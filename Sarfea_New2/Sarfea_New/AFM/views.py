@@ -379,23 +379,15 @@ def projects(request):
 
 def project_add(request):
 
-    form = None
-    client_form= None
     if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'client_form':
-            client_form = ClientsForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'form':
-            form = ProjectForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('projects')
-        
+        client_form = ClientsForm(request.POST)
+        form = ProjectForm(request.POST)
+        if client_form.is_valid():
+            client_form.save()
+            return redirect(request.path)
+        elif form.is_valid():
+            form.save()
+            return redirect('projects')    
     else:
         client_form = ClientsForm()
         form = ProjectForm()
