@@ -9,6 +9,17 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      #payment_type_label{
+        display: flex;
+      }
+      #last-date-add-btn, #last-date-delete-btn{
+        margin-left: 7px;
+        padding: 3px 8px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        border-radius: 5px;
+      } 
+    </style>
     {% endblock %}
     {% block title %} Income Details {% endblock %}
     {% block content %}
@@ -74,7 +85,7 @@
                     </div>
                   
                     <div class="input-box" name="PaymentType_Incomes">
-                      <span class="details">Ödeme Türü<button type="button" id="last-date-add-btn" class="last-date-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                      <span id="payment_type_label" class="details">Ödeme Türü<button type="button" id="last-date-add-btn" class="last-date-add-btn"><i class="fa-solid fa-plus"></i></button><button style="display:none;" type="button" id="last-date-delete-btn" class="last-date-delete-btn"><i class="fa-solid fa-minus"></i></button></span>
                       {{ incomes_form.PaymentType_Incomes }}
                     </div>
                     <div class="input-box" id="chek_date_box">
@@ -111,8 +122,8 @@
             <div class="column view-1"><div id="gider-acc" class="head"><span>İş Bedeli - {{project.Cost_NotIncludingKDV}} $</div>
             <table id="table" class="table table-sortable">
               <thead>
-                <th>Proje Adı</th>
-                <th scope="col">Alıcı Firma</th>
+                <th>Alıcı Firma</th>
+                <th scope="col">Tarih</th>
                 <th scope="col">Ödeme Türü</th>
                 <th scope="col">Tutar(TL)</th>
                 <th scope="col">Kur</th>
@@ -121,8 +132,8 @@
               <tbody id="tbody">   
                 {% for income in incomes %}
                 <tr class="table-row">
-                    <td><button type="button" class="edit-income-btn button2" style= "background: none; border:none;"><a href= "{% url 'income_edit' income_id=income.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ income.ProjectName_Incomes }} </td>
-                    <td>{{ income.CompanyName_ReceivePayment_Incomes }}</td>
+                    <td><button type="button" class="edit-income-btn button2" style= "background: none; border:none;"><a href= "{% url 'income_edit' income_id=income.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ income.CompanyName_ReceivePayment_Incomes }} </td>
+                    <td>{{ income.ChekDate_Incomes|date:"d/m/Y" }}</td>
                     <td>{{ income.PaymentType_Incomes }} </td>
                     <td class="amount-column">{{ income.Amount_Incomes }} ₺</td>
                     <td class="amount-kur">{{ income.Dollar_Rate_Incomes }}₺</td>
@@ -195,6 +206,30 @@
         return formattedNumber; 
     }
     }
+
+        var lastDateAddBtn = document.getElementById("last-date-add-btn");
+        var lastDateDeleteBtn = document.getElementById("last-date-delete-btn");
+        var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
+        var chekLastDateBox2 = document.querySelector('.chek-last-date-box');
+
+        document.addEventListener("DOMContentLoaded", function() {
+            lastDateDeleteBtn.addEventListener("click", function() {
+                    chekLastDateBox2.style.display = "none";
+                    lastDateAddBtn.style.display = "block";
+                    lastDateDeleteBtn.style.display = "none";
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            lastDateAddBtn.addEventListener("click", function() {
+                    lastDateDeleteBtn.style.display = "block";
+                    chekLastDateBox2.style.display === "none"
+                    chekLastDateBox2.style.display = "block";
+                    lastDateAddBtn.style.display = "none";
+                    
+                
+            });
+        });
+
 </script>
 {% endblock %}
 {% endblock %}

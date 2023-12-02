@@ -68,7 +68,7 @@ class Details(models.Model):
         return self.Detail
 
 class Project(models.Model):
-    ProjectName = models.CharField(max_length=63, blank=True, null=True, validators=[unique_supplier_validator])
+    ProjectName = models.CharField(max_length=63, blank=True, null=True)
     ProjectCode = models.CharField(max_length=63, blank=True, null=True)
     CompanyName = models.CharField(max_length=63, blank=True, null=True)
     CompanyUndertakingWork = models.CharField(max_length=63, blank=True, null=True)
@@ -120,6 +120,7 @@ class Incomes(models.Model):
     ProjectName_Incomes_Copy = models.CharField(max_length=63, blank=True, null=True)
     ProjectName_Incomes = models.CharField(max_length=63, blank=True, null=True)
     CompanyName_ReceivePayment_Incomes = models.CharField(max_length=63, blank=True, null=True)
+    CompanyName_Pay_Incomes = models.CharField(max_length=63, blank=True, null=True)
     Amount_Incomes = FourDecimalField(blank=True, null=True)
     Dollar_Rate_Incomes = FourDecimalField(blank=True, null=True)
     PaymentType_Incomes = models.CharField(max_length=63, blank=True, null=True)     
@@ -135,7 +136,7 @@ class ProjectNames(models.Model):
     
 class Clients(models.Model):
     CompanyName_Clients_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Clients = models.CharField(max_length=63, blank=True, null=True, validators=[unique_supplier_validator])
+    CompanyName_Clients = models.CharField(max_length=63, blank=True, null=True)
     ContactPerson = models.CharField(max_length=63, blank=True, null=True)
     PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
     Email= models.CharField(max_length=63, blank=True, null=True)
@@ -146,7 +147,7 @@ class Clients(models.Model):
 
 class Supplier(models.Model):
     CompanyName_Supplier_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Supplier = models.CharField(max_length=63, blank=True, null=True, validators=[unique_supplier_validator])
+    CompanyName_Supplier = models.CharField(max_length=63, blank=True, null=True)
     ContactPerson = models.CharField(max_length=63, blank=True, null=True)
     PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
     Email= models.CharField(max_length=63, blank=True, null=True)

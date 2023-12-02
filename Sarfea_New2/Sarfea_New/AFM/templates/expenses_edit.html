@@ -46,7 +46,7 @@
 
                 <div class="input-box">
                   <span class="details">Ödeme Yapılan Firma</span>
-                  <select name="CompanyName_Paying_Expenses" id="id_CompanyName_Paying_Expenses">
+                  <select required class="js-example-basic-single" name="CompanyName_Paying_Expenses" id="id_CompanyName_Paying_Expenses">
                     {% for x in supplier %}
                       {% if expenses_edit.CompanyName_Paying_Expenses == x.CompanyName_Supplier  %}
                         <option value="{{x.id}}" selected>{{ expenses_edit.CompanyName_Paying_Expenses }}</option>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="input-box">
                   <span class="details">Gider Detayı</span>
-                  <select name="ExpensDetails_Expenses" id="id_ExpensDetails_Expenses">
+                  <select class="js-example-basic-single" name="ExpensDetails_Expenses" id="id_ExpensDetails_Expenses">
                     {% for x in details %}
                       {% if expenses_edit.ExpensDetails_Expenses == x.Detail %}
                         <option value="{{x.id}}" selected>{{ expenses_edit.ExpensDetails_Expenses }}</option>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="input-box">
                   <span class="details">Banka</span>
-                  <select name="Bank_Expenses" id="id_Bank_Expenses">
+                  <select class="js-example-basic-single" name="Bank_Expenses" id="id_Bank_Expenses">
                     {% for x in banks %}
                       {% if expenses_edit.Bank_Expenses == x.BankName %}
                         <option value="{{x.id}}" selected>{{ expenses_edit.Bank_Expenses }}</option>

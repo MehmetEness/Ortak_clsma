@@ -60,7 +60,7 @@
               </div>
               <div class="input-box">
                 <span class="details">İş Yapılan Firma</span>
-                <select name="CompanyName_Job_JobHistory" id="id_CompanyName_Job_JobHistory">
+                <select required class="js-example-basic-single" name="CompanyName_Job_JobHistory" id="id_CompanyName_Job_JobHistory">
                   {% for x in supplier %}
                     {% if jobhistory_edit.CompanyName_Job_JobHistory == x.CompanyName_Supplier  %}
                       <option value="{{x.id}}" selected>{{ jobhistory_edit.CompanyName_Job_JobHistory }}</option>

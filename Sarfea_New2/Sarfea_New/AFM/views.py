@@ -56,6 +56,7 @@ def jobhistory_edit(request, jobhistory_id):
 def income_edit(request, income_id):
     income_edit = get_object_or_404(Incomes, id=income_id)
     my_company = MyCompanyNames.objects.all()
+    client = Clients.objects.all()
 
     if request.method == 'POST':
         edit_form = IncomesForm(request.POST, instance=income_edit)
@@ -69,14 +70,16 @@ def income_edit(request, income_id):
     context = {
         'edit_form': edit_form,
         'income_edit': income_edit,
-        'my_company': my_company
+        'my_company': my_company,
+        'client': client
+
     }
     return render(request, "income_edit.html", context)
 
 def supplier_edit(request, supplier_name):
     supplier_edit = get_object_or_404(Supplier, CompanyName_Supplier=supplier_name)
     locations = Locations.objects.all()
-   
+
     if request.method == 'POST':
         edit_form = SupplierForm(request.POST, instance=supplier_edit)
         
@@ -307,96 +310,30 @@ def projects(request):
         custom_order_date=F('StartDate')
     ).order_by('custom_order_situation', 'custom_order_date')
 
-    
-    expenses_form=None
-    incomes_form=None
-    client_form=None
-    jobhistory_form=None
-    client_form=None
-    supplier_form=None
-    form=None
-
-
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-        
-        if form_type == 'expenses_form':
-            expenses_form = ExpensesForm(request.POST)
-            if expenses_form.is_valid():
-                expenses_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'incomes_form':
-            incomes_form = IncomesForm(request.POST)
-            if incomes_form.is_valid():
-                incomes_form.save()
-                return redirect(request.path)
-            
-        elif form_type == 'jobhistory_form':
-            jobhistory_form = JobHistoryForm(request.POST)
-            if jobhistory_form.is_valid():
-                jobhistory_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'client_form':
-            client_form = ClientsForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'supplier_form':
-            supplier_form = SupplierForm(request.POST)
-            if supplier_form.is_valid():
-                supplier_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'form':
-            form = ProjectForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect(request.path)
-        
-    else:
-        supplier_form = SupplierForm()
-        client_form = ClientsForm()
-        expenses_form = ExpensesForm()
-        incomes_form = IncomesForm()
-        jobhistory_form = JobHistoryForm()
-        form = ProjectForm()
-        
-
     context = {
         "project": project,
-        "form": form,
-        "expenses_form": expenses_form,  # Şimdi gider formunu da şablona ekleyin
-        "incomes_form": incomes_form,
-        "jobhistory_form": jobhistory_form,
-        'client_form': client_form,
-        'supplier_form': supplier_form
+        
     }
 
     return render(request, "projects.html", context)
 
 def project_add(request):
 
-  
     if request.method == 'POST':
-        client_form = ClientsForm(request.POST)
-        form = ProjectForm(request.POST)
-        if client_form.is_valid():
-            client_form.save()
-            return redirect(request.path)
-        elif form.is_valid():
+        form = ProjectForm(request.POST or None )
+
+        
+        
+        if form.is_valid():
             form.save()
             return redirect('projects')    
         
     else:
-        client_form = ClientsForm()
         form = ProjectForm()
         
     context = {
         "form": form,
-        'client_form': client_form,
+        'form_errors': form.errors,
     }
     return render(request, "project_add.html", context)
 
@@ -460,6 +397,8 @@ def jobhistory_add(request):
 
 def income_add(request):
     income_form = None
+    client = Clients.objects.all()
+    project = Project.objects.all()
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
@@ -474,6 +413,24 @@ def income_add(request):
         
     context = {
         "incomes_form": income_form,
+        "client": client,
+        "project": project
     }
     return render(request, "income_add.html", context)
 
+def deneme(request):
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('deneme')    
+        
+    else:
+        form = ProjectForm()
+        
+    context = {
+        "form": form,
+    }
+    return render(request, "deneme.html", context)

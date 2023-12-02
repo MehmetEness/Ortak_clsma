@@ -1,0 +1,28 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}   
+
+
+
+
+<form method="post" action="{% url 'deneme' %}">
+    {% csrf_token %}
+    
+    <!-- Project Form Alanları -->
+    {{ form.as_p }}
+
+    <button type="submit">Submit</button>
+</form>
+
+
+
+
+
+
+
+
+
+{% endblock %}

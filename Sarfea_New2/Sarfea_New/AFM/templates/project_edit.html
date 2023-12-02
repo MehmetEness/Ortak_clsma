@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
-    <link rel="stylesheet" href="{% static 'centerr.css' %}">
+    <link rel="stylesheet" href="{% static 'center.css' %}">
+    <link rel="stylesheet" href="{% static 'new_selections.css' %}">
 
     {% endblock %}
     
@@ -48,7 +49,7 @@
               </div>
               <div class="input-box">
                 <span class="details">Firma Adı </span>
-                <select name="CompanyName" id="id_CompanyName">
+                <select required class="js-example-basic-single" name="CompanyName" id="id_CompanyName">
                   {% for x in client %}
                     {% if project_edit.CompanyName == x.CompanyName_Clients  %}
                       <option value="{{x.id}}" selected>{{project_edit.CompanyName}}</option>
@@ -78,7 +79,7 @@
               </div>
               <div class="input-box">
                 <span class="details">Konum</span>
-                <select name="Location" id="id_Location">
+                <select class="js-example-basic-single" name="Location" id="id_Location">
                   {% for x in locations %}
                     {% if project_edit.Location == x.Location  %}
                       <option value="{{x.id}}">{{x.Location}}</option>
@@ -184,8 +185,8 @@
     
     amountInputReformatBtn.addEventListener("click", function(event) {
     event.preventDefault();
-    amountInputForFormat1.value = clear(deger);
-    amountInputForFormat2.value = clear(deger);
+    amountInputForFormat1.value = clear(amountInputForFormat1.value);
+    amountInputForFormat2.value = clear(amountInputForFormat2.value);
     form.submit();
     });
     onPageLoad(amountInputForFormat1);
@@ -199,7 +200,6 @@
         var clearValue = clear(inputValue);
         var formatValue = format(clearValue);
         x.value = formatValue;
-        deger = formatValue;
     }
 
     

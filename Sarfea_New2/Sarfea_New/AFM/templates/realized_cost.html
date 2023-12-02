@@ -523,6 +523,82 @@ document.addEventListener("DOMContentLoaded", function () {
         return formattedNumber; 
     }
     }
+    document.addEventListener("DOMContentLoaded", function() {
+      var searchInput = document.getElementById("mysearch");
+      var clearButton = document.querySelector(".clear");
+      var tables = document.querySelectorAll(".table-sortable");
+  
+      // Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
+      searchInput.addEventListener("input", function() {
+          filterTables();
+      });
+  
+      // Clear Button'a tıklandığında çalışacak event listener
+      clearButton.addEventListener("click", function() {
+          // Search Input'un değerini boşalt
+          searchInput.value = "";
+          // Tüm tabloları göster
+          showAllRows();
+      });
+  
+      // Tüm tabloları filtreleyen fonksiyon
+      // ...
+
+// Tüm tabloları filtreleyen fonksiyon
+function filterTables() {
+  var filter = searchInput.value.toLowerCase();
+
+  tables.forEach(function (table) {
+      var rows = table.getElementsByTagName("tr");
+
+      for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+
+          // Sadece gizlenmemiş satırları ve başlık satırlarını filtrele
+          if (row.style.display !== "none" && !row.querySelector("th")) {
+              var cells = row.getElementsByTagName("td");
+              var shouldShow = false;
+
+              for (var j = 0; j < cells.length; j++) {
+                  var cell = cells[j];
+
+                  if (cell) {
+                      var text = cell.textContent || cell.innerText;
+
+                      if (text.toLowerCase().indexOf(filter) > -1) {
+                          shouldShow = true;
+                          break;
+                      }
+                  }
+              }
+
+              if (shouldShow) {
+                  row.style.display = "";
+              } else {
+                  row.style.display = "none";
+              }
+          }
+      }
+  });
+}
+
+// ...
+
+  
+      // Tüm satırları gösteren fonksiyon
+      function showAllRows() {
+          tables.forEach(function(table) {
+              var rows = table.getElementsByTagName("tr");
+  
+              for (var i = 0; i < rows.length; i++) {
+                  rows[i].style.display = "";
+              }
+          });
+      }
+  });
+  
+  
+   
 
 </script>
 

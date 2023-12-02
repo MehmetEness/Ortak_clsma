@@ -60,7 +60,7 @@
                 </div>    
                 <div class="input-box">
                   <span class="details">Konum</span>
-                  <select name="Location" id="id_Location">
+                  <select class="js-example-basic-single" name="Location" id="id_Location">
                     {% for x in locations %}
                       {% if supplier_edit.Location == x.Location  %}
                         <option value="{{x.id}}">{{x.Location}}</option>

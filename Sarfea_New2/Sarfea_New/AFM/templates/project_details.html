@@ -47,7 +47,7 @@
                       <div style="background-image:url('{% static 'images/arka8.png' %}');" class="column-2 card">
                           <div class="span"><span>DC Güç</span><span>{{project.DC_Power}}kWp</span></div></div>
                       <div style="background-image:url('{% static 'images/arka9.png' %}');" class="column-2 card">
-                          <div class="span"><span>İş Bedeli</span><span>{{project.Cost_NotIncludingKDV}} $</span></div>
+                          <div class="span"><span>İş Bedeli</span><span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span></div>
                           <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_name=project.ProjectName %}">a</a>
                       </div>
                       <div style="background-image:url('{% static 'images/arazi-cati.png' %}');" class="column-2 card">
@@ -89,6 +89,26 @@
             </div>
         </div>
     </div>
+    <script>
+    var realized_cost = document.querySelector("#realized_cost_span");
+    format(realized_cost);    
+    function format(number) {
+        var indexOfDot = number.textContent.indexOf('.');
+        
+        if(number.textContent != "None $"){
+            if (indexOfDot !== -1) {
+                var integerPart = number.textContent.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                var decimalPart = number.textContent.slice(indexOfDot + 1);
+                realized_cost.textContent = integerPart + '.' + decimalPart;
+            } else {
+                var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                realized_cost.textContent = formattedNumber; 
+            }
+        }else{
+            realized_cost.textContent = "0 $"; 
+        }
+    }
+    </script>
     {% endblock %}
 
 <!--

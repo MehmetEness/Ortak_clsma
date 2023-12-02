@@ -1,16 +1,40 @@
 from django import forms
+from datetime import datetime
 from .models import Project, ProjectNames, Expenses, Incomes, JobHistory ,CompanyNames, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations
    
+min_date = datetime(2000, 1, 1)
+max_date = datetime(2099, 12, 30) 
+
+
+
 class ProjectForm(forms.ModelForm):
-    ProjectName = forms.CharField(max_length=63, label="Proje Adını Giriniz")
-    ProjectCode = forms.CharField(max_length=63)
+ 
+    ProjectName = forms.CharField(
+        required=True,
+        max_length=63,
+        label="Proje Adını Giriniz",
+         error_messages={
+            'required': 'Lütfen Proje Adını Giriniz'  # Özel hata mesajı
+        }
+        )
+    ProjectCode = forms.CharField(
+        required=True,
+        max_length=63,
+         error_messages={
+            'required': 'Lütfen Proje Kodunu Giriniz'  # Özel hata mesajı
+        }
+        )
     CompanyName = forms.ModelChoiceField(
         queryset=Clients.objects.all().order_by('CompanyName_Clients'),
         empty_label="Firma Adını Seçiniz",
+        error_messages={
+            'required': 'Lütfen Firma Adını Seçiniz'  # Özel hata mesajı
+        }
     )  
     CompanyUndertakingWork = forms.ModelChoiceField(
         queryset=MyCompanyNames.objects.all(),
         empty_label="İşi Üstlenen Firma Adını Seçiniz",
+        required=False
     )    
     Location = forms.ModelChoiceField(
         queryset=Locations.objects.all(),
@@ -64,6 +88,7 @@ class ProjectForm(forms.ModelForm):
         max_digits=6,
         decimal_places=4,
         required=False,
+        initial=20.0
     )
     Situation = forms.ModelChoiceField(
         queryset=Situations.objects.all(),
@@ -72,12 +97,12 @@ class ProjectForm(forms.ModelForm):
     )    
     StartDate = forms.DateField(
         label='Tarih Seçiniz', 
-        widget=forms.widgets.DateInput(attrs={'type': 'date'}),
+        widget=forms.widgets.DateInput(attrs={'type': 'date', 'min': min_date, 'max': max_date}),
         required=False,
     )
     FinishDate = forms.DateField(
         label='Tarih Seçiniz', 
-        widget=forms.widgets.DateInput(attrs={'type': 'date'}),
+        widget=forms.widgets.DateInput(attrs={'type': 'date', 'min': min_date, 'max': max_date}),
         required=False,
     )
 
@@ -131,7 +156,6 @@ class ExpensesForm(forms.ModelForm):
         queryset=Banks.objects.all(),
         empty_label="Banka Seçiniz",
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
     )
     Date_Expenses = forms.DateField(
         label='Tarih Seçiniz',
@@ -190,11 +214,12 @@ class JobHistoryForm(forms.ModelForm):
 
 class IncomesForm(forms.ModelForm):
     ProjectName_Incomes_Copy = forms.CharField(max_length=63, required=False)
-    ProjectName_Incomes = forms.ModelChoiceField(
-        queryset=ProjectNames.objects.all().order_by('ProjectName'),
-        empty_label= "Proje Adını Seçiniz",
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False,
+    ProjectName_Incomes = forms.CharField(      
+        
+        max_length=63,
+        error_messages={
+            'required': 'Lütfen Proje Adını Giriniz'  # Özel hata mesajı
+        }
     )       
     CompanyName_ReceivePayment_Incomes = forms.ModelChoiceField(
         queryset=MyCompanyNames.objects.all(),
@@ -202,6 +227,13 @@ class IncomesForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         required=False
     )
+    CompanyName_Pay_Incomes = forms.CharField(
+        max_length=63, 
+        required=False,
+        error_messages={
+            'required': 'Lütfen Ödeme Yapan Firmanın Adını Seçiniz'  # Özel hata mesajı
+        }
+        )
     Amount_Incomes_Incomes = forms.DecimalField(  
         max_digits=17,
         decimal_places=4,
@@ -229,7 +261,7 @@ class IncomesForm(forms.ModelForm):
     class Meta:
         model = Incomes
         fields = ['ProjectName_Incomes','CompanyName_ReceivePayment_Incomes','Dollar_Rate_Incomes','ProjectName_Incomes_Copy',
-                   'Amount_Incomes','PaymentType_Incomes','ChekDate_Incomes', "LastChekDate_Incomes"
+                   'Amount_Incomes','PaymentType_Incomes','ChekDate_Incomes', "LastChekDate_Incomes","CompanyName_Pay_Incomes"
                   ]
 
 class ClientsForm(forms.ModelForm):
@@ -242,6 +274,7 @@ class ClientsForm(forms.ModelForm):
         queryset=Locations.objects.all(),
         empty_label= "Konum Seçiniz",
         required=False,
+
     ) 
     class Meta:
         model = Clients 
@@ -257,6 +290,7 @@ class SupplierForm(forms.ModelForm):
         queryset=Locations.objects.all(),
         empty_label= "Konum Seçiniz",
         required=False,
+
     )    
     class Meta:
         model = Supplier 

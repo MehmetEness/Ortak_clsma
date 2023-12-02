@@ -9,12 +9,17 @@
     </td>
     <td>
         {%if x.AC_Power %}
-         {{ x.AC_Power }} kW
+         {{ x.AC_Power }} kWe
+        {% endif %}
+    </td>
+    <td>
+        {%if x.DC_Power %}
+         {{ x.DC_Power }} kWp
         {% endif %}
     </td>
     <td>
         {%if x.CalculatedCost_NotIncludingKDV %}
-        {{ x.CalculatedCost_NotIncludingKDV }} ₺
+        {{ x.CalculatedCost_NotIncludingKDV }} 
         {% endif %}
     </td>
     <td>

@@ -26,5 +26,7 @@ urlpatterns = [
     path("expenses_add/", views.expenses_add, name='expenses_add'),
     path("jobhistory_add/", views.jobhistory_add, name='jobhistory_add'),
     path("income_add/", views.income_add, name='income_add'),
+    path("deneme/", views.deneme, name='deneme'),
+
 
 ]
