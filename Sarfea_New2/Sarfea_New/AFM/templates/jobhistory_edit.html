@@ -58,21 +58,29 @@
                   {% endfor %}
                 </select>
               </div>
-              <div class="input-box">
-                <span class="details">İş Yapılan Firma</span>
-                <select required class="js-example-basic-single" name="CompanyName_Job_JobHistory" id="id_CompanyName_Job_JobHistory">
-                  {% for x in supplier %}
-                    {% if jobhistory_edit.CompanyName_Job_JobHistory == x.CompanyName_Supplier  %}
-                      <option value="{{x.id}}" selected>{{ jobhistory_edit.CompanyName_Job_JobHistory }}</option>
-                    {% endif %}
-                  {% endfor %}
-                  {% for x in supplier %}
-                    {% if jobhistory_edit.CompanyName_Job_JobHistory != x.CompanyName_Supplier  %}
-                      <option value="{{x.id}}">{{x.CompanyName_Supplier}}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
+
+              <div class="input-box {% if edit_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
+                <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                <div class="dropdown-container">
+                    <input value="{{jobhistory_edit.CompanyName_Job_JobHistory}}" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
+                    {% if edit_form.CompanyName_Job_JobHistory.errors %}
+                            <div class="error-container">
+                                <span class="error-triangle"></span>
+                                <ul class="errorlist">
+                                    {% for error in edit_form.CompanyName_Job_JobHistory.errors %}
+                                        <li class="error-message">{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                  <div id="dropdown1" class="dropdown-content">
+                        {% for x in supplier %}
+                            <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
+                        {% endfor %}
+                  </div>
+                </div>
               </div>
+
               <div class="input-box">
                   <span class="details">Cinsi</span>
                   {{ edit_form.ExpensDetails_JobHistory }}

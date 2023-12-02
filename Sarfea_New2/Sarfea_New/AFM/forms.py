@@ -26,9 +26,8 @@ class ProjectForm(forms.ModelForm):
              # Özel hata mesajı
         }
         )
-    CompanyName = forms.ModelChoiceField(
-        queryset=Clients.objects.all().order_by('CompanyName_Clients'),
-        empty_label="Firma Adını Seçiniz",
+    CompanyName = forms.CharField(
+        max_length=63,
         error_messages={
             'required': '! Lütfen Firma Adını Seçiniz'  # Özel hata mesajı
         }
@@ -38,9 +37,7 @@ class ProjectForm(forms.ModelForm):
         empty_label="İşi Üstlenen Firma Adını Seçiniz",
         required=False
     )    
-    Location = forms.ModelChoiceField(
-        queryset=Locations.objects.all(),
-        empty_label= 'Konum Seçiniz',
+    Location = forms.CharField(
         required=False,
     )    
     Cost_NotIncludingKDV = forms.FloatField(required=False)        
@@ -134,22 +131,18 @@ class ExpensesForm(forms.ModelForm):
             'required': '! Lütfen Proje Adını Seçiniz'  # Özel hata mesajı
         }
         )
-    
     CompanyName_Expenses = forms.CharField(max_length=63, required=False)
     CompanyName_FromPaymentMade_Expenses = forms.ModelChoiceField(
         queryset=MyCompanyNames.objects.all(),
         empty_label="Firma Adını Seçiniz",
         required=False
     )
-    CompanyName_Paying_Expenses = forms.ModelChoiceField(
-        queryset=Supplier.objects.all().order_by('CompanyName_Supplier'),
-        empty_label="Firma Adını Seçiniz",
+    CompanyName_Paying_Expenses = forms.CharField(
         error_messages={
             'required': '! Lütfen Şirket Adını Seçiniz'  # Özel hata mesajı
         }
     )
-    ExpensDetails_Expenses = forms.ModelChoiceField(
-        queryset=Details.objects.all(),
+    ExpensDetails_Expenses = forms.CharField(
         required=False
     )
     Amount_Expenses = forms.DecimalField(  
@@ -164,7 +157,7 @@ class ExpensesForm(forms.ModelForm):
     )
     Bank_Expenses = forms.ModelChoiceField(
         queryset=Banks.objects.all(),
-        empty_label="Banka Seçiniz",
+        empty_label="Banka Adını Seçiniz",
         required=False,
     )
     Date_Expenses = forms.DateField(
@@ -194,9 +187,7 @@ class JobHistoryForm(forms.ModelForm):
         required=False,
         label='CompanyName_FromJobMade'
     )
-    CompanyName_Job_JobHistory = forms.ModelChoiceField(
-        queryset=Supplier.objects.all().order_by('CompanyName_Supplier'),  # 'company_name' yerine sıralamak istediğiniz alanı kullanın
-        empty_label="Firma Adını Seçiniz",
+    CompanyName_Job_JobHistory = forms.CharField(
          error_messages={
             'required': '! Lütfen Firma Adını Seçiniz'  # Özel hata mesajı
         }
@@ -240,7 +231,6 @@ class IncomesForm(forms.ModelForm):
     )
     CompanyName_Pay_Incomes = forms.CharField(
         max_length=63, 
-        required=False,
         error_messages={
             'required': '! Lütfen Ödeme Yapan Firmanın Adını Seçiniz'  # Özel hata mesajı
         }
@@ -281,11 +271,8 @@ class ClientsForm(forms.ModelForm):
     ContactPerson = forms.CharField(max_length=63, required=False)
     PhoneNumber = forms.CharField(max_length=11, required=False)
     Email= forms.CharField(max_length=63, required=False)
-    Location = forms.ModelChoiceField(
-        queryset=Locations.objects.all(),
-        empty_label= "Konum Seçiniz",
+    Location = forms.CharField(
         required=False,
-
     ) 
     class Meta:
         model = Clients 
@@ -297,12 +284,9 @@ class SupplierForm(forms.ModelForm):
     ContactPerson = forms.CharField(max_length=63, required=False)
     PhoneNumber = forms.CharField(max_length=11, required=False)
     Email= forms.CharField(max_length=63, required=False)
-    Location = forms.ModelChoiceField(
-        queryset=Locations.objects.all(),
-        empty_label= "Konum Seçiniz",
+    Location = forms.CharField(
         required=False,
-
-    )    
+    ) 
     class Meta:
         model = Supplier 
         fields = '__all__'

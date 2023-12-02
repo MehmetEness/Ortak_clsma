@@ -38,38 +38,52 @@
                     {% csrf_token %}
                     <input type="hidden" name="form_type" value="jobhistory_form">
                 <div class="user-details">
-                <div class="input-box" name="ProjectName_JobHistory">
+
+
+                <div class="input-box {% if jobhistory_form.ProjectName_JobHistory.errors %}error{% endif %}" id="ProjectName_JobHistoryInput">
                     <span class="details">Proje Adı</span>
-                    {{ jobhistory_form.ProjectName_JobHistory }}
-                    {% if jobhistory_form.ProjectName_JobHistory.errors %}
+                    <div class="dropdown-container">
+                      <input type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
+                      {% if jobhistory_form.ProjectName_JobHistory.errors %}
+                      <div class="error-container">
+                          <span class="error-triangle"></span>
+                          <ul class="errorlist">
+                              {% for error in jobhistory_form.ProjectName_JobHistory.errors %}
+                                  <li class="error-message">{{ error }}</li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                    {% endif %}
+                    <div id="dropdown1" class="dropdown-content">
+                          {% for x in project %}
+                              <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
+                          {% endfor %}
+                    </div>
+                  </div>
+                  </div>
+
+                <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
+                    <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                    <div class="dropdown-container">
+                        <input type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
+                        {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
                                 <div class="error-container">
                                     <span class="error-triangle"></span>
                                     <ul class="errorlist">
-                                        {% for error in jobhistory_form.ProjectName_JobHistory.errors %}
+                                        {% for error in jobhistory_form.CompanyName_Job_JobHistory.errors %}
                                             <li class="error-message">{{ error }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                             {% endif %}
-                </div>
-                <div class="input-box" name="CompanyName_FromJobMade_JobHistory"> 
-                    <span class="details">İşi Yapan Firma</span>
-                    {{ jobhistory_form.CompanyName_FromJobMade_JobHistory }}
-                </div>
-                <div class="input-box" name="CompanyName_Job_JobHistory">
-                    <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
-                    {{ jobhistory_form.CompanyName_Job_JobHistory }}
-                    {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
-                    <div class="error-container">
-                        <span class="error-triangle"></span>
-                        <ul class="errorlist">
-                            {% for error in jobhistory_form.CompanyName_Job_JobHistory.errors %}
-                                <li class="error-message">{{ error }}</li>
+                      <div id="dropdown2" class="dropdown-content">
+                            {% for x in supplier %}
+                                <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
                             {% endfor %}
-                        </ul>
+                      </div>
                     </div>
-                {% endif %}
-                </div>
+                  </div>
+
                 <div class="input-box" name="ExpensDetails_JobHistory">
                     <span class="details">Cinsi</span>
                     {{ jobhistory_form.ExpensDetails_JobHistory }}

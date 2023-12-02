@@ -151,6 +151,7 @@ def home(request):
     return render(request, "home.html")
 
 def client(request):
+    locations = Locations.objects.all()
     if request.method == 'POST':
         client_form = ClientsForm(request.POST)
         if client_form.is_valid():
@@ -163,12 +164,14 @@ def client(request):
 
     context = {
         'clients': clients,
-        'client_form': client_form
+        'client_form': client_form,
+        "locations": locations
     }
 
     return render(request, 'client.html', context)
 
 def supplier(request):
+    locations = Locations.objects.all()
     if request.method == 'POST':
         supplier_form = SupplierForm(request.POST)
         if supplier_form.is_valid():
@@ -181,7 +184,8 @@ def supplier(request):
 
     context = {
         'supplier': supplier,
-        'supplier_form': supplier_form
+        'supplier_form': supplier_form,
+        "locations": locations
     }
     return render(request, "supplier.html", context)
 
@@ -196,6 +200,10 @@ def realized_cost(request, project_name):
     project = get_object_or_404(Project, ProjectName=project_name)
     expenses = Expenses.objects.filter(Q(ProjectName_Expenses=project.ProjectName) & Q(CompanyName_Paying_Expenses__in=payment_firms_names))
     jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name)
+    supplier = Supplier.objects.all()
+    details = Details.objects.all()
+
+
 
     # Get distinct companies from PaymentFirms
     distinct_payment_firms = PaymentFirms.objects.all().values('PaymentFirmsName').distinct()
@@ -275,7 +283,9 @@ def realized_cost(request, project_name):
         "jobhistory_form": jobhistory_form,
         "supplier_form": supplier_form,
         "distinct_company_names": distinct_company_names,
-        "Total_Amount_List":Total_Amount_List
+        "Total_Amount_List":Total_Amount_List,
+        "supplier":supplier,
+        "details":details,
     }
     return render(request, "realized_cost.html", context)
 
@@ -283,6 +293,7 @@ def income_details(request, project_name):
     project = Project.objects.filter(ProjectName=project_name).first()
     incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
     incomes_form = IncomesForm()
+    client = Clients.objects.all()
 
     if request.method == 'POST':
         incomes_form = IncomesForm(request.POST)
@@ -297,6 +308,7 @@ def income_details(request, project_name):
         "project": project,
         "incomes": incomes,
         "incomes_form": incomes_form,
+        "client": client,
     }
     return render(request, "income_details.html", context)
 
@@ -320,7 +332,8 @@ def projects(request):
     return render(request, "projects.html", context)
 
 def project_add(request):
-
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
     if request.method == 'POST':
         form = ProjectForm(request.POST or None )
 
@@ -336,10 +349,15 @@ def project_add(request):
     context = {
         "form": form,
         'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
     }
     return render(request, "project_add.html", context)
 
 def expenses_add(request):
+    details = Details.objects.all()
+    supplier = Supplier.objects.all()
+    project = Project.objects.all()
 
     expenses_form = None
     supplier_form= None
@@ -365,6 +383,9 @@ def expenses_add(request):
     context = {
         "expenses_form": expenses_form,
         'supplier_form': supplier_form,
+        "details": details,
+        "supplier": supplier,
+        "project": project,
     }
     return render(request, "expenses_add.html", context)
 
@@ -372,6 +393,10 @@ def jobhistory_add(request):
 
     jobhistory_form = None
     supplier_form= None
+    project = Project.objects.all()
+    supplier = Supplier.objects.all()
+
+
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
@@ -394,12 +419,15 @@ def jobhistory_add(request):
     context = {
         "jobhistory_form": jobhistory_form,
         'supplier_form': supplier_form,
+        "project": project,
+        "supplier": supplier,
     }
     return render(request, "jobhistory_add.html", context)
 
 def income_add(request):
     income_form = None
     client = Clients.objects.all()
+    project = Project.objects.all()
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
@@ -414,7 +442,8 @@ def income_add(request):
         
     context = {
         "incomes_form": income_form,
-        "client": client
+        "client": client,
+        "project":project
     }
     return render(request, "income_add.html", context)
 

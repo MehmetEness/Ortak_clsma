@@ -34,10 +34,29 @@
                 <span class="details">İşi Yapan Firma</span>
                 {{ jobhistory_form.CompanyName_FromJobMade_JobHistory }}
              </div>
-             <div class="input-box" name="CompanyName_Job_JobHistory">
-                <span class="details">İş Yapılan Firma<button type="button" id="firma-add-btn" class="firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
-                {{ jobhistory_form.CompanyName_Job_JobHistory }}
-             </div>
+
+             <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
+              <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+              <div class="dropdown-container">
+                  <input type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
+                  {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
+                          <div class="error-container">
+                              <span class="error-triangle"></span>
+                              <ul class="errorlist">
+                                  {% for error in jobhistory_form.CompanyName_Job_JobHistory.errors %}
+                                      <li class="error-message">{{ error }}</li>
+                                  {% endfor %}
+                              </ul>
+                          </div>
+                      {% endif %}
+                <div id="dropdown1" class="dropdown-content">
+                      {% for x in supplier %}
+                          <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
+                      {% endfor %}
+                </div>
+              </div>
+            </div>
+
              <div class="input-box">
                 <span class="details">Cinsi</span>
                 {{ jobhistory_form.ExpensDetails_JobHistory }}
@@ -85,19 +104,42 @@
               <span class="details">Proje Adı</span>
               <input  name="ProjectName_Expenses" value="{{ project.ProjectName }}">
             </div>
-             <div class="input-box" name="CompanyName_Paying_Expenses">
-                <span class="details">Ödeme Yapılan Firma<button type="button" id="firma-add-btn2" class="firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
-                {{ expenses_form.CompanyName_Paying_Expenses }}
-               
-             </div>
+            <div class="input-box {% if expenses_form.CompanyName_Paying_Expenses.errors %}error{% endif %}" id="CompanyName_Paying_ExpensesInput">
+              <span class="details">Ödeme Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+              <div class="dropdown-container">
+                  <input type="text" id="id_CompanyName_Paying_Expenses" name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
+                  {% if expenses_form.CompanyName_Paying_Expenses.errors %}
+                          <div class="error-container">
+                              <span class="error-triangle"></span>
+                              <ul class="errorlist">
+                                  {% for error in expenses_form.CompanyName_Paying_Expenses.errors %}
+                                      <li class="error-message">{{ error }}</li>
+                                  {% endfor %}
+                              </ul>
+                          </div>
+                      {% endif %}
+                <div id="dropdown2" class="dropdown-content">
+                      {% for x in supplier %}
+                          <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
+                      {% endfor %}
+                </div>
+              </div>
+            </div>
              <div class="input-box" name="CompanyName_FromPaymentMade_Expenses"> 
                 <span class="details">Ödeme Yapan Firma</span>
                 {{ expenses_form.CompanyName_FromPaymentMade_Expenses }}
              </div>
              <div class="input-box">
-                <span class="details">Gider Detayı</span>
-                {{ expenses_form.ExpensDetails_Expenses }}
-             </div>
+              <span class="details">Gider Detayı</span>
+              <div class="dropdown-container">
+                  <input type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Datayı Seçiniz" data-dropdown="dropdown3">
+                <div id="dropdown3" class="dropdown-content">
+                      {% for x in details %}
+                          <span value="{{x.id}}" class="dropdown-item">{{x.Detail}}</span>
+                      {% endfor %}
+                </div>
+              </div> 
+          </div>
              <div class="input-box">
                 <span class="details">Tutar (₺)</span>
                 <input class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001">

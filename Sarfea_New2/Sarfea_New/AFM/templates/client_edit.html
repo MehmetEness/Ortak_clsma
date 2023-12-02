@@ -60,21 +60,17 @@
                 <span class="details">E-posta</span>
                 {{ edit_form.Email }}
               </div>    
-              <div class="input-box">
-                <span class="js-example-basic-single" class="details">Konum</span>
-                <select name="Location" id="id_Location">
-                  {% for x in locations %}
-                    {% if client_edit.Location == x.Location  %}
-                      <option value="{{x.id}}">{{x.Location}}</option>
-                    {% endif %}
-                  {% endfor %}
-                  {% for x in locations %}
-                    {% if client_edit.Location != x.Location  %}
-                      <option value="{{x.id}}">{{x.Location}}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
-            </div>              
+              <div class="input-box ">
+                <span class="details">Bölge</span>
+                <div class="dropdown-container">
+                  <input value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
+                <div id="dropdown1" class="dropdown-content">
+                      {% for x in locations %}
+                          <span value="{{x.id}}" class="dropdown-item">{{x.Location}}</span>
+                      {% endfor %}
+                </div>
+              </div>
+              </div>
             </div>
             <div class="button">
                 <input type="submit" value="Kaydet"/>
