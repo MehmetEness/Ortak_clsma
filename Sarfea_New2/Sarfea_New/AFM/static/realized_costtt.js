@@ -28,11 +28,11 @@ document.querySelector('.search').classList.toggle('active')
 
 
 //-------------------
-document.getElementById("firma-add-btn").addEventListener("click", function () {
+document.getElementById("paying-firma-add-btn-2").addEventListener("click", function () {
   console.log("firma add");
   document.querySelector(".payingFirmaAddWindow").style.display = "flex";
 });
-document.getElementById("firma-add-btn2").addEventListener("click", function () {
+document.getElementById("paying-firma-add-btn-1").addEventListener("click", function () {
   console.log("firma add2");
   document.querySelector(".payingFirmaAddWindow").style.display = "flex";
 });

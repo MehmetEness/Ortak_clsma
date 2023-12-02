@@ -4,9 +4,6 @@ document.getElementById("gelir-ac").addEventListener("click", function(){
 document.getElementById("gelir-modal").addEventListener("click", function(){
   document.querySelector(".gelirWindow").style.display = "none";
 });
-document.getElementById("last-date-add-btn").addEventListener("click", function () {
-document.querySelector(".chek-last-date-box").style.display = "block";
-});
 
 /* Dosya ekle */ 
 

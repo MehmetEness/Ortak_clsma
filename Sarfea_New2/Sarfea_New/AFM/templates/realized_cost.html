@@ -11,6 +11,17 @@
     />
     <link rel="stylesheet" type="text/css" href="{% static 'realized_costr.css' %}"> 
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
+    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
+    <style>
+      .paying-firma-add-btn {
+    margin-left: 7px;
+    padding: 0px 4px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+} 
+    </style>
 
     {% endblock %}
 
@@ -105,7 +116,7 @@
               <input  name="ProjectName_Expenses" value="{{ project.ProjectName }}">
             </div>
             <div class="input-box {% if expenses_form.CompanyName_Paying_Expenses.errors %}error{% endif %}" id="CompanyName_Paying_ExpensesInput">
-              <span class="details">Ödeme Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+              <span class="details">Ödeme Yapılan Firma<button type="button" id="paying-firma-add-btn-1" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
                   <input type="text" id="id_CompanyName_Paying_Expenses" name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
                   {% if expenses_form.CompanyName_Paying_Expenses.errors %}
@@ -361,8 +372,8 @@
 
   {% block js_files %}
 
-  <script src="{% static 'realized_cost.js' %}"></script> 
-  <script src="{% static 'index.js' %}"></script> 
+  <script src="{% static 'realized_costtt.js' %}"></script> 
+  <!-- <script src="{% static 'index.js' %}"></script>  -->
   <script>
  document.addEventListener("DOMContentLoaded", function() {
     // İlk li elemanını seç
@@ -646,6 +657,47 @@ function filterTables() {
   
    
 
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+const inputs = document.querySelectorAll('.myInput');
+
+inputs.forEach(input => {
+  const dropdownId = input.getAttribute('data-dropdown');
+  const dropdown = document.getElementById(dropdownId);
+  const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+
+  input.addEventListener('focus', function () {
+    dropdown.classList.add('show');
+  });
+
+  input.addEventListener('blur', function () {
+    setTimeout(() => {
+      dropdown.classList.remove('show');
+    }, 200);
+  });
+
+  input.addEventListener('input', function () {
+    const filterText = input.value.toLowerCase();
+
+    dropdownItems.forEach(item => {
+      const itemText = item.textContent.toLowerCase();
+      if (itemText.includes(filterText)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+
+  dropdownItems.forEach(item => {
+    item.addEventListener('click', function () {
+      input.value = this.textContent;
+      dropdown.classList.remove('show');
+    });
+  });
+});
+});
 </script>
 
  
