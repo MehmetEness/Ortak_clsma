@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/*  Body  */
+
+.body-div{
+    display: flex;
+    height: 100vh;    
+}
+.right-menu{
+    width: calc(100% - 256px);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.lists{
+    overflow-y: scroll;
+}
+/*  Top Menu  */
+#edit-text{
+    font-size: 20px;
+    margin-right: 20px;
+}
+.top-menu{    
+    background-color: #18283b;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+    padding: 10px 0px;
+    height: 78px;
+}
+.top-menu span{
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
+    border-bottom: 2px solid #fff;
+    padding-bottom: 3px;
+    margin-left: 550px;
+}
+.top-menu button{
+    cursor: pointer;
+    background-color: #fff;
+    padding: 10px 25px;
+    border: none;
+    margin-right: 20px;
+    font-size: 16px;    
+    border: solid 1px rgba(0, 0, 0, .3);   
+    border-radius: 40px; 
+}
+.top-menu .button1{
+    border-right: solid 1px rgba(0, 0, 0, .3);      
+}
+.top-menu .button2{
+    background-color: #fff;
+}
+.top-menu .button-project-start{
+    background-color: #424f5c;
+    color: #fff;        
+    margin: 0px 15px;
+}
+
+
+/*---------------------*/
+.lists{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.lists a{
+    text-decoration: none;
+    color: #000;
+}
+#table thead th{
+    background: #848588;    
+    color: #000;
+}
+#table tbody td{
+    height: 50px;
+}
+.lists table{ 
+    width: 100%;
+    text-align: left;    
+    border-collapse:collapse;
+}
+.lists thead{
+    line-height: 70px;
+    width: 100%;
+}
+.lists th:first-child{
+    padding-left: 50px;
+    max-width: 450px;
+}
+.lists tbody{
+    line-height: 45px;
+}
+.lists td:first-child{
+    padding-left: 20px;
+}
+.lists tbody tr:nth-child(even){
+    background-color: #d1d1d6;
+}
+#column{
+    width: 3px;
+    left: 350px;
+    background: #000;
+    height: 100%;
+}
+         /*pop up*/
+         .window{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 11111111;
+        }
+        .modal-kapat{
+            position: absolute;
+            right: 11px;
+            top: 5px;
+            cursor: pointer;
+        }
+        .container{
+        position: relative;    
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 60px;
+        }
+        .projeBaslatContainer{
+            max-width: 1000px;
+        }
+        .container .title{
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .container .title::before{
+            content: '';
+            position: absolute;
+            height: 3px;
+            width: 30px;
+            left: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #71b7e6, #191970);
+        }
+        .container form .user-details{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+        .container .input-box{   
+            margin-bottom: 15px; 
+            width: calc(100% / 2 - 20px);
+        }
+        .projeBaslatContainer .input-box{   
+            margin-bottom: 15px; 
+            width: calc(100% / 3 - 20px);
+        }
+        .user-details .input-box .details{
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .user-details .input-box input,select{
+            height: 45px;
+            width: 100%;
+            outline: none;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+            padding-left: 15px;
+            font-size: 16px;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .user-details .input-box input,
+        .user-details .input-box input,
+        .user-details .input-box select{
+            border-color: #191970;
+        }
+        form .gender-details .gender-title{
+            font-size: 20px;
+            font-weight: 500;
+        }
+        form .gender-details .category{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin: 14px 0;    
+        }
+        .gender-details .category label{
+            display: flex;
+            align-items: center;
+        }
+        .gender-details .category .dot{
+            height: 18px;
+            width: 18px;
+            background: #d9d9d9;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 5px solid transparent;
+            transition: all .3s ease;
+        }
+         #dot-1:checked ~ .category label .one,
+         #dot-2:checked ~ .category label .two,
+         #dot-3:checked ~ .category label .three{
+            border-color: #d9d9d9;
+            background: #191970;
+         }
+         form input[type="radio"]{
+            display: none;
+         }
+         form .button{
+            height: 45px;
+            margin-top: 25px;
+            margin-bottom: 0;
+         }
+         form .button input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #191970);
+         }
+         form .button input:hover{
+            background: linear-gradient(-135deg, #71b7e6, #191970);
+         }            
+         .tesvik{
+            position: fixed;   
+            margin-top: 5px;
+            border: 1px solid ;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+            border-top: none;
+            width: 100%;
+            z-index: 1111;
+            background: #fff;
+            width: 300px;
+            
+         }
+         .arazi{
+            position: fixed;   
+            margin-top: 5px;
+            border: 1px solid ;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+            border-top: none;
+            width: 100%;
+            z-index: 1111;
+            background: #fff;
+            width: 300px;
+            
+         }
+        .optionsArazi,
+        .optionsTesvik{
+            color: #808080;
+            padding: 2px 16px;
+            width: 100%;
+            font-size: 16px;
+            list-style-type: none;
+            cursor: pointer;
+            
+         }
+         .options:hover{
+            background: rgba(0, 0, 0, 0.3);
+            color: #000;
+         }
+         .holder{
+            color: #808080;
+            padding: 9px 16px;
+            width: 100%;
+            font-size: 16px;
+            list-style-type: none;
+            cursor: pointer;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+         }
+         .holder-bold{
+            color: #000;
+            font-weight: 500;
+         }
+         .hide{
+            display: none;
+        }
+
+        /*    Dosya Seçme */
+input[type="file"] {
+    display: none;
+  }
+.file-input label {
+    display: block;
+    position: relative;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    color: #ffffff;
+    font-size: 1.12em;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    padding: 1.12em 0;
+    margin: auto;
+    border-radius: 0.31em;
+    cursor: pointer;
+  }
+.file-input div {
+    font-weight: 400;
+    text-align: center;
+    margin: 10px 0 10px 0;
+    font-size: 16px;
+  }
+ .file-input ul {
+    list-style-type: none;
+  }
+ .file-input  li {
+    font-size: 12px;
+    font-weight: 300;
+    background-color: #eff5ff;
+    color: #025bee;
+    margin-bottom: 5px;
+    padding: 5px 5px;
+    border-radius: 0.3em;
+    display: flex;
+    justify-content: space-between;
+  }

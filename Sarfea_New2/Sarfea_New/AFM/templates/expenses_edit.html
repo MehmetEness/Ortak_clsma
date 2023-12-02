@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+    {% load static %}
+    {% load custom_tags %}
+
+    {% block css_files %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+    <link rel="stylesheet" href="{% static 'all_style.css' %}">
+    <link rel="stylesheet" href="{% static 'details_projects.css' %}">
+    <link rel="stylesheet" href="{% static 'center.css' %}">
+
+
+    {% endblock %}
+    
+    {% block title %} Expenses Edit {% endblock %}
+    {% block content %} 
+<div class="body-div">
+    {% include 'partials/_left_nav_bar.html' %}
+<div class="right-menu">
+    <div class="nav-bar">
+        <div class="nav-span">
+            <div class="backBtn">
+                <a href="{% url 'realized_cost' project_name=expenses_edit.ProjectName_Expenses %}">
+                    <button id="backBtn" class="button-project">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </a>
+                <span>
+                    </span>
+            </div>
+            <span>{{expenses_edit.CompanyName_Expenses}}</span>
+            <span></span>
+        </div>
+    </div>
+    <div class="center">
+      <div class="container">
+          <div class="title">Gider Güncelle</div>
+          <form id="my-form" action="{% url 'expenses_edit' expenses_id=expenses_edit.id %}" method="post">
+            {% csrf_token %}
+            <div class="user-details"> 
+              <div style="display:none;" class="input-box" name="ProjectName_Expenses">
+                  <span class="details">Proje Adı</span>
+                  <input  name="ProjectName_Expenses" value="{{ expenses_edit.ProjectName_Expenses }}">
+                </div>
+                <div style="display:none;" class="input-box" name=" CompanyName_Expenses">
+                  <span class="details">Şirket Adı</span>
+                  <input  name=" CompanyName_Expenses" value=" {{expenses_edit.CompanyName_Expenses}} ">
+                </div>
+                <div class="input-box">
+                  <span class="details">Ödeme Yapılan Firma</span>
+                  <select required class="js-example-basic-single" name="CompanyName_Paying_Expenses" id="id_CompanyName_Paying_Expenses">
+                    {% for x in supplier %}
+                      {% if expenses_edit.CompanyName_Paying_Expenses == x.CompanyName_Supplier  %}
+                        <option value="{{x.id}}" selected>{{ expenses_edit.CompanyName_Paying_Expenses }}</option>
+                      {% endif %}
+                    {% endfor %}
+                    {% for x in supplier %}
+                      {% if expenses_edit.CompanyName_Paying_Expenses != x.CompanyName_Supplier  %}
+                        <option value="{{x.id}}">{{x.CompanyName_Supplier}}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="input-box">
+                  <span class="details">Ödeme Yapan Firma</span>
+                  <select name="CompanyName_FromPaymentMade_Expenses" id="id_CompanyName_FromPaymentMade_Expenses">
+                    {% for x in my_company %}
+                      {% if expenses_edit.CompanyName_FromPaymentMade_Expenses == x.MyCompanyName  %}
+                        <option value="{{x.id}}" selected>{{ expenses_edit.CompanyName_FromPaymentMade_Expenses }}</option>
+                      {% endif %}
+                    {% endfor %}
+                    {% for x in my_company %}
+                      {% if expenses_edit.CompanyName_FromPaymentMade_Expenses != x.MyCompanyName  %}
+                        <option value="{{x.id}}">{{x.MyCompanyName}}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="input-box">
+                  <span class="details">Gider Detayı</span>
+                  <select class="js-example-basic-single" name="ExpensDetails_Expenses" id="id_ExpensDetails_Expenses">
+                    {% for x in details %}
+                      {% if expenses_edit.ExpensDetails_Expenses == x.Detail %}
+                        <option value="{{x.id}}" selected>{{ expenses_edit.ExpensDetails_Expenses }}</option>
+                      {% endif %}
+                    {% endfor %}
+                    {% for x in details %}
+                      {% if expenses_edit.ExpensDetails_Expenses != x.Detail  %}
+                        <option value="{{x.id}}">{{x.Detail}}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Tutar (₺)</span>
+                    <input class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001" value="{{expenses_edit.Amount_Expenses}}">
+                </div>
+                <div class="input-box">
+                    <span class="details">Dolar Kuru (₺)</span>
+                    {{ edit_form.Dollar_Rate_Expenses }}
+                </div>
+                <div class="input-box">
+                  <span class="details">Banka</span>
+                  <select class="js-example-basic-single" name="Bank_Expenses" id="id_Bank_Expenses">
+                    {% for x in banks %}
+                      {% if expenses_edit.Bank_Expenses == x.BankName %}
+                        <option value="{{x.id}}" selected>{{ expenses_edit.Bank_Expenses }}</option>
+                      {% endif %}
+                    {% endfor %}
+                    {% for x in banks %}
+                      {% if expenses_edit.Bank_Expenses != x.BankName  %}
+                        <option value="{{x.id}}">{{x.BankName}}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Tarih</span>
+                    <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" id="id_Date_Expenses" type="date" name="Date_Expenses" value="{{ expenses_edit.Date_Expenses|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+                </div>
+                <div class="input-box">
+                  <span class="details">Kur Saati</span>
+                  <select name="" id="">
+                    <option value="">15:30'dan Önce</option>
+                    <option value="">15:30'dan Sonra</option>
+                  </select>
+              </div>
+              </div>
+              <div class="button">
+                <input id="project-create-btn" type="submit" value="Kaydet" />
+              </div>
+          </form>
+      </div>
+    </div>
+</div>
+</div>
+          
+  {% block js_files %} 
+  <script src="{% static 'client.js' %}"></script> 
+  <script>
+     var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
+    var amountInputReformatBtn = document.querySelector("#project-create-btn");
+    var form = document.querySelector("#my-form");
+    var deger;
+    
+    amountInputReformatBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    amountInputForFormat.value = clear(deger);
+    form.submit();
+    });  
+        
+    runEventListeners();
+    onPageLoad(amountInputForFormat);
+
+    function onPageLoad(x) {
+        var inputValue = x.value; 
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        x.value = formatValue;
+        deger = formatValue;
+    }
+
+    
+    function runEventListeners(){
+    amountInputForFormat.addEventListener("input", function(event) {
+        var inputValue = event.target.value;
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        amountInputForFormat.value = formatValue;
+        deger = formatValue;
+    });
+    }
+    function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
+      if(value != undefined){
+        var cleanString = value.replace(/[^0-9.]/g, '');
+        return cleanString;    // Çıktı: "123456.789"  
+    }else{
+        var  cleanString = 0;
+        return cleanString;
+    } 
+    }
+    
+    function format(number) {
+    var indexOfDot = number.indexOf('.');
+    
+    if (indexOfDot !== -1) {
+    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var decimalPart = number.slice(indexOfDot + 1);
+    return integerPart + '.' + decimalPart;
+    } else {
+    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return formattedNumber; 
+    }
+    }
+
+  </script>
+  
+  {% endblock %}
+
+  {% endblock %} 
+  

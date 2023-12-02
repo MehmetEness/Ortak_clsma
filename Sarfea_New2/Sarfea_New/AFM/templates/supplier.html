@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'tedarikci.css' %}">
+    <link rel="stylesheet" href="{% static 'all_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+{% endblock %}
+    {% block title %} Supplier {% endblock %}
+    {% block content %}
+  <div class="body-div">
+    <div class="window tedarikciWindow">
+      <div class="container">
+          <h3 id="tedarikci-modal" class="modal-kapat">X</h3>
+          <div class="title">Tedarikci Ekle</div>
+          <form action="{% url 'supplier' %}" method="post">
+            {% csrf_token %}
+            <div class="user-details"> 
+                <div class="input-box" name="CompanyName_Supplier">
+                  <span class="details">Firma Adı</span>
+                  {{ supplier_form.CompanyName_Supplier }}
+                </div>    
+                <div class="input-box" name="ContactPerson">
+                  <span class="details">Muhatap</span>
+                  {{ supplier_form.ContactPerson }}
+                </div>  
+                <div class="input-box" name="PhoneNumber">
+                  <span class="details">Telefon</span>
+                  {{ supplier_form.PhoneNumber }}
+                </div>    
+                <div class="input-box" name="Email">
+                  <span class="details">E-posta</span>
+                  {{ supplier_form.Email }}
+                </div>    
+                <div class="input-box" name="Location">
+                  <span class="details">Bölge</span>
+                  {{ supplier_form.Location }}
+                </div>          
+              </div>
+              <div class="button">
+                  <input type="submit" value="Kaydet"/>
+              </div>
+          </form>
+          {% for error in supplier_form.non_field_errors %}
+           <p style="color: red;">hata{{ error }}</p>
+          {% endfor %}
+      </div>
+  </div>
+
+  {% include 'partials/_left_nav_bar.html' %}
+      <div class="right-menu"> 
+        <div class="top-menu">
+          <span>TEDARİKÇİLER</span>
+          <div class="content">                      
+            <button class="button1">Sırala</button>
+            <button class="button1">Filitrele</button>    
+            <button id="tedarikci-ac" class="button2" >Tedarikçi Ekle</button>          
+          </div>
+        </div>
+
+        <div class="lists">         
+          <table id="table" class="table table-sortable">   
+            <thead>
+              <th>Firma Adı</th>
+              <th scope="col">Muhatap</th>
+              <th scope="col">Telefon</th>
+              <th scope="col">E-posta</th>
+              <th scope="col">Bölge</th>
+            </thead>  
+            <tbody id="tbody">  
+              {% for sup in supplier %}
+              <tr>
+                  <td><button type="button" class="edit-supplier-btn button2" style= "background: none; border:none;"><a href= "{% url 'supplier_edit' supplier_name=sup.CompanyName_Supplier %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ sup.CompanyName_Supplier }} </td>
+                  <td>{{ sup.ContactPerson }}</td>
+                  <td>{{ sup.PhoneNumber }} </td>
+                  <td>{{ sup.Email }}</td>
+                  <td>{{ sup.Location }}</td>
+              </tr>
+              {% endfor %}                                    
+            </tbody>
+          </table>            
+        </div>
+      </div>   
+  </div>
+
+{% block js_files %} 
+<script src="{% static 'tedarikci.js' %}"></script> 
+
+{% endblock %}
+{% endblock %}

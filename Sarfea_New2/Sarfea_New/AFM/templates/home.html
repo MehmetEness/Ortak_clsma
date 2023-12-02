@@ -1,0 +1,33 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block css_files %} 
+
+<link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}"> 
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="{% static 'home_style.css' %}">
+{% endblock %}
+
+{% block title %} Home {% endblock %}
+{% block content %}   
+<div class="body-div">
+{% include 'partials/_left_nav_bar.html' %}
+
+<div class="right-menu">
+  <div class="up">
+    <div style="background-image: url('{% static 'images/main1.png' %}');" class="projeler card"></div>
+    <div style="background-image: url('{% static 'images/main2.png' %}');" class="sales card"></div>
+    <div style="background-image: url('{% static 'images/main3.png' %}');" class="stock card"></div>
+  </div>
+  <div class="down">
+    <div style="background-image: url('{% static 'images/main4.png' %}');" class="business-maintenance card"></div>
+    <div style="background-image: url('{% static 'images/main5.png' %}');" class="reporting card"></div>
+  </div>
+</div>
+</div>
+
+
+
+   
+    {% endblock %}

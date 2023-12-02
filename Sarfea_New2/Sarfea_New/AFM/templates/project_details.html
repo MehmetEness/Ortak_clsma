@@ -1,0 +1,211 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block css_files %} 
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+        <link
+            rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+            <link rel="stylesheet" href="{% static 'details_projects.css' %}">
+            <link rel="stylesheet" href="{% static 'all_style.css' %}">
+            {% endblock %}
+
+            {% block title %} Project Details {% endblock %}
+            {% block content %} 
+        <div class="body-div">
+            {% include 'partials/_left_nav_bar.html' %}
+        <div class="right-menu">
+            <div class="nav-bar">
+                <div class="nav-span">
+                    <div class="backBtn">
+                        <a href="{% url 'projects' %}">
+                            <button id="backBtn" class="button-project">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                        </a>                                                  
+                    </div>                    
+                    <span> {{project.CompanyName}}</span>
+                    <span>{{project.ProjectName}}</span>
+                    <span id="last-span">{{project.CompanyUndertakingWork}}</span>                   
+                 </div>
+            </div>
+
+            <div class="main">
+                <div class="row">
+                    <div style="background-image: url('{% static 'images/konum.png' %}');" class="column-2 card">
+                      <div class="span">
+                        <span>Konum</span>
+                        {% if project.Location %}
+                        <span>{{project.Location}}</span>
+                        {% endif %}
+
+                    </div></div>
+                      <div style="background-image:url('{% static 'images/arka7.png' %}');" class="column-2 card">
+                          <div class="span"><span>AC Güç</span><span>{{project.AC_Power}}kWe</span></div></div>
+                      <div style="background-image:url('{% static 'images/arka8.png' %}');" class="column-2 card">
+                          <div class="span"><span>DC Güç</span><span>{{project.DC_Power}}kWp</span></div></div>
+                      <div style="background-image:url('{% static 'images/arka9.png' %}');" class="column-2 card">
+                          <div class="span"><span>İş Bedeli</span><span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span></div>
+                          <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_name=project.ProjectName %}">a</a>
+                      </div>
+                      <div style="background-image:url('{% static 'images/arazi-cati.png' %}');" class="column-2 card">
+                          <div class="span"><span>{{project.Terrain_Roof}}</span></div></div>
+                  </div>
+                  <div class="row">
+                      <div style="background-image:url('{% static 'images/arka6.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/arka5.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/arka1.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div id="gerceklesenMaliyet" style="background-image:url('{% static 'images/arka4.png' %}');"  class="column-2 card">
+                          <div class="span"><span>Gerçekleşen Maliyet</span></div>
+                          <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_name=project.ProjectName %}"></a>
+                      </div>
+                      <div style="background-image:url('{% static 'images/arka2.png' %}');" class="column-2 card">
+                          <div class="span">
+                            {% if project.Incentive %}
+                                <span>Teşvikli</span>
+                            {% else %}
+                                <span>Teşviksiz</span>
+                            {% endif %}
+                          </div>
+                      </div>
+                 </div>
+                  <div class="row">
+                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                          <div class="span"><span></span></div></div>
+                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                          <div class="span"><span>{{project.StartDate|date:"d/m/Y"}}</span><span>{{project.FinishDate|date:"d/m/Y"}}</span></div></div>                    
+                  </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var realized_cost = document.querySelector("#realized_cost_span");
+    format(realized_cost);    
+    function format(number) {
+        var indexOfDot = number.textContent.indexOf('.');
+        
+        if(number.textContent != "None $"){
+            if (indexOfDot !== -1) {
+                var integerPart = number.textContent.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                var decimalPart = number.textContent.slice(indexOfDot + 1);
+                realized_cost.textContent = integerPart + '.' + decimalPart;
+            } else {
+                var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                realized_cost.textContent = formattedNumber; 
+            }
+        }else{
+            realized_cost.textContent = "0 $"; 
+        }
+    }
+    </script>
+    {% endblock %}
+
+<!--
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<link rel="stylesheet" type="text/css" href="{% static 'details_projects.css' %}"> 
+
+
+
+  <section><div class="left-nav-bar"> 
+    <div id="menu-top-radius"></div>
+    <ul class="first-ul">  
+      <li>
+        <a href="{% url 'home' %}">Ana Sayfa</a>
+      </li>
+      <li class="left-li">
+        <a href="{% url 'projects' %}">Projeler</a>
+      </li>
+      <li class="left-li">
+        <a href="">Satış Teklif</a>
+      </li>
+      <li class="left-li">
+        <a href="">Stok</a>
+      </li>
+      <li class="left-li">
+        <a href="">İşletme Bakım</a>
+      </li>
+      <li class="left-li">
+        <a  href="">Raporlama</a>
+      </li>
+    </ul>
+    <div id="menu-bottom-radius"></div>
+  </div></section>
+    
+    <div class="container">
+        <div class="nav-bar">
+            
+            <div class="nav-span">
+                <div class="backBtn">
+                  <a href="{% url 'projects' %}"><button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button></a>
+                  <span>{{ project.CompanyName }}</span>
+                </div>                
+                <span>Devan Eden Proje Detayı</span>
+                <span>{{ project.CompanyUndertakingWork }}</span>
+            </div>
+        </div>        
+        
+
+
+        <div class="main">
+        <div class="row">
+            <div class="column-1"><span >Konum</span>
+        
+              <span class ="title">{{ project.Location }}</span></div>
+            <div class="column-1"><span >AC Gücü</span><span class ="title">{{project.AC_Power}} kWe</span></div>
+            <div class="column-1"><span >DC Gücü</span><span class ="title">{{project.DC_Power}}kWp</span></div>
+            <div class="column-1"><span >İş Bedeli - KDV Hariç ($)</span><span class ="title">{{ project.Cost_NotIncludingKDV }} $</span></div>
+            <div class="column-1"><span >Arazi/Çatı</span><span class ="title">{{project.Terrain_Roof}}</span></div>
+            <div class="column-1"><span >KDV Oranı (%)</span><span class ="title">{{ project.KDV_Rate }} %</span></div>
+        </div>
+        <div class="row">
+            <div class="column-2"><span >Hesaplanan Maliyet - KDV Hariç ($)</span><span class ="title">{{project.CalculatedCost_NotIncludingKDV}} $</span></div>
+            <div class="column-2"><span>Hesaplanan Maliyet Tablo</span></div>
+            <div class="column-2"><span >Gerçekleşen Maliyet - KDV Hariç ($)</span><span class ="title">{{project.RealizedCost_NotIncludingKDV}} $</span></div>
+            <div id="gerceklesenMaliyet" class="column-2"><span>Gerçekleşen Maliyet Tablo</span>
+            <button class ="title"><a href="{% url 'realized_cost' company_name=project.CompanyName %}">Detaylar</a></button>
+            </div>
+            <div class="column-2">
+              <span >Teşvikli (Evet/Hayır)</span>
+              <span class ="title">
+                
+                  {% if project.Incentive %}
+                      Evet
+                  {% else %}
+                      Hayır
+                  {% endif %}
+              </span>
+          </div>
+        </div>
+        <div class="row">
+            <div class="column-1"><span >Hesaplanan Kar/Zarar ($)</span><span class ="title">{{project.CalculatedProfit_Loss}} $</span></div>
+            <div class="column-1"><span >Gerçekleşen Kar/Zarar ($)</span><span class ="title">{{project.RealizedProfit_Loss}} $</span></div>
+            <div class="column-1"><span >Hesaplanan Kar Oranı (%)</span><span class ="title">{{project.CalculatedProfitRate}} %</span></div>
+            <div class="column-1"><span >Gerçekleşen Kar Oranı (%)</span><span class ="title">{{project.RealizedProfitRate}} %</span></div>
+            <div class="column-1"><span >Başlama Tarihi</span><span class ="title">{{project.StartDate}}</span></div>
+            <div class="column-1"><span >Bitirme Tarihi</span><span class ="title">{{project.FinishDate}}</span></div>            
+        </div>
+    </div>
+    </div>
+    

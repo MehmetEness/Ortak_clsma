@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+    {% load static %}
+    {% load custom_tags %}
+
+    {% block css_files %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+    <link rel="stylesheet" href="{% static 'all_style.css' %}">
+    <link rel="stylesheet" href="{% static 'details_projects.css' %}">
+    <link rel="stylesheet" href="{% static 'center.css' %}">
+
+    {% endblock %}
+    
+    {% block title %} Income Edit {% endblock %}
+    {% block content %} 
+<div class="body-div">
+    {% include 'partials/_left_nav_bar.html' %}
+<div class="right-menu">
+    <div class="nav-bar">
+        <div class="nav-span">
+            <div class="backBtn">
+                <a href="{% url 'income_details' project_name=income_edit.ProjectName_Incomes %}">
+                    <button id="backBtn" class="button-project">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </a>
+                <span>
+                    </span>
+            </div>
+            <span>{{income_edit.ProjectName_Incomes}}</span>
+            <span></span>
+        </div>
+    </div>
+    <div class="center">
+      <div class="container">
+          <div class="title">Gelir Güncelle</div>
+          <form id="my-form" action="{% url 'income_edit' income_id=income_edit.id %}" method="post">
+            {% csrf_token %}
+          <div class="user-details">
+
+              <div style="display:none;" class="input-box" name="ProjectName_Incomes">
+                <span class="details">Proje Adı</span>
+                <input  name="ProjectName_Incomes" value="{{ income_edit.ProjectName_Incomes }}">
+              </div>
+
+              <div class="input-box">
+                <span class="details">Alıcı Firma</span>
+                <select name="CompanyName_ReceivePayment_Incomes" id="id_CompanyName_ReceivePayment_Incomes">
+                  {% for x in my_company %}
+                    {% if income_edit.CompanyName_ReceivePayment_Incomes == x.MyCompanyName  %}
+                      <option value="{{x.id}}" selected>{{ income_edit.CompanyName_ReceivePayment_Incomes }}</option>
+                    {% endif %}
+                  {% endfor %}
+                  {% for x in my_company %}
+                    {% if income_edit.CompanyName_ReceivePayment_Incomes != x.MyCompanyName  %}
+                      <option value="{{x.id}}">{{x.MyCompanyName}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="input-box">
+                <span class="details">Ödeyen Firma</span>
+                <select required class="js-example-basic-single" name="CompanyName_Pay_Incomes" id="id_CompanyName_Pay_Incomes">
+                  {% for x in client %}
+                    {% if income_edit.CompanyName_Pay_Incomes == x.CompanyName_Clients  %}
+                      <option value="{{x.id}}" selected>{{ income_edit.CompanyName_Pay_Incomes }}</option>
+                    {% endif %}
+                  {% endfor %}
+                  {% for x in client %}
+                    {% if income_edit.CompanyName_Pay_Incomes != x.CompanyName_Clients  %}
+                      <option value="{{x.id}}">{{x.CompanyName_Clients}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="input-box" name="Amount_Incomes">
+                  <span class="details">Alınan Miktar (₺)</span>
+                  <input class="coc-input" type="text" name="Amount_Incomes" id="id_Amount_Incomes" step="0.0001" value="{{income_edit.Amount_Incomes}}">
+              </div>
+              <div class="input-box" name="Dollar_Rate_Incomes">
+                  <span class="details">Dolar Kuru (₺)</span>
+                  {{ edit_form.Dollar_Rate_Incomes }}
+              </div>
+            
+              <div class="input-box" name="PaymentType_Incomes">
+                <span class="details">Ödeme Türü<button type="button" id="last-date-add-btn" class="last-date-add-btn"><i class="fa-solid fa-plus"></i></button><button style="display:none;" type="button" id="last-date-delete-btn" class="last-date-delete-btn"><i class="fa-solid fa-minus"></i></button></span>
+                {{ edit_form.PaymentType_Incomes }}
+              </div>
+              <div class="input-box" id="chek_date_box">
+                <span class="details">Tarih </span>
+                <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="ChekDate_Incomes" id="id_ChekDate_Incomes" value="{{ income_edit.ChekDate_Incomes|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+              </div>
+              <div style="display: none;" class="input-box chek-last-date-box" >
+                <span class="details">Çek Son Kullanma Tarihi </span>
+                <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes" value="{{ income_edit.LastChekDate_Incomes|date:'Y-m-d' }}"  min='2000-01-01' max='2099-01-01' />
+            </div>   
+            <div class="input-box">
+                <span class="details">Kur Saati</span>
+                <select name="" id="">
+                  <option value="">15:30'dan Önce</option>
+                  <option value="">15:30'dan Sonra</option>
+                </select>
+            </div> 
+        </div>      
+          <div class="button">  
+            <input id="project-create-btn" type="submit" value="Kaydet">
+          </div>
+          </form>
+      </div>
+    </div>  
+</div>
+</div>
+          
+  {% block js_files %} 
+  <script src="{% static 'client.js' %}"></script> 
+  <script>
+    var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
+    var amountInputReformatBtn = document.querySelector("#project-create-btn");
+    var form = document.querySelector("#my-form");
+    var deger;
+    
+    amountInputReformatBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    amountInputForFormat.value = clear(deger);
+    form.submit();
+    });          
+
+    runEventListeners();
+    onPageLoad(amountInputForFormat);
+
+    function onPageLoad(x) {
+        var inputValue = x.value; 
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        x.value = formatValue;
+        deger = formatValue;
+    }
+
+
+
+    function runEventListeners(){
+    amountInputForFormat.addEventListener("input", function(event) {
+        var inputValue = event.target.value;
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        amountInputForFormat.value = formatValue;
+        deger = formatValue;
+    });
+    }
+    function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
+      if(value != undefined){
+        var cleanString = value.replace(/[^0-9.]/g, '');
+        return cleanString;    // Çıktı: "123456.789"  
+    }else{
+        var  cleanString = 0;
+        return cleanString;
+    }   
+    }
+    
+    function format(number) {
+    var indexOfDot = number.indexOf('.');
+    
+    if (indexOfDot !== -1) {
+    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var decimalPart = number.slice(indexOfDot + 1);
+    return integerPart + '.' + decimalPart;
+    } else {
+    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return formattedNumber; 
+    }
+    }
+
+    var lastDateAddBtn = document.getElementById("last-date-add-btn");
+    var lastDateDeleteBtn = document.getElementById("last-date-delete-btn");
+    var chekLastDateBox2 = document.querySelector('.chek-last-date-box');
+
+    document.addEventListener("DOMContentLoaded", function() {
+        lastDateDeleteBtn.addEventListener("click", function() {
+                chekLastDateBox2.style.display = "none";
+                lastDateAddBtn.style.display = "block";
+                lastDateDeleteBtn.style.display = "none";
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        lastDateAddBtn.addEventListener("click", function() {
+            if (chekLastDateBox2.style.display === "none") {
+                chekLastDateBox2.style.display = "block";
+                lastDateAddBtn.style.display = "none";
+                lastDateDeleteBtn.style.display = "block";
+            }
+        });
+    });
+  </script>
+  
+  {% endblock %}
+
+  {% endblock %} 
+  
