@@ -5,10 +5,11 @@
     {% block css_files %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-    <link rel="stylesheet" href="{% static 'projects_style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'projects_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
+    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     {% endblock %}
     
@@ -82,7 +83,7 @@
 </div>
           
   {% block js_files %} 
-  <script src="{% static 'client.js' %}"></script> 
+  <!-- <script src="{% static 'client.js' %}"></script>  -->
   <script>
     var companyNameInput = document.getElementById("id_CompanyName_Supplier_New");
     var companyNameError = document.getElementById("companyNameError");
@@ -94,6 +95,46 @@
             companyNameError.textContent = "";
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+  const inputs = document.querySelectorAll('.myInput');
+
+  inputs.forEach(input => {
+    const dropdownId = input.getAttribute('data-dropdown');
+    const dropdown = document.getElementById(dropdownId);
+    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+
+    input.addEventListener('focus', function () {
+      dropdown.classList.add('show');
+    });
+
+    input.addEventListener('blur', function () {
+      setTimeout(() => {
+        dropdown.classList.remove('show');
+      }, 200);
+    });
+
+    input.addEventListener('input', function () {
+      const filterText = input.value.toLowerCase();
+
+      dropdownItems.forEach(item => {
+        const itemText = item.textContent.toLowerCase();
+        if (itemText.includes(filterText)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function () {
+        input.value = this.textContent;
+        dropdown.classList.remove('show');
+      });
+    });
+  });
+});
 </script>
   
   {% endblock %}

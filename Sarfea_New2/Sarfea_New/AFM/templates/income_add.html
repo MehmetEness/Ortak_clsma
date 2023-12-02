@@ -4,48 +4,12 @@
     {% block css_files %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-    <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
     <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
-    <style>
-  
-        .dropdown-container {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        }
-
-       
-        .dropdown-content {
-            width: 100%;
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        border: solid 1px #191970;
-        border-bottom-width: 2px;
-        border-radius: 5px;
-        min-width: 200px; 
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        }
-
-        .dropdown-item {
-        display: block;
-        padding: 12px 16px;
-        cursor: pointer;
-        }
-
-        .dropdown-item:hover {
-        background-color: #f1f1f1;
-        }
-
-        .show {
-        display: block;
-        }
-
-    </style>
+   <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     {% endblock %}
     
@@ -136,13 +100,18 @@
                    </div>
                  
                    <div class="input-box" name="PaymentType_Incomes">
-                    <span id="payment_type_label" class="details">Ödeme Türü<button type="button" id="last-date-add-btn" class="last-date-add-btn"><i class="fa-solid fa-plus"></i></button><button style="display:none;" type="button" id="last-date-delete-btn" class="last-date-delete-btn"><i class="fa-solid fa-minus"></i></button></span>
+                    <span id="payment_type_label" class="details">Ödeme Türü</span>
                     {{ incomes_form.PaymentType_Incomes }}
                    </div>
                    <div class="input-box" id="chek_date_box">
                      <span class="details">Tarih </span>
                      <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="ChekDate_Incomes" id="id_ChekDate_Incomes"  min='2000-01-01' max='2099-01-01'>
                    </div>
+
+                   <div style="display: none;" class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
+                    <span class="details">Çek Son Kullanma Tarihi </span>
+                    <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"  min='2000-01-01' max='2099-01-01'>
+                 </div>   
                    
                    <div class="input-box">
                       <span class="details">Kur Saati</span>
@@ -151,10 +120,7 @@
                          <option value="">15:30'dan Sonra</option>
                       </select>
                    </div> 
-                   <div style="display: none;" class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
-                    <span class="details">Çek Son Kullanma Tarihi </span>
-                    <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"  min='2000-01-01' max='2099-01-01'>
-                 </div>   
+                   
                    
                 </div>
                     <div class="button">
@@ -171,91 +137,61 @@
       <script src="{% static 'income_add.js' %}"></script> 
       <script>
 
-        $(document).ready(function() {
-          // Hata mesajını 3 saniye sonra kaldır
-          setTimeout(function() {
-              $(".error-container").fadeOut(500, function() {
-                  $(this).remove();
-              });
-          }, 2000);
-        });
+     
         
-          document.addEventListener('DOMContentLoaded', function () {
-            const input = document.getElementById('id_CompanyName_Pay_Incomes');
-            const dropdown = document.getElementById('myDropdown');
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
+document.addEventListener('DOMContentLoaded', function () {
+  const inputs = document.querySelectorAll('.myInput');
+
+  inputs.forEach(input => {
+    const dropdownId = input.getAttribute('data-dropdown');
+    const dropdown = document.getElementById(dropdownId);
+    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+
+    input.addEventListener('focus', function () {
+      dropdown.classList.add('show');
+    });
+
+    input.addEventListener('blur', function () {
+      setTimeout(() => {
+        dropdown.classList.remove('show');
+      }, 200);
+    });
+
+    input.addEventListener('input', function () {
+      const filterText = input.value.toLowerCase();
+
+      dropdownItems.forEach(item => {
+        const itemText = item.textContent.toLowerCase();
+        if (itemText.startsWith(filterText)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function () {
+        input.value = this.textContent;
+        dropdown.classList.remove('show');
+      });
+    });
+  });
+});
           
-            input.addEventListener('focus', function () {
-              dropdown.classList.add('show');
-            });
           
-            input.addEventListener('blur', function () {
-              // Input focus alanı dışına çıkınca dropdown menüyü gizle
-              setTimeout(() => {
-                dropdown.classList.remove('show');
-              }, 200);
-            });
-          
-            input.addEventListener('input', function () {
-              const filterText = input.value.toLowerCase();
-          
-              dropdownItems.forEach(item => {
-                const itemText = item.textContent.toLowerCase();
-                if (itemText.startsWith(filterText)) {
-                  item.style.display = 'block';
-                } else {
-                  item.style.display = 'none';
-                }
-              });
-            });
-          
-            dropdownItems.forEach(item => {
-              item.addEventListener('click', function () {
-                input.value = this.textContent;
-                dropdown.classList.remove('show');
-              });
-            });
-          });
-          
-          var lastDateAddBtn = document.getElementById("last-date-add-btn");
-          var lastDateDeleteBtn = document.getElementById("last-date-delete-btn");
           var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
-          var chekLastDateBox2 = document.querySelector('.chek-last-date-box');
-
-          document.addEventListener("DOMContentLoaded", function() {
-              lastDateDeleteBtn.addEventListener("click", function() {
-                      chekLastDateBox2.style.display = "none";
-                      lastDateAddBtn.style.display = "block";
-                      lastDateDeleteBtn.style.display = "none";
-              });
-          });
-          document.addEventListener("DOMContentLoaded", function() {
-              lastDateAddBtn.addEventListener("click", function() {
-                      lastDateDeleteBtn.style.display = "block";
-                      chekLastDateBox2.style.display === "none"
-                      chekLastDateBox2.style.display = "block";
-                      lastDateAddBtn.style.display = "none";
-                      
-                  
-              });
-          });
-          
         document.addEventListener('DOMContentLoaded', function () {
-        const mySelect = document.getElementById('mySelect');
-
-        // Seçenek değiştiğinde kontrol fonksiyonunu çağır
+        const mySelect = document.getElementById('id_PaymentType_Incomes');
         mySelect.addEventListener('change', controlFunction);
 
         function controlFunction() {
-        // Seçili olan option'un değerini al
         const selectedOption = mySelect.options[mySelect.selectedIndex].text;
 
-        // Eğer seçili olan option içinde "Çek" kelimesi varsa işlemi gerçekleştir
         if (selectedOption.includes('Çek')) {
-          console.log('Çek içeren bir seçenek seçildi.');
-          // Burada başka işlemler gerçekleştirebilirsiniz
+          chekLastDateBox.style.display = "block";
         } else {
-          console.log('Çek içeren bir seçenek seçilmedi.');
+          chekLastDateBox.style.display = "none";
         }
         }
         });

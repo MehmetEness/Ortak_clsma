@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
     <link rel="stylesheet" type="text/css" href="{% static 'client.css' %}"> 
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
+    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
   </head>
 <body>
   <div class="body-div">
@@ -33,7 +34,14 @@
                 </div>    
                 <div class="input-box" name="CompanyName">
                   <span class="details">Bölge</span>
-                  {{ client_form.Location }}
+                  <div class="dropdown-container">
+                    <input value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
+                  <div id="dropdown1" class="dropdown-content">
+                        {% for x in locations %}
+                            <span value="{{x.id}}" class="dropdown-item">{{x.Location}}</span>
+                        {% endfor %}
+                  </div>
+                </div>
                 </div>          
               </div>
               <div class="button">
@@ -80,7 +88,48 @@
   </div>
           
   {% block js_files %} 
-  <script src="{% static 'client.js' %}"></script> 
+  <script src="{% static 'clientt.js' %}"></script> 
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+  const inputs = document.querySelectorAll('.myInput');
+
+  inputs.forEach(input => {
+    const dropdownId = input.getAttribute('data-dropdown');
+    const dropdown = document.getElementById(dropdownId);
+    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+
+    input.addEventListener('focus', function () {
+      dropdown.classList.add('show');
+    });
+
+    input.addEventListener('blur', function () {
+      setTimeout(() => {
+        dropdown.classList.remove('show');
+      }, 200);
+    });
+
+    input.addEventListener('input', function () {
+      const filterText = input.value.toLowerCase();
+
+      dropdownItems.forEach(item => {
+        const itemText = item.textContent.toLowerCase();
+        if (itemText.includes(filterText)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function () {
+        input.value = this.textContent;
+        dropdown.classList.remove('show');
+      });
+    });
+  });
+});
+  </script>
   
   {% endblock %}
   {% endblock %}
