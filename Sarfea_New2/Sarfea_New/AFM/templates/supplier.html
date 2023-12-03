@@ -128,7 +128,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';

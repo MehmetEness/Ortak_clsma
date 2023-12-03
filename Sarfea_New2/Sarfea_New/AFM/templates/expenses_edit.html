@@ -154,7 +154,7 @@
 </div>
           
   {% block js_files %} 
-  <script src="{% static 'client.js' %}"></script> 
+  <!-- <script src="{% static 'client.js' %}"></script>  -->
   <script>
      var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
@@ -234,7 +234,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';

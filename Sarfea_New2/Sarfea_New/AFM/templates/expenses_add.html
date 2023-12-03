@@ -126,7 +126,7 @@
                 </div>
                 
                     <div class="button">
-                    <input id="project-create-btn" type="submit" value="Gider" />
+                    <input id="project-create-btn" type="submit" value="Gider Ekle" />
                     </div>
             </form>
         </div>
@@ -249,7 +249,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';

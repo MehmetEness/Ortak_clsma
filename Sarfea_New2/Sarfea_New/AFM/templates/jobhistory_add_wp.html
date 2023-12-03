@@ -44,7 +44,7 @@
                 <div style="display:none;" class="input-box" id="ProjectName_JobHistoryInput">
                     <span class="details">Proje Adı</span>
                     <div class="dropdown-container">
-                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
+                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" placeholder="Proje Adını Seçiniz">
                       
                   </div>
                   </div>
@@ -222,7 +222,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';

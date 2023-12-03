@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     {% endblock %}
@@ -44,14 +44,14 @@
                    <div style="display:none;" class="input-box" id="ProjectName_IncomesInput">
                     <span class="details">Proje Adı</span>
                     <div class="dropdown-container">
-                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
+                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes" placeholder="Proje Adını Seçiniz">
                       
                   </div>
                   </div>
                    <div class="input-box">
                     <span class="details">Ödeme Yapan Firma<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
-                        <input type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
+                        <input type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                         {% if incomes_form.CompanyName_Pay_Incomes.errors %}
                                 <div class="error-container">
                                     <span class="error-triangle"></span>
@@ -62,7 +62,7 @@
                                     </ul>
                                 </div>
                             {% endif %}
-                      <div id="dropdown2" class="dropdown-content">
+                      <div id="dropdown1" class="dropdown-content">
                             {% for x in client %}
                                 <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Clients}}</span>
                             {% endfor %}
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function controlFunction() {
         const selectedOption = mySelect.options[mySelect.selectedIndex].text;
 
-        if (selectedOption.includes('Çek')) {
+        if (selectedOption.startsWith('Çek')) {
           chekLastDateBox.style.display = "block";
         } else {
           chekLastDateBox.style.display = "none";

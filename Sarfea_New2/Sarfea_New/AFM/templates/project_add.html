@@ -178,7 +178,7 @@
         {% block js_files %} 
             <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
             <script src="{% static 'index.js' %}"></script> 
-            <script src="{% static 'project_add.js' %}"></script> 
+            <!-- <script src="{% static 'project_add.js' %}"></script>  -->
 
             <script>
                   
@@ -275,7 +275,7 @@
 
                     dropdownItems.forEach(item => {
                         const itemText = item.textContent.toLowerCase();
-                        if (itemText.includes(filterText)) {
+                        if (itemText.startsWith(filterText)) {
                         item.style.display = 'block';
                         } else {
                         item.style.display = 'none';

@@ -1,9 +1,9 @@
-document.getElementById("gelir-ac").addEventListener("click", function(){
-  document.querySelector(".gelirWindow").style.display = "flex";    
-});
-document.getElementById("gelir-modal").addEventListener("click", function(){
-  document.querySelector(".gelirWindow").style.display = "none";
-});
+// document.getElementById("gelir-ac").addEventListener("click", function(){
+//   document.querySelector(".gelirWindow").style.display = "flex";    
+// });
+// document.getElementById("gelir-modal").addEventListener("click", function(){
+//   document.querySelector(".gelirWindow").style.display = "none";
+// });
 
 /* Dosya ekle */ 
 

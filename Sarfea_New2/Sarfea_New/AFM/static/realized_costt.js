@@ -9,11 +9,16 @@ let rightTableResult;
     let rightTotalUSD = document.getElementById("sagTableToplamUSD");  
     let genaralTotalTL = document.getElementById("genelToplamTL");
     let generalTotalUSD = document.getElementById("genelToplamUSD"); 
+
+    let T_leftTotalTL = document.getElementById("solTotalTableToplamTL");
+    let T_leftTotalUSD = document.getElementById("solTotalTableToplamUSD");  
+    let T_rightTotalTL = document.getElementById("sagTotalTableToplamTL");
+    let T_rightTotalUSD = document.getElementById("sagTotalTableToplamUSD"); 
     
     
     let leftTable = document.querySelector("#table");      
     let rightTable = document.querySelector("#table-2"); 
-
+    let totalTable = document.querySelector("#total-cost-table"); 
 
 /*  Search Box  */
 document.querySelector('.icon').onclick = function(){
@@ -23,11 +28,11 @@ document.querySelector('.search').classList.toggle('active')
 
 
 //-------------------
-document.getElementById("firma-add-btn").addEventListener("click", function () {
+document.getElementById("paying-firma-add-btn-2").addEventListener("click", function () {
   console.log("firma add");
   document.querySelector(".payingFirmaAddWindow").style.display = "flex";
 });
-document.getElementById("firma-add-btn2").addEventListener("click", function () {
+document.getElementById("paying-firma-add-btn-1").addEventListener("click", function () {
   console.log("firma add2");
   document.querySelector(".payingFirmaAddWindow").style.display = "flex";
 });
@@ -39,59 +44,6 @@ document.getElementById("payingFirmaAdd-modal").addEventListener("click", functi
 
 
 
-document.getElementById("gider-ac").addEventListener("click", function(){
-    document.querySelector(".giderWindow").style.display = "flex";
-   
-    if(document.querySelector(".isWindow").style.display == "flex"){
-        document.querySelector(".isWindow").style.display = "none";
-    }
-});
-document.getElementById("gider-modal").addEventListener("click", function(){
-    document.querySelector(".giderWindow").style.display = "none";
-});
-
-
-document.getElementById("is-ac").addEventListener("click", function(){
-    document.querySelector(".isWindow").style.display = "flex";
-    if(document.querySelector(".giderWindow").style.display == "flex"){
-        document.querySelector(".giderWindow").style.display = "none";
-    }
-});
-document.getElementById("is-modal").addEventListener("click", function(){
-    document.querySelector(".isWindow").style.display = "none";
-});
-
-
-//-----
-document.getElementById("head-gider-ac").addEventListener("click", function(){
-document.querySelector(".giderWindow").style.display = "flex";
-
-if(document.querySelector(".isWindow").style.display == "flex"){
-    document.querySelector(".isWindow").style.display = "none";
-}
-});
-document.getElementById("gider-modal").addEventListener("click", function(){
-document.querySelector(".giderWindow").style.display = "none";
-});
-
-document.getElementById("is-modal").addEventListener("click", function(){
-document.querySelector(".isWindow").style.display = "none";
-})
-//-----
-document.getElementById("gider-modal").addEventListener("click", function(){
-document.querySelector(".giderWindow").style.display = "none";
-});
-
-
-document.getElementById("head-is-ac").addEventListener("click", function(){
-document.querySelector(".isWindow").style.display = "flex";
-if(document.querySelector(".giderWindow").style.display == "flex"){
-    document.querySelector(".giderWindow").style.display = "none";
-}
-});
-document.getElementById("is-modal").addEventListener("click", function(){
-document.querySelector(".isWindow").style.display = "none";
-});
 
 /*  Total Maliyet Tablosu   */
 document.getElementById("toplam-maliyet").addEventListener("click", function(){       
@@ -103,6 +55,51 @@ for(let index of view2){
 }
 });
 
+/****************   Total Table Topla   ***** */
+totalTableTopla(totalTable);
+function totalTableTopla(table){
+    let leftTotalTLFunction=0.0;
+    let leftTotalUSDFunction=0.0;
+    let rightTotalTLFunction=0.0;
+    let rightTotalUSDFunction=0.0;
+  
+    const dataRows = table.querySelectorAll("tbody tr");
+    dataRows.forEach(row => {
+        const cells = row.querySelectorAll("td"); 
+        if (window.getComputedStyle(row).getPropertyValue('display') !== 'none') {
+         const cells = row.querySelectorAll("td");
+         if(cells[1].textContent != "NaN"){
+            leftTotalTLFunction += birimSil(cells[1].textContent);
+          }
+          if(cells[2].textContent != "NaN"){
+            leftTotalUSDFunction += birimSil(cells[2].textContent);
+          }
+          if(cells[3].textContent != "NaN"){
+            rightTotalTLFunction += birimSil(cells[3].textContent);
+            }
+            if(cells[4].textContent != "NaN"){
+            rightTotalUSDFunction += birimSil(cells[4].textContent);
+            }
+     }
+    });
+    leftTotalUSDFunction = parseFloat(leftTotalUSDFunction.toFixed(4))
+    leftTotalTLFunction = parseFloat(leftTotalTLFunction.toFixed(4))
+    rightTotalUSDFunction = parseFloat(rightTotalUSDFunction.toFixed(4))
+    rightTotalTLFunction = parseFloat(rightTotalTLFunction.toFixed(4))
+    
+    T_leftTotalTL.textContent =  formatNumber(leftTotalTLFunction) + "₺";
+    T_leftTotalUSD.textContent = formatNumber(leftTotalUSDFunction) + "$"; 
+    T_rightTotalTL.textContent = formatNumber(rightTotalTLFunction) + "₺"; 
+    T_rightTotalUSD.textContent = formatNumber(rightTotalUSDFunction) + "$";
+
+  }
+  /* Gelen verinin birimini silip int veren fonksiyon */
+  
+  function birimSil(inputString) {
+    const withoutSymbols = inputString.replace(/₺|\$|\,/g, "");
+    const number = parseFloat(withoutSymbols.replace());
+    return number;
+  }
 
 //--------------------------------------------  /* Toplama İşlemi */ --------
 function tableTopla(table){
@@ -110,7 +107,6 @@ function tableTopla(table){
   const columnIndex2 = 5;
   let totalTLFunction=0.0;
   let totalUSDFunction=0.0;
-
 
   const dataRows = table.querySelectorAll("tbody tr");
   dataRows.forEach(row => {
@@ -125,8 +121,8 @@ function tableTopla(table){
         }
    }
   });
-  totalUSDFunction = parseFloat(totalUSDFunction.toFixed(2))
-  totalTLFunction = parseFloat(totalTLFunction.toFixed(2))
+  totalUSDFunction = parseFloat(totalUSDFunction.toFixed(4))
+  totalTLFunction = parseFloat(totalTLFunction.toFixed(4))
   return { totalTLFunction, totalUSDFunction };
 }
 /* Gelen verinin birimini silip int veren fonksiyon */
@@ -172,14 +168,14 @@ totalShow();
         // Toplam tablo sonucunu ekrana yaz
         leftTableResult = tableTopla(leftTable);
         rightTableResult = tableTopla(rightTable);
-        x = parseFloat((leftTableResult.totalTLFunction - rightTableResult.totalTLFunction).toFixed(2))
-        y = parseFloat((leftTableResult.totalUSDFunction - rightTableResult.totalUSDFunction).toFixed(2))    
+        x = parseFloat((leftTableResult.totalTLFunction - rightTableResult.totalTLFunction).toFixed(4))
+        y = parseFloat((leftTableResult.totalUSDFunction - rightTableResult.totalUSDFunction).toFixed(4))    
         genaralTotalTL.textContent =  formatNumber(x) + " ₺" ;
         generalTotalUSD.textContent =  formatNumber(y) + " $" ;
     }    
 } 
 function formatNumber(number) {
-    return new Intl.NumberFormat('en-US').format(number.toFixed(2));
+    return new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 }).format(number.toFixed(4));
 }
 
 

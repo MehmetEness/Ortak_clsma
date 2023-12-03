@@ -167,7 +167,7 @@
         </div>        
       </div>
 {% block js_files %} 
-<script src="{% static 'income_detailsss.js' %}"></script> 
+<script src="{% static 'income_details.js' %}"></script> 
 <script>
   var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
@@ -239,7 +239,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
@@ -271,6 +271,22 @@ var chekLastDateBox = document.querySelector(".chek-last-date-box");
         }
         }
         });
+</script>
+<script>
+   icon = document.querySelector('.icon');
+    search = document.querySelector('.search');
+    icon.onclick = function(){
+          search.classList.toggle('active')
+      }
+function clearSearch() {
+    const input = document.getElementById('mysearch');
+    input.value = '';
+    searchTable(); // Temizle dÃ¼ÄŸmesine basÄ±ldÄ±ÄŸÄ±nda tabloyu sÄ±fÄ±rla
+}
+
+function modalAc(){
+
+}
 </script>
 {% endblock %}
 {% endblock %}

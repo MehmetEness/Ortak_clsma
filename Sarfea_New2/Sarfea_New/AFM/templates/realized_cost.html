@@ -372,7 +372,7 @@
 
   {% block js_files %}
 
-  <script src="{% static 'realized_costtt.js' %}"></script> 
+  <script src="{% static 'realized_costt.js' %}"></script> 
   <!-- <script src="{% static 'index.js' %}"></script>  -->
   <script>
  document.addEventListener("DOMContentLoaded", function() {
@@ -682,7 +682,7 @@ inputs.forEach(input => {
 
     dropdownItems.forEach(item => {
       const itemText = item.textContent.toLowerCase();
-      if (itemText.includes(filterText)) {
+      if (itemText.startsWith(filterText)) {
         item.style.display = 'block';
       } else {
         item.style.display = 'none';

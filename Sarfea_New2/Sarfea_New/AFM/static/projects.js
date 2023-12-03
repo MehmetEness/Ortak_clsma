@@ -1,4 +1,4 @@
-src="https://code.jquery.com/jquery-3.6.0.min.js"
+src="https://code.jquery.com/jquery-3.6.0.min.js";
        
        
     icon = document.querySelector('.icon');

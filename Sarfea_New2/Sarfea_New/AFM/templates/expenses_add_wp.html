@@ -43,7 +43,7 @@
                    <div style="display:none;" class="input-box" id="ProjectName_ExpensesInput">
                     <span class="details">Proje Adı</span>
                     <div class="dropdown-container">
-                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Expenses" name="ProjectName_Expenses" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
+                      <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Expenses" name="ProjectName_Expenses" placeholder="Proje Adını Seçiniz" >
                     </div>
                    </div>
 
@@ -111,7 +111,7 @@
                 </div>
                 
                     <div class="button">
-                    <input id="project-create-btn" type="submit" value="Gider" />
+                    <input id="project-create-btn" type="submit" value="Gider Ekle" />
                     </div>
             </form>
         </div>
@@ -234,7 +234,7 @@
 
       dropdownItems.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(filterText)) {
+        if (itemText.startsWith(filterText)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
