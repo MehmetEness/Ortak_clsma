@@ -284,6 +284,30 @@
   });
 });
   </script>
+  <!-- KDV % Ekleme -->
+  <script>
+    // Input elementini seç
+    const kdvRateInput = document.getElementById("id_KDV_Rate");
+    addPercentageSymbol(kdvRateInput);
+    // Input değeri değiştiğinde bu fonksiyonu çağır
+    kdvRateInput.addEventListener("input", function () {
+      addPercentageSymbol(kdvRateInput);
+    });
+
+    function addPercentageSymbol(input) {
+      // Girilen değeri al
+      let enteredValue = input.value;
+
+      // Sayısal ve virgül dışındaki karakterleri temizle
+      let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
+
+      // "%" işaretini ekle
+      let formattedValue =  "%" + numericValue;
+
+      // Input değerini güncelle
+      input.value = formattedValue;
+    }
+  </script>
   
   {% endblock %}
 
