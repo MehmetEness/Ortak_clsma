@@ -83,11 +83,11 @@ class ProjectForm(forms.ModelForm):
         required=False,
         empty_label= 'Seçiniz',
     )    
-    KDV_Rate = forms.DecimalField(  
-        max_digits=6,
-        decimal_places=4,
+    KDV_Rate = forms.CharField(  
         required=False,
-        initial=20.0
+        initial="%20.0",
+        max_length=12,
+
     )
     Situation = forms.ModelChoiceField(
         queryset=Situations.objects.all(),

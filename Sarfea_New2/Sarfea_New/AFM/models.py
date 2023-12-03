@@ -85,7 +85,7 @@ class Project(models.Model):
     Situation = models.CharField(max_length=63, default="Onay Bekliyor")
     StartDate = models.DateField(blank=True, null=True)
     FinishDate = models.DateField(blank=True, null=True)
-    KDV_Rate = models.FloatField(default=20, blank=True, null=True)
+    KDV_Rate = models.CharField(default="20", blank=True, null=True, max_length=12)
     Terrain_Roof = models.CharField(max_length=63, blank=True, null=True)
     Incentive = models.BooleanField(default=False)
     

@@ -539,7 +539,7 @@ def jobhistory_add_wp(request, project_id):
             supplier_form = SupplierForm(request.POST)
             if supplier_form.is_valid():
                 supplier_form.save()
-                return redirect('expenses_add_wp',project_id=project.id )
+                return redirect('jobhistory_add_wp',project_id=project.id )
         
         elif form_type == 'jobhistory_form':
             jobhistory_form = JobHistoryForm(request.POST)
@@ -572,9 +572,9 @@ def income_add_wp(request, project_id):
             income_form = IncomesForm(request.POST)
             if income_form.is_valid():
                 income_form.save()
-                return redirect('realized_cost', project_name = project.ProjectName)
+                return redirect('income_details', project_name = project.ProjectName)
             
-        elif form_type == client_form:
+        elif form_type == 'client_form':
             client_form = ClientsForm(request.POST)
             if client_form.is_valid():
                 client_form.save()

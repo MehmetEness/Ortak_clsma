@@ -35,7 +35,7 @@
         <div class="center">
             <div class="container projeBaslatContainer">
             <div class="title">Gelir Ekle</div>
-            <form id="my-form" action="{% url 'income_add' %}" method="post">
+            <form id="my-form" action="{% url 'income_add_wp' project_id=project.id  %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_type" value="income_form">
                 <div class="user-details">
@@ -106,7 +106,6 @@
                          <option value="">15:30'dan Sonra</option>
                       </select>
                    </div> 
-                   
                    
                 </div>
                     <div class="button">
