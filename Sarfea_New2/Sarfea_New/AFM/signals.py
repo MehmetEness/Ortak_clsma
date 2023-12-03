@@ -124,16 +124,23 @@ def update_Incomes_Tl(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Clients)
 def update_projects_with_client_name(sender, instance, **kwargs):
-    
+    matching_client_new = Clients.objects.filter(CompanyName_Clients_New=instance.CompanyName_Clients)
+
+
+
     # Eğer CompanyName_Clients değiştiyse
-    if instance.CompanyName_Clients != instance.CompanyName_Clients_New and instance.CompanyName_Clients_New:
+    if instance.CompanyName_Clients != instance.CompanyName_Clients_New and instance.CompanyName_Clients_New and not matching_client_new:
         # Yeni CompanyName ile eşleşen Project'leri bul
         matching_projects = Project.objects.filter(CompanyName=instance.CompanyName_Clients)
+        matching_incomes = Incomes.objects.filter(CompanyName_Pay_Incomes=instance.CompanyName_Clients)
 
         # Bulunan Project'leri CompanyName_Clients_New ile güncelle
         for project in matching_projects:
             project.CompanyName = instance.CompanyName_Clients_New
             project.save()
+        for income in matching_incomes:
+            income.CompanyName_Pay_Incomes = instance.CompanyName_Clients_New
+            income.save()
 
         # CompanyName_Clients_New boşsa CompanyName_Clients ile doldur
         if not instance.CompanyName_Clients_New:
@@ -145,24 +152,26 @@ def update_projects_with_client_name(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Supplier)
 def update_expenses_with_supplier_name(sender, instance, **kwargs):
-    
-    # Eğer CompanyName_Clients değiştiyse
+  
+
+    matching_supplier_new = Supplier.objects.filter(CompanyName_Supplier_New=instance.CompanyName_Supplier)
     if instance.CompanyName_Supplier != instance.CompanyName_Supplier_New and instance.CompanyName_Supplier_New:
-        # Yeni CompanyName ile eşleşen Project'leri bul
-        matching_expenses = Expenses.objects.filter(CompanyName_Paying_Expenses=instance.CompanyName_Supplier)
-        matching_jobhistory = JobHistory.objects.filter(CompanyName_Job_JobHistory=instance.CompanyName_Supplier)
+    # Eğer matching_supplier_new boşsa veya hiçbir eşleşme bulunmamışsa
+        if not matching_supplier_new.exists():
+            # Yeni CompanyName ile eşleşen Project'leri bul
+            matching_expenses = Expenses.objects.filter(CompanyName_Paying_Expenses=instance.CompanyName_Supplier)
+            matching_jobhistory = JobHistory.objects.filter(CompanyName_Job_JobHistory=instance.CompanyName_Supplier)
 
+            # Bulunan Project'leri CompanyName_Clients_New ile güncelle
+            for expenses in matching_expenses:
+                expenses.CompanyName_Paying_Expenses = instance.CompanyName_Supplier_New
+                expenses.save()
 
-        # Bulunan Project'leri CompanyName_Clients_New ile güncelle
-        for expenses in matching_expenses:
-            expenses.CompanyName_Paying_Expenses = instance.CompanyName_Supplier_New
-            expenses.save()
-        # Bulunan Project'leri CompanyName_Clients_New ile güncelle
-        for jobhistory in matching_jobhistory:
-            jobhistory.CompanyName_Job_JobHistory = instance.CompanyName_Supplier_New
-            jobhistory.save()
+            # Bulunan Project'leri CompanyName_Clients_New ile güncelle
+            for jobhistory in matching_jobhistory:
+                jobhistory.CompanyName_Job_JobHistory = instance.CompanyName_Supplier_New
+                jobhistory.save()
 
-    
-        # Son olarak CompanyName_Clients'ı CompanyName_Clients_New ile güncelle
-        instance.CompanyName_Supplier = instance.CompanyName_Supplier_New
-        instance.save()
+            # Son olarak CompanyName_Clients'ı CompanyName_Clients_New ile güncelle
+            instance.CompanyName_Supplier = instance.CompanyName_Supplier_New
+            instance.save()

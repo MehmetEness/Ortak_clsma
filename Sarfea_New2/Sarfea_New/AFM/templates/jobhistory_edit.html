@@ -125,9 +125,28 @@
             </div>
           </form>
       </div>
+      <div class="window payingFirmaAddWindow">
+        <div class="container">
+            <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
+            <div class="title">Firma Ekle</div>
+        <form action="{% url 'jobhistory_add' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="supplier_form">
+                <div class="user-details"> 
+                    <div class="input-box" name="CompanyName_Supplier">
+                    <span class="details">Firma Adı</span>
+                    {{ supplier_form.CompanyName_Supplier }}
+                    </div>                        
+            </div>
+                <div class="button">
+                    <input type="submit" value="Kaydet">
+                </div>
+        </form>
+        </div>
     </div>
-    
 
+
+    </div>
 </div>
 </div>
           

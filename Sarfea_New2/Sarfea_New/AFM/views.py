@@ -38,20 +38,30 @@ def jobhistory_edit(request, jobhistory_id):
     jobhistory_edit = get_object_or_404(JobHistory, id=jobhistory_id)
     my_company = MyCompanyNames.objects.all()
     supplier = Supplier.objects.all()
+
     if request.method == 'POST':
         edit_form = JobHistoryForm(request.POST, instance=jobhistory_edit)
-        
+        jobhistory_form = JobHistoryForm(request.POST)
+
         if edit_form.is_valid():
           
           edit_form.save()
           return redirect('realized_cost', project_name=jobhistory_edit.ProjectName_JobHistory)
+    
+        elif jobhistory_form.is_valid():
+            jobhistory_form.save()
+            return redirect('jobhistory_edit')
     else:
         edit_form = JobHistoryForm(instance=jobhistory_edit)
+        supplier_form = SupplierForm()
+
+
     context = {
         'edit_form': edit_form,
         'jobhistory_edit': jobhistory_edit,
         'my_company': my_company,
-        'supplier': supplier
+        'supplier': supplier,
+        "supplier_form": supplier_form,
     }
     return render(request, "jobhistory_edit.html", context)
 
@@ -336,21 +346,26 @@ def project_add(request):
     locations = Locations.objects.all()
     if request.method == 'POST':
         form = ProjectForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
 
-        
-        
         if form.is_valid():
             form.save()
-            return redirect('projects')    
-        
+            return redirect('projects')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('project_add')
     else:
         form = ProjectForm()
+        client_form = ClientsForm()
         
     context = {
         "form": form,
         'form_errors': form.errors,
         "client": client,
         "locations": locations,
+        "client_form":client_form,
     }
     return render(request, "project_add.html", context)
 
@@ -426,6 +441,8 @@ def jobhistory_add(request):
 
 def income_add(request):
     income_form = None
+    client_form = None
+
     client = Clients.objects.all()
     project = Project.objects.all()
     if request.method == 'POST':
@@ -436,14 +453,22 @@ def income_add(request):
             if income_form.is_valid():
                 income_form.save()
                 return redirect('projects')
-        
+            
+        elif form_type == client_form:
+            client_form = ClientsForm(request.POST)
+            if client_form.is_valid():
+                client_form.save()
+                return redirect(request.path)
+
     else:
         income_form = IncomesForm()
-        
+        client_form = ClientsForm()
+
     context = {
         "incomes_form": income_form,
         "client": client,
-        "project":project
+        "project":project,
+        "client_form":client_form,
     }
     return render(request, "income_add.html", context)
 
@@ -463,3 +488,106 @@ def deneme(request):
         "form": form,
     }
     return render(request, "deneme.html", context)
+
+def expenses_add_wp(request, project_id):
+    details = Details.objects.all()
+    supplier = Supplier.objects.all()
+    project = get_object_or_404(Project, id=project_id)
+
+    expenses_form = None
+    supplier_form= None
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'supplier_form':
+            supplier_form = SupplierForm(request.POST)
+            if supplier_form.is_valid():
+                supplier_form.save()
+                return redirect('expenses_add_wp',project_id=project.id )
+        
+        elif form_type == 'expenses_form':
+            expenses_form = ExpensesForm(request.POST)
+            if expenses_form.is_valid():
+                expenses_form.save()
+                return redirect('realized_cost', project_name = project.ProjectName)
+        
+    else:
+        supplier_form = SupplierForm()
+        expenses_form = ExpensesForm()
+        
+    context = {
+        "expenses_form": expenses_form,
+        'supplier_form': supplier_form,
+        "details": details,
+        "supplier": supplier,
+        "project": project,
+    }
+    return render(request, "expenses_add_wp.html", context)
+
+def jobhistory_add_wp(request, project_id):
+
+    jobhistory_form = None
+    supplier_form= None
+    project = get_object_or_404(Project, id=project_id)
+    supplier = Supplier.objects.all()
+
+
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'supplier_form':
+            supplier_form = SupplierForm(request.POST)
+            if supplier_form.is_valid():
+                supplier_form.save()
+                return redirect('expenses_add_wp',project_id=project.id )
+        
+        elif form_type == 'jobhistory_form':
+            jobhistory_form = JobHistoryForm(request.POST)
+            if jobhistory_form.is_valid():
+                jobhistory_form.save()
+                return redirect('realized_cost', project_name = project.ProjectName)
+        
+    else:
+        supplier_form = SupplierForm()
+        jobhistory_form = JobHistoryForm()
+        
+    context = {
+        "jobhistory_form": jobhistory_form,
+        'supplier_form': supplier_form,
+        "project": project,
+        "supplier": supplier,
+    }
+    return render(request, "jobhistory_add_wp.html", context)
+
+def income_add_wp(request, project_id):
+    income_form = None
+    client_form = None
+
+    client = Clients.objects.all()
+    project = get_object_or_404(Project, id=project_id)
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'income_form':
+            income_form = IncomesForm(request.POST)
+            if income_form.is_valid():
+                income_form.save()
+                return redirect('realized_cost', project_name = project.ProjectName)
+            
+        elif form_type == client_form:
+            client_form = ClientsForm(request.POST)
+            if client_form.is_valid():
+                client_form.save()
+                return redirect('income_add_wp',project_id=project.id )
+
+    else:
+        income_form = IncomesForm()
+        client_form = ClientsForm()
+
+    context = {
+        "incomes_form": income_form,
+        "client": client,
+        "project":project,
+        "client_form":client_form,
+    }
+    return render(request, "income_add_wp.html", context)

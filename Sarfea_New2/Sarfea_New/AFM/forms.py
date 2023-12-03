@@ -122,7 +122,6 @@ class ProjectForm(forms.ModelForm):
             raise forms.ValidationError("Bu Proje İsmi zaten kullanılıyor. Lütfen başka birProje İsmi seçin")
         return project_name
 
-
 class ExpensesForm(forms.ModelForm):
     ProjectName_Expenses_Copy = forms.CharField(max_length=63, required=False)
     ProjectName_Expenses = forms.CharField(
@@ -266,7 +265,14 @@ class IncomesForm(forms.ModelForm):
                   ]
 
 class ClientsForm(forms.ModelForm):
-    CompanyName_Clients_New = forms.CharField(max_length=63, required=False)
+    CompanyName_Clients_New = forms.CharField(
+        max_length=63, 
+        required=False,
+        error_messages={
+            'required': '! Lütfen Firma Adını Giriniz',
+            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
+        }
+        )
     CompanyName_Clients = forms.CharField(max_length=63)
     ContactPerson = forms.CharField(max_length=63, required=False)
     PhoneNumber = forms.CharField(max_length=11, required=False)
@@ -279,8 +285,22 @@ class ClientsForm(forms.ModelForm):
         fields = '__all__'
 
 class SupplierForm(forms.ModelForm):
-    CompanyName_Supplier_New = forms.CharField(max_length=63, required=False)
-    CompanyName_Supplier = forms.CharField(max_length=63)
+    CompanyName_Supplier_New = forms.CharField(
+        max_length=63,
+        required=False,
+        error_messages={
+            'required': '! Lütfen Firma Adını Giriniz',
+            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
+        }
+    )
+    
+    CompanyName_Supplier = forms.CharField(
+        max_length=63,
+         error_messages={
+            'required': '! Lütfen Firma Adını Giriniz',
+            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
+        }
+    )
     ContactPerson = forms.CharField(max_length=63, required=False)
     PhoneNumber = forms.CharField(max_length=11, required=False)
     Email= forms.CharField(max_length=63, required=False)

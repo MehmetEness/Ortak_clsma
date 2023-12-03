@@ -136,7 +136,7 @@ class ProjectNames(models.Model):
     
 class Clients(models.Model):
     CompanyName_Clients_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Clients = models.CharField(max_length=63, blank=True, null=True)
+    CompanyName_Clients = models.CharField(max_length=63, blank=True, null=True, unique=True)
     ContactPerson = models.CharField(max_length=63, blank=True, null=True)
     PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
     Email= models.CharField(max_length=63, blank=True, null=True)
@@ -147,7 +147,7 @@ class Clients(models.Model):
 
 class Supplier(models.Model):
     CompanyName_Supplier_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Supplier = models.CharField(max_length=63, blank=True, null=True)
+    CompanyName_Supplier = models.CharField(max_length=63, blank=True, null=True, unique=True)
     ContactPerson = models.CharField(max_length=63, blank=True, null=True)
     PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
     Email= models.CharField(max_length=63, blank=True, null=True)

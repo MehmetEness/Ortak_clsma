@@ -19,6 +19,16 @@
                 <div class="input-box" name="CompanyName_Supplier">
                   <span class="details">Firma Adı</span>
                   {{ supplier_form.CompanyName_Supplier }}
+                  {% if supplier_form.CompanyName_Supplier.errors %}
+                  <div class="error-container">
+                      <span class="error-triangle"></span>
+                      <ul class="errorlist">
+                          {% for error in supplier_form.CompanyName_Supplier.errors %}
+                              <li class="error-message">{{ error }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              {% endif %}                 
                 </div>    
                 <div class="input-box" name="ContactPerson">
                   <span class="details">Muhatap</span>
@@ -92,6 +102,8 @@
 
 {% block js_files %} 
 <script src="{% static 'tedarikcii.js' %}"></script> 
+<script src="{% static 'index.js' %}"></script> 
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
   const inputs = document.querySelectorAll('.myInput');

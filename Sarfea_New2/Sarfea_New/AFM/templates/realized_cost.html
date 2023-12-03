@@ -211,9 +211,9 @@
       <div class="menu-icon">
         <a href="{% url 'project_details' project_name=project.ProjectName %}"><button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button></a>
       </div>
-      <button class="button2" id="is-ac">Yapılan İş</button>
+      <a href="{% url 'jobhistory_add_wp' project_id=project.id  %}"><button class="button2">Yapılan İş</button></a>
       <div id="gerceklesen-maliyet-text"><span>{{project.ProjectName}}</span></div>
-      <button id="gider-ac" class="button2" >Yapılan Ödeme</button>
+      <a href="{% url 'expenses_add_wp' project_id=project.id  %}"><button  class="button2" >Yapılan Ödeme</button></a>
       
       <div class="content">
         <button class="button1">Filitrele</button>

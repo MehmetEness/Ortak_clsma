@@ -63,7 +63,7 @@
                   </div>
                   </div>
                    <div class="input-box">
-                    <span class="details">Ödeme Yapan Firma</span>
+                    <span class="details">Ödeme Yapan Firma<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
                         <input type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
                         {% if incomes_form.CompanyName_Pay_Incomes.errors %}
@@ -128,6 +128,26 @@
                     </div>
             </form>
         </div>
+        <div class="window clientFirmaAddWindow">
+          <div class="container">
+              <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
+              <div class="title">Firma Ekle</div>
+          <form action="{% url 'project_add' %}" method="post">
+                  {% csrf_token %}
+              <input type="hidden" name="form_type" value="client_form">
+  
+                  <div class="user-details"> 
+                      <div class="input-box" name="CompanyName_Clients">
+                      <span class="details">Firma Adı</span>
+                      {{ client_form.CompanyName_Clients }}
+                      </div>                        
+              </div>
+                  <div class="button">
+                      <input type="submit" value="Kaydet">
+                  </div>
+          </form>
+          </div>
+      </div>
   
     </div>
 </div>
@@ -136,7 +156,26 @@
  
       <script src="{% static 'income_add.js' %}"></script> 
       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // firma-add-btn butonunu seçin
+          var firmaAddBtn = document.getElementById("paying-firma-add-btn");
 
+          // clientFirmaAddWindow penceresini seçin
+          var clientFirmaAddWindow = document.querySelector(".clientFirmaAddWindow");
+
+          // firma-add-btn butonuna tıklandığında
+          firmaAddBtn.addEventListener("click", function() {
+              // clientFirmaAddWindow penceresinin görünürlüğünü değiştir
+              clientFirmaAddWindow.style.display = "flex";
+          });
+
+          // clientFirmaAdd-modal (X) butonuna tıklandığında
+          var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
+          clientFirmaAddModal.addEventListener("click", function() {
+              // clientFirmaAddWindow penceresinin görünürlüğünü gizle
+              clientFirmaAddWindow.style.display = "none";
+          });
+      });
      
         
 document.addEventListener('DOMContentLoaded', function () {
