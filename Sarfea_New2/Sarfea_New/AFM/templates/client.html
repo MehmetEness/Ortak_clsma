@@ -19,6 +19,16 @@
                 <div class="input-box" name="CompanyName">
                   <span class="details">Firma Adı</span>
                   {{ client_form.CompanyName_Clients }}
+                  {% if client_form.CompanyName_Clients.errors %}
+                  <div class="error-container">
+                      <span class="error-triangle"></span>
+                      <ul class="errorlist">
+                          {% for error in client_form.CompanyName_Clients.errors %}
+                              <li class="error-message">{{ error }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              {% endif %} 
                 </div>    
                 <div class="input-box" name="CompanyName">
                   <span class="details">Muhatap</span>

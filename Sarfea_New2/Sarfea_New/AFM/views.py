@@ -439,7 +439,7 @@ def jobhistory_add(request):
     }
     return render(request, "jobhistory_add.html", context)
 
-def income_add(request):
+def income_add(request):   
     income_form = None
     client_form = None
 
@@ -448,17 +448,19 @@ def income_add(request):
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
-        if form_type == 'income_form':
+        if form_type == 'client_form':
+            client_form = ClientsForm(request.POST)
+            if client_form.is_valid():
+                client_form.save()
+                return redirect(request.path)
+            
+        elif form_type == 'income_form':
             income_form = IncomesForm(request.POST)
             if income_form.is_valid():
                 income_form.save()
                 return redirect('projects')
             
-        elif form_type == client_form:
-            client_form = ClientsForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
-                return redirect(request.path)
+       
 
     else:
         income_form = IncomesForm()

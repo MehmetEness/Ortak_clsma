@@ -273,9 +273,15 @@ class ClientsForm(forms.ModelForm):
             'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
         }
         )
-    CompanyName_Clients = forms.CharField(max_length=63)
+    CompanyName_Clients = forms.CharField(
+        max_length=63,
+        error_messages={
+            'required': '! Lütfen Firma Adını Giriniz',
+            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
+        }
+        )
     ContactPerson = forms.CharField(max_length=63, required=False)
-    PhoneNumber = forms.CharField(max_length=11, required=False)
+    PhoneNumber = forms.CharField(max_length=15, required=False)
     Email= forms.CharField(max_length=63, required=False)
     Location = forms.CharField(
         required=False,
@@ -302,7 +308,7 @@ class SupplierForm(forms.ModelForm):
         }
     )
     ContactPerson = forms.CharField(max_length=63, required=False)
-    PhoneNumber = forms.CharField(max_length=11, required=False)
+    PhoneNumber = forms.CharField(max_length=15, required=False)
     Email= forms.CharField(max_length=63, required=False)
     Location = forms.CharField(
         required=False,
