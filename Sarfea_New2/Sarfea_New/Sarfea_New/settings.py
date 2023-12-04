@@ -136,4 +136,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Alan adı tanımlama
 
 
-ALLOWED_HOSTS = ['sovotozoglu.com', '3.90.217.139', 'sovotozoglu.net','3.80.27.91','127.0.0.1']
+ALLOWED_HOSTS = ['sovotozoglu.com', '3.90.217.139', 'sovotozoglu.net','3.80.27.91','127.0.0.1','16.170.173.29']
