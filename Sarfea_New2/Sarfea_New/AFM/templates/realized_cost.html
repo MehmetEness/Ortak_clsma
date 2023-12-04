@@ -407,6 +407,10 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
   });
+
+
+
+  /***************************************************       seçilen firmaya göre tablo formatlama         ********************************************************************************/
 document.addEventListener("DOMContentLoaded", function () {
     // Get all company links
     var companyLinks = document.querySelectorAll(".company-link");
@@ -420,12 +424,6 @@ document.addEventListener("DOMContentLoaded", function () {
             var allRows = document.querySelectorAll(".table-row");
             allRows.forEach(function (row) {
                 row.style.display = "none";
-            });
-
-            // Show rows for the selected company
-            var selectedRows = document.querySelectorAll('.table-row[data-company="' + selectedCompany + '"]');
-            selectedRows.forEach(function (row) {
-                row.style.display = "";
 
                 // Format numeric values TL
                 var numericCells = row.querySelectorAll('td:nth-child(4)');
@@ -461,11 +459,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
             });
-        
-        
-        
-        
-        
+
+            // Show rows for the selected company
+            var selectedRows = document.querySelectorAll('.table-row[data-company="' + selectedCompany + '"]');
+            selectedRows.forEach(function (row) {
+                row.style.display = "";
+
+                
+            });        
           });
     });
 
