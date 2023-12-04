@@ -69,8 +69,13 @@
         <div class="top-menu">
           <span>TEDARİKÇİLER</span>
           <div class="content">                      
-            <button class="button1">Sırala</button>
-            <button class="button1">Filitrele</button>    
+            <div class="search">
+              <div class="icon"></div>
+              <div class="input">
+                <input id="mysearch" type="text" placeholder="Ara">
+            </div>
+            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
+         </div> 
             <button id="tedarikci-ac" class="button2" >Tedarikçi Ekle</button>          
           </div>
         </div>
@@ -143,6 +148,83 @@
       });
     });
   });
+});
+</script>
+<!-- search bar -->
+<script>
+  icon = document.querySelector('.icon');
+search = document.querySelector('.search');
+icon.onclick = function(){
+  search.classList.toggle('active')
+}
+function clearSearch() {
+const input = document.getElementById('mysearch');
+input.value = '';
+searchTable(); // Temizle dÃ¼ÄŸmesine basÄ±ldÄ±ÄŸÄ±nda tabloyu sÄ±fÄ±rla
+}
+
+function modalAc(){
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+var searchInput = document.getElementById("mysearch");
+var clearButton = document.querySelector(".clear");  // Bu class'ı, HTML'deki clear span elementine uygulamalısınız
+var table = document.getElementById("table");
+var rows = table.getElementsByTagName("tr");
+
+// Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
+searchInput.addEventListener("input", function() {
+filterTable();
+});
+
+// Clear Button'a tıklandığında çalışacak event listener
+clearButton.addEventListener("click", function() {
+// Search Input'un değerini boşalt
+searchInput.value = "";
+// Tüm satırları göster
+showAllRows();
+});
+
+// Tabloyu filtreleyen fonksiyon
+function filterTable() {
+var filter = searchInput.value.toLowerCase();
+
+for (var i = 0; i < rows.length; i++) {
+   var row = rows[i];
+
+if (!row.querySelector("th")) {
+   var cells = row.getElementsByTagName("td");
+   var shouldShow = false;
+
+   for (var j = 0; j < cells.length; j++) {
+       var cell = cells[j];
+
+       if (cell) {
+           var text = cell.textContent || cell.innerText;
+
+           if (text.toLowerCase().indexOf(filter) > -1) {
+               shouldShow = true;
+               break;
+           }
+       }
+   }
+
+   if (shouldShow) {
+       row.style.display = "";
+   } else {
+       row.style.display = "none";
+   }
+}
+}
+}
+
+// Tüm satırları gösteren fonksiyon
+function showAllRows() {
+for (var i = 0; i < rows.length; i++) {
+   rows[i].style.display = "";
+}
+}
 });
 </script>
 

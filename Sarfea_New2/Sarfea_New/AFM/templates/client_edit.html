@@ -136,6 +136,17 @@
   });
 });
   </script>
+  <script>   
+    
+    document.getElementById('id_PhoneNumber').addEventListener('keypress', function (e) {
+    const key = String.fromCharCode(e.keyCode);
+    const regex = /[0-9+]/;
+    if (!regex.test(key)) {
+        e.preventDefault();
+        this.value = this.value.replace(/[^0-9+]/g, key); // Sadece geçerli karakteri ekle
+    }
+});
+    </script>
   
   {% endblock %}
 

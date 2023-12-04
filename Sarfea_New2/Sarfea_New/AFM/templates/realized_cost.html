@@ -9,7 +9,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"t
     />
-    <link rel="stylesheet" type="text/css" href="{% static 'realized_costr.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'realized_costrr.css' %}"> 
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
     <style>
@@ -216,7 +216,7 @@
       <a href="{% url 'expenses_add_wp' project_id=project.id  %}"><button  class="button2" >Yapılan Ödeme</button></a>
       
       <div class="content">
-        <button class="button1">Filitrele</button>
+        
         <div class="search">
           <div class="icon"></div>
           <div class="input">
@@ -579,80 +579,80 @@ document.addEventListener("DOMContentLoaded", function () {
     var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return formattedNumber; 
     }
-    }
-    document.addEventListener("DOMContentLoaded", function() {
-      var searchInput = document.getElementById("mysearch");
-      var clearButton = document.querySelector(".clear");
-      var tables = document.querySelectorAll(".table-sortable");
+   }
+//     document.addEventListener("DOMContentLoaded", function() {
+//       var searchInput = document.getElementById("mysearch");
+//       var clearButton = document.querySelector(".clear");
+//       var tables = document.querySelectorAll(".table-sortable");
   
-      // Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
-      searchInput.addEventListener("input", function() {
-          filterTables();
-      });
+//       // Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
+//       searchInput.addEventListener("input", function() {
+//           filterTables();
+//       });
   
-      // Clear Button'a tıklandığında çalışacak event listener
-      clearButton.addEventListener("click", function() {
-          // Search Input'un değerini boşalt
-          searchInput.value = "";
-          // Tüm tabloları göster
-          showAllRows();
-      });
+//       // Clear Button'a tıklandığında çalışacak event listener
+//       clearButton.addEventListener("click", function() {
+//           // Search Input'un değerini boşalt
+//           searchInput.value = "";
+//           // Tüm tabloları göster
+//           showAllRows();
+//       });
   
-      // Tüm tabloları filtreleyen fonksiyon
-      // ...
+//       // Tüm tabloları filtreleyen fonksiyon
+//       // ...
 
-// Tüm tabloları filtreleyen fonksiyon
-function filterTables() {
-  var filter = searchInput.value.toLowerCase();
+// // Tüm tabloları filtreleyen fonksiyon
+// function filterTables() {
+//   var filter = searchInput.value.toLowerCase();
 
-  tables.forEach(function (table) {
-      var rows = table.getElementsByTagName("tr");
+//   tables.forEach(function (table) {
+//       var rows = table.getElementsByTagName("tr");
 
-      for (var i = 0; i < rows.length; i++) {
-          var row = rows[i];
+//       for (var i = 0; i < rows.length; i++) {
+//           var row = rows[i];
 
-          // Sadece gizlenmemiş satırları ve başlık satırlarını filtrele
-          if (row.style.display !== "none" && !row.querySelector("th")) {
-              var cells = row.getElementsByTagName("td");
-              var shouldShow = false;
+//           // Sadece gizlenmemiş satırları ve başlık satırlarını filtrele
+//           if (row.style.display !== "none" && !row.querySelector("th")) {
+//               var cells = row.getElementsByTagName("td");
+//               var shouldShow = false;
 
-              for (var j = 0; j < cells.length; j++) {
-                  var cell = cells[j];
+//               for (var j = 0; j < cells.length; j++) {
+//                   var cell = cells[j];
 
-                  if (cell) {
-                      var text = cell.textContent || cell.innerText;
+//                   if (cell) {
+//                       var text = cell.textContent || cell.innerText;
 
-                      if (text.toLowerCase().indexOf(filter) > -1) {
-                          shouldShow = true;
-                          break;
-                      }
-                  }
-              }
+//                       if (text.toLowerCase().indexOf(filter) > -1) {
+//                           shouldShow = true;
+//                           break;
+//                       }
+//                   }
+//               }
 
-              if (shouldShow) {
-                  row.style.display = "";
-              } else {
-                  row.style.display = "none";
-              }
-          }
-      }
-  });
-}
+//               if (shouldShow) {
+//                   row.style.display = "";
+//               } else {
+//                   row.style.display = "none";
+//               }
+//           }
+//       }
+//   });
+// }
 
-// ...
+// // ...
 
   
-      // Tüm satırları gösteren fonksiyon
-      function showAllRows() {
-          tables.forEach(function(table) {
-              var rows = table.getElementsByTagName("tr");
+//       // Tüm satırları gösteren fonksiyon
+//       function showAllRows() {
+//           tables.forEach(function(table) {
+//               var rows = table.getElementsByTagName("tr");
   
-              for (var i = 0; i < rows.length; i++) {
-                  rows[i].style.display = "";
-              }
-          });
-      }
-  });
+//               for (var i = 0; i < rows.length; i++) {
+//                   rows[i].style.display = "";
+//               }
+//           });
+//       }
+//   });
   
   
    
@@ -697,6 +697,83 @@ inputs.forEach(input => {
     });
   });
 });
+});
+</script>
+<!-- search bar -->
+<script>
+  icon = document.querySelector('.icon');
+search = document.querySelector('.search');
+icon.onclick = function(){
+  search.classList.toggle('active')
+}
+function clearSearch() {
+const input = document.getElementById('mysearch');
+input.value = '';
+searchTable(); // Temizle dÃ¼ÄŸmesine basÄ±ldÄ±ÄŸÄ±nda tabloyu sÄ±fÄ±rla
+}
+
+function modalAc(){
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+var searchInput = document.getElementById("mysearch");
+var clearButton = document.querySelector(".clear");  // Bu class'ı, HTML'deki clear span elementine uygulamalısınız
+var table = document.getElementById("table");
+var rows = table.getElementsByTagName("tr");
+
+// Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
+searchInput.addEventListener("input", function() {
+filterTable();
+});
+
+// Clear Button'a tıklandığında çalışacak event listener
+clearButton.addEventListener("click", function() {
+// Search Input'un değerini boşalt
+searchInput.value = "";
+// Tüm satırları göster
+showAllRows();
+});
+
+// Tabloyu filtreleyen fonksiyon
+function filterTable() {
+var filter = searchInput.value.toLowerCase();
+
+for (var i = 0; i < rows.length; i++) {
+   var row = rows[i];
+
+if (!row.querySelector("th")) {
+   var cells = row.getElementsByTagName("td");
+   var shouldShow = false;
+
+   for (var j = 0; j < cells.length; j++) {
+       var cell = cells[j];
+
+       if (cell) {
+           var text = cell.textContent || cell.innerText;
+
+           if (text.toLowerCase().indexOf(filter) > -1) {
+               shouldShow = true;
+               break;
+           }
+       }
+   }
+
+   if (shouldShow) {
+       row.style.display = "";
+   } else {
+       row.style.display = "none";
+   }
+}
+}
+}
+
+// Tüm satırları gösteren fonksiyon
+function showAllRows() {
+for (var i = 0; i < rows.length; i++) {
+   rows[i].style.display = "";
+}
+}
 });
 </script>
 

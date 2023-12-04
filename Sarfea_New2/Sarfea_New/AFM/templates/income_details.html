@@ -29,16 +29,15 @@
           <div id="is-bedeli-text"><span>{{project.ProjectName}} </span></div>
           
           
-          <div class="content">
-            <a href="{% url 'income_add_wp' project_id=project.id %}"><button  class="button2" >Gelir Ekle</button></a>
-            <button class="button1">Filitrele</button>
-            <div class="search">
+          <div style="margin-right: 50px;" class="content">                       
+            <!-- <div class="search">
               <div class="icon"></div>
               <div class="input">
                 <input id="mysearch" type="text" placeholder="Ara">
               </div>
               <span class="clear" onclick="document.getElementById('mysearch').value = ''"></span>
-            </div>
+            </div> -->
+            <a href="{% url 'income_add_wp' project_id=project.id %}"><button  class="button2" >Gelir Ekle</button></a>
           </div>
         </div>
       </div>

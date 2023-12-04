@@ -44,7 +44,7 @@
                 <div class="input-box {% if jobhistory_form.ProjectName_JobHistory.errors %}error{% endif %}" id="ProjectName_JobHistoryInput">
                     <span class="details">Proje Adı</span>
                     <div class="dropdown-container">
-                      <input type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" placeholder="Proje Adını Seçiniz" >
+                      <input type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
                       {% if jobhistory_form.ProjectName_JobHistory.errors %}
                       <div class="error-container">
                           <span class="error-triangle"></span>
