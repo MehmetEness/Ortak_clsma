@@ -115,9 +115,10 @@
                    
                    <div class="input-box">
                       <span class="details">Kur Saati</span>
-                      <select name="" id="">
-                         <option value="">15:30'dan Önce</option>
-                         <option value="">15:30'dan Sonra</option>
+                      <select name="" id="kur-time">
+                         <option value="secenek1">Kur Saati Seçiniz</option>
+                         <option value="secenek2">15:30'dan Önce</option>
+                         <option value="secenek3">15:30'dan Sonra</option>
                       </select>
                    </div> 
                    
@@ -154,7 +155,7 @@
           
   {% block js_files %} 
  
-      <script src="{% static 'income_add.js' %}"></script> 
+      <script src="{% static 'income_addd.js' %}"></script> 
       <script>
         document.addEventListener("DOMContentLoaded", function() {
           // firma-add-btn butonunu seçin
