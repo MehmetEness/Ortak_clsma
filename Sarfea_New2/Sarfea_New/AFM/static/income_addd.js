@@ -61,7 +61,7 @@ timeForKur.addEventListener('change', function () {
     if (secilenDeger === 'secenek1') {
         
     } else if (secilenDeger === 'secenek2') {
-        tarih = tarihFormatiniDegistir(dateForKur.value);
+        tarih = birGunOncekiTarih(dateForKur.value).replace(/-/g, '');
         getBuyingValues(tarih)
             .then(buyingValues => {
                 kurInput.textContent = buyingValues;
@@ -71,7 +71,8 @@ timeForKur.addEventListener('change', function () {
             });
             
     } else if (secilenDeger === 'secenek3') {
-        tarih = tarihFormatiniDegistir(birGunOncekiTarih(dateForKur.value));
+        tarih = tarihFormatiniDegistir(dateForKur.value);    
+        console.log(tarih);    
         getBuyingValues(tarih)
             .then(buyingValues => {
                 kurInput.textContent = buyingValues;
