@@ -125,7 +125,7 @@
             
           </div>
           <div class="right-menu">            
-            <div class="column view-1"><div id="gider-acc" class="head"><span>İş Bedeli - {{project.Cost_NotIncludingKDV}} $</div>
+            <div class="column view-1"><div id="gider-acc" class="head"><span>İş Bedeli - </span>&nbsp;<span id="is-bedeli-span">{{project.Cost_NotIncludingKDV}} $</span></div>
             <table id="table" class="table table-sortable">
               <thead>
                 <th>Alıcı Firma</th>
@@ -199,6 +199,21 @@
         return cleanString;
     }   
     }
+
+    var isBedeliSpan = document.querySelector("#is-bedeli-span");
+    document.addEventListener('DOMContentLoaded', function(){
+      if(isBedeliSpan.textContent == "None $"){
+        isBedeliSpan.textContent = "0 $";
+      }
+      else{
+        isBedeliSpan.textContent = format(isBedeliSpan.textContent);
+        console.log(format(isBedeliSpan.textContent));
+      }
+      
+    });
+   
+
+    
     
     function format(number) {
     var indexOfDot = number.indexOf('.');
@@ -273,7 +288,7 @@ var chekLastDateBox = document.querySelector(".chek-last-date-box");
         });
 </script>
 <!-- Search Bar -->
-<script>
+<!-- <script>
    icon = document.querySelector('.icon');
     search = document.querySelector('.search');
     icon.onclick = function(){
@@ -288,6 +303,6 @@ function clearSearch() {
 function modalAc(){
 
 }
-</script>
+</script> -->
 {% endblock %}
 {% endblock %}

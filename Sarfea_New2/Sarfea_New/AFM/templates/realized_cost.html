@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 numericCells.forEach(function (cell) {
                     var numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));                    
                     if(numericValue.toString() != "NaN"){
-                      cell.textContent =  formatNumber(numericValue)+' '+'₺' ;
+                      cell.textContent =  formatNumber2(numericValue)+' '+'₺' ;
                     }
                     else{
                       cell.textContent = '0₺';
@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
                     
                     if(numericValue.toString() != "NaN"){
-                      cell.textContent =  formatNumber(numericValue)+' $';
+                      cell.textContent =  formatNumber2(numericValue)+' $';
                     }else{
                       cell.textContent = '0$';
                     }
@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
                     
                     if(numericValue.toString() != "NaN"){
-                      cell.textContent =  formatNumber(numericValue) + ' ₺';
+                      cell.textContent =  formatNumber4(numericValue) + ' ₺';
                     }else{
                       cell.textContent = '0₺';
                     }
@@ -470,8 +470,11 @@ document.addEventListener("DOMContentLoaded", function () {
           });
     });
 
-    function formatNumber(number) {
+    function formatNumber4(number) {
       return new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 }).format(number.toFixed(4));
+    }
+    function formatNumber2(number) {
+      return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(number.toFixed(4));
     }
 });
 
@@ -503,10 +506,10 @@ document.addEventListener("DOMContentLoaded", function () {
       expensesUSDValue = isNaN(expensesUSDValue) || expensesUSDValue === null ? 0 : expensesUSDValue;
 
       // Temizlenmiş değerleri para birimi şeklinde formatla
-      var formattedJobTL = formatCurrency(jobTLValue, '₺');
-      var formattedJobUSD = formatCurrency(jobUSDValue, '$');
-      var formattedExpensesTL = formatCurrency(expensesTLValue, '₺');
-      var formattedExpensesUSD = formatCurrency(expensesUSDValue, '$');
+      var formattedJobTL = formatCurrency2(jobTLValue, '₺');
+      var formattedJobUSD = formatCurrency2(jobUSDValue, '$');
+      var formattedExpensesTL = formatCurrency2(expensesTLValue, '₺');
+      var formattedExpensesUSD = formatCurrency2(expensesUSDValue, '$');
 
       // Sonuçları hücrelere yaz
       jobTLCell.textContent = formattedJobTL;
@@ -522,8 +525,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Sayıyı para birimi şeklinde formatlayan yardımcı fonksiyon
-  function formatCurrency(value, currencySymbol) {
+  function formatCurrency4(value, currencySymbol) {
     return value.toFixed(4).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ' + currencySymbol;
+  }
+  function formatCurrency2(value, currencySymbol) {
+    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ' + currencySymbol;
   }
 
 

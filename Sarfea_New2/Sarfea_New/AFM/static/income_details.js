@@ -36,12 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
   
   numericCells.forEach(function (cell) {
     var numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
-    cell.textContent = formatNumber(numericValue);
+    cell.textContent = formatNumber2(numericValue);
 });
 });
 
-function formatNumber(number) {
+function formatNumber4(number) {
   return new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 }).format(number.toFixed(4));
+
+}
+function formatNumber2(number) {
+  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(number.toFixed(4));
 
 }
 
@@ -64,8 +68,8 @@ setTimeout(function() {fetchDataFromTable();}, 0);
       // tabloyu topla ve sonuçları ekrana yaz
    tableResult = tableTopla(table);
   
-   genaralTotalTL.textContent = formatNumber(tableResult.totalTLFunction)+" ₺" ; 
-   generalTotalUSD.textContent =  formatNumber(tableResult.totalUSDFunction)+" $" ; 
+   genaralTotalTL.textContent = formatNumber2(tableResult.totalTLFunction)+" ₺" ; 
+   generalTotalUSD.textContent =  formatNumber2(tableResult.totalUSDFunction)+" $" ; 
    
   }    
 }
@@ -89,8 +93,8 @@ dataRows.forEach(row => {
         totalTLFunction += birimSil(cells[columnIndex1].textContent);    
   }
 });
-totalUSDFunction = parseFloat(totalUSDFunction.toFixed(4))
-totalTLFunction = parseFloat(totalTLFunction.toFixed(4))
+totalUSDFunction = parseFloat(totalUSDFunction.toFixed(2))
+totalTLFunction = parseFloat(totalTLFunction.toFixed(2))
 
 return { totalTLFunction, totalUSDFunction };
 }
@@ -141,9 +145,9 @@ document.addEventListener("DOMContentLoaded", function () {
      
 
     // Temizlenmiş değerleri para birimi şeklinde formatla
-    var formattedAmountTL = formatCurrency(amountTLValue, '₺');
-    var formattedAmountKur = formatCurrency(amountKurValue, '₺');
-    var formattedAmountUSD = formatCurrency(amountUSDValue, '$');
+    var formattedAmountTL = formatCurrency2(amountTLValue, '₺');
+    var formattedAmountKur = formatCurrency4(amountKurValue, '₺');
+    var formattedAmountUSD = formatCurrency2(amountUSDValue, '$');
 
     // Sonuçları ekrana yaz
     amountTL.textContent = formattedAmountTL;
@@ -159,8 +163,11 @@ function removeSymbols(value) {
 }
 
 // Sayıyı para birimi şeklinde formatlayan yardımcı fonksiyon
-function formatCurrency(value, currencySymbol) {
+function formatCurrency4(value, currencySymbol) {
   return value.toFixed(4).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ' + currencySymbol;
+}
+function formatCurrency2(value, currencySymbol) {
+  return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ' + currencySymbol;
 }
 
 
