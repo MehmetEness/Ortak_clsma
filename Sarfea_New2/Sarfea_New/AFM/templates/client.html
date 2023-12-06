@@ -46,7 +46,7 @@
                 <div class="input-box" name="CompanyName">
                   <span class="details">Bölge</span>
                   <div class="dropdown-container">
-                    <input value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
+                    <input autocomplete= 'off' value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
                   <div id="dropdown1" class="dropdown-content">
                         {% for x in locations %}
                             <span value="{{x.id}}" class="dropdown-item">{{x.Location}}</span>

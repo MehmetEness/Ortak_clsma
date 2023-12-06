@@ -25,8 +25,8 @@ fetch(dosyaURL)
       const hedefVeri = data.items.find(item => item.Tarih === hedefTarih);
 
       if (hedefVeri) {
-        // TP_DK_USD_A alanını konsola yazdır
-        console.log(hedefVeri.TP_DK_USD_A);
+        // TP_DK_USD_S alanını konsola yazdır
+        console.log(hedefVeri.TP_DK_USD_S);
       } else {
         console.log('Belirtilen tarihe ait veri bulunamadı.');
       }
@@ -61,8 +61,8 @@ timeForKur.addEventListener('change', function () {
             const hedefVeri = data.items.find(item => item.Tarih === tarih);
       
             if (hedefVeri) {
-              // TP_DK_USD_A alanını konsola yazdır
-              console.log(hedefVeri.TP_DK_USD_A);
+              // TP_DK_USD_S alanını konsola yazdır
+              console.log(hedefVeri.TP_DK_USD_S);
             } else {
               console.log('Belirtilen tarihe ait veri bulunamadı.');
             }
@@ -85,8 +85,8 @@ timeForKur.addEventListener('change', function () {
             const hedefVeri = data.items.find(item => item.Tarih === tarih);
       
             if (hedefVeri) {
-              // TP_DK_USD_A alanını konsola yazdır
-              console.log(hedefVeri.TP_DK_USD_A);
+              // TP_DK_USD_S alanını konsola yazdır
+              console.log(hedefVeri.TP_DK_USD_S);
             } else {
               console.log('Belirtilen tarihe ait veri bulunamadı.');
             }

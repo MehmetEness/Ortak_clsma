@@ -19,6 +19,7 @@ class ProjectForm(forms.ModelForm):
         }
         )
     ProjectCode = forms.CharField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         required=True,
         max_length=63,
          error_messages={
@@ -172,8 +173,9 @@ class ExpensesForm(forms.ModelForm):
                   'Date_Expenses', 'ProjectName_Expenses', 'ProjectName_Expenses_Copy']   
 
 class JobHistoryForm(forms.ModelForm):
-    ProjectName_JobHistory_Copy = forms.CharField(max_length=63, required=False)
+    ProjectName_JobHistory_Copy = forms.CharField(max_length=63, required=False,widget=forms.TextInput(attrs={'autocomplete': 'off'}),)
     ProjectName_JobHistory = forms.CharField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         max_length=63, 
         error_messages={
             'required': '! Lütfen Proje Adını Seçiniz'
@@ -187,19 +189,22 @@ class JobHistoryForm(forms.ModelForm):
         label='CompanyName_FromJobMade'
     )
     CompanyName_Job_JobHistory = forms.CharField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
          error_messages={
             'required': '! Lütfen Firma Adını Seçiniz'  # Özel hata mesajı
         }
     )
   
-    ExpensDetails_JobHistory = forms.CharField(required=False, max_length=1000, initial='Diğer')
-    Invoice_No_JobHistory = forms.CharField(required=False, max_length=63)
+    ExpensDetails_JobHistory = forms.CharField(required=False, max_length=1000, initial='Diğer',widget=forms.TextInput(attrs={'autocomplete': 'off'}),)
+    Invoice_No_JobHistory = forms.CharField(required=False, max_length=63,widget=forms.TextInput(attrs={'autocomplete': 'off'}),)
     Amount_JobHistory = forms.DecimalField(  
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         max_digits=17,
         decimal_places=4,
         required=False,
     )
     Dollar_Rate_JobHistory = forms.DecimalField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         max_digits=8,
         decimal_places=4,
         required=False,
@@ -216,8 +221,9 @@ class JobHistoryForm(forms.ModelForm):
                   'ExpensDetails_JobHistory', 'Amount_JobHistory', 'Dollar_Rate_JobHistory', 'Date_JobHistory', 'Invoice_No_JobHistory']
 
 class IncomesForm(forms.ModelForm):
-    ProjectName_Incomes_Copy = forms.CharField(max_length=63, required=False)
+    ProjectName_Incomes_Copy = forms.CharField(max_length=63, required=False, widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     ProjectName_Incomes = forms.CharField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         error_messages={
             'required': '! Lütfen Proje Adını Giriniz'  # Özel hata mesajı
         }
@@ -230,16 +236,19 @@ class IncomesForm(forms.ModelForm):
     )
     CompanyName_Pay_Incomes = forms.CharField(
         max_length=63, 
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         error_messages={
             'required': '! Lütfen Ödeme Yapan Firmanın Adını Seçiniz'  # Özel hata mesajı
         }
         )
     Amount_Incomes_Incomes = forms.DecimalField(  
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         max_digits=17,
         decimal_places=4,
         required=False,
     )
     Dollar_Rate_Incomes = forms.DecimalField(
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         max_digits=8,
         decimal_places=4,
         required=False,
@@ -268,6 +277,7 @@ class ClientsForm(forms.ModelForm):
     CompanyName_Clients_New = forms.CharField(
         max_length=63, 
         required=False,
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         error_messages={
             'required': '! Lütfen Firma Adını Giriniz',
             'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
@@ -275,14 +285,15 @@ class ClientsForm(forms.ModelForm):
         )
     CompanyName_Clients = forms.CharField(
         max_length=63,
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         error_messages={
             'required': '! Lütfen Firma Adını Giriniz',
             'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
         }
         )
-    ContactPerson = forms.CharField(max_length=63, required=False)
-    PhoneNumber = forms.CharField(max_length=15, required=False)
-    Email= forms.CharField(max_length=63, required=False)
+    ContactPerson = forms.CharField(max_length=63, required=False,widget=forms.TextInput(attrs={'autocomplete': 'off'}))
+    PhoneNumber = forms.CharField(max_length=15, required=False,widget=forms.TextInput(attrs={'autocomplete': 'off'}))
+    Email= forms.CharField(max_length=63, required=False,widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     Location = forms.CharField(
         required=False,
     ) 
@@ -294,6 +305,7 @@ class SupplierForm(forms.ModelForm):
     CompanyName_Supplier_New = forms.CharField(
         max_length=63,
         required=False,
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
         error_messages={
             'required': '! Lütfen Firma Adını Giriniz',
             'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
@@ -302,17 +314,19 @@ class SupplierForm(forms.ModelForm):
     
     CompanyName_Supplier = forms.CharField(
         max_length=63,
-         error_messages={
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
+        error_messages={
             'required': '! Lütfen Firma Adını Giriniz',
             'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
         }
     )
-    ContactPerson = forms.CharField(max_length=63, required=False)
-    PhoneNumber = forms.CharField(max_length=15, required=False)
-    Email= forms.CharField(max_length=63, required=False)
+    ContactPerson = forms.CharField(max_length=63, required=False, widget=forms.TextInput(attrs={'autocomplete': 'off'}),)
+    PhoneNumber = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'autocomplete': 'off'})),
+    Email= forms.CharField(max_length=63, required=False, widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     Location = forms.CharField(
         required=False,
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
     ) 
     class Meta:
         model = Supplier 
-        fields = '__all__'
+        fields = '__all__'   

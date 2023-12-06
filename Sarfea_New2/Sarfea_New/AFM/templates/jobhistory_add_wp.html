@@ -52,7 +52,7 @@
                 <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
                     <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
-                        <input type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
+                        <input autocomplete= 'off' type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
                         {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
                                 <div class="error-container">
                                     <span class="error-triangle"></span>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="input-box" name="Amount_JobHistory">
                     <span class="details">Tutar (₺)</span>
-                    <input class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001">
+                    <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001">
                 </div>
                 <div class="input-box" name="Dollar_Rate_JobHistory">
                     <span class="details">Dolar Kuru (₺)</span>
@@ -253,99 +253,70 @@
       //**************      KUR HESAPLAMA      ********************
       
       
-      // Hedef tarih
-      var hedefTarih = '06-01-2015';
-      
-      // JSON dosyasının URL'si
       var dosyaURL = "{% static 'kur.json' %}";
-      
-      // JSON dosyasını fetch ile oku
-      fetch(dosyaURL)
-        .then(response => response.json())
-        .then(data => {
-          try {
-            // Hedef tarihi kullanarak veriyi filtrele
-            const hedefVeri = data.items.find(item => item.Tarih === hedefTarih);
-      
-            if (hedefVeri) {
-              // TP_DK_USD_A alanını konsola yazdır
-              console.log(hedefVeri.TP_DK_USD_A);
-            } else {
-              console.log('Belirtilen tarihe ait veri bulunamadı.');
-            }
-          } catch (parseHata) {
-            console.error('JSON parse hatası:', parseHata);
-          }
-        })
-        .catch(err => {
-          console.error('Dosya okuma hatası:', err);
-        });
-      
-      
-      
-      
-      
-      //selection seçimine göre yapılacak işlem
-      
-      timeForKur.addEventListener('change', function () {
-          // Seçilen değeri al
-          const secilenDeger = timeForKur.value;
-         
-          // Seçilen değere göre işlem yap
-          if (secilenDeger === 'secenek1') {
-              
-          } else if (secilenDeger === 'secenek2') {
-              tarih = birGunOncekiTarih(dateForKur.value);
-              fetch(dosyaURL)
-              .then(response => response.json())
-              .then(data => {
-                try {
-                  // Hedef tarihi kullanarak veriyi filtrele
-                  const hedefVeri = data.items.find(item => item.Tarih === tarih);
-            
-                  if (hedefVeri) {
-                    // TP_DK_USD_A alanını konsola yazdır
-                    //console.log(hedefVeri.TP_DK_USD_A);
-                    kurInput.value = hedefVeri.TP_DK_USD_A
-                  } else {
-                    console.log('Belirtilen tarihe ait veri bulunamadı.');
-                  }
-                } catch (parseHata) {
-                  console.error('JSON parse hatası:', parseHata);
-                }
-              })
-              .catch(err => {
-                console.error('Dosya okuma hatası:', err);
-              });
-          ////-----------------------------------------
+   //selection seçimine göre yapılacak işlem
+          
+          timeForKur.addEventListener('change', function () {
+              // Seçilen değeri al
+              const secilenDeger = timeForKur.value;
+             
+              // Seçilen değere göre işlem yap
+              if (secilenDeger === 'secenek1') {
                   
-          } else if (secilenDeger === 'secenek3') {
-            //console.log(dateForKur.value);
-              tarih = tarihFormatiniDegistir(dateForKur.value);    
-              console.log(tarih);
-              fetch(dosyaURL)
-              .then(response => response.json())
-              .then(data => {
-                try {
-                  // Hedef tarihi kullanarak veriyi filtrele
-                  const hedefVeri = data.items.find(item => item.Tarih === tarih);
-            
-                  if (hedefVeri) {
-                    // TP_DK_USD_A alanını konsola yazdır
-                    kurInput.value = hedefVeri.TP_DK_USD_A
-                  } else {
-                    console.log('Belirtilen tarihe ait veri bulunamadı.');
-                  }
-                } catch (parseHata) {
-                  console.error('JSON parse hatası:', parseHata);
-                }
-              })
-              .catch(err => {
-                console.error('Dosya okuma hatası:', err);
-              });
-          }
-      });
-      
+              } else if (secilenDeger === 'secenek2') {
+                  tarih = birGunOncekiTarih(dateForKur.value);
+                  console.log(tarih);
+                  fetch(dosyaURL)
+                  .then(response => response.json())
+                  .then(data => {
+                    try {
+                      // Hedef tarihi kullanarak veriyi filtrele
+                      const hedefVeri = data.items.find(item => item.Tarih === tarih);
+                
+                      if (hedefVeri) {
+                        // TP_DK_USD_S alanını konsola yazdır
+                        //console.log(hedefVeri.TP_DK_USD_S);
+                        kurInput.value = hedefVeri.TP_DK_USD_S
+                        console.log(hedefVeri.TP_DK_USD_S);
+                      } else {
+                        console.log('Belirtilen tarihe ait veri bulunamadı.');
+                      }
+                    } catch (parseHata) {
+                      console.error('JSON parse hatası:', parseHata);
+                    }
+                  })
+                  .catch(err => {
+                    console.error('Dosya okuma hatası:', err);
+                  });
+              ////-----------------------------------------
+                      
+              } else if (secilenDeger === 'secenek3') {
+                //console.log(dateForKur.value);
+                  tarih = tarihFormatiniDegistir(dateForKur.value);    
+                  console.log(tarih);
+                  fetch(dosyaURL)
+                  .then(response => response.json())
+                  .then(data => {
+                    try {
+                      // Hedef tarihi kullanarak veriyi filtrele
+                      const hedefVeri = data.items.find(item => item.Tarih === tarih);
+                
+                      if (hedefVeri) {
+                        // TP_DK_USD_S alanını konsola yazdır
+                        console.log(hedefVeri.TP_DK_USD_S);
+                        kurInput.value = hedefVeri.TP_DK_USD_S
+                      } else {
+                        console.log('Belirtilen tarihe ait veri bulunamadı.');
+                      }
+                    } catch (parseHata) {
+                      console.error('JSON parse hatası:', parseHata);
+                    }
+                  })
+                  .catch(err => {
+                    console.error('Dosya okuma hatası:', err);
+                  });
+              }
+          });
       
       /******************************       Tarihi Formatlama          ********************************* */
       function tarihFormatiniDegistir(tarih) {
