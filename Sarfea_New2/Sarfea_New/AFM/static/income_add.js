@@ -10,48 +10,39 @@ var tarih ;
 //**************      KUR HESAPLAMA      ********************
 
 
-function getBuyingValues(x) {
-    var url = `https://tcmb.gov.tr/kurlar/202311/${x}.xml`;
-    console.log(url);
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Hata: " + response.status);
-            }
-            return response.text();
-        })
-        .then(data => {
-            // XML'i parse et
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "application/xml");
+// Hedef tarih
+var hedefTarih = '06-01-2015';
 
-            // Döviz kurlarını al
-            const rates = [];
-            const currencyNodes = xmlDoc.getElementsByTagName("Currency");
-            for (let i = 0; i < currencyNodes.length; i++) {
-                const currencyNode = currencyNodes[i];
-                rates.push({
-                    "currency": currencyNode.getAttribute("Kod"),
-                    "buying": parseFloat(currencyNode.querySelector("BanknoteBuying").textContent),
-                    "selling": parseFloat(currencyNode.querySelector("BanknoteSelling").textContent),
-                });
-            }
+// JSON dosyasının URL'si
+var dosyaURL = "{% static 'kur.json' %}";
 
-            // buying değerlerini al ve sayısal değerlere dönüştür
-            const buyingValues = rates.map(rate => rate.buying);
+// JSON dosyasını fetch ile oku
+fetch(dosyaURL)
+  .then(response => response.json())
+  .then(data => {
+    try {
+      // Hedef tarihi kullanarak veriyi filtrele
+      const hedefVeri = data.items.find(item => item.Tarih === hedefTarih);
 
-            return buyingValues;
-        })
-        .catch(error => {
-            console.error(error);
-            throw error; // Hata durumunda promise'ı reject et
-        });
-}
+      if (hedefVeri) {
+        // TP_DK_USD_A alanını konsola yazdır
+        console.log(hedefVeri.TP_DK_USD_A);
+      } else {
+        console.log('Belirtilen tarihe ait veri bulunamadı.');
+      }
+    } catch (parseHata) {
+      console.error('JSON parse hatası:', parseHata);
+    }
+  })
+  .catch(err => {
+    console.error('Dosya okuma hatası:', err);
+  });
 
 
 
 
 
+//selection seçimine göre yapılacak işlem
 
 timeForKur.addEventListener('change', function () {
     // Seçilen değeri al
@@ -62,25 +53,51 @@ timeForKur.addEventListener('change', function () {
         
     } else if (secilenDeger === 'secenek2') {
         tarih = birGunOncekiTarih(dateForKur.value).replace(/-/g, '');
-        getBuyingValues(tarih)
-            .then(buyingValues => {
-                kurInput.textContent = buyingValues;
-            })
-            .catch(error => {
-                console.error("Hata:", error);
-            });
+        fetch(dosyaURL)
+        .then(response => response.json())
+        .then(data => {
+          try {
+            // Hedef tarihi kullanarak veriyi filtrele
+            const hedefVeri = data.items.find(item => item.Tarih === tarih);
+      
+            if (hedefVeri) {
+              // TP_DK_USD_A alanını konsola yazdır
+              console.log(hedefVeri.TP_DK_USD_A);
+            } else {
+              console.log('Belirtilen tarihe ait veri bulunamadı.');
+            }
+          } catch (parseHata) {
+            console.error('JSON parse hatası:', parseHata);
+          }
+        })
+        .catch(err => {
+          console.error('Dosya okuma hatası:', err);
+        });
+    ////-----------------------------------------
             
     } else if (secilenDeger === 'secenek3') {
         tarih = tarihFormatiniDegistir(dateForKur.value);    
-        console.log(tarih);    
-        getBuyingValues(tarih)
-            .then(buyingValues => {
-                kurInput.textContent = buyingValues;
-            })
-            .catch(error => {
-                console.error("Hata:", error);
-            });
+        fetch(dosyaURL)
+        .then(response => response.json())
+        .then(data => {
+          try {
+            // Hedef tarihi kullanarak veriyi filtrele
+            const hedefVeri = data.items.find(item => item.Tarih === tarih);
+      
+            if (hedefVeri) {
+              // TP_DK_USD_A alanını konsola yazdır
+              console.log(hedefVeri.TP_DK_USD_A);
+            } else {
+              console.log('Belirtilen tarihe ait veri bulunamadı.');
             }
+          } catch (parseHata) {
+            console.error('JSON parse hatası:', parseHata);
+          }
+        })
+        .catch(err => {
+          console.error('Dosya okuma hatası:', err);
+        });
+    }
 });
 
 
@@ -88,6 +105,14 @@ timeForKur.addEventListener('change', function () {
 function tarihFormatiniDegistir(tarih) {
     // Giriş tarihini JavaScript Date objesine çevir
     const dateObj = new Date(tarih);
+    if (isWeekend(dateObj)) {
+        dateObj.setDate(dateObj.getDate() - 1);
+    }
+
+    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
+    while (isWeekend(dateObj)) {
+        dateObj.setDate(dateObj.getDate() - 1);
+    }
 
     // Yıl, ay ve gün bilgilerini al
     const yil = dateObj.getFullYear();
@@ -106,6 +131,15 @@ function birGunOncekiTarih(dateString) {
     const dateObj = new Date(dateString);
     dateObj.setDate(dateObj.getDate() - 1);
 
+    if (isWeekend(dateObj)) {
+        dateObj.setDate(dateObj.getDate() - 1);
+    }
+
+    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
+    while (isWeekend(dateObj)) {
+        dateObj.setDate(dateObj.getDate() - 1);
+    }
+
     // Yıl, ay ve gün bilgilerini al
     const yil = dateObj.getFullYear();
     const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
@@ -115,6 +149,12 @@ function birGunOncekiTarih(dateString) {
     const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
 
     return yeniFormatliTarih;
+}
+
+// Haftasonu kontrol fonksiyonu
+function isWeekend(date) {
+    const day = date.getDay();
+    return day === 0 || day === 6;
 }
 
 
