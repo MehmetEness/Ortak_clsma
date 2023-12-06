@@ -38,7 +38,8 @@
               id="ProjectNameInput"
             >
               <span class="details">Proje Adı</span>
-              {{ form.ProjectName }} {% if form.ProjectName.errors %}
+              <input type="text" name="ProjectName" maxlength="63" required="" id="id_ProjectName" autocomplete="off">
+              {% if form.ProjectName.errors %}
               <div class="error-container">
                 <span class="error-triangle"></span>
                 <ul class="errorlist">
@@ -86,6 +87,7 @@
                   class="myInput"
                   placeholder="Firma Adını Seçiniz"
                   data-dropdown="dropdown1"
+                  autocomplete="off"
                 />
                 {% if form.CompanyName.errors %}
                 <div class="error-container">
@@ -122,6 +124,7 @@
                   class="myInput"
                   placeholder="Konum Seçiniz"
                   data-dropdown="dropdown2"
+                  autocomplete="off"
                 />
                 <div id="dropdown2" class="dropdown-content">
                   {% for x in locations %}
@@ -140,6 +143,7 @@
                 name="Cost_NotIncludingKDV"
                 id="id_Cost_NotIncludingKDV"
                 step="0.0001"
+                autocomplete="off"
               />
             </div>
             <div class="input-box">
@@ -158,6 +162,8 @@
                 name="CalculatedCost_NotIncludingKDV"
                 id="id_CalculatedCost_NotIncludingKDV"
                 step="0.0001"
+                autocomplete="off"
+
               />
             </div>
 

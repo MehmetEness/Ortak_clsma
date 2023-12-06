@@ -42,10 +42,10 @@ deactivate nondestructive
 if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ] ; then
     # transform D:\path\to\venv to /d/path/to/venv on MSYS
     # and to /cygdrive/d/path/to/venv on Cygwin
-    export VIRTUAL_ENV=$(cygpath "D:\SOFTWARE\29.11.2023 1. etap genel manada tamamlanmıs hali (1)\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world")
+    export VIRTUAL_ENV=$(cygpath "D:\SOFTWARE\3.12.20230ortak çalışma\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world")
 else
     # use the path as-is
-    export VIRTUAL_ENV="D:\SOFTWARE\29.11.2023 1. etap genel manada tamamlanmıs hali (1)\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world"
+    export VIRTUAL_ENV="D:\SOFTWARE\3.12.20230ortak çalışma\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world"
 fi
 
 _OLD_VIRTUAL_PATH="$PATH"

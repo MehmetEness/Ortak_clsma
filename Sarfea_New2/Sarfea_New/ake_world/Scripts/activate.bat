@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\SOFTWARE\29.11.2023 1. etap genel manada tamamlanmıs hali (1)\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world
+set VIRTUAL_ENV=D:\SOFTWARE\3.12.20230ortak çalışma\Ortak_clsma\Sarfea_New2\Sarfea_New\ake_world
 
 if not defined PROMPT set PROMPT=$P$G
 

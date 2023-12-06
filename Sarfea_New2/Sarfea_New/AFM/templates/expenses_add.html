@@ -282,38 +282,10 @@
           
           
           // Hedef tarih
-          var hedefTarih = '06-01-2015';
           
           // JSON dosyasının URL'si
           var dosyaURL = "{% static 'kur.json' %}";
-          
-          // JSON dosyasını fetch ile oku
-          fetch(dosyaURL)
-            .then(response => response.json())
-            .then(data => {
-              try {
-                // Hedef tarihi kullanarak veriyi filtrele
-                const hedefVeri = data.items.find(item => item.Tarih === hedefTarih);
-          
-                if (hedefVeri) {
-                  // TP_DK_USD_A alanını konsola yazdır
-                  console.log(hedefVeri.TP_DK_USD_A);
-                } else {
-                  console.log('Belirtilen tarihe ait veri bulunamadı.');
-                }
-              } catch (parseHata) {
-                console.error('JSON parse hatası:', parseHata);
-              }
-            })
-            .catch(err => {
-              console.error('Dosya okuma hatası:', err);
-            });
-          
-          
-          
-          
-          
-          //selection seçimine göre yapılacak işlem
+   //selection seçimine göre yapılacak işlem
           
           timeForKur.addEventListener('change', function () {
               // Seçilen değeri al
@@ -324,6 +296,7 @@
                   
               } else if (secilenDeger === 'secenek2') {
                   tarih = birGunOncekiTarih(dateForKur.value);
+                  console.log(tarih);
                   fetch(dosyaURL)
                   .then(response => response.json())
                   .then(data => {
@@ -334,7 +307,8 @@
                       if (hedefVeri) {
                         // TP_DK_USD_A alanını konsola yazdır
                         //console.log(hedefVeri.TP_DK_USD_A);
-                        kurInput.value = hedefVeri.TP_DK_USD_A
+                        kurInput.value = hedefVeri.TP_DK_USD_S
+                        console.log(hedefVeri.TP_DK_USD_S);
                       } else {
                         console.log('Belirtilen tarihe ait veri bulunamadı.');
                       }
@@ -360,8 +334,8 @@
                 
                       if (hedefVeri) {
                         // TP_DK_USD_A alanını konsola yazdır
-                        console.log(hedefVeri.TP_DK_USD_A);
-                        kurInput.value = hedefVeri.TP_DK_USD_A
+                        console.log(hedefVeri.TP_DK_USD_S);
+                        kurInput.value = hedefVeri.TP_DK_USD_S
                       } else {
                         console.log('Belirtilen tarihe ait veri bulunamadı.');
                       }
