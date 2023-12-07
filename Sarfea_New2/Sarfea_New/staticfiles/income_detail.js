@@ -76,8 +76,8 @@ setTimeout(function() {fetchDataFromTable();}, 0);
 
 
 function tableTopla(table){
-const columnIndex1 = 3;
-const columnIndex2 = 5;
+const columnIndex1 = 4;
+const columnIndex2 = 6;
 let totalTLFunction=0.0;
 let totalUSDFunction=0.0;
 

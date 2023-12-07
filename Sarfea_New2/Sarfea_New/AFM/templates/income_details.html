@@ -129,6 +129,7 @@
             <table id="table" class="table table-sortable">
               <thead>
                 <th>Alıcı Firma</th>
+                <th>Ödeme Yapan Firma</th>
                 <th scope="col">Tarih</th>
                 <th scope="col">Ödeme Türü</th>
                 <th scope="col">Tutar(TL)</th>
@@ -139,6 +140,7 @@
                 {% for income in incomes %}
                 <tr class="table-row">
                     <td><button type="button" class="edit-income-btn button2" style= "background: none; border:none;"><a href= "{% url 'income_edit' income_id=income.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ income.CompanyName_ReceivePayment_Incomes }} </td>
+                    <td>{{ income.CompanyName_Pay_Incomes }} </td>                    
                     <td>{{ income.ChekDate_Incomes|date:"d/m/Y" }}</td>
                     <td>{{ income.PaymentType_Incomes }} </td>
                     <td class="amount-column">{{ income.Amount_Incomes }} ₺</td>
@@ -149,6 +151,7 @@
               </tbody>
               <tfoot>
                 <tr>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td class="right">Toplam:</td>
@@ -166,7 +169,7 @@
         </div>        
       </div>
 {% block js_files %} 
-<script src="{% static 'income_details.js' %}"></script> 
+<script src="{% static 'income_detail.js' %}"></script> 
 <script>
   var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
