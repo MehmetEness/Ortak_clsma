@@ -1,12 +1,29 @@
 from django.http.response import HttpResponse
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
+from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
 from django.db.models import Q
 
 # Create your views here.
 def sales_offer(request):
+    sales_offer_card = SalesOfferCard.object.all()
+
+    if request.method == 'POST':
+        sales_offer_form = SalesOfferCardForm(request.POST)
+        
+        if sales_offer_form.is_valid():
+          
+          sales_offer_form.save()
+          return redirect('sales_offer')
+    else:
+        sales_offer_form = SalesOfferCardForm()
+    
+    context = {
+        'sales_offer_card':sales_offer_card,
+        'sales_offer_form':sales_offer_form,
+
+    }
     return render(request, "sales_offer.html")
 
 def expenses_edit(request, expenses_id):
