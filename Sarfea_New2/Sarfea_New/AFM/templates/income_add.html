@@ -319,9 +319,10 @@ var dosyaURL = "{% static 'kur.json' %}";
                 
                       if (hedefVeri) {
                         // TP_DK_USD_S alanını konsola yazdır
-                        //console.log(hedefVeri.TP_DK_USD_S);
                         kurInput.value = hedefVeri.TP_DK_USD_S
                         console.log(hedefVeri.TP_DK_USD_S);
+                        console.log(hedefVeri);
+
                       } else {
                         console.log('Belirtilen tarihe ait veri bulunamadı.');
                       }

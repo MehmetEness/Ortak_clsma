@@ -30,6 +30,7 @@ urlpatterns = [
     path("expenses_add_wp/<int:project_id>", views.expenses_add_wp, name='expenses_add_wp'),
     path("jobhistory_add_wp/<int:project_id>", views.jobhistory_add_wp, name='jobhistory_add_wp'),
     path("income_add_wp/<int:project_id>", views.income_add_wp, name='income_add_wp'),
+    path("sales_offer/", views.sales_offer, name='sales_offer'),
 
 
 ]

@@ -16,7 +16,7 @@
        <div class="nav-button" onclick="window.location.href = supplierUrl;"><i class="fas fa-truck"></i><a href="{% url 'supplier' %}"><span>Tedarikçi</span></a></div>
 
        <hr/>
-       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-wallet"></i><span>Satış Teklif</span></div>            
+       <div class="nav-button" onclick="window.location.href = sales_offerUrl;"><i class="fas fa-wallet"></i><a href="{% url 'sales_offer' %}"><span>Satış Teklif</span></a></div>            
        <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-box"></i><span>Stok</span></div>
        <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-wrench"></i><span>İşletme Bakım</span></div>
        <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-chart-line"></i><span>Raporlama</span></div>
@@ -41,6 +41,8 @@
     var projectsUrl = "{% url 'projects' %}";
     var clientUrl = "{% url 'client' %}";
     var supplierUrl = "{% url 'supplier' %}";
+    var sales_offerUrl = "{% url 'sales_offer' %}";
+
 </script>
 
 {% endblock %}

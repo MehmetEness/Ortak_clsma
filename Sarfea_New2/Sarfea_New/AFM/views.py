@@ -6,6 +6,9 @@ from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobH
 from django.db.models import Q
 
 # Create your views here.
+def sales_offer(request):
+    return render(request, "sales_offer.html")
+
 def expenses_edit(request, expenses_id):
     expenses_edit = get_object_or_404(Expenses, id=expenses_id)
     project = get_object_or_404(Project, ProjectName=expenses_edit.ProjectName_Expenses)
