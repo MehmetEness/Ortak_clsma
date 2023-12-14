@@ -119,6 +119,8 @@
 .lists thead{
     line-height: 70px;
     width: 100%;
+    position: sticky;
+    top: 0;
 }
 .lists th:first-child{
     padding-left: 50px;
