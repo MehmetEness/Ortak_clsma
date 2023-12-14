@@ -164,11 +164,13 @@ class SalesOfferCard(models.Model):
     AC_Power_Card = models.IntegerField(blank=True, null=True,default=0)
     DC_Power_Card = models.IntegerField(blank=True, null=True,default=0)
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True)
-    Situation_Card = models.CharField(max_length=63, default="Teklif")
+    Situation_Card = models.CharField(max_length=63, default="Potansiyel Müşteri")
     Date_Card = models.DateField(blank=True, null=True)
     Terrain_Roof_Card = models.CharField(max_length=63, blank=True, null=True)
-    Offer_File_Card = models.FileField(upload_to='offer_files/')
-    M_File_Card = models.FileField(upload_to='m_files/')
+    Comment_Date_Card = models.DateField(blank=True, null=True)
+    Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
+    Offer_File_Card = models.FileField(upload_to='offer_files/', blank=True, null=True)
+    M_File_Card = models.FileField(upload_to='m_files/', blank=True, null=True)
 	
     
     

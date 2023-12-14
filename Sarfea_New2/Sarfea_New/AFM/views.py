@@ -9,22 +9,46 @@ from django.db.models import Q
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
 
-    if request.method == 'POST':
-        sales_offer_form = SalesOfferCardForm(request.POST)
-        
-        if sales_offer_form.is_valid():
-          
-          sales_offer_form.save()
-          return redirect('sales_offer')
-    else:
-        sales_offer_form = SalesOfferCardForm()
-    
+    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri')
+    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    potential_customers_count = potential_customers.count()
+
+    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama')
+    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    cost_customers_count = cost_customers.count()
+
+    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme')
+    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    price_customers_count = price_customers.count()
+
+    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama')
+    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    offer_customers_count = offer_customers.count()
+
+    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme')
+    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    presentation_customers_count = presentation_customers.count()
+
+    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu')
+    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    done_customers_count = done_customers.count()
+
     context = {
         'sales_offer_card':sales_offer_card,
-        'sales_offer_form':sales_offer_form,
-
+        'potential_customers_cost':potential_customers_cost,
+        'potential_customers_count':potential_customers_count,
+        'cost_customers_cost':cost_customers_cost,
+        'cost_customers_count':cost_customers_count,
+        'price_customers_cost':price_customers_cost,
+        'price_customers_count':price_customers_count,
+        'offer_customers_cost':offer_customers_cost,
+        'offer_customers_count':offer_customers_count,
+        'presentation_customers_cost':presentation_customers_cost,
+        'presentation_customers_count':presentation_customers_count,
+        'done_customers_cost':done_customers_cost,
+        'done_customers_count':done_customers_count,
     }
-    return render(request, "sales_offer.html")
+    return render(request, "sales_offer.html", context)
 
 def expenses_edit(request, expenses_id):
     expenses_edit = get_object_or_404(Expenses, id=expenses_id)

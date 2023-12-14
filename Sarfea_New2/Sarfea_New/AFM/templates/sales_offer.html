@@ -47,129 +47,126 @@
           <div class="sales_container">         
                   <div class="rows">    
                     <div class="total-cash">
-                      <span>$ 150,000</span>
-                      <span>(2)</span>
-                    </div>                 
+                      <span>$ {{potential_customers_cost}}</span>
+                      <span>({{potential_customers_count}})</span>
+                    </div>       
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Potansiyel Müşteri' %}
                     <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
                       <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
                         <span>* * * *</span>
                       </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
                     </div>
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
+
                   </div>
                   <div class="rows">
                     <div class="total-cash">
-                      <span>$ 75,000</span>
-                      <span>(1)</span>
+                      <span>$ {{cost_customers_cost}}</span>
+                      <span>({{cost_customers_count}})</span>
                     </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Maliyet Hesaplama' %}
                     <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
                       <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
                         <span>* * * *</span>
                       </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+                   
                   </div>
                   <div class="rows">
                     <div class="total-cash">
-                      <span>$ 150,000</span>
-                      <span>(2)</span>
+                      <span>$ {{price_customers_cost}}</span>
+                      <span>({{price_customers_count}})</span>
                     </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Fiyat Belirleme' %}
                     <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
                       <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
                         <span>* * * *</span>
                       </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
                     </div>
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    
                   </div>
                   <div class="rows">
                     <div class="total-cash">
-                      <span>$ 225,000</span>
-                      <span>(3)</span>
+                      <span>$ {{offer_customers_cost}}</span>
+                      <span>({{offer_customers_count}})</span>
                     </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Teklif Hazırlama' %}
                     <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
                       <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
                         <span>* * * *</span>
                       </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
                     </div>
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
                   </div>
                   <div class="rows">
                     <div class="total-cash">
-                      <span>$ 0</span>
-                      <span>(0)</span>
+                      <span>$ {{presentation_customers_cost}}</span>
+                      <span>({{presentation_customers_count}})</span>
                     </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' %}
+                    <div class="card" draggable="true">
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
+                      <div class="cash-box">
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                   </div>
                   <div class="rows">
                     <div class="total-cash">
-                      <span>$ 75,000</span>
-                      <span>(1)</span>
+                      <span>$ {{done_customers_cost}}</span>
+                      <span>({{done_customers_count}})</span>
                     </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Teklif Sunuldu' %}
                     <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <span class="bold">{{card.Client_Card}}</span>
+                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
                       <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
+                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
                         <span>* * * *</span>
                       </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                      <span>{{card.Date_Card | date:"d F"}}</span>
+                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
                     </div>
+                    {% endif %}
+                    {% endfor %}
                   </div>
           
         </div>

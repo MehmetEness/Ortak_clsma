@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from.models import Project, MyCompanyNames , Locations, Terrain_Roof, Banks, Situations, CompanyNames
+from.models import Project, MyCompanyNames , Locations, Terrain_Roof, Banks, Situations, CompanyNames,SalesOfferCard
 from.models import Supplier, Clients, ProjectNames, Incomes, JobHistory, Expenses, PaymentFirms, Details
 
 admin.site.register(Project)
@@ -18,3 +18,4 @@ admin.site.register(JobHistory)
 admin.site.register(Expenses)
 admin.site.register(PaymentFirms)
 admin.site.register(Details)
+admin.site.register(SalesOfferCard)
