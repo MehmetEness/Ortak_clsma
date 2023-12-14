@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'tedarikci.css' %}">
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-{% endblock %}
+    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %}
     {% block title %} Sales Offer {% endblock %}
     {% block content %}
   <div class="body-div">
@@ -14,144 +14,213 @@
   {% include 'partials/_left_nav_bar.html' %}
       <div class="right-menu"> 
         <div class="top-menu">
-          <span>Satış Teklifi</span>
-          <div class="content">                      
-            <div class="search">
-              <div class="icon"></div>
-              <div class="input">
-                <input id="mysearch" type="text" placeholder="Ara">
+          <span>Satış Teklifi</span>    
+          <ul class="top-menu-ul">
+            <li>Liste</li>
+            <li>Satış Süresi</li>
+            <li>Bekleyen İşler</li>
+            <li>Kaybedilen İşler</li>
+          </ul>      
+        </div>   
+        <div class="main-container">
+          <div class="titles">
+            <div class="title">
+              <p>Potansiyel Müşteri</p>                     
             </div>
-            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
-         </div> 
+            <div class="title">
+              <p>Maliyet Hesaplama</p>
+            </div>
+            <div class="title">
+              <p>Fiyat Belirleme</p>
+            </div>
+            <div class="title">
+              <p>Teklif Hazırlama</p>
+            </div>
+            <div class="title">
+              <p>Sunum Sonrası Görüşme</p>
+            </div>
+            <div class="title">
+              <p>Teklif Sunuldu</p>
+            </div>
           </div>
+          <div class="sales_container">         
+                  <div class="rows">                     
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                  </div>
+                  <div class="rows">
+                    
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                  </div>
+                  <div class="rows">
+                    
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                  </div>
+                  <div class="rows">
+                    
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                  </div>
+                  <div class="rows">
+                    
+                  </div>
+                  <div class="rows">
+                    
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                  </div>
+          
         </div>
-
-        <div class="lists">         
-                  
-        </div>
+        </div>   
+          
       </div>   
   </div>
 
 {% block js_files %} 
-<script src="{% static 'tedarikcii.js' %}"></script> 
-<script src="{% static 'index.js' %}"></script> 
+<!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
 
+<!--      ****  Sürükle Bırak  ****       -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-  const inputs = document.querySelectorAll('.myInput');
+  var p = document.querySelectorAll(".card");
+  var choice = document.querySelectorAll(".rows");
+  var dragItem = null;
 
-  inputs.forEach(input => {
-    const dropdownId = input.getAttribute('data-dropdown');
-    const dropdown = document.getElementById(dropdownId);
-    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+  for(var i of p){
+      i.addEventListener("dragstart", dragStart);
+      i.addEventListener("dragend", dragEnd);
+  }
 
-    input.addEventListener('focus', function () {
-      dropdown.classList.add('show');
-    });
+  function dragStart(){
+      dragItem = this;
+      setTimeout(()=>this.style.display = "none", 0);
+  }
+  function dragEnd(){            
+      setTimeout(()=>this.style.display = "flex", 0);
+      dragItem = null;
+  }
 
-    input.addEventListener('blur', function () {
-      setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200);
-    });
-
-    input.addEventListener('input', function () {
-      const filterText = input.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        if (itemText.startsWith(filterText)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function () {
-        input.value = this.textContent;
-        dropdown.classList.remove('show');
-      });
-    });
-  });
-});
+  for(j of choice){
+      j.addEventListener("dragover", dragOver);
+      j.addEventListener("dragenter", dragEnter);
+      j.addEventListener("dragleave", dragLeave);
+      j.addEventListener("drop", Drop);
+  }
+  function Drop(){
+      this.append(dragItem);
+      this.style.border = "none"
+      this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+  }
+  function dragOver(e){
+      e.preventDefault();
+      this.style.border = "2px solid rgba(0, 0, 0, 0.3)"
+  }
+  function dragEnter(e){
+      e.preventDefault();
+  }
+  function dragLeave(){
+      this.style.border = "none"
+      this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+  }
 </script>
-<!-- search bar -->
 <script>
-  icon = document.querySelector('.icon');
-search = document.querySelector('.search');
-icon.onclick = function(){
-  search.classList.toggle('active')
-}
-function clearSearch() {
-const input = document.getElementById('mysearch');
-input.value = '';
-searchTable(); // Temizle dÃ¼ÄŸmesine basÄ±ldÄ±ÄŸÄ±nda tabloyu sÄ±fÄ±rla
-}
+  // JavaScript kullanarak tıklanan elemana "clicked" sınıfını ekleyen fonksiyon
+  document.addEventListener("DOMContentLoaded", function () {
+    var menuItems = document.querySelectorAll(".top-menu-ul li");
 
-function modalAc(){
+    // İlk li elemanına otomatik olarak tıklama gerçekleştir
+    menuItems[0].click();
 
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-var searchInput = document.getElementById("mysearch");
-var clearButton = document.querySelector(".clear");  // Bu class'ı, HTML'deki clear span elementine uygulamalısınız
-var table = document.getElementById("table");
-var rows = table.getElementsByTagName("tr");
-
-// Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
-searchInput.addEventListener("input", function() {
-filterTable();
-});
-
-// Clear Button'a tıklandığında çalışacak event listener
-clearButton.addEventListener("click", function() {
-// Search Input'un değerini boşalt
-searchInput.value = "";
-// Tüm satırları göster
-showAllRows();
-});
-
-// Tabloyu filtreleyen fonksiyon
-function filterTable() {
-var filter = searchInput.value.toLowerCase();
-
-for (var i = 0; i < rows.length; i++) {
-   var row = rows[i];
-
-if (!row.querySelector("th")) {
-   var cells = row.getElementsByTagName("td");
-   var shouldShow = false;
-
-   for (var j = 0; j < cells.length; j++) {
-       var cell = cells[j];
-
-       if (cell) {
-           var text = cell.textContent || cell.innerText;
-
-           if (text.toLowerCase().indexOf(filter) > -1) {
-               shouldShow = true;
-               break;
-           }
-       }
-   }
-
-   if (shouldShow) {
-       row.style.display = "";
-   } else {
-       row.style.display = "none";
-   }
-}
-}
-}
-
-// Tüm satırları gösteren fonksiyon
-function showAllRows() {
-for (var i = 0; i < rows.length; i++) {
-   rows[i].style.display = "";
-}
-}
+    menuItems.forEach(function (item) {
+        item.addEventListener("click", function () {
+            // Tıklanan öğeye "li-hover" sınıfını ekleyin
+            menuItems.forEach(function (item) {
+                item.classList.remove("li-hover");
+            });
+            this.classList.add("li-hover");
+        });
+    });
 });
 </script>
 
