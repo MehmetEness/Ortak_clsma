@@ -367,15 +367,15 @@ var dosyaURL = "{% static 'kur.json' %}";
 function tarihFormatiniDegistir(tarih) {
     // Giriş tarihini JavaScript Date objesine çevir
     const dateObj = new Date(tarih);
+    dateObj.setDate(dateObj.getDate() + 1);
     if (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
+        dateObj.setDate(dateObj.getDate() + 1);
     }
 
     // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
     while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
+        dateObj.setDate(dateObj.getDate() + 1);
     }
-
     // Yıl, ay ve gün bilgilerini al
     const yil = dateObj.getFullYear();
     const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
@@ -392,13 +392,12 @@ function tarihFormatiniDegistir(tarih) {
 
 function birGunOncekiTarih(dateString) {
     const dateObj = new Date(dateString);
-    dateObj.setDate(dateObj.getDate() - 1);
+    dateObj.setDate(dateObj.getDate());
 
     // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
     while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
+        dateObj.setDate(dateObj.getDate() + 1);
     }
-
     // Yıl, ay ve gün bilgilerini al
     const yil = dateObj.getFullYear();
     const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');

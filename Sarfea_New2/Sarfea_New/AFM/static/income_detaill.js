@@ -41,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function formatNumber4(number) {
-  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 }).format(number.toFixed(4));
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits:4 , maximumFractionDigits: 4 }).format(number.toFixed(4));
 
 }
 function formatNumber2(number) {
-  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(number.toFixed(4));
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(4));
 
 }
 
