@@ -7,7 +7,7 @@ from django.db.models import Q
 
 # Create your views here.
 def sales_offer(request):
-    sales_offer_card = SalesOfferCard.object.all()
+    sales_offer_card = SalesOfferCard.objects.all()
 
     if request.method == 'POST':
         sales_offer_form = SalesOfferCardForm(request.POST)
