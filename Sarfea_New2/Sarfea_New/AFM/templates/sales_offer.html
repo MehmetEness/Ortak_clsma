@@ -14,13 +14,14 @@
   {% include 'partials/_left_nav_bar.html' %}
       <div class="right-menu"> 
         <div class="top-menu">
-          <span>Satış Teklifi</span>    
+          <span>Satış Teklif</span>    
           <ul class="top-menu-ul">
             <li>Liste</li>
             <li>Satış Süresi</li>
             <li>Bekleyen İşler</li>
             <li>Kaybedilen İşler</li>
-          </ul>      
+          </ul> 
+          <button>Yeni Satış</button>     
         </div>   
         <div class="main-container">
           <div class="titles">
@@ -44,7 +45,11 @@
             </div>
           </div>
           <div class="sales_container">         
-                  <div class="rows">                     
+                  <div class="rows">    
+                    <div class="total-cash">
+                      <span>$ 150,000</span>
+                      <span>(2)</span>
+                    </div>                 
                     <div class="card" draggable="true">
                       <span class="bold">Soylu Emlak Geliştirme</span>
                       <span>Genel Merkez İnşaatı(#46)</span>
@@ -67,7 +72,10 @@
                     </div>
                   </div>
                   <div class="rows">
-                    
+                    <div class="total-cash">
+                      <span>$ 75,000</span>
+                      <span>(1)</span>
+                    </div> 
                     <div class="card" draggable="true">
                       <span class="bold">Soylu Emlak Geliştirme</span>
                       <span>Genel Merkez İnşaatı(#46)</span>
@@ -80,40 +88,10 @@
                     </div>
                   </div>
                   <div class="rows">
-                    
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
-                  </div>
-                  <div class="rows">
-                    
-                    <div class="card" draggable="true">
-                      <span class="bold">Soylu Emlak Geliştirme</span>
-                      <span>Genel Merkez İnşaatı(#46)</span>
-                      <div class="cash-box">
-                        <span class="bold">$ 75,000</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>1 Mayıs</span>
-                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
-                    </div>
+                    <div class="total-cash">
+                      <span>$ 150,000</span>
+                      <span>(2)</span>
+                    </div> 
                     <div class="card" draggable="true">
                       <span class="bold">Soylu Emlak Geliştirme</span>
                       <span>Genel Merkez İnşaatı(#46)</span>
@@ -136,10 +114,52 @@
                     </div>
                   </div>
                   <div class="rows">
-                    
+                    <div class="total-cash">
+                      <span>$ 225,000</span>
+                      <span>(3)</span>
+                    </div> 
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
+                    <div class="card" draggable="true">
+                      <span class="bold">Soylu Emlak Geliştirme</span>
+                      <span>Genel Merkez İnşaatı(#46)</span>
+                      <div class="cash-box">
+                        <span class="bold">$ 75,000</span>
+                        <span>* * * *</span>
+                      </div>                      
+                      <span>1 Mayıs</span>
+                      <span><span class="bold">18 Şubat:</span> Daha yetkili bir konyak araştır</span>
+                    </div>
                   </div>
                   <div class="rows">
-                    
+                    <div class="total-cash">
+                      <span>$ 0</span>
+                      <span>(0)</span>
+                    </div> 
+                  </div>
+                  <div class="rows">
+                    <div class="total-cash">
+                      <span>$ 75,000</span>
+                      <span>(1)</span>
+                    </div> 
                     <div class="card" draggable="true">
                       <span class="bold">Soylu Emlak Geliştirme</span>
                       <span>Genel Merkez İnşaatı(#46)</span>
