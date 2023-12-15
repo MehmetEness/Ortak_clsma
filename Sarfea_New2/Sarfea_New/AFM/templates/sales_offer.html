@@ -16,10 +16,10 @@
         <div class="top-menu">
           <span>Satış Teklif</span>    
           <ul class="top-menu-ul">
-            <li>Liste</li>
-            <li>Satış Süresi</li>
-            <li>Bekleyen İşler</li>
-            <li>Kaybedilen İşler</li>
+            <li id="list">Liste</li>
+            <li id="sale_time">Satış Süresi</li>
+            <li id="waiting_job">Bekleyen İşler</li>
+            <li id="losing_job">Kaybedilen İşler</li>
           </ul> 
           <button>Yeni Satış</button>     
         </div>   
@@ -171,6 +171,64 @@
           
         </div>
         </div>   
+        <div class="list-container">
+          <div class="lists">
+            <table id="table" class="table table-sortable">
+               <thead>
+                  <th scope="col">Proje Adı</th>
+                  <th scope="col">Konum</th>
+                  <th scope="col">AC Güç</th>
+                  <th scope="col">DC Güç</th>
+                  <th scope="col">İş Bedeli</th>
+                  <th scope="col">Arazi/Çatı</th>
+                  <th scope="col">Tarih</th>
+                  <th scope="col">Durum</th>
+               </thead>
+               <tbody>
+                  <tr>
+                    <td>asfas</td>
+                    <td>asfsdfs</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                  </tr>
+                  <tr>
+                    <td>asfas</td>
+                    <td>asfsdfs</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                  </tr>
+                  <tr>
+                    <td>asfas</td>
+                    <td>asfsdfs</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                  </tr>
+                  <tr>
+                    <td>asfas</td>
+                    <td>asfsdfs</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                    <td>dfasdasd</td>
+                    <td>afsdfsd</td>
+                    <td>fasdasfasd</td>
+                  </tr>                  
+               </tbody>
+              </table>
+            </div>
+        </div>
           
       </div>   
   </div>
@@ -239,6 +297,50 @@
         });
     });
 });
+</script>
+<!-- Top Menu -->
+<script>
+
+  let maniContainer = document.querySelector(".main-container");
+  let listContainer = document.querySelector(".list-container");
+
+
+ document.addEventListener("DOMContentLoaded", function () {
+    var listItems = document.querySelectorAll(".top-menu-ul li");
+
+    listItems.forEach(function (item) {
+        item.addEventListener("click", function () {
+            // Tıklanan öğenin id'sini al
+            var clickedItemId = this.id;
+
+            // Fonksiyonu çağır ve tıklanan id'yi parametre olarak geç
+            handleMenuItemClick(clickedItemId);
+        });
+    });
+
+    // Tıklanan öğeye göre çalışacak fonksiyon
+    function handleMenuItemClick(clickedItemId) {
+        switch (clickedItemId) {
+            case "list":
+                listContainer.style.display = "flex";
+                maniContainer.style.display = "none";
+                break;
+            case "sale_time":
+                break;
+            case "waiting_job":
+                listContainer.style.display = "none";
+                maniContainer.style.display = "flex";
+                break;
+            case "losing_job":
+                break;
+            default:
+                console.log("Bilinmeyen öğe tıklandı!");
+                break;
+        }
+    }
+});
+
+
 </script>
 
 {% endblock %}
