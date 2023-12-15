@@ -185,46 +185,18 @@
                   <th scope="col">Durum</th>
                </thead>
                <tbody>
+                {% for card in sales_offer_card%}
                   <tr>
-                    <td>asfas</td>
-                    <td>asfsdfs</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
+                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                    <td>{{card.Situation_Card}}</td>
                   </tr>
-                  <tr>
-                    <td>asfas</td>
-                    <td>asfsdfs</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                  </tr>
-                  <tr>
-                    <td>asfas</td>
-                    <td>asfsdfs</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                  </tr>
-                  <tr>
-                    <td>asfas</td>
-                    <td>asfsdfs</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                    <td>dfasdasd</td>
-                    <td>afsdfsd</td>
-                    <td>fasdasfasd</td>
-                  </tr>                  
+                  {% endfor %}      
                </tbody>
               </table>
             </div>

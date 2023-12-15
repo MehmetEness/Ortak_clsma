@@ -165,7 +165,7 @@ class SalesOfferCard(models.Model):
     DC_Power_Card = models.IntegerField(blank=True, null=True,default=0)
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True)
     Situation_Card = models.CharField(
-        max_length=63,
+        max_length=63,blank=True, null=True,
         choices=(
             ('Potansiyel Müşteri', 'Potansiyel Müşteri'),
             ('Maliyet Hesaplama', 'Maliyet Hesaplama'),
@@ -177,7 +177,13 @@ class SalesOfferCard(models.Model):
         default='Potansiyel Müşteri',
     )    
     Date_Card = models.DateField(blank=True, null=True)
-    Terrain_Roof_Card = models.CharField(max_length=63, blank=True, null=True)
+    Terrain_Roof_Card = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Çatı', 'Çatı'),
+            ('Arazi', 'Arazi'),
+        ),
+    )    
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files/', blank=True, null=True)
