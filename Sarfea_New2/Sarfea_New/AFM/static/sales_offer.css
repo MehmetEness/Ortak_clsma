@@ -89,7 +89,7 @@
     overflow: hidden;
 }
 .main-container{
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 100%;
     height: 100%;
@@ -163,4 +163,61 @@
     margin-right: 20px;
     font-weight: 600;
     color: rgb(104, 104, 104);
+}
+
+
+/*    *************************    List  **********************          */
+.list-container{
+    width: 100%;
+    height: 100%;
+}
+.lists{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.lists a{
+    text-decoration: none;
+    color: #000;
+}
+#table thead th{
+    background: #848588;    
+    color: #000;
+}
+#table tbody td{
+    height: 50px;
+}
+.lists table{ 
+    max-height: 200px;
+    overflow-y: scroll;
+    width: 100%;
+    text-align: left;    
+    border-collapse:collapse;
+}
+.lists thead{
+    line-height: 70px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+}
+.lists th:first-child{
+    padding-left: 50px;
+}
+.lists tbody{
+    line-height: 45px;
+}
+.lists td:first-child{
+    padding-left: 20px;
+}
+.lists tbody tr:nth-child(even){
+    background-color: #d1d1d6;
+}
+#column{
+    width: 3px;
+    left: 350px;
+    background: #000;
+    height: 100%;
 }
