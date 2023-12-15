@@ -6,6 +6,26 @@ from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobH
 from django.db.models import Q
 
 # Create your views here.
+def sales_offer_add(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+
+    if request.method == 'POST':
+        sales_form = SalesOfferCardForm(request.POST or None )
+
+        if sales_form.is_valid():
+            sales_form.save()
+            return redirect('projects')  
+    else:  
+        sales_form = SalesOfferCardForm()
+
+    context={
+        'sales_form':sales_form,
+        'client':client,
+        'locations':locations
+    }
+    return render(request, "sales_offer_add.html", context)
+
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
 
@@ -32,6 +52,8 @@ def sales_offer(request):
     done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu')
     done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     done_customers_count = done_customers.count()
+
+
 
     context = {
         'sales_offer_card':sales_offer_card,
