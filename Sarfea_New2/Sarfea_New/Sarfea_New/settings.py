@@ -31,9 +31,6 @@ APPEND_SLASH = True
 
 # Sarfea_New/settings.py
 
-ALLOWED_HOSTS = []
-
-
 
 # Application definition
 
