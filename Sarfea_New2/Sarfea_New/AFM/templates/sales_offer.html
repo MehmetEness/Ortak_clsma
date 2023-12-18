@@ -220,7 +220,10 @@
 
 {% block js_files %} 
 <!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
-
+<!-- Elementler -->
+<script>
+let rows = document.querySelectorAll(".rows");
+</script>
 <!--      ****  Sürükle Bırak  ****       -->
 <script>
   var p = document.querySelectorAll(".card");
@@ -239,6 +242,7 @@
   function dragEnd(){            
       setTimeout(()=>this.style.display = "flex", 0);
       dragItem = null;
+      cardFormat();
   }
 
   for(j of choice){
@@ -342,6 +346,40 @@
 });
 
 
+</script>
+<!-- Toplama İşlemleri -->
+<script>
+  
+  cardFormat();
+
+  function cardFormat(){
+  
+  rows.forEach(function(row) {
+    let cards = row.querySelectorAll(".card");
+    let totalCashSpan = row.querySelector('.total-cash span:nth-child(1)');
+    let customersCountSpan = row.querySelector('.total-cash span:nth-child(2)');
+    let totalCash = 0;
+
+    cards.forEach(function(card){
+      let currentUSD = parseFloat(card.querySelector(".boxes:first-of-type p:first-of-type").textContent.replace(/[^\d.-]/g, ''));
+      totalCash += currentUSD;
+      
+    });
+  
+    totalCashSpan.textContent ="$" + formatNumber(totalCash);
+    customersCountSpan.textContent = `(${String(cards.length)})`;
+    
+  //console.log(String(cards.length));
+  });
+
+}
+
+</script>
+<!-- Functions -->
+<script>
+  function formatNumber(number) {
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(2));
+}
 </script>
 
 {% endblock %}
