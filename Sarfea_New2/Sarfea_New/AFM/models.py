@@ -160,7 +160,7 @@ class SalesOfferCard(models.Model):
     Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
-    Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True)
+    Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default=0)
     AC_Power_Card = models.IntegerField(blank=True, null=True,default=0)
     DC_Power_Card = models.IntegerField(blank=True, null=True,default=0)
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True)

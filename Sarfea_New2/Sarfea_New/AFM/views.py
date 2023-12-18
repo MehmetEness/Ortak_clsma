@@ -49,6 +49,8 @@ def update_card_situation(request):
 
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
+    for card in sales_offer_card:
+        card.Cost_NotIncludingKDV_Card = str(card.Cost_NotIncludingKDV_Card).replace(",", ".")
 
     potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri')
     potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
