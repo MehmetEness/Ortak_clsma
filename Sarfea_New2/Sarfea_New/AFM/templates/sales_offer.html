@@ -53,15 +53,18 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
+
                     {% endif %}
                     {% endfor %}
 
@@ -74,15 +77,17 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Maliyet Hesaplama' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
                     {% endif %}
                     {% endfor %}
                    
@@ -95,15 +100,17 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Fiyat Belirleme' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
                     {% endif %}
                     {% endfor %}
                     
@@ -116,15 +123,17 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazırlama' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
@@ -136,15 +145,17 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Sunum Sonrası Görüşme' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
@@ -156,15 +167,17 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Sunuldu' %}
                     <div class="card" draggable="true">
-                      <span class="bold">{{card.Client_Card}}</span>
-                      <span>{{card.Offer_Subject_Card}} #{{card.id}} </span>
-                      <div class="cash-box">
-                        <span class="bold">$ {{card.Cost_NotIncludingKDV_Card}}</span>
-                        <span>* * * *</span>
-                      </div>                      
-                      <span>{{card.Date_Card | date:"d F"}}</span>
-                      <span><span class="bold">{{card.Comment_Date_Card | date:"d F"}}:</span> {{card.Offer_Comment_Card}}</span>
+                      <p class="bold">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
                     </div>
+                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
