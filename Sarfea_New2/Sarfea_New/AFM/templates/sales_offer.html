@@ -354,10 +354,10 @@
         let USDSpan =   card.querySelector(".boxes:first-of-type p:first-of-type");
         let unitSpan = card.querySelector(".boxes:first-of-type p:nth-of-type(2)");
         let currentUSD = parseFloat(USDSpan.textContent.replace(/[^\d.-]/g, ''));
-        let currentUnit = parseFloat(unitSpan.textContent.replace(/[^\d.-]/g, ''));
+        let currentUnit = parseFloat(unitSpan.textContent.replace(',', '.').replace(/[^\d,.-]/g, ''))
   
         USDSpan.textContent ="$" + formatNumber(currentUSD);
-        //unitSpan.textContent =formatNumber(currentUnit) + "USD/kWp";
+        unitSpan.textContent =formatNumber(currentUnit) + " USD/kWp";
   
   
         totalCash += currentUSD;
