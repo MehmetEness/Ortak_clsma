@@ -1,4 +1,7 @@
 from django.http.response import HttpResponse
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
@@ -26,6 +29,24 @@ def sales_offer_add(request):
     }
     return render(request, "sales_offer_add.html", context)
 
+@csrf_exempt  # Temporarily disable CSRF for simplicity. Add proper CSRF handling in production.
+def update_card_situation(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        card_id = data.get('card_id')
+        new_situation = data.get('new_situation')
+
+        # Update the card's situation in the database
+        try:
+            card = SalesOfferCard.objects.get(id=card_id)
+            card.Situation_Card = new_situation
+            card.save()
+            return JsonResponse({'success': True})
+        except SalesOfferCard.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Card not found'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
 
@@ -52,6 +73,7 @@ def sales_offer(request):
     done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu')
     done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     done_customers_count = done_customers.count()
+
 
 
 

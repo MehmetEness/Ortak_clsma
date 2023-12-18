@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from .views import update_card_situation
 
 
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path("income_add_wp/<int:project_id>", views.income_add_wp, name='income_add_wp'),
     path("sales_offer/", views.sales_offer, name='sales_offer'),
     path("sales_offer_add/", views.sales_offer_add, name='sales_offer_add'),
+    path('update_card_situation/', update_card_situation, name='update_card_situation'),
 
 
 

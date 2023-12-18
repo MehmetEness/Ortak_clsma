@@ -45,14 +45,14 @@
             </div>
           </div>
           <div class="sales_container">         
-                  <div class="rows">    
+                  <div class="rows" data-situation="Potansiyel Müşteri">    
                     <div class="total-cash">
                       <span>$ {{potential_customers_cost}}</span>
                       <span>({{potential_customers_count}})</span>
                     </div>       
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -69,14 +69,14 @@
                     {% endfor %}
 
                   </div>
-                  <div class="rows">
+                  <div class="rows" data-situation="Maliyet Hesaplama">
                     <div class="total-cash">
                       <span>$ {{cost_customers_cost}}</span>
                       <span>({{cost_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Maliyet Hesaplama' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -92,14 +92,14 @@
                     {% endfor %}
                    
                   </div>
-                  <div class="rows">
+                  <div class="rows" data-situation="Fiyat Belirleme">
                     <div class="total-cash">
                       <span>$ {{price_customers_cost}}</span>
                       <span>({{price_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Fiyat Belirleme' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -115,14 +115,14 @@
                     {% endfor %}
                     
                   </div>
-                  <div class="rows">
+                  <div class="rows" data-situation="Teklif Hazırlama">
                     <div class="total-cash">
                       <span>$ {{offer_customers_cost}}</span>
                       <span>({{offer_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazırlama' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -137,14 +137,14 @@
                     {% endif %}
                     {% endfor %}
                   </div>
-                  <div class="rows">
+                  <div class="rows" data-situation="Sunum Sonrası Görüşme">
                     <div class="total-cash">
                       <span>$ {{presentation_customers_cost}}</span>
                       <span>({{presentation_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Sunum Sonrası Görüşme' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -159,14 +159,14 @@
                     {% endif %}
                     {% endfor %}
                   </div>
-                  <div class="rows">
+                  <div class="rows" data-situation="Teklif Sunuldu">
                     <div class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Sunuldu' %}
-                    <div class="card" draggable="true">
+                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -248,9 +248,25 @@
       j.addEventListener("drop", Drop);
   }
   function Drop(){
+      var targetRowSituation = this.dataset.situation;
       this.append(dragItem);
       this.style.border = "none"
       this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+
+      var cardId = dragItem.dataset.cardId;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "{% url 'update_card_situation' %}", true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+                // Update the card's situation on the client side
+              dragItem.dataset.situation = targetRowSituation;
+          }
+    };
+    xhr.send(JSON.stringify({ card_id: cardId, new_situation: targetRowSituation }));
+
   }
   function dragOver(e){
       e.preventDefault();
