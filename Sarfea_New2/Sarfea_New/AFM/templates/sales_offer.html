@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offerr.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -222,165 +222,157 @@
 <!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
 <!-- Elementler -->
 <script>
-let rows = document.querySelectorAll(".rows");
-</script>
-<!--      ****  Sürükle Bırak  ****       -->
-<script>
-  var p = document.querySelectorAll(".card");
-  var choice = document.querySelectorAll(".rows");
-  var dragItem = null;
-
-  for(var i of p){
-      i.addEventListener("dragstart", dragStart);
-      i.addEventListener("dragend", dragEnd);
-  }
-
-  function dragStart(){
-      dragItem = this;
-      setTimeout(()=>this.style.display = "none", 0);
-  }
-  function dragEnd(){            
-      setTimeout(()=>this.style.display = "flex", 0);
-      dragItem = null;
-      cardFormat();
-  }
-
-  for(j of choice){
-      j.addEventListener("dragover", dragOver);
-      j.addEventListener("dragenter", dragEnter);
-      j.addEventListener("dragleave", dragLeave);
-      j.addEventListener("drop", Drop);
-  }
-  function Drop(){
-      var targetRowSituation = this.dataset.situation;
-      this.append(dragItem);
-      this.style.border = "none"
-      this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
-
-      var cardId = dragItem.dataset.cardId;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "{% url 'update_card_situation' %}", true);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-      xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-                // Update the card's situation on the client side
-              dragItem.dataset.situation = targetRowSituation;
-          }
-    };
-    xhr.send(JSON.stringify({ card_id: cardId, new_situation: targetRowSituation }));
-
-  }
-  function dragOver(e){
-      e.preventDefault();
-      this.style.border = "2px solid rgba(0, 0, 0, 0.3)"
-  }
-  function dragEnter(e){
-      e.preventDefault();
-  }
-  function dragLeave(){
-      this.style.border = "none"
-      this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
-  }
-</script>
-<script>
-  // JavaScript kullanarak tıklanan elemana "clicked" sınıfını ekleyen fonksiyon
-  document.addEventListener("DOMContentLoaded", function () {
-    var menuItems = document.querySelectorAll(".top-menu-ul li");
-
-    // İlk li elemanına otomatik olarak tıklama gerçekleştir
-    menuItems[0].click();
-
-    menuItems.forEach(function (item) {
-        item.addEventListener("click", function () {
-            // Tıklanan öğeye "li-hover" sınıfını ekleyin
-            menuItems.forEach(function (item) {
-                item.classList.remove("li-hover");
-            });
-            this.classList.add("li-hover");
-        });
-    });
-});
-</script>
-<!-- Top Menu -->
-<script>
-
-  let maniContainer = document.querySelector(".main-container");
-  let listContainer = document.querySelector(".list-container");
-
-
- document.addEventListener("DOMContentLoaded", function () {
-    var listItems = document.querySelectorAll(".top-menu-ul li");
-
-    listItems.forEach(function (item) {
-        item.addEventListener("click", function () {
-            // Tıklanan öğenin id'sini al
-            var clickedItemId = this.id;
-
-            // Fonksiyonu çağır ve tıklanan id'yi parametre olarak geç
-            handleMenuItemClick(clickedItemId);
-        });
-    });
-
-    // Tıklanan öğeye göre çalışacak fonksiyon
-    function handleMenuItemClick(clickedItemId) {
-        switch (clickedItemId) {
-            case "list":
-                listContainer.style.display = "flex";
-                maniContainer.style.display = "none";
-                break;
-            case "sale_time":
-                break;
-            case "waiting_job":
-                listContainer.style.display = "none";
-                maniContainer.style.display = "flex";
-                break;
-            case "losing_job":
-                break;
-            default:
-                console.log("Bilinmeyen öğe tıklandı!");
-                break;
-        }
+  let rows = document.querySelectorAll(".rows");
+  </script>
+  <!-- Functions -->
+  <script>
+    function formatNumber(number) {
+      return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(2));
     }
-});
-
-
-</script>
-<!-- Toplama İşlemleri -->
-<script>
+  </script>
+  <!--      ****  Sürükle Bırak  ****       -->
+  <script>
+    var p = document.querySelectorAll(".card");
+    var choice = document.querySelectorAll(".rows");
+    var dragItem = null;
   
-  cardFormat();
-
-  function cardFormat(){
+    for(var i of p){
+        i.addEventListener("dragstart", dragStart);
+        i.addEventListener("dragend", dragEnd);
+    }
   
-  rows.forEach(function(row) {
-    let cards = row.querySelectorAll(".card");
-    let totalCashSpan = row.querySelector('.total-cash span:nth-child(1)');
-    let customersCountSpan = row.querySelector('.total-cash span:nth-child(2)');
-    let totalCash = 0;
-
-    cards.forEach(function(card){
-      let currentUSD = parseFloat(card.querySelector(".boxes:first-of-type p:first-of-type").textContent.replace(/[^\d.-]/g, ''));
-      totalCash += currentUSD;
+    function dragStart(){
+        dragItem = this;
+        setTimeout(()=>this.style.display = "none", 0);
+    }
+    function dragEnd(){            
+        setTimeout(()=>this.style.display = "flex", 0);
+        dragItem = null;
+        cardFormat();
+    }
+  
+    for(j of choice){
+        j.addEventListener("dragover", dragOver);
+        j.addEventListener("dragenter", dragEnter);
+        j.addEventListener("dragleave", dragLeave);
+        j.addEventListener("drop", Drop);
+    }
+    function Drop(){
+        this.append(dragItem);
+        this.style.border = "none"
+        this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+    }
+    function dragOver(e){
+        e.preventDefault();
+        this.style.border = "2px solid rgba(0, 0, 0, 0.3)"
+    }
+    function dragEnter(e){
+        e.preventDefault();
+    }
+    function dragLeave(){
+        this.style.border = "none"
+        this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+    }
+  </script>
+  <script>
+    // JavaScript kullanarak tıklanan elemana "clicked" sınıfını ekleyen fonksiyon
+    document.addEventListener("DOMContentLoaded", function () {
+      var menuItems = document.querySelectorAll(".top-menu-ul li");
+  
+      // İlk li elemanına otomatik olarak tıklama gerçekleştir
+      menuItems[0].click();
+  
+      menuItems.forEach(function (item) {
+          item.addEventListener("click", function () {
+              // Tıklanan öğeye "li-hover" sınıfını ekleyin
+              menuItems.forEach(function (item) {
+                  item.classList.remove("li-hover");
+              });
+              this.classList.add("li-hover");
+          });
+      });
+  });
+  </script>
+  <!-- Top Menu -->
+  <script>
+  
+    let maniContainer = document.querySelector(".main-container");
+    let listContainer = document.querySelector(".list-container");
+  
+  
+   document.addEventListener("DOMContentLoaded", function () {
+      var listItems = document.querySelectorAll(".top-menu-ul li");
+  
+      listItems.forEach(function (item) {
+          item.addEventListener("click", function () {
+              // Tıklanan öğenin id'sini al
+              var clickedItemId = this.id;
+  
+              // Fonksiyonu çağır ve tıklanan id'yi parametre olarak geç
+              handleMenuItemClick(clickedItemId);
+          });
+      });
+  
+      // Tıklanan öğeye göre çalışacak fonksiyon
+      function handleMenuItemClick(clickedItemId) {
+          switch (clickedItemId) {
+              case "list":
+                  listContainer.style.display = "flex";
+                  maniContainer.style.display = "none";
+                  break;
+              case "sale_time":
+                  break;
+              case "waiting_job":
+                  listContainer.style.display = "none";
+                  maniContainer.style.display = "flex";
+                  break;
+              case "losing_job":
+                  break;
+              default:
+                  console.log("Bilinmeyen öğe tıklandı!");
+                  break;
+          }
+      }
+  });
+  
+  
+  </script>
+  <!-- Toplama İşlemleri -->
+  <script>
+    
+    cardFormat();
+  
+    function cardFormat(){
+    
+    rows.forEach(function(row) {
+      let cards = row.querySelectorAll(".card");
+      let totalCashSpan = row.querySelector('.total-cash span:nth-child(1)');
+      let customersCountSpan = row.querySelector('.total-cash span:nth-child(2)');
+      let totalCash = 0;
+  
+      cards.forEach(function(card){    
+        let USDSpan =   card.querySelector(".boxes:first-of-type p:first-of-type");
+        let unitSpan = card.querySelector(".boxes:first-of-type p:nth-of-type(2)");
+        let currentUSD = parseFloat(USDSpan.textContent.replace(/[^\d.-]/g, ''));
+        let currentUnit = parseFloat(unitSpan.textContent.replace(/[^\d.-]/g, ''));
+  
+        USDSpan.textContent ="$" + formatNumber(currentUSD);
+        //unitSpan.textContent =formatNumber(currentUnit) + "USD/kWp";
+  
+  
+        totalCash += currentUSD;
+      });
+    
+      totalCashSpan.textContent ="$" + formatNumber(totalCash);
+      customersCountSpan.textContent = `(${String(cards.length)})`;
       
+    //console.log(String(cards.length));
     });
   
-    totalCashSpan.textContent ="$" + formatNumber(totalCash);
-    customersCountSpan.textContent = `(${String(cards.length)})`;
-    
-  //console.log(String(cards.length));
-  });
-
-}
-
-</script>
-<!-- Functions -->
-<script>
-  function formatNumber(number) {
-  return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(2));
-}
-</script>
+  }
+  
+  </script>
+  
 
 {% endblock %}
 {% endblock %}
