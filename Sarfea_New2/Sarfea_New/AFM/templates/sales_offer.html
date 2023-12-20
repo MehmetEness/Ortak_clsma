@@ -267,6 +267,9 @@
         // Get the card ID from the dragged item
         var cardId = dragItem.dataset.cardId;
         console.log(dragItem.dataset);
+        console.log(targetRowSituation);
+        console.log(cardId);
+
         // Make an AJAX request to update the card's situation
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "{% url 'update_card_situation' %}", true);

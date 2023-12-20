@@ -15,17 +15,23 @@ def sales_offer_add(request):
 
     if request.method == 'POST':
         sales_form = SalesOfferCardForm(request.POST or None )
-
+        client_form = ClientsForm(request.POST or None )
         if sales_form.is_valid():
             sales_form.save()
-            return redirect('projects')  
+            return redirect('sales_offer')  
+        elif client_form.is_valid():
+            client_form.save()
+            return redirect('sales_offer_add')
+        
     else:  
         sales_form = SalesOfferCardForm()
+        client_form = ClientsForm()
 
     context={
         'sales_form':sales_form,
         'client':client,
-        'locations':locations
+        'locations':locations,
+        'client_form':client_form
     }
     return render(request, "sales_offer_add.html", context)
 

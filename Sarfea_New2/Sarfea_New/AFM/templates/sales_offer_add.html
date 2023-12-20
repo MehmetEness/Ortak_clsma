@@ -35,7 +35,7 @@
 
           <div class="user-details">
 
-            <div class="input-box {% if sales_form.Client_Card.errors %}error{% endif %}" id="Client_Card">
+            <!--<div class="input-box {% if sales_form.Client_Card.errors %}error{% endif %}" id="Client_Card">
               <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
@@ -58,11 +58,15 @@
                   {% endfor %}
                 </div>
               </div>
-            </div>
+            </div>-->
 
             <div class="input-box">
               <span class="details">Detay</span>
               {{ sales_form.Offer_Subject_Card }}
+            </div>
+            <div class="input-box">
+              <span class="details">Müşteri</span>
+              {{ sales_form.Client_Card }}
             </div>
 
             <div class="input-box">
