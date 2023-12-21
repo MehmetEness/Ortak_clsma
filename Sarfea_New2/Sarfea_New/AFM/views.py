@@ -59,27 +59,27 @@ def sales_offer(request):
         card.Cost_NotIncludingKDV_Card = str(card.Cost_NotIncludingKDV_Card).replace(",", ".")
         card.UnitCost_NotIncludingKDV = str(card.UnitCost_NotIncludingKDV).replace(",", ".")
 
-    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri')
+    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
     potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     potential_customers_count = potential_customers.count()
 
-    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama')
+    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
     cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     cost_customers_count = cost_customers.count()
 
-    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme')
+    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
     price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     price_customers_count = price_customers.count()
 
-    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama')
+    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
     offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     offer_customers_count = offer_customers.count()
 
-    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme')
+    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
     presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     presentation_customers_count = presentation_customers.count()
 
-    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu')
+    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
     done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     done_customers_count = done_customers.count()
 

@@ -35,7 +35,7 @@
 
           <div class="user-details">
 
-            <!--<div class="input-box {% if sales_form.Client_Card.errors %}error{% endif %}" id="Client_Card">
+           <!--  <div class="input-box {% if sales_form.Client_Card.errors %}error{% endif %}" id="Client_Card">
               <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
@@ -59,15 +59,16 @@
                 </div>
               </div>
             </div>-->
+           <div class="input-box">
+              <span class="details">Müşteri</span>
+              {{ sales_form.Client_Card }}
+            </div>
 
             <div class="input-box">
               <span class="details">Detay</span>
               {{ sales_form.Offer_Subject_Card }}
             </div>
-            <div class="input-box">
-              <span class="details">Müşteri</span>
-              {{ sales_form.Client_Card }}
-            </div>
+           
 
             <div class="input-box">
               <span class="details">Konum</span>
@@ -101,13 +102,27 @@
                 autocomplete="off"
               />
             </div>
-            <div class="input-box">
+             <div class="input-box">
               <span class="details">AC Güç (kWe)</span>
-              {{sales_form.AC_Power_Card}}
+              <input
+                class="coc-input"
+                type="text"
+                name="AC_Power_Card"
+                id="id_AC_Power_Card"
+                step="1"
+                autocomplete="off"
+              />
             </div>
-            <div class="input-box">
+             <div class="input-box">
               <span class="details">DC Güç (kWp)</span>
-              {{sales_form.AC_Power_Card}}
+              <input
+                class="coc-input"
+                type="text"
+                name="DC_Power_Card"
+                id="id_DC_Power_Card"
+                step="1"
+                autocomplete="off"
+              />
             </div>
             <div class="input-box">
               <span class="details">Birim Başına Maliyet - KDV Hariç ($)</span>
@@ -148,9 +163,9 @@
                   background: url('{% static 'images/calendar.gif' %}') 99% 50%
                     no-repeat;
                 "
-                id="tarih2"
+                id="id_Comment_Date_Card"
                 type="date"
-                name="Offer_Comment_Card"
+                name="Comment_Date_Card"
                 placeholder="Tarih Seçiniz"
                 min="2000-01-01"
                 max="2099-01-01"
@@ -210,7 +225,7 @@
     let isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
     let birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
     let acGucInput = document.querySelector("#id_AC_Power_Card");
-    let dcGucInput = document.querySelector("#id_AC_Power_Card");
+    let dcGucInput = document.querySelector("#id_DC_Power_Card");
 
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");

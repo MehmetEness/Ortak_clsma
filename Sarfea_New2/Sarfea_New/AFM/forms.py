@@ -332,6 +332,67 @@ class SupplierForm(forms.ModelForm):
         fields = '__all__'   
 
 class SalesOfferCardForm(forms.ModelForm):
+
+    Client_Card = forms.ModelChoiceField(
+        queryset=Clients.objects.all(),
+        required=True,
+         error_messages={
+            'required': '! Lütfen Müşteri Seçiniz',
+        }
+        )
+    
+    Offer_Subject_Card = forms.CharField(
+        max_length=400,
+        required=False,
+    )  
+      
+    Location_Card = forms.CharField(
+        required=False,
+    )    
+    Cost_NotIncludingKDV_Card = forms.FloatField(required=False, initial="0")        
+    AC_Power_Card = forms.IntegerField(required=False,)
+    DC_Power_Card = forms.IntegerField(required=False,)
+    UnitCost_NotIncludingKDV = forms.DecimalField(  
+        max_digits=10,
+        decimal_places=2,
+        required=False,
+    )
+   
+    Situation_Card = forms.ChoiceField(
+        choices=[
+            ('Potansiyel Müşteri', 'Potansiyel Müşteri'),
+            ('Maliyet Hesaplama', 'Maliyet Hesaplama'),
+            ('Fiyat Belirleme', 'Fiyat Belirleme'),
+            ('Teklif Hazırlama', 'Teklif Hazırlama'),
+            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
+            ('Teklif Sunuldu', 'Teklif Sunuldu'),
+         ],
+        required=False,
+        initial="Potansiyel Müşteri"
+    )
+   
+    Terrain_Roof = forms.ChoiceField(
+        choices=[
+            ('Çatı', 'Çatı'),
+            ('Arazi', 'Arazi'),
+        ],
+        required=False,
+    )    
+    Date_Card = forms.DateField(
+        label='Tarih Seçiniz', 
+        widget=forms.widgets.DateInput(attrs={'type': 'date', 'min': min_date, 'max': max_date}),
+        required=False,
+    )
+    Comment_Date_Card = forms.DateField(
+        label='Tarih Seçiniz', 
+        widget=forms.widgets.DateInput(attrs={'type': 'date', 'min': min_date, 'max': max_date}),
+        required=False,
+    )
+    Offer_Comment_Card = forms.CharField(
+        max_length=400,
+        required=False,
+    )  
+
     class Meta:
         model = SalesOfferCard
         fields = '__all__'
