@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offerr.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -44,7 +44,7 @@
               <p>Teklif Sunuldu</p>
             </div>
           </div>
-          <div class="sales_container">         
+          <div class="sales_container container">         
                   <div class="rows" data-situation="Potansiyel Müşteri">    
                     <div class="total-cash">
                       <span>$ {{potential_customers_cost}}</span>
@@ -52,7 +52,7 @@
                     </div>       
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -76,7 +76,7 @@
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Maliyet Hesaplama' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -99,7 +99,7 @@
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Fiyat Belirleme' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -122,7 +122,7 @@
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazırlama' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -144,7 +144,7 @@
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Sunum Sonrası Görüşme' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -166,7 +166,7 @@
                     </div> 
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Sunuldu' %}
-                    <div class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
                       <div class="boxes">
@@ -184,7 +184,67 @@
           
         </div>
         </div>   
-        <div class="list-container">
+        <div class="list-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable">
+               <thead>
+                  <th scope="col">Proje Adı</th>
+                  <th scope="col">Konum</th>
+                  <th scope="col">AC Güç</th>
+                  <th scope="col">DC Güç</th>
+                  <th scope="col">İş Bedeli</th>
+                  <th scope="col">Arazi/Çatı</th>
+                  <th scope="col">Tarih</th>
+                  <th scope="col">Durum</th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card%}
+                  <tr>
+                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                    <td>{{card.Situation_Card}}</td>
+                  </tr>
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="lost-job-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable">
+               <thead>
+                  <th scope="col">Proje Adı</th>
+                  <th scope="col">Konum</th>
+                  <th scope="col">AC Güç</th>
+                  <th scope="col">DC Güç</th>
+                  <th scope="col">İş Bedeli</th>
+                  <th scope="col">Arazi/Çatı</th>
+                  <th scope="col">Tarih</th>
+                  <th scope="col">Durum</th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card%}
+                  <tr>
+                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                    <td>{{card.Situation_Card}}</td>
+                  </tr>
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="sales-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead>
@@ -265,10 +325,7 @@
         var targetRowSituation = this.dataset.situation;
         
         // Get the card ID from the dragged item
-        var cardId = dragItem.dataset.cardId;
-        console.log(dragItem.dataset);
-        console.log(targetRowSituation);
-        console.log(cardId);
+        var cardId = dragItem.id;
 
         // Make an AJAX request to update the card's situation
         var xhr = new XMLHttpRequest();
@@ -303,7 +360,7 @@
       var menuItems = document.querySelectorAll(".top-menu-ul li");
   
       // İlk li elemanına otomatik olarak tıklama gerçekleştir
-      menuItems[0].click();
+      menuItems[2].click();
   
       menuItems.forEach(function (item) {
           item.addEventListener("click", function () {
@@ -321,7 +378,8 @@
   
     let maniContainer = document.querySelector(".main-container");
     let listContainer = document.querySelector(".list-container");
-  
+    let lostJobContainer = document.querySelector(".lost-job-container");
+    let salesContainer = document.querySelector(".sales-container");
   
    document.addEventListener("DOMContentLoaded", function () {
       var listItems = document.querySelectorAll(".top-menu-ul li");
@@ -342,14 +400,26 @@
               case "list":
                   listContainer.style.display = "flex";
                   maniContainer.style.display = "none";
+                  salesContainer.style.display = "none";
+                  lostJobContainer.style.display = "none";
                   break;
               case "sale_time":
+                  listContainer.style.display = "none";
+                  maniContainer.style.display = "none";
+                  salesContainer.style.display = "flex";
+                  lostJobContainer.style.display = "none";
                   break;
               case "waiting_job":
                   listContainer.style.display = "none";
                   maniContainer.style.display = "flex";
+                  salesContainer.style.display = "none";
+                  lostJobContainer.style.display = "none";
                   break;
               case "losing_job":
+                  listContainer.style.display = "none";
+                  maniContainer.style.display = "none";
+                  salesContainer.style.display = "none";
+                  lostJobContainer.style.display = "flex";
                   break;
               default:
                   console.log("Bilinmeyen öğe tıklandı!");
