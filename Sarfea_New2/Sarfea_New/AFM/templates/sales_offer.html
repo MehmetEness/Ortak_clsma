@@ -51,7 +51,7 @@
                       <span>({{potential_customers_count}})</span>
                     </div>       
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Potansiyel Müşteri' %}
+                    {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -75,7 +75,7 @@
                       <span>({{cost_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Maliyet Hesaplama' %}
+                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -98,7 +98,7 @@
                       <span>({{price_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Fiyat Belirleme' %}
+                    {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -121,7 +121,7 @@
                       <span>({{offer_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Hazırlama' %}
+                    {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -143,7 +143,7 @@
                       <span>({{presentation_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' %}
+                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -165,7 +165,7 @@
                       <span>({{done_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Sunuldu' %}
+                    {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
@@ -228,7 +228,8 @@
                   <th scope="col">Durum</th>
                </thead>
                <tbody>
-                {% for card in sales_offer_card%}
+                {% for card in sales_offer_card %}
+                {% if card.Is_Lost == True %}
                   <tr>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
@@ -239,6 +240,7 @@
                     <td>{{card.Date_Card| date:"d F y"}}</td>
                     <td>{{card.Situation_Card}}</td>
                   </tr>
+                  {% endif %}
                   {% endfor %}      
                </tbody>
               </table>
@@ -259,6 +261,7 @@
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
+                {% if card.Is_Lost == False %}
                   <tr>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
@@ -269,6 +272,7 @@
                     <td>{{card.Date_Card| date:"d F y"}}</td>
                     <td>{{card.Situation_Card}}</td>
                   </tr>
+                  {% endif %}
                   {% endfor %}      
                </tbody>
               </table>

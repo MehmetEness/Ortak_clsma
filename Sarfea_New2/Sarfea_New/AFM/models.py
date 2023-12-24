@@ -188,7 +188,7 @@ class SalesOfferCard(models.Model):
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files/', blank=True, null=True)
     M_File_Card = models.FileField(upload_to='m_files/', blank=True, null=True)
-	
+    Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     
     
 
