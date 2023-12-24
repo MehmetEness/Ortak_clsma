@@ -7,7 +7,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
+<style>
+  #id_Offer_Comment_Card{
+  }
+  /* Dosya girişi için temel gizleme */
+input[type="file"] {
+  display: none;
+}
 
+/* Stilize edilmiş düğme görünümü */
+label {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
 {% endblock %} {% block title %} Sales Offer Add {% endblock %} {% block content %}
 <div class="body-div">
   {% include 'partials/_left_nav_bar.html' %}
@@ -25,7 +41,6 @@
         <span></span>
       </div>
     </div>
-
     <div class="center">
       <div class="container projeBaslatContainer">
         <div class="title">Satış Teklifi Ekle</div>
