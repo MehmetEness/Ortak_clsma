@@ -1,8 +1,9 @@
 from django.db.models.signals import pre_save 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients
+from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard
 from django.db import models
+from django.utils.text import slugify
 
 @receiver(pre_save, sender=Project)
 def update_related_models(sender, instance, **kwargs):
@@ -22,7 +23,6 @@ def update_related_models(sender, instance, **kwargs):
     project_names = ProjectNames.objects.filter(ProjectName=project_name)
     if not project_names.exists():
         ProjectNames.objects.create(ProjectName=project_name,ProjectCode=project_code )
-
 
 @receiver(pre_save, sender=Expenses)
 def update_payment_firms(sender, instance, **kwargs):
@@ -175,3 +175,13 @@ def update_expenses_with_supplier_name(sender, instance, **kwargs):
             # Son olarak CompanyName_Clients'ı CompanyName_Clients_New ile güncelle
             instance.CompanyName_Supplier = instance.CompanyName_Supplier_New
             instance.save()
+
+@receiver(pre_save, sender=SalesOfferCard)
+def update_client_card(sender, instance, **kwargs):
+    if instance.Client_Card_Copy:
+        try:
+            client = Clients.objects.get(CompanyName_Clients=instance.Client_Card_Copy)
+            instance.Client_Card = client
+        except Clients.DoesNotExist:
+            # Eğer eşleşen bir Clients bulunamazsa, isteğinize göre bir işlem yapabilirsiniz.
+            pass

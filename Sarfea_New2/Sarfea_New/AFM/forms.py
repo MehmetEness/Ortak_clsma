@@ -332,20 +332,19 @@ class SupplierForm(forms.ModelForm):
         fields = '__all__'   
 
 class SalesOfferCardForm(forms.ModelForm):
-
-    Client_Card = forms.ModelChoiceField(
-        queryset=Clients.objects.all(),
-        required=True,
+    Client_Card_Copy = forms.CharField(
          error_messages={
             'required': '! Lütfen Müşteri Seçiniz',
         }
+    )
+    Client_Card = forms.ModelChoiceField(
+        queryset=Clients.objects.all(),
+        required=False,
         )
-    
     Offer_Subject_Card = forms.CharField(
         max_length=400,
         required=False,
-    )  
-      
+    )    
     Location_Card = forms.CharField(
         required=False,
     )    
@@ -388,10 +387,9 @@ class SalesOfferCardForm(forms.ModelForm):
         widget=forms.widgets.DateInput(attrs={'type': 'date', 'min': min_date, 'max': max_date}),
         required=False,
     )
-    Offer_Comment_Card = forms.CharField(
-        max_length=400,
-        required=False,
-    )  
+    Offer_Comment_Card = forms.CharField(max_length=400, required=False)
+    Offer_File_Card = forms.FileField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))  
+    M_File_Card = forms.FileField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))  
 
     class Meta:
         model = SalesOfferCard

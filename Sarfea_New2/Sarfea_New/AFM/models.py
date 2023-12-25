@@ -157,7 +157,8 @@ class Supplier(models.Model):
         return self.CompanyName_Supplier
 
 class SalesOfferCard(models.Model):
-    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE)
+    Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)
+    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
@@ -186,8 +187,8 @@ class SalesOfferCard(models.Model):
     )    
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
-    Offer_File_Card = models.FileField(upload_to='offer_files/', blank=True, null=True)
-    M_File_Card = models.FileField(upload_to='m_files/', blank=True, null=True)
+    Offer_File_Card = models.FileField(upload_to='AFM_files/offer_files/', blank=True, null=True)
+    M_File_Card = models.FileField(upload_to='AFM_files/m_files/', blank=True, null=True)
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     
     

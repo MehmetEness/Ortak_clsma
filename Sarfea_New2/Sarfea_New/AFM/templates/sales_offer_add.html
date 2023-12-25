@@ -10,10 +10,31 @@
 <style>
   #id_Offer_Comment_Card{
   }
-  /* Dosya girişi için temel gizleme */
-input[type="file"] {
-  display: none;
-}
+  input[type="file"] {
+    cursor: pointer !Important;
+    font: 300 14px sans-serif;
+    color:#9e9e9e;
+  }
+  input[type="file"]::-webkit-file-upload-button
+  {
+    font: 300 14px  sans-serif;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    border: 0;
+    padding: 12px 25px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  
+  input[type="file"]::-ms-browse {
+    font: 300 14px 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    border: 0;
+    padding: 12px 25px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+  }
 
 /* Stilize edilmiş düğme görünümü */
 label {
@@ -44,22 +65,22 @@ label {
     <div class="center">
       <div class="container projeBaslatContainer">
         <div class="title">Satış Teklifi Ekle</div>
-        <form id="my-form" action="{% url 'sales_offer_add' %}" method="post">
+        <form id="my-form" action="{% url 'sales_offer_add' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input type="hidden" name="sales_form" value="sales_form" />
 
           <div class="user-details">
 
-           <!--  <div class="input-box {% if sales_form.Client_Card.errors %}error{% endif %}" id="Client_Card">
+           <div class="input-box {% if sales_form.Client_Card_Copy.errors %}error{% endif %}" id="Client_Card_Copy">
               <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
-                <input autocomplete= 'off' type="text" id="id_Client_Card" name="Client_Card" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
+                <input autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
                 {% if sales_form.Client_Card.errors %}
                 <div class="error-container">
                   <span class="error-triangle"></span>
                   <ul class="errorlist">
-                    {% for error in sales_form.Client_Card.errors %}
+                    {% for error in sales_form.Client_Card_Copy.errors %}
                     <li class="error-message">{{ error }}</li>
                     {% endfor %}
                   </ul>
@@ -73,11 +94,8 @@ label {
                   {% endfor %}
                 </div>
               </div>
-            </div>-->
-           <div class="input-box">
-              <span class="details">Müşteri</span>
-              {{ sales_form.Client_Card }}
             </div>
+          
 
             <div class="input-box">
               <span class="details">Detay</span>
@@ -194,13 +212,21 @@ label {
               <span class="details">Yorum</span>
               {{sales_form.Offer_Comment_Card}}
             </div>
-            <div class="input-box">
+            <div>
               <span class="details">Teklif Dosyası</span>
-              {{sales_form.Offer_File_Card}}
+              <input
+                id="id_Offer_File_Card"
+                name="Offer_File_Card"
+                type="file"
+              />
             </div>
-            <div class="input-box">
+            <div>
                 <span class="details">M Dosyası</span>
-                {{sales_form.M_File_Card}}
+                <input
+                id="id_M_File_Card"
+                name="M_File_Card"
+                type="file"
+              />
               </div>
           </div>
           <div class="button">
@@ -268,25 +294,25 @@ label {
 
     document.addEventListener("DOMContentLoaded", function () {
       const inputs = document.querySelectorAll(".myInput");
-
+    
       inputs.forEach((input) => {
         const dropdownId = input.getAttribute("data-dropdown");
         const dropdown = document.getElementById(dropdownId);
         const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
-
+    
         input.addEventListener("focus", function () {
           dropdown.classList.add("show");
         });
-
+    
         input.addEventListener("blur", function () {
           setTimeout(() => {
             dropdown.classList.remove("show");
           }, 200);
         });
-
+    
         input.addEventListener("input", function () {
           const filterText = input.value.toLowerCase();
-
+    
           dropdownItems.forEach((item) => {
             const itemText = item.textContent.toLowerCase();
             if (itemText.startsWith(filterText)) {
@@ -296,15 +322,19 @@ label {
             }
           });
         });
-
+    
         dropdownItems.forEach((item) => {
           item.addEventListener("click", function () {
-            input.value = this.textContent;
+            const selectedClientId = this.getAttribute("value"); // Seçilen müşterinin ID'sini al
+            input.value = this.textContent; // Sadece text content'i inputa ata
+            input.setAttribute("data-selected-client-id", selectedClientId); // ID'yi bir data attribute olarak sakla
+    
             dropdown.classList.remove("show");
           });
         });
       });
     });
+    
 
     // Noktalamalar
  

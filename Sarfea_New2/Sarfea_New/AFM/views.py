@@ -7,14 +7,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
 from django.db.models import Q
-
+from django.views import View
 # Create your views here.
+
+
+
 def sales_offer_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
 
     if request.method == 'POST':
-        sales_form = SalesOfferCardForm(request.POST or None )
+        sales_form = SalesOfferCardForm(request.POST, request.FILES )
         client_form = ClientsForm(request.POST or None )
         if sales_form.is_valid():
             sales_form.save()
