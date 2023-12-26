@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offerrrrr.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -92,6 +92,45 @@
                     {% endif %}
                     {% endfor %}
                    
+
+                    <div class="card" draggable="true">
+                         
+                      <p class="bold">Doğa Tohumculuk</p>
+                      <p>Isıtma Sistemleri #(2)  </p>
+                      <p>12.06.2023</p>
+                      <div class="boxes">
+                        <p>$ 150000</p>
+                        <p>1000 USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>500 kWp</p>
+                      <p>Çatı</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
+                    </div>
+
+
                   </div>
                   <div class="rows" data-situation="Fiyat Belirleme">
                     <div class="total-cash">
@@ -359,6 +398,7 @@
         this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
     }
   </script>
+  <!-- Top Menu Tıklama -->
   <script>
     // JavaScript kullanarak tıklanan elemana "clicked" sınıfını ekleyen fonksiyon
     document.addEventListener("DOMContentLoaded", function () {
@@ -452,6 +492,11 @@
             let unitSpan = card.querySelector(".boxes:first-of-type p:nth-of-type(2)");
 
             // Parse the text content to float, handling possible 'null' or 'undefined'
+            console.log(card);
+            console.log(USDSpan);
+            console.log("xdxxx");
+            console.log(parseFloat(USDSpan.textContent.replace(/[^\d.-]/g, '')) || 0);
+            
             let currentUSD = parseFloat(USDSpan.textContent.replace(/[^\d.-]/g, '')) || 0;
             let currentUnit = parseFloat(unitSpan.textContent.replace(',', '.').replace(/[^\d,.-]/g, '')) || 0;
 
@@ -469,6 +514,29 @@
   
   }
   
+  </script>
+  <!-- Card Menu -->
+  <script>
+
+    // card_menu_btn öğesini alın
+    var cardMenuBtn1 = document.getElementById("card_menu-btn1");
+    var cardMenuBtn2 = document.getElementById("card_menu-btn2");
+
+    // card_menu öğesini alın
+    var cardMenu = document.getElementById("card_menu");
+
+    // card_menu_btn'e tıklama olayı ekle
+    cardMenuBtn1.addEventListener("click", function() {
+      cardMenu.style.display = "block";
+      cardMenuBtn1.style.display = "none"
+      cardMenuBtn2.style.display = "block"
+    });
+    cardMenuBtn2.addEventListener("click", function() {
+      cardMenu.style.display = "none";
+      cardMenuBtn2.style.display = "none"
+      cardMenuBtn1.style.display = "block"
+    });
+
   </script>
   
 
