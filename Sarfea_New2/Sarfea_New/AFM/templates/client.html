@@ -147,14 +147,14 @@
   </script>
   <script>   
     
-    document.getElementById('id_PhoneNumber').addEventListener('keypress', function (e) {
-    const key = String.fromCharCode(e.keyCode);
-    const regex = /[0-9+]/;
-    if (!regex.test(key)) {
-        e.preventDefault();
-        this.value = this.value.replace(/[^0-9+]/g, key); // Sadece geçerli karakteri ekle
-    }
-});
+//     document.getElementById('id_PhoneNumber').addEventListener('keypress', function (e) {
+//     const key = String.fromCharCode(e.keyCode);
+//     const regex = /[0-9+]/;
+//     if (!regex.test(key)) {
+//         e.preventDefault();
+//         this.value = this.value.replace(/[^0-9+]/g, key); // Sadece geçerli karakteri ekle
+//     }
+// });
     </script>
     <!-- search bar -->
     <script>
@@ -232,6 +232,54 @@ function modalAc(){
        }
    }
 });
+    </script>
+    <!-- Telefon Numarası -->
+    <script>
+      var inputField = document.querySelector("#id_PhoneNumber");
+      
+
+      inputField.addEventListener('input', function(event) {
+  var contryNumber = "+90";
+  const userInput = inputField.value;
+  
+  if (event.inputType !== 'deleteContentBackward') {
+    inputField.value = formatPhoneNumberByCountryCode(userInput, contryNumber);
+  }
+});
+
+
+function formatPhoneNumberByCountryCode(phoneNumber, countryCode) {
+  var cleaned = phoneNumber.replace(/[^\d+]/g, '');
+  var formatted = cleaned;
+
+  switch (countryCode) {
+    case '+1': // ABD
+      // ABD için formatlama
+      break;
+    case '+44': // İngiltere
+      // İngiltere için formatlama
+      break;
+    case "+90": // Türkiye
+    inputField.maxLength = 15;
+      if(formatted.length < 4) return formatted;
+      if (formatted.length < 7) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
+      }
+      if (formatted.length < 7) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
+      }
+      if (formatted.length < 9) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6)}`;        
+      }
+      if (formatted.length < 11) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6,8)} ${formatted.slice(8)}`;        
+      }
+      break;
+    default:
+      // Diğer ülkeler için formatlama
+      break;
+  }
+}
     </script>
   
   {% endblock %}
