@@ -34,7 +34,10 @@ urlpatterns = [
     path("jobhistory_add_wp/<int:project_id>", views.jobhistory_add_wp, name='jobhistory_add_wp'),
     path("income_add_wp/<int:project_id>", views.income_add_wp, name='income_add_wp'),
     path("sales_offer/", views.sales_offer, name='sales_offer'),
+    path('sales_offer/sales_offer_edit/<int:sales_offer_id>/', views.sales_offer_edit, name='sales_offer_edit'),
     path("sales_offer_add/", views.sales_offer_add, name='sales_offer_add'),
     path('update_card_situation/', update_card_situation, name='update_card_situation'),
-   
+    path('delete_salesoffercard/<int:card_id>/', views.delete_salesoffercard, name='delete_salesoffercard'),
+    path('set_card_lost/<int:card_id>/', views.set_card_lost, name='set_card_lost'),
+
    ]

@@ -86,9 +86,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -137,9 +137,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -189,9 +189,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -240,9 +240,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -290,9 +290,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -340,9 +340,9 @@
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
-                          <li>Düzenle</li>
-                          <li>Kaybedildi</li>
-                          <li>Sil</li>
+                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -454,6 +454,81 @@
 <!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
 
 <!-- Elementler -->
+<script>
+  function lostCard(cardId) {
+    const csrftoken = getCookie('csrftoken');
+
+    if (!csrftoken) {
+      console.error('CSRF token bulunamadı.');
+      return;
+    }
+
+    fetch(`/set_card_lost/${cardId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Kaybedildi işlemi başarısız');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Kaybedildi işlemi başarılı', data);
+      // Gerekirse sayfayı yenileme veya başka bir işlem yapma
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Hata:', error.message);
+    });
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  }
+</script>
+
+<script>
+  // CSRF token'ını al
+  const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+  const csrfToken = csrfCookie ? csrfCookie.split('=')[1] : null;
+
+  function deleteCard(cardId) {
+    if (!csrfToken) {
+      console.error('CSRF token bulunamadı.');
+      return;
+    }
+
+    // Silme işlemi için bir HTTP isteği yap
+    fetch(`/delete_salesoffercard/${cardId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Silme işlemi başarısız');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Silme başarılı', data);
+      // Gerekirse sayfayı yenileme veya başka bir işlem yapma
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Hata:', error.message);
+    });
+  }
+</script>
+
 <script>
   let rows = document.querySelectorAll(".rows");
   </script>

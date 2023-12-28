@@ -1,0 +1,479 @@
+{% extends "base.html" %} {% load static %} {% block css_files %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"/> -->
+<link rel="stylesheet" href="{% static 'details_projects.css' %}" />
+<link rel="stylesheet" href="{% static 'center.css' %}" />
+<link rel="stylesheet" href="{% static 'projects_styles.css' %}" />
+<link rel="stylesheet" href="{% static 'all_style.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+<link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
+<style>
+  #id_Offer_Comment_Card{
+  }
+  input[type="file"] {
+    cursor: pointer !Important;
+    font: 300 14px sans-serif;
+    color:#9e9e9e;
+  }
+  input[type="file"]::-webkit-file-upload-button
+  {
+    font: 300 14px  sans-serif;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    border: 0;
+    padding: 12px 25px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  
+  input[type="file"]::-ms-browse {
+    font: 300 14px 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    border: 0;
+    padding: 12px 25px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+/* Stilize edilmiş düğme görünümü */
+label {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
+<style>
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    margin-right: 0.25em;
+}
+
+
+.inputfile-1 + label {
+    color: #f1e5e6;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+}
+
+
+</style>
+{% endblock %} {% block title %} Sales Offer Edit {% endblock %} {% block content %}
+<div class="body-div">
+  {% include 'partials/_left_nav_bar.html' %}
+  <div class="right-menu">
+    <div class="nav-bar">
+      <div class="nav-span">
+        <div class="backBtn">
+          <a href="{% url 'sales_offer' %}">
+            <button id="backBtn" class="button-project">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </a>
+          <span> </span>
+        </div>
+        <span></span>
+      </div>
+    </div>
+    <div class="center">
+      <div class="container projeBaslatContainer">
+        <div class="title">Satış Teklifi Ekle</div>
+        <form id="my-form" action="{% url 'sales_offer_edit' sales_offer_id=sales_offer_edit_curr.id %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="sales_form" value="sales_form" />
+
+          <div class="user-details">
+
+           <div class="input-box {% if sales_form.Client_Card_Copy.errors %}error{% endif %}" id="Client_Card_Copy">
+              <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
+                  <i class="fa-solid fa-plus"></i></button></span>
+              <div class="dropdown-container">
+                <input value="{{sales_offer_edit_curr.Client_Card}}" autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
+                {% if sales_form.Client_Card.errors %}
+                <div class="error-container">
+                  <span class="error-triangle"></span>
+                  <ul class="errorlist">
+                    {% for error in sales_form.Client_Card_Copy.errors %}
+                    <li class="error-message">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+                <div id="dropdown1" class="dropdown-content">
+                  {% for x in client %}
+                  <span value="{{x.id}}" class="dropdown-item"
+                    >{{x.CompanyName_Clients}}</span
+                  >
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          
+
+            <div class="input-box">
+              <span class="details">Detay</span>
+              {{ sales_form.Offer_Subject_Card }}
+            </div>
+           
+
+            <div class="input-box">
+              <span class="details">Konum</span>
+              <div class="dropdown-container">
+                <input
+                  value="{{sales_offer_edit_curr.Location_Card}}"
+                  type="text"
+                  id="id_Location_Card"
+                  name="Location_Card"
+                  class="myInput"
+                  placeholder="Konum Seçiniz"
+                  data-dropdown="dropdown2"
+                  autocomplete="off"
+                />
+                <div id="dropdown2" class="dropdown-content">
+                  {% for x in locations %}
+                  <span value="{{x.id}}" class="dropdown-item"
+                    >{{x.Location}}</span
+                  >
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">İş Bedeli - KDV Hariç ($)</span>
+              <input
+                value="{{sales_offer_edit_curr.Cost_NotIncludingKDV_Card}}"
+                class="coc-input"
+                type="text"
+                name="Cost_NotIncludingKDV_Card"
+                id="id_Cost_NotIncludingKDV_Card"
+                step="0.01"
+                autocomplete="off"
+              />
+            </div>
+             <div class="input-box">
+              <span class="details">AC Güç (kWe)</span>
+              <input
+              value="{{sales_offer_edit_curr.AC_Power_Card}}"
+                class="coc-input"
+                type="text"
+                name="AC_Power_Card"
+                id="id_AC_Power_Card"
+                step="1"
+                autocomplete="off"
+              />
+            </div>
+             <div class="input-box">
+              <span class="details">DC Güç (kWp)</span>
+              <input
+              value="{{sales_offer_edit_curr.DC_Power_Card}}"
+                class="coc-input"
+                type="text"
+                name="DC_Power_Card"
+                id="id_DC_Power_Card"
+                step="1"
+                autocomplete="off"
+              />
+            </div>
+            <div class="input-box">
+              <span class="details">Birim Başına Maliyet - KDV Hariç ($)</span>
+              <input
+              value="{{sales_offer_edit_curr.UnitCost_NotIncludingKDV}}"
+                class="coc-input"
+                type="text"
+                name="UnitCost_NotIncludingKDV"
+                id="id_UnitCost_NotIncludingKDV"
+                step="0.01"
+                autocomplete="off"
+
+              />
+            </div>
+            <div class="input-box">
+                <span class="details">Durumu</span>
+                {{sales_form.Situation_Card}}
+              </div>
+
+            <div class="input-box">
+              <span class="details">Tarih</span>
+              <input
+              value="{{sales_offer_edit_curr.Date_Card}}"
+                style="
+                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
+                    no-repeat;
+                "
+                id="tarih"
+                type="date"
+                name="Date_Card"
+                placeholder="Tarih Seçiniz"
+                min="2000-01-01"
+                max="2099-01-01"
+              />
+            </div>
+            <div class="input-box">
+              <span class="details">Yorum Tarihi</span>
+              <input
+              value="{{sales_offer_edit_curr.Comment_Date_Card}}"
+
+                style="
+                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
+                    no-repeat;
+                "
+                id="id_Comment_Date_Card"
+                type="date"
+                name="Comment_Date_Card"
+                placeholder="Tarih Seçiniz"
+                min="2000-01-01"
+                max="2099-01-01"
+              />
+            </div>
+            <div class="input-box">
+              <span class="details">Arazi/Çatı</span>
+              {{sales_form.Terrain_Roof_Card}}
+            </div>
+            <div class="input-box">
+              <span class="details">Yorum</span>
+              {{sales_form.Offer_Comment_Card}}
+            </div>
+            <div class="input-box">
+              <span class="details">Teklif Dosyası</span>
+              <input type="file" name="Offer_File_Card" id="id_Offer_File_Card" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+              <label for="id_Offer_File_Card"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Dosya seçin&hellip;</span></label>
+            
+            </div>
+            <div class="input-box"> 
+              <span class="details">M Dosyası</span>
+              <input value="AFM_files/m_files/yapılacaklar.txt"type="file" name="M_File_Card" id="id_M_File_Card" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+              <label for="id_M_File_Card"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Dosya seçin&hellip;</span></label>            
+              </div>
+          </div>
+          <div class="button">
+            <input id="project-create-btn" type="submit" value="Satış Teklifini Güncelle" />
+          </div>
+        </form>
+      </div>
+
+      <div class="window clientFirmaAddWindow">
+        <div class="container">
+          <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
+          <div class="title">Firma Ekle</div>
+          <form action="{% url 'project_add' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="client_form" />
+
+            <div class="user-details">
+              <div class="input-box" name="CompanyName_Clients">
+                <span class="details">Firma Adı</span>
+                {{ client_form.CompanyName_Clients }}
+              </div>
+            </div>
+            <div class="button">
+              <input type="submit" value="Kaydet" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% block js_files %} 
+  <!-- <script src="{% static 'project_add.js' %}"></script>  -->
+
+  <!--   Elements    -->
+  <script>
+    let isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
+    let birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
+    let acGucInput = document.querySelector("#id_AC_Power_Card");
+    let dcGucInput = document.querySelector("#id_DC_Power_Card");
+
+    var amountInputReformatBtn = document.querySelector("#project-create-btn");
+    var form = document.querySelector("#my-form");
+  </script>
+
+  <script>
+    // Firma Add button
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var firmaAddBtn = document.getElementById("paying-firma-add-btn");
+      var clientFirmaAddWindow = document.querySelector(
+        ".clientFirmaAddWindow"
+      );
+
+      firmaAddBtn.addEventListener("click", function () {
+        clientFirmaAddWindow.style.display = "flex";
+      });
+
+      var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
+      clientFirmaAddModal.addEventListener("click", function () {
+        clientFirmaAddWindow.style.display = "none";
+      });
+    });
+    // Drop Boxes
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const inputs = document.querySelectorAll(".myInput");
+    
+      inputs.forEach((input) => {
+        const dropdownId = input.getAttribute("data-dropdown");
+        const dropdown = document.getElementById(dropdownId);
+        const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
+    
+        input.addEventListener("focus", function () {
+          dropdown.classList.add("show");
+        });
+    
+        input.addEventListener("blur", function () {
+          setTimeout(() => {
+            dropdown.classList.remove("show");
+          }, 200);
+        });
+    
+        input.addEventListener("input", function () {
+          const filterText = input.value.toLowerCase();
+    
+          dropdownItems.forEach((item) => {
+            const itemText = item.textContent.toLowerCase();
+            if (itemText.startsWith(filterText)) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+    
+        dropdownItems.forEach((item) => {
+          item.addEventListener("click", function () {
+            const selectedClientId = this.getAttribute("value"); // Seçilen müşterinin ID'sini al
+            input.value = this.textContent; // Sadece text content'i inputa ata
+            input.setAttribute("data-selected-client-id", selectedClientId); // ID'yi bir data attribute olarak sakla
+    
+            dropdown.classList.remove("show");
+          });
+        });
+      });
+    });
+    
+
+    // Noktalamalar
+ 
+    runEventListeners(isBedeliInput);
+    runEventListeners(birimBasiMaliyetInput);
+    runEventListeners(acGucInput);
+    runEventListeners(dcGucInput);
+
+    function runEventListeners(input) {
+      input.addEventListener("input", function (event) {
+        var inputValue = event.target.value;
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        input.value = formatValue;
+        deger = formatValue;
+      });
+    }
+    function clear(value) {
+      
+      if (value != undefined) {
+        var cleanString = value.replace(/[^0-9.]/g, "");
+        return cleanString;
+      } else {
+        var cleanString = 0;
+        return cleanString;
+      }
+    }
+
+    function format(number) {
+      var indexOfDot = number.indexOf(".");
+
+      if (indexOfDot !== -1) {
+        var integerPart = number
+          .slice(0, indexOfDot)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var decimalPart = number.slice(indexOfDot + 1);
+        return integerPart + "." + decimalPart;
+      } else {
+        var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return formattedNumber;
+      }
+    }
+
+                    // Form Gönderme
+        
+    amountInputReformatBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      isBedeliInput.value = clear(isBedeliInput.value);
+      birimBasiMaliyetInput.value = clear(birimBasiMaliyetInput.value);
+      acGucInput.value = clear(acGucInput.value);
+      dcGucInput.value = clear(dcGucInput.value);
+      form.submit();
+    });                  
+  </script>
+
+  <!-- Select File -->
+<script>
+  'use strict';
+
+;( function ( document, window, index )
+{
+	var inputs = document.querySelectorAll( '.inputfile' );
+	Array.prototype.forEach.call( inputs, function( input )
+	{
+		var label	 = input.nextElementSibling,
+			labelVal = label.innerHTML;
+
+		input.addEventListener( 'change', function( e )
+		{
+			var fileName = '';
+			if( this.files && this.files.length > 1 )
+				fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+			else
+				fileName = e.target.value.split( '\\' ).pop();
+
+			if( fileName )
+				label.querySelector( 'span' ).innerHTML = fileName;
+			else
+				label.innerHTML = labelVal;
+		});
+
+		// Firefox bug fix
+		input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
+		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
+	});
+}( document, window, 0 ));
+</script>
+
+  {% endblock %} {% endblock %}
+</div>

@@ -8,9 +8,59 @@ from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, Clien
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
 from django.db.models import Q
 from django.views import View
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 
+@require_POST
+def set_card_lost(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    card.Is_Lost = True
+    card.save()
+    return JsonResponse({'success': True})
 
+def delete_salesoffercard(request, card_id):
+    try:
+        # Öğrenciyi bulma
+        card = SalesOfferCard.objects.get(id=card_id)
+
+        # Modeli silme
+        card.delete()
+
+        # Başarılı bir silme işlemi sonrasında yapılacak işlemler
+        # Örneğin, bir mesaj gösterme veya başka bir sayfaya yönlendirme
+
+    except card.DoesNotExist:
+        # Model bulunamadıysa yapılacak işlemler
+        # Örneğin, bir hata mesajı gösterme veya başka bir sayfaya yönlendirme
+        return HttpResponse("Silme işlemi başarılı")
+
+def sales_offer_edit(request, sales_offer_id):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
+    if request.method == 'POST':
+        sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
+        client_form = ClientsForm(request.POST or None )
+        if sales_form.is_valid():
+            sales_form.save()
+            return redirect('sales_offer')  
+        elif client_form.is_valid():
+            client_form.save()
+            return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
+        
+    else:  
+        sales_form = SalesOfferCardForm(instance=sales_offer_edit_curr)
+        client_form = ClientsForm()
+
+    context={
+        'sales_form':sales_form,
+        'client':client,
+        'locations':locations,
+        'client_form':client_form,
+        'sales_offer_edit_curr':sales_offer_edit_curr
+    }
+    return render(request, "sales_offer_edit.html", context)
 
 def sales_offer_add(request):
     client = Clients.objects.all()
