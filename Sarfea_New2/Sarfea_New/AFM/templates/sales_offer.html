@@ -53,58 +53,16 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
-                      <div class="boxes">
-                        <p>$ {{ card.Cost_NotIncludingKDV_Card }}</p>                    
-                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
-                      <p>{{card.Terrain_Roof_Card}}</p>
-                    </div>
-
-                  </div>
-
-                    {% endif %}
-                    {% endfor %}
-
-                  </div>
-                  <div class="rows" data-situation="Maliyet Hesaplama">
-                    <div class="total-cash">
-                      <span>$ {{cost_customers_cost}}</span>
-                      <span>({{cost_customers_count}})</span>
-                    </div> 
-                    {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False %}
-                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
                       </div>   
                       <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.DC_Power_Card}} kWp</p>
                       <p>{{card.Terrain_Roof_Card}}</p>
-                   </div>
-                  </div>
-                    {% endif %}
-                    {% endfor %}
-                   
-
-                    <div class="card" draggable="true">
-                         
-                      <p class="bold700">Doğa Tohumculuk</p>
-                      <p>Isıtma Sistemleri #(2)  </p>
-                      <p>12.06.2023</p>
-                      <div class="boxes">
-                        <p>$ 150000</p>
-                        <p>1000 USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>500 kWp</p>
-                      <p>Çatı</p>
                       </div>
                       <div class="boxes">
                         <div class="buttons">
@@ -122,10 +80,8 @@
                       </div>
                       <div class="flex-row">
                         <span class="bold500">Yorum: </span>
-                        <p class="eclipse">Teslim şartları avukatla görüşüldüTeslim şartları avukatla görüşüldü.</p>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
-                      
-
                       <div class="card-menu">
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
@@ -136,8 +92,61 @@
                         </ul>
                       </div> 
                     </div>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
 
+                  <div class="rows" data-situation="Maliyet Hesaplama">
+                    <div class="total-cash">
+                      <span>$ {{cost_customers_cost}}</span>
+                      <span>({{cost_customers_count}})</span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False %}
+                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.DC_Power_Card}} kWp</p>
+                      <p>{{card.Terrain_Roof_Card}}</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Kaybedildi</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
+                    </div>
+                
 
+                    {% endif %}
+                    {% endfor %}
                   </div>
                   <div class="rows" data-situation="Fiyat Belirleme">
                     <div class="total-cash">
@@ -147,17 +156,45 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
                       </div>   
                       <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.DC_Power_Card}} kWp</p>
                       <p>{{card.Terrain_Roof_Card}}</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Kaybedildi</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
                     </div>
-                  </div>
                     {% endif %}
                     {% endfor %}
                     
@@ -170,17 +207,45 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
                       </div>   
                       <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.DC_Power_Card}} kWp</p>
                       <p>{{card.Terrain_Roof_Card}}</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Kaybedildi</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
                     </div>
-                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
@@ -192,17 +257,45 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
                       </div>   
                       <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.DC_Power_Card}} kWp</p>
                       <p>{{card.Terrain_Roof_Card}}</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Kaybedildi</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
                     </div>
-                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
@@ -214,17 +307,45 @@
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}}) </p>
+                      <p class="bold700">{{card.Client_Card}}</p>
+                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
                       </div>   
                       <div class="boxes">             
-                      <p>{{card.DC_Power_Card}}kWp</p>
+                      <p>{{card.DC_Power_Card}} kWp</p>
                       <p>{{card.Terrain_Roof_Card}}</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mr-3">M1</button>
+                          <button class="mr-3">M2</button>
+                          <button>M3</button>
+                        </div>
+                        <div class="buttons">
+                          <button class="mr-3">T1</button>
+                          <button class="mr-3">T2</button>
+                          <button class="mr-3">T3</button>
+                          <button class="mr-3">T4</button>
+                          <button>T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
+                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
+                        <ul id="card_menu">
+                          <li>Düzenle</li>
+                          <li>Kaybedildi</li>
+                          <li>Sil</li>
+                        </ul>
+                      </div> 
                     </div>
-                  </div>
                     {% endif %}
                     {% endfor %}
                   </div>
