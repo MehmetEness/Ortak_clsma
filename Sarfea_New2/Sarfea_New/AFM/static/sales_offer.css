@@ -11,12 +11,29 @@
     width: 0 !important;
   }
 
-.bold{
+.bold700{
     font-size: 0.8vw;
+    font-weight: 700 !important;
+}
+.bold500{
+    font-size: 0.7vw;
     font-weight: 700 !important;
 }
 .mr-3{
     margin-right: 0px;
+}
+.eclipse{
+    font-size: 0.65vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 38%;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px 5px;
 }
 
 /*  Body  */
@@ -111,18 +128,19 @@
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 .card{
+    width: 95%;
     position: relative;
     font-family: 'Rethink Sans', sans-serif;
-    height: 178px;
+    height: 200px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 1px 1px 1px #888888;
     border-radius: 10px;
     margin: 5px;
     padding: 10px;
     font-size: 0.7vw;
-    white-space: nowrap;
+    /* white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
     display: flex;
     flex-direction: column;
     justify-content: center;
