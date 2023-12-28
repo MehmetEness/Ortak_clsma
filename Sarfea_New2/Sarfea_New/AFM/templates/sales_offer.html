@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offerrrrr.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -95,7 +95,7 @@
 
                     <div class="card" draggable="true">
                          
-                      <p class="bold">Doğa Tohumculuk</p>
+                      <p class="bold700">Doğa Tohumculuk</p>
                       <p>Isıtma Sistemleri #(2)  </p>
                       <p>12.06.2023</p>
                       <div class="boxes">
@@ -120,11 +120,18 @@
                           <button>T5</button>
                         </div>
                       </div>
+                      <div class="flex-row">
+                        <span class="bold500">Yorum: </span>
+                        <p class="eclipse">Teslim şartları avukatla görüşüldüTeslim şartları avukatla görüşüldü.</p>
+                      </div>
+                      
+
                       <div class="card-menu">
                         <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
                         <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
                         <ul id="card_menu">
                           <li>Düzenle</li>
+                          <li>Kaybedildi</li>
                           <li>Sil</li>
                         </ul>
                       </div> 
