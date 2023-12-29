@@ -39,6 +39,9 @@ def sales_offer_edit(request, sales_offer_id):
     client = Clients.objects.all()
     locations = Locations.objects.all()
     sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
+    sales_offer_edit_curr.Cost_NotIncludingKDV_Card = str(sales_offer_edit_curr.Cost_NotIncludingKDV_Card).replace(",", ".")
+    sales_offer_edit_curr.UnitCost_NotIncludingKDV = str(sales_offer_edit_curr.UnitCost_NotIncludingKDV).replace(",", ".")
+
     if request.method == 'POST':
         sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
         client_form = ClientsForm(request.POST or None )
