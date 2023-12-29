@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offerr.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -83,10 +83,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -134,10 +134,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;"  class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -186,10 +186,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -237,10 +237,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -287,10 +287,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -337,10 +337,10 @@
                         <p class="eclipse">{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i id="card_menu-btn1" class="fa-solid fa-ellipsis"></i>
-                        <i style="display: none;" id="card_menu-btn2" class="fa-solid fa-ellipsis"></i>
-                        <ul id="card_menu">
-                          <a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}"><li>Düzenle</li></a>
+                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
@@ -352,7 +352,7 @@
           
         </div>
         </div>   
-        <div class="list-container container">
+        <div style="display: none;" class="list-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead>
@@ -382,7 +382,7 @@
               </table>
             </div>
         </div>
-        <div class="lost-job-container container">
+        <div style="display: none;" class="lost-job-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead>
@@ -414,7 +414,7 @@
               </table>
             </div>
         </div>
-        <div class="sales-container container">
+        <div style="display: none;" class="sales-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead>
@@ -454,6 +454,8 @@
 <!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
 
 <!-- Elementler -->
+
+<!-- Kaybedilen İş -->
 <script>
   function lostCard(cardId) {
     const csrftoken = getCookie('csrftoken');
@@ -478,7 +480,6 @@
     })
     .then(data => {
       console.log('Kaybedildi işlemi başarılı', data);
-      // Gerekirse sayfayı yenileme veya başka bir işlem yapma
       location.reload();
     })
     .catch(error => {
@@ -493,6 +494,7 @@
   }
 </script>
 
+<!-- Silinen İş -->
 <script>
   // CSRF token'ını al
   const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
@@ -514,13 +516,13 @@
     })
     .then(response => {
       if (!response.ok) {
+        location.reload();
         throw new Error('Silme işlemi başarısız');
       }
       return response.json();
     })
     .then(data => {
       console.log('Silme başarılı', data);
-      // Gerekirse sayfayı yenileme veya başka bir işlem yapma
       location.reload();
     })
     .catch(error => {
@@ -722,24 +724,30 @@
   <!-- Card Menu -->
   <script>
 
-    // card_menu_btn öğesini alın
-    var cardMenuBtn1 = document.getElementById("card_menu-btn1");
-    var cardMenuBtn2 = document.getElementById("card_menu-btn2");
+    var cardMenuBtn1 = document.querySelectorAll(".card_menu-btn1");
+    
 
-    // card_menu öğesini alın
-    var cardMenu = document.getElementById("card_menu");
+  cardMenuBtn1.forEach(btn => {
+  btn.addEventListener('click', function() {
+    let card = this.closest('.card');
+    var cardMenuBtn2 = card.querySelector(".card_menu-btn2");    
+    let cardMenu = card.querySelector('.card_menu');
+          
+    cardMenu.style.display = "block";
+    btn.style.display = "none"
+    cardMenuBtn2.style.display = "block"
+    console.log(cardMenuBtn2);
+     
+     cardMenuBtn2.addEventListener("click", function() {
+       cardMenu.style.display = "none";
+       cardMenuBtn2.style.display = "none"
+       btn.style.display = "block"
+     });
+  });
+});
 
-    // card_menu_btn'e tıklama olayı ekle
-    cardMenuBtn1.addEventListener("click", function() {
-      cardMenu.style.display = "block";
-      cardMenuBtn1.style.display = "none"
-      cardMenuBtn2.style.display = "block"
-    });
-    cardMenuBtn2.addEventListener("click", function() {
-      cardMenu.style.display = "none";
-      cardMenuBtn2.style.display = "none"
-      cardMenuBtn1.style.display = "block"
-    });
+
+    
 
   </script>
   

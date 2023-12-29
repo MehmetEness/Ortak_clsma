@@ -27,7 +27,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 38%;
+    width: 75%;
 }
 .flex-row{
     display: flex;
@@ -93,6 +93,7 @@
     padding: 10px 20px;
     cursor: pointer;
 }
+
 .top-menu-ul li:hover{
     border-bottom: 2px solid  #8392a5;
 }
@@ -131,7 +132,7 @@
     width: 95%;
     position: relative;
     font-family: 'Rethink Sans', sans-serif;
-    height: 200px;
+    /* height: 200px; */
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 1px 1px 1px #888888;
     border-radius: 10px;
@@ -169,6 +170,10 @@
     color: #fff;
     border-radius: 10px;
     font-size: 0.7vw;
+}
+.card-menu ul li a{
+    text-decoration: none;
+    color: #fff;
 }
 .card p{
     padding: 4px 0;
