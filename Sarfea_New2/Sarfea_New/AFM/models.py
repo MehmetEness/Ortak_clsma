@@ -187,8 +187,14 @@ class SalesOfferCard(models.Model):
     )    
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
-    Offer_File_Card = models.FileField(upload_to='AFM_files/offer_files/', blank=True, null=True)
-    M_File_Card = models.FileField(upload_to='AFM_files/m_files/', blank=True, null=True)
+    Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_3 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_4 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_5 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    M_File_Card = models.FileField(upload_to='m_files', default="", blank=True, null=True)
+    M_File_Card_2 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
+    M_File_Card_3 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     
     

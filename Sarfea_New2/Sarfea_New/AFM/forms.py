@@ -388,8 +388,6 @@ class SalesOfferCardForm(forms.ModelForm):
         required=False,
     )
     Offer_Comment_Card = forms.CharField(max_length=400, required=False)
-    Offer_File_Card = forms.FileField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))  
-    M_File_Card = forms.FileField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))  
 
     class Meta:
         model = SalesOfferCard
