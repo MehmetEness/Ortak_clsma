@@ -119,7 +119,7 @@ label {
     </div>
     <div class="center">
       <div class="container projeBaslatContainer">
-        <div class="title">Satış Teklifi Ekle</div>
+        <div class="title">Satış Teklifini Güncelle</div>
         <form id="my-form" action="{% url 'sales_offer_edit' sales_offer_id=sales_offer_edit_curr.id %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input type="hidden" name="sales_form" value="sales_form" />
