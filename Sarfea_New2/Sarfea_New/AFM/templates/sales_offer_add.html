@@ -488,9 +488,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Check if the input initially has a file selected
         if (input.files && input.files.length > 0 && nextLabel) {
-            nextLabel.style.display = 'inline-block';
-            inputs[index + 1].style.display = 'inline-block';
-        }
+                nextLabel.style.display = 'inline-block';
+                inputs[index + 1].style.display = 'inline-block';
+            } else {
+                // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
+                var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
+                console.log(defaultText);
+                var fileName = label.querySelector('span').textContent;
+                console.log(fileName);
+                if (fileName !== defaultText) {
+                    label.style.display = 'inline-block';
+                }
+            }
     });
 });
 
@@ -534,9 +543,18 @@ document.addEventListener('DOMContentLoaded', function () {
   
           // Check if the input initially has a file selected
           if (input.files && input.files.length > 0 && nextLabel) {
-              nextLabel.style.display = 'inline-block';
-              inputs[index + 1].style.display = 'inline-block';
-          }
+                nextLabel.style.display = 'inline-block';
+                inputs[index + 1].style.display = 'inline-block';
+            } else {
+                // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
+                var defaultText = 'M' + (index + 1) + ' Dosyası seçin';
+                console.log(defaultText);
+                var fileName = label.querySelector('span').textContent;
+                console.log(fileName);
+                if (fileName !== defaultText) {
+                    label.style.display = 'inline-block';
+                }
+            }
       });
   });
   
