@@ -233,7 +233,7 @@ label {
             <div class="input-box">
               <span class="details">Tarih</span>
               <input
-              value="{{sales_offer_edit_curr.Date_Card}}"
+              value="{{ sales_offer_edit_curr.Date_Card|date:'Y-m-d' }}"
                 style="
                   background: url('{% static 'images/calendar.gif' %}') 99% 50%
                     no-repeat;
@@ -249,7 +249,7 @@ label {
             <div class="input-box">
               <span class="details">Yorum Tarihi</span>
               <input
-              value="{{sales_offer_edit_curr.Comment_Date_Card}}"
+              value="{{ sales_offer_edit_curr.Comment_Date_Card|date:'Y-m-d' }}"
 
                 style="
                   background: url('{% static 'images/calendar.gif' %}') 99% 50%

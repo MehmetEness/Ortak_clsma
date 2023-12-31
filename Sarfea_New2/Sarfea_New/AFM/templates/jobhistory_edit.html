@@ -111,7 +111,13 @@
               </div>
               <div class="input-box">
                   <span class="details">Tarih</span>
-                  <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" id="id_Date_JobHistory" type="date" name="Date_JobHistory" value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+                  <input 
+                  style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" 
+                  class="coc-input" 
+                  id="id_Date_JobHistory" 
+                  type="date" 
+                  name="Date_JobHistory" 
+                  value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
               </div>
               <div class="input-box">
                 <span class="details">Kur Saati</span>
