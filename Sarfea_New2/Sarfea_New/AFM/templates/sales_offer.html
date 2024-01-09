@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offerr.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offer.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -67,52 +67,52 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}                        
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
@@ -150,52 +150,52 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}                        
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
@@ -234,44 +234,44 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}
@@ -279,8 +279,8 @@
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
@@ -318,44 +318,44 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}
@@ -363,8 +363,8 @@
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
@@ -401,44 +401,44 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}
@@ -446,8 +446,8 @@
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
@@ -484,44 +484,44 @@
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
                           <button class="mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
                           <button class="mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
                           <button class="mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
                           <button class="mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
                           <button class="mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
                           <button class="mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
                           <button class="mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
                           <button class="mr-3">T5</button>
                           {% endif %}
@@ -529,8 +529,8 @@
                         </div>
                       </div>
                       <div class="flex-row">
-                        <span class="bold500">Yorum: </span>
-                        <p class="eclipse">{{card.Offer_Comment_Card}}</p>
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
                         <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
