@@ -23,15 +23,18 @@
         <div id="nav-content-highlight"></div>
     </div>
     <input id="nav-footer-toggle" type="checkbox"/>
+    {% if user.is_authenticated %}
     <div id="nav-footer">
         <div id="nav-footer-heading">
           <div id="nav-footer-avatar"><i class="fas fa-user"></i></div>
-          <div id="nav-footer-titlebox"><span id="nav-footer-title" target="_blank">Yönetici</span><span id="nav-footer-subtitle">Admin</span></div>
+          <div id="nav-footer-titlebox"><span id="nav-footer-title" target="_blank">{{ user.username }}</span><span id="nav-footer-subtitle"></span></div>
           <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
         </div>
         <div id="nav-footer-content">
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% block js_files %} 

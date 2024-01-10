@@ -3,7 +3,6 @@ from django.urls import path
 from django.views.static import serve
 from django.conf import settings
 from . import views
-from .views import update_card_situation
 
 
 
@@ -11,7 +10,6 @@ from .views import update_card_situation
 
 urlpatterns = [
     #path("admin/", admin.site.urls),
-    path("", views.home),
     path("home", views.home, name='home'),
     path("projects/", views.projects, name='projects'),
     path('project_details/<str:project_name>/', views.project_details, name='project_details'),
@@ -36,8 +34,8 @@ urlpatterns = [
     path("sales_offer/", views.sales_offer, name='sales_offer'),
     path('sales_offer/sales_offer_edit/<int:sales_offer_id>/', views.sales_offer_edit, name='sales_offer_edit'),
     path("sales_offer_add/", views.sales_offer_add, name='sales_offer_add'),
-    path('update_card_situation/', update_card_situation, name='update_card_situation'),
-    path('delete_salesoffercard/<int:card_id>/', views.delete_salesoffercard, name='delete_salesoffercard'),
-    path('set_card_lost/<int:card_id>/', views.set_card_lost, name='set_card_lost'),
+    path('update_card_situation/', views.update_card_situation, name='update_card_situation'),
+    path('sales_offer/AFM/delete_salesoffercard/<int:card_id>/', views.delete_salesoffercard, name='delete_salesoffercard'),
+    path('sales_offer/AFM/set_card_lost/<card_id>/', views.set_card_lost, name='set_card_lost'),
 
    ]

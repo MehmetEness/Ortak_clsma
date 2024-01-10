@@ -667,7 +667,7 @@
       return;
     }
 
-    fetch(`/set_card_lost/${cardId}/`, {
+    fetch(`AFM/set_card_lost/${cardId}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -676,7 +676,7 @@
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Kaybedildi işlemi başarısız');
+        throw new Error('Kaybedildi işlemi başarısızz');
       }
       return response.json();
     })
@@ -709,7 +709,7 @@
     }
 
     // Silme işlemi için bir HTTP isteği yap
-    fetch(`/delete_salesoffercard/${cardId}/`, {
+    fetch(`AFM/delete_salesoffercard/${cardId}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

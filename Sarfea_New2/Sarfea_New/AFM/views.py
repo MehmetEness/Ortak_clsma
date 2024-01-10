@@ -15,13 +15,13 @@ from django.views.decorators.http import require_POST
 @require_POST
 def set_card_lost(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
     card.Is_Lost = True
     card.save()
     return JsonResponse({'success': True})
 
 def delete_salesoffercard(request, card_id):
     try:
-        # Öğrenciyi bulma
         card = SalesOfferCard.objects.get(id=card_id)
 
         # Modeli silme
@@ -33,7 +33,7 @@ def delete_salesoffercard(request, card_id):
     except card.DoesNotExist:
         # Model bulunamadıysa yapılacak işlemler
         # Örneğin, bir hata mesajı gösterme veya başka bir sayfaya yönlendirme
-        return HttpResponse("Silme işlemi başarılı")
+        return HttpResponse("Silme işlemi başarısız")
 
 def sales_offer_edit(request, sales_offer_id):
     client = Clients.objects.all()
