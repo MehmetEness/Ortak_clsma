@@ -22,12 +22,20 @@
 .mr-3{
     margin-right: 0px;
 }
+.blue{
+    background: #2c3e50;
+    color: #fff !important;
+}
+.blue:hover{
+    background: #445d77 !important;
+    color: #fff !important;
+}
 .eclipse{
     font-size: 0.65vw;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 75%;
+    width: 100%;
 }
 .flex-row{
     display: flex;
