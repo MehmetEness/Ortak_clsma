@@ -281,7 +281,7 @@
 
               
               <input type="file" name="Offer_File_Card" id="id_Offer_File_Card" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
-              <label style="display: none;" for="id_Offer_File_Card"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg>
+              <label style="display: block;" for="id_Offer_File_Card"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg>
                  {% if sales_offer_edit_curr.Offer_File_Card %}
                 <span>{{sales_offer_edit_curr.Offer_File_Card.name | basename }}</span>
                 {% else %}  
@@ -329,7 +329,7 @@
             </div>
 
             <div class="input-box"> 
-              <span class="details">M Dosyası</span>
+              <span class="details">Maliyet Dosyası</span>
 
               
               <input type="file" name="M_File_Card" id="id_M_File_Card" class="inputfile inputfile-2" data-multiple-caption="{count} files selected" multiple />
@@ -337,7 +337,7 @@
                 {% if sales_offer_edit_curr.M_File_Card %}
                 <span>{{sales_offer_edit_curr.M_File_Card.name | basename }}</span>
                 {% else %}
-                <span>M1 Dosyası seçin</span>
+                <span>Maliyet 1 Dosyası seçin</span>
                 {% endif %}              
               </label> 
               
@@ -347,7 +347,7 @@
                 {% if sales_offer_edit_curr.M_File_Card_2 %}
                 <span>{{sales_offer_edit_curr.M_File_Card_2.name | basename }}</span>
                 {% else %}
-                <span>M2 Dosyası seçin</span>
+                <span>Maliyet 2 Dosyası seçin</span>
                 {% endif %}              
               </label> 
 
@@ -357,7 +357,7 @@
                 {% if sales_offer_edit_curr.M_File_Card_3 %}
                 <span>{{sales_offer_edit_curr.M_File_Card_3.name | basename }}</span>
                 {% else %}
-                <span>M3 Dosyası seçin</span>
+                <span>Maliyet 3 Dosyası seçin</span>
                 {% endif %}              
               </label> 
 
@@ -610,7 +610,7 @@
                   if (fileName) {
                     label.querySelector('span').innerHTML = fileName;
                 } else {
-                    var defaultText = 'M' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
+                    var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
                     label.querySelector('span').innerHTML = defaultText; // Etiketi güncelle   M1 Dosyası seçin
                 }
               });
@@ -621,7 +621,7 @@
                 inputs[index + 1].style.display = 'inline-block';
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
-                var defaultText = 'M' + (index + 1) + ' Dosyası seçin';
+                var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin';
                 //console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
                 //console.log(fileName);

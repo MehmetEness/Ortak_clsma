@@ -148,26 +148,33 @@
                 </div>
               </div>
             </div>
-          
-
             <div class="input-box">
-              <span class="details">Detay</span>
-              {{ sales_form.Offer_Subject_Card }}
+              <span class="details">İlgilenen Kişi</span>
+              <div class="dropdown-container">
+                <input autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown11"/>
+                {% if sales_form.Client_Card.errors %}
+                <div class="error-container">
+                  <span class="error-triangle"></span>
+                  <ul class="errorlist">
+                    {% for error in sales_form.Client_Card_Copy.errors %}
+                    <li class="error-message">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+                <div id="dropdown11" class="dropdown-content">
+                  {% for x in client %}
+                  <span value="{{x.id}}" class="dropdown-item"
+                    >{{x.CompanyName_Clients}}</span
+                  >
+                  {% endfor %}
+                </div>
+              </div>
             </div>
-           
-
             <div class="input-box">
               <span class="details">Konum</span>
               <div class="dropdown-container">
-                <input
-                  type="text"
-                  id="id_Location_Card"
-                  name="Location_Card"
-                  class="myInput"
-                  placeholder="Konum Seçiniz"
-                  data-dropdown="dropdown2"
-                  autocomplete="off"
-                />
+                <input type="text" id="id_Location_Card" name="Location_Card" class="myInput" placeholder="Konum Seçiniz" data-dropdown="dropdown2" autocomplete="off"/>
                 <div id="dropdown2" class="dropdown-content">
                   {% for x in locations %}
                   <span value="{{x.id}}" class="dropdown-item"
@@ -178,93 +185,56 @@
               </div>
             </div>
             <div class="input-box">
-              <span class="details">İş Bedeli - KDV Hariç ($)</span>
-              <input
-                class="coc-input"
-                type="text"
-                name="Cost_NotIncludingKDV_Card"
-                id="id_Cost_NotIncludingKDV_Card"
-                step="0.01"
-                autocomplete="off"
-              />
+              <span class="details">Teklif Bedeli - KDV Hariç ($)</span>
+              <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off"/>
             </div>
-             <div class="input-box">
+            <div class="input-box">
+              <span class="details">Birim Teklif</span>
+              {{ sales_form.Offer_Subject_Card }}
+            </div>
+            <div class="input-box">
               <span class="details">AC Güç (kWe)</span>
-              <input
-                class="coc-input"
-                type="text"
-                name="AC_Power_Card"
-                id="id_AC_Power_Card"
-                step="1"
-                autocomplete="off"
-              />
+              <input class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off"/>
             </div>
-             <div class="input-box">
+            <div class="input-box">
+              <span class="details">Toplam Maliyet</span>
+              {{ sales_form.Offer_Subject_Card }}
+            </div>
+            <div class="input-box">
+              <span class="details">Birim Maliyet - KDV Hariç ($)</span>
+              <input class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off"/>
+            </div>
+            <div class="input-box">
               <span class="details">DC Güç (kWp)</span>
-              <input
-                class="coc-input"
-                type="text"
-                name="DC_Power_Card"
-                id="id_DC_Power_Card"
-                step="1"
-                autocomplete="off"
-              />
+              <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off"/>
             </div>
             <div class="input-box">
-              <span class="details">Birim Başına Maliyet - KDV Hariç ($)</span>
-              <input
-                class="coc-input"
-                type="text"
-                name="UnitCost_NotIncludingKDV"
-                id="id_UnitCost_NotIncludingKDV"
-                step="0.01"
-                autocomplete="off"
-
-              />
-            </div>
-            <div class="input-box">
-                <span class="details">Durumu</span>
-                {{sales_form.Situation_Card}}
-              </div>
-
-            <div class="input-box">
-              <span class="details">Tarih</span>
-              <input
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
-                id="tarih"
-                type="date"
-                name="Date_Card"
-                placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
-              />
-            </div>
-            <div class="input-box">
-              <span class="details">Yorum Tarihi</span>
-              <input
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
-                id="id_Comment_Date_Card"
-                type="date"
-                name="Comment_Date_Card"
-                placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
-              />
-            </div>
-            <div class="input-box">
-              <span class="details">Arazi/Çatı</span>
-              {{sales_form.Terrain_Roof_Card}}
+              <span class="details">Durumu</span>
+              {{sales_form.Situation_Card}}
             </div>
             <div class="input-box">
               <span class="details">Yorum</span>
               {{sales_form.Offer_Comment_Card}}
             </div>
+            <div class="input-box">
+              <span class="details">Tarih</span>
+              <input style="background: url('{% static 'images/calendar.gif' %}') 99% 50% no-repeat;" id="tarih" type="date" name="Date_Card" placeholder="Tarih Seçiniz" min="2000-01-01" max="2099-01-01"/>
+            </div> 
+            <div class="input-box">
+              <span class="details">Arazi/Çatı</span>
+              {{sales_form.Terrain_Roof_Card}}
+            </div>         
+            
+            <div style="display: block;" class="input-box">
+              <span class="details">Arazi Bedeli(MW)</span>
+              {{sales_form.Terrain_Roof_Card}}
+            </div>    
+            <div style="display: none;" class="input-box">
+                <input id="empty_input"  type="text">
+            </div> 
+            <div class="input-box">
+              
+            </div>        
             <div class="input-box">
               <span class="details">Teklif Dosyası</span>
               <input type="file" name="Offer_File_Card" id="id_Offer_File_Card_1" class="inputfile inputfile-1" />
@@ -280,15 +250,16 @@
             
             </div>
             <div class="input-box"> 
-              <span class="details">M Dosyası</span>
+              <span class="details">Maliyet Dosyası</span>
               <input type="file" name="M_File_Card" id="id_M_File_Card_1" class="inputfile inputfile-2"/>
-              <label for="id_M_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>M1 Dosyası seçin</span></label>            
+              <label for="id_M_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Maliyet 1 Dosyası seçin</span></label>            
               <input type="file" name="M_File_Card_2" id="id_M_File_Card_2" class="inputfile inputfile-2"/>
-              <label style="display: none;" for="id_M_File_Card_2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>M2 Dosyası seçin</span></label>            
+              <label style="display: none;" for="id_M_File_Card_2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Maliyet 2 Dosyası seçin</span></label>            
               <input type="file" name="M_File_Card_3" id="id_M_File_Card_3" class="inputfile inputfile-2"/>
-              <label style="display: none;" for="id_M_File_Card_3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>M3 Dosyası seçin</span></label>            
+              <label style="display: none;" for="id_M_File_Card_3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Maliyet 3 Dosyası seçin</span></label>            
               
             </div>
+            
           </div>
           <div class="button">
             <input id="project-create-btn" type="submit" value="Satış Teklifi Ekle" />
@@ -537,7 +508,8 @@ document.addEventListener('DOMContentLoaded', function () {
               if (fileName) {
                 label.querySelector('span').innerHTML = fileName;
             } else {
-                var defaultText = 'M' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
+                var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
+                console.log(defaultText)
                 label.querySelector('span').innerHTML = defaultText; // Etiketi güncelle   M1 Dosyası seçin
             }
           });
@@ -548,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputs[index + 1].style.display = 'inline-block';
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
-                var defaultText = 'M' + (index + 1) + ' Dosyası seçin';
+                var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin';
                 console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
                 console.log(fileName);
@@ -560,7 +532,25 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   </script>
+  <!-- Arazi çatı script -->
+<script>
+        // var chekLastDateBox = document.getElementById("id_Terrain_Roof_Card");
+        // var emptyInput = document.getElementById("empty_input");
+        // document.addEventListener('DOMContentLoaded', function () {
+        // const mySelect = document.getElementById('id_Terrain_Roof_Card');
+        // mySelect.addEventListener('change', controlFunction);
 
+        // function controlFunction() {
+        // const selectedOption = mySelect.options[mySelect.selectedIndex].text;
+
+        // if (selectedOption.startsWith('Çek')) {
+        //   chekLastDateBox.style.display = "block";
+        // } else {
+        //   chekLastDateBox.style.display = "none";
+        // }
+        // }
+        // });
+</script>
 
   {% endblock %} {% endblock %}
 </div>

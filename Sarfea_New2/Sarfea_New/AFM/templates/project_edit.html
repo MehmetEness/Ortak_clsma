@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'center.css' %}">
     <link rel="stylesheet" href="{% static 'new_selections.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
+    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
 
     {% endblock %}
     
@@ -51,7 +51,7 @@
               </div>
 
               <div class="input-box {% if form.CompanyName.errors %}error{% endif %}" id="CompanyNameInput">
-                <span class="details">Firma Adı</span>
+                <span id="firma_adi_span" class="details">Firma Adı*</span>
                 <div class="dropdown-container">
                   <input autocomplete="off" value="{{project_edit.CompanyName}}" type="text" id="id_CompanyName" name="CompanyName" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                     {% if edit_form.CompanyName.errors %}
@@ -184,18 +184,28 @@
     
 
 
-    var amountInputForFormat1 = document.querySelector("#id_Cost_NotIncludingKDV");
-    var amountInputForFormat2 = document.querySelector("#id_CalculatedCost_NotIncludingKDV");
-    var amountInputReformatBtn = document.querySelector("#project-create-btn");
-    var form = document.querySelector("#my-form");
-    var deger;
-    
-    amountInputReformatBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    amountInputForFormat1.value = clear(amountInputForFormat1.value);
-    amountInputForFormat2.value = clear(amountInputForFormat2.value);
-    form.submit();
-    });
+            var amountInputForFormat1 = document.querySelector("#id_Cost_NotIncludingKDV");
+            var amountInputForFormat2 = document.querySelector("#id_CalculatedCost_NotIncludingKDV");
+            var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName");
+            var s1 = document.querySelector("#firma_adi_span");
+            var submitBool = true;
+            var deger;
+            
+            amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }
+           if(submitBool){
+            amountInputForFormat.value = clear(deger);
+            form.submit();
+           }
+            
+            }); 
     onPageLoad(amountInputForFormat1);
     onPageLoad(amountInputForFormat2);
     runEventListeners(amountInputForFormat1);

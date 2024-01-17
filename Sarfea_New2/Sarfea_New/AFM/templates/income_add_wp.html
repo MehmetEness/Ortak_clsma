@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
+    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     {% endblock %}
@@ -49,7 +49,7 @@
                   </div>
                   </div>
                    <div class="input-box">
-                    <span class="details">Ödeme Yapan Firma<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                    <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
                         <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                         {% if incomes_form.CompanyName_Pay_Incomes.errors %}
@@ -221,16 +221,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         });
         
-        var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
-        var amountInputReformatBtn = document.querySelector("#project-create-btn");
-        var form = document.querySelector("#my-form");
-        var deger;
-        
-        amountInputReformatBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        amountInputForFormat.value = clear(deger);
-        form.submit();
-        });  
+            var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
+            var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName_Pay_Incomes");
+            var s1 = document.querySelector("#odeme_yapan_firma_span");
+            var submitBool = true;
+            var deger;
+            
+            amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }
+           if(submitBool){
+            amountInputForFormat.value = clear(deger);
+            form.submit();
+           }
+            
+            });   
             
         runEventListeners();
         function runEventListeners(){
