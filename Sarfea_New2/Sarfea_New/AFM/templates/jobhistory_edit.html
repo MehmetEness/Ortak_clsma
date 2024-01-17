@@ -56,7 +56,7 @@
                 <input  name="ProjectName_JobHistory" value="{{ jobhistory_edit.ProjectName_JobHistory }}">
               </div>
               <div class="input-box">
-                <span class="details">İş Yapan Firma</span>
+                <span id="is_yapan_firma_span" class="details">İş Yapan Firma*</span>
                 <select name="CompanyName_FromJobMade_JobHistory" id="id_CompanyName_FromJobMade_JobHistory">
                   {% for x in my_company %}
                     {% if jobhistory_edit.CompanyName_FromJobMade_JobHistory == x.MyCompanyName  %}
@@ -72,7 +72,7 @@
               </div>
 
               <div class="input-box {% if edit_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
-                <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                 <div class="dropdown-container">
                     <input autocomplete= 'off' value="{{jobhistory_edit.CompanyName_Job_JobHistory}}" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                     {% if edit_form.CompanyName_Job_JobHistory.errors %}
@@ -162,15 +162,33 @@
   <!-- <script src="{% static 'clientt.js' %}"></script>  -->
   <script>
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
-    var amountInputReformatBtn = document.querySelector("#project-create-btn");
-    var form = document.querySelector("#my-form");
-    var deger;
-    
-    amountInputReformatBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    amountInputForFormat.value = clear(deger);
-    form.submit();
-    });  
+            var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName_FromJobMade_JobHistory");
+            var i2 = document.querySelector("#id_CompanyName_Job_JobHistory");
+            var s1 = document.querySelector("#is_yapan_firma_span");
+            var s2 = document.querySelector("#is_yapilan_firma_span");
+            var submitBool = true;
+            var deger;
+            
+            amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }
+          if(i2.value == ""){
+              s2.style.color = "red";
+              s2.style.fontWeight = "700";
+              submitBool = false;
+           }
+           if(submitBool){
+            amountInputForFormat.value = clear(deger);
+            form.submit();
+           }
+            
+            });      
         
     runEventListeners();
     onPageLoad(amountInputForFormat);

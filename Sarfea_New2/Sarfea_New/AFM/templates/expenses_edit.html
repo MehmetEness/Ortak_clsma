@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="input-box {% if expenses_form.CompanyName_Paying_Expenses.errors %}error{% endif %}" id="CompanyName_Paying_ExpensesInput">
-                  <span class="details">Ödeme Yapılan Firma</span>
+                  <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*</span>
                   <div class="dropdown-container">
                       <input autocomplete= 'off' value="{{ expenses_edit.CompanyName_Paying_Expenses }}" type="text" id="id_CompanyName_Paying_Expenses" name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                       {% if edit_form.CompanyName_Paying_Expenses.errors %}
@@ -158,16 +158,27 @@
   {% block js_files %} 
   <!-- <script src="{% static 'client.js' %}"></script>  -->
   <script>
-     var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
-    var amountInputReformatBtn = document.querySelector("#project-create-btn");
-    var form = document.querySelector("#my-form");
-    var deger;
-    
-    amountInputReformatBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    amountInputForFormat.value = clear(deger);
-    form.submit();
-    });  
+            var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
+            var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName_Paying_Expenses");
+            var s1 = document.querySelector("#odeme_yapilan_firma_span");
+            var submitBool = true;
+            var deger;
+            
+            amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }          
+           if(submitBool){
+            amountInputForFormat.value = clear(deger);
+            form.submit();
+           }
+            
+            });      
         
     runEventListeners();
     onPageLoad(amountInputForFormat);

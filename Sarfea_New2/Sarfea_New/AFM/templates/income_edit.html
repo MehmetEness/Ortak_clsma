@@ -62,7 +62,7 @@
               </div>
              
               <div class="input-box">
-                <span class="details">Ödeme Yapan Firma</span>
+                <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*</span>
                 <div class="dropdown-container">
                     <input autocomplete='off' value="{{income_edit.CompanyName_Pay_Incomes}}" type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
                     
@@ -126,17 +126,27 @@
   {% block js_files %} 
   <!-- <script src="{% static 'client.js' %}"></script>  -->
   <script>
-    var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
-    var amountInputReformatBtn = document.querySelector("#project-create-btn");
-    var form = document.querySelector("#my-form");
-    var deger;
-    
-    amountInputReformatBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    amountInputForFormat.value = clear(deger);
-    form.submit();
-    });          
-
+            var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
+            var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName_Pay_Incomes");
+            var s1 = document.querySelector("#odeme_yapan_firma_span");
+            var submitBool = true;
+            var deger;
+            
+            amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }
+           if(submitBool){
+            amountInputForFormat.value = clear(deger);
+            form.submit();
+           }
+            
+            }); 
     runEventListeners();
     onPageLoad(amountInputForFormat);
 

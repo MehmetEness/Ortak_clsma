@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
+    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     {% endblock %}
@@ -41,7 +41,7 @@
                 <div class="user-details">
 
                   <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
-                    <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                    <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
                         <input autocomplete= 'off', type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
                         {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
@@ -63,7 +63,7 @@
                   </div>
 
                 <div class="input-box {% if jobhistory_form.ProjectName_JobHistory.errors %}error{% endif %}" id="ProjectName_JobHistoryInput">
-                    <span class="details">Proje Adı</span>
+                    <span id="proje_adi_span" class="details">Proje Adı*</span>
                     <div class="dropdown-container">
                       <input autocomplete= 'off' type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
                       {% if jobhistory_form.ProjectName_JobHistory.errors %}
@@ -174,13 +174,31 @@
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
+            var i1 = document.querySelector("#id_CompanyName_Job_JobHistory");
+            var i2 = document.querySelector("#id_ProjectName_JobHistory");
+            var s1 = document.querySelector("#is_yapilan_firma_span");
+            var s2 = document.querySelector("#proje_adi_span");
+            var submitBool = true;
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              submitBool = false;
+           }
+          if(i2.value == ""){
+              s2.style.color = "red";
+              s2.style.fontWeight = "700";
+              submitBool = false;
+           }
+           if(submitBool){
             amountInputForFormat.value = clear(deger);
             form.submit();
-            });  
+           }
+            
+            });             
                 
             runEventListeners();
             function runEventListeners(){

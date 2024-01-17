@@ -36,7 +36,7 @@
           <div class="user-details">
 
             <div class="input-box {% if form.CompanyName.errors %}error{% endif %}" id="CompanyNameInput">
-              <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
+              <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
                 <input autocomplete= 'off' type="text" id="id_CompanyName" name="CompanyName" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
@@ -61,8 +61,8 @@
             </div>
 
             <div class="input-box {% if form.ProjectName.errors %}error{% endif %}" id="ProjectNameInput">
-              <span class="details">Proje Adı</span>
-              <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" required="" id="id_ProjectName" autocomplete="off">
+              <span id="proje_adi_span" class="details">Proje Adı*</span>
+              <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" id="id_ProjectName" autocomplete="off">
               {% if form.ProjectName.errors %}
               <div class="error-container">
                 <span class="error-triangle"></span>
@@ -78,7 +78,7 @@
               class="input-box {% if form.ProjectCode.errors %}error{% endif %}"
               id="ProjectCodeInput"
             >
-              <span class="details">Proje Kodu</span>
+              <span id="proje_kodu_span" class="details">Proje Kodu*</span>
               {{ form.ProjectCode }} {% if form.ProjectCode.errors %}
               <div class="error-container">
                 <span class="error-triangle"></span>
@@ -260,12 +260,39 @@
     );
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");
+    var i1 = document.querySelector("#id_CompanyName");
+    var i2 = document.querySelector("#id_ProjectName");
+    var i3 = document.querySelector("#id_ProjectCode");
+    var s1 = document.querySelector("#firma_adi_span");
+    var s2 = document.querySelector("#proje_adi_span");
+    var s3 = document.querySelector("#proje_kodu_span");
+    var submitBool = true;
 
     amountInputReformatBtn.addEventListener("click", function (event) {
       event.preventDefault();
-      amountInputForFormat1.value = clear(amountInputForFormat1.value);
-      amountInputForFormat2.value = clear(amountInputForFormat2.value);
-      form.submit();
+      
+      if(i1.value == ""){
+        s1.style.color = "red";
+        s1.style.fontWeight = "700";
+        submitBool = false;
+      }
+      if(i2.value == ""){
+        s2.style.color = "red";
+        s2.style.fontWeight = "700";
+        submitBool = false;
+      }
+      if(i3.value == ""){
+        s3.style.color = "red";
+        s3.style.fontWeight = "700";
+        submitBool = false;
+      }
+      
+      if(submitBool){
+        amountInputForFormat1.value = clear(amountInputForFormat1.value);
+        amountInputForFormat2.value = clear(amountInputForFormat2.value);
+        form.submit();
+      }
+     
     });
 
     runEventListeners(amountInputForFormat1);
