@@ -9,6 +9,7 @@ from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobH
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -35,6 +36,7 @@ def delete_salesoffercard(request, card_id):
         # Örneğin, bir hata mesajı gösterme veya başka bir sayfaya yönlendirme
         return HttpResponse("Silme işlemi başarısız")
 
+@login_required
 def sales_offer_edit(request, sales_offer_id):
     client = Clients.objects.all()
     locations = Locations.objects.all()
@@ -65,6 +67,7 @@ def sales_offer_edit(request, sales_offer_id):
     }
     return render(request, "sales_offer_edit.html", context)
 
+@login_required
 def sales_offer_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
@@ -109,6 +112,7 @@ def update_card_situation(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+@login_required
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
     for card in sales_offer_card:
@@ -159,6 +163,7 @@ def sales_offer(request):
     }
     return render(request, "sales_offer.html", context)
 
+@login_required
 def expenses_edit(request, expenses_id):
     expenses_edit = get_object_or_404(Expenses, id=expenses_id)
     project = get_object_or_404(Project, ProjectName=expenses_edit.ProjectName_Expenses)
@@ -187,6 +192,7 @@ def expenses_edit(request, expenses_id):
     }
     return render(request, "expenses_edit.html", context)
 
+@login_required
 def jobhistory_edit(request, jobhistory_id):
     jobhistory_edit = get_object_or_404(JobHistory, id=jobhistory_id)
     my_company = MyCompanyNames.objects.all()
@@ -218,6 +224,8 @@ def jobhistory_edit(request, jobhistory_id):
     }
     return render(request, "jobhistory_edit.html", context)
 
+
+@login_required
 def income_edit(request, income_id):
     income_edit = get_object_or_404(Incomes, id=income_id)
     my_company = MyCompanyNames.objects.all()
@@ -241,6 +249,7 @@ def income_edit(request, income_id):
     }
     return render(request, "income_edit.html", context)
 
+@login_required
 def supplier_edit(request, supplier_name):
     supplier_edit = get_object_or_404(Supplier, CompanyName_Supplier=supplier_name)
     locations = Locations.objects.all()
@@ -262,6 +271,7 @@ def supplier_edit(request, supplier_name):
     }
     return render(request, "supplier_edit.html", context)
 
+@login_required
 def client_edit(request, client_name):
     client_edit = get_object_or_404(Clients, CompanyName_Clients=client_name)
     locations = Locations.objects.all()
@@ -282,6 +292,7 @@ def client_edit(request, client_name):
     }
     return render(request, "client_edit.html", context)
 
+@login_required
 def project_edit(request, project_name):
     project_edit = get_object_or_404(Project, ProjectName=project_name)
     my_company = MyCompanyNames.objects.all()
@@ -310,9 +321,11 @@ def project_edit(request, project_name):
     }
     return render(request, "project_edit.html", context)
 
+@login_required
 def home(request):
     return render(request, "home.html")
 
+@login_required
 def client(request):
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -333,6 +346,7 @@ def client(request):
 
     return render(request, 'client.html', context)
 
+@login_required
 def supplier(request):
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -352,10 +366,12 @@ def supplier(request):
     }
     return render(request, "supplier.html", context)
 
+@login_required
 def project_details(request, project_name):
     project = Project.objects.filter(ProjectName=project_name).first()
     return render(request, 'project_details.html', {'project': project})
 
+@login_required
 def realized_cost(request, project_name):
     payment_firms = PaymentFirms.objects.all()
     payment_firms_names = [pf.PaymentFirmsName for pf in payment_firms]
@@ -452,6 +468,7 @@ def realized_cost(request, project_name):
     }
     return render(request, "realized_cost.html", context)
 
+@login_required
 def income_details(request, project_name):
     project = Project.objects.filter(ProjectName=project_name).first()
     incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
@@ -475,6 +492,7 @@ def income_details(request, project_name):
     }
     return render(request, "income_details.html", context)
 
+@login_required
 def projects(request):
     project = Project.objects.annotate(
         custom_order_situation=Case(
@@ -494,6 +512,7 @@ def projects(request):
 
     return render(request, "projects.html", context)
 
+@login_required
 def project_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
@@ -522,6 +541,7 @@ def project_add(request):
     }
     return render(request, "project_add.html", context)
 
+@login_required
 def expenses_add(request):
     details = Details.objects.all()
     supplier = Supplier.objects.all()
@@ -557,6 +577,7 @@ def expenses_add(request):
     }
     return render(request, "expenses_add.html", context)
 
+@login_required
 def jobhistory_add(request):
 
     jobhistory_form = None
@@ -592,6 +613,7 @@ def jobhistory_add(request):
     }
     return render(request, "jobhistory_add.html", context)
 
+@login_required
 def income_add(request):   
     income_form = None
     client_form = None
@@ -627,6 +649,7 @@ def income_add(request):
     }
     return render(request, "income_add.html", context)
 
+@login_required
 def deneme(request):
 
     if request.method == 'POST':
@@ -644,6 +667,7 @@ def deneme(request):
     }
     return render(request, "deneme.html", context)
 
+@login_required
 def expenses_add_wp(request, project_id):
     details = Details.objects.all()
     supplier = Supplier.objects.all()
@@ -679,6 +703,7 @@ def expenses_add_wp(request, project_id):
     }
     return render(request, "expenses_add_wp.html", context)
 
+@login_required
 def jobhistory_add_wp(request, project_id):
 
     jobhistory_form = None
@@ -714,6 +739,7 @@ def jobhistory_add_wp(request, project_id):
     }
     return render(request, "jobhistory_add_wp.html", context)
 
+@login_required
 def income_add_wp(request, project_id):
     income_form = None
     client_form = None
