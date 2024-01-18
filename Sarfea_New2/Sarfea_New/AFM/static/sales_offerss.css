@@ -50,7 +50,7 @@
     height: 100vh;    
 }
 .right-menu{
-    width: calc(100% - 256px);
+             width: calc(100% - 256px);
     height: 100vh;
     display: flex;
     flex-direction: column;

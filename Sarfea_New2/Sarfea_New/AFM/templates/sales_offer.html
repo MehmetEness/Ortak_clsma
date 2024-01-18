@@ -1,9 +1,145 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'sales_offer_nav.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offer_navrss.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offerr.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offerss.css' %}">
+    <style>
+    #id_Offer_Comment_Card{
+    }
+    input[type="file"] {
+      cursor: pointer !important;
+      font: 300 14px sans-serif;
+      color:#9e9e9e;
+      width: 0px !important;
+    }
+    input[type="file"]::-webkit-file-upload-button
+    {
+      font: 300 14px  sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    
+    input[type="file"]::-ms-browse {
+      font: 300 14px 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
+  
+  /* Stilize edilmiş düğme görünümü */
+  .input-box label {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  </style>
+  <style>
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+  }
+  
+  .inputfile + label {
+      width: 49%;
+      font-size: 12px;
+      /* 20px */
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-block;
+      overflow: hidden;
+      padding: 5px 10px;
+      /* 10px 20px */
+  }
+  
+  
+  
+  .inputfile:focus + label,
+  .inputfile.has-focus + label {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
+  }
+  
+  .inputfile + label svg {
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      fill: currentColor;
+      margin-top: -0.25em;
+      margin-right: 0.25em;
+  }
+  
+  
+  .inputfile-1 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
+  .inputfile-2 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
+  .details{
+    position: absolute;
+    top: 10px;
+    left: 30%;
+  }
+  #submit_btn{
+    position: absolute;
+    bottom: 10px;
+    left: 40%;
+  }
+  #file_label{
+    position: absolute;
+    left: 30%;
+    top: 40%;
+  }
+
+
+  .file_upload{  
+    color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 200px;
+  background-color: #2c3e50;
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  z-index: 11123123123;
+}
+.file_upload .container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#clientFirmaAdd-modal{
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.file_input{
+  display: none;
+}
+  
+  
+  </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
     {% block title %} Sales Offer {% endblock %}
@@ -12,9 +148,30 @@
    
 
   {% include 'partials/_left_nav_bar.html' %}
-      <div class="right-menu"> 
-        <div class="top-menu">
-          <span>Satış Teklif</span>    
+  <div style="display: none;" class="file_upload">
+    <div class="container">
+      <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
+      <form action="{% url 'project_add' %}" method="post">
+        <span class="details">Teklif Dosyası</span>
+              <input style="display: none;" type="file" name="Offer_File_Card file_input" id="id_Offer_File_Card_1" class="inputfile inputfile-1" />
+              <label id="file_label" for="id_Offer_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Teklif 1 Dosyası seçin</span></label>
+              
+        <div class="button">
+          <input id="submit_btn" type="submit" value="Kaydet" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+      <div class="right-menu">         
+        <div class="top-menu">  
+          <div>
+            <button id="hamburger_btn1" style="margin: 0; margin-left: 20px;"><i class="fa-solid fa-bars"></i></button>   
+            <button id="hamburger_btn2" style="margin: 0; margin-left: 20px; display: none;"><i class="fa-solid fa-bars"></i></button>         
+            <span>Satış Teklif</span> 
+          </div>   
           <ul class="top-menu-ul">
             <li id="list">Liste</li>           
             <li id="waiting_job">Bekleyen İşler</li> 
@@ -51,7 +208,7 @@
             
           </div>
           <div class="sales_container container">         
-                  <div class="rows" data-situation="Potansiyel Müşteri">    
+              <div class="rows" data-situation="Potansiyel Müşteri">    
                     <div style="background-color: #D0DDFB;" class="total-cash">
                       <span>$ {{potential_customers_cost}}</span>
                       <span>({{potential_customers_count}})</span>
@@ -75,17 +232,17 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
@@ -135,9 +292,8 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                  </div>
-
-                  <div class="rows" data-situation="Maliyet Hesaplama">
+              </div>
+              <div class="rows" data-situation="Maliyet Hesaplama">
                     <div style="background-color: #9DB8FB;" class="total-cash">
                       <span>$ {{cost_customers_cost}}</span>
                       <span>({{cost_customers_count}})</span>
@@ -223,8 +379,8 @@
 
                     {% endif %}
                     {% endfor %}
-                  </div>
-                  <div class="rows" data-situation="Fiyat Belirleme">
+              </div>
+              <div class="rows" data-situation="Fiyat Belirleme">
                     <div style="background-color: #F5FCD9;" class="total-cash">
                       <span>$ {{price_customers_cost}}</span>
                       <span>({{price_customers_count}})</span>
@@ -310,8 +466,8 @@
                     {% endif %}
                     {% endfor %}
                     
-                  </div>
-                  <div class="rows" data-situation="Teklif Hazırlama">
+              </div>
+              <div class="rows" data-situation="Teklif Hazırlama">
                     <div style="background-color: #FEF29A;" class="total-cash">
                       <span>$ {{offer_customers_cost}}</span>
                       <span>({{offer_customers_count}})</span>
@@ -396,8 +552,8 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                  </div>
-                  <div class="rows" data-situation="Teklif Hazır">
+              </div>
+              <div class="rows" data-situation="Teklif Hazır">
                     <div style="background-color: #FEDB1B;" class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
@@ -482,8 +638,8 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                  </div>
-                  <div class="rows" data-situation="Sunum Sonrası Görüşme">
+              </div>
+              <div class="rows" data-situation="Sunum Sonrası Görüşme">
                     <div style="background-color: #FDA802;" class="total-cash">
                       <span>$ {{presentation_customers_cost}}</span>
                       <span>({{presentation_customers_count}})</span>
@@ -568,8 +724,8 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                  </div>
-                  <div class="rows" data-situation="Teklif Sunuldu">
+              </div>
+              <div class="rows" data-situation="Teklif Sunuldu">
                     <div style="background-color: #98EE77;" class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
@@ -654,9 +810,8 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                  </div>
-          
-        </div>
+              </div>          
+          </div>
         </div>   
         <div style="display: none;" class="list-container container">
           <div class="lists">
@@ -1117,7 +1272,7 @@
   });
 });
   // Sayfa üzerinde herhangi bir yere tıklanınca
-  document.addEventListener('click', function (event) {
+ /* document.addEventListener('click', function (event) {
 
     if(boolClick){
       if (cardMenuBtn2 !== null) {
@@ -1130,7 +1285,7 @@
        btn1 = null;
     }
     }
-  });
+  });*/
 
 
 
@@ -1157,6 +1312,47 @@ function formatNumber2(number) {
   return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(4));
 
 }
+  </script>
+  <!-- Hamburger Menu -->
+  <!-- width: calc(100% - 256px); -->
+  <script>
+    var rightMenu = document.querySelector(".right-menu");
+    var leftMenu = document.querySelector("#nav-bar");
+    var hamburgerMenu1 = document.querySelector("#hamburger_btn1");
+    var hamburgerMenu2 = document.querySelector("#hamburger_btn2");
+
+    hamburgerMenu1.addEventListener("click", ()=>{      
+      hamburgerMenu1.style.display = "none";       
+      hamburgerMenu2.style.display = "inline-block";
+      leftMenu.style.display = "none";  
+      rightMenu.style.width = "100%"
+    });
+    
+    hamburgerMenu2.addEventListener("click", ()=>{
+      hamburgerMenu2.style.display = "none";
+      hamburgerMenu1.style.display = "inline-block";
+      leftMenu.style.display = "flex";   
+      rightMenu.style.width = "calc(100% - 256px)";
+    });
+  </script>
+
+  <!-- m-t file input -->
+  <script>
+    modalKapat = document.querySelectorAll(".modal-kapat");
+    mButtons = document.querySelectorAll(".mb");
+    fileBox = document.querySelector(".file_upload");
+
+    modalKapat.forEach(function(item){
+      item.addEventListener("click", function(){
+        fileBox.style.display = "none";
+      });
+    });
+
+    mButtons.forEach(function(item){
+      item.addEventListener("click", function(){
+        fileBox.style.display = "block";
+      });
+    });
   </script>
   
 
