@@ -8,6 +8,11 @@
     --navbar-light-secondary: #8392a5;
   }
   
+
+
+
+
+
   #nav-bar {
     height: 100%;
     background: var(--navbar-dark-primary);
@@ -18,6 +23,16 @@
     overflow: hidden;
     user-select: none;
   }
+  /* #nav-bar {
+    height: 100%;
+    background: var(--navbar-dark-primary);
+    display: flex;
+    flex-direction: column;
+    color: var(--navbar-light-primary);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow: hidden;
+    user-select: none;
+  } */
   #nav-bar hr {
     margin: 0;
     position: relative;
