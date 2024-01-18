@@ -37,5 +37,6 @@ urlpatterns = [
     path('update_card_situation/', views.update_card_situation, name='update_card_situation'),
     path('sales_offer/AFM/delete_salesoffercard/<int:card_id>/', views.delete_salesoffercard, name='delete_salesoffercard'),
     path('sales_offer/AFM/set_card_lost/<card_id>/', views.set_card_lost, name='set_card_lost'),
+    path('sales_offer/AFM/set_card_relost/<card_id>/', views.set_card_relost, name='set_card_relost'),
 
    ]

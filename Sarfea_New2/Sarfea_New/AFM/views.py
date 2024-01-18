@@ -21,6 +21,14 @@ def set_card_lost(request, card_id):
     card.save()
     return JsonResponse({'success': True})
 
+@require_POST
+def set_card_relost(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Lost = False
+    card.save()
+    return JsonResponse({'success': True})
+
 def delete_salesoffercard(request, card_id):
     try:
         card = SalesOfferCard.objects.get(id=card_id)

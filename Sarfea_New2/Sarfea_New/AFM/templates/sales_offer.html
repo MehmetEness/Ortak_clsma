@@ -707,7 +707,7 @@
                 {% for card in sales_offer_card %}
                 {% if card.Is_Lost == True %}
                   <tr>
-                    <td><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td><a onclick="reLostCard({{ card.id }})"><i class="fa-solid fa-rotate-left"></i></a></i></td>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.AC_Power_Card}}</td>
@@ -794,6 +794,7 @@
           
       </div>   
   </div>
+  {% endblock %}
 
 {% block js_files %} 
 <!-- <script src="{% static 'tedarikcii.js' %}"></script>  -->
@@ -831,6 +832,42 @@
     })
     .then(data => {
       console.log('Kaybedildi işlemi başarılı', data);
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Hata:', error.message);
+    });
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  }
+
+  function reLostCard(cardId) {
+    const csrftoken = getCookie('csrftoken');
+
+    if (!csrftoken) {
+      console.error('CSRF token bulunamadı.');
+      return;
+    }
+
+    fetch(`AFM/set_card_relost/${cardId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Kaybedildi işlemi başarısızz');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('00Kaybedildi işlemi başarılı', data);
       location.reload();
     })
     .catch(error => {
@@ -1160,5 +1197,4 @@ function formatNumber2(number) {
   </script>
   
 
-{% endblock %}
 {% endblock %}

@@ -162,9 +162,11 @@ class SalesOfferCard(models.Model):
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
+    Offer_Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
     AC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
     DC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
+    UnitOffer_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
     Situation_Card = models.CharField(
         max_length=63,blank=True, null=True,
         choices=(
@@ -185,6 +187,7 @@ class SalesOfferCard(models.Model):
             ('Arazi', 'Arazi'),
         ),
     )    
+    Roof_Cost_Card = models.IntegerField(blank=True, null=True)
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -196,7 +199,9 @@ class SalesOfferCard(models.Model):
     M_File_Card_2 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
     M_File_Card_3 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
+    Is_Gain = models.BooleanField(default=False, blank=True, null=True)
     
+
     
 
 

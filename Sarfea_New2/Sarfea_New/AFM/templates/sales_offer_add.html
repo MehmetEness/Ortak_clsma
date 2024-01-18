@@ -150,27 +150,8 @@
             </div>
             <div class="input-box">
               <span class="details">İlgilenen Kişi</span>
-              <div class="dropdown-container">
-                <input autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown11"/>
-                {% if sales_form.Client_Card.errors %}
-                <div class="error-container">
-                  <span class="error-triangle"></span>
-                  <ul class="errorlist">
-                    {% for error in sales_form.Client_Card_Copy.errors %}
-                    <li class="error-message">{{ error }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-                {% endif %}
-                <div id="dropdown11" class="dropdown-content">
-                  {% for x in client %}
-                  <span value="{{x.id}}" class="dropdown-item"
-                    >{{x.CompanyName_Clients}}</span
-                  >
-                  {% endfor %}
-                </div>
+                <input autocomplete= 'off' type="text" class="myInput" placeholder="İlgilenen Kişi"/>
               </div>
-            </div>
             <div class="input-box">
               <span class="details">Konum</span>
               <div class="dropdown-container">
@@ -186,11 +167,12 @@
             </div>
             <div class="input-box">
               <span class="details">Teklif Bedeli - KDV Hariç ($)</span>
-              <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off"/>
+              <input class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off"/>
             </div>
             <div class="input-box">
               <span class="details">Birim Teklif</span>
-              {{ sales_form.Offer_Subject_Card }}
+              <input class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off"/>
+
             </div>
             <div class="input-box">
               <span class="details">AC Güç (kWe)</span>
@@ -198,7 +180,7 @@
             </div>
             <div class="input-box">
               <span class="details">Toplam Maliyet</span>
-              {{ sales_form.Offer_Subject_Card }}
+              <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="1" autocomplete="off"/>
             </div>
             <div class="input-box">
               <span class="details">Birim Maliyet - KDV Hariç ($)</span>
@@ -227,7 +209,7 @@
             
             <div style="display: block;" class="input-box">
               <span class="details">Arazi Bedeli(MW)</span>
-              {{sales_form.Terrain_Roof_Card}}
+              <input class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off"/>
             </div>    
             <div style="display: none;" class="input-box">
                 <input id="empty_input"  type="text">
@@ -289,7 +271,7 @@
       </div>
     </div>
   </div>
-
+  {% endblock %}
   {% block js_files %} 
   <!-- <script src="{% static 'project_add.js' %}"></script>  -->
 
@@ -552,5 +534,5 @@ document.addEventListener('DOMContentLoaded', function () {
         // });
 </script>
 
-  {% endblock %} {% endblock %}
+  {% endblock %} 
 </div>
