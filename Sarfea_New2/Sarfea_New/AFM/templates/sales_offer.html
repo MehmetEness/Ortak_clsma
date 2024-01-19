@@ -168,6 +168,12 @@
   font-size: 18px;
   font-weight: 700;
 }
+.right-menu{
+      width:100%;
+    }
+    #nav-bar{
+      display:none;
+    }
   
   
   </style>
@@ -1388,8 +1394,7 @@ function formatNumber2(number) {
     var leftMenu = document.querySelector("#nav-bar");
     var hamburgerMenu1 = document.querySelector("#hamburger_btn1");
     var hamburgerMenu2 = document.querySelector("#hamburger_btn2");
-    leftMenu.style.display = "none";
-    rightMenu.style.width = "100%"
+    
 
     hamburgerMenu1.addEventListener("click", ()=>{      
       hamburgerMenu1.style.display = "none";       
