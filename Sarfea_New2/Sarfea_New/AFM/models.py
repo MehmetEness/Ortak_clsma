@@ -174,8 +174,9 @@ class SalesOfferCard(models.Model):
             ('Maliyet Hesaplama', 'Maliyet Hesaplama'),
             ('Fiyat Belirleme', 'Fiyat Belirleme'),
             ('Teklif Hazırlama', 'Teklif Hazırlama'),
-            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
+            ('Teklif Hazır', 'Teklif Hazır'),
             ('Teklif Sunuldu', 'Teklif Sunuldu'),
+            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
         ),
         default='Potansiyel Müşteri',
     )    
@@ -200,7 +201,55 @@ class SalesOfferCard(models.Model):
     M_File_Card_3 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     Is_Gain = models.BooleanField(default=False, blank=True, null=True)
-    
+    Is_late = models.BooleanField(default=False, blank=True, null=True)
+
+class SalesOfferCard_Revise(models.Model):
+    Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE, blank=True, null=True)
+    Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)
+    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
+    Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
+    Location_Card = models.CharField(max_length=200, blank=True, null=True)
+    Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
+    Offer_Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
+    AC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
+    DC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
+    UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
+    UnitOffer_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
+    Situation_Card = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Potansiyel Müşteri', 'Potansiyel Müşteri'),
+            ('Maliyet Hesaplama', 'Maliyet Hesaplama'),
+            ('Fiyat Belirleme', 'Fiyat Belirleme'),
+            ('Teklif Hazırlama', 'Teklif Hazırlama'),
+            ('Teklif Hazır', 'Teklif Hazır'),
+            ('Teklif Sunuldu', 'Teklif Sunuldu'),
+            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
+        ),
+        default='Potansiyel Müşteri',
+    )    
+    Date_Card = models.DateField(blank=True, null=True)
+    Terrain_Roof_Card = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Çatı', 'Çatı'),
+            ('Arazi', 'Arazi'),
+        ),
+    )    
+    Roof_Cost_Card = models.IntegerField(blank=True, null=True)
+    Comment_Date_Card = models.DateField(blank=True, null=True)
+    Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
+    Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_3 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_4 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    Offer_File_Card_5 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
+    M_File_Card = models.FileField(upload_to='m_files', default="", blank=True, null=True)
+    M_File_Card_2 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
+    M_File_Card_3 = models.FileField(upload_to='m_files', default="", blank=True, null=True)
+    Is_Lost = models.BooleanField(default=False, blank=True, null=True)
+    Is_Gain = models.BooleanField(default=False, blank=True, null=True)
+    Is_late = models.BooleanField(default=False, blank=True, null=True)
 
     
 

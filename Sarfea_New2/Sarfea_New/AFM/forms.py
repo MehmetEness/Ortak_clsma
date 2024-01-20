@@ -363,8 +363,10 @@ class SalesOfferCardForm(forms.ModelForm):
             ('Maliyet Hesaplama', 'Maliyet Hesaplama'),
             ('Fiyat Belirleme', 'Fiyat Belirleme'),
             ('Teklif Hazırlama', 'Teklif Hazırlama'),
-            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
+            ('Teklif Hazır', 'Teklif Hazır'),
             ('Teklif Sunuldu', 'Teklif Sunuldu'),
+            ('Sunum Sonrası Görüşme', 'Sunum Sonrası Görüşme'),
+
          ],
         required=False,
         initial="Potansiyel Müşteri"

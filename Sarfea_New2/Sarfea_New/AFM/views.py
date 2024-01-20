@@ -5,13 +5,88 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@require_POST
+def create_revise(request, card_id):
+    # Retrieve the existing SalesOfferCard instance
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+
+    # Create a new SalesOfferCard_Revise instance
+    revise = SalesOfferCard_Revise(
+        Revise_Owner=card,
+        Client_Card_Copy=card.Client_Card_Copy,
+        Client_Card=card.Client_Card,
+        Offer_Subject_Card=card.Offer_Subject_Card,
+        Location_Card=card.Location_Card,
+        Cost_NotIncludingKDV_Card=card.Cost_NotIncludingKDV_Card,
+        Offer_Cost_NotIncludingKDV_Card=card.Offer_Cost_NotIncludingKDV_Card,
+        AC_Power_Card=card.AC_Power_Card,
+        DC_Power_Card=card.DC_Power_Card,
+        UnitCost_NotIncludingKDV=card.UnitCost_NotIncludingKDV,
+        UnitOffer_NotIncludingKDV=card.UnitOffer_NotIncludingKDV,
+        Situation_Card=card.Situation_Card,
+        Date_Card=card.Date_Card,
+        Terrain_Roof_Card=card.Terrain_Roof_Card,
+        Roof_Cost_Card=card.Roof_Cost_Card,
+        Comment_Date_Card=card.Comment_Date_Card,
+        Offer_Comment_Card=card.Offer_Comment_Card,
+        Offer_File_Card=card.Offer_File_Card,
+        Offer_File_Card_2=card.Offer_File_Card_2,
+        Offer_File_Card_3=card.Offer_File_Card_3,
+        Offer_File_Card_4=card.Offer_File_Card_4,
+        Offer_File_Card_5=card.Offer_File_Card_5,
+        M_File_Card=card.M_File_Card,
+        M_File_Card_2=card.M_File_Card_2,
+        M_File_Card_3=card.M_File_Card_3,
+        Is_Lost=card.Is_Lost,
+        Is_Gain=card.Is_Gain,
+        Is_late=card.Is_late
+    )
+
+    # Save the new SalesOfferCard_Revise instance
+    revise.save()
+
+    # Return a JSON response
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_wait(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_late = True
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_rewait(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_late = False
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_gain(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Gain = True
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_regain(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Gain = False
+    card.save()
+    return JsonResponse({'success': True})
+
 
 @require_POST
 def set_card_lost(request, card_id):

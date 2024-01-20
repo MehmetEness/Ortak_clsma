@@ -38,5 +38,10 @@ urlpatterns = [
     path('sales_offer/AFM/delete_salesoffercard/<int:card_id>/', views.delete_salesoffercard, name='delete_salesoffercard'),
     path('sales_offer/AFM/set_card_lost/<card_id>/', views.set_card_lost, name='set_card_lost'),
     path('sales_offer/AFM/set_card_relost/<card_id>/', views.set_card_relost, name='set_card_relost'),
+    path('sales_offer/AFM/set_card_gain/<card_id>/', views.set_card_gain, name='set_card_gain'),
+    path('sales_offer/AFM/set_card_regain/<card_id>/', views.set_card_regain, name='set_card_regain'),
+    path('sales_offer/AFM/set_card_wait/<card_id>/', views.set_card_wait, name='set_card_wait'),
+    path('sales_offer/AFM/set_card_rewait/<card_id>/', views.set_card_rewait, name='set_card_rewait'),
+    path('sales_offer/AFM/create_revise/<card_id>/', views.create_revise, name='create_revise'),
 
    ]

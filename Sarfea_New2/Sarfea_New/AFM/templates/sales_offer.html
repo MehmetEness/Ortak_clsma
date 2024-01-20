@@ -320,9 +320,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -405,9 +405,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -493,9 +493,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -580,9 +580,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -596,7 +596,7 @@
                       <span>({{done_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -666,9 +666,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -676,6 +676,92 @@
                     {% endif %}
                     {% endfor %}
               </div>
+              <div class="rows" data-situation="Teklif Sunuldu">
+                <div style="background-color: #98EE77;" class="total-cash">
+                  <span>$ {{done_customers_cost}}</span>
+                  <span>({{done_customers_count}})</span>
+                </div> 
+                {% for card in sales_offer_card %}
+                {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
+                <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
+                  <p class="bold700">{{card.Client_Card}}</p>
+                  <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
+                  <p>{{card.Date_Card}}</p>
+                  <div class="boxes">
+                    <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
+                    <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
+                  </div>   
+                  <div class="boxes">             
+                  <p>{{card.DC_Power_Card}} kWp</p>
+                  <p>{{card.Terrain_Roof_Card}}</p>
+                  </div>
+                  <div class="boxes">
+                    <div class="buttons">
+                      {% if card.M_File_Card %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                      {% else %}
+                      <button class="mr-3">M1</button>
+                      {% endif %}                              
+                      {% if card.M_File_Card_2 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                      {% else %}
+                      <button class="mr-3">M2</button>
+                      {% endif %}                          
+                      {% if card.M_File_Card_3 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                      {% else %}
+                      <button class="mr-3">M3</button>
+                      {% endif %}                  
+                        </div>
+                    <div class="buttons">
+                      {% if card.Offer_File_Card %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                      {% else %}
+                      <button class="mr-3">T1</button>
+                      {% endif %}                            
+                      {% if card.Offer_File_Card_2 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                      {% else %}
+                      <button class="mr-3">T2</button>
+                      {% endif %}                          
+                      {% if card.Offer_File_Card_3 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                      {% else %}
+                      <button class="mr-3">T3</button>
+                      {% endif %}                          
+                      {% if card.Offer_File_Card_4 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                      {% else %}
+                      <button class="mr-3">T4</button>
+                      {% endif %}
+                      {% if card.Offer_File_Card_5 %}
+                      <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                      {% else %}
+                      <button class="mr-3">T5</button>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                  <div class="flex-row">
+                    
+                    <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                  </div>
+                  <div class="card-menu">
+                    <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
+                    <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                    <ul class="card_menu">
+                      <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                      <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                      <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                      <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                          <li onclick="reviseCard({{ card.id }})">Revize</li>
+                      <li onclick="deleteCard({{ card.id }})">Sil</li>
+                    </ul>
+                  </div> 
+                </div>
+                {% endif %}
+                {% endfor %}
+          </div>  
               <div class="rows" data-situation="Sunum Sonrası Görüşme">
                     <div style="background-color: #FDA802;" class="total-cash">
                       <span>$ {{presentation_customers_cost}}</span>
@@ -752,9 +838,9 @@
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                          <li onclick="reviseCard({{ card.id }})">Revize</li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -762,92 +848,7 @@
                     {% endif %}
                     {% endfor %}
               </div>
-              <div class="rows" data-situation="Teklif Sunuldu">
-                    <div style="background-color: #98EE77;" class="total-cash">
-                      <span>$ {{done_customers_cost}}</span>
-                      <span>({{done_customers_count}})</span>
-                    </div> 
-                    {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
-                    <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
-                      <p class="bold700">{{card.Client_Card}}</p>
-                      <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>$ {{card.Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitCost_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.DC_Power_Card}} kWp</p>
-                      <p>{{card.Terrain_Roof_Card}}</p>
-                      </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mr-3">T5</button>
-                          {% endif %}
-
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
-                        <ul class="card_menu">
-                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li><a href="">Kazanıldı</a></li>
-                          <li><a href="">Bekleyen</a></li>
-                          <li><a href="">Revize</a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
-                        </ul>
-                      </div> 
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-              </div>          
+        
           </div>
         </div>   
         <div style="display: none;" class="list-container container">
@@ -931,9 +932,9 @@
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
-                {% if card.Is_Lost == False %}
+                {% if card.Is_late == True %}
                   <tr>
-                    <td><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td onclick="reWaitCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.AC_Power_Card}}</td>
@@ -965,9 +966,9 @@
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
-                {% if card.Is_Lost == False %}
+                {% if card.Is_Gain == True %}
                   <tr>
-                    <td><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td onclick="reGainCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.AC_Power_Card}}</td>
@@ -1000,7 +1001,192 @@
   }
   </script>
   <script>
+// Revize  işlemleri 
+function reviseCard(cardId) {
+  const csrftoken = getCookie('csrftoken');
 
+  if (!csrftoken) {
+    console.error('CSRF token bulunamadı.');
+    return;
+  }
+
+  fetch(`AFM/create_revise/${cardId}/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken,
+    },
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Kaybedildi işlemi başarısızz');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Kaybedildi işlemi başarılı', data);
+    location.reload();
+  })
+  .catch(error => {
+    console.error('Hata:', error.message);
+  });
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+}
+
+     // Wait işlemleri 
+     function waitCard(cardId) {
+      const csrftoken = getCookie('csrftoken');
+  
+      if (!csrftoken) {
+        console.error('CSRF token bulunamadı.');
+        return;
+      }
+  
+      fetch(`AFM/set_card_wait/${cardId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Kaybedildi işlemi başarısızz');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Kaybedildi işlemi başarılı', data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Hata:', error.message);
+      });
+    }
+  
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      return parts.length === 2 ? parts.pop().split(';').shift() : null;
+    }
+  
+    function reWaitCard(cardId) {
+      const csrftoken = getCookie('csrftoken');
+  
+      if (!csrftoken) {
+        console.error('CSRF token bulunamadı.');
+        return;
+      }
+  
+      fetch(`AFM/set_card_rewait/${cardId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Kaybedildi işlemi başarısızz');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('00Kaybedildi işlemi başarılı', data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Hata:', error.message);
+      });
+    }
+  
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      return parts.length === 2 ? parts.pop().split(';').shift() : null;
+    }
+
+
+    // Gain işlemleri 
+    function gainCard(cardId) {
+      const csrftoken = getCookie('csrftoken');
+  
+      if (!csrftoken) {
+        console.error('CSRF token bulunamadı.');
+        return;
+      }
+  
+      fetch(`AFM/set_card_gain/${cardId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Kaybedildi işlemi başarısızz');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Kaybedildi işlemi başarılı', data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Hata:', error.message);
+      });
+    }
+  
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      return parts.length === 2 ? parts.pop().split(';').shift() : null;
+    }
+  
+    function reGainCard(cardId) {
+      const csrftoken = getCookie('csrftoken');
+  
+      if (!csrftoken) {
+        console.error('CSRF token bulunamadı.');
+        return;
+      }
+  
+      fetch(`AFM/set_card_regain/${cardId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Kaybedildi işlemi başarısızz');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('00Kaybedildi işlemi başarılı', data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Hata:', error.message);
+      });
+    }
+  
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      return parts.length === 2 ? parts.pop().split(';').shift() : null;
+    }
+   
+   
+    //Lost İşlemleri
   function lostCard(cardId) {
     const csrftoken = getCookie('csrftoken');
 
