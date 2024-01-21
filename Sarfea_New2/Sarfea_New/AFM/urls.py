@@ -43,5 +43,6 @@ urlpatterns = [
     path('sales_offer/AFM/set_card_wait/<card_id>/', views.set_card_wait, name='set_card_wait'),
     path('sales_offer/AFM/set_card_rewait/<card_id>/', views.set_card_rewait, name='set_card_rewait'),
     path('sales_offer/AFM/create_revise/<card_id>/', views.create_revise, name='create_revise'),
+    path("sales_offer_revises/<card_id>/", views.sales_offer_revises, name='sales_offer_revises'),
 
    ]

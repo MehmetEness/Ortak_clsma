@@ -322,7 +322,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})">Revize</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -407,7 +407,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})">Revize</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -495,7 +495,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})">Revize</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -582,7 +582,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})">Revize</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -668,7 +668,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})">Revize</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -754,7 +754,7 @@
                       <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                       <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                       <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                          <li onclick="reviseCard({{ card.id }})">Revize</li>
+                      <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                       <li onclick="deleteCard({{ card.id }})">Sil</li>
                     </ul>
                   </div> 
@@ -840,7 +840,7 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                          <li onclick="reviseCard({{ card.id }})">Revize</li>
+                          <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -867,7 +867,7 @@
                <tbody>
                 {% for card in sales_offer_card%}
                   <tr>
-                    <td></td>
+                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}">revize<a/></td>
                     <td> {{card.Offer_Subject_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.AC_Power_Card}}</td>

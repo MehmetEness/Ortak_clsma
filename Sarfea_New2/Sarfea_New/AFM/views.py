@@ -12,6 +12,19 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
+def sales_offer_revises(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    revises = SalesOfferCard_Revise.objects.filter(Revise_Owner=card)
+
+
+    context={
+        'card':card,
+        'revises':revises,
+    }
+    return render(request, "sales_offer_revises.html", context)
+
+
 @require_POST
 def create_revise(request, card_id):
     # Retrieve the existing SalesOfferCard instance
@@ -173,7 +186,9 @@ def sales_offer_add(request):
         'sales_form':sales_form,
         'client':client,
         'locations':locations,
-        'client_form':client_form
+        'client_form':client_form,
+        'error': sales_form.errors,
+
     }
     return render(request, "sales_offer_add.html", context)
 

@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% load static %} {% block css_files %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"/> -->
+<link rel="stylesheet" href="{% static 'details_projects.css' %}" />
+<link rel="stylesheet" href="{% static 'center.css' %}" />
+<link rel="stylesheet" href="{% static 'projects_styles.css' %}" />
+<link rel="stylesheet" href="{% static 'all_style.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
+
+{% endblock %} {% block title %} Sales Offer Revises {% endblock %} {% block content %}
+<div class="body-div">
+  {% include 'partials/_left_nav_bar.html' %}
+  <div class="right-menu">
+    <div class="nav-bar">
+      <div class="nav-span">
+        <div class="backBtn">
+          <a href="{% url 'sales_offer' %}">
+            <button id="backBtn" class="button-project">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </a>
+          <span> </span>
+        </div>
+        <span></span>
+      </div>
+    </div>
+    
+    <div  class="list-container container">
+        <div class="lists">
+          <table id="table" class="table table-sortable">
+             <thead><th></th>
+                <th scope="col">Proje Adı</th>
+                <th scope="col">Konum</th>
+                <th scope="col">AC Güç</th>
+                <th scope="col">DC Güç</th>
+                <th scope="col">İş Bedeli</th>
+                <th scope="col">Arazi/Çatı</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">Durum</th>
+             </thead>
+             <tbody>
+                <tr>
+                  <td></td>
+                  <td> {{card.Offer_Subject_Card}} </td>
+                  <td>{{card.Location_Card}}</td>
+                  <td>{{card.AC_Power_Card}}</td>
+                  <td>{{card.DC_Power_Card}}</td>
+                  <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                  <td>{{card.Terrain_Roof_Card}}</td>
+                  <td>{{card.Date_Card| date:"d F y"}}</td>
+                  <td>{{card.Situation_Card}}</td>
+                </tr>
+                {% for revise in revises%}
+                <tr>
+                  <td></td>
+                  <td> {{revise.Offer_Subject_Card}} </td>
+                  <td>{{revise.Location_Card}}</td>
+                  <td>{{revise.AC_Power_Card}}</td>
+                  <td>{{revise.DC_Power_Card}}</td>
+                  <td>{{revise.Cost_NotIncludingKDV_Card}}</td>
+                  <td>{{revise.Terrain_Roof_Card}}</td>
+                  <td>{{revise.Date_Card| date:"d F y"}}</td>
+                  <td>{{revise.Situation_Card}}</td>
+                </tr>
+                {% endfor %}           
+             </tbody>
+            </table>
+          </div>
+      </div>
+
+  </div>
+  {% endblock %}
+  {% block js_files %} 
+  {% endblock %} 

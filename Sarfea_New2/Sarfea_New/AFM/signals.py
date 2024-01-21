@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard
 from django.db import models
 from django.utils.text import slugify
+from decimal import Decimal
 
 @receiver(pre_save, sender=Project)
 def update_related_models(sender, instance, **kwargs):
@@ -176,12 +177,48 @@ def update_expenses_with_supplier_name(sender, instance, **kwargs):
             instance.CompanyName_Supplier = instance.CompanyName_Supplier_New
             instance.save()
 
-@receiver(pre_save, sender=SalesOfferCard)
+@receiver(post_save, sender=SalesOfferCard)
 def update_client_card(sender, instance, **kwargs):
+    need_save = False
+
     if instance.Client_Card_Copy:
         try:
             client = Clients.objects.get(CompanyName_Clients=instance.Client_Card_Copy)
             instance.Client_Card = client
+            need_save = True
         except Clients.DoesNotExist:
-            # Eğer eşleşen bir Clients bulunamazsa, isteğinize göre bir işlem yapabilirsiniz.
+            # Optional handling for non-existent client
             pass
+    if instance.UnitOffer_NotIncludingKDV is not None and instance.DC_Power_Card is not None and instance.Cost_NotIncludingKDV_Card is None:
+        instance.Offer_Cost_NotIncludingKDV_Card = instance.DC_Power_Card * instance.UnitOffer_NotIncludingKDV
+    
+    if instance.UnitCost_NotIncludingKDV is not None and instance.DC_Power_Card is not None and instance.Cost_NotIncludingKDV_Card is None:
+        instance.Cost_NotIncludingKDV_Card = instance.DC_Power_Card * instance.UnitCost_NotIncludingKDV
+        
+    if instance.Roof_Cost_Card and instance.UnitOffer_NotIncludingKDV:
+        instance.Unit_Cost_with_Roof_Cost = instance.Roof_Cost_Card + instance.UnitOffer_NotIncludingKDV
+        need_save = True
+
+    if instance.Roof_Cost_Card and instance.DC_Power_Card and instance.Offer_Cost_NotIncludingKDV_Card:
+    # Convert the float result to Decimal before adding
+        tmp = Decimal(instance.Roof_Cost_Card * instance.DC_Power_Card / 1000)
+        tmp = tmp + instance.Offer_Cost_NotIncludingKDV_Card
+        instance.Unit_Offer_with_Roof_Cost = tmp
+        need_save = True
+
+    if instance.Cost_NotIncludingKDV_Card and instance.Offer_Cost_NotIncludingKDV_Card:
+        if instance.Offer_Cost_NotIncludingKDV_Card != 0:
+            instance.Profit_Rate_Card = instance.Cost_NotIncludingKDV_Card / instance.Offer_Cost_NotIncludingKDV_Card
+            need_save = True
+
+    
+
+
+    post_save.disconnect(update_client_card, sender=SalesOfferCard)
+
+    # Save the instance
+    try:
+        instance.save(update_fields=['Client_Card', 'Unit_Cost_with_Roof_Cost', 'Unit_Offer_with_Roof_Cost', 'Profit_Rate_Card','Cost_NotIncludingKDV_Card', 'Offer_Cost_NotIncludingKDV_Card'])
+    finally:
+        # Reconnect the signal
+        post_save.connect(update_client_card, sender=SalesOfferCard)

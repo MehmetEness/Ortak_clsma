@@ -190,6 +190,8 @@ class SalesOfferCard(models.Model):
     )    
     Roof_Cost_Card = models.IntegerField(blank=True, null=True)
     Comment_Date_Card = models.DateField(blank=True, null=True)
+    Person_Deal= models.CharField(max_length=63, blank=True, null=True)
+
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -202,6 +204,9 @@ class SalesOfferCard(models.Model):
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     Is_Gain = models.BooleanField(default=False, blank=True, null=True)
     Is_late = models.BooleanField(default=False, blank=True, null=True)
+    Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
+    Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
+    Profit_Rate_Card= TwoDecimalField(blank=True, null=True)
 
 class SalesOfferCard_Revise(models.Model):
     Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE, blank=True, null=True)
@@ -236,9 +241,10 @@ class SalesOfferCard_Revise(models.Model):
             ('Arazi', 'Arazi'),
         ),
     )    
-    Roof_Cost_Card = models.IntegerField(blank=True, null=True)
+    Roof_Cost_Card = models.IntegerField(blank=True, null=True, default="0")
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
+    Person_Deal= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_3 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -250,7 +256,9 @@ class SalesOfferCard_Revise(models.Model):
     Is_Lost = models.BooleanField(default=False, blank=True, null=True)
     Is_Gain = models.BooleanField(default=False, blank=True, null=True)
     Is_late = models.BooleanField(default=False, blank=True, null=True)
-
+    Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
+    Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
+    Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
     
 
 
