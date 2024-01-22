@@ -251,7 +251,7 @@
                       <span>({{potential_customers_count}})</span>
                     </div>       
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -336,7 +336,8 @@
                       <span>({{cost_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -423,7 +424,8 @@
                       <span>({{price_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -510,7 +512,8 @@
                       <span>({{offer_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -596,7 +599,8 @@
                       <span>({{done_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -682,7 +686,8 @@
                   <span>({{done_customers_count}})</span>
                 </div> 
                 {% for card in sales_offer_card %}
-                {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False %}
+                {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                 <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                   <p class="bold700">{{card.Client_Card}}</p>
                   <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -768,7 +773,8 @@
                       <span>({{presentation_customers_count}})</span>
                     </div> 
                     {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False %}
+                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
                       <p class="bold700">{{card.Client_Card}}</p>
                       <p>{{card.Offer_Subject_Card}} #({{card.id}})</p>
@@ -855,12 +861,20 @@
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead><th></th>
-                  <th scope="col">Proje Adı</th>
+                  <th scope="col">Müşteri Adı</th>
                   <th scope="col">Konum</th>
+                  <th scope="col">İlgili Kişi</th>
                   <th scope="col">AC Güç</th>
                   <th scope="col">DC Güç</th>
-                  <th scope="col">İş Bedeli</th>
+                  <th scope="col">Birim Maliyet</th>
+                  <th scope="col">Toplam Maliyet</th>
+                  <th scope="col">Birim Teklif</th>
+                  <th scope="col">Toplam Teklif</th>
                   <th scope="col">Arazi/Çatı</th>
+                  <th scope="col">Arazi Maliyeti</th>
+                  <th scope="col">Arazi Dahil Birim Maliyet</th>
+                  <th scope="col">Arazi Dahil Toplam Teklif</th>
+                  <th scope="col">Arazi Maliyeti</th>
                   <th scope="col">Tarih</th>
                   <th scope="col">Durum</th>
                </thead>
@@ -868,12 +882,21 @@
                 {% for card in sales_offer_card%}
                   <tr>
                     <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}">revize<a/></td>
-                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
                     <td>{{card.AC_Power_Card}}</td>
                     <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
                     <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
                     <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+
                     <td>{{card.Date_Card| date:"d F y"}}</td>
                     <td>{{card.Situation_Card}}</td>
                   </tr>
@@ -887,28 +910,43 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                  <th scope="col">Proje Adı</th>
-                  <th scope="col">Konum</th>
-                  <th scope="col">AC Güç</th>
-                  <th scope="col">DC Güç</th>
-                  <th scope="col">İş Bedeli</th>
-                  <th scope="col">Arazi/Çatı</th>
-                  <th scope="col">Tarih</th>
-                  <th scope="col">Durum</th>
+                <th scope="col">Müşteri Adı</th>
+                <th scope="col">Konum</th>
+                <th scope="col">İlgili Kişi</th>
+                <th scope="col">AC Güç</th>
+                <th scope="col">DC Güç</th>
+                <th scope="col">Birim Maliyet</th>
+                <th scope="col">Toplam Maliyet</th>
+                <th scope="col">Birim Teklif</th>
+                <th scope="col">Toplam Teklif</th>
+                <th scope="col">Arazi/Çatı</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Arazi Dahil Birim Maliyet</th>
+                <th scope="col">Arazi Dahil Toplam Teklif</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Tarih</th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card %}
                 {% if card.Is_Lost == True %}
                   <tr>
                     <td><a onclick="reLostCard({{ card.id }})"><i class="fa-solid fa-rotate-left"></i></a></i></td>
-                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
                     <td>{{card.AC_Power_Card}}</td>
                     <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
                     <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
                     <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+
                     <td>{{card.Date_Card| date:"d F y"}}</td>
-                    <td>{{card.Situation_Card}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}      
@@ -921,28 +959,42 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                  <th scope="col">Proje Adı</th>
-                  <th scope="col">Konum</th>
-                  <th scope="col">AC Güç</th>
-                  <th scope="col">DC Güç</th>
-                  <th scope="col">İş Bedeli</th>
-                  <th scope="col">Arazi/Çatı</th>
-                  <th scope="col">Tarih</th>
-                  <th scope="col">Durum</th>
+                <th scope="col">Müşteri Adı</th>
+                <th scope="col">Konum</th>
+                <th scope="col">İlgili Kişi</th>
+                <th scope="col">AC Güç</th>
+                <th scope="col">DC Güç</th>
+                <th scope="col">Birim Maliyet</th>
+                <th scope="col">Toplam Maliyet</th>
+                <th scope="col">Birim Teklif</th>
+                <th scope="col">Toplam Teklif</th>
+                <th scope="col">Arazi/Çatı</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Arazi Dahil Birim Maliyet</th>
+                <th scope="col">Arazi Dahil Toplam Teklif</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Tarih</th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
                 {% if card.Is_late == True %}
                   <tr>
                     <td onclick="reWaitCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
-                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
                     <td>{{card.AC_Power_Card}}</td>
                     <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
                     <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
                     <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
                     <td>{{card.Date_Card| date:"d F y"}}</td>
-                    <td>{{card.Situation_Card}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}      
@@ -955,28 +1007,42 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                  <th scope="col">Proje Adı</th>
-                  <th scope="col">Konum</th>
-                  <th scope="col">AC Güç</th>
-                  <th scope="col">DC Güç</th>
-                  <th scope="col">İş Bedeli</th>
-                  <th scope="col">Arazi/Çatı</th>
-                  <th scope="col">Tarih</th>
-                  <th scope="col">Durum</th>
+                <th scope="col">Müşteri Adı</th>
+                <th scope="col">Konum</th>
+                <th scope="col">İlgili Kişi</th>
+                <th scope="col">AC Güç</th>
+                <th scope="col">DC Güç</th>
+                <th scope="col">Birim Maliyet</th>
+                <th scope="col">Toplam Maliyet</th>
+                <th scope="col">Birim Teklif</th>
+                <th scope="col">Toplam Teklif</th>
+                <th scope="col">Arazi/Çatı</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Arazi Dahil Birim Maliyet</th>
+                <th scope="col">Arazi Dahil Toplam Teklif</th>
+                <th scope="col">Arazi Maliyeti</th>
+                <th scope="col">Tarih</th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
                 {% if card.Is_Gain == True %}
                   <tr>
                     <td onclick="reGainCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
-                    <td> {{card.Offer_Subject_Card}} </td>
+                    <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
                     <td>{{card.AC_Power_Card}}</td>
                     <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
                     <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
                     <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
                     <td>{{card.Date_Card| date:"d F y"}}</td>
-                    <td>{{card.Situation_Card}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}      
