@@ -108,6 +108,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 5px;
   }
 
 
@@ -124,7 +125,7 @@
 .file_upload .container{
   position: relative;
   background-color: #fff;
-  border: 4px solid rgba(0, 0, 0, 0.7);
+  border: 3px solid #18283b;
   border-radius: 10px;
   top: 50%;
   left: 50%;
@@ -189,9 +190,9 @@
     <div class="container">
       <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
       <form action="{% url 'project_add' %}" method="post">
-        <span class="details">Maliyet Dosyası</span>
+        <span class="details"></span>
               <input style="display: none;" type="file" name="Offer_File_Card file_input" id="id_Offer_File_Card_1" class="inputfile inputfile-1" />
-              <label id="file_label" for="id_Offer_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Teklif 1 Dosyası seçin</span></label>
+              <label id="file_label" for="id_Offer_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span id="details_span"></span></label>
               
         <div class="button">
           <input id="submit_btn" type="submit" value="Kaydet" />
@@ -286,27 +287,27 @@
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}                        
                         </div>
                       </div>
@@ -355,44 +356,44 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}                        
                         </div>
                       </div>
@@ -443,44 +444,44 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}
 
                         </div>
@@ -531,44 +532,44 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}
 
                         </div>
@@ -618,44 +619,44 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}
 
                         </div>
@@ -705,44 +706,44 @@
                       {% if card.M_File_Card %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                       {% else %}
-                      <button class="mr-3">M1</button>
+                      <button class="mb mr-3">M1</button>
                       {% endif %}                              
                       {% if card.M_File_Card_2 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                       {% else %}
-                      <button class="mr-3">M2</button>
+                      <button class="mb mr-3">M2</button>
                       {% endif %}                          
                       {% if card.M_File_Card_3 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                       {% else %}
-                      <button class="mr-3">M3</button>
+                      <button class="mb mr-3">M3</button>
                       {% endif %}                  
                         </div>
                     <div class="buttons">
                       {% if card.Offer_File_Card %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                       {% else %}
-                      <button class="mr-3">T1</button>
+                      <button class="mb mr-3">T1</button>
                       {% endif %}                            
                       {% if card.Offer_File_Card_2 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                       {% else %}
-                      <button class="mr-3">T2</button>
+                      <button class="mb mr-3">T2</button>
                       {% endif %}                          
                       {% if card.Offer_File_Card_3 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                       {% else %}
-                      <button class="mr-3">T3</button>
+                      <button class="mb mr-3">T3</button>
                       {% endif %}                          
                       {% if card.Offer_File_Card_4 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                       {% else %}
-                      <button class="mr-3">T4</button>
+                      <button class="mb mr-3">T4</button>
                       {% endif %}
                       {% if card.Offer_File_Card_5 %}
                       <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                       {% else %}
-                      <button class="mr-3">T5</button>
+                      <button class="mb mr-3">T5</button>
                       {% endif %}
 
                     </div>
@@ -792,44 +793,44 @@
                           {% if card.M_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
                           {% else %}
-                          <button class="mr-3">M1</button>
+                          <button class="mb mr-3">M1</button>
                           {% endif %}                              
                           {% if card.M_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
                           {% else %}
-                          <button class="mr-3">M2</button>
+                          <button class="mb mr-3">M2</button>
                           {% endif %}                          
                           {% if card.M_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
                           {% else %}
-                          <button class="mr-3">M3</button>
+                          <button class="mb mr-3">M3</button>
                           {% endif %}                  
                             </div>
                         <div class="buttons">
                           {% if card.Offer_File_Card %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
                           {% else %}
-                          <button class="mr-3">T1</button>
+                          <button class="mb mr-3">T1</button>
                           {% endif %}                            
                           {% if card.Offer_File_Card_2 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
                           {% else %}
-                          <button class="mr-3">T2</button>
+                          <button class="mb mr-3">T2</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_3 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
                           {% else %}
-                          <button class="mr-3">T3</button>
+                          <button class="mb mr-3">T3</button>
                           {% endif %}                          
                           {% if card.Offer_File_Card_4 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
                           {% else %}
-                          <button class="mr-3">T4</button>
+                          <button class="mb mr-3">T4</button>
                           {% endif %}
                           {% if card.Offer_File_Card_5 %}
                           <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
                           {% else %}
-                          <button class="mr-3">T5</button>
+                          <button class="mb mr-3">T5</button>
                           {% endif %}
 
                         </div>
@@ -1646,7 +1647,6 @@ function formatNumber2(number) {
     var leftMenu = document.querySelector("#nav-bar");
     var hamburgerMenu1 = document.querySelector("#hamburger_btn1");
     var hamburgerMenu2 = document.querySelector("#hamburger_btn2");
-    
 
     hamburgerMenu1.addEventListener("click", ()=>{      
       hamburgerMenu1.style.display = "none";       
@@ -1669,6 +1669,10 @@ function formatNumber2(number) {
     mButtons = document.querySelectorAll(".mb");
     fileBox = document.querySelector(".file_upload");
 
+    var details = document.querySelector(".details");
+    var detailsSpan = document.querySelector("#details_span");
+    
+
     modalKapat.forEach(function(item){
       item.addEventListener("click", function(){
         fileBox.style.display = "none";
@@ -1677,6 +1681,47 @@ function formatNumber2(number) {
 
     mButtons.forEach(function(item){
       item.addEventListener("click", function(){
+        
+        var cardId = this.closest('.card').id;
+
+        switch (item.textContent) {
+          case "M1":
+              details.textContent = "Maliyet Dosyası";
+              detailsSpan.textContent = "M1 Dosyası Seçiniz...";
+              break;
+
+          case "M2":
+              details.textContent = "Maliyet Dosyası";
+              detailsSpan.textContent = "M2 Dosyası Seçiniz...";
+              break;
+
+          case "M3":
+              details.textContent = "Maliyet Dosyası";
+              detailsSpan.textContent = "M3 Dosyası Seçiniz...";
+              break;
+          case "T1":
+              details.textContent = "Teklif Dosyası";
+              detailsSpan.textContent = "T1 Dosyası Seçiniz...";
+              break;
+          case "T2":
+              details.textContent = "Teklif Dosyası";
+              detailsSpan.textContent = "T2 Dosyası Seçiniz...";
+              break;  
+          case "T3":
+              details.textContent = "Teklif Dosyası";
+              detailsSpan.textContent = "T3 Dosyası Seçiniz...";
+              break;
+          case "T4":
+              details.textContent = "Teklif Dosyası";
+              detailsSpan.textContent = "T4 Dosyası Seçiniz...";
+              break;
+          case "T5":
+              details.textContent = "Teklif Dosyası";
+              detailsSpan.textContent = "T5 Dosyası Seçiniz...";
+              break;         
+          default:
+              break;
+        }      
         fileBox.style.display = "block";
       });
     });

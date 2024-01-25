@@ -284,6 +284,15 @@
 
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");
+
+    var teklifBedeliInput = document.querySelector(
+      "#id_Offer_Cost_NotIncludingKDV_Card"
+    );
+    var birimTeklifInput = document.querySelector(
+      "#id_UnitOffer_NotIncludingKDV"
+    );
+    var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
+
   </script>
 
    <!-- Firma Add button -->
@@ -308,11 +317,15 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const inputs = document.querySelectorAll(".myInput");
+      console.log("inputs");
     
       inputs.forEach((input) => {
         const dropdownId = input.getAttribute("data-dropdown");
+        //Düzenlenecek
         const dropdown = document.getElementById(dropdownId);
         const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
+        console.log(dropdown)
+        console.log(dropdownItems)
     
         input.addEventListener("focus", function () {
           dropdown.classList.add("show");
@@ -356,6 +369,9 @@
     runEventListeners(birimBasiMaliyetInput);
     runEventListeners(acGucInput);
     runEventListeners(dcGucInput);
+    runEventListeners(araziBedeliInput);
+    runEventListeners(birimTeklifInput);
+    runEventListeners(teklifBedeliInput);
 
     function runEventListeners(input) {
       input.addEventListener("input", function (event) {
@@ -447,9 +463,9 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
                 var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
-                console.log(defaultText);
+                //console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
-                console.log(fileName);
+                //console.log(fileName);
                 if (fileName !== defaultText) {
                     label.style.display = 'inline-block';
                 }
@@ -503,9 +519,9 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
                 var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin';
-                console.log(defaultText);
+                //console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
-                console.log(fileName);
+                //console.log(fileName);
                 if (fileName !== defaultText) {
                     label.style.display = 'inline-block';
                 }
