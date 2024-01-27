@@ -8,7 +8,7 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0 !important;
+    /* width: 0 !important; */
   }
 
 .bold700{
@@ -264,6 +264,11 @@
     height: 100%;
     overflow: hidden;
     overflow-y: scroll;
+    
+}
+.list-container{
+     width: 100%; 
+    overflow-x: auto;
 }
 .lists{
     display: flex;
@@ -287,13 +292,13 @@
 .lists table{ 
     max-height: 200px;
     overflow-y: scroll;
+    overflow-x: scroll;
     width: 100%;
     text-align: left;    
     border-collapse:collapse;
 }
 .lists thead{
     line-height: 70px;
-    width: 100%;
     position: sticky;
     top: 0;
 }

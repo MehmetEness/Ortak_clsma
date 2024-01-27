@@ -3,7 +3,7 @@
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'sales_offer_navrss.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'sales_offerss.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_offersr.css' %}">
     <style>
     #id_Offer_Comment_Card{
     }
@@ -906,6 +906,7 @@
               </table>
             </div>
         </div>
+        
         <div style="display: none;" class="lost-job-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
@@ -1447,6 +1448,7 @@ function getCookie(name) {
   
       // İlk li elemanına otomatik olarak tıklama gerçekleştir
       menuItems[2].click();
+      menuItems[2].classList.add("li-hover");
   
       menuItems.forEach(function (item) {
           item.addEventListener("click", function () {

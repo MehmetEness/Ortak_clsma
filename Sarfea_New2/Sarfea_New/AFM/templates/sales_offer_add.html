@@ -150,7 +150,7 @@
             </div>
             <div class="input-box">
               <span class="details">İlgilenen Kişi</span>
-                <input autocomplete= 'off' type="text" class="myInput" placeholder="İlgilenen Kişi" id="id_Person_Deal" name="Person_Deal"/>
+                <input autocomplete= 'off' type="text" class="" placeholder="İlgilenen Kişi" id="id_Person_Deal" name="Person_Deal"/>
               </div>
             <div class="input-box">
               <span class="details">Konum</span>
@@ -317,15 +317,15 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const inputs = document.querySelectorAll(".myInput");
-      console.log("inputs");
+      console.log(inputs);
     
       inputs.forEach((input) => {
         const dropdownId = input.getAttribute("data-dropdown");
         //Düzenlenecek
         const dropdown = document.getElementById(dropdownId);
         const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
-        console.log(dropdown)
-        console.log(dropdownItems)
+        console.log(dropdownId)
+        //console.log(dropdownItems)
     
         input.addEventListener("focus", function () {
           dropdown.classList.add("show");
@@ -532,22 +532,22 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
   <!-- Arazi çatı script -->
 <script>
-        // var chekLastDateBox = document.getElementById("id_Terrain_Roof_Card");
-        // var emptyInput = document.getElementById("empty_input");
-        // document.addEventListener('DOMContentLoaded', function () {
-        // const mySelect = document.getElementById('id_Terrain_Roof_Card');
-        // mySelect.addEventListener('change', controlFunction);
+        var chekLastDateBox = document.getElementById("id_Terrain_Roof_Card");
+        var emptyInput = document.getElementById("empty_input");
+        document.addEventListener('DOMContentLoaded', function () {
+        const mySelect = document.getElementById('id_Terrain_Roof_Card');
+        mySelect.addEventListener('change', controlFunction);
 
-        // function controlFunction() {
-        // const selectedOption = mySelect.options[mySelect.selectedIndex].text;
+        function controlFunction() {
+        const selectedOption = mySelect.options[mySelect.selectedIndex].text;
 
-        // if (selectedOption.startsWith('Çek')) {
-        //   chekLastDateBox.style.display = "block";
-        // } else {
-        //   chekLastDateBox.style.display = "none";
-        // }
-        // }
-        // });
+        if (selectedOption.startsWith('Çek')) {
+          chekLastDateBox.style.display = "block";
+        } else {
+          chekLastDateBox.style.display = "none";
+        }
+        }
+        });
 </script>
 
   {% endblock %} 
