@@ -150,7 +150,7 @@
             </div>
             <div class="input-box">
               <span class="details">İlgilenen Kişi</span>
-                <input autocomplete= 'off' type="text" class="myInput" placeholder="İlgilenen Kişi" id="id_Person_Deal" name="Person_Deal"/>
+                <input autocomplete= 'off' type="text" class="" placeholder="İlgilenen Kişi" id="id_Person_Deal" name="Person_Deal"/>
               </div>
             <div class="input-box">
               <span class="details">Konum</span>
@@ -203,20 +203,19 @@
               <input style="background: url('{% static 'images/calendar.gif' %}') 99% 50% no-repeat;" id="tarih" type="date" name="Date_Card" placeholder="Tarih Seçiniz" min="2000-01-01" max="2099-01-01"/>
             </div> 
             <div class="input-box">
+              <span class="details">ilgili Kişi</span>
+              <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off"/>
+            </div> 
+            <div class="input-box">
               <span class="details">Arazi/Çatı</span>
               {{sales_form.Terrain_Roof_Card}}
             </div>         
             
             <div style="display: block;" class="input-box">
-              <span class="details">Arazi Bedeli(MW)</span>
-              <input class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off"/>
+              <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
+              <input style="display: none;" class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off"/>
             </div>    
-            <div style="display: none;" class="input-box">
-                <input id="empty_input"  type="text">
-            </div> 
-            <div class="input-box">
-              
-            </div>        
+               
             <div class="input-box">
               <span class="details">Teklif Dosyası</span>
               <input type="file" name="Offer_File_Card" id="id_Offer_File_Card_1" class="inputfile inputfile-1" />
@@ -291,7 +290,7 @@
     var birimTeklifInput = document.querySelector(
       "#id_UnitOffer_NotIncludingKDV"
     );
-    var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
+   
 
   </script>
 
@@ -317,15 +316,12 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const inputs = document.querySelectorAll(".myInput");
-      console.log("inputs");
     
       inputs.forEach((input) => {
         const dropdownId = input.getAttribute("data-dropdown");
         //Düzenlenecek
         const dropdown = document.getElementById(dropdownId);
         const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
-        console.log(dropdown)
-        console.log(dropdownItems)
     
         input.addEventListener("focus", function () {
           dropdown.classList.add("show");
@@ -369,7 +365,6 @@
     runEventListeners(birimBasiMaliyetInput);
     runEventListeners(acGucInput);
     runEventListeners(dcGucInput);
-    runEventListeners(araziBedeliInput);
     runEventListeners(birimTeklifInput);
     runEventListeners(teklifBedeliInput);
 
@@ -463,9 +458,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
                 var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
-                //console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
-                //console.log(fileName);
                 if (fileName !== defaultText) {
                     label.style.display = 'inline-block';
                 }
@@ -507,7 +500,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 label.querySelector('span').innerHTML = fileName;
             } else {
                 var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
-                console.log(defaultText)
                 label.querySelector('span').innerHTML = defaultText; // Etiketi güncelle   M1 Dosyası seçin
             }
           });
@@ -519,9 +511,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
                 var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin';
-                //console.log(defaultText);
                 var fileName = label.querySelector('span').textContent;
-                //console.log(fileName);
                 if (fileName !== defaultText) {
                     label.style.display = 'inline-block';
                 }
@@ -532,22 +522,26 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
   <!-- Arazi çatı script -->
 <script>
-        // var chekLastDateBox = document.getElementById("id_Terrain_Roof_Card");
-        // var emptyInput = document.getElementById("empty_input");
-        // document.addEventListener('DOMContentLoaded', function () {
-        // const mySelect = document.getElementById('id_Terrain_Roof_Card');
-        // mySelect.addEventListener('change', controlFunction);
+        var mySelect = document.getElementById("id_Terrain_Roof_Card");
+        var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
+        var araziSpan = document.querySelector(".arazi-span");
+        document.addEventListener('DOMContentLoaded', function () {
+        //const chekLastDateBox = document.getElementById('id_Terrain_Roof_Card1');
+        mySelect.addEventListener('change', function(){
+          var selectedIndex = mySelect.selectedIndex;
+          var selectedText = mySelect.options[selectedIndex].text;
+        
 
-        // function controlFunction() {
-        // const selectedOption = mySelect.options[mySelect.selectedIndex].text;
+        if (selectedText=="Arazi") {
+          araziBedeliInput.style.display = "block";
+          araziSpan.style.display = "block";
+        } else {
+          araziBedeliInput.style.display = "none";
+          araziSpan.style.display = "none";
+        }
+        });
 
-        // if (selectedOption.startsWith('Çek')) {
-        //   chekLastDateBox.style.display = "block";
-        // } else {
-        //   chekLastDateBox.style.display = "none";
-        // }
-        // }
-        // });
+        });
 </script>
 
   {% endblock %} 
