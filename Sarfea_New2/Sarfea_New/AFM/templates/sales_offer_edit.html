@@ -182,100 +182,54 @@
               </div>
             </div>
             <div class="input-box">
-              <span class="details">Toplam Maliyet</span>
-              <input
-                value="{{sales_offer_edit_curr.Cost_NotIncludingKDV_Card}}"
-                class="coc-input"
-                type="text"
-                name="Cost_NotIncludingKDV_Card"
-                id="id_Cost_NotIncludingKDV_Card"
-                step="0.01"
-                autocomplete="off"
-              />
+              <span class="details">Teklif Bedeli - KDV Hariç ($)</span>
+              <input class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off"/>
             </div>
-             <div class="input-box">
+            <div class="input-box">
+              <span class="details">Birim Teklif</span>
+              <input class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off"/>
+
+            </div>
+            <div class="input-box">
               <span class="details">AC Güç (kWe)</span>
-              <input
-              value="{{sales_offer_edit_curr.AC_Power_Card}}"
-                class="coc-input"
-                type="text"
-                name="AC_Power_Card"
-                id="id_AC_Power_Card"
-                step="1"
-                autocomplete="off"
-              />
+              <input class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off"/>
             </div>
-             <div class="input-box">
+            <div class="input-box">
+              <span class="details">Toplam Maliyet</span>
+              <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="1" autocomplete="off"/>
+            </div>
+            <div class="input-box">
+              <span class="details">Birim Maliyet - KDV Hariç ($)</span>
+              <input class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off"/>
+            </div>
+            <div class="input-box">
               <span class="details">DC Güç (kWp)</span>
-              <input
-              value="{{sales_offer_edit_curr.DC_Power_Card}}"
-                class="coc-input"
-                type="text"
-                name="DC_Power_Card"
-                id="id_DC_Power_Card"
-                step="1"
-                autocomplete="off"
-              />
+              <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off"/>
             </div>
             <div class="input-box">
-              <span class="details">Birim Başına Maliyet - KDV Hariç ($)</span>
-              <input
-              value="{{sales_offer_edit_curr.UnitCost_NotIncludingKDV}}"
-                class="coc-input"
-                type="text"
-                name="UnitCost_NotIncludingKDV"
-                id="id_UnitCost_NotIncludingKDV"
-                step="0.01"
-                autocomplete="off"
-
-              />
-            </div>
-            <div class="input-box">
-                <span class="details">Durumu</span>
-                {{sales_form.Situation_Card}}
-              </div>
-
-            <div class="input-box">
-              <span class="details">Tarih</span>
-              <input
-              value="{{ sales_offer_edit_curr.Date_Card|date:'Y-m-d' }}"
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
-                id="tarih"
-                type="date"
-                name="Date_Card"
-                placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
-              />
-            </div>
-            <div class="input-box">
-              <span class="details">Yorum Tarihi</span>
-              <input
-              value="{{ sales_offer_edit_curr.Comment_Date_Card|date:'Y-m-d' }}"
-
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
-                id="id_Comment_Date_Card"
-                type="date"
-                name="Comment_Date_Card"
-                placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
-              />
-            </div>
-            <div class="input-box">
-              <span class="details">Arazi/Çatı</span>
-              {{sales_form.Terrain_Roof_Card}}
+              <span class="details">Durumu</span>
+              {{sales_form.Situation_Card}}
             </div>
             <div class="input-box">
               <span class="details">Yorum</span>
               {{sales_form.Offer_Comment_Card}}
             </div>
+            <div class="input-box">
+              <span class="details">Tarih</span>
+              <input style="background: url('{% static 'images/calendar.gif' %}') 99% 50% no-repeat;" id="tarih" type="date" name="Date_Card" placeholder="Tarih Seçiniz" min="2000-01-01" max="2099-01-01"/>
+            </div> 
+            <div class="input-box">
+              <span class="details">ilgili Kişi</span>
+              <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off"/>
+            </div> 
+            <div class="input-box">
+              <span class="details">Arazi/Çatı</span>
+              {{sales_form.Terrain_Roof_Card}}
+            </div>  
+            <div style="display: block;" class="input-box">
+              <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
+              <input style="display: none;" class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off"/>
+            </div> 
             <div class="input-box">
               <span class="details">Teklif Dosyası</span>
 
@@ -634,6 +588,29 @@
       });
       
       </script>
+      <!-- Arazi çatı script -->
+<script>
+  var mySelect = document.getElementById("id_Terrain_Roof_Card");
+  var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
+  var araziSpan = document.querySelector(".arazi-span");
+  document.addEventListener('DOMContentLoaded', function () {
+  //const chekLastDateBox = document.getElementById('id_Terrain_Roof_Card1');
+  mySelect.addEventListener('change', function(){
+    var selectedIndex = mySelect.selectedIndex;
+    var selectedText = mySelect.options[selectedIndex].text;
+  
+    console.log(selectedText)
+  if (selectedText=="Arazi") {
+    araziBedeliInput.style.display = "block";
+    araziSpan.style.display = "block";
+  } else {
+    araziBedeliInput.style.display = "none";
+    araziSpan.style.display = "none";
+  }
+  });
+
+  });
+</script>
 
   {% endblock %} 
 </div>
