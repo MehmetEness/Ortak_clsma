@@ -355,6 +355,7 @@
     let birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
     let acGucInput = document.querySelector("#id_AC_Power_Card");
     let dcGucInput = document.querySelector("#id_DC_Power_Card");
+    let araziBedeli = document.querySelector("#id_Roof_Cost_Card");
 
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");
@@ -430,6 +431,9 @@
     runEventListeners(birimBasiMaliyetInput);
     runEventListeners(acGucInput);
     runEventListeners(dcGucInput);
+    runEventListeners(birimTeklifInput);
+    runEventListeners(teklifBedeliInput);
+    runEventListeners(araziBedeli);
 
     function runEventListeners(input) {
       input.addEventListener("input", function (event) {
@@ -474,6 +478,9 @@
       birimBasiMaliyetInput.value = clear(birimBasiMaliyetInput.value);
       acGucInput.value = clear(acGucInput.value);
       dcGucInput.value = clear(dcGucInput.value);
+      birimTeklifInput.value = clear(birimTeklifInput.value);
+      teklifBedeliInput.value = clear(teklifBedeliInput.value);
+      araziBedeli.value = clear(araziBedeli.value);
       form.submit();
     });                  
   </script>
