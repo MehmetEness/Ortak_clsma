@@ -189,7 +189,7 @@
   <div style="display: none;" class="file_upload">
     <div class="container">
       <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
-      <form enctype="multipart/form-data">
+      <form id="file-form" enctype="multipart/form-data">
         <span class="details"></span>
               <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
               <label id="file_label" for="id_file_up">
@@ -1796,10 +1796,21 @@ function formatNumber2(number) {
       });
     });
 
+    // document.getElementById('submit_btn').addEventListener('click', function(event) {
+    //    // Normal form gönderimini engeller
+    //   uploadFile(cardId, fileType); // uploadFile fonksiyonunu çağırır
+    // });
     document.getElementById('submit_btn').addEventListener('click', function(event) {
-       // Normal form gönderimini engeller
-      uploadFile(cardId, fileType); // uploadFile fonksiyonunu çağırır
-    });
+    event.preventDefault(); // Normal form gönderimini engelle
+
+    uploadFile(cardId, fileType); // uploadFile fonksiyonunu çağırır
+
+    // 1000 milisaniye (1 saniye) sonra formu submit et
+    setTimeout(function() {
+        document.querySelector('#file-form').submit();
+    }, 10);
+});
+
     
     function uploadFile(cardId, fileType) {
       var formData = new FormData();
