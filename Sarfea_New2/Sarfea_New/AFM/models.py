@@ -191,7 +191,7 @@ class SalesOfferCard(models.Model):
     Roof_Cost_Card = models.IntegerField(blank=True, null=True)
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
-
+    Person_Related= models.CharField(max_length=63, blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -245,6 +245,7 @@ class SalesOfferCard_Revise(models.Model):
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
+    Person_Related= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_3 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)

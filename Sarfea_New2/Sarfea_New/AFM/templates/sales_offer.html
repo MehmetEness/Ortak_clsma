@@ -189,11 +189,15 @@
   <div style="display: none;" class="file_upload">
     <div class="container">
       <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
-      <form action="{% url 'project_add' %}" method="post">
+      <form >
         <span class="details"></span>
-              <input style="display: none;" type="file" name="Offer_File_Card file_input" id="id_Offer_File_Card_1" class="inputfile inputfile-1" />
-              <label id="file_label" for="id_Offer_File_Card_1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span id="details_span"></span></label>
-              
+              <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
+              <label id="file_label" for="id_file_up">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> 
+                  <span id="details_span"></span></label>
+             
+              <!--<input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
+              <label id="file_label" for="id_file_up"></label> -->
         <div class="button">
           <input style="cursor: pointer;" id="submit_btn" type="submit" value="Kaydet" />
         </div>
@@ -1461,6 +1465,57 @@
       });
   });
   </script>
+  <script>
+    'use strict';
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        var inputs = document.querySelectorAll('.inputfile-2');
+    
+        Array.prototype.forEach.call(inputs, function (input, index) {
+            var label = input.nextElementSibling;
+            var nextLabel = inputs[index + 1] ? inputs[index + 1].nextElementSibling : null;
+    
+            input.addEventListener('change', function () {
+                if (index < inputs.length - 1 && nextLabel) {
+                    nextLabel.style.display = 'inline-block';
+                    inputs[index + 1].style.display = 'inline-block';
+                }
+            });
+    
+            input.addEventListener('change', function (e) {
+                var label = input.nextElementSibling,
+                    labelVal = label.innerHTML;
+    
+                var fileName = '';
+                if (input.files && input.files.length > 1)
+                    fileName = (input.getAttribute('data-multiple-caption') || '').replace('{count}', input.files.length);
+                else
+                    fileName = e.target.value.split('\\').pop();
+    
+                if (fileName) {
+                  label.querySelector('span').innerHTML = fileName;
+              } else {
+                  var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin'; // Özel metni oluştur
+                  label.querySelector('span').innerHTML = defaultText; // Etiketi güncelle   M1 Dosyası seçin
+              }
+            });
+    
+            // Check if the input initially has a file selected
+            if (input.files && input.files.length > 0 && nextLabel) {
+                  nextLabel.style.display = 'inline-block';
+                  inputs[index + 1].style.display = 'inline-block';
+              } else {
+                  // Sayfa yüklendiğinde dosya adı varsa ve farklıysa labelı görünür yap
+                  var defaultText = 'Maliyet ' + (index + 1) + ' Dosyası seçin';
+                  var fileName = label.querySelector('span').textContent;
+                  if (fileName !== defaultText) {
+                      label.style.display = 'inline-block';
+                  }
+              }
+        });
+    });
+    
+    </script>
   <!-- Top Menu -->
   <script>
   
@@ -1685,41 +1740,58 @@ function formatNumber2(number) {
       item.addEventListener("click", function(){
         
         var cardId = this.closest('.card').id;
+        var fileType = '';
 
         switch (item.textContent) {
           case "M1":
               details.textContent = "Maliyet Dosyası";
               detailsSpan.textContent = "M1 Dosyası Seçiniz...";
+              fileType = 'M_File_Card';
+
               break;
 
           case "M2":
               details.textContent = "Maliyet Dosyası";
               detailsSpan.textContent = "M2 Dosyası Seçiniz...";
+              fileType = 'M_File_Card_2';
+
               break;
 
           case "M3":
               details.textContent = "Maliyet Dosyası";
               detailsSpan.textContent = "M3 Dosyası Seçiniz...";
+              fileType = 'M_File_Card_3';
+
               break;
           case "T1":
               details.textContent = "Teklif Dosyası";
               detailsSpan.textContent = "T1 Dosyası Seçiniz...";
+              fileType = 'Offer_File_Card';
+
               break;
           case "T2":
               details.textContent = "Teklif Dosyası";
               detailsSpan.textContent = "T2 Dosyası Seçiniz...";
+              fileType = 'Offer_File_Card_2';
+
               break;  
           case "T3":
               details.textContent = "Teklif Dosyası";
               detailsSpan.textContent = "T3 Dosyası Seçiniz...";
+              fileType = 'Offer_File_Card_3';
+
               break;
           case "T4":
               details.textContent = "Teklif Dosyası";
               detailsSpan.textContent = "T4 Dosyası Seçiniz...";
+              fileType = 'Offer_File_Card_4';
+
               break;
           case "T5":
               details.textContent = "Teklif Dosyası";
               detailsSpan.textContent = "T5 Dosyası Seçiniz...";
+              fileType = 'Offer_File_Card_5';
+
               break;         
           default:
               break;
@@ -1727,6 +1799,32 @@ function formatNumber2(number) {
         fileBox.style.display = "block";
       });
     });
+
+    document.getElementById('submit_btn').addEventListener('click', function(event) {
+      event.preventDefault(); // Normal form gönderimini engeller
+      
+    
+      uploadFile(cardId, fileType);
+    });
+    
+    function uploadFile(cardId, fileType) {
+      var formData = new FormData();
+      formData.append('file', document.getElementById('id_file_up').files[0]);
+      formData.append('card_id', cardId);
+      formData.append('file_type', fileType);
+    
+      fetch('/upload_file_view/', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
   </script>
   
 

@@ -12,6 +12,53 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@csrf_exempt
+def upload_file_view(request):
+    if request.method == 'POST':
+        card_id = request.POST.get('card_id')
+        file_type = request.POST.get('file_type')
+        file = request.FILES.get('file')
+
+        try:
+            card = SalesOfferCard.objects.get(pk=card_id)
+        except SalesOfferCard.DoesNotExist:
+            return JsonResponse({'error': 'SalesOfferCard bulunamadı'}, status=404)
+
+        # Dosya tipine göre doğru alanı seçin ve dosyayı kaydedin
+        if file_type == 'M_File_Card':
+            # Burada birden fazla M_File_Card alanı varsa, hangisini kullanacağınıza karar vermeniz gerekebilir
+            card.M_File_Card = file
+        elif file_type == 'M_File_Card_2':
+
+            card.M_File_Card_2 = file
+        elif file_type == 'M_File_Card_3':
+
+            card.M_File_Card_3 = file
+        elif file_type == 'Offer_File_Card':
+
+            card.Offer_File_Card = file
+        elif file_type == 'Offer_File_Card_2':
+
+            card.Offer_File_Card_2 = file
+        elif file_type == 'Offer_File_Card_3':
+
+            card.Offer_File_Card_3 = file
+        elif file_type == 'Offer_File_Card_4':
+
+            card.Offer_File_Card_4 = file
+        elif file_type == 'Offer_File_Card_5':
+
+            card.Offer_File_Card_5 = file
+        else:
+            return JsonResponse({'error': 'Geçersiz dosya tipi'}, status=400)
+
+        card.save()
+        return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+
 @login_required
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
@@ -49,6 +96,8 @@ def create_revise(request, card_id):
         Roof_Cost_Card=card.Roof_Cost_Card,
         Comment_Date_Card=card.Comment_Date_Card,
         Offer_Comment_Card=card.Offer_Comment_Card,
+        Person_Deal=card.Person_Deal,
+        Person_Related=card.Person_Related,
         Offer_File_Card=card.Offer_File_Card,
         Offer_File_Card_2=card.Offer_File_Card_2,
         Offer_File_Card_3=card.Offer_File_Card_3,
@@ -141,16 +190,28 @@ def sales_offer_edit(request, sales_offer_id):
     sales_offer_edit_curr.UnitCost_NotIncludingKDV = str(sales_offer_edit_curr.UnitCost_NotIncludingKDV).replace(",", ".")
 
     if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
         sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
         client_form = ClientsForm(request.POST or None )
-        if sales_form.is_valid():
+        print("form.is_valid")
+
+        if form_type == 'sales_form':
+
+            print("sales_form.is_valid")
+
             sales_form.save()
+            print()
             return redirect('sales_offer')  
-        elif client_form.is_valid():
+        elif form_type == 'client_form':
+            print("client_form.is_valid")
+
             client_form.save()
             return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
         
     else:  
+        print("else.is_valid")
+
         sales_form = SalesOfferCardForm(instance=sales_offer_edit_curr)
         client_form = ClientsForm()
 
