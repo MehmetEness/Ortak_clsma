@@ -1720,25 +1720,23 @@ function formatNumber2(number) {
 
   <!-- m-t file input -->
   <script>
-    modalKapat = document.querySelectorAll(".modal-kapat");
-    mButtons = document.querySelectorAll(".mb");
-    fileBox = document.querySelector(".file_upload");
+    var modalKapat = document.querySelectorAll(".modal-kapat");
+    var mButtons = document.querySelectorAll(".mb");
+    var fileBox = document.querySelector(".file_upload");
+    var cardId, fileType; // Global değişkenler
 
     var details = document.querySelector(".details");
     var detailsSpan = document.querySelector("#details_span");
-    
 
-    modalKapat.forEach(function(item){
-      item.addEventListener("click", function(){
+    modalKapat.forEach(function(item) {
+      item.addEventListener("click", function() {
         fileBox.style.display = "none";
       });
     });
 
-    mButtons.forEach(function(item){
-      item.addEventListener("click", function(){
-        
-        var cardId = this.closest('.card').id;
-        var fileType = '';
+    mButtons.forEach(function(item) {
+      item.addEventListener("click", function() {
+        cardId = this.closest('.card').id; // card ID'sini set eder
 
         switch (item.textContent) {
           case "M1":
@@ -1800,9 +1798,7 @@ function formatNumber2(number) {
 
     document.getElementById('submit_btn').addEventListener('click', function(event) {
       event.preventDefault(); // Normal form gönderimini engeller
-      
-    
-      uploadFile(cardId, fileType);
+      uploadFile(cardId, fileType); // uploadFile fonksiyonunu çağırır
     });
     
     function uploadFile(cardId, fileType) {
@@ -1818,12 +1814,14 @@ function formatNumber2(number) {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
+        // Burada başarılı yükleme sonrası kullanıcıya bilgi verilebilir
       })
       .catch(error => {
         console.error('Error:', error);
+        // Burada hata durumunda kullanıcıya hata gösterilebilir
       });
     }
-  </script>
+</script>
   <script>
     document.getElementById('id_file_up').addEventListener('change', function() {
         var fileName = this.value.split("\\").pop(); 
