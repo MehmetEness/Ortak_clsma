@@ -487,7 +487,19 @@
       teklifBedeliInput.value = clear(teklifBedeliInput.value);
       araziBedeli.value = clear(araziBedeli.value);
       form.submit();
-    });                  
+    });     
+    
+    //açılışta inputlardaki sayıları formatlama
+    document.addEventListener("DOMContentLoaded", function(){
+      isBedeliInput.value = format(isBedeliInput.value);
+      birimBasiMaliyetInput.value = format(birimBasiMaliyetInput.value);
+      acGucInput.value = format(acGucInput.value);
+      dcGucInput.value = format(dcGucInput.value);
+      birimTeklifInput.value = format(birimTeklifInput.value);
+      teklifBedeliInput.value = format(teklifBedeliInput.value);
+      araziBedeli.value = format(araziBedeli.value);
+    
+    });
   </script>
 
   <!-- Select File -->
