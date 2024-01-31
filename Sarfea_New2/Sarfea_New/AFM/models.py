@@ -4,13 +4,13 @@ from django.utils import timezone
 
 class FourDecimalField(models.DecimalField):
     def __init__(self, *args, **kwargs):
-        kwargs['max_digits'] = 17 # Toplam basamak sayısı (ondalık dahil)
+        kwargs['max_digits'] = 30 # Toplam basamak sayısı (ondalık dahil)
         kwargs['decimal_places'] = 4  # Ondalık basamak sayısı
         super().__init__(*args, **kwargs)
 
 class TwoDecimalField(models.DecimalField):
     def __init__(self, *args, **kwargs):
-        kwargs['max_digits'] = 12 # Toplam basamak sayısı (ondalık dahil)
+        kwargs['max_digits'] = 30 # Toplam basamak sayısı (ondalık dahil)
         kwargs['decimal_places'] = 2  # Ondalık basamak sayısı
         super().__init__(*args, **kwargs)
 
