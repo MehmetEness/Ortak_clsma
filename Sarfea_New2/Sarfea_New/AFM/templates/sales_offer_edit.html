@@ -131,7 +131,7 @@
               <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
-                <input value="{{sales_offer_edit_curr.Client_Card}}" autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
+                <input value="{{sales_offer_edit_curr.Client_Card_Copy}}" autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
                 {% if sales_form.Client_Card.errors %}
                 <div class="error-container">
                   <span class="error-triangle"></span>
@@ -356,9 +356,14 @@
     let acGucInput = document.querySelector("#id_AC_Power_Card");
     let dcGucInput = document.querySelector("#id_DC_Power_Card");
     let araziBedeli = document.querySelector("#id_Roof_Cost_Card");
-
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");
+    var teklifBedeliInput = document.querySelector(
+      "#id_Offer_Cost_NotIncludingKDV_Card"
+    );
+    var birimTeklifInput = document.querySelector(
+      "#id_UnitOffer_NotIncludingKDV"
+    );
   </script>
 
   <script>
@@ -538,8 +543,6 @@
         });
     });
     
-    
-    
     </script>
     <script>
       'use strict';
@@ -620,4 +623,3 @@
 </script>
 
   {% endblock %} 
-</div>

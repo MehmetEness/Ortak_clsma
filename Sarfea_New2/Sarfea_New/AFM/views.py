@@ -58,7 +58,6 @@ def upload_file_view(request):
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
-
 @login_required
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
@@ -149,7 +148,6 @@ def set_card_regain(request, card_id):
     card.save()
     return JsonResponse({'success': True})
 
-
 @require_POST
 def set_card_lost(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
@@ -188,7 +186,8 @@ def sales_offer_edit(request, sales_offer_id):
     sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
     sales_offer_edit_curr.Cost_NotIncludingKDV_Card = str(sales_offer_edit_curr.Cost_NotIncludingKDV_Card).replace(",", ".")
     sales_offer_edit_curr.UnitCost_NotIncludingKDV = str(sales_offer_edit_curr.UnitCost_NotIncludingKDV).replace(",", ".")
-
+    sales_offer_edit_curr.UnitOffer_NotIncludingKDV = str(sales_offer_edit_curr.UnitOffer_NotIncludingKDV).replace(",", ".")
+    sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card = str(sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card).replace(",", ".")
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
@@ -196,16 +195,15 @@ def sales_offer_edit(request, sales_offer_id):
         client_form = ClientsForm(request.POST or None )
         print("form.is_valid")
 
-        if form_type == 'sales_form':
+        if sales_form.is_valid():
 
             print("sales_form.is_valid")
-
             sales_form.save()
-            print()
             return redirect('sales_offer')  
-        elif form_type == 'client_form':
-            print("client_form.is_valid")
+        
+        elif  client_form.is_valid():
 
+            print("client_form.is_valid")
             client_form.save()
             return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
         
