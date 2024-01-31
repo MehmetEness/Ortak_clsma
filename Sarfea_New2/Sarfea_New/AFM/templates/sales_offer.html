@@ -170,11 +170,11 @@
   font-weight: 700;
 }
 .right-menu{
-      width:100%;
-    }
-    #nav-bar{
-      display:none;
-    }
+   width:100%;
+}
+#nav-bar{
+  display:none;
+}
   
   
   </style>
@@ -183,8 +183,6 @@
     {% block title %} Sales Offer {% endblock %}
     {% block content %}
   <div class="body-div">
-   
-
   {% include 'partials/_left_nav_bar.html' %}
   <div style="display: none;" class="file_upload">
     <div class="container">
@@ -202,9 +200,6 @@
       </form>
     </div>
   </div>
-
-
-
       <div class="right-menu">         
         <div class="top-menu">  
           <div>
@@ -1677,14 +1672,28 @@
   <!-- Liste Formatlama -->
   <script>
  document.addEventListener("DOMContentLoaded", function () {
-  
-  var numericCells = document.querySelectorAll('#table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');  
-  
-  numericCells.forEach(function (cell) {
-    var numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
-    cell.textContent = formatNumber2(numericValue);
-});
-});
+    var numericCells = document.querySelectorAll(
+      "#table td:nth-child(5), #table td:nth-child(6), #table td:nth-child(7), #table td:nth-child(8), #table td:nth-child(9), #table td:nth-child(10), #table td:nth-child(12), #table td:nth-child(13), #table td:nth-child(14), #table td:nth-child(15)"
+    );
+    var textCells = document.querySelectorAll(
+      "#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(11), #table td:nth-child(16)"
+    );
+    textCells.forEach(function (cell) {
+      console.log(cell.textContent);
+      if (cell.textContent == "None" || cell.textContent == "") {
+        cell.textContent = "-";
+      }
+    });
+
+    numericCells.forEach(function (cell) {
+      if (cell.textContent == "None") {
+        cell.textContent = "-";
+      } else {
+        var numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ""));
+        cell.textContent = formatNumber2(numericValue);
+      }
+    });
+  });
 
 function formatNumber4(number) {
   return new Intl.NumberFormat('en-US', { minimumFractionDigits:4 , maximumFractionDigits: 4 }).format(number.toFixed(4));
