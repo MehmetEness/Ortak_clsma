@@ -535,6 +535,7 @@
     
     //açılışta inputlardaki sayıları formatlama
     document.addEventListener("DOMContentLoaded", function(){
+      inputField.value = tarihReFormat(inputField.value);
       isBedeliInput.value = format(isBedeliInput.value);
       birimBasiMaliyetInput.value = format(birimBasiMaliyetInput.value);
       acGucInput.value = format(acGucInput.value);
@@ -553,6 +554,23 @@
     var yil = parcalar[2];
 
     var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
+function tarihReFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('-');
+
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
+
+    var yeniFormat = gun + '.' + ay + '.' + yil;
 
     return yeniFormat;
       }

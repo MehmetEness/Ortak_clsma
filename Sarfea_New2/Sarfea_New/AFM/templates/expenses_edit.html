@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{% static 'details_projectsss.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
 
 
     <style>
@@ -101,7 +100,7 @@
                 <div class="input-box">
                   <span class="details">Gider Detayı</span>
                   <div class="dropdown-container">
-                      <input autocomplete= 'off' value="{{ expenses_edit.ExpensDetails_Expenses }}" type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Datayı Seçiniz" data-dropdown="dropdown2">
+                      <input autocomplete= 'off' value="{{ expenses_edit.ExpensDetails_Expenses }}" type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Detayı Seçiniz" data-dropdown="dropdown2">
                     <div id="dropdown2" class="dropdown-content">
                           {% for x in details %}
                               <span value="{{x.id}}" class="dropdown-item">{{x.Detail}}</span>
@@ -112,7 +111,7 @@
 
                 <div class="input-box">
                     <span class="details">Tutar (₺)</span>
-                    <input autocomplete= 'off' class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001" value="{{expenses_edit.Amount_Expenses}}">
+                    <input autocomplete= 'off' class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001" value="{{expenses_edit.Amount_Expenses}}" placeholder="0.00">
                 </div>
                 <div class="input-box">
                     <span class="details">Dolar Kuru (₺)</span>
@@ -135,7 +134,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Tarih</span>
-                    <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" value="{{ expenses_edit.Date_Expenses|date:'Y-m-d' }}"/>
+                    <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" value="{{ expenses_edit.Date_Expenses|date:'Y-m-d' }}" placeholder="01.01.2000"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Kur Saati</span>
@@ -159,6 +158,7 @@
   {% block js_files %} 
   <!-- <script src="{% static 'client.js' %}"></script>  -->
   <script>
+     var inputField = document.querySelector("#id_Date_Expenses");
             var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
@@ -203,10 +203,28 @@
         return "";
       }
     
-}     
+}    
+function tarihReFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('-');
+
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
+
+    var yeniFormat = gun + '.' + ay + '.' + yil;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+} 
         
     runEventListeners();
     onPageLoad(amountInputForFormat);
+    inputField.value = tarihReFormat(inputField.value);
 
     function onPageLoad(x) {
         var inputValue = x.value; 
@@ -423,7 +441,7 @@ function birGunOncekiTarih(dateString) {
       }
    </script>
    <script>
-    var inputField = document.querySelector("#id_Date_Expenses");
+   
          
    
       inputField.addEventListener('input', function(event) {

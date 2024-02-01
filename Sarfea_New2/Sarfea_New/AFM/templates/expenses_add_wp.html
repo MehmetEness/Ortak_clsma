@@ -77,7 +77,7 @@
                    <div class="input-box">
                     <span class="details">Gider Detayı</span>
                     <div class="dropdown-container">
-                        <input autocomplete= 'off' type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Datayı Seçiniz" data-dropdown="dropdown3">
+                        <input autocomplete= 'off' type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Detayı Seçiniz" data-dropdown="dropdown3">
                       <div id="dropdown3" class="dropdown-content">
                             {% for x in details %}
                                 <span value="{{x.id}}" class="dropdown-item">{{x.Detail}}</span>
@@ -87,7 +87,7 @@
                 </div>
                    <div class="input-box">
                       <span class="details">Tutar (₺)</span>
-                      <input autocomplete= 'off' class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001">
+                      <input autocomplete= 'off' class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001" placeholder="0.00">
                    </div>
                    <div class="input-box">
                       <span class="details">Dolar Kuru (₺)</span>
@@ -99,7 +99,7 @@
                    </div>
                   <div class="input-box">
                       <span class="details">Tarih</span>
-                      <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" />
+                      <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" placeholder="01.01.2000"/>
                    </div>
                    <div class="input-box">
                       <span class="details">Kur Saati</span>

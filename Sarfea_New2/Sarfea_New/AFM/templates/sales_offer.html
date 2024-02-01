@@ -879,7 +879,7 @@
                <tbody>
                 {% for card in sales_offer_card%}
                   <tr>
-                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}">revize<a/></td>
+                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-wrench"></i></a></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>

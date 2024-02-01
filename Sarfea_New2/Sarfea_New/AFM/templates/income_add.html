@@ -92,26 +92,25 @@
                   
                    <div class="input-box" name="Amount_Incomes">
                     <span class="details">Alınan Miktar (₺)</span>
-                    <input autocomplete='off' class="coc-input" type="text" name="Amount_Incomes" id="id_Amount_Incomes" step="0.0001">
-                  </div>
-                
-                   <div class="input-box" name="Dollar_Rate_Incomes">
-                       <span class="details">Dolar Kuru (₺)</span>
-                       {{ incomes_form.Dollar_Rate_Incomes }}
-                   </div>
+                    <input autocomplete='off' class="coc-input" type="text" name="Amount_Incomes" id="id_Amount_Incomes" step="0.0001" placeholder="0.00">
+                  </div>               
                  
                    <div class="input-box" name="PaymentType_Incomes">
                     <span id="payment_type_label" class="details">Ödeme Türü</span>
                     {{ incomes_form.PaymentType_Incomes }}
                    </div>
                    <div class="input-box" id="chek_date_box">
-                     <span class="details">Tarih </span>
-                     <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes">
-                   </div>
+                    <span class="details">Tarih </span>
+                    <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes" placeholder="01.01.2000">
+                  </div>
+                   <div class="input-box" name="Dollar_Rate_Incomes">
+                    <span class="details">Dolar Kuru (₺)</span>
+                    {{ incomes_form.Dollar_Rate_Incomes }}
+                </div>
 
                    <div style="display: none;" class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
                     <span class="details">Çek Son Kullanma Tarihi </span>
-                    <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes">
+                    <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes" placeholder="01.01.2000">
                  </div>   
                    
                    <div class="input-box">
@@ -224,6 +223,11 @@ document.addEventListener('DOMContentLoaded', function () {
           var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
         document.addEventListener('DOMContentLoaded', function () {
         const mySelect = document.getElementById('id_PaymentType_Incomes');
+        if (mySelect.value == "Çek") {
+          chekLastDateBox.style.display = "block";
+        } else {
+          chekLastDateBox.style.display = "none";
+        }
         mySelect.addEventListener('change', controlFunction);
 
         function controlFunction() {
@@ -275,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
             inputField.value = tarihFormat(inputField.value);
             inputField2.value = tarihFormat(inputField2.value);
             amountInputForFormat.value = clear(deger);
-           // form.submit();
+            form.submit();
            }
             
             }); 

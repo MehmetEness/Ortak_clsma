@@ -4,7 +4,6 @@
     {% block css_files %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
@@ -92,7 +91,7 @@
                 </div>
                 <div class="input-box" name="Amount_JobHistory">
                     <span class="details">Tutar (₺)</span>
-                    <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001">
+                    <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001" placeholder="0.00">
                 </div>
                 <div class="input-box" name="Dollar_Rate_JobHistory">
                     <span class="details">Dolar Kuru (₺)</span>
@@ -100,7 +99,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Tarih</span>
-                    <input class="coc-input" id="id_Date_JobHistory" type="text" name="Date_JobHistory" />
+                    <input class="coc-input" id="id_Date_JobHistory" type="text" name="Date_JobHistory" placeholder="01.01.2000"/>
                 </div>
                 <div class="input-box" name="Invoice_No_JobHistory">
                     <span class="details">Fatura Numarası</span>
