@@ -9,7 +9,16 @@
     width: 0 !important;
   }
   #table{
-    width: 100%;
+    width: 100%;    
+  }
+  #table tbody td{
+    text-align: left;
+  }
+  #table thead th{
+    text-align: left;
+  }
+  #table thead th:first-child{
+    padding-left: 50px;
   }
     </style>
     
@@ -299,21 +308,44 @@ var chekLastDateBox = document.querySelector(".chek-last-date-box");
         }
         });
 </script>
-<!-- Search Bar -->
-<!-- <script>
-   icon = document.querySelector('.icon');
-    search = document.querySelector('.search');
-    icon.onclick = function(){
-          search.classList.toggle('active')
-      }
-function clearSearch() {
-    const input = document.getElementById('mysearch');
-    input.value = '';
-    searchTable(); // Temizle dÃ¼ÄŸmesine basÄ±ldÄ±ÄŸÄ±nda tabloyu sÄ±fÄ±rla
-}
+<!-- Tablo format -->
+<script>
+ document.addEventListener("DOMContentLoaded", function () {
+  
+    var usdCells = document.querySelectorAll('#table td:nth-child(5), #table td:nth-child(7)');  
+    var tlCells = document.querySelectorAll('#table td:nth-child(6)');  
+    var textCells = document.querySelectorAll('#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4)');
+  
+    usdCells.forEach(function (cell) {    
+        var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
+        if (!isNaN(parseFloat(value))) {
+            cell.textContent = formatNumber(value) + "$";
+        } else {
+        cell.textContent = "0$"
+        }   
+    });
+    tlCells.forEach(function (cell) {    
+        var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
+        if (!isNaN(parseFloat(value))) {
+            cell.textContent = formatNumber(value) + "₺";
+        } else {
+        cell.textContent = "0₺"
+        }   
+    });   
+    textCells.forEach(function (cell) {   
 
-function modalAc(){
+        var value = cell.textContent.trim();
+       
+        if (value == "" || value == "None" || value == "NaN") {
+            cell.textContent = "-";
+        } else {
+        cell.textContent = value;        
+        }   
+    });
+});
 
+function formatNumber(number) {
+return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(2));
 }
-</script> -->
+</script> 
 {% endblock %}

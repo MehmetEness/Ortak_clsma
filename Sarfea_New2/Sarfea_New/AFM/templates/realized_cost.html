@@ -21,6 +21,13 @@
     font-size: 13px;
     cursor: pointer;
 } 
+.table tbody td{
+    text-align: left;
+  }
+  .table thead th{
+    text-align: left;
+  }
+  
 
     </style>
 
@@ -789,7 +796,22 @@ for (var i = 0; i < rows.length; i++) {
 </script>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
   
+  
+  var textCells = document.querySelectorAll('#table tbody td:nth-child(1), #table tbody td:nth-child(2), #table-2 tbody td:nth-child(1), #table-2 tbody td:nth-child(2), #table-2 tbody td:nth-child(3)');
+
+  textCells.forEach(function (cell) {   
+
+      var value = cell.textContent.trim();
+     
+      if (value == "" || value == "None") {
+          cell.textContent = "-";
+      } else {
+      cell.textContent = value;        
+      }   
+  });
+});
 </script>
 
  
