@@ -757,7 +757,7 @@
                       <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                       <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                       <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                      <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
+                      <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize</a></li>
                       <li onclick="deleteCard({{ card.id }})">Sil</li>
                     </ul>
                   </div> 
@@ -844,7 +844,9 @@
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                          <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
+                          <li onclick="reviseCard({{ card.id }})">
+                              Revize 
+                          </li>
                           <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
@@ -879,7 +881,7 @@
                <tbody>
                 {% for card in sales_offer_card%}
                   <tr>
-                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-wrench"></i></a></td>
+                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -896,14 +898,22 @@
                     <td>{{card.Profit_Rate_Card}}</td>
 
                     <td>{{card.Date_Card| date:"d F y"}}</td>
+                    {% if card.Is_Gain == True %}
+                    <td>Kazanılan İş</td>
+                    {% elif card.Is_Lost == True %}
+                    <td>Kaybedilen İş</td>
+                    {% elif card.Is_late == True %}
+                    <td>Bekleyen İş</td>
+                    {% else %}
                     <td>{{card.Situation_Card}}</td>
+                    {% endif %}
+
                   </tr>
                   {% endfor %}      
                </tbody>
               </table>
             </div>
         </div>
-        
         <div style="display: none;" class="lost-job-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
@@ -929,7 +939,11 @@
                 {% for card in sales_offer_card %}
                 {% if card.Is_Lost == True %}
                   <tr>
-                    <td><a onclick="reLostCard({{ card.id }})"><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td>
+                      <a href="#" onclick="reLostCard({{ card.id }}); return false;">
+                        <i class="fa-solid fa-rotate-left"></i>
+                      </a>
+                    </td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -1091,10 +1105,14 @@
         .then(data => {
           console.log('Kaybedildi işlemi başarılı', data);
           location.reload();
+          var newUrl = "{% url 'sales_offer_edit' 0 %}".replace("0", cardId);
+          window.location.href = newUrl;
         })
         .catch(error => {
           console.error('Hata:', error.message);
         });
+        
+
       }
 
       function getCookie(name) {

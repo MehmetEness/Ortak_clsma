@@ -260,6 +260,8 @@ class SalesOfferCard_Revise(models.Model):
     Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
+    Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
+
     
 
 

@@ -13,8 +13,6 @@
 #nav-bar{
   display:flex;
 }
-  
-  
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
@@ -39,7 +37,15 @@
     </div>
   </div>
       <div class="right-menu">         
-        <div class="top-menu">  
+        <div class="top-menu"> 
+          <div class="backBtn">
+            <a href="{% url 'sales_offer' %}">
+              <button id="backBtn" class="button-project">
+                <i class="fa-solid fa-arrow-left"></i>
+              </button>
+            </a>
+            <span> </span>
+          </div> 
           <div>        
             <span>{{card.Client_Card}}</span> 
           </div>   
