@@ -48,7 +48,7 @@
         <div style="display: flex;" class="list-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
-               <thead><th></th>
+               <thead>
                   <th scope="col">Müşteri Adı</th>
                   <th scope="col">Konum</th>
                   <th scope="col">İlgili Kişi</th>
@@ -67,9 +67,7 @@
                   <th scope="col">Durum</th>
                </thead>
                <tbody>
-                {% for card in sales_offer_card%}
                   <tr>
-                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}">revize<a/></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -88,7 +86,26 @@
                     <td>{{card.Date_Card| date:"d F y"}}</td>
                     <td>{{card.Situation_Card}}</td>
                   </tr>
-                  {% endfor %}      
+                  {% for revise in revises %}
+                  <tr>
+                    <td> {{revise.Client_Card}} </td>
+                    <td>{{revise.Location_Card}}</td>
+                    <td>{{revise.Person_Deal}}</td>
+                    <td>{{revise.AC_Power_Card}}</td>
+                    <td>{{revise.DC_Power_Card}}</td>
+                    <td>{{revise.UnitCost_NotIncludingKDV}}</td>
+                    <td>{{revise.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{revise.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{revise.Offer_Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{revise.Terrain_Roof_Card}}</td>
+                    <td>{{revise.Roof_Cost_Card}}</td>
+                    <td>{{revise.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{revise.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{revise.Profit_Rate_Card}}</td>
+                    <td>{{revise.Date_Card| date:"d F y"}}</td>
+                    <td>{{revise.Situation_Card}}</td>
+                    {% endfor %}
+                  </tr>
                </tbody>
               </table>
             </div>
