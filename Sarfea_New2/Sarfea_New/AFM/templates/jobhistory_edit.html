@@ -112,12 +112,11 @@
               <div class="input-box">
                   <span class="details">Tarih</span>
                   <input 
-                  style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" 
                   class="coc-input" 
                   id="id_Date_JobHistory" 
-                  type="date" 
+                  type="text" 
                   name="Date_JobHistory" 
-                  value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+                  value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" />
               </div>
               <div class="input-box">
                 <span class="details">Kur Saati</span>
@@ -170,6 +169,8 @@
             var s1 = document.querySelector("#is_yapan_firma_span");
             var s2 = document.querySelector("#is_yapilan_firma_span");
             var submitBool = true;
+            var x = true;
+            var x1 = true;
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
@@ -177,20 +178,47 @@
             if(i1.value == ""){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
-              submitBool = false;
+              x = false;
+           }
+           else{
+              s1.style.color = "black";
+              s1.style.fontWeight = "500";
+              x = true;
            }
           if(i2.value == ""){
               s2.style.color = "red";
               s2.style.fontWeight = "700";
-              submitBool = false;
+              x1 = false;
            }
-           if(submitBool){
+           else{
+              s2.style.color = "black";
+              s2.style.fontWeight = "500";
+              x1 = true;
+           }
+           if(x && x1){
+            inputField.value = tarihFormat(inputField.value);
             amountInputForFormat.value = clear(deger);
             form.submit();
            }
             
             });      
-        
+            function tarihFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('.');
+
+    var gun = parcalar[0];
+    var ay = parcalar[1];
+    var yil = parcalar[2];
+
+    var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}       
     runEventListeners();
     onPageLoad(amountInputForFormat);
 
@@ -428,6 +456,55 @@ function birGunOncekiTarih(dateString) {
         const day = date.getDay();
         return day === 0 || day === 6;
     }
+ </script>
+
+<script>
+  var inputField = document.querySelector("#id_Date_JobHistory");
+       
+ 
+    inputField.addEventListener('input', function(event) {
+    var userInput = inputField.value;
+   
+   if (event.inputType !== 'deleteContentBackward') {
+     inputField.value = formatDate(userInput);
+   }
+ });   
+ 
+  function formatDate(date) {
+   var cleaned = date.replace(/[^\d+]/g, '');
+   var formatted = cleaned;
+   var current;
+   var day = "31";
+   var month = "12";
+   var year = "2999";
+     
+     inputField.maxLength = 10;
+       if(formatted.length < 3) {
+         if(formatted < day){
+           return formatted;
+         }
+         else{
+           return "31";
+         }        
+       }
+       if (formatted.length < 5) {
+         if(formatted.slice(2) < month){
+           return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+         }
+         else{
+           return `${formatted.slice(0,2)}.12`
+         }                  
+       }
+       if (formatted.length < 10) {
+         if(formatted.slice(4) < year){
+           return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+         }
+         else{
+           return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+         } 
+                   
+       }  
+ }
  </script>
   
   {% endblock %}

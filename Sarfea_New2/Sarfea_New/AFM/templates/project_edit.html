@@ -73,7 +73,7 @@
                </div>
 
               <div class="input-box">
-                  <span class="details">İşi Üstlenen Firma</span>
+                  <span class="details">İşi Üstlenen Firma*</span>
                   <select name="CompanyUndertakingWork" id="id_CompanyUndertakingWork">
                     {% for x in my_company %}
                       {% if project_edit.CompanyUndertakingWork == x.MyCompanyName  %}
@@ -89,7 +89,7 @@
               </div>
 
             <div class="input-box">
-              <span class="details">Konum</span>
+              <span id="konum_span" class="details">Konum*</span>
                <div class="dropdown-container">
               <input autocomplete="off" value="{{project_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Konum Seçiniz" data-dropdown="dropdown2">
                   <div id="dropdown2" class="dropdown-content">
@@ -120,12 +120,12 @@
             
               <div class="input-box" name="StartDate">
                 <span class="details">Başlama Tarihi</span>
-                <input style="background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat; " id="id_StartDate" type="date" name="StartDate" value="{{ project_edit.StartDate|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+                <input id="id_StartDate" type="text" name="StartDate" value="{{ project_edit.StartDate|date:'Y-m-d' }}" />
             </div>
             
             <div class="input-box">
               <span class="details">Bitirme Tarihi</span>
-              <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" id="id_FinishDate" type="date" name="FinishDate" value="{{ project_edit.FinishDate|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+              <input id="id_FinishDate" type="text" name="FinishDate" value="{{ project_edit.FinishDate|date:'Y-m-d' }}" />
             </div>
             <div class="input-box">
               <span class="details">KDV Oranı (%)</span>
@@ -191,7 +191,11 @@
             var form = document.querySelector("#my-form");
             var i1 = document.querySelector("#id_CompanyName");
             var s1 = document.querySelector("#firma_adi_span");
+            var i2 = document.querySelector("#id_Location");
+            var s2 = document.querySelector("#konum_span");
             var submitBool = true;
+            var x = true;
+            var x1 = true;
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
@@ -199,14 +203,49 @@
             if(i1.value == ""){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
-              submitBool = false;
+              x = false;
            }
-           if(submitBool){
+           else{
+            x = true;
+            s1.style.color = "black";
+            s1.style.fontWeight = "500";
+           }
+           if(i2.value == ""){
+              s2.style.color = "red";
+              s2.style.fontWeight = "700";
+              x1 = false;
+           }
+           else{
+            x1 = true;
+            s2.style.color = "black";
+            s2.style.fontWeight = "500";
+           }
+           if(x && x1){
+            inputField.value = tarihFormat(inputField.value);
+            inputField2.value = tarihFormat(inputField2.value);
             amountInputForFormat.value = clear(deger);
             form.submit();
            }
             
             }); 
+    function tarihFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('.');
+
+    var gun = parcalar[0];
+    var ay = parcalar[1];
+    var yil = parcalar[2];
+
+    var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
+
     onPageLoad(amountInputForFormat1);
     onPageLoad(amountInputForFormat2);
     runEventListeners(amountInputForFormat1);
@@ -319,6 +358,63 @@
       input.value = formattedValue;
     }
   </script>
+  <script>
+    var inputField = document.querySelector("#id_StartDate");
+    var inputField2 = document.querySelector("#id_FinishDate");
+         
+   
+      inputField.addEventListener('input', function(event) {
+      var userInput = inputField.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField.value = formatDate(userInput);
+     }
+   });
+   inputField2.addEventListener('input', function(event) {
+      var userInput = inputField2.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField2.value = formatDate(userInput);
+     }
+   });
+   
+    function formatDate(date) {
+     var cleaned = date.replace(/[^\d+]/g, '');
+     var formatted = cleaned;
+     var current;
+     var day = "31";
+     var month = "12";
+     var year = "2999";
+       
+       inputField.maxLength = 10;
+       inputField2.maxLength = 10;
+         if(formatted.length < 3) {
+           if(formatted < day){
+             return formatted;
+           }
+           else{
+             return "31";
+           }        
+         }
+         if (formatted.length < 5) {
+           if(formatted.slice(2) < month){
+             return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+           }
+           else{
+             return `${formatted.slice(0,2)}.12`
+           }                  
+         }
+         if (formatted.length < 10) {
+           if(formatted.slice(4) < year){
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+           }
+           else{
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+           } 
+                     
+         }  
+   }
+   </script>
   
   {% endblock %}
 

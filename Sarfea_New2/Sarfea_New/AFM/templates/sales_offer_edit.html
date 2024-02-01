@@ -128,7 +128,7 @@
           <div class="user-details">
 
            <div class="input-box {% if sales_form.Client_Card_Copy.errors %}error{% endif %}" id="Client_Card_Copy">
-              <span class="details">Firma Adı<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
+              <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
                 <input value="{{sales_offer_edit_curr.Client_Card_Copy}}" autocomplete= 'off' type="text" id="id_Client_Card_Copy" name="Client_Card_Copy" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
@@ -154,13 +154,13 @@
           
 
             <div class="input-box">
-              <span class="details">İlgilenen Kişi</span>
+              <span id="ilgilenen_kisi_span" class="details">İlgilenen Kişi*</span>
               {{ sales_form.Person_Deal }}
             </div>
            
 
             <div class="input-box">
-              <span class="details">Konum</span>
+              <span id="konum_span" class="details">Konum*</span>
               <div class="dropdown-container">
                 <input
                   value="{{sales_offer_edit_curr.Location_Card}}"
@@ -216,7 +216,7 @@
             </div>
             <div class="input-box">
               <span class="details">Tarih</span>
-              <input value="{{ sales_offer_edit_curr.Date_Card|date:'Y-m-d' }}" style="background: url('{% static 'images/calendar.gif' %}') 99% 50% no-repeat;" id="tarih" type="date" name="Date_Card" placeholder="Tarih Seçiniz" min="2000-01-01" max="2099-01-01"/>
+              <input value="{{ sales_offer_edit_curr.Date_Card|date:'Y-m-d' }}" id="tarih" type="text" name="Date_Card" placeholder="Tarih Seçiniz"/>
             </div> 
             <div class="input-box">
               <span class="details">ilgili Kişi</span>
@@ -476,9 +476,52 @@
     }
 
                     // Form Gönderme
-        
+    var i1 = document.querySelector("#id_Client_Card_Copy");
+    var i2 = document.querySelector("#id_Person_Deal");
+    var i3 = document.querySelector("#id_Location_Card");
+    var s1 = document.querySelector("#firma_adi_span");
+    var s2 = document.querySelector("#ilgilenen_kisi_span");
+    var s3 = document.querySelector("#konum_span");
+    var submitBool = true;
+    var x = true;
+    var x1 = true;
+    var x2 = true;    
+
     amountInputReformatBtn.addEventListener("click", function(event) {
       event.preventDefault();
+      if(i1.value == ""){
+        s1.style.color = "red";
+        s1.style.fontWeight = "700";
+        x = false;
+      }
+      else{
+        s1.style.color = "black";
+        s1.style.fontWeight = "500";
+        x = true;
+      }
+      if(i2.value == ""){
+        s2.style.color = "red";
+        s2.style.fontWeight = "700";
+        x1 = false;
+      }
+      else{
+        s2.style.color = "black";
+        s2.style.fontWeight = "500";
+        x1 = true;
+      }
+      if(i3.value == ""){
+        s3.style.color = "red";
+        s3.style.fontWeight = "700";
+        x2 = false;
+      }
+      else{
+        s3.style.color = "black";
+        s3.style.fontWeight = "500";
+        x2 = true;
+      }
+      
+      if(x && x1 && x2){
+      inputField.value = tarihFormat(inputField.value);
       isBedeliInput.value = clear(isBedeliInput.value);
       birimBasiMaliyetInput.value = clear(birimBasiMaliyetInput.value);
       acGucInput.value = clear(acGucInput.value);
@@ -487,6 +530,7 @@
       teklifBedeliInput.value = clear(teklifBedeliInput.value);
       araziBedeli.value = clear(araziBedeli.value);
       form.submit();
+      }
     });     
     
     //açılışta inputlardaki sayıları formatlama
@@ -500,6 +544,23 @@
       araziBedeli.value = format(araziBedeli.value);
     
     });
+    function tarihFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('.');
+
+    var gun = parcalar[0];
+    var ay = parcalar[1];
+    var yil = parcalar[2];
+
+    var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
   </script>
 
   <!-- Select File -->
@@ -632,6 +693,53 @@
   });
 
   });
+</script>
+<script>
+var inputField = document.querySelector("#tarih");
+      
+
+      inputField.addEventListener('input', function(event) {
+      var userInput = inputField.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField.value = formatDate(userInput);
+     }
+   });
+function formatDate(date) {
+  var cleaned = date.replace(/[^\d+]/g, '');
+  var formatted = cleaned;
+  var current;
+  var day = "31";
+  var month = "12";
+  var year = "2999";
+    
+    inputField.maxLength = 10;
+      if(formatted.length < 3) {
+        if(formatted < day){
+          return formatted;
+        }
+        else{
+          return "31";
+        }        
+      }
+      if (formatted.length < 5) {
+        if(formatted.slice(2) < month){
+          return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+        }
+        else{
+          return `${formatted.slice(0,2)}.12`
+        }                  
+      }
+      if (formatted.length < 10) {
+        if(formatted.slice(4) < year){
+          return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+        }
+        else{
+          return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+        } 
+                  
+      }  
+}
 </script>
 
   {% endblock %} 

@@ -135,7 +135,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Tarih</span>
-                    <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" id="id_Date_Expenses" type="date" name="Date_Expenses" value="{{ expenses_edit.Date_Expenses|date:'Y-m-d' }}" min='2000-01-01' max='2099-01-01' />
+                    <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" value="{{ expenses_edit.Date_Expenses|date:'Y-m-d' }}"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Kur Saati</span>
@@ -165,6 +165,7 @@
             var i1 = document.querySelector("#id_CompanyName_Paying_Expenses");
             var s1 = document.querySelector("#odeme_yapilan_firma_span");
             var submitBool = true;
+            var x = true;
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
@@ -172,14 +173,37 @@
             if(i1.value == ""){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
-              submitBool = false;
-           }          
-           if(submitBool){
+              x = false;
+           }    
+           else{
+              s1.style.color = "black";
+              s1.style.fontWeight = "500";
+              x = true;
+            }      
+           if(x){
+            inputField.value = tarihFormat(inputField.value);
             amountInputForFormat.value = clear(deger);
             form.submit();
            }
             
-            });      
+            }); 
+            function tarihFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('.');
+
+    var gun = parcalar[0];
+    var ay = parcalar[1];
+    var yil = parcalar[2];
+
+    var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}     
         
     runEventListeners();
     onPageLoad(amountInputForFormat);
@@ -397,6 +421,55 @@ function birGunOncekiTarih(dateString) {
           const day = date.getDay();
           return day === 0 || day === 6;
       }
+   </script>
+   <script>
+    var inputField = document.querySelector("#id_Date_Expenses");
+         
+   
+      inputField.addEventListener('input', function(event) {
+      var userInput = inputField.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField.value = formatDate(userInput);
+     }
+   });
+   
+   
+    function formatDate(date) {
+     var cleaned = date.replace(/[^\d+]/g, '');
+     var formatted = cleaned;
+     var current;
+     var day = "31";
+     var month = "12";
+     var year = "2999";
+       
+       inputField.maxLength = 10;
+         if(formatted.length < 3) {
+           if(formatted < day){
+             return formatted;
+           }
+           else{
+             return "31";
+           }        
+         }
+         if (formatted.length < 5) {
+           if(formatted.slice(2) < month){
+             return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+           }
+           else{
+             return `${formatted.slice(0,2)}.12`
+           }                  
+         }
+         if (formatted.length < 10) {
+           if(formatted.slice(4) < year){
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+           }
+           else{
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+           } 
+                     
+         }  
+   }
    </script>
   
   {% endblock %}
