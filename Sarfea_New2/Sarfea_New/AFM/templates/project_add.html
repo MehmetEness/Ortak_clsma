@@ -153,32 +153,20 @@
 
             <div class="input-box">
               <span class="details"> işin Başlama Tarihi</span>
-              <input
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
+              <input                
                 id="tarih"
-                type="date"
+                type="text"
                 name="StartDate"
                 placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
               />
             </div>
             <div class="input-box">
               <span class="details">Bitirme Tarihi</span>
               <input
-                style="
-                  background: url('{% static 'images/calendar.gif' %}') 99% 50%
-                    no-repeat;
-                "
                 id="tarih2"
-                type="date"
+                type="text"
                 name="FinishDate"
                 placeholder="Tarih Seçiniz"
-                min="2000-01-01"
-                max="2099-01-01"
               />
             </div>
             <div class="input-box">
@@ -267,6 +255,9 @@
     var s2 = document.querySelector("#proje_adi_span");
     var s3 = document.querySelector("#proje_kodu_span");
     var submitBool = true;
+    var x = true;
+    var x1 = true;
+    var x2 = true;
 
     amountInputReformatBtn.addEventListener("click", function (event) {
       event.preventDefault();
@@ -274,26 +265,61 @@
       if(i1.value == ""){
         s1.style.color = "red";
         s1.style.fontWeight = "700";
-        submitBool = false;
+        x = false;
+      }
+      else{
+        s1.style.color = "black";
+        s1.style.fontWeight = "500";
+        x = true;
       }
       if(i2.value == ""){
         s2.style.color = "red";
         s2.style.fontWeight = "700";
-        submitBool = false;
+        x1 = false;
+      }
+      else{
+        s2.style.color = "black";
+        s2.style.fontWeight = "500";
+        x1 = true;
       }
       if(i3.value == ""){
         s3.style.color = "red";
         s3.style.fontWeight = "700";
-        submitBool = false;
+        x2 = false;
+      }
+      else{
+        s3.style.color = "black";
+        s3.style.fontWeight = "500";
+        x2 = true;
       }
       
-      if(submitBool){
+      if(x && x1 && x2){
+        inputField.value = tarihFormat(inputField.value);
+        inputField2.value = tarihFormat(inputField2.value);
         amountInputForFormat1.value = clear(amountInputForFormat1.value);
         amountInputForFormat2.value = clear(amountInputForFormat2.value);
         form.submit();
       }
      
     });
+
+    function tarihFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('.');
+
+    var gun = parcalar[0];
+    var ay = parcalar[1];
+    var yil = parcalar[2];
+
+    var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
 
     runEventListeners(amountInputForFormat1);
     runEventListeners(amountInputForFormat2);
@@ -396,6 +422,63 @@
       input.value = formattedValue;
     }
   </script>
+  <script>
+    var inputField = document.querySelector("#tarih");
+    var inputField2 = document.querySelector("#tarih2");
+         
+   
+      inputField.addEventListener('input', function(event) {
+      var userInput = inputField.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField.value = formatDate(userInput);
+     }
+   });
+   inputField2.addEventListener('input', function(event) {
+      var userInput = inputField2.value;
+     
+     if (event.inputType !== 'deleteContentBackward') {
+       inputField2.value = formatDate(userInput);
+     }
+   });
+   
+    function formatDate(date) {
+     var cleaned = date.replace(/[^\d+]/g, '');
+     var formatted = cleaned;
+     var current;
+     var day = "31";
+     var month = "12";
+     var year = "2999";
+       
+       inputField.maxLength = 10;
+       inputField2.maxLength = 10;
+         if(formatted.length < 3) {
+           if(formatted < day){
+             return formatted;
+           }
+           else{
+             return "31";
+           }        
+         }
+         if (formatted.length < 5) {
+           if(formatted.slice(2) < month){
+             return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+           }
+           else{
+             return `${formatted.slice(0,2)}.12`
+           }                  
+         }
+         if (formatted.length < 10) {
+           if(formatted.slice(4) < year){
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+           }
+           else{
+             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+           } 
+                     
+         }  
+   }
+   </script>
 
   {% endblock %} 
 </div>
