@@ -5,6 +5,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'client.css' %}"> 
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
+    <style>
+      #table thead{
+        position: sticky;
+        top: 0;
+      }
+    </style>
   
   </head>
 <body>
@@ -13,11 +19,11 @@
        <div class="container">
           <h3 id="musteri-modal" class="modal-kapat">X</h3>
           <div class="title">Müşteri Ekle</div>
-          <form action="{% url 'client' %}" method="post">
+          <form id="myForm" action="{% url 'client' %}" method="post">
             {% csrf_token %}
             <div class="user-details"> 
                 <div class="input-box" name="CompanyName">
-                  <span class="details">Firma Adı</span>
+                  <span id="firma_adi_span" class="details">Firma Adı*</span>
                   {{ client_form.CompanyName_Clients }}
                   {% if client_form.CompanyName_Clients.errors %}
                   <div class="error-container">
@@ -55,7 +61,7 @@
                 </div>          
               </div>
               <div class="button">
-                  <input type="submit" value="Kaydet"/>
+                  <input id="kaydet_btn" type="submit" value="Kaydet"/>
               </div>
           </form>
        </div>
@@ -80,7 +86,7 @@
         <div class="lists">         
           <table id="table" class="table table-sortable">   
             <thead>
-              <th>Firma Adı</th>
+              <th>Firma Adı</th>              
               <th scope="col">Muhatap</th>
               <th scope="col">Telefon</th>
               <th scope="col">E-posta</th>
@@ -280,6 +286,32 @@ function formatPhoneNumberByCountryCode(phoneNumber, countryCode) {
       break;
   }
 }
+    </script>
+    <script>
+            
+            var amountInputReformatBtn = document.querySelector("#kaydet_btn");
+            var form = document.querySelector("#myForm");
+            var i1 = document.querySelector("#id_CompanyName_Clients");
+            var s1 = document.querySelector("#firma_adi_span");
+            var submitBool = true;
+            var x = true;
+      amountInputReformatBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            if(i1.value == ""){
+              s1.style.color = "red";
+              s1.style.fontWeight = "700";
+              x = false;
+           }
+           else{
+        s1.style.color = "black";
+        s1.style.fontWeight = "500";
+        x = true;
+      }
+           if(x){            
+            form.submit();
+           }
+            
+            }); 
     </script>
   
   {% endblock %}

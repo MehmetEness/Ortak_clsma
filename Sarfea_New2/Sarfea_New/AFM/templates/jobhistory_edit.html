@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{% static 'details_projectsss.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styless.css' %}">
 
     <style>
       .paying-firma-add-btn {
@@ -99,7 +98,7 @@
               </div>
               <div class="input-box">
                   <span class="details">Tutar (₺)</span>
-                  <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001" value="{{jobhistory_edit.Amount_JobHistory}}">
+                  <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001" value="{{jobhistory_edit.Amount_JobHistory}}" placeholder="0.00">
               </div>
               <div class="input-box">
                   <span class="details">Dolar Kuru (₺)</span>
@@ -116,7 +115,7 @@
                   id="id_Date_JobHistory" 
                   type="text" 
                   name="Date_JobHistory" 
-                  value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" />
+                  value="{{ jobhistory_edit.Date_JobHistory|date:'Y-m-d' }}" placeholder="01.01.2000"/>
               </div>
               <div class="input-box">
                 <span class="details">Kur Saati</span>
@@ -161,6 +160,7 @@
   {% block js_files %} 
   <!-- <script src="{% static 'clientt.js' %}"></script>  -->
   <script>
+    var inputField = document.querySelector("#id_Date_JobHistory");
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
@@ -218,9 +218,27 @@
         return "";
       }
     
-}       
+}   
+function tarihReFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('-');
+
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
+
+    var yeniFormat = gun + '.' + ay + '.' + yil;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}    
     runEventListeners();
     onPageLoad(amountInputForFormat);
+    inputField.value = tarihReFormat(inputField.value);
 
     function onPageLoad(x) {
         var inputValue = x.value; 
@@ -459,7 +477,7 @@ function birGunOncekiTarih(dateString) {
  </script>
 
 <script>
-  var inputField = document.querySelector("#id_Date_JobHistory");
+  
        
  
     inputField.addEventListener('input', function(event) {

@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'tedarikci.css' %}">
+    <link rel="stylesheet" href="{% static 'tedarikcii.css' %}">
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
+
+    <style>
+      #table thead{
+        
+        position: sticky;
+        top: 0;
+      }
+    </style>
 {% endblock %}
     {% block title %} Supplier {% endblock %}
     {% block content %}
@@ -13,11 +21,11 @@
       <div class="container">
           <h3 id="tedarikci-modal" class="modal-kapat">X</h3>
           <div class="title">Tedarikci Ekle</div>
-          <form action="{% url 'supplier' %}" method="post">
+          <form id="myForm" action="{% url 'supplier' %}" method="post">
             {% csrf_token %}
             <div class="user-details"> 
                 <div class="input-box" name="CompanyName_Supplier">
-                  <span class="details">Firma Adı</span>
+                  <span id="firma_adi_span" class="details">Firma Adı*</span>
                   {{ supplier_form.CompanyName_Supplier }}
                   {% if supplier_form.CompanyName_Supplier.errors %}
                   <div class="error-container">
@@ -55,7 +63,7 @@
                 </div>          
               </div>
               <div class="button">
-                  <input type="submit" value="Kaydet"/>
+                  <input id="kaydet_btn" type="submit" value="Kaydet"/>
               </div>
           </form>
           {% for error in supplier_form.non_field_errors %}
@@ -274,6 +282,32 @@ default:
   break;
 }
 }
+</script>
+<script>
+            
+  var amountInputReformatBtn = document.querySelector("#kaydet_btn");
+  var form = document.querySelector("#myForm");
+  var i1 = document.querySelector("#id_CompanyName_Clients");
+  var s1 = document.querySelector("#firma_adi_span");
+  var submitBool = true;
+  var x = true;
+amountInputReformatBtn.addEventListener("click", function(event) {
+  event.preventDefault();
+  if(i1.value == ""){
+    s1.style.color = "red";
+    s1.style.fontWeight = "700";
+    x = false;
+ }
+ else{
+s1.style.color = "black";
+s1.style.fontWeight = "500";
+x = true;
+}
+ if(x){            
+  form.submit();
+ }
+  
+  }); 
 </script>
 
 {% endblock %}

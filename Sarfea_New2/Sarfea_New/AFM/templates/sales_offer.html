@@ -879,7 +879,7 @@
                <tbody>
                 {% for card in sales_offer_card%}
                   <tr>
-                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}">revize<a/></td>
+                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-wrench"></i></a></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -1679,7 +1679,6 @@
       "#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(11), #table td:nth-child(16)"
     );
     textCells.forEach(function (cell) {
-      console.log(cell.textContent);
       if (cell.textContent == "None" || cell.textContent == "") {
         cell.textContent = "-";
       }
@@ -1847,6 +1846,166 @@ function formatNumber2(number) {
         var fileName = this.value.split("\\").pop(); 
         document.getElementById('details_span').innerText = fileName + ' seçildi'; 
     });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+
+    rowcardss = document.querySelectorAll(".card");
+    rowcardss.forEach(function(item) {
+      
+      let cardTarih = item.querySelector('p:nth-child(3)');
+      let araziCati = item.querySelector('.boxes:nth-of-type(2) p:nth-of-type(2)');
+      if(araziCati.textContent == "None"){
+        araziCati.textContent = "-";
+      };
+      if(cardTarih.textContent == "None"){
+        cardTarih.textContent = "-";
+      };
+    });
+
+    // 1. row
+    var rowsElement1 = document.querySelector('.rows[data-situation="Potansiyel Müşteri"]');
+    var cardElements1 = rowsElement1.querySelectorAll('.card');
+
+    var sortedCards1 = Array.from(cardElements1).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards1.length; i++) {
+        
+        rowsElement1.appendChild(sortedCards1[i]);
+    }
+    // 2. row
+    var rowsElement2 = document.querySelector('.rows[data-situation="Maliyet Hesaplama"]');
+    var cardElements2 = rowsElement2.querySelectorAll('.card');
+
+    var sortedCards2 = Array.from(cardElements2).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards2.length; i++) {
+        rowsElement2.appendChild(sortedCards2[i]);
+    }
+    // 3. row
+    var rowsElement3 = document.querySelector('.rows[data-situation="Fiyat Belirleme"]');
+    var cardElements3 = rowsElement3.querySelectorAll('.card');
+
+    var sortedCards3 = Array.from(cardElements3).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards3.length; i++) {
+        rowsElement3.appendChild(sortedCards3[i]);
+    }
+    // 4. row
+    var rowsElement4 = document.querySelector('.rows[data-situation="Teklif Hazırlama"]');
+    var cardElements4 = rowsElement4.querySelectorAll('.card');
+
+    var sortedCards4 = Array.from(cardElements4).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards4.length; i++) {
+        rowsElement4.appendChild(sortedCards4[i]);
+    }
+    // 5. row
+    var rowsElement5 = document.querySelector('.rows[data-situation="Teklif Hazır"]');
+    var cardElements5 = rowsElement5.querySelectorAll('.card');
+
+    var sortedCards5 = Array.from(cardElements5).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards5.length; i++) {
+        rowsElement5.appendChild(sortedCards5[i]);
+    }
+    // 6. row
+    var rowsElement6 = document.querySelector('.rows[data-situation="Teklif Sunuldu"]');
+    var cardElements6 = rowsElement6.querySelectorAll('.card');
+
+    var sortedCards6 = Array.from(cardElements6).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards6.length; i++) {
+        rowsElement6.appendChild(sortedCards6[i]);
+    }
+    // 7. row
+    var rowsElement7 = document.querySelector('.rows[data-situation="Sunum Sonrası Görüşme"]');
+    var cardElements7 = rowsElement7.querySelectorAll('.card');
+
+    var sortedCards7 = Array.from(cardElements7).sort(function(a, b) {
+        var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent); // 3. sıradaki p etiketindeki tarih
+        var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+        if (dateA === null && dateB !== null) {
+            return 1; // eğer dateA None ve dateB değilse, dateA'yı dateB'den sonraya yerleştir
+        } else if (dateA !== null && dateB === null) {
+            return -1; // eğer dateA değil ve dateB None ise, dateA'yı dateB'den önceye yerleştir
+        }
+        return dateA - dateB;
+    });
+    for (var i = 0; i < sortedCards7.length; i++) {
+        rowsElement7.appendChild(sortedCards7[i]);
+    }
+});
+
+function parseCardDate(dateString) {
+  if (dateString == "-") {
+        return null; // Eğer "None" ise, null döndür
+    }
+    // Özel tarih formatını işleyen bir fonksiyon ekleyin
+    // Örneğin: "11 Ocak 2024" formatındaki bir tarihi aşağıdaki gibi işleyebilirsiniz.
+    var months = {
+        "Ocak": 0, "Şubat": 1, "Mart": 2, "Nisan": 3, "Mayıs": 4, "Haziran": 5,
+        "Temmuz": 6, "Ağustos": 7, "Eylül": 8, "Ekim": 9, "Kasım": 10, "Aralık": 11
+    };
+
+    var dateParts = dateString.split(" ");
+    var day = parseInt(dateParts[0]);
+    var month = months[dateParts[1]];
+    var year = parseInt(dateParts[2]);
+
+    return new Date(year, month, day);
+}
 </script>
   
 

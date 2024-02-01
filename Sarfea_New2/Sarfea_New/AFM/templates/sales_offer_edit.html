@@ -183,28 +183,28 @@
             </div>
             <div class="input-box">
               <span class="details">Teklif Bedeli - KDV Hariç ($)</span>
-              <input value="{{sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card}}" class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card}}" class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
               <span class="details">Birim Teklif</span>
-              <input value="{{sales_offer_edit_curr.UnitOffer_NotIncludingKDV}}" class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.UnitOffer_NotIncludingKDV}}" class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
 
             </div>
             <div class="input-box">
               <span class="details">AC Güç (kWe)</span>
-              <input value="{{sales_offer_edit_curr.AC_Power_Card}}" class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.AC_Power_Card}}" class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
               <span class="details">Toplam Maliyet</span>
-              <input value="{{sales_offer_edit_curr.Cost_NotIncludingKDV_Card}}" class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="1" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.Cost_NotIncludingKDV_Card}}" class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
               <span class="details">Birim Maliyet - KDV Hariç ($)</span>
-              <input value="{{sales_offer_edit_curr.UnitCost_NotIncludingKDV}}" class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.UnitCost_NotIncludingKDV}}" class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
               <span class="details">DC Güç (kWp)</span>
-              <input value="{{sales_offer_edit_curr.DC_Power_Card}}" class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.DC_Power_Card}}" class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
               <span class="details">Durumu</span>
@@ -216,11 +216,11 @@
             </div>
             <div class="input-box">
               <span class="details">Tarih</span>
-              <input value="{{ sales_offer_edit_curr.Date_Card|date:'d-m-Y' }}" id="tarih" type="text" name="Date_Card" placeholder="Tarih Seçiniz"/>
+              <input value="{{ sales_offer_edit_curr.Date_Card|date:'d-m-Y' }}" id="tarih" type="text" name="Date_Card" placeholder="01.01.2000"/>
             </div> 
             <div class="input-box">
               <span class="details">ilgili Kişi</span>
-              <input value="{{sales_offer_edit_curr.Person_Related}}" class="coc-input" type="text" name="Person_Related" id="id_Person_Related" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.Person_Related}}" class="coc-input" type="text" name="Person_Related" id="id_Person_Related" autocomplete="off" placeholder="İlgili Kişi"/>
             </div> 
             <div class="input-box">
               <span class="details">Arazi/Çatı</span>
@@ -228,7 +228,7 @@
             </div>  
             <div style="display: block;" class="input-box">
               <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
-              <input value="{{sales_offer_edit_curr.Roof_Cost_Card}}" style="display: none;" class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off"/>
+              <input value="{{sales_offer_edit_curr.Roof_Cost_Card}}" style="display: none;" class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div> 
             <div class="input-box">
               <span class="details">Teklif Dosyası</span>
@@ -535,6 +535,7 @@
     
     //açılışta inputlardaki sayıları formatlama
     document.addEventListener("DOMContentLoaded", function(){
+      inputField.value = tarihReFormat(inputField.value);
       isBedeliInput.value = format(isBedeliInput.value);
       birimBasiMaliyetInput.value = format(birimBasiMaliyetInput.value);
       acGucInput.value = format(acGucInput.value);
@@ -553,6 +554,23 @@
     var yil = parcalar[2];
 
     var yeniFormat = yil + '-' + ay + '-' + gun;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
+function tarihReFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('-');
+
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
+
+    var yeniFormat = gun + '.' + ay + '.' + yil;
 
     return yeniFormat;
       }

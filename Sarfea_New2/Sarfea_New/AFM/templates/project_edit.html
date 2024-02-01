@@ -184,7 +184,8 @@
    
     
 
-
+var inputField = document.querySelector("#id_StartDate");
+    var inputField2 = document.querySelector("#id_FinishDate");
             var amountInputForFormat1 = document.querySelector("#id_Cost_NotIncludingKDV");
             var amountInputForFormat2 = document.querySelector("#id_CalculatedCost_NotIncludingKDV");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
@@ -245,11 +246,30 @@
       }
     
 }
+function tarihReFormat(tarih) {
+      if(tarih.length == 10){
+        var parcalar = tarih.split('-');
+
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
+
+    var yeniFormat = gun + '.' + ay + '.' + yil;
+
+    return yeniFormat;
+      }
+      else{
+        return "";
+      }
+    
+}
 
     onPageLoad(amountInputForFormat1);
     onPageLoad(amountInputForFormat2);
     runEventListeners(amountInputForFormat1);
     runEventListeners(amountInputForFormat2);
+    inputField.value = tarihReFormat(inputField.value);
+    inputField2.value = tarihReFormat(inputField2.value);
 
 
     function onPageLoad(x) {
@@ -359,8 +379,7 @@
     }
   </script>
   <script>
-    var inputField = document.querySelector("#id_StartDate");
-    var inputField2 = document.querySelector("#id_FinishDate");
+    
          
    
       inputField.addEventListener('input', function(event) {

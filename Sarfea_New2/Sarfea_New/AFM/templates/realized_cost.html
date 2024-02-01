@@ -21,6 +21,7 @@
     font-size: 13px;
     cursor: pointer;
 } 
+
     </style>
 
     {% endblock %}
@@ -246,7 +247,8 @@
           
         <div class="right-menu">
           <div class="total-table view-2">
-             <div id="total-table-head" class="head"><!--<span>Toplam Ödeme =&nbsp;</span><span>₺512.458,25</span><span>&nbsp;/&nbsp;</span><span>$52.239,20</span>-->
+             <div id="total-table-head" class="head">
+              <!--<span>Toplam Ödeme =&nbsp;</span><span>₺512.458,25</span><span>&nbsp;/&nbsp;</span><span>$52.239,20</span>-->
             </div>
             <table id="total-cost-table" class="table table-sortable">
                   <thead>
@@ -382,13 +384,16 @@
 
     // İlk li elemanına tıklama olayını tetikle
     if (firstLiElement) {
-        firstLiElement.click();
+        setTimeout(function() {
+            firstLiElement.click();
+        }, 10); // 10 milisaniye gecikme
     }
 });
 
 document.addEventListener("DOMContentLoaded", function() {
     // Tüm li elemanlarını seç
     var companyLinks = document.querySelectorAll(".company-link");
+   
 
     // Her li elemanına tıklama olayı ekle
     companyLinks.forEach(function(link) {
@@ -403,7 +408,6 @@ document.addEventListener("DOMContentLoaded", function() {
         this.style.backgroundColor = "#7597c0"; // veya istediğiniz arka plan rengini belirleyebilirsiniz
         this.style.color = "#2c3e50";
 
-        // Diğer işlemleri buraya ekleyebilirsiniz, örneğin totalShow() fonksiyonunu çağırmak
         totalShow();
       });
     });
