@@ -8,7 +8,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'projects_styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
-
+<style>
+    #table thead th:not(:first-child){
+        text-align: center;
+    }
+    #table tbody td:not(:first-child){
+        text-align: center;
+    }
+    .lists{
+        overflow-y: scroll;
+    }
+</style>
 {% endblock %}
 {% block title %} Projects {% endblock %}
 {% block content %}
@@ -39,7 +49,7 @@
       <table id="table" class="table table-sortable">
          <thead>
             <th scope="col">Proje Adı</th>
-            <th scope="col">Konum</th>
+            <th id="xx2" scope="col">Konum</th>
             <th scope="col">AC Güç</th>
             <th scope="col">DC Güç</th>
             <th scope="col">İş Bedeli</th>
@@ -62,106 +72,7 @@
 {% endblock %}
 
 {% block js_files %} 
-<script src="{% static 'projects.js' %}"></script> 
-<script src="{% static 'dist/mc-calendar.min.js' %}"></script> 
-<script>
-   document.addEventListener("DOMContentLoaded", function () {
-  
-    var usdCells = document.querySelectorAll('#table td:nth-child(5)');  
-    var numericCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4)');
-    var textCells = document.querySelectorAll('#table td:nth-child(2), #table td:nth-child(6), #table td:nth-child(7)');
-  
-    usdCells.forEach(function (cell) {    
-        var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
-        if (!isNaN(parseFloat(value))) {
-            cell.textContent = formatNumber(value) + "$";
-        } else {
-        cell.textContent = "0$"
-        }   
-    });
-    numericCells.forEach(function (cell) {    
-        var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
-        if (!isNaN(parseFloat(value))) {
-            cell.textContent = formatNumber(value);
-        } else {
-        cell.textContent = "0"
-        }   
-    });
-    textCells.forEach(function (cell) {   
+<script src="{% static 'functions.js' %}"></script> 
+<script src="{% static 'projectst.js' %}"></script> 
 
-        var value = cell.textContent.trim();
-       
-        if (value == "" || value == "None") {
-            cell.textContent = "-";
-        } else {
-        cell.textContent = value;        
-        }   
-    });
-});
-
-function formatNumber(number) {
-return new Intl.NumberFormat('en-US', { minimumFractionDigits:2 , maximumFractionDigits: 2 }).format(number.toFixed(2));
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-   var searchInput = document.getElementById("mysearch");
-   var clearButton = document.querySelector(".clear");  // Bu class'ı, HTML'deki clear span elementine uygulamalısınız
-   var table = document.getElementById("table");
-   var rows = table.getElementsByTagName("tr");
-
-   // Search Input'a yapılan herhangi bir değişiklikte çalışacak event listener
-   searchInput.addEventListener("input", function() {
-       filterTable();
-   });
-
-   // Clear Button'a tıklandığında çalışacak event listener
-   clearButton.addEventListener("click", function() {
-       // Search Input'un değerini boşalt
-       searchInput.value = "";
-       // Tüm satırları göster
-       showAllRows();
-   });
-
-   // Tabloyu filtreleyen fonksiyon
-   function filterTable() {
-       var filter = searchInput.value.toLowerCase();
-
-       for (var i = 0; i < rows.length; i++) {
-           var row = rows[i];
-
-        if (!row.querySelector("th")) {
-           var cells = row.getElementsByTagName("td");
-           var shouldShow = false;
-
-           for (var j = 0; j < cells.length; j++) {
-               var cell = cells[j];
-
-               if (cell) {
-                   var text = cell.textContent || cell.innerText;
-
-                   if (text.toLowerCase().indexOf(filter) > -1) {
-                       shouldShow = true;
-                       break;
-                   }
-               }
-           }
-
-           if (shouldShow) {
-               row.style.display = "";
-           } else {
-               row.style.display = "none";
-           }
-        }
-    }
-}
-
-   // Tüm satırları gösteren fonksiyon
-   function showAllRows() {
-       for (var i = 0; i < rows.length; i++) {
-           rows[i].style.display = "";
-       }
-   }
-});
-
-</script>
 {% endblock %}
