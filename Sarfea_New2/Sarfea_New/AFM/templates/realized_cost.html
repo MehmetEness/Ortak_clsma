@@ -295,7 +295,8 @@
             <div id="c1" class="column view-1">
               <div id="head-is-ac" class="head"><span>Yapılan İş</span></div>
             <table id="table" class="table table-sortable">
-              <thead>
+              <thead>                    
+                    <th></th>
                     <th>Fatura No</th>
                     <th scope="col">Tarih</th>
                     <th scope="col">Cinsi</th>
@@ -307,7 +308,8 @@
                   <tbody id="tbody3">   
                       {% for history in jobhistory %}
                       <tr id="tablotr-is-ac" class="table-row" data-company="{{ history.CompanyName_Job_JobHistory }}">
-                          <td><button type="button" class="edit-jobhistory-btn button2" style= "background: none; border:none;"><a href= "{% url 'jobhistory_edit' jobhistory_id=history.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ history.Invoice_No_JobHistory }} </td>
+                        <td><button type="button" class="edit-jobhistory-btn button2" style= "background: none; border:none;"><a href= "{% url 'jobhistory_edit' jobhistory_id=history.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
+                          <td>{{ history.Invoice_No_JobHistory }} </td>
                           <td>{{ history.Date_JobHistory|date:"d/m/Y"}} </td>
                           <td title="{{ history.ExpensDetails_JobHistory }}" class="ellipsis">{{ history.ExpensDetails_JobHistory}}</td>
                           <td class="ellipsis">{{ history.Amount_JobHistory }}₺</td>
@@ -334,6 +336,8 @@
               <div id="head-gider-ac" class="head"><span>Yapılan Ödeme</span></div>
               <table id="table-2" class="table table-sortable">   
                 <thead>
+                  <th></th>
+
                     <th>Tarih</th>
                     <th scope="col">Açıklama</th>
                     <th scope="col">Banka</th>
@@ -344,8 +348,9 @@
                   <tbody id="tbody-2">   
                       {% for expense in expenses %}
                       <tr class="table-row" data-company="{{ expense.CompanyName_Paying_Expenses }}"> 
-                        
-                        <td><button type="button" class="edit-expenses-btn button2" style= "background: none; border:none;"><a href= "{% url 'expenses_edit' expenses_id=expense.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a>{{ expense.Date_Expenses|date:"d/m/Y" }} </td>
+                        <td><button type="button" class="edit-expenses-btn button2" style= "background: none; border:none;"><a href= "{% url 'expenses_edit' expenses_id=expense.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
+
+                        <td>{{ expense.Date_Expenses|date:"d/m/Y" }} </td>
                           <td class="ellipsis">{{ expense.ExpensDetails_Expenses }}</td>
                           <td>{{ expense.Bank_Expenses }} </td>
                           <td class="ellipsis"> {{ expense.Amount_Expenses }}</td>

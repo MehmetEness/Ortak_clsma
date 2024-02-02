@@ -1,7 +1,8 @@
 {% load static %}
 
 <tr> 
-    <td><button type="button" class="edit-project-btn button2" style= "background: none; border:none;"><a href= "{% url 'project_edit' project_name=x.ProjectName %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button><a href="{% url 'project_details' project_name=x.ProjectName %}"> {{ x.ProjectName }}</a></td>
+    <td><button type="button" class="edit-project-btn button2" style= "background: none; border:none;"><a href= "{% url 'project_edit' project_name=x.ProjectName %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></button>  </td>
+    <td></a><a href="{% url 'project_details' project_name=x.ProjectName %}">{{ x.ProjectName }}</a></td>
     <td>
         {%if x.Location %}
          {{ x.Location }}
