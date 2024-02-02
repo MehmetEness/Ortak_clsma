@@ -254,7 +254,50 @@ if(icon && search){
     }
 }
 
+//                  12 ocak 2023 FORMATINDAKİ TARİHLERİ SIRALAMA
 
+
+
+function parseCardDate(dateString) {
+    if (dateString == "-") {
+        return null;
+    }
+    var months = {
+        "Ocak": 0, "Şubat": 1, "Mart": 2, "Nisan": 3, "Mayıs": 4, "Haziran": 5,
+        "Temmuz": 6, "Ağustos": 7, "Eylül": 8, "Ekim": 9, "Kasım": 10, "Aralık": 11
+    };
+    var dateParts = dateString.split(" ");
+    var day = parseInt(dateParts[0]);
+    var month = months[dateParts[1]];
+    var year = parseInt(dateParts[2]);
+  
+    return new Date(year, month, day);
+}
+
+//                  CARDLARI TARİHE GÖRE SIRALAMA
+
+function cardDateList(rows){
+      rows.forEach(function(row){
+        var cards = row.querySelectorAll('.card');
+        var sortedCards = Array.from(cards).sort(function(a, b) {
+            var dateA = parseCardDate(a.querySelector('p:nth-child(3)').textContent);
+            var dateB = parseCardDate(b.querySelector('p:nth-child(3)').textContent);
+            
+            if (dateA === null && dateB !== null) {
+                return 1;
+            } else if (dateA !== null && dateB === null) {
+                return -1;
+            }
+    
+            return dateA - dateB;
+        });
+        for (var i = 0; i < sortedCards.length; i++) {
+        
+            row.appendChild(sortedCards[i]);
+        }
+      });
+
+}
 
 //            ***** DOM EVENTS *****
 
