@@ -1,6 +1,7 @@
+
 var amountInputReformatBtn = document.querySelector("#kaydet_btn");
 var form = document.querySelector("#myForm");
-var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
+var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
 
 var phoneInput = document.querySelector("#id_PhoneNumber");
@@ -9,18 +10,15 @@ var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
 var table = document.getElementById("table");
 
+//                  TEDARİKÇİ EKLE BUTTON
 
-
-
-
-//                  MÜŞTERİ EKLE BUTTON
-
-document.getElementById("musteri-ac").addEventListener("click", function(){    
-        document.querySelector(".musteriWindow").style.display = "flex";    
+document.getElementById("tedarikci-ac").addEventListener("click", function(){
+    document.querySelector(".tedarikciWindow").style.display = "flex";
 });
-document.getElementById("musteri-modal").addEventListener("click", function(){
-    document.querySelector(".musteriWindow").style.display = "none";
+document.getElementById("tedarikci-modal").addEventListener("click", function(){
+    document.querySelector(".tedarikciWindow").style.display = "none";
 });
+
 
 //                  ZORUNLU İNPUTLAR  
 
@@ -51,4 +49,5 @@ clearButton.addEventListener("click", function() {
     searchInput.value = "";
     showAllRows(table);
 });
+
 

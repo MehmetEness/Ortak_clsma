@@ -1,5 +1,6 @@
 
-
+var icon = document.querySelector('.icon');
+var search = document.querySelector('.search');
 
 
 
@@ -188,3 +189,118 @@ function showAllRows(table) {
         rows[i].style.display = "";
     }
 }
+
+//                  ZORUNLU İNPUT BİLDİRİMLERİ
+
+function requiredInputs(inputs, labels){
+    var value = 0;
+    inputs.forEach(function(input, index){
+        
+        if(input.value == ""){
+            labels[index].style.color = "red";
+            labels[index].style.fontWeight = "700";
+        }
+        else{
+            labels[index].style.color = "black";
+            labels[index].style.fontWeight = "500";
+            value += 0;
+        }
+    });
+    if(value == inputs.length){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+//                  TELEFON NUMARASI FORMATLAMA
+
+function formatPhoneNumberByCountryCode(phoneNumber, countryCode) {
+    var cleaned = phoneNumber.replace(/[^\d+]/g, '');
+    var formatted = cleaned;
+  
+    switch (countryCode) {
+        case "+90": // Türkiye
+        phoneNumber.maxLength = 15;
+        if(formatted.length < 4) return formatted;
+        if (formatted.length < 7) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
+        }
+        if (formatted.length < 7) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
+        }
+        if (formatted.length < 9) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6)}`;        
+        }
+        if (formatted.length < 11) {
+            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6,8)} ${formatted.slice(8)}`;        
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+//                  SEARCH İNPUT
+
+if(icon && search){
+    icon.onclick = function(){
+        search.classList.toggle('active')
+    }
+    function clearSearch() {
+        const input = document.getElementById('mysearch');
+        input.value = '';
+    }
+}
+
+
+
+//            ***** DOM EVENTS *****
+
+document.addEventListener('DOMContentLoaded', function () {
+    var dropdownInputs = document.querySelectorAll('.myInput');
+
+//                  DROPDOWN İNPUTS
+
+    if(dropdownInputs){
+        dropdownInputs.forEach(input => {
+            const dropdownId = input.getAttribute('data-dropdown');
+            const dropdown = document.getElementById(dropdownId);
+            const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+        
+            input.addEventListener('focus', function () {
+              dropdown.classList.add('show');
+            });
+        
+            input.addEventListener('blur', function () {
+              setTimeout(() => {
+                dropdown.classList.remove('show');
+              }, 200);
+            });
+        
+            input.addEventListener('input', function () {
+              const filterText = input.value.toLowerCase();
+        
+              dropdownItems.forEach(item => {
+                const itemText = item.textContent.toLowerCase();
+                if (itemText.startsWith(filterText)) {
+                  item.style.display = 'block';
+                } else {
+                  item.style.display = 'none';
+                }
+              });
+            });
+        
+            dropdownItems.forEach(item => {
+              item.addEventListener('click', function () {
+                input.value = this.textContent;
+                dropdown.classList.remove('show');
+              });
+            });
+          });
+    }
+
+
+
+  });
