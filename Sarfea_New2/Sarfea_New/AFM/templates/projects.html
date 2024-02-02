@@ -69,7 +69,7 @@
   
     var usdCells = document.querySelectorAll('#table td:nth-child(5)');  
     var numericCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4)');
-    var textCells = document.querySelectorAll('#table td:nth-child(1), #table td:nth-child(2), #table td:nth-child(6), #table td:nth-child(7)');
+    var textCells = document.querySelectorAll('#table td:nth-child(2), #table td:nth-child(6), #table td:nth-child(7)');
   
     usdCells.forEach(function (cell) {    
         var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
