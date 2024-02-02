@@ -25,7 +25,6 @@ let listContainer = document.querySelector(".list-container");
 let lostJobContainer = document.querySelector(".lost-job-container");
 let salesContainer = document.querySelector(".sales-container");
 let wonContainer = document.querySelector(".won-container");
-  
 
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
@@ -242,51 +241,51 @@ function cardFormat() {
 //                  TOP MENU FONKSİYONLARI
 
 topMenuLi.forEach(function (item) {
-    item.addEventListener("click", function () {
-        var clickedItemId = this.id;
-        handleMenuItemClick(clickedItemId);
-    });
+  item.addEventListener("click", function () {
+    var clickedItemId = this.id;
+    handleMenuItemClick(clickedItemId);
+  });
 });
 function handleMenuItemClick(clickedItemId) {
-    switch (clickedItemId) {
-        case "list":
-            listContainer.style.display = "flex";
-            maniContainer.style.display = "none";
-            salesContainer.style.display = "none";
-            lostJobContainer.style.display = "none";
-            wonContainer.style.display = "none";
-              break;
-        case "sale_time":
-            listContainer.style.display = "none";
-            maniContainer.style.display = "flex";
-            salesContainer.style.display = "none";
-            lostJobContainer.style.display = "none";
-            wonContainer.style.display = "none";
-              break;
-        case "waiting_job":
-            listContainer.style.display = "none";
-            maniContainer.style.display = "none";
-            salesContainer.style.display = "flex";
-            lostJobContainer.style.display = "none";
-            wonContainer.style.display = "none";
-              break;
-        case "losing_job":
-            listContainer.style.display = "none";
-            maniContainer.style.display = "none";
-            salesContainer.style.display = "none";
-            lostJobContainer.style.display = "flex";
-            wonContainer.style.display = "none";
-              break;
-        case "won_job":
-            listContainer.style.display = "none";
-            maniContainer.style.display = "none";
-            salesContainer.style.display = "none";
-            lostJobContainer.style.display = "none";
-            wonContainer.style.display = "flex";
-              break;
-        default:                  
-              break;
-    }
+  switch (clickedItemId) {
+    case "list":
+      listContainer.style.display = "flex";
+      maniContainer.style.display = "none";
+      salesContainer.style.display = "none";
+      lostJobContainer.style.display = "none";
+      wonContainer.style.display = "none";
+      break;
+    case "sale_time":
+      listContainer.style.display = "none";
+      maniContainer.style.display = "flex";
+      salesContainer.style.display = "none";
+      lostJobContainer.style.display = "none";
+      wonContainer.style.display = "none";
+      break;
+    case "waiting_job":
+      listContainer.style.display = "none";
+      maniContainer.style.display = "none";
+      salesContainer.style.display = "flex";
+      lostJobContainer.style.display = "none";
+      wonContainer.style.display = "none";
+      break;
+    case "losing_job":
+      listContainer.style.display = "none";
+      maniContainer.style.display = "none";
+      salesContainer.style.display = "none";
+      lostJobContainer.style.display = "flex";
+      wonContainer.style.display = "none";
+      break;
+    case "won_job":
+      listContainer.style.display = "none";
+      maniContainer.style.display = "none";
+      salesContainer.style.display = "none";
+      lostJobContainer.style.display = "none";
+      wonContainer.style.display = "flex";
+      break;
+    default:
+      break;
+  }
 }
 
 //                  TOP MENÜ TIKLAMA
@@ -294,354 +293,357 @@ function handleMenuItemClick(clickedItemId) {
 topMenuLi.forEach(function (item) {
   item.addEventListener("click", function () {
     topMenuLi.forEach(function (item) {
-          item.classList.remove("li-hover");
-      });
-      this.classList.add("li-hover");
+      item.classList.remove("li-hover");
+    });
+    this.classList.add("li-hover");
   });
 });
 
 //                  CARD DRAG İŞLEMLERİ
 
-var dragItem = null;  
-for(var i of rowcards){
-    i.addEventListener("dragstart", dragStart);
-    i.addEventListener("dragend", dragEnd);
-}  
-function dragStart(){
-    dragItem = this;
-    setTimeout(()=>this.style.display = "none", 0);
+var dragItem = null;
+for (var i of rowcards) {
+  i.addEventListener("dragstart", dragStart);
+  i.addEventListener("dragend", dragEnd);
 }
-function dragEnd(){            
-    setTimeout(()=>this.style.display = "flex", 0);        
-    cardFormat();
-}  
-for(j of rows){
-    j.addEventListener("dragover", dragOver);
-    j.addEventListener("dragenter", dragEnter);
-    j.addEventListener("dragleave", dragLeave);
-    j.addEventListener("drop", Drop);
+function dragStart() {
+  dragItem = this;
+  setTimeout(() => (this.style.display = "none"), 0);
+}
+function dragEnd() {
+  setTimeout(() => (this.style.display = "flex"), 0);
+  cardFormat();
+}
+for (j of rows) {
+  j.addEventListener("dragover", dragOver);
+  j.addEventListener("dragenter", dragEnter);
+  j.addEventListener("dragleave", dragLeave);
+  j.addEventListener("drop", Drop);
 }
 function Drop() {
-    this.append(dragItem);
-    this.style.border = "none"
-    this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+  this.append(dragItem);
+  this.style.border = "none";
+  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
 
-    var targetRowSituation = this.dataset.situation;        
-    var cardId = dragItem.id;
-    var xhr = new XMLHttpRequest();
+  var targetRowSituation = this.dataset.situation;
+  var cardId = dragItem.id;
+  var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "{% url 'update_card_situation' %}", true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.open("POST", "{% url 'update_card_situation' %}", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            dragItem.dataset.situation = targetRowSituation;
-        }
-    };
-    xhr.send(JSON.stringify({ card_id: cardId, new_situation: targetRowSituation }));        
-}    
-function dragOver(e){
-    e.preventDefault();
-    this.style.border = "2px solid rgba(0, 0, 0, 0.3)"
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      dragItem.dataset.situation = targetRowSituation;
+    }
+  };
+  xhr.send(
+    JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
+  );
 }
-function dragEnter(e){
-    e.preventDefault();
+function dragOver(e) {
+  e.preventDefault();
+  this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
 }
-function dragLeave(){
-    this.style.border = "none"
-    this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+function dragEnter(e) {
+  e.preventDefault();
+}
+function dragLeave() {
+  this.style.border = "none";
+  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
 }
 
 //                  SİLME İŞLEMİ
 
-    // CSRF token'ını al
-const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-const csrfToken = csrfCookie ? csrfCookie.split('=')[1] : null;
+// CSRF token'ını al
+const csrfCookie = document.cookie
+  .split("; ")
+  .find((row) => row.startsWith("csrftoken="));
+const csrfToken = csrfCookie ? csrfCookie.split("=")[1] : null;
 
 function deleteCard(cardId) {
   if (!csrfToken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
   fetch(`AFM/delete_salesoffercard/${cardId}/`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrfToken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
+    .then((response) => {
+      if (!response.ok) {
+        location.reload();
+        throw new Error("Silme işlemi başarısız");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Silme başarılı", data);
       location.reload();
-      throw new Error('Silme işlemi başarısız');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Silme başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 
 //                  LOST İŞLEMLERİ
 
 function lostCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_lost/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 function reLostCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_relost/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('00Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("00Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
 //                  GAİN İŞLEMLERİ
 
 function gainCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_gain/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 function reGainCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_regain/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('00Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("00Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
 //                  WAİT İŞLEMLERİ
 
 function waitCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_wait/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 function reWaitCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/set_card_rewait/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('00Kaybedildi işlemi başarılı', data);
-    location.reload();
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("00Kaybedildi işlemi başarılı", data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
 //                  REVİZE İŞLEMLERİ
 
 function reviseCard(cardId) {
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = getCookie("csrftoken");
 
   if (!csrftoken) {
-    console.error('CSRF token bulunamadı.');
+    console.error("CSRF token bulunamadı.");
     return;
   }
 
   fetch(`AFM/create_revise/${cardId}/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Kaybedildi işlemi başarısızz');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Kaybedildi işlemi başarılı', data);
-    location.reload();
-    var newUrl = "{% url 'sales_offer_edit' 0 %}".replace("0", cardId);
-    window.location.href = newUrl;
-  })
-  .catch(error => {
-    console.error('Hata:', error.message);
-  });
-  
-
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Kaybedildi işlemi başarısızz");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Kaybedildi işlemi başarılı", data);
+      location.reload();
+      var newUrl = "{% url 'sales_offer_edit' 0 %}".replace("0", cardId);
+      window.location.href = newUrl;
+    })
+    .catch((error) => {
+      console.error("Hata:", error.message);
+    });
 }
+
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
 //                  DOSYA YENİ SEKME AÇMA
 
 function openFile(url) {
-  window.open(url, '_blank');
+  window.open(url, "_blank");
 }
