@@ -70,7 +70,6 @@ def sales_offer_revises(request, card_id):
     }
     return render(request, "sales_offer_revises.html", context)
 
-
 @require_POST
 def create_revise(request, card_id):
     # Retrieve the existing SalesOfferCard instance
@@ -328,7 +327,10 @@ def expenses_edit(request, expenses_id):
     supplier = Supplier.objects.all()
     banks = Banks.objects.all()
     details = Details.objects.all()
-   
+    expenses_edit.Amount_Expenses = str(expenses_edit.Amount_Expenses).replace(",", ".")
+    expenses_edit.Amount_TL_Expenses = str(expenses_edit.Amount_TL_Expenses).replace(",", ".")
+    expenses_edit.Dollar_Rate_Expenses = str(expenses_edit.Dollar_Rate_Expenses).replace(",", ".")
+
     if request.method == 'POST':
         edit_form = ExpensesForm(request.POST, instance=expenses_edit)
         
@@ -354,6 +356,9 @@ def jobhistory_edit(request, jobhistory_id):
     jobhistory_edit = get_object_or_404(JobHistory, id=jobhistory_id)
     my_company = MyCompanyNames.objects.all()
     supplier = Supplier.objects.all()
+    jobhistory_edit.Amount_JobHistory = str(jobhistory_edit.Amount_JobHistory).replace(",", ".")
+    jobhistory_edit.Amount_TL_JobHistory = str(jobhistory_edit.Amount_TL_JobHistory).replace(",", ".")
+    jobhistory_edit.Dollar_Rate_JobHistory = str(jobhistory_edit.Dollar_Rate_JobHistory).replace(",", ".")
 
     if request.method == 'POST':
         edit_form = JobHistoryForm(request.POST, instance=jobhistory_edit)
@@ -387,6 +392,9 @@ def income_edit(request, income_id):
     income_edit = get_object_or_404(Incomes, id=income_id)
     my_company = MyCompanyNames.objects.all()
     client = Clients.objects.all()
+    income_edit.Amount_Incomes = str(income_edit.Amount_Incomes).replace(",", ".")
+    income_edit.Dollar_Rate_Incomes = str(income_edit.Dollar_Rate_Incomes).replace(",", ".")
+    income_edit.Amount_Usd_Incomes = str(income_edit.Amount_Usd_Incomes).replace(",", ".")
 
     if request.method == 'POST':
         edit_form = IncomesForm(request.POST, instance=income_edit)
@@ -457,7 +465,12 @@ def project_edit(request, project_name):
     locations = Locations.objects.all()
     terrain_roof = Terrain_Roof.objects.all()
     situations = Situations.objects.all()
-
+    project_edit.CalculatedCost_NotIncludingKDV = str(project_edit.CalculatedCost_NotIncludingKDV).replace(",", ".")
+    project_edit.RealizedCost_NotIncludingKDV = str(project_edit.RealizedCost_NotIncludingKDV).replace(",", ".")
+    project_edit.CalculatedProfit_Loss = str(project_edit.CalculatedProfit_Loss).replace(",", ".")
+    project_edit.RealizedProfit_Loss = str(project_edit.RealizedProfit_Loss).replace(",", ".")
+    project_edit.CalculatedProfitRate = str(project_edit.CalculatedProfitRate).replace(",", ".")
+    project_edit.RealizedProfitRate = str(project_edit.RealizedProfitRate).replace(",", ".")
 
    
     if request.method == 'POST':
