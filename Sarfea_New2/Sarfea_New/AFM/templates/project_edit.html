@@ -107,11 +107,13 @@
               </div>
               <div class="input-box">
                   <span class="details">AC Güç (kWe)</span>
-                  {{edit_form.AC_Power}}
+                  <input autocomplete="off" class="coc-input" type="text" name="AC_Power" id="id_AC_Power" step="1" value="{{project_edit.AC_Power}}">
+
               </div>
               <div class="input-box">
                   <span class="details">DC Güç (kWp)</span>
-                  {{edit_form.DC_Power}}
+                  <input autocomplete="off" class="coc-input" type="text" name="DC_Power" id="id_DC_Power" step="1" value="{{project_edit.DC_Power}}">
+
               </div>
               <div class="input-box">
                   <span class="details">Hesaplanan Maliyet - KDV Hariç ($)</span>
