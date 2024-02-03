@@ -1,5 +1,7 @@
 var icon = document.querySelector(".icon");
 var search = document.querySelector(".search");
+var searchInput = document.getElementById("mysearch");
+var clearButton = document.querySelector(".clear");
 
 //                  FORMAT NUMBERS
 

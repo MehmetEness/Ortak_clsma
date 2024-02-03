@@ -25,6 +25,7 @@ let listContainer = document.querySelector(".list-container");
 let lostJobContainer = document.querySelector(".lost-job-container");
 let salesContainer = document.querySelector(".sales-container");
 let wonContainer = document.querySelector(".won-container");
+var tables = document.querySelectorAll(".table");
 
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
@@ -52,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
   tableFormat(numericCells, "numeric");
   tableFormat(textCells, "text");
 });
+
+
 //------------------------------------------------------------------------------------------------------------------
 
 //                  DOSYA YÜKLEME İŞLEMLERİ
@@ -297,6 +300,21 @@ topMenuLi.forEach(function (item) {
     });
     this.classList.add("li-hover");
   });
+});
+
+//                    TABLO FİLİTRELEME İŞLEMLERİ
+
+searchInput.addEventListener("input", function(){
+  tables.forEach(function(table){
+    filterTable(searchInput, table);
+  });  
+});
+clearButton.addEventListener("click", function() {
+  tables.forEach(function(table){
+    searchInput.value = "";
+  showAllRows(table);
+  });  
+  
 });
 
 //                  CARD DRAG İŞLEMLERİ

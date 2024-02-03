@@ -69,7 +69,6 @@ companyLinks.forEach(function (link) {
     totalShow();
   });
 });
-
 function totalShow() {
   for (let index of view1) {
     index.style.display = "flex";
@@ -197,6 +196,20 @@ document  .getElementById("toplam-maliyet").addEventListener("click", function (
   });
 
 //
+
+//                  TABLO FİLİTRELEME
+
+searchInput.addEventListener("input", function(){
+  filterTable(searchInput, leftTable);
+  filterTable(searchInput, rightTable);
+  filterTable(searchInput, totalTable);
+});
+clearButton.addEventListener("click", function() {
+  searchInput.value = "";
+  showAllRows(leftTable);
+  showAllRows(rightTable);
+  showAllRows(totalTable);
+});
 
 //            ***** DOM EVENTS *****
 
