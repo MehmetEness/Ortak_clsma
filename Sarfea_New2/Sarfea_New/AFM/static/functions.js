@@ -11,6 +11,17 @@ function formatNumber(number, fract) {
     maximumFractionDigits: fract,
   }).format(number.toFixed(fract));
 }
+function format(number) {
+  var indexOfDot = number.indexOf('.');  
+  if (indexOfDot !== -1) {
+    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var decimalPart = number.slice(indexOfDot + 1);
+    return integerPart + '.' + decimalPart;
+  } else {
+    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return formattedNumber; 
+  }
+}
 
 //                  TABLE FORMAT
 
@@ -75,7 +86,7 @@ function tableFormat(cells, type) {
         }
       });
       break;
-    
+
     default:
   }
 }
@@ -349,7 +360,86 @@ function formatDate(date) {
       return `${formatted.slice(0, 2)}.${formatted.slice(2, 4)}.2999`;
     }
   }
+}                
+function formatDateForSubmit(date) {
+  if(date.length == 10){
+    var splits = date.split('.');
+
+var gun = splits[0];
+var ay = splits[1];
+var yil = splits[2];
+
+var newFormat = yil + '-' + ay + '-' + gun;
+
+return newFormat;
+  }
+  else{
+    return "";
+  }
+
+}   
+
+//                  INPUTLARI FORMATLAMA
+
+function runEventListeners(inputForFormat){
+    inputForFormat.addEventListener("input", function(event) {
+        var inputValue = event.target.value;
+        var clearValue = clear(inputValue);
+        var formatValue = format(clearValue);
+        inputForFormat.value = formatValue;
+    });
 }
+function clear(value){      
+    if(value != undefined){
+        var cleanString = value.replace(/[^0-9.]/g, '');
+        return cleanString;
+    }else{
+        var  cleanString = 0;
+        return cleanString;
+    } 
+}
+
+//                 DOLAR KURU İÇİN TARİH ÇEKME
+
+function tarihFormatiniDegistir(tarih) {
+  // Giriş tarihini JavaScript Date objesine çevir
+  const dateObj = new Date(tarih);
+  dateObj.setDate(dateObj.getDate() + 1);
+  if (isWeekend(dateObj)) {
+      dateObj.setDate(dateObj.getDate() + 1);
+  }
+  // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
+  while (isWeekend(dateObj)) {
+      dateObj.setDate(dateObj.getDate() + 1);
+  }
+  // Yıl, ay ve gün bilgilerini al
+  const yil = dateObj.getFullYear();
+  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
+  const gun = dateObj.getDate().toString().padStart(2, '0'); // Gün değeri 2 haneli yap
+  // Yıl, ay ve gün bilgilerini birleştirerek gün-ay-yıl formatında tarihi oluştur
+  const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
+  return yeniFormatliTarih;
+}
+function birGunOncekiTarih(dateString) {
+  const dateObj = new Date(dateString);
+  dateObj.setDate(dateObj.getDate());
+  // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
+  while (isWeekend(dateObj)) {
+      dateObj.setDate(dateObj.getDate() + 1);
+  }
+  // Yıl, ay ve gün bilgilerini al
+  const yil = dateObj.getFullYear();
+  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+  const gun = dateObj.getDate().toString().padStart(2, '0');
+  // Yıl, ay ve gün bilgilerini birleştirerek yeni formatta tarihi oluştur
+  const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
+  return yeniFormatliTarih;
+}  
+    // Haftasonu kontrol fonksiyonu
+  function isWeekend(date) {
+      const day = date.getDay();
+      return day === 0 || day === 6;
+  }
 
 //            ***** DOM EVENTS *****
 
