@@ -128,9 +128,7 @@
 .lists tbody{
     line-height: 45px;
 }
-.lists td:first-child{
-    padding-left: 20px;
-}
+
 .lists tbody tr:nth-child(even){
     background-color: #d1d1d6;
 }

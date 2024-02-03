@@ -288,10 +288,10 @@ function tarihReFormat(tarih) {
         deger = formatValue;
     });
     }
-    function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
+    function clear(value){ 
       if(value != undefined){
         var cleanString = value.replace(/[^0-9.]/g, '');
-        return cleanString;    // Çıktı: "123456.789"  
+        return cleanString;   
     }else{
         var  cleanString = 0;
         return cleanString;

@@ -314,9 +314,9 @@ var chekLastDateBox = document.querySelector(".chek-last-date-box");
 <script>
  document.addEventListener("DOMContentLoaded", function () {
   
-    var usdCells = document.querySelectorAll('#table td:nth-child(5), #table td:nth-child(7)');  
-    var tlCells = document.querySelectorAll('#table td:nth-child(6)');  
-    var textCells = document.querySelectorAll('#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4)');
+    var usdCells = document.querySelectorAll('#table td:nth-child(8)');  
+    var tlCells = document.querySelectorAll('#table td:nth-child(6),#table td:nth-child(7)');  
+    var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(5)');
   
     usdCells.forEach(function (cell) {    
         var value = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));

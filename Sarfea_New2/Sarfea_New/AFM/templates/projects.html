@@ -5,14 +5,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-<link rel="stylesheet" type="text/css" href="{% static 'projects_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
 <style>
-    #table thead th:not(:first-child){
+    #table thead th:not(:nth-child(2)){
         text-align: center;
     }
-    #table tbody td:not(:first-child){
+    #table tbody td:not(:nth-child(2)){
         text-align: center;
     }
     .lists{
@@ -74,6 +74,6 @@
 
 {% block js_files %} 
 <script src="{% static 'functions.js' %}"></script> 
-<script src="{% static 'projectst.js' %}"></script> 
+<script src="{% static 'projects.js' %}"></script> 
 
 {% endblock %}
