@@ -156,176 +156,15 @@
 {% endblock %} 
 
   {% block js_files %} 
+  <script src="{% static 'functions.js' %}"></script> 
   <script src="{% static 'expenses_edit.js' %}"></script> 
+  
   <script>
-     var inputField = document.querySelector("#id_Date_Expenses");
-            var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
-            var amountInputReformatBtn = document.querySelector("#project-create-btn");
-            var form = document.querySelector("#my-form");
-            var i1 = document.querySelector("#id_CompanyName_Paying_Expenses");
-            var s1 = document.querySelector("#odeme_yapilan_firma_span");
-            var submitBool = true;
-            var x = true;
-            var deger;
-            
-            amountInputReformatBtn.addEventListener("click", function(event) {
-            event.preventDefault();
-            if(i1.value == ""){
-              s1.style.color = "red";
-              s1.style.fontWeight = "700";
-              x = false;
-           }    
-           else{
-              s1.style.color = "black";
-              s1.style.fontWeight = "500";
-              x = true;
-            }      
-           if(x){
-            inputField.value = tarihFormat(inputField.value);
-            amountInputForFormat.value = clear(deger);
-            //form.submit();
-           }
-            
-            }); 
-            function tarihFormat(tarih) {
-      if(tarih.length == 10){
-        var parcalar = tarih.split('.');
-
-    var gun = parcalar[0];
-    var ay = parcalar[1];
-    var yil = parcalar[2];
-
-    var yeniFormat = yil + '-' + ay + '-' + gun;
-
-    return yeniFormat;
-      }
-      else{
-        return "";
-      }
-    
-}    
-function tarihReFormat(tarih) {
-      if(tarih.length == 10){
-        var parcalar = tarih.split('-');
-
-    var yil = parcalar[0];
-    var ay = parcalar[1];
-    var gun = parcalar[2];
-
-    var yeniFormat = gun + '.' + ay + '.' + yil;
-
-    return yeniFormat;
-      }
-      else{
-        return "";
-      }
-    
-} 
-        
-    runEventListeners();
-    onPageLoad(amountInputForFormat);
-    inputField.value = tarihReFormat(inputField.value);
-
-    function onPageLoad(x) {
-        var inputValue = x.value; 
-        var clearValue = clear(inputValue);
-        var formatValue = format(clearValue);
-        x.value = formatValue;
-        deger = formatValue;
-    }
-
-    
-    function runEventListeners(){
-    amountInputForFormat.addEventListener("input", function(event) {
-        var inputValue = event.target.value;
-        var clearValue = clear(inputValue);
-        var formatValue = format(clearValue);
-        amountInputForFormat.value = formatValue;
-        deger = formatValue;
-    });
-    }
-    function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
-      if(value != undefined){
-        var cleanString = value.replace(/[^0-9.]/g, '');
-        return cleanString;    // Çıktı: "123456.789"  
-    }else{
-        var  cleanString = 0;
-        return cleanString;
-    } 
-    }
-    
-    function format(number) {
-    var indexOfDot = number.indexOf('.');
-    
-    if (indexOfDot !== -1) {
-    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    var decimalPart = number.slice(indexOfDot + 1);
-    return integerPart + '.' + decimalPart;
-    } else {
-    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return formattedNumber; 
-    }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-  const inputs = document.querySelectorAll('.myInput');
-
-  inputs.forEach(input => {
-    const dropdownId = input.getAttribute('data-dropdown');
-    const dropdown = document.getElementById(dropdownId);
-    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
-
-    input.addEventListener('focus', function () {
-      dropdown.classList.add('show');
-    });
-
-    input.addEventListener('blur', function () {
-      setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200);
-    });
-
-    input.addEventListener('input', function () {
-      const filterText = input.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        if (itemText.startsWith(filterText)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function () {
-        input.value = this.textContent;
-        dropdown.classList.remove('show');
-      });
-    });
-  });
-});
-
-  </script>
-  <script>
-    var amountInput = document.querySelector("#id_Amount_Expenses");    // Alınan miktar
-      var kurInput = document.querySelector("#id_Dollar_Rate_Expenses");  // Dolar kuru
-      var dateForKur = document.querySelector("#id_Date_Expenses");   // Tarih
-      var timeForKur = document.querySelector("#kur-time");              // Kur saati
-      var buyingValues ; 
-      var tarih ;
+  
       
       //**************      KUR HESAPLAMA      ********************
-      function convertTarihFormat (tarih){
-        var date = tarih.split('.');
-        console.log(date[1]);
-        date = `${date[1]}.${date[0]}.${date[2]}`
-        console.log(date)
-      }
-      console.log(convertTarihFormat("11.12.2022"));
       
-      // Hedef tarih
+      
       var dosyaURL = "{% static 'kur.json' %}";
    //selection seçimine göre yapılacak işlem
           
@@ -337,9 +176,8 @@ function tarihReFormat(tarih) {
               if (secilenDeger === 'secenek1') {
                   
               } else if (secilenDeger === 'secenek2') {
-                  tarih = convertTarihFormat(dateForKur.value);
-                  console.log(dateForKur.value);
-                  console.log(convertTarihFormat(dateForKur.value));
+                  tarih = birGunOncekiTarih(dateForKur.value);
+                  console.log(tarih);
                   fetch(dosyaURL)
                   .then(response => response.json())
                   .then(data => {
@@ -390,111 +228,12 @@ function tarihReFormat(tarih) {
                     console.error('Dosya okuma hatası:', err);
                   });
               }
-          });
+          });         
       
       
-      /******************************       Tarihi Formatlama          ********************************* */
-      function tarihFormatiniDegistir(tarih) {
-    // Giriş tarihini JavaScript Date objesine çevir
-    const dateObj = new Date(tarih);
-    dateObj.setDate(dateObj.getDate() + 1);
-    if (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
 
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
-    const gun = dateObj.getDate().toString().padStart(2, '0'); // Gün değeri 2 haneli yap
-
-    // Yıl, ay ve gün bilgilerini birleştirerek gün-ay-yıl formatında tarihi oluştur
-    const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
-
-    return yeniFormatliTarih;
-}
-
-
-/************************************      Tarihten 1 gün çıkarma         *************************************** */
-
-function birGunOncekiTarih(dateString) {
-    const dateObj = new Date(dateString);
-    dateObj.setDate(dateObj.getDate());
-
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    const gun = dateObj.getDate().toString().padStart(2, '0');
-
-    // Yıl, ay ve gün bilgilerini birleştirerek yeni formatta tarihi oluştur
-    const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
-
-    return yeniFormatliTarih;
-}
-      
-      
-      // Haftasonu kontrol fonksiyonu
-      function isWeekend(date) {
-          const day = date.getDay();
-          return day === 0 || day === 6;
-      }
    </script>
-   <script>
    
-         
-   
-      inputField.addEventListener('input', function(event) {
-      var userInput = inputField.value;
-     
-     if (event.inputType !== 'deleteContentBackward') {
-       inputField.value = formatDate(userInput);
-     }
-   });
-   
-   
-    function formatDate(date) {
-     var cleaned = date.replace(/[^\d+]/g, '');
-     var formatted = cleaned;
-     var current;
-     var day = "31";
-     var month = "12";
-     var year = "2999";
-       
-       inputField.maxLength = 10;
-         if(formatted.length < 3) {
-           if(formatted < day){
-             return formatted;
-           }
-           else{
-             return "31";
-           }        
-         }
-         if (formatted.length < 5) {
-           if(formatted.slice(2) < month){
-             return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
-           }
-           else{
-             return `${formatted.slice(0,2)}.12`
-           }                  
-         }
-         if (formatted.length < 10) {
-           if(formatted.slice(4) < year){
-             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
-           }
-           else{
-             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
-           } 
-                     
-         }  
-   }
-   </script>
   
   {% endblock %}
 

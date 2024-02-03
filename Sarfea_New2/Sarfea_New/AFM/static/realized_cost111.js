@@ -8,7 +8,7 @@ var kurCells = document.querySelectorAll(
   "#table tbody td:nth-child(6), #table-2 tbody td:nth-child(6)"
 );
 var usdCells = document.querySelectorAll(
-  "#table tbody td:nth-child(7), #table-2 tbody td:nth-child(8), #total-cost-table tbody td:nth-child(3), #total-cost-table tbody td:nth-child(5)"
+  "#table tbody td:nth-child(7), #table-2 tbody td:nth-child(7), #total-cost-table tbody td:nth-child(3), #total-cost-table tbody td:nth-child(5)"
 );
 var companyLinks = document.querySelectorAll(".company-link");
 let view1 = document.querySelectorAll(".view-1");

@@ -377,6 +377,11 @@ return newFormat;
     return "";
   }
 
+}
+function convertDateFormat (tarih){
+  var date = tarih.split('.');
+  date = `${date[1]}.${date[0]}.${date[2]}`;
+  return date;
 }   
 
 //                  INPUTLARI FORMATLAMA
@@ -397,6 +402,13 @@ function clear(value){
         var  cleanString = 0;
         return cleanString;
     } 
+}
+function onPageLoad(input) {
+  var inputValue = input.value; 
+  var clearValue = clear(inputValue);
+  var formatValue = format(clearValue);
+  input.value = formatValue;
+  deger = formatValue;
 }
 
 //                 DOLAR KURU İÇİN TARİH ÇEKME
@@ -435,11 +447,10 @@ function birGunOncekiTarih(dateString) {
   const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
   return yeniFormatliTarih;
 }  
-    // Haftasonu kontrol fonksiyonu
-  function isWeekend(date) {
+function isWeekend(date) {
       const day = date.getDay();
       return day === 0 || day === 6;
-  }
+}
 
 //            ***** DOM EVENTS *****
 
