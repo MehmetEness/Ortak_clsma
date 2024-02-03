@@ -602,45 +602,7 @@ function getCookie(name) {
   return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
-//                  REVİZE İŞLEMLERİ
 
-function reviseCard(cardId) {
-  const csrftoken = getCookie("csrftoken");
-
-  if (!csrftoken) {
-    console.error("CSRF token bulunamadı.");
-    return;
-  }
-
-  fetch(`AFM/create_revise/${cardId}/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": csrftoken,
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Kaybedildi işlemi başarısızz");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Kaybedildi işlemi başarılı", data);
-      location.reload();
-      var newUrl = "{% url 'sales_offer_edit' 0 %}".replace("0", cardId);
-      window.location.href = newUrl;
-    })
-    .catch((error) => {
-      console.error("Hata:", error.message);
-    });
-}
-
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  return parts.length === 2 ? parts.pop().split(";").shift() : null;
-}
 
 //                  DOSYA YENİ SEKME AÇMA
 
