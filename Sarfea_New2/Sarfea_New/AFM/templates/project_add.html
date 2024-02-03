@@ -2,11 +2,19 @@
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"/> -->
 <link rel="stylesheet" href="{% static 'details_projects.css' %}" />
 <link rel="stylesheet" href="{% static 'center.css' %}" />
-<link rel="stylesheet" href="{% static 'projects_styles.css' %}" />
 <link rel="stylesheet" href="{% static 'all_style.css' %}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
+
+<style>
+  #paying-firma-add-btn{
+    padding: 0 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    font-size: 15px;
+  }
+</style>
 
 {% endblock %} {% block title %} Project Add {% endblock %} {% block content %}
 <div class="body-div">
@@ -192,7 +200,7 @@
         <div class="container">
           <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
           <div class="title">Firma Ekle</div>
-          <form action="{% url 'project_add' %}" method="post">
+          <form id="firma_form" action="{% url 'project_add' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="client_form" />
 
@@ -203,7 +211,7 @@
               </div>
             </div>
             <div class="button">
-              <input type="submit" value="Kaydet" />
+              <input id="firma_add_btn" type="submit" value="Kaydet" />
             </div>
           </form>
         </div>
@@ -213,8 +221,46 @@
   {% endblock %}
   {% block js_files %}
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="{% static 'index.js' %}"></script>
   <!-- <script src="{% static 'project_add.js' %}"></script>  -->
+
+<!-- AYNI FİRMA EKLEMEDE HATA VERME -->
+<script>
+var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
+var firmaAddInput = document.querySelector("#id_CompanyName_Clients");
+var firmaInput = document.querySelector("#id_CompanyName");
+var firmaAddBtn = document.querySelector("#firma_add_btn");
+var firmaForm = document.querySelector("#firma_form");
+
+firmaAddBtn.addEventListener("click", function(){
+  event.preventDefault();
+  
+    var firmaCount = 0;
+        firmalar.forEach(function(firma){
+          if(firmaAddInput.value == firma.textContent){
+            firmaCount += 1;
+          }
+        });   
+        if(firmaCount == 0){
+          firmaForm.submit();
+          console.log(firmaCount);
+        }   
+        else{
+          console.log(firmaCount);
+        }
+  
+});
+
+
+firmalar.forEach(function(firma){
+  //console.log(firma.textContent);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+ 
+})
+</script>
+
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -261,8 +307,14 @@
 
     amountInputReformatBtn.addEventListener("click", function (event) {
       event.preventDefault();
+      var firmaCount = 0;
+        firmalar.forEach(function(firma){
+          if(firmaInput.value == firma.textContent){
+            firmaCount += 1;
+          }
+        });
       
-      if(i1.value == ""){
+      if(i1.value == "" || firmaCount == 0){
         s1.style.color = "red";
         s1.style.fontWeight = "700";
         x = false;
@@ -297,9 +349,11 @@
         inputField.value = tarihFormat(inputField.value);
         inputField2.value = tarihFormat(inputField2.value);
         amountInputForFormat1.value = clear(amountInputForFormat1.value);
-        amountInputForFormat2.value = clear(amountInputForFormat2.value);
-        form.submit();
+        amountInputForFormat2.value = clear(amountInputForFormat2.value);            
+          //form.submit();        
       }
+
+
      
     });
 

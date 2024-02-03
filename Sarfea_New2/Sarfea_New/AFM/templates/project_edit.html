@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{% static 'center.css' %}">
     <link rel="stylesheet" href="{% static 'new_selections.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
+    
+
+   
 
     {% endblock %}
     
@@ -107,12 +109,9 @@
               </div>
               <div class="input-box">
                   <span class="details">AC Güç (kWe)</span>
-<<<<<<< HEAD
-                  <input id="AC_Power" name="AC_Power" type="text" value="{{project_edit.AC_Power}}">
-=======
+
                   <input autocomplete="off" class="coc-input" type="text" name="AC_Power" id="id_AC_Power" step="1" value="{{project_edit.AC_Power}}">
 
->>>>>>> 3f7a45b52ed3c27531cedc4ebbfcd5af6ab885e5
               </div>
               <div class="input-box">
                   <span class="details">DC Güç (kWp)</span>
@@ -193,64 +192,32 @@
 
             var amountInputForFormat1 = document.querySelector("#id_Cost_NotIncludingKDV");
             var amountInputForFormat2 = document.querySelector("#id_CalculatedCost_NotIncludingKDV");
+            var amountInputForFormat3 = document.querySelector("#id_AC_Power");
+            var amountInputForFormat4 = document.querySelector("#id_DC_Power");
+             
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
-            var i1 = document.querySelector("#id_CompanyName");
-            var s1 = document.querySelector("#firma_adi_span");
-            var i2 = document.querySelector("#id_Location");
-            var s2 = document.querySelector("#konum_span");
-            var submitBool = true;
-            var x = true;
-            var x1 = true;
+           
+            var reqInputs = document.querySelectorAll("#id_CompanyName, #id_Location");
+            var reqLabels = document.querySelectorAll("#firma_adi_span, #konum_span");
+           var startDateInput = document.querySelector("#id_StartDate");
+           var finishDateInput = document.querySelector("#id_FinishDate");
+           
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
-            event.preventDefault();
-            if(i1.value == ""){
-              s1.style.color = "red";
-              s1.style.fontWeight = "700";
-              x = false;
-           }
-           else{
-            x = true;
-            s1.style.color = "black";
-            s1.style.fontWeight = "500";
-           }
-           if(i2.value == ""){
-              s2.style.color = "red";
-              s2.style.fontWeight = "700";
-              x1 = false;
-           }
-           else{
-            x1 = true;
-            s2.style.color = "black";
-            s2.style.fontWeight = "500";
-           }
-           if(x && x1){
-            inputField.value = tarihFormat(inputField.value);
-            inputField2.value = tarihFormat(inputField2.value);
-            amountInputForFormat.value = clear(deger);
-            form.submit();
-           }
-            
+                event.preventDefault();            
+                if(requiredInputs(reqInputs, reqLabels)){
+                  startDateInput.value = formatDateForSubmit(startDateInput.value);
+                  finishDateInput.value = formatDateForSubmit(finishDateInput.value);
+                  amountInputForFormat1.value = clear(amountInputForFormat1.value);
+                  amountInputForFormat2.value = clear(amountInputForFormat2.value);
+                  amountInputForFormat3.value = clear(amountInputForFormat3.value);
+                  amountInputForFormat4.value = clear(amountInputForFormat4.value);
+                  form.submit();
+                }            
             }); 
-    function tarihFormat(tarih) {
-      if(tarih.length == 10){
-        var parcalar = tarih.split('.');
-
-    var gun = parcalar[0];
-    var ay = parcalar[1];
-    var yil = parcalar[2];
-
-    var yeniFormat = yil + '-' + ay + '-' + gun;
-
-    return yeniFormat;
-      }
-      else{
-        return "";
-      }
     
-}
 function tarihReFormat(tarih) {
       if(tarih.length == 10){
         var parcalar = tarih.split('-');
@@ -273,8 +240,8 @@ function tarihReFormat(tarih) {
     onPageLoad(amountInputForFormat2);
     runEventListeners(amountInputForFormat1);
     runEventListeners(amountInputForFormat2);
-    inputField.value = tarihReFormat(inputField.value);
-    inputField2.value = tarihReFormat(inputField2.value);
+    startDateInput.value = tarihReFormat(startDateInput.value);
+    finishDateInput.value = tarihReFormat(finishDateInput.value);
 
 
     function onPageLoad(x) {
