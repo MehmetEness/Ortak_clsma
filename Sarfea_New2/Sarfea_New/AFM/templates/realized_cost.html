@@ -27,7 +27,29 @@
   .table thead th{
     text-align: left;
   }
+#table thead th:first-child, #table-2 thead th:first-child {
+  width: 40px;
+    text-align: center;
+}
+#table thead th:not(:nth-child(2)), #table-2 thead th:not(:nth-child(2)) {
+    text-align: center;
+}
+#table tbody td:first-child, #table-2 tbody td:first-child {
+  width: 40px;
+    text-align: center;
+}
+#table tbody td:not(:nth-child(2)), #table-2 tbody td:not(:nth-child(2)) {
+    text-align: center;
+}
   
+.full-text-popup {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: none;
+    z-index: 999;
+}
 
     </style>
 
@@ -218,6 +240,24 @@
 
   <script src="{% static 'functions.js' %}"></script> 
   <script src="{% static 'realized_cost11.js' %}"></script> 
+  <script>
+    function showFullText(element) {
+    var fullText = element.textContent;
+    
+    var popup = document.createElement("div");
+    popup.className = "full-text-popup";
+    popup.innerHTML = fullText;
+
+    element.appendChild(popup);
+}
+
+function hideFullText(element) {
+    var popup = element.querySelector(".full-text-popup");
+    if (popup) {
+        element.removeChild(popup);
+    }
+}
+  </script>
   
   {% endblock %}
 

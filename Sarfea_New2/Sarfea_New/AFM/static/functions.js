@@ -19,8 +19,10 @@ function tableFormat(cells, type) {
         var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
+          cell.title = formatNumber(value, 2) + "$";
         } else {
           cell.textContent = "0$";
+          cell.title = "0$";
         }
       });
       break;
@@ -29,8 +31,10 @@ function tableFormat(cells, type) {
         var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
+          cell.title = formatNumber(value, 2) + "₺";
         } else {
           cell.textContent = "0₺";
+          cell.title = "0₺";
         }
       });
       break;
@@ -39,8 +43,10 @@ function tableFormat(cells, type) {
         var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
+          cell.title = formatNumber(value, 4) + "₺";
         } else {
           cell.textContent = "0₺";
+          cell.title = "0₺";
         }
       });
       break;
@@ -60,21 +66,14 @@ function tableFormat(cells, type) {
         var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2);
+          cell.title = formatNumber(value, 2);
         } else {
           cell.textContent = "0";
+          cell.title = "0";
         }
       });
       break;
-    case "kur":
-      cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
-        if (!isNaN(parseFloat(value))) {
-          cell.textContent = formatNumber(value, 4) + "$";
-        } else {
-          cell.textContent = "0$";
-        }
-      });
-      break;
+    
     default:
   }
 }
