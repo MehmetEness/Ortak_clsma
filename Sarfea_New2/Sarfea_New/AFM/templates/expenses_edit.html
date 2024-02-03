@@ -156,7 +156,7 @@
 {% endblock %} 
 
   {% block js_files %} 
-  <!-- <script src="{% static 'client.js' %}"></script>  -->
+  <script src="{% static 'expenses_edit.js' %}"></script> 
   <script>
      var inputField = document.querySelector("#id_Date_Expenses");
             var amountInputForFormat = document.querySelector("#id_Amount_Expenses");
@@ -183,7 +183,7 @@
            if(x){
             inputField.value = tarihFormat(inputField.value);
             amountInputForFormat.value = clear(deger);
-            form.submit();
+            //form.submit();
            }
             
             }); 
@@ -309,7 +309,6 @@ function tarihReFormat(tarih) {
 
   </script>
   <script>
-        
     var amountInput = document.querySelector("#id_Amount_Expenses");    // Alınan miktar
       var kurInput = document.querySelector("#id_Dollar_Rate_Expenses");  // Dolar kuru
       var dateForKur = document.querySelector("#id_Date_Expenses");   // Tarih
@@ -318,7 +317,13 @@ function tarihReFormat(tarih) {
       var tarih ;
       
       //**************      KUR HESAPLAMA      ********************
-      
+      function convertTarihFormat (tarih){
+        var date = tarih.split('.');
+        console.log(date[1]);
+        date = `${date[1]}.${date[0]}.${date[2]}`
+        console.log(date)
+      }
+      console.log(convertTarihFormat("11.12.2022"));
       
       // Hedef tarih
       var dosyaURL = "{% static 'kur.json' %}";
@@ -332,8 +337,9 @@ function tarihReFormat(tarih) {
               if (secilenDeger === 'secenek1') {
                   
               } else if (secilenDeger === 'secenek2') {
-                  tarih = birGunOncekiTarih(dateForKur.value);
-                  console.log(tarih);
+                  tarih = convertTarihFormat(dateForKur.value);
+                  console.log(dateForKur.value);
+                  console.log(convertTarihFormat(dateForKur.value));
                   fetch(dosyaURL)
                   .then(response => response.json())
                   .then(data => {
