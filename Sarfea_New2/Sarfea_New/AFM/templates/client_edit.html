@@ -5,7 +5,6 @@
     {% block css_files %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
@@ -36,7 +35,7 @@
     <div class="center">
     <div class="container">
         <div class="title">Müşteri Güncelle</div>
-        <form action="{% url 'client_edit' client_name=client_edit.CompanyName_Clients %}" method="post">
+        <form id="myForm" action="{% url 'client_edit' client_name=client_edit.CompanyName_Clients %}" method="post">
           {% csrf_token %}
           <div class="user-details"> 
               <div style="display:none;" class="input-box" name="CompanyName">
@@ -44,7 +43,7 @@
                 {{ edit_form.CompanyName_Clients }}
               </div>    
               <div  class="input-box" name="CompanyName">
-                <span class="details">Firma Adı</span>
+                <span id="firma_adi_span" class="details">Firma Adı*</span>
                 <input autocomplete= 'off' id="id_CompanyName_Clients_New"  name="CompanyName_Clients_New" value="{{edit_form.CompanyName_Clients.value}}" />
                 <p id="companyNameError" style="color: #191970;"></p>
               </div>    
@@ -74,7 +73,7 @@
               </div>
             </div>
             <div class="button">
-                <input type="submit" value="Kaydet"/>
+                <input id="kaydet_btn" type="submit" value="Kaydet"/>
             </div>
         </form>
      </div>
@@ -84,117 +83,9 @@
 {% endblock %} 
 
   {% block js_files %} 
-  <!-- <script src="{% static 'client.js' %}"></script>  -->
-  <script>
-    var companyNameInput = document.getElementById("id_CompanyName_Clients_New");
-    var companyNameError = document.getElementById("companyNameError");
-
-    companyNameInput.addEventListener("blur", function() {
-        if (companyNameInput.value.trim() === "") {
-            companyNameError.textContent = "Firma Adını Güncellemediniz";
-        } else {
-            companyNameError.textContent = "";
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-  const inputs = document.querySelectorAll('.myInput');
-
-  inputs.forEach(input => {
-    const dropdownId = input.getAttribute('data-dropdown');
-    const dropdown = document.getElementById(dropdownId);
-    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
-
-    input.addEventListener('focus', function () {
-      dropdown.classList.add('show');
-    });
-
-    input.addEventListener('blur', function () {
-      setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200);
-    });
-
-    input.addEventListener('input', function () {
-      const filterText = input.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        if (itemText.startsWith(filterText)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function () {
-        input.value = this.textContent;
-        dropdown.classList.remove('show');
-      });
-    });
-  });
-});
-  </script>
-  <script>   
-    
-    document.getElementById('id_PhoneNumber').addEventListener('keypress', function (e) {
-    const key = String.fromCharCode(e.keyCode);
-    const regex = /[0-9+]/;
-    if (!regex.test(key)) {
-        e.preventDefault();
-        this.value = this.value.replace(/[^0-9+]/g, key); // Sadece geçerli karakteri ekle
-    }
-});
-    </script>
-     <script>
-      var inputField = document.querySelector("#id_PhoneNumber");
-      var contryNumber = "+90";
-      inputField.value = formatPhoneNumberByCountryCode(inputField.value, contryNumber)
-      inputField.addEventListener('input', function(event) {
+  <script src="{% static 'functions.js' %}"></script>
+  <script src="{% static 'client_edit.js' %}"></script>  
   
-  const userInput = inputField.value;
-  
-  if (event.inputType !== 'deleteContentBackward') {
-    inputField.value = formatPhoneNumberByCountryCode(userInput, contryNumber);
-  }
-});
-
-
-function formatPhoneNumberByCountryCode(phoneNumber, countryCode) {
-  var cleaned = phoneNumber.replace(/[^\d+]/g, '');
-  var formatted = cleaned;
-
-  switch (countryCode) {
-    case '+1': // ABD
-      // ABD için formatlama
-      break;
-    case '+44': // İngiltere
-      // İngiltere için formatlama
-      break;
-    case "+90": // Türkiye
-    inputField.maxLength = 15;
-      if(formatted.length < 4) return formatted;
-      if (formatted.length < 7) {
-            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
-      }
-      if (formatted.length < 7) {
-            return `(${formatted.slice(0,3)}) ${formatted.slice(3)}`;        
-      }
-      if (formatted.length < 9) {
-            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6)}`;        
-      }
-      if (formatted.length < 11) {
-            return `(${formatted.slice(0,3)}) ${formatted.slice(3,6)} ${formatted.slice(6,8)} ${formatted.slice(8)}`;        
-      }
-      break;
-    default:
-      // Diğer ülkeler için formatlama
-      break;
-  }
-}
-    </script>
   
   {% endblock %}
 

@@ -203,7 +203,7 @@ function requiredInputs(inputs, labels){
         else{
             labels[index].style.color = "black";
             labels[index].style.fontWeight = "500";
-            value += 0;
+            value += 1;
         }
     });
     if(value == inputs.length){
@@ -298,6 +298,44 @@ function cardDateList(rows){
       });
 
 }
+
+//                  TARİH FORMATLAMA
+
+function formatDate(date) {
+    var cleaned = date.replace(/[^\d+]/g, '');
+    var formatted = cleaned;
+    var day = "31";
+    var month = "12";
+    var year = "2999";
+      
+    if(formatted.length < 3) {
+        if(formatted < day){
+            return formatted;
+        }
+        else{
+            return "31";
+        }        
+    }
+    if (formatted.length < 5) {
+        if(formatted.slice(2) < month){
+            return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+        }
+        else{
+            return `${formatted.slice(0,2)}.12`
+        }                  
+    }
+    if (formatted.length < 10) {
+        if(formatted.slice(4) < year){
+            return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+        }
+        else{
+            return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+        }                     
+    }  
+}
+
+
+
 
 //            ***** DOM EVENTS *****
 

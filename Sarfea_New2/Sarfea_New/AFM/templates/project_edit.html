@@ -120,12 +120,12 @@
             
               <div class="input-box" name="StartDate">
                 <span class="details">Başlama Tarihi</span>
-                <input id="id_StartDate" type="text" name="StartDate" value="{{ project_edit.StartDate|date:'Y-m-d' }}" />
+                <input id="id_StartDate" type="text" name="StartDate" value="{{ project_edit.StartDate|date:'Y-m-d' }}" maxlength="10"/>
             </div>
             
             <div class="input-box">
               <span class="details">Bitirme Tarihi</span>
-              <input id="id_FinishDate" type="text" name="FinishDate" value="{{ project_edit.FinishDate|date:'Y-m-d' }}" />
+              <input id="id_FinishDate" type="text" name="FinishDate" value="{{ project_edit.FinishDate|date:'Y-m-d' }}" maxlength="10"/>
             </div>
             <div class="input-box">
               <span class="details">KDV Oranı (%)</span>
@@ -178,14 +178,13 @@
 {% endblock %}
 
   {% block js_files %}  
+
+  <script src="{% static 'functions.js' %}"></script>
+  <script src="{% static 'project_edit.js' %}"></script> 
+
   <script>
 
 
-   
-    
-
-var inputField = document.querySelector("#id_StartDate");
-    var inputField2 = document.querySelector("#id_FinishDate");
             var amountInputForFormat1 = document.querySelector("#id_Cost_NotIncludingKDV");
             var amountInputForFormat2 = document.querySelector("#id_CalculatedCost_NotIncludingKDV");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
@@ -313,127 +312,9 @@ function tarihReFormat(tarih) {
     }
 
 
-     
-    document.addEventListener('DOMContentLoaded', function () {
-  const inputs = document.querySelectorAll('.myInput');
-
-  inputs.forEach(input => {
-    const dropdownId = input.getAttribute('data-dropdown');
-    const dropdown = document.getElementById(dropdownId);
-    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
-
-    input.addEventListener('focus', function () {
-      dropdown.classList.add('show');
-    });
-
-    input.addEventListener('blur', function () {
-      setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200);
-    });
-
-    input.addEventListener('input', function () {
-      const filterText = input.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        if (itemText.startsWith(filterText)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function () {
-        input.value = this.textContent;
-        dropdown.classList.remove('show');
-      });
-    });
-  });
-});
-  </script>
-  <!-- KDV % Ekleme -->
-  <script>
-    // Input elementini seç
-    const kdvRateInput = document.getElementById("id_KDV_Rate");
-    addPercentageSymbol(kdvRateInput);
-    // Input değeri değiştiğinde bu fonksiyonu çağır
-    kdvRateInput.addEventListener("input", function () {
-      addPercentageSymbol(kdvRateInput);
-    });
-
-    function addPercentageSymbol(input) {
-      // Girilen değeri al
-      let enteredValue = input.value;
-
-      // Sayısal ve virgül dışındaki karakterleri temizle
-      let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
-
-      // "%" işaretini ekle
-      let formattedValue =  "%" + numericValue;
-
-      // Input değerini güncelle
-      input.value = formattedValue;
-    }
-  </script>
-  <script>
-    
-         
    
-      inputField.addEventListener('input', function(event) {
-      var userInput = inputField.value;
-     
-     if (event.inputType !== 'deleteContentBackward') {
-       inputField.value = formatDate(userInput);
-     }
-   });
-   inputField2.addEventListener('input', function(event) {
-      var userInput = inputField2.value;
-     
-     if (event.inputType !== 'deleteContentBackward') {
-       inputField2.value = formatDate(userInput);
-     }
-   });
-   
-    function formatDate(date) {
-     var cleaned = date.replace(/[^\d+]/g, '');
-     var formatted = cleaned;
-     var current;
-     var day = "31";
-     var month = "12";
-     var year = "2999";
-       
-       inputField.maxLength = 10;
-       inputField2.maxLength = 10;
-         if(formatted.length < 3) {
-           if(formatted < day){
-             return formatted;
-           }
-           else{
-             return "31";
-           }        
-         }
-         if (formatted.length < 5) {
-           if(formatted.slice(2) < month){
-             return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
-           }
-           else{
-             return `${formatted.slice(0,2)}.12`
-           }                  
-         }
-         if (formatted.length < 10) {
-           if(formatted.slice(4) < year){
-             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
-           }
-           else{
-             return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
-           } 
-                     
-         }  
-   }
-   </script>
+ </script>
+
   
   {% endblock %}
 
