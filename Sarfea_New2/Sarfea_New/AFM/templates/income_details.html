@@ -145,6 +145,7 @@
             <div class="column view-1"><div id="gider-acc" class="head"><span>İş Bedeli - </span>&nbsp;<span id="is-bedeli-span">{{project.Cost_NotIncludingKDV}} $</span></div>
             <table id="table" class="table table-sortable">
               <thead>
+                <th></th>
                 <th>Alıcı Firma</th>
                 <th>Ödeme Yapan Firma</th>
                 <th scope="col">Tarih</th>
@@ -156,7 +157,8 @@
               <tbody id="tbody">   
                 {% for income in incomes %}
                 <tr class="table-row">
-                    <td><button type="button" class="edit-income-btn button2" style= "background: none; border:none;"><a href= "{% url 'income_edit' income_id=income.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ income.CompanyName_ReceivePayment_Incomes }} </td>
+                    <td><button type="button" class="edit-income-btn button2" style= "background: none; border:none;"><a href= "{% url 'income_edit' income_id=income.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>                    
+                    <td>{{ income.CompanyName_ReceivePayment_Incomes }} </td>
                     <td>{{ income.CompanyName_Pay_Incomes }} </td>                    
                     <td>{{ income.ChekDate_Incomes|date:"d/m/Y" }}</td>
                     <td>{{ income.PaymentType_Incomes }} </td>
