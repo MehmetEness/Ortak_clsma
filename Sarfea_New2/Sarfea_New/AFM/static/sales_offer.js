@@ -5,7 +5,7 @@ var numericCells = document.querySelectorAll(
   "#table td:nth-child(5), #table td:nth-child(6), #table td:nth-child(7), #table td:nth-child(8), #table td:nth-child(9), #table td:nth-child(10), #table td:nth-child(12), #table td:nth-child(13), #table td:nth-child(14), #table td:nth-child(15)"
 );
 var textCells = document.querySelectorAll(
-  "#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(11), #table td:nth-child(16)"
+  "#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(11), #table td:nth-child(16)"
 );
 var mButtons = document.querySelectorAll(".mb");
 var closeModal = document.querySelectorAll(".modal-kapat");
@@ -27,6 +27,14 @@ let salesContainer = document.querySelector(".sales-container");
 let wonContainer = document.querySelector(".won-container");
 var tables = document.querySelectorAll(".table");
 
+var listTable = document.querySelector('.list-container table');  
+var lostTable = document.querySelector('.lost-job-container table');  
+var salesTable = document.querySelector('.sales-container table'); 
+var wonTable = document.querySelector('.won-container table');  
+let thRowsList = listTable.querySelectorAll("th"); 
+let thRowsLost = lostTable.querySelectorAll("th");
+let thRowsSales = salesTable.querySelectorAll("th");
+let thRowsWon = wonTable.querySelectorAll("th");
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
 
@@ -317,59 +325,32 @@ clearButton.addEventListener("click", function() {
   
 });
 
-//                  CARD DRAG İŞLEMLERİ
+//                  TABLO SIRALAMA
 
-var dragItem = null;
-for (var i of rowcards) {
-  i.addEventListener("dragstart", dragStart);
-  i.addEventListener("dragend", dragEnd);
-}
-function dragStart() {
-  dragItem = this;
-  setTimeout(() => (this.style.display = "none"), 0);
-}
-function dragEnd() {
-  setTimeout(() => (this.style.display = "flex"), 0);
-  cardFormat();
-}
-for (j of rows) {
-  j.addEventListener("dragover", dragOver);
-  j.addEventListener("dragenter", dragEnter);
-  j.addEventListener("dragleave", dragLeave);
-  j.addEventListener("drop", Drop);
-}
-function Drop() {
-  this.append(dragItem);
-  this.style.border = "none";
-  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
-
-  var targetRowSituation = this.dataset.situation;
-  var cardId = dragItem.id;
-  var xhr = new XMLHttpRequest();
-
-  xhr.open("POST", "{% url 'update_card_situation' %}", true);
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      dragItem.dataset.situation = targetRowSituation;
-    }
-  };
-  xhr.send(
-    JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
-  );
-}
-function dragOver(e) {
-  e.preventDefault();
-  this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
-}
-function dragEnter(e) {
-  e.preventDefault();
-}
-function dragLeave() {
-  this.style.border = "none";
-  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
-}
+thRowsList.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsList).indexOf(header);
+      sortTable(listTable, columnIndex);
+  });
+});
+thRowsLost.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsLost).indexOf(header);
+      sortTable(lostTable, columnIndex);
+  });
+});
+thRowsSales.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsSales).indexOf(header);
+      sortTable(salesTable, columnIndex);
+  });
+});
+thRowsWon.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsWon).indexOf(header);
+      sortTable(wonTable, columnIndex);
+  });
+});
 
 //                  SİLME İŞLEMİ
 

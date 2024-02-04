@@ -1,14 +1,15 @@
-
+var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
 var amountInputReformatBtn = document.querySelector("#kaydet_btn");
 var form = document.querySelector("#myForm");
 var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
+var table = document.getElementById("table");
+let thRows = table.querySelectorAll("th");
 
 var phoneInput = document.querySelector("#id_PhoneNumber");
 
 var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
-var table = document.getElementById("table");
 
 //                  TEDARİKÇİ EKLE BUTTON
 
@@ -50,4 +51,22 @@ clearButton.addEventListener("click", function() {
     showAllRows(table);
 });
 
+//                  TABLO SIRALAMA
 
+thRows.forEach(header => {
+    header.addEventListener("click", function() {        
+        var columnIndex = Array.from(thRows).indexOf(header);
+        sortTable(table, columnIndex);
+    });
+});
+
+
+
+//                  DOM LOADED
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    //Tablo Formatlama
+    tableFormat(textCells, "text")
+    
+});

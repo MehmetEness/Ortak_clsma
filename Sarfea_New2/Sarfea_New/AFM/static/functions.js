@@ -66,9 +66,9 @@ function tableFormat(cells, type) {
     case "text":
       cells.forEach(function (cell) {
         if (
-          cell.textContent == "None" ||
+          cell.textContent.trim() == "None" ||
           cell.textContent.trim() == "" ||
-          cell.textContent == "NaN"
+          cell.textContent.trim() == "NaN"
         ) {
           cell.textContent = "-";
         }
@@ -94,16 +94,17 @@ function tableFormat(cells, type) {
 //                  SIRALAMA İŞLEMLERİ
 
 function sortTable(table, columnIndex) {
+  const headers = table.querySelectorAll('thead th span');
   var rows, switching, i, x, y, shouldSwitch;
   var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
   switching = true;
 
   while (switching) {
     switching = false;
+    var tbody = table.querySelector('tbody');
+    rows = tbody.rows;
 
-    rows = table.rows;
-
-    for (i = 1; i < rows.length - 1; i++) {
+    for (i = 0; i < rows.length - 1; i++) {
       shouldSwitch = false;
 
       x = rows[i].getElementsByTagName("td")[columnIndex];
@@ -112,7 +113,7 @@ function sortTable(table, columnIndex) {
       if (!isNaN(x.textContent.replace(/[$,₺]/g, "").trim())) {
         var xValue = parseFloat(x.textContent.replace(/[$,₺]/g, "").trim());
         var yValue = parseFloat(y.textContent.replace(/[$,₺]/g, "").trim());
-        if (!isNaN(xValue) && !isNaN(yValue) && xValue > yValue) {
+        if (!isNaN(xValue) && !isNaN(yValue) && xValue < yValue) {
           shouldSwitch = true;
           break;
         }
@@ -137,7 +138,7 @@ function sortTable(table, columnIndex) {
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
     }
-  }
+  }  
 }
 function compareDates(date1, date2) {
   var parts1 = date1.split("/");
@@ -451,6 +452,19 @@ function isWeekend(date) {
       const day = date.getDay();
       return day === 0 || day === 6;
 }
+
+//                  FİRMA ADLARI KONTROLÜ
+
+function firmaCount(firmalar, input){
+  var firmaCount = 0;
+  firmalar.forEach(function(firma){
+      if(input.value.trim() == firma.textContent.trim()){
+          firmaCount += 1;
+      }
+  });  
+  return firmaCount;
+}
+
 
 //            ***** DOM EVENTS *****
 

@@ -1,44 +1,53 @@
-// document.getElementById("gelir-ac").addEventListener("click", function(){
-//   document.querySelector(".gelirWindow").style.display = "flex";    
-// });
-// document.getElementById("gelir-modal").addEventListener("click", function(){
-//   document.querySelector(".gelirWindow").style.display = "none";
-// });
+var table = document.querySelector('#table');  
+let thRows = table.querySelectorAll("th");
+var rows = table.querySelectorAll("tbody")
+var usdCells = document.querySelectorAll('#table td:nth-child(8)');  
+var tlCells = document.querySelectorAll('#table td:nth-child(6)');
+var kurCells = document.querySelectorAll('#table td:nth-child(7)');
+var textCells = document.querySelectorAll('#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5)');
 
-/* Dosya ekle */ 
 
-// let gelirFileInput = document.getElementById("gelir-file-input");
-// let gelirFileList = document.getElementById("gelir-files-list");
-// let gelirNumOfFiles = document.getElementById("gelir-num-of-files");
-// gelirFileInput.addEventListener("change", () => {
-//     gelirFileList.innerHTML = "";
-//     gelirNumOfFiles.textContent = `${gelirFileInput.files.length} Files Selected`;
-//   for (i of gelirFileInput.files) {
-//     let reader = new FileReader();
-//     let listItem = document.createElement("li");
-//     let fileName = i.name; 
-//     let fileSize = (i.size / 1024).toFixed(1);
-//     listItem.innerHTML = `<p>${fileName}</p><p>${fileSize}KB</p>`;
-//     if (fileSize >= 1024) {
-//       fileSize = (fileSize / 1024).toFixed(1);
-//       listItem.innerHTML = `<p>${fileName}</p><p>${fileSize}MB</p>`;
-//     }
-//     gelirFileList.appendChild(listItem);
-//   }
-// });
 
-// income_details.js
+//                  TABLO SIRALAMA
 
-// income_details.js
+thRows.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRows).indexOf(header);
+      sortTable(table, columnIndex);
+  });
+});
+
+//                  SEARCH İŞLEMLERİ
+
+searchInput.addEventListener("input", function(){
+  filterTable(searchInput, table);
+});
+clearButton.addEventListener("click", function() {
+  searchInput.value = "";
+  showAllRows(table);
+});
+
+
+
+
+//                  DOM LOADED
+
 document.addEventListener("DOMContentLoaded", function () {
+
+  //Tablo Formatlama
   
-  var numericCells = document.querySelectorAll('.table-row td:nth-child(4), .table-row td:nth-child(6)');  
+  tableFormat(usdCells, "usd")
+  tableFormat(kurCells, "kur")
+  tableFormat(tlCells, "tl")
+  tableFormat(textCells, "text")
   
-  numericCells.forEach(function (cell) {
-    var numericValue = parseFloat(cell.textContent.replace(/[^\d.-]/g, ''));
-    cell.textContent = formatNumber2(numericValue);
 });
-});
+
+
+
+
+
+//--------------------------------------------------------------------------------
 
 function formatNumber4(number) {
   return new Intl.NumberFormat('en-US', { minimumFractionDigits:4 , maximumFractionDigits: 4 }).format(number.toFixed(4));
@@ -51,11 +60,11 @@ function formatNumber2(number) {
 
  
 
-//--------------------------------------------------------------------------------
+
 let tableResult;
   let genaralTotalTL = document.getElementById("total-amount-TL");
   let generalTotalUSD = document.getElementById("total-amount-USD");     
-  let table = document.querySelector("#table");  
+  
 
 
 

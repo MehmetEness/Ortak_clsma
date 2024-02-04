@@ -7,11 +7,29 @@
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     <style>
-      #table thead{
-        
-        position: sticky;
-        top: 0;
-      }
+#table thead{        
+  position: sticky;
+  top: 0;
+}
+  table thead th {
+  cursor: pointer;
+}
+  table thead th span{
+  position: relative;
+}
+thead th span::after{
+  content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
     </style>
 {% endblock %}
     {% block title %} Supplier {% endblock %}
@@ -91,11 +109,11 @@
         <div class="lists">         
           <table id="table" class="table table-sortable">   
             <thead>
-              <th>Firma Adı</th>
-              <th scope="col">Muhatap</th>
-              <th scope="col">Telefon</th>
-              <th scope="col">E-posta</th>
-              <th scope="col">Bölge</th>
+              <th><span>Firma Adı</span></th>
+              <th scope="col"><span>Muhatap</span></th>
+              <th scope="col"><span>Telefon</span></th>
+              <th scope="col"><span>E-posta</span></th>
+              <th scope="col"><span>Bölge</span></th>
             </thead>  
             <tbody id="tbody">  
               {% for sup in supplier %}

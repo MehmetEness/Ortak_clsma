@@ -273,7 +273,25 @@
   background: #999;
   transform: rotate(315deg);
 }
-
+table thead th {
+      cursor: pointer;
+   }
+   table thead th span{
+      position: relative;
+   }
+   thead th span::after{
+   content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+   }
 /*---------------------*/
   
   
@@ -969,22 +987,22 @@
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead><th></th>
-                  <th scope="col">Müşteri Adı</th>
-                  <th scope="col">Konum</th>
-                  <th scope="col">İlgili Kişi</th>
-                  <th scope="col">AC Güç</th>
-                  <th scope="col">DC Güç</th>
-                  <th scope="col">Birim Maliyet</th>
-                  <th scope="col">Toplam Maliyet</th>
-                  <th scope="col">Birim Teklif</th>
-                  <th scope="col">Toplam Teklif</th>
-                  <th scope="col">Arazi/Çatı</th>
-                  <th scope="col">Arazi Maliyeti</th>
-                  <th scope="col">Arazi Dahil Birim Maliyet</th>
-                  <th scope="col">Arazi Dahil Toplam Teklif</th>
-                  <th scope="col">Arazi Maliyeti</th>
-                  <th scope="col">Tarih</th>
-                  <th scope="col">Durum</th>
+                  <th scope="col"><span>Müşteri Adı</span></th>
+                  <th scope="col"><span>Konum</span></th>
+                  <th scope="col"><span>İlgili Kişi</span></th>
+                  <th scope="col"><span>AC Güç</span></th>
+                  <th scope="col"><span>DC Güç</span></th>
+                  <th scope="col"><span>Birim Maliyet</span></th>
+                  <th scope="col"><span>Toplam Maliyet</span></th>
+                  <th scope="col"><span>Birim Teklif</span></th>
+                  <th scope="col"><span>Toplam Teklif</span></th>
+                  <th scope="col"><span>Arazi/Çatı</span></th>
+                  <th scope="col"><span>Arazi Maliyeti</span></th>
+                  <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                  <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                  <th scope="col"><span>Arazi Maliyeti</span></th>
+                  <th scope="col"><span>Tarih</span></th>
+                  <th scope="col"><span>Durum</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1027,21 +1045,21 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                <th scope="col">Müşteri Adı</th>
-                <th scope="col">Konum</th>
-                <th scope="col">İlgili Kişi</th>
-                <th scope="col">AC Güç</th>
-                <th scope="col">DC Güç</th>
-                <th scope="col">Birim Maliyet</th>
-                <th scope="col">Toplam Maliyet</th>
-                <th scope="col">Birim Teklif</th>
-                <th scope="col">Toplam Teklif</th>
-                <th scope="col">Arazi/Çatı</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Arazi Dahil Birim Maliyet</th>
-                <th scope="col">Arazi Dahil Toplam Teklif</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Tarih</th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card %}
@@ -1080,21 +1098,21 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                <th scope="col">Müşteri Adı</th>
-                <th scope="col">Konum</th>
-                <th scope="col">İlgili Kişi</th>
-                <th scope="col">AC Güç</th>
-                <th scope="col">DC Güç</th>
-                <th scope="col">Birim Maliyet</th>
-                <th scope="col">Toplam Maliyet</th>
-                <th scope="col">Birim Teklif</th>
-                <th scope="col">Toplam Teklif</th>
-                <th scope="col">Arazi/Çatı</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Arazi Dahil Birim Maliyet</th>
-                <th scope="col">Arazi Dahil Toplam Teklif</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Tarih</th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1128,21 +1146,21 @@
             <table id="table" class="table table-sortable">
                <thead>
                 <th></th>
-                <th scope="col">Müşteri Adı</th>
-                <th scope="col">Konum</th>
-                <th scope="col">İlgili Kişi</th>
-                <th scope="col">AC Güç</th>
-                <th scope="col">DC Güç</th>
-                <th scope="col">Birim Maliyet</th>
-                <th scope="col">Toplam Maliyet</th>
-                <th scope="col">Birim Teklif</th>
-                <th scope="col">Toplam Teklif</th>
-                <th scope="col">Arazi/Çatı</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Arazi Dahil Birim Maliyet</th>
-                <th scope="col">Arazi Dahil Toplam Teklif</th>
-                <th scope="col">Arazi Maliyeti</th>
-                <th scope="col">Tarih</th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1230,7 +1248,59 @@
         return parts.length === 2 ? parts.pop().split(';').shift() : null;
       }
 
+//                  CARD DRAG İŞLEMLERİ
 
+var dragItem = null;
+for (var i of rowcards) {
+  i.addEventListener("dragstart", dragStart);
+  i.addEventListener("dragend", dragEnd);
+}
+function dragStart() {
+  dragItem = this;
+  setTimeout(() => (this.style.display = "none"), 0);
+}
+function dragEnd() {
+  setTimeout(() => (this.style.display = "flex"), 0);
+  cardFormat();
+}
+for (j of rows) {
+  j.addEventListener("dragover", dragOver);
+  j.addEventListener("dragenter", dragEnter);
+  j.addEventListener("dragleave", dragLeave);
+  j.addEventListener("drop", Drop);
+}
+function Drop() {
+  this.append(dragItem);
+  this.style.border = "none";
+  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+
+  var targetRowSituation = this.dataset.situation;
+  var cardId = dragItem.id;
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "{% url 'update_card_situation' %}", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      dragItem.dataset.situation = targetRowSituation;
+    }
+  };
+  xhr.send(
+    JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
+  );
+}
+function dragOver(e) {
+  e.preventDefault();
+  this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
+}
+function dragEnter(e) {
+  e.preventDefault();
+}
+function dragLeave() {
+  this.style.border = "none";
+  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+}
     
 </script>
 
