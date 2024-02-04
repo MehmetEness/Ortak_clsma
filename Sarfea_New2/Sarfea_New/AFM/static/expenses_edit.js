@@ -48,3 +48,25 @@ createBtn.addEventListener("click", function(event) {
     }    
 }); 
 
+
+//----------
+var inputField = document.querySelector("#id_Date_Expenses");
+function tarihReFormat(tarih) {
+    if(tarih.length == 10){
+      var parcalar = tarih.split('-');
+
+  var yil = parcalar[0];
+  var ay = parcalar[1];
+  var gun = parcalar[2];
+
+  var yeniFormat = gun + '.' + ay + '.' + yil;
+
+  return yeniFormat;
+    }
+    else{
+      return "";
+    }
+  
+}   
+inputField.value = tarihReFormat(inputField.value);
+

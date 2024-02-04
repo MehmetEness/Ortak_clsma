@@ -408,13 +408,27 @@
     var s1 = document.querySelector("#firma_adi_span");
     var s2 = document.querySelector("#ilgilenen_kisi_span");
     var s3 = document.querySelector("#konum_span");
+    var konumlar = document.querySelectorAll("#dropdown2 .dropdown-item");
+    var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
     var submitBool = true;
     var x = true;
     var x1 = true;
     var x2 = true;
     amountInputReformatBtn.addEventListener("click", function(event) {
       event.preventDefault();
-      if(i1.value == ""){
+      var konumCount = 0;
+      konumlar.forEach(function(konum){
+          if(i3.value == konum.textContent){
+            konumCount += 1;
+          }
+      });
+      var firmaCounta = 0;
+      firmalar.forEach(function(firma){
+          if(i1.value == firma.textContent){
+            firmaCounta += 1;
+          }
+      });
+      if(i1.value == "" || firmaCounta == 0){
         s1.style.color = "red";
         s1.style.fontWeight = "700";
         x = false;
@@ -434,7 +448,7 @@
         s2.style.fontWeight = "500";
         x1 = true;
       }
-      if(i3.value == ""){
+      if(i3.value == "" || konumCount == 0){
         s3.style.color = "red";
         s3.style.fontWeight = "700";
         x2 = false;
