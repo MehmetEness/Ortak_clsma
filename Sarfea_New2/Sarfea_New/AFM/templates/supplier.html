@@ -45,16 +45,7 @@ thead th span::after{
                 <div class="input-box" name="CompanyName_Supplier">
                   <span id="firma_adi_span" class="details">Firma Adı*</span>
                   {{ supplier_form.CompanyName_Supplier }}
-                  {% if supplier_form.CompanyName_Supplier.errors %}
-                  <div class="error-container">
-                      <span class="error-triangle"></span>
-                      <ul class="errorlist">
-                          {% for error in supplier_form.CompanyName_Supplier.errors %}
-                              <li class="error-message">{{ error }}</li>
-                          {% endfor %}
-                      </ul>
-                  </div>
-              {% endif %}                 
+                   
                 </div>    
                 <div class="input-box" name="ContactPerson">
                   <span class="details">Muhatap</span>
