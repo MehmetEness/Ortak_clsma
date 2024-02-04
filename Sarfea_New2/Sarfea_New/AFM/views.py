@@ -340,6 +340,8 @@ def expenses_edit(request, expenses_id):
           return redirect('realized_cost', project_name=expenses_edit.ProjectName_Expenses)
     else:
         edit_form = ExpensesForm(instance=expenses_edit)
+
+
     context = {
         'edit_form': edit_form,
         'expenses_edit': expenses_edit,
@@ -362,19 +364,14 @@ def jobhistory_edit(request, jobhistory_id):
 
     if request.method == 'POST':
         edit_form = JobHistoryForm(request.POST, instance=jobhistory_edit)
-        jobhistory_form = JobHistoryForm(request.POST)
 
         if edit_form.is_valid():
           
-          edit_form.save()
-          return redirect('realized_cost', project_name=jobhistory_edit.ProjectName_JobHistory)
+            edit_form.save()
+            return redirect('realized_cost', project_name=jobhistory_edit.ProjectName_JobHistory)
     
-        elif jobhistory_form.is_valid():
-            jobhistory_form.save()
-            return redirect('jobhistory_edit')
     else:
         edit_form = JobHistoryForm(instance=jobhistory_edit)
-        supplier_form = SupplierForm()
 
 
     context = {
@@ -382,7 +379,6 @@ def jobhistory_edit(request, jobhistory_id):
         'jobhistory_edit': jobhistory_edit,
         'my_company': my_company,
         'supplier': supplier,
-        "supplier_form": supplier_form,
     }
     return render(request, "jobhistory_edit.html", context)
 

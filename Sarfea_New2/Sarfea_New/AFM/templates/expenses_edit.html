@@ -59,20 +59,11 @@
                   <input autocomplete= 'off' name=" CompanyName_Expenses" value=" {{expenses_edit.CompanyName_Expenses}} ">
                 </div>
 
-                <div class="input-box {% if expenses_form.CompanyName_Paying_Expenses.errors %}error{% endif %}" id="CompanyName_Paying_ExpensesInput">
+                <div class="input-box" id="CompanyName_Paying_ExpensesInput">
                   <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*</span>
                   <div class="dropdown-container">
                       <input autocomplete= 'off' value="{{ expenses_edit.CompanyName_Paying_Expenses }}" type="text" id="id_CompanyName_Paying_Expenses" name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
-                      {% if edit_form.CompanyName_Paying_Expenses.errors %}
-                              <div class="error-container">
-                                  <span class="error-triangle"></span>
-                                  <ul class="errorlist">
-                                      {% for error in edit_form.CompanyName_Paying_Expenses.errors %}
-                                          <li class="error-message">{{ error }}</li>
-                                      {% endfor %}
-                                  </ul>
-                              </div>
-                          {% endif %}
+                      
                     <div id="dropdown1" class="dropdown-content">
                           {% for x in supplier %}
                               <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>

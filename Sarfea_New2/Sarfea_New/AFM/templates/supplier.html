@@ -109,16 +109,18 @@ thead th span::after{
         <div class="lists">         
           <table id="table" class="table table-sortable">   
             <thead>
-              <th><span>Firma Adı</span></th>
-              <th scope="col"><span>Muhatap</span></th>
-              <th scope="col"><span>Telefon</span></th>
-              <th scope="col"><span>E-posta</span></th>
-              <th scope="col"><span>Bölge</span></th>
+              <th></th>
+              <th>Firma Adı</th>
+              <th scope="col">Muhatap</th>
+              <th scope="col">Telefon</th>
+              <th scope="col">E-posta</th>
+              <th scope="col">Bölge</th>
             </thead>  
             <tbody id="tbody">  
               {% for sup in supplier %}
               <tr>
-                  <td><button type="button" class="edit-supplier-btn button2" style= "background: none; border:none;"><a href= "{% url 'supplier_edit' supplier_name=sup.CompanyName_Supplier %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button>{{ sup.CompanyName_Supplier }} </td>
+                  <td><button type="button" class="edit-supplier-btn button2" style= "background: none; border:none;"><a href= "{% url 'supplier_edit' supplier_name=sup.CompanyName_Supplier %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
+                  <td>{{ sup.CompanyName_Supplier }} </td>
                   <td>{{ sup.ContactPerson }}</td>
                   <td>{{ sup.PhoneNumber }} </td>
                   <td>{{ sup.Email }}</td>
@@ -126,7 +128,7 @@ thead th span::after{
               </tr>
               {% endfor %}                                    
             </tbody>
-          </table>            
+          </table>      
         </div>
       </div>   
   </div>
