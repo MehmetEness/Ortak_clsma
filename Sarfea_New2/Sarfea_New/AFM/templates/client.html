@@ -10,6 +10,9 @@
         position: sticky;
         top: 0;
       }
+      .lists th:not(:nth-child(1)){
+    width: 19%;
+}
       table thead th {
       cursor: pointer;
    }
@@ -97,11 +100,11 @@
           <table id="table" class="table table-sortable">   
             <thead>
               <th></th>              
-              <th>Firma Adı</th>              
-              <th scope="col">Muhatap</th>
-              <th scope="col">Telefon</th>
-              <th scope="col">E-posta</th>
-              <th scope="col">Bölge</th>
+              <th><span>Firma Adı</span></th>              
+              <th scope="col"><span>Muhatap</span></th>
+              <th scope="col"><span>Telefon</span></th>
+              <th scope="col"><span>E-posta</span></th>
+              <th scope="col"><span>Bölge</span></th>
             </thead>  
             <tbody id="tbody">  
               {% for client in clients %}

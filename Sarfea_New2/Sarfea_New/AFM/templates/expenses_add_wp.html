@@ -17,6 +17,12 @@
         border-radius: 5px;
         font-size: 15px;
       }
+      #firma_container{
+  width: 20%;
+}
+#firma_input_box{
+  width: 100%;
+}
     </style>
 
     {% endblock %}
@@ -117,14 +123,14 @@
         </div>
 
         <div class="window payingFirmaAddWindow">
-            <div class="container">
+            <div id="firma_container" class="container">
                   <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
                   <div class="title">Firma Ekle</div>
                <form id="firma_form" action="{% url 'expenses_add_wp' project_id=project.id  %}" method="post">
                      {% csrf_token %}
                      <input type="hidden" name="form_type" value="supplier_form">
                      <div class="user-details"> 
-                        <div class="input-box" name="CompanyName_Supplier">
+                        <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
                           <span id="firma_add_label" class="details">Firma Adı*</span>
                           {{ supplier_form.CompanyName_Supplier }}
                         </div>                        
