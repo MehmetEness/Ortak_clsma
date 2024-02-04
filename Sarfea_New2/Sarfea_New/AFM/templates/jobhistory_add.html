@@ -57,16 +57,7 @@
                     <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
                         <input autocomplete= 'off', type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
-                        {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}
-                                <div class="error-container">
-                                    <span class="error-triangle"></span>
-                                    <ul class="errorlist">
-                                        {% for error in jobhistory_form.CompanyName_Job_JobHistory.errors %}
-                                            <li class="error-message">{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                       
                       <div id="dropdown2" class="dropdown-content">
                             {% for x in supplier %}
                                 <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
@@ -79,16 +70,7 @@
                     <span id="proje_adi_span" class="details">Proje Adı*</span>
                     <div class="dropdown-container">
                       <input autocomplete= 'off' type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
-                      {% if jobhistory_form.ProjectName_JobHistory.errors %}
-                      <div class="error-container">
-                          <span class="error-triangle"></span>
-                          <ul class="errorlist">
-                              {% for error in jobhistory_form.ProjectName_JobHistory.errors %}
-                                  <li class="error-message">{{ error }}</li>
-                              {% endfor %}
-                          </ul>
-                      </div>
-                    {% endif %}
+                     
                     <div id="dropdown1" class="dropdown-content">
                           {% for x in project %}
                               <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
@@ -159,7 +141,7 @@
     {% endblock %} 
     {% block js_files %} 
         <script src="{% static 'jobhistory_add.js' %}"></script>
-        <script src="{% static 'functions11.js' %}"></script>  
+        <script src="{% static 'functions.js' %}"></script>  
 
         <script>
           var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");

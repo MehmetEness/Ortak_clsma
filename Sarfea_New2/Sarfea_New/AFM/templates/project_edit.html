@@ -56,16 +56,7 @@
                 <span id="firma_adi_span" class="details">Firma Adı*</span>
                 <div class="dropdown-container">
                   <input autocomplete="off" value="{{project_edit.CompanyName}}" type="text" id="id_CompanyName" name="CompanyName" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1">
-                    {% if edit_form.CompanyName.errors %}
-                  <div class="error-container">
-                      <span class="error-triangle"></span>
-                      <ul class="errorlist">
-                          {% for error in edit_form.CompanyName.errors %}
-                              <li class="error-message">{{ error }}</li>
-                          {% endfor %}
-                      </ul>
-                  </div>
-                    {% endif %}
+                  
                   <div id="dropdown1" class="dropdown-content">
                       {% for x in client %}
                           <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Clients}}</span>

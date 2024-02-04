@@ -98,16 +98,7 @@
                       <span class="details">Ödeme Yapan Firma</span>
                       <div class="dropdown-container">
                           <input type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Konum Seçiniz" data-dropdown="dropdown1">
-                          {% if incomes_form.CompanyName_Pay_Incomes.errors %}
-                                  <div class="error-container">
-                                      <span class="error-triangle"></span>
-                                      <ul class="errorlist">
-                                          {% for error in incomes_form.CompanyName_Pay_Incomes.errors %}
-                                              <li class="error-message">{{ error }}</li>
-                                          {% endfor %}
-                                      </ul>
-                                  </div>
-                              {% endif %}
+                       
                         <div id="dropdown1" class="dropdown-content">
                               {% for x in client %}
                                   <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Clients}}</span>

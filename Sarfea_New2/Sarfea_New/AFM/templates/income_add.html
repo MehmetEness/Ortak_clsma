@@ -57,16 +57,7 @@
                     <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
                     <div class="dropdown-container">
                         <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
-                        {% if incomes_form.CompanyName_Pay_Incomes.errors %}
-                                <div class="error-container">
-                                    <span class="error-triangle"></span>
-                                    <ul class="errorlist">
-                                        {% for error in incomes_form.CompanyName_Pay_Incomes.errors %}
-                                            <li class="error-message">{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                       
                       <div id="dropdown2" class="dropdown-content">
                             {% for x in client %}
                                 <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Clients}}</span>
@@ -79,16 +70,7 @@
                     <span id="proje_adi_span" class="details">Proje Adı*</span>
                     <div class="dropdown-container">
                       <input autocomplete='off' type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="dropdown1">
-                      {% if incomes_form.ProjectName_Incomes.errors %}
-                      <div class="error-container">
-                          <span class="error-triangle"></span>
-                          <ul class="errorlist">
-                              {% for error in incomes_form.ProjectName_Incomes.errors %}
-                                  <li class="error-message">{{ error }}</li>
-                              {% endfor %}
-                          </ul>
-                      </div>
-                    {% endif %}
+                      
                     <div id="dropdown1" class="dropdown-content">
                           {% for x in project %}
                               <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
