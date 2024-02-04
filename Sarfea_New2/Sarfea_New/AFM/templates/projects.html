@@ -9,15 +9,35 @@
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
 <style>
-    #table thead th:not(:nth-child(2)){
+    #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
         text-align: center;
     }
-    #table tbody td:not(:nth-child(2)){
-        text-align: center;
+    #table thead th:nth-child(2){
+        padding-left: 20px;
     }
     .lists{
         overflow-y: scroll;
     }
+    table thead th {
+      cursor: pointer;
+   }
+   table thead th span{
+      position: relative;
+   }
+   thead th span::after{
+   content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+   }
+
 </style>
 {% endblock %}
 {% block title %} Projects {% endblock %}
@@ -49,14 +69,14 @@
       <table id="table" class="table table-sortable">
          <thead>
             <th scope="col"></th>
-            <th scope="col">Proje Adı</th>
-            <th id="xx2" scope="col">Konum</th>
-            <th scope="col">AC Güç</th>
-            <th scope="col">DC Güç</th>
-            <th scope="col">İş Bedeli</th>
-            <th scope="col">Arazi/Çatı</th>
-            <th scope="col">Tarih</th>
-            <th scope="col">Durum</th>
+            <th scope="col"><span>Proje Adı</span></th>
+            <th id="xx2" scope="col"><span>Konum</span></th>
+            <th scope="col"><span>AC Güç</span></th>
+            <th scope="col"><span>DC Güç</span></th>
+            <th scope="col"><span>İş Bedeli</span></th>
+            <th scope="col"><span>Arazi/Çatı</span></th>
+            <th scope="col"><span>Tarih</span></th>
+            <th scope="col"><span>Durum</span></th>
          </thead>
          <tbody>
             {% for x in project %}

@@ -1,3 +1,6 @@
+
+var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
+
 var amountInputReformatBtn = document.querySelector("#kaydet_btn");
 var form = document.querySelector("#myForm");
 var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
@@ -8,6 +11,7 @@ var phoneInput = document.querySelector("#id_PhoneNumber");
 var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
 var table = document.getElementById("table");
+let thRows = table.querySelectorAll("th");
 
 
 
@@ -46,9 +50,36 @@ phoneInput.addEventListener('input', function(event) {
 searchInput.addEventListener("input", function() {
     filterTable(searchInput, table);
 });
-
 clearButton.addEventListener("click", function() {
     searchInput.value = "";
     showAllRows(table);
 });
 
+//                  TABLO FİLİTRELEME
+
+searchInput.addEventListener("input", function(){
+    filterTable(searchInput, table);
+});
+clearButton.addEventListener("click", function() {
+    searchInput.value = "";
+    showAllRows(table);
+});
+
+//                  TABLO SIRALAMA
+
+thRows.forEach(header => {
+    header.addEventListener("click", function() {        
+        var columnIndex = Array.from(thRows).indexOf(header);
+        sortTable(table, columnIndex);
+    });
+});
+
+
+//                  DOM LOADED
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    //Tablo Formatlama
+    tableFormat(textCells, "text")
+    
+});

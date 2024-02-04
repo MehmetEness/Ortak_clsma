@@ -206,7 +206,7 @@
 
             <div class="user-details">
               <div class="input-box" name="CompanyName_Clients">
-                <span class="details">Firma Adı</span>
+                <span id="firma_add_label" class="details">Firma Adı*</span>
                 {{ client_form.CompanyName_Clients }}
               </div>
             </div>
@@ -221,7 +221,7 @@
   {% endblock %}
   {% block js_files %}
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <!-- <script src="{% static 'project_add.js' %}"></script>  -->
+  <script src="{% static 'functions11.js' %}"></script> 
 
 <!-- AYNI FİRMA EKLEMEDE HATA VERME -->
 <script>
@@ -230,34 +230,20 @@ var firmaAddInput = document.querySelector("#id_CompanyName_Clients");
 var firmaInput = document.querySelector("#id_CompanyName");
 var firmaAddBtn = document.querySelector("#firma_add_btn");
 var firmaForm = document.querySelector("#firma_form");
+var firmaAddLabel = document.querySelector("#firma_add_label");
 
 firmaAddBtn.addEventListener("click", function(){
-  event.preventDefault();
-  
-    var firmaCount = 0;
-        firmalar.forEach(function(firma){
-          if(firmaAddInput.value == firma.textContent){
-            firmaCount += 1;
-          }
-        });   
-        if(firmaCount == 0){
-          firmaForm.submit();
-          console.log(firmaCount);
-        }   
-        else{
-          console.log(firmaCount);
-        }
-  
+  event.preventDefault();       
+    if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+        firmaAddLabel.style.color = "black";
+        firmaAddLabel.style.fontWeight = "500";
+        firmaForm.submit();
+    }
+    else{
+        firmaAddLabel.style.color = "red";
+        firmaAddLabel.style.fontWeight = "700";
+    }   
 });
-
-
-firmalar.forEach(function(firma){
-  //console.log(firma.textContent);
-});
-
-document.addEventListener("DOMContentLoaded", function () {
- 
-})
 </script>
 
 
@@ -350,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
         inputField2.value = tarihFormat(inputField2.value);
         amountInputForFormat1.value = clear(amountInputForFormat1.value);
         amountInputForFormat2.value = clear(amountInputForFormat2.value);            
-          //form.submit();        
+        form.submit();        
       }
 
 

@@ -25,6 +25,7 @@
     text-align: left;
   }
   .table thead th{
+    padding-left: 20px;
     text-align: left;
   }
 #table thead th:first-child, #table-2 thead th:first-child {
@@ -50,6 +51,26 @@
     display: none;
     z-index: 999;
 }
+
+table thead th {
+      cursor: pointer;
+   }
+   table thead th span{
+      position: relative;
+   }
+   thead th span::after{
+   content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+   }
 
     </style>
 
@@ -111,11 +132,11 @@
             <table id="total-cost-table" class="table table-sortable">
                   <thead>
                     <tr>
-                      <th>Firma Adı</th>
-                      <th>Toplam İş Miktarı (TL)</th>
-                      <th>Toplam İş Miktarı (USD)</th>
-                      <th>Toplam Gider (TL)</th>
-                      <th>Toplam Gider (USD)</th>
+                      <th><span>Firma Adı</span></th>
+                      <th><span>Toplam İş Miktarı (TL)</span></th>
+                      <th><span>Toplam İş Miktarı (USD)</span></th>
+                      <th><span>Toplam Gider (TL)</span></th>
+                      <th><span>Toplam Gider (USD)</span></th>
                     </tr>
                   </thead>
                   <tbody id="tbody">
@@ -148,12 +169,12 @@
             <table id="table" class="table table-sortable">
               <thead>                    
                     <th></th>
-                    <th>Fatura No</th>
-                    <th scope="col">Tarih</th>
-                    <th scope="col">Cinsi</th>
-                    <th scope="col">Tutar(TL)</th>
-                    <th scope="col">Kur</th>
-                    <th scope="col">Tutar(USD)</th>
+                    <th><span>Fatura No</span></th>
+                    <th scope="col"><span>Tarih</span></th>
+                    <th scope="col"><span>Cinsi</span></th>
+                    <th scope="col"><span>Tutar(TL)</span></th>
+                    <th scope="col"><span>Kur</span></th>
+                    <th scope="col"><span>Tutar(USD)</span></th>
                     
                 </thead>  
                   <tbody id="tbody3">   
@@ -188,13 +209,12 @@
               <table id="table-2" class="table table-sortable">   
                 <thead>
                   <th></th>
-
-                    <th>Tarih</th>
-                    <th scope="col">Açıklama</th>
-                    <th scope="col">Banka</th>
-                    <th scope="col">Tutar(TL)</th>
-                    <th scope="col">Kur</th>
-                    <th scope="col">Tutar(USD)</th>
+                    <th><span>Tarih</span></th>
+                    <th scope="col"><span>Açıklama</span></th>
+                    <th scope="col"><span>Banka</span></th>
+                    <th scope="col"><span>Tutar(TL)</span></th>
+                    <th scope="col"><span>Kur</span></th>
+                    <th scope="col"><span>Tutar(USD)</span></th>
                 </thead>  
                   <tbody id="tbody-2">   
                       {% for expense in expenses %}
@@ -239,7 +259,7 @@
   {% block js_files %}
 
   <script src="{% static 'functions.js' %}"></script> 
-  <script src="{% static 'realized_cost111.js' %}"></script> 
+  <script src="{% static 'realized_cost.js' %}"></script> 
   <script>
     function showFullText(element) {
     var fullText = element.textContent;

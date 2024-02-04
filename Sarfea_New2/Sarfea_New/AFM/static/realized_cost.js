@@ -28,6 +28,9 @@ let T_rightTotalUSD = document.getElementById("sagTotalTableToplamUSD");
 let leftTable = document.querySelector("#table");
 let rightTable = document.querySelector("#table-2");
 let totalTable = document.querySelector("#total-cost-table");
+let thRowsLeft = leftTable.querySelectorAll("th");
+let thRowsRight = rightTable.querySelectorAll("th");
+let thRowsTotal = totalTable.querySelectorAll("th");
 let leftTableResult;
 let rightTableResult;
 
@@ -183,6 +186,26 @@ function birimSil(inputString) {
   return number;
 }
 
+//                  TABLO SIRALAMA
+
+thRowsLeft.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsLeft).indexOf(header);
+      sortTable(leftTable, columnIndex);
+  });
+});
+thRowsRight.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsRight).indexOf(header);
+      sortTable(rightTable, columnIndex);
+  });
+});
+thRowsTotal.forEach(header => {
+  header.addEventListener("click", function() {        
+      var columnIndex = Array.from(thRowsTotal).indexOf(header);
+      sortTable(totalTable, columnIndex);
+  });
+});
 
 //                  TOPLAM MALİYET TABLOSU GÖSTERME
 
@@ -194,8 +217,6 @@ document  .getElementById("toplam-maliyet").addEventListener("click", function (
       index.style.display = "block";
     }
   });
-
-//
 
 //                  TABLO FİLİTRELEME
 

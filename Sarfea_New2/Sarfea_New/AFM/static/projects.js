@@ -1,4 +1,4 @@
-// tablo sıralama    
+
 var table = document.querySelector('#table');  
 let thRows = table.querySelectorAll("th");
 var rows = table.getElementsByTagName("tr")
@@ -7,13 +7,17 @@ var numericCells = document.querySelectorAll('#table td:nth-child(4), #table td:
 var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(7), #table td:nth-child(8)');
 
 
+//                  TABLO SIRALAMA
+
 thRows.forEach(header => {
     header.addEventListener("click", function() {        
         var columnIndex = Array.from(thRows).indexOf(header);
         sortTable(table, columnIndex);
     });
 });
-//tablo filitreleme
+
+//                  SEARCH İŞLEMLERİ
+
 searchInput.addEventListener("input", function(){
     filterTable(searchInput, table);
 });
@@ -23,10 +27,15 @@ clearButton.addEventListener("click", function() {
 });
 
 
-// DOMLoaded
+
+//                  DOM LOADED
+
 document.addEventListener("DOMContentLoaded", function () {
-    // tablo formatlama    
+
+    //Tablo Formatlama
+
     tableFormat(usdCells, "usd")
     tableFormat(numericCells, "numeric")
     tableFormat(textCells, "text")
+    
 });

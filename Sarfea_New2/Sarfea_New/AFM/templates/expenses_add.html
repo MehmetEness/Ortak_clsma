@@ -8,8 +8,16 @@
     <link rel="stylesheet" href="{% static 'all_style.css' %}">
     <link rel="stylesheet" href="{% static 'details_projects.css' %}">
     <link rel="stylesheet" href="{% static 'center.css' %}">
-    <link rel="stylesheet" href="{% static 'projects_styles.css' %}">
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
+
+    <style>
+      #paying-firma-add-btn-2{
+        padding: 0 5px;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        font-size: 15px;
+      }
+    </style>
 
     {% endblock %}
     
@@ -138,17 +146,17 @@
             <div class="container">
                   <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
                   <div class="title">Firma Ekle</div>
-               <form action="{% url 'expenses_add' %}" method="post">
+               <form id="firma_form" action="{% url 'expenses_add' %}" method="post">
                      {% csrf_token %}
                      <input type="hidden" name="form_type" value="supplier_form">
                      <div class="user-details"> 
                         <div class="input-box" name="CompanyName_Supplier">
-                          <span class="details">Firma Adı</span>
+                          <span id="firma_add_label" class="details">Firma Adı*</span>
                           {{ supplier_form.CompanyName_Supplier }}
                         </div>                        
                   </div>
                      <div class="button">
-                           <input type="submit" value="Kaydet">
+                           <input id="firma_add_btn" type="submit" value="Kaydet">
                      </div>
                </form>
             </div>
@@ -158,9 +166,29 @@
 </div>
 {% endblock %} 
     {% block js_files %} 
-    <script src="{% static 'functions.js' %}"></script> 
+    <script src="{% static 'functions111.js' %}"></script> 
     <script src="{% static 'expenses_add1.js' %}"></script> 
     
+
+    <script>
+      var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
+      var firmaAddInput = document.querySelector("#id_CompanyName_Supplier");          
+      var firmaAddBtn = document.querySelector("#firma_add_btn");
+      var firmaForm = document.querySelector("#firma_form");
+      var firmaAddLabel = document.querySelector("#firma_add_label");
+      firmaAddBtn.addEventListener("click", function(){
+        event.preventDefault();       
+          if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+              firmaAddLabel.style.color = "black";
+              firmaAddLabel.style.fontWeight = "500";
+              firmaForm.submit();
+          }
+          else{
+              firmaAddLabel.style.color = "red";
+              firmaAddLabel.style.fontWeight = "700";
+          }   
+      });
+      </script>
 
        <script>
         
