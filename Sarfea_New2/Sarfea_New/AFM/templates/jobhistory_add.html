@@ -186,7 +186,8 @@
                 });
             });
 
-
+            var projeler = document.querySelectorAll("#dropdown1 .dropdown-item");
+            var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
@@ -198,10 +199,23 @@
             var x = true;
             var x1 = true;
             var deger;
-            
-            amountInputReformatBtn.addEventListener("click", function(event) {
+          amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
-            if(i1.value == ""){
+            var projeCount = 0;
+                projeler.forEach(function(proje){
+                if(i2.value == proje.textContent){
+                  projeCount += 1;
+                }
+              });
+              var firmaCounta = 0;
+            firmalar.forEach(function(firma){
+              if(i1.value == firma.textContent){
+                firmaCounta += 1;
+              }
+            });
+            
+            event.preventDefault();
+            if(i1.value == "" || firmaCounta == 0){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
               x = false;
@@ -211,7 +225,7 @@
               s1.style.fontWeight = "500";
               x = true;
            }
-          if(i2.value == ""){
+          if(i2.value == "" || projeCount == 0){
               s2.style.color = "red";
               s2.style.fontWeight = "700";
               x1 = false;
@@ -222,11 +236,13 @@
               x1 = true;
            }
            if(x && x1){
-            inputField.value = tarihFormat(inputField.value);
-            amountInputForFormat.value = clear(deger);
-            form.submit();
-           }
             
+              inputField.value = tarihFormat(inputField.value);
+              amountInputForFormat.value = clear(deger);
+              form.submit();
+                       
+           }
+          
             });             
             function tarihFormat(tarih) {
       if(tarih.length == 10){

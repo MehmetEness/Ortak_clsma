@@ -88,7 +88,7 @@
                    </div>
 
                    <div class="input-box">
-                    <span class="details">Gider Detayı</span>
+                    <span id="gider_detay_span" class="details">Gider Detayı</span>
                     <div class="dropdown-container">
                         <input autocomplete= 'off' type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Detayı Seçiniz" data-dropdown="dropdown3">
                       <div id="dropdown3" class="dropdown-content">
@@ -155,7 +155,7 @@
 {% endblock %} 
     {% block js_files %} 
     <script src="{% static 'functions.js' %}"></script> 
-    <script src="{% static 'expenses_add1.js' %}"></script> 
+    <script src="{% static 'expenses_add.js' %}"></script> 
     
 
     <script>

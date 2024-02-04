@@ -186,6 +186,7 @@
 
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
             var form = document.querySelector("#my-form");
             var i1 = document.querySelector("#id_CompanyName_Job_JobHistory");
             var s1 = document.querySelector("#is_yapilan_firma_span");
@@ -195,10 +196,16 @@
             
             amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
-            if(i1.value == ""){
+            var firmaCounta = 0;
+            firmalar.forEach(function(firma){
+              if(i1.value == firma.textContent){
+                firmaCounta += 1;
+              }
+            });
+            if(i1.value == "" || firmaCounta == 0){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
-              submitBool = false;
+              x = false;
            }
            else{
               s1.style.color = "black";

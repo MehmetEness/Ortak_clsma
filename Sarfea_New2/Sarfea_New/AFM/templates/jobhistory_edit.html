@@ -129,6 +129,7 @@
   <!-- <script src="{% static 'clientt.js' %}"></script>  -->
   <script>
     var inputField = document.querySelector("#id_Date_JobHistory");
+    var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
             var amountInputForFormat = document.querySelector("#id_Amount_JobHistory");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
             var form = document.querySelector("#my-form");
@@ -143,6 +144,12 @@
             
             amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
+            var firmaCounta = 0;
+            firmalar.forEach(function(firma){
+              if(i2.value == firma.textContent){
+                firmaCounta += 1;
+              }
+            });
             if(i1.value == ""){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
@@ -153,7 +160,7 @@
               s1.style.fontWeight = "500";
               x = true;
            }
-          if(i2.value == ""){
+          if(i2.value == "" || firmaCounta == 0){
               s2.style.color = "red";
               s2.style.fontWeight = "700";
               x1 = false;
