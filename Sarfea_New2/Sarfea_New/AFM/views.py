@@ -183,10 +183,7 @@ def sales_offer_edit(request, sales_offer_id):
     client = Clients.objects.all()
     locations = Locations.objects.all()
     sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
-    sales_offer_edit_curr.Cost_NotIncludingKDV_Card = str(sales_offer_edit_curr.Cost_NotIncludingKDV_Card).replace(",", ".")
-    sales_offer_edit_curr.UnitCost_NotIncludingKDV = str(sales_offer_edit_curr.UnitCost_NotIncludingKDV).replace(",", ".")
-    sales_offer_edit_curr.UnitOffer_NotIncludingKDV = str(sales_offer_edit_curr.UnitOffer_NotIncludingKDV).replace(",", ".")
-    sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card = str(sales_offer_edit_curr.Offer_Cost_NotIncludingKDV_Card).replace(",", ".")
+    
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
@@ -271,9 +268,7 @@ def update_card_situation(request):
 @login_required
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
-    for card in sales_offer_card:
-        card.Cost_NotIncludingKDV_Card = str(card.Cost_NotIncludingKDV_Card).replace(",", ".")
-        card.UnitCost_NotIncludingKDV = str(card.UnitCost_NotIncludingKDV).replace(",", ".")
+   
 
     potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
     potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
@@ -327,9 +322,7 @@ def expenses_edit(request, expenses_id):
     supplier = Supplier.objects.all()
     banks = Banks.objects.all()
     details = Details.objects.all()
-    expenses_edit.Amount_Expenses = str(expenses_edit.Amount_Expenses).replace(",", ".")
-    expenses_edit.Amount_TL_Expenses = str(expenses_edit.Amount_TL_Expenses).replace(",", ".")
-    expenses_edit.Dollar_Rate_Expenses = str(expenses_edit.Dollar_Rate_Expenses).replace(",", ".")
+   
 
     if request.method == 'POST':
         edit_form = ExpensesForm(request.POST, instance=expenses_edit)
@@ -358,9 +351,7 @@ def jobhistory_edit(request, jobhistory_id):
     jobhistory_edit = get_object_or_404(JobHistory, id=jobhistory_id)
     my_company = MyCompanyNames.objects.all()
     supplier = Supplier.objects.all()
-    jobhistory_edit.Amount_JobHistory = str(jobhistory_edit.Amount_JobHistory).replace(",", ".")
-    jobhistory_edit.Amount_TL_JobHistory = str(jobhistory_edit.Amount_TL_JobHistory).replace(",", ".")
-    jobhistory_edit.Dollar_Rate_JobHistory = str(jobhistory_edit.Dollar_Rate_JobHistory).replace(",", ".")
+    
 
     if request.method == 'POST':
         edit_form = JobHistoryForm(request.POST, instance=jobhistory_edit)
@@ -370,6 +361,7 @@ def jobhistory_edit(request, jobhistory_id):
             edit_form.save()
             return redirect('realized_cost', project_name=jobhistory_edit.ProjectName_JobHistory)
     
+
     else:
         edit_form = JobHistoryForm(instance=jobhistory_edit)
 
@@ -388,9 +380,7 @@ def income_edit(request, income_id):
     income_edit = get_object_or_404(Incomes, id=income_id)
     my_company = MyCompanyNames.objects.all()
     client = Clients.objects.all()
-    income_edit.Amount_Incomes = str(income_edit.Amount_Incomes).replace(",", ".")
-    income_edit.Dollar_Rate_Incomes = str(income_edit.Dollar_Rate_Incomes).replace(",", ".")
-    income_edit.Amount_Usd_Incomes = str(income_edit.Amount_Usd_Incomes).replace(",", ".")
+    
 
     if request.method == 'POST':
         edit_form = IncomesForm(request.POST, instance=income_edit)
@@ -461,12 +451,7 @@ def project_edit(request, project_name):
     locations = Locations.objects.all()
     terrain_roof = Terrain_Roof.objects.all()
     situations = Situations.objects.all()
-    project_edit.CalculatedCost_NotIncludingKDV = str(project_edit.CalculatedCost_NotIncludingKDV).replace(",", ".")
-    project_edit.RealizedCost_NotIncludingKDV = str(project_edit.RealizedCost_NotIncludingKDV).replace(",", ".")
-    project_edit.CalculatedProfit_Loss = str(project_edit.CalculatedProfit_Loss).replace(",", ".")
-    project_edit.RealizedProfit_Loss = str(project_edit.RealizedProfit_Loss).replace(",", ".")
-    project_edit.CalculatedProfitRate = str(project_edit.CalculatedProfitRate).replace(",", ".")
-    project_edit.RealizedProfitRate = str(project_edit.RealizedProfitRate).replace(",", ".")
+   
 
    
     if request.method == 'POST':
