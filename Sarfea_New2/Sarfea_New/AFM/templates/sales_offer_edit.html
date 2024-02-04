@@ -10,43 +10,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
 <style>
-  #id_Offer_Comment_Card{
-  }
-  input[type="file"] {
-    cursor: pointer !important;
-    font: 300 14px sans-serif;
-    color:#9e9e9e;
-    width: 0px !important;
-  }
-  input[type="file"]::-webkit-file-upload-button
-  {
-    font: 300 14px  sans-serif;
-    background: linear-gradient(135deg, #71b7e6, #191970);
-    border: 0;
-    padding: 12px 25px;
-    cursor: pointer;
-    color: #fff;
-    text-transform: uppercase;
-  }
-  
-  input[type="file"]::-ms-browse {
-    font: 300 14px 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #71b7e6, #191970);
-    border: 0;
-    padding: 12px 25px;
-    cursor: pointer;
-    color: #fff;
-    text-transform: uppercase;
-  }
+    #id_Offer_Comment_Card{
+    }
+    input[type="file"] {
+      cursor: pointer !important;
+      font: 300 14px sans-serif;
+      color:#9e9e9e;
+      width: 0px !important;
+    }
+    input[type="file"]::-webkit-file-upload-button
+    {
+      font: 300 14px  sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    
+    input[type="file"]::-ms-browse {
+      font: 300 14px 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
 
-/* Stilize edilmiş düğme görünümü */
-.input-box label {
-  background-color: #3498db;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  /* Stilize edilmiş düğme görünümü */
+  .input-box label {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 </style>
 <style>
   .inputfile {
@@ -56,52 +56,54 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}
+  }
 
-.inputfile + label {
-    width: 49%;
-    font-size: 12px;
-    /* 20px */
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    padding: 5px 10px;
-    /* 10px 20px */
-}
-
-
-
-.inputfile:focus + label,
-.inputfile.has-focus + label {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-}
-
-.inputfile + label svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    fill: currentColor;
-    margin-top: -0.25em;
-    margin-right: 0.25em;
-}
+  .inputfile + label {
+      width: 49%;
+      font-size: 12px;
+      /* 20px */
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-block;
+      overflow: hidden;
+      padding: 5px 10px;
+      /* 10px 20px */
+  }
 
 
-.inputfile-1 + label {
-    color: #f1e5e6;
-    background: linear-gradient(135deg, #71b7e6, #191970);
-}
-.inputfile-2 + label {
-    color: #f1e5e6;
-    background: linear-gradient(135deg, #71b7e6, #191970);
-}
+
+  .inputfile:focus + label,
+  .inputfile.has-focus + label {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
+  }
+
+  .inputfile + label svg {
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      fill: currentColor;
+      margin-top: -0.25em;
+      margin-right: 0.25em;
+  }
+
+
+  .inputfile-1 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
+  .inputfile-2 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
 
 
 </style>
-{% endblock %} {% block title %} Sales Offer Edit {% endblock %} {% block content %}
+{% endblock %} 
+{% block title %} Sales Offer Edit {% endblock %} 
+{% block content %}
 <div class="body-div">
   {% include 'partials/_left_nav_bar.html' %}
   <div class="right-menu">
@@ -127,7 +129,7 @@
 
           <div class="user-details">
 
-           <div class="input-box {% if sales_form.Client_Card_Copy.errors %}error{% endif %}" id="Client_Card_Copy">
+            <div class="input-box {% if sales_form.Client_Card_Copy.errors %}error{% endif %}" id="Client_Card_Copy">
               <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
@@ -366,7 +368,7 @@
     );
   </script>
 
-  <script>
+<script>
     // Firma Add button
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -561,8 +563,8 @@
         return "";
       }
     
-}
-function tarihReFormat(tarih) {
+  }
+  function tarihReFormat(tarih) {
       if(tarih.length == 10){
         var parcalar = tarih.split('-');
 
@@ -578,11 +580,11 @@ function tarihReFormat(tarih) {
         return "";
       }
     
-}
-  </script>
+  }
+</script>
 
   <!-- Select File -->
-  <script>
+<script>
     'use strict';
     
     document.addEventListener('DOMContentLoaded', function () {
@@ -634,8 +636,8 @@ function tarihReFormat(tarih) {
         });
     });
     
-    </script>
-    <script>
+</script>
+<script>
       'use strict';
       
       document.addEventListener('DOMContentLoaded', function () {
@@ -688,76 +690,76 @@ function tarihReFormat(tarih) {
           });
       });
       
-      </script>
+</script>
       <!-- Arazi çatı script -->
 <script>
-  var mySelect = document.getElementById("id_Terrain_Roof_Card");
-  var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
-  var araziSpan = document.querySelector(".arazi-span");
-  document.addEventListener('DOMContentLoaded', function () {
-  //const chekLastDateBox = document.getElementById('id_Terrain_Roof_Card1');
-  mySelect.addEventListener('change', function(){
-    var selectedIndex = mySelect.selectedIndex;
-    var selectedText = mySelect.options[selectedIndex].text;
-  
-    console.log(selectedText)
-  if (selectedText=="Arazi") {
-    araziBedeliInput.style.display = "block";
-    araziSpan.style.display = "block";
-  } else {
-    araziBedeliInput.style.display = "none";
-    araziSpan.style.display = "none";
-  }
-  });
+    var mySelect = document.getElementById("id_Terrain_Roof_Card");
+    var araziBedeliInput = document.querySelector("#id_Roof_Cost_Card");
+    var araziSpan = document.querySelector(".arazi-span");
+    document.addEventListener('DOMContentLoaded', function () {
+    //const chekLastDateBox = document.getElementById('id_Terrain_Roof_Card1');
+    mySelect.addEventListener('change', function(){
+      var selectedIndex = mySelect.selectedIndex;
+      var selectedText = mySelect.options[selectedIndex].text;
+    
+      console.log(selectedText)
+    if (selectedText=="Arazi") {
+      araziBedeliInput.style.display = "block";
+      araziSpan.style.display = "block";
+    } else {
+      araziBedeliInput.style.display = "none";
+      araziSpan.style.display = "none";
+    }
+    });
 
-  });
+    });
 </script>
 <script>
-var inputField = document.querySelector("#tarih");
-      
+  var inputField = document.querySelector("#tarih");
+        
 
-      inputField.addEventListener('input', function(event) {
-      var userInput = inputField.value;
-     
-     if (event.inputType !== 'deleteContentBackward') {
-       inputField.value = formatDate(userInput);
-     }
-   });
-function formatDate(date) {
-  var cleaned = date.replace(/[^\d+]/g, '');
-  var formatted = cleaned;
-  var current;
-  var day = "31";
-  var month = "12";
-  var year = "2999";
-    
-    inputField.maxLength = 10;
-      if(formatted.length < 3) {
-        if(formatted < day){
-          return formatted;
-        }
-        else{
-          return "31";
-        }        
+        inputField.addEventListener('input', function(event) {
+        var userInput = inputField.value;
+      
+      if (event.inputType !== 'deleteContentBackward') {
+        inputField.value = formatDate(userInput);
       }
-      if (formatted.length < 5) {
-        if(formatted.slice(2) < month){
-          return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+    });
+  function formatDate(date) {
+    var cleaned = date.replace(/[^\d+]/g, '');
+    var formatted = cleaned;
+    var current;
+    var day = "31";
+    var month = "12";
+    var year = "2999";
+      
+      inputField.maxLength = 10;
+        if(formatted.length < 3) {
+          if(formatted < day){
+            return formatted;
+          }
+          else{
+            return "31";
+          }        
         }
-        else{
-          return `${formatted.slice(0,2)}.12`
-        }                  
-      }
-      if (formatted.length < 10) {
-        if(formatted.slice(4) < year){
-          return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+        if (formatted.length < 5) {
+          if(formatted.slice(2) < month){
+            return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
+          }
+          else{
+            return `${formatted.slice(0,2)}.12`
+          }                  
         }
-        else{
-          return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
-        } 
-                  
-      }  
-}
+        if (formatted.length < 10) {
+          if(formatted.slice(4) < year){
+            return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
+          }
+          else{
+            return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
+          } 
+                    
+        }  
+  }
 </script>
 
   {% endblock %} 

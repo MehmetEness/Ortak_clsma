@@ -43,21 +43,11 @@
 
           <div class="user-details">
 
-            <div class="input-box {% if form.CompanyName.errors %}error{% endif %}" id="CompanyNameInput">
+            <div class="input-box" id="CompanyNameInput">
               <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                   <i class="fa-solid fa-plus"></i></button></span>
               <div class="dropdown-container">
                 <input autocomplete= 'off' type="text" id="id_CompanyName" name="CompanyName" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
-                {% if form.CompanyName.errors %}
-                <div class="error-container">
-                  <span class="error-triangle"></span>
-                  <ul class="errorlist">
-                    {% for error in form.CompanyName.errors %}
-                    <li class="error-message">{{ error }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-                {% endif %}
                 <div id="dropdown1" class="dropdown-content">
                   {% for x in client %}
                   <span value="{{x.id}}" class="dropdown-item"
@@ -68,35 +58,17 @@
               </div>
             </div>
 
-            <div class="input-box {% if form.ProjectName.errors %}error{% endif %}" id="ProjectNameInput">
+            <div class="input-box" id="ProjectNameInput">
               <span id="proje_adi_span" class="details">Proje Adı*</span>
               <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" id="id_ProjectName" autocomplete="off">
-              {% if form.ProjectName.errors %}
-              <div class="error-container">
-                <span class="error-triangle"></span>
-                <ul class="errorlist">
-                  {% for error in form.ProjectName.errors %}
-                  <li class="error-message">{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-              {% endif %}
             </div>
+
             <div
-              class="input-box {% if form.ProjectCode.errors %}error{% endif %}"
+              class="input-box"
               id="ProjectCodeInput"
             >
               <span id="proje_kodu_span" class="details">Proje Kodu*</span>
-              {{ form.ProjectCode }} {% if form.ProjectCode.errors %}
-              <div class="error-container">
-                <span class="error-triangle"></span>
-                <ul class="errorlist">
-                  {% for error in form.ProjectCode.errors %}
-                  <li class="error-message">{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-              {% endif %}
+              {{ form.ProjectCode }} 
             </div>
 
             
