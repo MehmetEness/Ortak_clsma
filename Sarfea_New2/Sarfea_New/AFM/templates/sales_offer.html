@@ -332,16 +332,20 @@ table thead th {
             <li id="losing_job">Kaybedilen İşler</li>
             <li id="won_job">Kazanılan İşler</li>
           </ul> 
-          <div class="content">         
-            <div style="margin-left: 50px;" class="search">
-                <div class="icon"></div>
-                <div class="input">
-                  <input id="mysearch" type="text" placeholder="Ara">
-              </div>
-              <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
-           </div>
-          </div>
+          
+          <div class="top_right_box">
+            <div class="content">         
+              <div style="margin-left: 50px;" class="search">
+                  <div class="icon"></div>
+                  <div class="input">
+                    <input id="mysearch" type="text" placeholder="Ara">
+                </div>
+                <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
+             </div>
+            </div>
             <button> <a href="{% url 'sales_offer_add' %}">Yeni Satış</a></button>
+          </div>
+            
           
         </div>   
         <div class="main-container">
