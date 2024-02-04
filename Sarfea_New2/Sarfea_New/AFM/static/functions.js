@@ -231,6 +231,38 @@ function requiredInputs(inputs, labels) {
   }
 }
 
+//                  SELECTİON VE İNPUT KONTROLÜ
+
+function controlSelectionInputs(input, label,ddmenu) {
+  var optionCount = 0;
+  ddmenu.forEach(function(option){
+    if(input.value == option.textContent){
+      optionCount += 1;
+    }
+  });
+  if (optionCount == 0) {
+    label.style.color = "red";
+    label.style.fontWeight = "700";
+    return false;
+  } else {
+    label.style.color = "black";
+    label.style.fontWeight = "500";
+    return true;
+  }
+}
+
+//                  FİRMA ADLARI KONTROLÜ
+
+function firmaCount(firmalar, input){
+  var firmaCount = 0;
+  firmalar.forEach(function(firma){
+      if(input.value.trim() == firma.textContent.trim()){
+          firmaCount += 1;
+      }
+  });  
+  return firmaCount;
+}
+
 //                  TELEFON NUMARASI FORMATLAMA
 
 function formatPhoneNumberByCountryCode(phoneNumber, countryCode) {
@@ -451,18 +483,6 @@ function birGunOncekiTarih(dateString) {
 function isWeekend(date) {
       const day = date.getDay();
       return day === 0 || day === 6;
-}
-
-//                  FİRMA ADLARI KONTROLÜ
-
-function firmaCount(firmalar, input){
-  var firmaCount = 0;
-  firmalar.forEach(function(firma){
-      if(input.value.trim() == firma.textContent.trim()){
-          firmaCount += 1;
-      }
-  });  
-  return firmaCount;
 }
 
 

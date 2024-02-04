@@ -124,13 +124,20 @@
             var form = document.querySelector("#my-form");
             var i1 = document.querySelector("#id_CompanyName_Pay_Incomes");
             var s1 = document.querySelector("#odeme_yapan_firma_span");
+            var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
             var submitBool = true;
             var x = true;
             var deger;
             
             amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
-            if(i1.value == ""){
+            var firmaCounta = 0;
+            firmalar.forEach(function(firma){
+              if(i1.value == firma.textContent){
+                firmaCounta += 1;
+              }
+            });
+            if(i1.value == "" || firmaCounta == 0){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
               x = false;

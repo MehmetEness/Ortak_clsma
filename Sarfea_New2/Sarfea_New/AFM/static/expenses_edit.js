@@ -11,6 +11,13 @@ var kurInput = document.querySelector("#id_Dollar_Rate_Expenses");
 var dateForKur = document.querySelector("#id_Date_Expenses");  
 var timeForKur = document.querySelector("#kur-time");     
 
+var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
+var payingFirmaInput = document.querySelector("#id_CompanyName_Paying_Expenses");
+var payingFirmaLabel = document.querySelector("#odeme_yapilan_firma_span");
+var details = document.querySelectorAll("#dropdown2 .dropdown-item");
+var detailsInput = document.querySelector("#id_ExpensDetails_Expenses");
+var detailsLabel = document.querySelector("#gider_detay_span");
+
 
 
 
@@ -34,7 +41,7 @@ onPageLoad(amountInput);
 
 createBtn.addEventListener("click", function(event) {
     event.preventDefault();           
-    if(requiredInputs(reqInputs, reqLabels)){
+    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputs(payingFirmaInput, payingFirmaLabel, firmalar) && controlSelectionInputs(detailsInput, detailsLabel, details)){
         dateInput.value = formatDateForSubmit(dateInput.value);
         amountInput.value = clear(amountInput.value);
         form.submit();

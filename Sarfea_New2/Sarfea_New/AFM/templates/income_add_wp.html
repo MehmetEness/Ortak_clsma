@@ -256,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
             var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
             var amountInputReformatBtn = document.querySelector("#project-create-btn");
+            var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
             var form = document.querySelector("#my-form");
             var i1 = document.querySelector("#id_CompanyName_Pay_Incomes");
             var s1 = document.querySelector("#odeme_yapan_firma_span");
@@ -265,16 +266,22 @@ document.addEventListener('DOMContentLoaded', function () {
             
             amountInputReformatBtn.addEventListener("click", function(event) {
             event.preventDefault();
-            if(i1.value == ""){
+            var firmaCounta = 0;
+            firmalar.forEach(function(firma){
+              if(i1.value == firma.textContent){
+                firmaCounta += 1;
+              }
+            });
+            if(i1.value == "" || firmaCounta == 0){
               s1.style.color = "red";
               s1.style.fontWeight = "700";
               x = false;
            }
            else{
-        s1.style.color = "black";
-        s1.style.fontWeight = "500";
-        x = true;
-      }
+            s1.style.color = "black";
+            s1.style.fontWeight = "500";
+            x = true;
+          }
            if(x){
             inputField.value = tarihFormat(inputField.value);
             inputField2.value = tarihFormat(inputField2.value);
