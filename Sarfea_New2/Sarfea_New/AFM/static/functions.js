@@ -6,10 +6,7 @@ var clearButton = document.querySelector(".clear");
 //                  FORMAT NUMBERS
 
 function formatNumber(number, fract) {
-  return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: fract,
-    maximumFractionDigits: fract,
-  }).format(number.toFixed(fract));
+  return new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
 }
 function format(number) {
   var indexOfDot = number.indexOf('.');  
@@ -29,7 +26,7 @@ function tableFormat(cells, type) {
   switch (type) {
     case "usd":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
+        var value = parseFloat(cell.textContent.replace(/,/g, "."));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -41,7 +38,7 @@ function tableFormat(cells, type) {
       break;
     case "tl":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
+        var value = parseFloat(cell.textContent.replace(/,/g, "."));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
@@ -53,7 +50,7 @@ function tableFormat(cells, type) {
       break;
     case "kur":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
+        var value = parseFloat(cell.textContent.replace(/,/g, "."));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -76,7 +73,7 @@ function tableFormat(cells, type) {
       break;
     case "numeric":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/[^\d,-]/g, ""));
+        var value = parseFloat(cell.textContent.replace(/,/g, "."));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2);
           cell.title = formatNumber(value, 2);

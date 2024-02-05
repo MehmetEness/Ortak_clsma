@@ -217,7 +217,7 @@ function tarihReFormat(tarih) {
 
     function onPageLoad(x) {
         var inputValue = x.value; 
-        var clearValue = clear(inputValue);
+        var clearValue = clear2(inputValue);
         var formatValue = format(clearValue);
         x.value = formatValue;
         deger = formatValue;
@@ -236,6 +236,15 @@ function tarihReFormat(tarih) {
     function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
       if(value != undefined){
         var cleanString = value.replace(/[^0-9.]/g, '');
+        return cleanString;    // Çıktı: "123456.789"  
+    }else{
+        var  cleanString = 0;
+        return cleanString;
+    }   
+    }
+    function clear2(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
+      if(value != undefined){
+        var cleanString = value.replace(/,/g, '.');
         return cleanString;    // Çıktı: "123456.789"  
     }else{
         var  cleanString = 0;

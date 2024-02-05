@@ -62,8 +62,8 @@ function formatNumber2(number) {
 
 
 let tableResult;
-  let genaralTotalTL = document.getElementById("total-amount-TL");
-  let generalTotalUSD = document.getElementById("total-amount-USD");     
+let genaralTotalTL = document.getElementById("total-amount-TL");
+let generalTotalUSD = document.getElementById("total-amount-USD");     
   
 
 
@@ -126,7 +126,7 @@ function birimSil(inputString) {
 
 
 /*    Tabloyu Formatlama    */
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
   // Tablodaki tüm satırları seç
   var rows = document.querySelectorAll(".table-row");
 
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     amountUSD.textContent = formattedAmountUSD;
   });
 
-});
+});*/
 
 // Sembol ve boşlukları temizleyen yardımcı fonksiyon
 function removeSymbols(value) {

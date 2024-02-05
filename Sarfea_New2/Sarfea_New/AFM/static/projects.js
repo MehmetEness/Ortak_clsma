@@ -7,6 +7,7 @@ var numericCells = document.querySelectorAll('#table td:nth-child(4), #table td:
 var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(7), #table td:nth-child(8)');
 
 
+
 //                  TABLO SIRALAMA
 
 thRows.forEach(header => {

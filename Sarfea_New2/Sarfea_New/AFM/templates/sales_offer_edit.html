@@ -5,7 +5,6 @@
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}"/> -->
 <link rel="stylesheet" href="{% static 'details_projects.css' %}" />
 <link rel="stylesheet" href="{% static 'center.css' %}" />
-<link rel="stylesheet" href="{% static 'projects_styles.css' %}" />
 <link rel="stylesheet" href="{% static 'all_style.css' %}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
@@ -464,9 +463,20 @@
         return cleanString;
       }
     }
+    function clear2(value) {
+      
+      if (value != undefined) {
+        var cleanString = value.replace(/,/g, ".");
+        return cleanString;
+      } else {
+        var cleanString = 0;
+        return cleanString;
+      }
+    }
 
     function format(number) {
-      var indexOfDot = number.indexOf(".");
+      
+      var indexOfDot = clear2(number).indexOf(".");
 
       if (indexOfDot !== -1) {
         var integerPart = number
