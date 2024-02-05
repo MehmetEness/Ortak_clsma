@@ -1026,18 +1026,21 @@ table thead th {
                     <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
                     <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
                     <td>{{card.Profit_Rate_Card}}</td>
-
                     <td>{{card.Date_Card| date:"d F y"}}</td>
-                    {% if card.Is_Gain == True %}
-                    <td>Kazanılan İş</td>
-                    {% elif card.Is_Lost == True %}
-                    <td>Kaybedilen İş</td>
-                    {% elif card.Is_late == True %}
-                    <td>Bekleyen İş</td>
-                    {% else %}
-                    <td>{{card.Situation_Card}}</td>
-                    {% endif %}
 
+                    {% if card.Is_Gain == True %}
+                    <td class="gain-job">Kazanılan İş</td>
+
+                    {% elif card.Is_Lost == True %}
+                    <td class="lost-job">Kaybedilen İş</td>
+
+                    {% elif card.Is_late == True %}
+                    <td class="wait-job">Bekleyen İş</td>
+
+                    {% else %}
+                    <td class="run-job">{{card.Situation_Card}}</td>
+
+                    {% endif %}
                   </tr>
                   {% endfor %}      
                </tbody>
