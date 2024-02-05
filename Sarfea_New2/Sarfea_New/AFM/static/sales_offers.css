@@ -321,9 +321,9 @@
 .lists td:first-child {
   padding-left: 20px;
 }
-.lists tbody tr:nth-child(even) {
+/* .lists tbody tr:nth-child(even) {
   background-color: #d1d1d6;
-}
+} */
 #column {
   width: 3px;
   left: 350px;
