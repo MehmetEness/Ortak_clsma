@@ -1273,7 +1273,6 @@ function dragStart() {
 }
 function dragEnd() {
   setTimeout(() => (this.style.display = "flex"), 0);
-  cardFormat();
 }
 for (j of rows) {
   j.addEventListener("dragover", dragOver);
