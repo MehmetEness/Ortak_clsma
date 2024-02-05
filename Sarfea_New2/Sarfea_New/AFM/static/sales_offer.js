@@ -237,7 +237,7 @@ function cardFormat() {
       let powerCount =
         parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
 
-      USDSpan.textContent = "$" + formatNumber(currentUSD, 2);
+      USDSpan.textContent = "$ " + formatNumber(currentUSD, 2);
       unitSpan.textContent = formatNumber(currentUnit, 0) + " USD/kWp";
       powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
 
