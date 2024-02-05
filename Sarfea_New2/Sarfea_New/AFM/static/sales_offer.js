@@ -231,11 +231,11 @@ function cardFormat() {
         ".boxes:nth-of-type(2) p:nth-of-type(1)"
       );
       let currentUSD =
-        parseFloat(USDSpan.textContent.replace(/[^\d.-]/g, "")) || 0;
+        parseFloat(USDSpan.textContent.replace(/,/g, ".")) || 0;
       let currentUnit =
-        parseFloat(unitSpan.textContent.replace(/[^\d.-]/g, "")) || 0;
+        parseFloat(unitSpan.textContent.replace(/,/g, ".")) || 0;
       let powerCount =
-        parseFloat(powerSpan.textContent.replace(/[^\d.-]/g, "")) || 0;
+        parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
 
       USDSpan.textContent = "$" + formatNumber(currentUSD, 2);
       unitSpan.textContent = formatNumber(currentUnit, 0) + " USD/kWp";
