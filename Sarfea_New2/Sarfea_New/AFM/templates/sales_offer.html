@@ -1014,7 +1014,16 @@ table thead th {
                     {% if card.Is_Gain == True %} class="gain-job"
                     {% elif card.Is_Lost == True %} class="lost-job"
                     {% elif card.Is_late == True %} class="wait-job"
-                    {% else %} class="run-job"{% endif %}>
+                    {% else %} 
+                        {% if card.Situation_Card == "Potansiyel Müşteri" %}class="1"
+                        {% elif card.Situation_Card == "Maliyet Hesaplama" %}class="2"
+                        {% elif card.Situation_Card == "Fiyat Belirleme" %}class="3"
+                        {% elif card.Situation_Card == "Teklif Hazırlama" %}class="4"
+                        {% elif card.Situation_Card == "Teklif Hazır" %}class="5"
+                        {% elif card.Situation_Card == "Teklif Sunuldu" %}class="6"
+                        {% elif card.Situation_Card == "Sunum Sonrası Görüşme" %}class="7"
+                        {% endif %}
+                    {% endif %}>
 
                     <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a></td>
                     <td> {{card.Client_Card}} </td>
