@@ -192,7 +192,7 @@
   border-radius: 40px;
 }
 .search.active {
-  width: 360px;
+  width: 300px;
 }
 .search .icon {
   position: absolute;
@@ -295,17 +295,18 @@ table thead th {
 /*---------------------*/
 
 .run-job{
-  background: #FFF8C2;
+  background: #fff3dc;
 }
 .wait-job{
-  background: #d7e3fc;
+  background: #dee8ff;
 }
 .lost-job{
-  background: #FED7DE;
+  background: #ece6e7;
 }
 .gain-job{
-  background: #D3EEDF;
+  background: #e2eee7;
 }
+
   
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1026,16 +1027,7 @@ table thead th {
                     {% if card.Is_Gain == True %} class="gain-job"
                     {% elif card.Is_Lost == True %} class="lost-job"
                     {% elif card.Is_late == True %} class="wait-job"
-                    {% else %} 
-                        {% if card.Situation_Card == "Potansiyel Müşteri" %}class="1"
-                        {% elif card.Situation_Card == "Maliyet Hesaplama" %}class="2"
-                        {% elif card.Situation_Card == "Fiyat Belirleme" %}class="3"
-                        {% elif card.Situation_Card == "Teklif Hazırlama" %}class="4"
-                        {% elif card.Situation_Card == "Teklif Hazır" %}class="5"
-                        {% elif card.Situation_Card == "Teklif Sunuldu" %}class="6"
-                        {% elif card.Situation_Card == "Sunum Sonrası Görüşme" %}class="7"
-                        {% endif %}
-                    {% endif %}>
+                    {% else %} class="run-job"{% endif %}>
 
                     <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a></td>
                     <td> {{card.Client_Card}} </td>
@@ -1075,7 +1067,7 @@ table thead th {
         </div>
         <div style="display: none;" class="lost-job-container container">
           <div class="lists">
-            <table id="table" class="table table-sortable">
+            <table id="table" class="table table-sortable table_row">
                <thead>
                 <th></th>
                 <th scope="col"><span>Müşteri Adı</span></th>
@@ -1128,7 +1120,7 @@ table thead th {
         </div>
         <div style="display: none;" class="sales-container container">
           <div class="lists">
-            <table id="table" class="table table-sortable">
+            <table id="table" class="table table-sortable table_row">
                <thead>
                 <th></th>
                 <th scope="col"><span>Müşteri Adı</span></th>
@@ -1176,7 +1168,7 @@ table thead th {
         </div>
         <div style="display: none;" class="won-container container">
           <div class="lists">
-            <table id="table" class="table table-sortable">
+            <table id="table" class="table table-sortable table_row">
                <thead>
                 <th></th>
                 <th scope="col"><span>Müşteri Adı</span></th>

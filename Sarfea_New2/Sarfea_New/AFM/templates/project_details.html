@@ -34,11 +34,11 @@
 
             <div class="main">
                 <div class="row">
-                    <div style="background-image: url('{% static 'images/konum.png' %}');" class="column-2 card">
-                      <div class="span">
+                    <div id="konum_div" style="background-image: url('{% static 'images/konum.png' %}');" class="column-2 card">
+                      <div style="display: none;" class="span">
                         <span>Konum</span>
                         {% if project.Location %}
-                        <span>{{project.Location}}</span>
+                        <span id="Konum_span">{{project.Location}}</span>
                         {% endif %}
 
                     </div></div>
@@ -93,19 +93,30 @@
     {% block js_files %}
 
     <script>
+        var konumDiv = document.querySelector("#konum_div");
+        var konumSpan = document.querySelector("#Konum_span");
+        konumImgChange(konumSpan);
+        function konumImgChange(konumSpan){
+            var KonumText = konumSpan.textContent.toLowerCase();
+            var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
+            konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+        };
+
+    </script>
+    <script>
     var realized_cost = document.querySelector("#realized_cost_span");
     format(realized_cost);    
-    function format(number) {
-        var indexOfDot = number.textContent.indexOf('.');
+    function format(number1) {
+        var indexOfDot = number1.textContent.indexOf('.');
         
-        if(number.textContent != "None $"){
+        if(number1.textContent != "None $"){
             if (indexOfDot !== -1) {
-                var integerPart = number.textContent.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                var decimalPart = number.textContent.slice(indexOfDot + 1);
+                var integerPart = number1.textContent.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                var decimalPart = number1.textContent.slice(indexOfDot + 1);
                 realized_cost.textContent = integerPart + '.' + decimalPart;
             } else {
-                var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                realized_cost.textContent = formattedNumber; 
+                //var formattedNumber = number1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                //realized_cost.textContent = formattedNumber; 
             }
         }else{
             realized_cost.textContent = "0 $"; 
