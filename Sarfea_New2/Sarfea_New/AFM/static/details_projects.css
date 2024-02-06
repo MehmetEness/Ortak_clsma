@@ -20,9 +20,12 @@
     flex-direction: column;
 }
 
+
 /*  Right Menu  */
 .card{    
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-radius: 15px;    
     margin-right: 5px;
     border: 1px solid #000;
@@ -123,8 +126,8 @@ button{
 .row a{
     padding: 0px 10px;
     position: absolute;
-    right: 12px;
-    top: 10px;
+    right: 0;
+    top: 0;
     color: transparent;
     background-color: transparent;
 }
@@ -151,6 +154,27 @@ button{
     padding: 5px 10px;
     z-index: 1;
 }
-
+.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;    
+}
+.flex span:first-child{
+    color: #06d6a0;
+    font-size: 40px;
+    font-weight: 900;
+}
+.flex span:nth-child(2){
+    color: #000;
+    font-size: 30px;
+    font-weight: 700;
+}
+.flex span:nth-child(3){
+    color: #000;
+    padding: 0 5px;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 3px solid #000;
+}
 /*---------------------*/
 
