@@ -42,16 +42,24 @@
                         {% endif %}
 
                     </div></div>
-                      <div style="background-image:url('{% static 'images/arka7.png' %}');" class="column-2 card">
-                          <div class="span"><span>AC Güç</span><span id="ac-power-span">{{project.AC_Power}}kWe</span></div></div>
-                      <div style="background-image:url('{% static 'images/arka8.png' %}');" class="column-2 card">
-                          <div class="span"><span>DC Güç</span><span id="dc-power-span">{{project.DC_Power}}kWp</span></div></div>
-                      <div style="background-image:url('{% static 'images/arka9.png' %}');" class="column-2 card">
-                          <div class="span"><span>İş Bedeli</span><span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span></div>
+                      <div id="flex"  class="column-2 card flex">
+                        <span><i class="fa-solid fa-power-off"></i></span>
+                        <span id="ac-power-span">{{project.AC_Power}} kWe</span>
+                        <span>AC Güç</span>                          
+                        </div>
+                      <div class="column-2 card flex">
+                          <span><i class="fa-solid fa-power-off"></i></span>
+                          <span id="dc-power-span">{{project.DC_Power}}kWp</span>
+                          <span>DC Güç</span>
+                        </div>
+                      <div class="column-2 card flex">                         
+                            <span><i class="fa-solid fa-dollar-sign"></i></span>
+                            <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                            <span>İş Bedeli</span>                        
                           <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_name=project.ProjectName %}">a</a>
                       </div>
-                      <div style="background-image:url('{% static 'images/arazi-cati.png' %}');" class="column-2 card">
-                          <div class="span"><span>{{project.Terrain_Roof}}</span></div></div>
+                      <div id="type_div" class="column-2 card">
+                          <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div></div>
                   </div>
                   <div class="row">
                       <div style="background-image:url('{% static 'images/arka6.png' %}');" class="column-2 card">
@@ -60,7 +68,7 @@
                           <div class="span"><span></span></div></div>
                       <div style="background-image:url('{% static 'images/arka1.png' %}');" class="column-2 card">
                           <div class="span"><span></span></div></div>
-                      <div id="gerceklesenMaliyet" style="background-image:url('{% static 'images/arka4.png' %}');"  class="column-2 card">
+                      <div id="gerceklesenMaliyet" class="column-2 card">
                           <div class="span"><span>Gerçekleşen Maliyet</span></div>
                           <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_name=project.ProjectName %}"></a>
                       </div>
@@ -100,6 +108,19 @@
             var KonumText = konumSpan.textContent.toLowerCase();
             var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
             konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+        };
+
+        var typeDiv = document.querySelector("#type_div");
+        var typeSpan = document.querySelector("#type_span");
+        typeImgChange(typeSpan);
+        function typeImgChange(typeSpan){
+            var typeText = typeSpan.textContent.toLowerCase();
+            if(typeText == "çatı"){
+                typeText = typeText.replace("çatı", "cati");
+            }
+            console.log(typeText)
+            var newImageUrl = `{% static 'images/' %}${typeText}.png`;
+            typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
         };
 
     </script>
