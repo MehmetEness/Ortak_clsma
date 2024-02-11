@@ -45,5 +45,6 @@ urlpatterns = [
     path('sales_offer/AFM/create_revise/<card_id>/', views.create_revise, name='create_revise'),
     path("sales_offer_revises/<card_id>/", views.sales_offer_revises, name='sales_offer_revises'),
     path('upload_file_view/', views.upload_file_view, name='upload_file_view'),
+    path('get-clients/', views.get_clients, name='get_clients'),
 
    ]
