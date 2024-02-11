@@ -275,6 +275,7 @@
 }
 table thead th {
       cursor: pointer;
+      z-index: 111111;
    }
    table thead th span{
       position: relative;
@@ -292,19 +293,26 @@ table thead th {
   transform: translateY(-50%);
   transition: transform 0.3s ease;
    }
+  .list_firt_tr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
 /*---------------------*/
 
-.run-job{
-  background: #fff3dc;
+
+.run-job .fa-circle{
+  color: #dae457;
 }
-.wait-job{
-  background: #dee8ff;
+.wait-job .fa-circle{
+  color: #5d88ec;
 }
-.lost-job{
-  background: #ece6e7;
+.lost-job .fa-circle{
+  color: #ca0828;
 }
-.gain-job{
-  background: #e2eee7;
+.gain-job .fa-circle{
+  color: #04eb22;
 }
 
   
@@ -390,9 +398,52 @@ table thead th {
           <div class="sales_container container">         
               <div class="rows" data-situation="Potansiyel Müşteri">    
                     <div style="background-color: #D0DDFB;" class="total-cash">
-                      <span>$ {{potential_customers_cost}}</span>
-                      <span>({{potential_customers_count}})</span>
-                    </div>       
+                      <span>$ span1</span>
+                      <span>span2</span>
+                    </div>  
+                    <div id=""  class="card" draggable="true" data-situation="Potansiyel Müşteri">
+                      <div class="boxes">
+                        <p class="bold700">Firma Adı</p>
+                        <p>tarih</p>
+                      </div>
+                      <div class="boxes">
+                        <p>Teklif Bedeli</p>
+                        <p>Birim Teklif</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>Toplam Maliyet</p>
+                      <p>Birim Maliyet</p>
+                      </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          <button class="mb mr-3">M1</button>
+                          <button class="mb mr-3">M2</button>
+                          <button class="mb mr-3">M3</button>
+                            </div>
+                        <div class="buttons">
+                          <button class="mb mr-3">T1</button>
+                          <button class="mb mr-3">T2</button>
+                          <button class="mb mr-3">T3</button>
+                          <button class="mb mr-3">T4</button>
+                          <button class="mb mr-3">T5</button>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>yorum</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a>Düzenle</a></li>
+                          <li>Kaybedildi</li>
+                          <li>Kazanıldı</li>
+                          <li>Bekleyen</li>
+                          <li><a>Revize </a></li>                          
+                        </ul>
+                      </div> 
+                      
+                    </div>                         
                     {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}" class="card" draggable="true" data-situation="{{ card.Situation_Card }}">
@@ -458,15 +509,14 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                               <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
+                          
                         </ul>
                       </div> 
                     </div>
@@ -544,15 +594,13 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;"  class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                               <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -562,7 +610,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Fiyat Belirleme">
-                    <div style="background-color: #F5FCD9;" class="total-cash">
+                    <div style="background-color: #FEF19A;" class="total-cash">
                       <span>$ {{price_customers_cost}}</span>
                       <span>({{price_customers_count}})</span>
                     </div> 
@@ -633,15 +681,13 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                               <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -650,7 +696,7 @@ table thead th {
                     
               </div>
               <div class="rows" data-situation="Teklif Hazırlama">
-                    <div style="background-color: #FEF29A;" class="total-cash">
+                    <div style="background-color: #FDE549;" class="total-cash">
                       <span>$ {{offer_customers_cost}}</span>
                       <span>({{offer_customers_count}})</span>
                     </div> 
@@ -721,15 +767,13 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                               <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -737,7 +781,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Teklif Hazır">
-                    <div style="background-color: #FEDB1B;" class="total-cash">
+                    <div style="background-color: #F2D202;" class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
                     </div> 
@@ -808,15 +852,13 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                               <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -824,7 +866,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Teklif Sunuldu">
-                <div style="background-color: #98EE77;" class="total-cash">
+                <div style="background-color: #FCF635;" class="total-cash">
                   <span>$ {{done_customers_cost}}</span>
                   <span>({{done_customers_count}})</span>
                 </div> 
@@ -895,15 +937,13 @@ table thead th {
                     <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                   </div>
                   <div class="card-menu">
-                    <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                    <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                    <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                     <ul class="card_menu">
                       <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                       <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                       <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                       <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                       <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize</a></li>
-                      <li onclick="deleteCard({{ card.id }})">Sil</li>
                     </ul>
                   </div> 
                 </div>
@@ -982,15 +1022,13 @@ table thead th {
                         <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
                       </div>
                       <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn1"></i>
-                        <i style="display: none;" class="fa-solid fa-ellipsis card_menu-btn2"></i>
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
                         <ul class="card_menu">
                           <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
                           <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
                           <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
                           <li onclick="waitCard({{ card.id }})">Bekleyen</li>
                           <li onclick="reviseCard({{ card.id }})">Revize</li>
-                          <li onclick="deleteCard({{ card.id }})">Sil</li>
                         </ul>
                       </div> 
                     </div>
@@ -1029,7 +1067,7 @@ table thead th {
                     {% elif card.Is_late == True %} class="wait-job"
                     {% else %} class="run-job"{% endif %}>
 
-                    <td ><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a></td>
+                    <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><img src="{% static 'icon.ico' %}" alt=""></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -1295,8 +1333,8 @@ for (j of rows) {
 }
 function Drop() {
   this.append(dragItem);
-  this.style.border = "none";
-  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+  //this.style.border = "none";
+  //this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
 
   var targetRowSituation = this.dataset.situation;
   var cardId = dragItem.id;
@@ -1316,14 +1354,14 @@ function Drop() {
 }
 function dragOver(e) {
   e.preventDefault();
-  this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
+  //this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
 }
 function dragEnter(e) {
   e.preventDefault();
 }
 function dragLeave() {
-  this.style.border = "none";
-  this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+ // this.style.border = "none";
+ // this.style.borderRight = "6px solid rgba(41, 60, 73,0.9)";
 }
     
 </script>

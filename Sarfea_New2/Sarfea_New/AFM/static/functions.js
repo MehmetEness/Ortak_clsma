@@ -3,19 +3,33 @@ var search = document.querySelector(".search");
 var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
 
+//                  GENEL FUNCTİON
+
+function clear(value){      
+  if(value != undefined){
+      var cleanString = value.replace(/[^0-9,]/g, '');
+      return cleanString;
+  }else{
+      var  cleanString = 0;
+      return cleanString;
+  } 
+}
+
 //                  FORMAT NUMBERS
 
 function formatNumber(number, fract) {
-  return new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
+  
+  var value = new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
+  return value.replace(/\./g, 'a').replace(/,/g, '.').replace(/a/g, ',');
 }
 function format(number) {
-  var indexOfDot = number.indexOf('.');  
+  var indexOfDot = number.indexOf(',');  
   if (indexOfDot !== -1) {
-    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     var decimalPart = number.slice(indexOfDot + 1);
-    return integerPart + '.' + decimalPart;
+    return integerPart + ',' + decimalPart;
   } else {
-    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
       return formattedNumber; 
   }
 }
@@ -26,7 +40,8 @@ function tableFormat(cells, type) {
   switch (type) {
     case "usd":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        //var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -38,7 +53,8 @@ function tableFormat(cells, type) {
       break;
     case "tl":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+       // var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
@@ -50,7 +66,7 @@ function tableFormat(cells, type) {
       break;
     case "kur":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -73,7 +89,7 @@ function tableFormat(cells, type) {
       break;
     case "numeric":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2);
           cell.title = formatNumber(value, 2);
@@ -91,22 +107,22 @@ function tableFormat(cells, type) {
 //                  SIRALAMA İŞLEMLERİ
 
 function sortTable(table, columnIndex) {
-  const headers = table.querySelectorAll('thead th span');
+  //const headers = table.querySelectorAll('thead th span');
   var rows, switching, i, x, y, shouldSwitch;
   var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
   switching = true;
-
-  while (switching) {
+  
+  while (switching) {    
     switching = false;
     var tbody = table.querySelector('tbody');
     rows = tbody.rows;
-
+    
     for (i = 0; i < rows.length - 1; i++) {
       shouldSwitch = false;
-
       x = rows[i].getElementsByTagName("td")[columnIndex];
-      y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-
+      y = rows[i + 1].getElementsByTagName("td")[columnIndex];     
+      console.log(rows[i].textContent)
+      console.log(rows[i + 1].textContent)
       if (!isNaN(x.textContent.replace(/[$,₺]/g, "").trim())) {
         var xValue = parseFloat(x.textContent.replace(/[$,₺]/g, "").trim());
         var yValue = parseFloat(y.textContent.replace(/[$,₺]/g, "").trim());
@@ -134,6 +150,7 @@ function sortTable(table, columnIndex) {
     if (shouldSwitch) {
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
+      
     }
   }  
 }
@@ -214,7 +231,7 @@ function requiredInputs(inputs, labels) {
   inputs.forEach(function (input, index) {
     if (input.value == "") {
       labels[index].style.color = "red";
-      labels[index].style.fontWeight = "700";
+      labels[index].style.fontWeight = "600";
     } else {
       labels[index].style.color = "black";
       labels[index].style.fontWeight = "500";
@@ -233,19 +250,55 @@ function requiredInputs(inputs, labels) {
 function controlSelectionInputs(input, label,ddmenu) {
   var optionCount = 0;
   ddmenu.forEach(function(option){
-    if(input.value == option.textContent){
+    if(input.value.trim() == option.textContent.trim()){
       optionCount += 1;
     }
   });
   if (optionCount == 0) {
     label.style.color = "red";
-    label.style.fontWeight = "700";
+    label.style.fontWeight = "600";
     return false;
   } else {
     label.style.color = "black";
     label.style.fontWeight = "500";
     return true;
   }
+}
+function controlSelectionInputsReverse(input, label,ddmenu) {
+  var optionCount = 0;
+  ddmenu.forEach(function(option){
+    if(input.value.trim() == option.textContent.trim()){
+      optionCount += 1;
+    }
+  });
+  if (optionCount == 0) {    
+    label.style.color = "black";
+    label.style.fontWeight = "500";
+    return true;
+  } else {
+    label.style.color = "red";
+    label.style.fontWeight = "600";
+    return false;
+  }
+}
+
+//                  INPUTLARI FORMATLAMA
+
+function inputForFormat(input){
+  input.addEventListener("input", function(event) {
+      var inputValue = event.target.value;
+      var clearValue = clear(inputValue);
+      var formatValue = format(clearValue);
+      input.value = formatValue;
+  });
+}
+
+function onPageLoad(input) {
+var inputValue = input.value; 
+var clearValue = clear(inputValue);
+var formatValue = format(clearValue);
+input.value = formatValue;
+deger = formatValue;
 }
 
 //                  FİRMA ADLARI KONTROLÜ
@@ -414,66 +467,36 @@ function convertDateFormat (tarih){
   return date;
 }   
 
-//                  INPUTLARI FORMATLAMA
 
-function runEventListeners(inputForFormat){
-    inputForFormat.addEventListener("input", function(event) {
-        var inputValue = event.target.value;
-        var clearValue = clear(inputValue);
-        var formatValue = format(clearValue);
-        inputForFormat.value = formatValue;
-    });
-}
-function clear(value){      
-    if(value != undefined){
-        var cleanString = value.replace(/[^0-9.]/g, '');
-        return cleanString;
-    }else{
-        var  cleanString = 0;
-        return cleanString;
-    } 
-}
-function onPageLoad(input) {
-  var inputValue = input.value; 
-  var clearValue = clear(inputValue);
-  var formatValue = format(clearValue);
-  input.value = formatValue;
-  deger = formatValue;
-}
 
 //                 DOLAR KURU İÇİN TARİH ÇEKME
 
 function tarihFormatiniDegistir(tarih) {
-  // Giriş tarihini JavaScript Date objesine çevir
+  tarih = convertDateFormat(tarih);
   const dateObj = new Date(tarih);
   dateObj.setDate(dateObj.getDate() + 1);
   if (isWeekend(dateObj)) {
       dateObj.setDate(dateObj.getDate() + 1);
   }
-  // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
   while (isWeekend(dateObj)) {
       dateObj.setDate(dateObj.getDate() + 1);
   }
-  // Yıl, ay ve gün bilgilerini al
   const yil = dateObj.getFullYear();
-  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
-  const gun = dateObj.getDate().toString().padStart(2, '0'); // Gün değeri 2 haneli yap
-  // Yıl, ay ve gün bilgilerini birleştirerek gün-ay-yıl formatında tarihi oluştur
+  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+  const gun = dateObj.getDate().toString().padStart(2, '0');
   const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
   return yeniFormatliTarih;
 }
 function birGunOncekiTarih(dateString) {
+  dateString = convertDateFormat(dateString);
   const dateObj = new Date(dateString);
   dateObj.setDate(dateObj.getDate());
-  // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
   while (isWeekend(dateObj)) {
       dateObj.setDate(dateObj.getDate() + 1);
   }
-  // Yıl, ay ve gün bilgilerini al
   const yil = dateObj.getFullYear();
   const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
   const gun = dateObj.getDate().toString().padStart(2, '0');
-  // Yıl, ay ve gün bilgilerini birleştirerek yeni formatta tarihi oluştur
   const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
   return yeniFormatliTarih;
 }  

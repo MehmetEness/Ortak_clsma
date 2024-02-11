@@ -17,7 +17,8 @@ var leftMenu = document.querySelector("#nav-bar");
 var hamburgerMenu1 = document.querySelector("#hamburger_btn1");
 var hamburgerMenu2 = document.querySelector("#hamburger_btn2");
 var rowcards = document.querySelectorAll(".card");
-var cardMenuBtn1 = document.querySelectorAll(".card_menu-btn1");
+var cardMenuBtn = document.querySelectorAll(".card_menu-btn");
+var cardUlMenus = document.querySelectorAll(".card_menu");
 let rows = document.querySelectorAll(".rows");
 var topMenuLi = document.querySelectorAll(".top-menu-ul li");
 let maniContainer = document.querySelector(".main-container");
@@ -35,6 +36,7 @@ let thRowsList = listTable.querySelectorAll("th");
 let thRowsLost = lostTable.querySelectorAll("th");
 let thRowsSales = salesTable.querySelectorAll("th");
 let thRowsWon = wonTable.querySelectorAll("th");
+
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
 
@@ -183,38 +185,35 @@ hamburgerMenu2.addEventListener("click", () => {
 
 //                  CARD MENÜ
 
-var cardMenuBtn2;
 let cardMenu;
 let btn1;
 var boolClick = false;
 
-cardMenuBtn1.forEach((btn) => {
+
+cardMenuBtn.forEach((btn) => {   
   btn.addEventListener("click", function () {
-    let card = this.closest(".card");
-    cardMenuBtn2 = card.querySelector(".card_menu-btn2");
-    cardMenu = card.querySelector(".card_menu");
-    btn1 = btn;
-    boolClick = true;
-
-    cardMenu.style.display = "block";
-    btn.style.display = "none";
-    cardMenuBtn2.style.display = "block";
-
-    cardMenuBtn2.addEventListener("click", function () {
-      cardMenu.style.display = "none";
-      cardMenuBtn2.style.display = "none";
-      btn.style.display = "block";
-      cardMenuBtn2 = null;
-      cardMenu = null;
-      btn1 = null;
-      boolClick = false;
-    });
+      let card = this.closest(".card");
+      cardMenu = card.querySelector(".card_menu");
+      if(cardMenu.style.display == "none"){
+        cardMenu.style.display = "block";
+      }
+      else{
+        cardMenu.style.display = "none";
+      }
   });
+  document.addEventListener("click", function(event) {                 
+        var isClickInsideDiv = btn.contains(event.target);
+        let card = btn.closest(".card");
+        let cardMenu1 = card.querySelector(".card_menu");
+        if(!isClickInsideDiv){                    
+              cardMenu1.style.display = "none";          
+        }         
+    });
 });
 
 //                  CARD FORMATLAMA
 
-cardFormat();
+//cardFormat();
 function cardFormat() {
   rows.forEach(function (row) {
     let cards = row.querySelectorAll(".card");
