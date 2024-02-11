@@ -18,7 +18,9 @@ function clear(value){
 //                  FORMAT NUMBERS
 
 function formatNumber(number, fract) {
-  return new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
+  
+  var value = new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
+  return value.replace(/\./g, 'a').replace(/,/g, '.').replace(/a/g, ',');
 }
 function format(number) {
   var indexOfDot = number.indexOf(',');  
@@ -38,7 +40,8 @@ function tableFormat(cells, type) {
   switch (type) {
     case "usd":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        //var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -50,7 +53,8 @@ function tableFormat(cells, type) {
       break;
     case "tl":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+       // var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
@@ -62,7 +66,7 @@ function tableFormat(cells, type) {
       break;
     case "kur":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -85,7 +89,7 @@ function tableFormat(cells, type) {
       break;
     case "numeric":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2);
           cell.title = formatNumber(value, 2);
