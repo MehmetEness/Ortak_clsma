@@ -222,13 +222,11 @@ function cardFormat() {
     let totalCash = 0;
 
     cards.forEach(function (card) {
-      let USDSpan = card.querySelector(".boxes:first-of-type p:first-of-type");
-      let unitSpan = card.querySelector(
-        ".boxes:first-of-type p:nth-of-type(2)"
-      );
-      let powerSpan = card.querySelector(
-        ".boxes:nth-of-type(2) p:nth-of-type(1)"
-      );
+      let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
+      let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
+      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
+      let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
+      let powerSpan = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(1)");
       let currentUSD =
         parseFloat(USDSpan.textContent.replace(/,/g, ".")) || 0;
       let currentUnit =
