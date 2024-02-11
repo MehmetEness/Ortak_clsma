@@ -91,7 +91,7 @@
                    </div>
                    <div class="input-box" id="chek_date_box">
                     <span class="details">Tarih </span>
-                    <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes" placeholder="01.01.2000">
+                    <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes" placeholder="01.01.2000" maxlength="10">
                   </div>
                    <div class="input-box" name="PaymentType_Incomes">
                     <span id="payment_type_label" class="details">Ödeme Türü</span>
@@ -107,7 +107,7 @@
                    </div> 
                    <div style="display: none;" class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
                     <span class="details">Çek Son Kullanma Tarihi </span>
-                    <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes" placeholder="01.01.2000">
+                    <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes" placeholder="01.01.2000" maxlength="10">
                  </div>   
                    
                    
@@ -144,203 +144,9 @@
 {% endblock %} 
   {% block js_files %} 
   <script src="{% static 'functions.js' %}"></script> 
-      <script src="{% static 'income_add.js' %}"></script> 
+  <script src="{% static 'income_add_wp.js' %}"></script> 
 
-
-      <script>
-        var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
-        var firmaAddInput = document.querySelector("#id_CompanyName_Clients");          
-        var firmaAddBtn = document.querySelector("#firma_add_btn");
-        var firmaForm = document.querySelector("#firma_form");
-        var firmaAddLabel = document.querySelector("#firma_add_label");
-        firmaAddBtn.addEventListener("click", function(){
-          event.preventDefault();       
-            if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
-                firmaAddLabel.style.color = "black";
-                firmaAddLabel.style.fontWeight = "500";
-                firmaForm.submit();
-            }
-            else{
-                firmaAddLabel.style.color = "red";
-                firmaAddLabel.style.fontWeight = "700";
-            }   
-        });
-        </script>
-
-
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          // firma-add-btn butonunu seçin
-          var firmaAddBtn = document.getElementById("paying-firma-add-btn");
-
-          // clientFirmaAddWindow penceresini seçin
-          var clientFirmaAddWindow = document.querySelector(".clientFirmaAddWindow");
-
-          // firma-add-btn butonuna tıklandığında
-          firmaAddBtn.addEventListener("click", function() {
-              // clientFirmaAddWindow penceresinin görünürlüğünü değiştir
-              clientFirmaAddWindow.style.display = "flex";
-          });
-
-          // clientFirmaAdd-modal (X) butonuna tıklandığında
-          var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
-          clientFirmaAddModal.addEventListener("click", function() {
-              // clientFirmaAddWindow penceresinin görünürlüğünü gizle
-              clientFirmaAddWindow.style.display = "none";
-          });
-      });
-     
-        
-document.addEventListener('DOMContentLoaded', function () {
-  const inputs = document.querySelectorAll('.myInput');
-
-  inputs.forEach(input => {
-    const dropdownId = input.getAttribute('data-dropdown');
-    const dropdown = document.getElementById(dropdownId);
-    const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
-
-    input.addEventListener('focus', function () {
-      dropdown.classList.add('show');
-    });
-
-    input.addEventListener('blur', function () {
-      setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200);
-    });
-
-    input.addEventListener('input', function () {
-      const filterText = input.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        if (itemText.startsWith(filterText)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function () {
-        input.value = this.textContent;
-        dropdown.classList.remove('show');
-      });
-    });
-  });
-});
-          
-          
-          var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
-        document.addEventListener('DOMContentLoaded', function () {
-        const mySelect = document.getElementById('id_PaymentType_Incomes');
-        if (mySelect.value == "Çek") {
-          chekLastDateBox.style.display = "block";
-        } else {
-          chekLastDateBox.style.display = "none";
-        }
-        mySelect.addEventListener('change', controlFunction);
-
-        function controlFunction() {
-        const selectedOption = mySelect.options[mySelect.selectedIndex].text;
-
-        if (selectedOption.startsWith('Çek')) {
-          chekLastDateBox.style.display = "block";
-        } else {
-          chekLastDateBox.style.display = "none";
-        }
-        }
-        });
-        
-            var amountInputForFormat = document.querySelector("#id_Amount_Incomes");
-            var amountInputReformatBtn = document.querySelector("#project-create-btn");
-            var firmalar = document.querySelectorAll("#dropdown1 .dropdown-item");
-            var form = document.querySelector("#my-form");
-            var i1 = document.querySelector("#id_CompanyName_Pay_Incomes");
-            var s1 = document.querySelector("#odeme_yapan_firma_span");
-            var submitBool = true;
-            var x = true;
-            var deger;
-            
-            amountInputReformatBtn.addEventListener("click", function(event) {
-            event.preventDefault();
-            var firmaCounta = 0;
-            firmalar.forEach(function(firma){
-              if(i1.value == firma.textContent){
-                firmaCounta += 1;
-              }
-            });
-            if(i1.value == "" || firmaCounta == 0){
-              s1.style.color = "red";
-              s1.style.fontWeight = "700";
-              x = false;
-           }
-           else{
-            s1.style.color = "black";
-            s1.style.fontWeight = "500";
-            x = true;
-          }
-           if(x){
-            inputField.value = tarihFormat(inputField.value);
-            inputField2.value = tarihFormat(inputField2.value);
-            amountInputForFormat.value = clear(deger);
-            form.submit();
-           }
-            
-            });   
-            function tarihFormat(tarih) {
-      if(tarih.length == 10){
-        var parcalar = tarih.split('.');
-
-    var gun = parcalar[0];
-    var ay = parcalar[1];
-    var yil = parcalar[2];
-
-    var yeniFormat = yil + '-' + ay + '-' + gun;
-
-    return yeniFormat;
-      }
-      else{
-        return "";
-      }
-    
-}
-       
-        runEventListeners();
-        function runEventListeners(){
-        amountInputForFormat.addEventListener("input", function(event) {
-            var inputValue = event.target.value;
-            var clearValue = clear(inputValue);
-            var formatValue = format(clearValue);
-            amountInputForFormat.value = formatValue;
-            deger = formatValue;
-        });
-        }
-        function clear(value){   // Alfasayısal olmayan ve nokta olmayan karakterleri kaldır   
-            if(value != undefined){
-            var cleanString = value.replace(/[^0-9.]/g, '');
-            return cleanString;    // Çıktı: "123456.789"  
-        }else{
-            var  cleanString = 0;
-            return cleanString;
-        }  
-        }
-        
-        function format(number) {
-        var indexOfDot = number.indexOf('.');
-        
-        if (indexOfDot !== -1) {
-        var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        var decimalPart = number.slice(indexOfDot + 1);
-        return integerPart + '.' + decimalPart;
-        } else {
-        var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return formattedNumber; 
-        }
-        }
-      </script>
+ 
       <script>
         
         var amountInput = document.querySelector("#id_Amount_Incomes");    // Alınan miktar
@@ -350,33 +156,20 @@ document.addEventListener('DOMContentLoaded', function () {
           var buyingValues ; 
           var tarih ;
           
-          //**************      KUR HESAPLAMA      ********************
-          
-          
-          // Hedef tarih
+          //**************      KUR HESAPLAMA      ********************          
+        
           var dosyaURL = "{% static 'kur.json' %}";
-          //selection seçimine göre yapılacak işlem
-                 
                  timeForKur.addEventListener('change', function () {
-                     // Seçilen değeri al
                      const secilenDeger = timeForKur.value;
-                    
-                     // Seçilen değere göre işlem yap
-                     if (secilenDeger === 'secenek1') {
-                         
+                     if (secilenDeger === 'secenek1') {                         
                      } else if (secilenDeger === 'secenek2') {
                          tarih = birGunOncekiTarih(dateForKur.value);
-                         console.log(tarih);
                          fetch(dosyaURL)
                          .then(response => response.json())
                          .then(data => {
                            try {
-                             // Hedef tarihi kullanarak veriyi filtrele
-                             const hedefVeri = data.items.find(item => item.Tarih === tarih);
-                       
+                             const hedefVeri = data.items.find(item => item.Tarih === tarih);                       
                              if (hedefVeri) {
-                               // TP_DK_USD_S alanını konsola yazdır
-                               //console.log(hedefVeri.TP_DK_USD_S);
                                kurInput.value = hedefVeri.TP_DK_USD_S
                                console.log(hedefVeri.TP_DK_USD_S);
                              } else {
@@ -388,22 +181,16 @@ document.addEventListener('DOMContentLoaded', function () {
                          })
                          .catch(err => {
                            console.error('Dosya okuma hatası:', err);
-                         });
-                     ////-----------------------------------------
-                             
+                         });                             
                      } else if (secilenDeger === 'secenek3') {
-                       //console.log(dateForKur.value);
                          tarih = tarihFormatiniDegistir(dateForKur.value);    
                          console.log(tarih);
                          fetch(dosyaURL)
                          .then(response => response.json())
                          .then(data => {
                            try {
-                             // Hedef tarihi kullanarak veriyi filtrele
-                             const hedefVeri = data.items.find(item => item.Tarih === tarih);
-                       
+                             const hedefVeri = data.items.find(item => item.Tarih === tarih);                       
                              if (hedefVeri) {
-                               // TP_DK_USD_S alanını konsola yazdır
                                console.log(hedefVeri.TP_DK_USD_S);
                                kurInput.value = hedefVeri.TP_DK_USD_S
                              } else {
@@ -419,116 +206,8 @@ document.addEventListener('DOMContentLoaded', function () {
                      }
                  });
           
-          
-          /******************************       Tarihi Formatlama          ********************************* */
-          function tarihFormatiniDegistir(tarih) {
-    // Giriş tarihini JavaScript Date objesine çevir
-    const dateObj = new Date(tarih);
-    dateObj.setDate(dateObj.getDate() + 1);
-    if (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
-
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
-    const gun = dateObj.getDate().toString().padStart(2, '0'); // Gün değeri 2 haneli yap
-
-    // Yıl, ay ve gün bilgilerini birleştirerek gün-ay-yıl formatında tarihi oluştur
-    const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
-
-    return yeniFormatliTarih;
-}
-
-
-/************************************      Tarihten 1 gün çıkarma         *************************************** */
-
-function birGunOncekiTarih(dateString) {
-    const dateObj = new Date(dateString);
-    dateObj.setDate(dateObj.getDate());
-
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() + 1);
-    }
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    const gun = dateObj.getDate().toString().padStart(2, '0');
-
-    // Yıl, ay ve gün bilgilerini birleştirerek yeni formatta tarihi oluştur
-    const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
-
-    return yeniFormatliTarih;
-}
-          
-          
-          // Haftasonu kontrol fonksiyonu
-          function isWeekend(date) {
-              const day = date.getDay();
-              return day === 0 || day === 6;
-          }
+  
        </script>
-<script>
-  var inputField = document.querySelector("#id_ChekDate_Incomes");
-  var inputField2 = document.querySelector("#id_LastChekDate_Incomes");
-       
- 
-    inputField.addEventListener('input', function(event) {
-    var userInput = inputField.value;
-   
-   if (event.inputType !== 'deleteContentBackward') {
-     inputField.value = formatDate(userInput);
-   }
- });
- inputField2.addEventListener('input', function(event) {
-    var userInput = inputField2.value;
-   
-   if (event.inputType !== 'deleteContentBackward') {
-     inputField2.value = formatDate(userInput);
-   }
- });
- 
-  function formatDate(date) {
-   var cleaned = date.replace(/[^\d+]/g, '');
-   var formatted = cleaned;
-   var current;
-   var day = "31";
-   var month = "12";
-   var year = "2999";
-     
-     inputField.maxLength = 10;
-     inputField2.maxLength = 10;
-       if(formatted.length < 3) {
-         if(formatted < day){
-           return formatted;
-         }
-         else{
-           return "31";
-         }        
-       }
-       if (formatted.length < 5) {
-         if(formatted.slice(2) < month){
-           return `${formatted.slice(0,2)}.${formatted.slice(2)}`;  
-         }
-         else{
-           return `${formatted.slice(0,2)}.12`
-         }                  
-       }
-       if (formatted.length < 10) {
-         if(formatted.slice(4) < year){
-           return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.${formatted.slice(4)}`; 
-         }
-         else{
-           return `${formatted.slice(0,2)}.${formatted.slice(2,4)}.2999`;
-         } 
-                   
-       }  
- }
- </script>
+
     
   {% endblock %}

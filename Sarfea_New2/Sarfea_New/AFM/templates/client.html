@@ -62,7 +62,7 @@
                   {{ client_form.Email }}
                 </div>    
                 <div class="input-box" name="CompanyName">
-                  <span class="details">Bölge</span>
+                  <span id="konum_span" class="details">Bölge</span>
                   <div class="dropdown-container">
                     <input autocomplete= 'off' value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
                   <div id="dropdown1" class="dropdown-content">
@@ -110,7 +110,7 @@
               {% for client in clients %}
               <tr>
                   <td><button type="button" class="edit-client-btn button2" style= "background: none; border:none;"><a href= "{% url 'client_edit' client_name=client.CompanyName_Clients %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
-                  <td>{{ client.CompanyName_Clients }} </td>
+                  <td>{{ client.CompanyName_Clients }}</td>
                   <td>{{ client.ContactPerson }}</td>
                   <td>{{ client.PhoneNumber }} </td>
                   <td>{{ client.Email }}</td>
