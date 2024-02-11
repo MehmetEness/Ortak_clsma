@@ -803,20 +803,28 @@ def income_add(request):
 @login_required
 def deneme(request):
 
+    locations = Locations.objects.all()
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('deneme')    
-        
+        client_form = ClientsForm(request.POST)
+        if client_form.is_valid():
+            client_form.save()
+            return redirect('client')
     else:
-        form = ProjectForm()
-        
+        client_form = ClientsForm()
+
+    clients = Clients.objects.all()
+
     context = {
-        "form": form,
+        'clients': clients,
+        'client_form': client_form,
+        "locations": locations
     }
     return render(request, "deneme.html", context)
+
+@login_required
+def get_clients(request):
+    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'clients': list(clients)})
 
 @login_required
 def expenses_add_wp(request, project_id):
