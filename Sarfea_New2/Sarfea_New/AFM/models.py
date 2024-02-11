@@ -67,6 +67,11 @@ class Details(models.Model):
     def __str__(self):
         return self.Detail
 
+class Worker(models.Model):
+    Worker_Name = models.CharField(max_length=63)
+    def __str__(self):
+        return self.Worker_Name
+
 class Project(models.Model):
     ProjectName = models.CharField(max_length=63, blank=True, null=True, unique=True)
     ProjectCode = models.CharField(max_length=63, blank=True, null=True)
@@ -262,7 +267,8 @@ class SalesOfferCard_Revise(models.Model):
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
     Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
 
-    
+
+
 
 
 

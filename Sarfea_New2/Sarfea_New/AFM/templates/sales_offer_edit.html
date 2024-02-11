@@ -160,11 +160,11 @@
             <div class="input-box">
               <span id="ilgilenen_kisi_span" class="details">İlgilenen Kişi*</span>
               <div class="dropdown-container">
-                <input type="text" id="id_Person_Deal" name="Person_Deal" class="myInput" placeholder="İlgilenen Kişi" data-dropdown="dropdown3" autocomplete="off"/>
+                <input value="{{sales_offer_edit_curr.Person_Deal}}" type="text" id="id_Person_Deal" name="Person_Deal" class="myInput" placeholder="İlgilenen Kişi" data-dropdown="dropdown3" autocomplete="off"/>
                 <div id="dropdown3" class="dropdown-content">
-                  {% for x in locations %}
+                  {% for x in workers %}
                   <span value="{{x.id}}" class="dropdown-item"
-                    >{{x.Location}}</span
+                    >{{x.Worker_Name}}</span
                   >
                   {% endfor %}
                 </div>
