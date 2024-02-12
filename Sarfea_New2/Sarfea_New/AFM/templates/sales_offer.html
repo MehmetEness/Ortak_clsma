@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{% static 'sales_offer_navrss.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <link rel="stylesheet" href="{% static 'sales_offers.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
     #id_Offer_Comment_Card{
     }
@@ -405,9 +406,9 @@ table thead th {
                     {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
+                        <p class="bold700">{{card.Client_Card}}</p>                        
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -416,6 +417,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>5000kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -490,8 +495,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -500,6 +505,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -565,7 +574,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Fiyat Belirleme">
-                    <div style="background-color: #FEF19A;" class="total-cash">
+                    <div style="background-color: #ece75f;" class="total-cash">
                       <span>$ {{price_customers_cost}}</span>
                       <span>({{price_customers_count}})</span>
                     </div> 
@@ -574,8 +583,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -584,6 +593,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>5000kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -650,7 +663,7 @@ table thead th {
                     
               </div>
               <div class="rows" data-situation="Teklif Hazırlama">
-                    <div style="background-color: #FDE549;" class="total-cash">
+                    <div style="background-color: #e5de00;" class="total-cash">
                       <span>$ {{offer_customers_cost}}</span>
                       <span>({{offer_customers_count}})</span>
                     </div> 
@@ -659,8 +672,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -669,6 +682,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -734,7 +751,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Teklif Hazır">
-                    <div style="background-color: #F2D202;" class="total-cash">
+                    <div style="background-color: #e6cc00;" class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
                     </div> 
@@ -743,8 +760,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -753,6 +770,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -818,7 +839,7 @@ table thead th {
                     {% endfor %}
               </div>
               <div class="rows" data-situation="Teklif Sunuldu">
-                <div style="background-color: #FCF635;" class="total-cash">
+                <div style="background-color: #e69b00;" class="total-cash">
                   <span>$ {{done_customers_cost}}</span>
                   <span>({{done_customers_count}})</span>
                 </div> 
@@ -827,8 +848,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -837,6 +858,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -902,7 +927,7 @@ table thead th {
                 {% endfor %}
               </div>  
               <div class="rows" data-situation="Sunum Sonrası Görüşme">
-                    <div style="background-color: #FDA802;" class="total-cash">
+                    <div style="background-color: #e47200;" class="total-cash">
                       <span>$ {{presentation_customers_cost}}</span>
                       <span>({{presentation_customers_count}})</span>
                     </div> 
@@ -911,8 +936,8 @@ table thead th {
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
                         <p class="bold700">{{card.Client_Card}}</p>
-                        <p>{{card.Date_Card}}</p>
                       </div>
+                      <p>{{card.Date_Card}}</p>
                       <div class="boxes">
                         <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
                         <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
@@ -921,6 +946,10 @@ table thead th {
                       <p>{{card.Cost_NotIncludingKDV_Card}}</p>
                       <p>{{card.UnitCost_NotIncludingKDV}}</p>
                       </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
                       <div class="boxes">
                         <div class="buttons">
                           {% if card.M_File_Card %}
@@ -1024,7 +1053,7 @@ table thead th {
                     {% elif card.Situation_Card == 'Sunum Sonrası Görüşme' %} class="sun-son-gor"
                     {% endif %}>
 
-                    <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><img src="{% static 'icon.ico' %}" alt=""></td>
+                    <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -1290,6 +1319,8 @@ for (j of rows) {
 }
 function Drop() {
   this.append(dragItem);
+  cardDateList(rowsElements);
+  totalSpanFormatForDrag();
   //this.style.border = "none";
   //this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
 

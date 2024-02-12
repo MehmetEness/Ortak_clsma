@@ -33,6 +33,7 @@ var lostTable = document.querySelector('.lost-job-container table');
 var salesTable = document.querySelector('.sales-container table'); 
 var wonTable = document.querySelector('.won-container table');  
 let thRowsList = listTable.querySelectorAll("th"); 
+let trRowsList = listTable.querySelectorAll("tr"); 
 let thRowsLost = lostTable.querySelectorAll("th");
 let thRowsSales = salesTable.querySelectorAll("th");
 let thRowsWon = wonTable.querySelectorAll("th");
@@ -43,10 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
   topMenuLi[2].classList.add("li-hover");
 
   rowcards.forEach(function (item) {
-    let cardTarih = item.querySelector("p:nth-child(3)");
-    let araziCati = item.querySelector(
-      ".boxes:nth-of-type(2) p:nth-of-type(2)"
-    );
+    let cardTarih = item.querySelector("p:nth-child(2)");
+    let araziCati = item.querySelector(".boxes:nth-of-type(4) p:nth-of-type(2)");
     if (araziCati.textContent == "None") {
       araziCati.textContent = "-";
     }
@@ -54,6 +53,59 @@ document.addEventListener("DOMContentLoaded", function () {
       cardTarih.textContent = "-";
     }
   });
+
+  //                  LİSTE İŞ RENGİ VERME
+
+  trRowsList.forEach((row) =>{
+    let span = row.querySelector(".icon-blue")
+    console.log(row.className)
+    switch (row.className) {
+      case "gain-job":
+        span.style.color = "#38b000"
+        break;
+
+      case "lost-job":
+        span.style.color = "#bf0603"
+
+        break;
+
+      case "wait-job":
+        span.style.color = "#00296b"
+
+        break;
+      case "pot-mus":
+        span.style.color = "#D0DDFB"
+
+        break;
+      case "mal-hes":
+        span.style.color = "#9DB8FB"
+
+        break;
+      case "fi-be":
+        span.style.color = "#ece75f"
+
+        break;
+      case "tek-hazırlama":
+        span.style.color = "#e5de00"
+
+        break;
+      case "tek-hazır":
+        span.style.color = "#e6cc00"
+
+        break;
+      case "tek-sunuldu":
+          span.style.color = "#e69b00"
+  
+        break;  
+      case "sun-son-gor":
+          span.style.color = "#e47200"
+  
+        break; 
+      default:
+        break;
+    }
+  });
+  //<span class="icon-blue"></span>
 
   //                  CARD TARİHE GÖRE SIRALAMA
   cardDateList(rowsElements);
@@ -86,7 +138,7 @@ document
     uploadFile(cardId, fileType);
     setTimeout(function () {
       document.querySelector("#file-form").submit();
-    }, 10);
+    }, 50);
   });
 function uploadFile(cardId, fileType) {
   var formData = new FormData();
@@ -213,7 +265,7 @@ cardMenuBtn.forEach((btn) => {
 
 //                  CARD FORMATLAMA
 
-//cardFormat();
+cardFormat();
 function cardFormat() {
   rows.forEach(function (row) {
     let cards = row.querySelectorAll(".card");
@@ -222,30 +274,45 @@ function cardFormat() {
     let totalCash = 0;
 
     cards.forEach(function (card) {
-      let USDSpan = card.querySelector(".boxes:first-of-type p:first-of-type");
-      let unitSpan = card.querySelector(
-        ".boxes:first-of-type p:nth-of-type(2)"
-      );
-      let powerSpan = card.querySelector(
-        ".boxes:nth-of-type(2) p:nth-of-type(1)"
-      );
-      let currentUSD =
-        parseFloat(USDSpan.textContent.replace(/,/g, ".")) || 0;
-      let currentUnit =
-        parseFloat(unitSpan.textContent.replace(/,/g, ".")) || 0;
-      let powerCount =
-        parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
+      let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
+      let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
+      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
+      let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
+      let powerSpan = card.querySelector(".boxes:nth-of-type(4) p:nth-of-type(1)");
+      let totalTeklifCount = parseFloat(totalTeklif.textContent.replace(/,/g, ".")) || 0;
+      let unitTeklifCount = parseFloat(unitTeklif.textContent.replace(/,/g, ".")) || 0;
+      let totalMaliyetCount = parseFloat(totalMaliyet.textContent.replace(/,/g, ".")) || 0;
+      let unitMaliyetCount = parseFloat(unitMaliyet.textContent.replace(/,/g, ".")) || 0;
+      let powerCount = parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
 
-      USDSpan.textContent = "$ " + formatNumber(currentUSD, 2);
-      unitSpan.textContent = formatNumber(currentUnit, 0) + " USD/kWp";
+      totalTeklif.textContent = "$ " + formatNumber(totalTeklifCount, 2);
+      unitTeklif.textContent = formatNumber(unitTeklifCount, 0) + " USD/kWp";
+      totalMaliyet.textContent = "$ " + formatNumber(totalMaliyetCount, 2);
+      unitMaliyet.textContent = formatNumber(unitMaliyetCount, 0) + " USD/kWp";
       powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
 
-      totalCash += currentUSD;
+      totalCash += totalMaliyetCount;
     });
 
     totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
     customersCountSpan.textContent = `(${String(cards.length)})`;
-  });
+  });  
+}
+function totalSpanFormatForDrag() {
+  rows.forEach(function (row) {
+    let cards = row.querySelectorAll(".card");
+    let totalCashSpan = row.querySelector(".total-cash span:nth-child(1)");
+    let customersCountSpan = row.querySelector(".total-cash span:nth-child(2)");
+    let totalCash = 0;
+
+    cards.forEach(function (card) {
+      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
+      let totalMaliyetCount = parseFloat(clear(totalMaliyet.textContent)) || 0;
+      totalCash += totalMaliyetCount;
+    });
+    totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
+    customersCountSpan.textContent = `(${String(cards.length)})`;
+  });  
 }
 
 //                  TOP MENU FONKSİYONLARI

@@ -393,8 +393,8 @@ function cardDateList(rows) {
   rows.forEach(function (row) {
     var cards = row.querySelectorAll(".card");
     var sortedCards = Array.from(cards).sort(function (a, b) {
-      var dateA = parseCardDate(a.querySelector("p:nth-child(3)").textContent);
-      var dateB = parseCardDate(b.querySelector("p:nth-child(3)").textContent);
+      var dateA = parseCardDate(a.querySelector("p:nth-child(2)").textContent);
+      var dateB = parseCardDate(b.querySelector("p:nth-child(2)").textContent);
 
       if (dateA === null && dateB !== null) {
         return 1;
