@@ -133,8 +133,7 @@ async function getAndRenderClients() {
     }
 }
 
-const form = document.getElementById('myForm');
-form.addEventListener('submit', async function(event) {
+sform.addEventListener('submit', async function(event) {
     event.preventDefault();
     try {
         const formData = new FormData(form);
