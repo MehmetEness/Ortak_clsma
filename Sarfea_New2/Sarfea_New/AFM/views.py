@@ -58,6 +58,28 @@ def upload_file_view(request):
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
+@csrf_exempt
+def post_client(request):
+    if request.method == 'POST':
+        
+        company_name_clients = request.POST.get('company_name_clients')
+        contact_person= request.POST.get('contact_person')
+        phone_number= request.POST.get('phone_number')
+        email= request.POST.get('email')
+        location= request.POST.get('location')
+
+        Clients.objects.create(
+            CompanyName_Clients=company_name_clients, 
+            ContactPerson=contact_person, 
+            PhoneNumber=phone_number, 
+            Email=email, 
+            Location=location, 
+        )
+
+        return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
 @login_required
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
@@ -106,7 +128,10 @@ def create_revise(request, card_id):
         M_File_Card_3=card.M_File_Card_3,
         Is_Lost=card.Is_Lost,
         Is_Gain=card.Is_Gain,
-        Is_late=card.Is_late
+        Is_late=card.Is_late,
+        Unit_Cost_with_Roof_Cost=card.Unit_Cost_with_Roof_Cost,
+        Unit_Offer_with_Roof_Cost=card.Unit_Offer_with_Roof_Cost,
+        Profit_Rate_Card=card.Profit_Rate_Card,
     )
 
     # Save the new SalesOfferCard_Revise instance
@@ -931,6 +956,9 @@ def income_add_wp(request, project_id):
         "client_form":client_form,
     }
     return render(request, "income_add_wp.html", context)
+#***********************************************************
+#                       GET METHODLARI
+#***********************************************************
 
 @login_required
 def get_clients(request):

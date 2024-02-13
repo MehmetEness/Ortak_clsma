@@ -56,6 +56,6 @@ urlpatterns = [
     path("get_expenses/<str:project_name>/", views.get_expenses, name='get_expenses'),
     path("get_job_history/<str:project_name>/", views.get_job_history, name='get_job_history'),
     path("get_incomes/<str:project_name>/", views.get_incomes, name='get_incomes'),
-
+    path('post-client/', views.post_client, name='post_client'),
 
    ]
