@@ -58,6 +58,28 @@ def upload_file_view(request):
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
+@csrf_exempt
+def post_client(request):
+    if request.method == 'POST':
+        
+        company_name_clients = request.POST.get('company_name_clients')
+        contact_person= request.POST.get('contact_person')
+        phone_number= request.POST.get('phone_number')
+        email= request.POST.get('email')
+        location= request.POST.get('location')
+
+        Clients.objects.create(
+            CompanyName_Clients=company_name_clients, 
+            ContactPerson=contact_person, 
+            PhoneNumber=phone_number, 
+            Email=email, 
+            Location=location, 
+        )
+
+        return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
 @login_required
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
@@ -106,7 +128,10 @@ def create_revise(request, card_id):
         M_File_Card_3=card.M_File_Card_3,
         Is_Lost=card.Is_Lost,
         Is_Gain=card.Is_Gain,
-        Is_late=card.Is_late
+        Is_late=card.Is_late,
+        Unit_Cost_with_Roof_Cost=card.Unit_Cost_with_Roof_Cost,
+        Unit_Offer_with_Roof_Cost=card.Unit_Offer_with_Roof_Cost,
+        Profit_Rate_Card=card.Profit_Rate_Card,
     )
 
     # Save the new SalesOfferCard_Revise instance
@@ -377,7 +402,6 @@ def jobhistory_edit(request, jobhistory_id):
         'supplier': supplier,
     }
     return render(request, "jobhistory_edit.html", context)
-
 
 @login_required
 def income_edit(request, income_id):
@@ -825,10 +849,7 @@ def deneme(request):
     }
     return render(request, "deneme.html", context)
 
-@login_required
-def get_clients(request):
-    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'clients': list(clients)})
+
 
 @login_required
 def expenses_add_wp(request, project_id):
@@ -935,3 +956,59 @@ def income_add_wp(request, project_id):
         "client_form":client_form,
     }
     return render(request, "income_add_wp.html", context)
+#***********************************************************
+#                       GET METHODLARI
+#***********************************************************
+
+@login_required
+def get_clients(request):
+    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'clients': list(clients)})
+
+@login_required
+def get_suppliers(request):
+    suppliers = Supplier.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'suppliers': list(suppliers)})
+
+@login_required
+def get_projects(request):
+    projects = Project.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'projects': list(projects)})
+
+@login_required
+def get_lost_cards(request):
+    lost_cards = SalesOfferCard.objects.filter(Is_Lost=True)
+    return JsonResponse({'lost_cards': list(lost_cards)})
+
+@login_required
+def get_gain_cards(request):
+    gain_cards = SalesOfferCard.objects.filter(Is_Gain=True)
+    return JsonResponse({'gain_cards': list(gain_cards)})
+
+@login_required
+def get_late_cards(request):
+    late_cards = SalesOfferCard.objects.filter(Is_late=True)
+    return JsonResponse({'late_cards': list(late_cards)})
+
+@login_required
+def get_run_cards(request):
+    run_cards = SalesOfferCard.objects.filter(Is_late=False, Is_Gain=False, Is_Lost=False)
+    return JsonResponse({'run_cards': list(run_cards)})
+
+@login_required
+def get_cards(request):
+    cards = SalesOfferCard.objects.all().values()  
+    return JsonResponse({'cards': list(cards)})
+
+@login_required
+def get_expenses(request, project_name):
+    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name)
+    return JsonResponse({'expenses': list(expenses)})
+
+def get_job_history(request, project_name):
+    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name)
+    return JsonResponse({'jobhistory': list(jobhistory)})
+
+def get_incomes(request, project_name):
+    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
+    return JsonResponse({'incomes': list(incomes)})
