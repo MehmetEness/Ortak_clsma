@@ -378,7 +378,6 @@ def jobhistory_edit(request, jobhistory_id):
     }
     return render(request, "jobhistory_edit.html", context)
 
-
 @login_required
 def income_edit(request, income_id):
     income_edit = get_object_or_404(Incomes, id=income_id)
@@ -825,10 +824,7 @@ def deneme(request):
     }
     return render(request, "deneme.html", context)
 
-@login_required
-def get_clients(request):
-    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'clients': list(clients)})
+
 
 @login_required
 def expenses_add_wp(request, project_id):
@@ -935,3 +931,56 @@ def income_add_wp(request, project_id):
         "client_form":client_form,
     }
     return render(request, "income_add_wp.html", context)
+
+@login_required
+def get_clients(request):
+    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'clients': list(clients)})
+
+@login_required
+def get_suppliers(request):
+    suppliers = Supplier.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'suppliers': list(suppliers)})
+
+@login_required
+def get_projects(request):
+    projects = Project.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'projects': list(projects)})
+
+@login_required
+def get_lost_cards(request):
+    lost_cards = SalesOfferCard.objects.filter(Is_Lost=True)
+    return JsonResponse({'lost_cards': list(lost_cards)})
+
+@login_required
+def get_gain_cards(request):
+    gain_cards = SalesOfferCard.objects.filter(Is_Gain=True)
+    return JsonResponse({'gain_cards': list(gain_cards)})
+
+@login_required
+def get_late_cards(request):
+    late_cards = SalesOfferCard.objects.filter(Is_late=True)
+    return JsonResponse({'late_cards': list(late_cards)})
+
+@login_required
+def get_run_cards(request):
+    run_cards = SalesOfferCard.objects.filter(Is_late=False, Is_Gain=False, Is_Lost=False)
+    return JsonResponse({'run_cards': list(run_cards)})
+
+@login_required
+def get_cards(request):
+    cards = SalesOfferCard.objects.all().values()  
+    return JsonResponse({'cards': list(cards)})
+
+@login_required
+def get_expenses(request, project_name):
+    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name)
+    return JsonResponse({'expenses': list(expenses)})
+
+def get_job_history(request, project_name):
+    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name)
+    return JsonResponse({'jobhistory': list(jobhistory)})
+
+def get_incomes(request, project_name):
+    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
+    return JsonResponse({'incomes': list(incomes)})

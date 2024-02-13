@@ -46,5 +46,16 @@ urlpatterns = [
     path("sales_offer_revises/<card_id>/", views.sales_offer_revises, name='sales_offer_revises'),
     path('upload_file_view/', views.upload_file_view, name='upload_file_view'),
     path('get-clients/', views.get_clients, name='get_clients'),
+    path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
+    path('get_projects/', views.get_projects, name='get_projects'),
+    path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
+    path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
+    path('get_late_cards/', views.get_late_cards, name='get_late_cards'),
+    path('get_run_cards/', views.get_run_cards, name='get_run_cards'),
+    path('get_cards/', views.get_cards, name='get_cards'),
+    path("get_expenses/<str:project_name>/", views.get_expenses, name='get_expenses'),
+    path("get_job_history/<str:project_name>/", views.get_job_history, name='get_job_history'),
+    path("get_incomes/<str:project_name>/", views.get_incomes, name='get_incomes'),
+
 
    ]

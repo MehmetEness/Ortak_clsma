@@ -133,14 +133,9 @@ async function getAndRenderClients() {
     }
 }
 
-<<<<<<< HEAD
-sform.addEventListener('submit', async function(event) {
-    event.preventDefault();
-=======
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
->>>>>>> b4120996c373b756c7142e09918c1210f52bea65
     try {
         const formData = new FormData(form);
         for(item of formData){
