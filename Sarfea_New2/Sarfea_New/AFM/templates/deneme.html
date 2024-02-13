@@ -106,7 +106,7 @@
                     <th scope="col"><span>E-posta</span></th>
                     <th scope="col"><span>Bölge</span></th>
                 </thead>  
-                <tbody id="tbody">  
+                <tbody id="tbody">                   
                 </tbody>
             </table> 
         </div>
@@ -116,52 +116,6 @@
   {% block js_files %} 
   <script src="{% static 'client.js' %}"></script> 
   <script src="{% static 'functions.js' %}"></script>   
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function(){
-        // Sayfa yüklendiğinde verileri al
-        getAndRenderClients();
+  <script src="{% static 'deneme.js' %}"></script> 
 
-        // Belirli bir süre aralığında verileri güncelle
-        setInterval(getAndRenderClients, 5000);  // Örneğin, her 5 saniyede bir güncelle
-
-        function getAndRenderClients() {
-            $.ajax({
-                url: '/get-clients/',  // views.py'de tanımlanan URL
-                type: 'GET',
-                success: function (data) {
-                    // Verileri güncelle
-                    var clients = data.clients;
-
-                    // Tabloyu temizle
-                    $('#tbody').empty();
-
-                    // Yeni verileri tabloya ekle
-                    clients.forEach(function(client) {
-                        var row = '<tr>' +
-                            '<td>';
-                        if (client.CompanyName_Clients) {
-                            row += '<button class="edit-client-btn button2" data-client-name="' + client.CompanyName_Clients + '">Edit</button>' +
-                            '</td>' +
-                            '<td>' + client.CompanyName_Clients + '</td>' +
-                            '<td>' + client.ContactPerson + '</td>' +
-                            '<td>' + client.PhoneNumber + '</td>' +
-                            '<td>' + client.Email + '</td>' +
-                            '<td>' + client.Location + '</td>' +
-                            '</tr>';
-                            $('#tbody').append(row);
-                        } 
-                    });
-                    
-                    // Butona tıklama olayını yakalayarak ilgili URL'ye yönlendirme işlemini gerçekleştirin
-                    $('.edit-client-btn').click(function() {
-                        var clientName = $(this).data('client-name');
-                        window.location.href = '/client_edit/' + clientName + '/';
-                    });
-                    
-                }
-            });
-        }
-    });
-</script>
-  {% endblock %}
+{% endblock %}
