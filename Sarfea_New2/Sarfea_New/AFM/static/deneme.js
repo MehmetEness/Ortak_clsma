@@ -30,14 +30,14 @@ document.getElementById("musteri-modal").addEventListener("click", function(){
 
 //                  ZORUNLU İNPUTLAR  
 
-createBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    var bool = controlSelectionInputs(locationInput, locationSpan, locations);
-    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputsReverse(reqInputs[0], reqLabels[0], companyList) && bool){      
-        console.log("dfs")      
-        form.submit();
-    }
-}); 
+// createBtn.addEventListener("click", function(event) {
+//     event.preventDefault();
+//     var bool = controlSelectionInputs(locationInput, locationSpan, locations);
+//     if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputsReverse(reqInputs[0], reqLabels[0], companyList) && bool){      
+//         console.log("dfs")      
+//         form.submit();
+//     }
+// }); 
 
 //                  TELEFON NUMARASI FORMATLAMA
 
@@ -133,19 +133,28 @@ async function getAndRenderClients() {
     }
 }
 
+<<<<<<< HEAD
 sform.addEventListener('submit', async function(event) {
     event.preventDefault();
+=======
+
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+>>>>>>> b4120996c373b756c7142e09918c1210f52bea65
     try {
         const formData = new FormData(form);
-        const response = await fetch('/submit-form-url', {
-            method: 'POST',
-            body: formData
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        for(item of formData){
+            console.log(item[0],item[1])
         }
-        const data = await response.json();
+        // const response = await fetch('/submit-form-url', {
+        //     method: 'POST',
+        //     body: formData
+        // });
+        // if (!response.ok) {
+        //     throw new Error('Network response was not ok');
+        // }
+        // const data = await response.json();
     } catch (error) {
         console.error("göndrme başarısız");
     }
-});
+}); 

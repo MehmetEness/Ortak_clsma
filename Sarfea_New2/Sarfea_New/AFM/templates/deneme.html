@@ -46,22 +46,21 @@
             <div class="user-details"> 
                 <div class="input-box" name="CompanyName">
                   <span id="firma_adi_span" class="details">Firma Adı*</span>
-                  {{ client_form.CompanyName_Clients }}
-                  
+                  {{ client_form.CompanyName_Clients }}                  
                 </div>    
-                <div class="input-box" name="CompanyName">
+                <div class="input-box" name="MuhatapName">
                   <span class="details">Muhatap</span>
                   {{ client_form.ContactPerson }}
                 </div>  
-                <div class="input-box" name="CompanyName">
+                <div class="input-box" name="phone">
                   <span class="details">Telefon</span>
                   {{ client_form.PhoneNumber }}
                 </div>    
-                <div class="input-box" name="CompanyName">
+                <div class="input-box" name="eMail">
                   <span class="details">E-posta</span>
                   {{ client_form.Email }}
                 </div>    
-                <div class="input-box" name="CompanyName">
+                <div class="input-box" name="Location">
                   <span class="details">Bölge</span>
                   <div class="dropdown-container">
                     <input autocomplete= 'off' value="{{client_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
