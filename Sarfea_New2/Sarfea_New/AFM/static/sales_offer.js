@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   trRowsList.forEach((row) =>{
     let span = row.querySelector(".icon-blue")
-    console.log(row.className)
     switch (row.className) {
       case "gain-job":
         span.style.color = "#38b000"
@@ -673,18 +672,20 @@ function openFile(url) {
   window.open(url, "_blank");
 }
 
+//                  LİSTEDEN CARDA GİTME
 
-
-
-let xxx = document.querySelector(".xspan");
-
-xxx.addEventListener("click", ()=>{
-
-  const card = document.getElementById("85");
-  topMenuLi[2].classList.add("li-hover");
-  topMenuLi[0].classList.remove("li-hover");
-  handleMenuItemClick("sale_time");
-    if (card) {
-      card.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+trRowsList.forEach((tr) =>{
+    musteriName = tr.querySelector("td:nth-child(3)");
+    if (musteriName) {
+      musteriName.style.cursor = "pointer";
+        musteriName.addEventListener("click", ()=>{
+            const card = document.getElementById(tr.dataset.id);
+            if(card){
+              topMenuLi[2].classList.add("li-hover");
+              topMenuLi[0].classList.remove("li-hover");            
+              handleMenuItemClick("sale_time");
+              card.scrollIntoView({ behavior: "smooth", block: "center" });
+            }                      
+        });
+    }     
 });

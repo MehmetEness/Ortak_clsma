@@ -313,7 +313,7 @@
 .lists table {
   max-height: 200px;
   overflow-y: scroll;
-  width: 3300px;
+  max-width: 3300px;
   text-align: center;
   border-collapse: collapse;
 }
@@ -322,9 +322,9 @@
   position: sticky;
   top: 0;
 }
-.lists th:first-child {
+/* .lists th:first-child {
   padding-left: 50px;
-}
+} */
 .lists tbody {
   line-height: 45px;
 }
