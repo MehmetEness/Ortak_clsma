@@ -1,25 +1,282 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css_files %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-<link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
-<link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
-<style>
-    #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
-        text-align: center;
+    <link rel="stylesheet" href="{% static 'sales_offer_navrss.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'sales_offers.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+    #id_Offer_Comment_Card{
     }
-    #table thead th:nth-child(2){
-        padding-left: 20px;
+    input[type="file"] {
+      cursor: pointer !important;
+      font: 300 14px sans-serif;
+      color:#9e9e9e;
+      width: 0px !important;
     }
-    .lists{
-        overflow-y: scroll;
-    }
-    table thead th {
+    input[type="file"]::-webkit-file-upload-button
+    {
+      font: 300 14px  sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
       cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    
+    input[type="file"]::-ms-browse {
+      font: 300 14px 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+      border: 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+    }
+  
+  /* Stilize edilmiş düğme görünümü */
+  .input-box label {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  </style>
+  <style>
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+  }
+  
+  .inputfile + label {
+      width: 49%;
+      font-size: 12px;
+      /* 20px */
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-block;
+      overflow: hidden;
+      padding: 5px 10px;
+      /* 10px 20px */
+  }
+  
+  
+  
+  .inputfile:focus + label,
+  .inputfile.has-focus + label {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
+  }
+  
+  .inputfile + label svg {
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      fill: currentColor;
+      margin-top: -0.25em;
+      margin-right: 0.25em;
+  }
+  
+  
+  .inputfile-1 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
+  .inputfile-2 + label {
+      color: #f1e5e6;
+      background: linear-gradient(135deg, #71b7e6, #191970);
+  }
+  .details{
+    position: absolute;
+    top: 10px;
+    left: 30%;
+  }
+  #submit_btn{
+    position: absolute;
+    bottom: 10px;
+    left: 40%;
+  }
+  #file_label{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+  }
+
+
+  .file_upload{  
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    color: #000;
+  position: absolute;     
+  
+  
+  z-index: 11123123123;
+}
+.file_upload .container{
+  position: relative;
+  background-color: #fff;
+  border: 3px solid #18283b;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#clientFirmaAdd-modal{
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.file_input{
+  display: none;
+}
+.file_upload #submit_btn{
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+    width: 250px;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+}
+.file_upload .details{
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: 700;
+}
+.right-menu{
+   width:100%;
+}
+#nav-bar{
+  display:none;
+}
+/*search box*/
+
+.search {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  overflow: hidden;
+  margin-left: 13px;
+  margin-right: 15px;
+  font-size: 16px;
+  border: solid 1px rgba(0, 0, 0, 0.3);
+  border-radius: 40px;
+}
+.search.active {
+  width: 300px;
+}
+.search .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  cursor: pointer;
+}
+.search .icon::before {
+  content: "";
+  position: absolute;
+  width: 7.5px;
+  height: 7.5px;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  transform: translate(-2px, -2px);
+}
+.search .icon::after {
+  content: "";
+  position: absolute;
+  width: 1.5px;
+  height: 6px;
+  background-color: #000;
+  transform: translate(3px, 3px) rotate(315deg);
+}
+.search .input {
+  position: relative;
+  width: 300px;
+  height: 40px;
+  left: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search .input input {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding: 10px 0;
+}
+.clear {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  right: 12px;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clear::before {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 10px;
+  background: #999;
+  transform: rotate(45deg);
+}
+.clear::after {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 10px;
+  background: #999;
+  transform: rotate(315deg);
+}
+table thead th {
+      cursor: pointer;
+      z-index: 111111;
    }
    table thead th span{
       position: relative;
@@ -37,63 +294,1060 @@
   transform: translateY(-50%);
   transition: transform 0.3s ease;
    }
+  .list_firt_tr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
+/*---------------------*/
 
-</style>
-{% endblock %}
-{% block title %} Projects {% endblock %}
-{% block content %}
- <div class="body-div"> 
-    
-    
-    {% include 'partials/_left_nav_bar.html' %}
-    <div class="right-menu">
-      <div class="top-menu">
-        <div class="content">         
-          <div style="margin-left: 50px;" class="search active">
-              <div class="icon"></div>
-              <div class="input">
-                <input id="mysearch" type="text" placeholder="Ara">
-            </div>
-            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
-         </div>
-      </div>
-      <div class="fonction-butons">
-         <a href="{% url 'income_add' %}"><button class="button2" >Gelir</button></a>
-         <a href="{% url 'expenses_add' %}"><button class="button2" >Yapılan Ödeme</button></a>
-         <a href="{% url 'jobhistory_add' %}"><button class="button2" >Yapılan İş</button></a>
-         <a href="{% url 'project_add' %}"><button class="button-project-start" >Proje Başlat</button></a>
-      </div>
-   </div>
-   <div class="lists">
-      <div class="line"></div>
-      <table id="table" class="table table-sortable">
-         <thead>
-            <th scope="col"></th>
-            <th scope="col"><span>Proje Adı</span></th>
-            <th id="xx2" scope="col"><span>Konum</span></th>
-            <th scope="col"><span>AC Güç</span></th>
-            <th scope="col"><span>DC Güç</span></th>
-            <th scope="col"><span>İş Bedeli</span></th>
-            <th scope="col"><span>Arazi/Çatı</span></th>
-            <th scope="col"><span>Tarih</span></th>
-            <th scope="col"><span>Durum</span></th>
-         </thead>
-         <tbody>
-            {% for x in project %}
-            {% include 'partials/_table-row.html' %}
-            {% endfor %}
-         </tbody>
-        </table>
-      </div>
+
+.run-job .fa-circle{
+  color: #dae457;
+}
+.wait-job .fa-circle{
+  color: #5d88ec;
+}
+.lost-job .fa-circle{
+  color: #ca0828;
+}
+.gain-job .fa-circle{
+  color: #04eb22;
+}
+
+  
+  </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %}
+    {% block title %} Sales Offer {% endblock %}
+    {% block content %}
+  <div class="body-div">
+  {% include 'partials/_left_nav_bar.html' %}
+  <div style="display: none;" class="file_upload">
+    <div class="container">
+      <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
+      <form id="file-form" enctype="multipart/form-data">
+        <span class="details"></span>
+              <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
+              <label id="file_label" for="id_file_up">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> 
+                  <span id="details_span"></span></label>
+             
+        <div class="button">
+          <input style="cursor: pointer;" id="submit_btn" type="submit" value="Kaydet" />
+        </div>
+      </form>
     </div>
   </div>
-</div>
-</div>
-</div>
-{% endblock %}
+      <div class="right-menu">         
+        <div class="top-menu">  
+          <div>
+            <button id="hamburger_btn1" style="margin: 0; margin-left: 20px; display: none;"><i class="fa-solid fa-bars"></i></button>   
+            <button id="hamburger_btn2" style="margin: 0; margin-left: 20px;"><i class="fa-solid fa-bars"></i></button>         
+            <span class="xspan">Satış Teklif</span> 
+          </div>   
+          <ul class="top-menu-ul">
+            <li id="list">Liste</li>           
+            <li id="waiting_job">Bekleyen İşler</li> 
+            <li id="sale_time">Satış Süreci</li>
+            <li id="losing_job">Kaybedilen İşler</li>
+            <li id="won_job">Kazanılan İşler</li>
+          </ul> 
+          
+          <div class="top_right_box">
+            <div class="content">         
+              <div style="margin-left: 50px;" class="search">
+                  <div class="icon"></div>
+                  <div class="input">
+                    <input id="mysearch" type="text" placeholder="Ara">
+                </div>
+                <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
+             </div>
+            </div>
+            <button> <a href="{% url 'sales_offer_add' %}">Yeni Satış</a></button>
+          </div>
+            
+          
+        </div>   
+        <div class="main-container">
+          <div class="titles">
+            <div class="title">
+              <p>Potansiyel Müşteri</p>                     
+            </div>
+            <div class="title">
+              <p>Maliyet Hesaplama</p>
+            </div>
+            <div class="title">
+              <p>Fiyat Belirleme</p>
+            </div>
+            <div class="title">
+              <p>Teklif Hazırlama</p>
+            </div>
+            <div class="title">
+              <p>Teklif Hazır</p>
+            </div>
+            <div class="title">
+              <p>Teklif Sunuldu</p>
+            </div>
+            <div class="title">
+              <p>Sunum Sonrası Görüşme</p>
+            </div>
+            
+            
+          </div>
+          <div class="sales_container container">         
+              <div class="rows" data-situation="Potansiyel Müşteri">    
+                    <div style="background-color: #D0DDFB;" class="total-cash">
+                      <span>$ span1</span>
+                      <span>span2</span>
+                    </div>  
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>                        
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>5000kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}                    
+              </div>
+              <div class="rows" data-situation="Maliyet Hesaplama">
+                    <div style="background-color: #9DB8FB;" class="total-cash">
+                      <span>$ </span>
+                      <span></span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}
+              </div>
+              <div class="rows" data-situation="Fiyat Belirleme">
+                    <div style="background-color: #ece75f;" class="total-cash">
+                      <span>$ {{price_customers_cost}}</span>
+                      <span>({{price_customers_count}})</span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>5000kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}
+                    
+              </div>
+              <div class="rows" data-situation="Teklif Hazırlama">
+                    <div style="background-color: #e5de00;" class="total-cash">
+                      <span>$ {{offer_customers_cost}}</span>
+                      <span>({{offer_customers_count}})</span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}
+              </div>
+              <div class="rows" data-situation="Teklif Hazır">
+                    <div style="background-color: #e6cc00;" class="total-cash">
+                      <span>$ {{done_customers_cost}}</span>
+                      <span>({{done_customers_count}})</span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}
+              </div>
+              <div class="rows" data-situation="Teklif Sunuldu">
+                <div style="background-color: #e69b00;" class="total-cash">
+                  <span>$ {{done_customers_cost}}</span>
+                  <span>({{done_customers_count}})</span>
+                </div> 
+                {% for card in sales_offer_card %}
+                {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                {% endfor %}
+              </div>  
+              <div class="rows" data-situation="Sunum Sonrası Görüşme">
+                    <div style="background-color: #e47200;" class="total-cash">
+                      <span>$ {{presentation_customers_cost}}</span>
+                      <span>({{presentation_customers_count}})</span>
+                    </div> 
+                    {% for card in sales_offer_card %}
+                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
+                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
+                      <div class="boxes">
+                        <p class="bold700">{{card.Client_Card}}</p>
+                      </div>
+                      <p>{{card.Date_Card}}</p>
+                      <div class="boxes">
+                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
+                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
+                      </div>   
+                      <div class="boxes">             
+                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
+                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
+                      </div>
+                      <div class="boxes">             
+                        <p>500kwp</p>
+                        <p>Çatı</p>
+                        </div>
+                      <div class="boxes">
+                        <div class="buttons">
+                          {% if card.M_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
+                          {% else %}
+                          <button class="mb mr-3">M1</button>
+                          {% endif %}                              
+                          {% if card.M_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
+                          {% else %}
+                          <button class="mb mr-3">M2</button>
+                          {% endif %}                          
+                          {% if card.M_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
+                          {% else %}
+                          <button class="mb mr-3">M3</button>
+                          {% endif %}                  
+                            </div>
+                        <div class="buttons">
+                          {% if card.Offer_File_Card %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
+                          {% else %}
+                          <button class="mb mr-3">T1</button>
+                          {% endif %}                            
+                          {% if card.Offer_File_Card_2 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
+                          {% else %}
+                          <button class="mb mr-3">T2</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_3 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
+                          {% else %}
+                          <button class="mb mr-3">T3</button>
+                          {% endif %}                          
+                          {% if card.Offer_File_Card_4 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
+                          {% else %}
+                          <button class="mb mr-3">T4</button>
+                          {% endif %}
+                          {% if card.Offer_File_Card_5 %}
+                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
+                          {% else %}
+                          <button class="mb mr-3">T5</button>
+                          {% endif %}                        
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                        
+                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
+                      </div>
+                      <div class="card-menu">
+                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                        <ul class="card_menu">
+                          <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
+                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
+                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
+                              <li onclick="reviseCard({{ card.id }})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>                         
+                        </ul>
+                      </div> 
+                    </div>     
+                    {% endif %}
+                    {% endfor %}
+              </div>
+        
+          </div>
+        </div>   
+        <div style="display: none;" class="list-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable">
+               <thead><th></th>
+                  <th scope="col"><span>Durum</span></th>
+                  <th scope="col"><span>Müşteri Adı</span></th>
+                  <th scope="col"><span>Konum</span></th>
+                  <th scope="col"><span>İlgili Kişi</span></th>
+                  <th scope="col"><span>AC Güç</span></th>
+                  <th scope="col"><span>DC Güç</span></th>
+                  <th scope="col"><span>Birim Maliyet</span></th>
+                  <th scope="col"><span>Toplam Maliyet</span></th>
+                  <th scope="col"><span>Birim Teklif</span></th>
+                  <th scope="col"><span>Toplam Teklif</span></th>
+                  <th scope="col"><span>Arazi/Çatı</span></th>
+                  <th scope="col"><span>Arazi Maliyeti</span></th>
+                  <th scope="col"><span>Arazi Dahil B.M.</span></th>
+                  <th scope="col"><span>Arazi Dahil T.T.</span></th>
+                  <th scope="col"><span>Arazi Maliyeti</span></th>
+                  <th scope="col"><span>Tarih</span></th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card%}
+                  <tr id="{{ card.id }}"
+                    {% if card.Is_Gain == True %} class="gain-job"
+                    {% elif card.Is_Lost == True %} class="lost-job"
+                    {% elif card.Is_late == True %} class="wait-job"
+                    {% elif card.Situation_Card == 'Potansiyel Müşteri' %} class="pot-mus"
+                    {% elif card.Situation_Card == 'Maliyet Hesaplama' %} class="mal-hes"
+                    {% elif card.Situation_Card == 'Fiyat Belirleme' %} class="fi-be"
+                    {% elif card.Situation_Card == 'Teklif Hazırlama' %} class="tek-hazırlama"
+                    {% elif card.Situation_Card == 'Teklif Hazır' %} class="tek-hazır"
+                    {% elif card.Situation_Card == 'Teklif Sunuldu' %} class="tek-sunuldu"
+                    {% elif card.Situation_Card == 'Sunum Sonrası Görüşme' %} class="sun-son-gor"
+                    {% endif %}
+                    >
+
+                    <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
+                    {% if card.Is_Gain == True %}
+                    <td class="gain-job">Kazanılan İş</td>
+
+                    {% elif card.Is_Lost == True %}
+                    <td class="lost-job">Kaybedilen İş</td>
+
+                    {% elif card.Is_late == True %}
+                    <td class="wait-job">Bekleyen İş</td>
+
+                    {% else %}
+                    <td class="run-job">{{card.Situation_Card}}</td>
+
+                    {% endif %}
+                    <td> {{card.Client_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+
+                    
+                  </tr>
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+        <div style="display: none;" class="lost-job-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable table_row">
+               <thead>
+                <th></th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card %}
+                {% if card.Is_Lost == True %}
+                  <tr>
+                    <td>
+                      <a href="#" onclick="reLostCard({{ card.id }}); return false;">
+                        <i class="fa-solid fa-rotate-left"></i>
+                      </a>
+                    </td>
+                    <td> {{card.Client_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+        <div style="display: none;" class="sales-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable table_row">
+               <thead>
+                <th></th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card%}
+                {% if card.Is_late == True %}
+                  <tr>
+                    <td onclick="reWaitCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td> {{card.Client_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+        <div style="display: none;" class="won-container container">
+          <div class="lists">
+            <table id="table" class="table table-sortable table_row">
+               <thead>
+                <th></th>
+                <th scope="col"><span>Müşteri Adı</span></th>
+                <th scope="col"><span>Konum</span></th>
+                <th scope="col"><span>İlgili Kişi</span></th>
+                <th scope="col"><span>AC Güç</span></th>
+                <th scope="col"><span>DC Güç</span></th>
+                <th scope="col"><span>Birim Maliyet</span></th>
+                <th scope="col"><span>Toplam Maliyet</span></th>
+                <th scope="col"><span>Birim Teklif</span></th>
+                <th scope="col"><span>Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi/Çatı</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
+                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                <th scope="col"><span>Arazi Maliyeti</span></th>
+                <th scope="col"><span>Tarih</span></th>
+               </thead>
+               <tbody>
+                {% for card in sales_offer_card%}
+                {% if card.Is_Gain == True %}
+                  <tr>
+                    <td onclick="reGainCard({{ card.id }})"><a><i class="fa-solid fa-rotate-left"></i></a></i></td>
+                    <td> {{card.Client_Card}} </td>
+                    <td>{{card.Location_Card}}</td>
+                    <td>{{card.Person_Deal}}</td>
+                    <td>{{card.AC_Power_Card}}</td>
+                    <td>{{card.DC_Power_Card}}</td>
+                    <td>{{card.UnitCost_NotIncludingKDV}}</td>
+                    <td>{{card.Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.UnitOffer_NotIncludingKDV}}</td>
+                    <td>{{card.Offer_Cost_NotIncludingKDV_Card}}</td>
+                    <td>{{card.Terrain_Roof_Card}}</td>
+                    <td>{{card.Roof_Cost_Card}}</td>
+                    <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
+                    <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
+                    <td>{{card.Profit_Rate_Card}}</td>
+                    <td>{{card.Date_Card| date:"d F y"}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}      
+               </tbody>
+              </table>
+            </div>
+        </div>
+          
+      </div>   
+  </div>
+  {% endblock %}
 
 {% block js_files %} 
 <script src="{% static 'functions.js' %}"></script> 
-<script src="{% static 'deneme2.js' %}"></script> 
+<script src="{% static 'sales_offer.js' %}"></script> 
 
+
+<script>
+// Revize  işlemleri 
+      function reviseCard(cardId) {
+        const csrftoken = getCookie('csrftoken');
+
+        if (!csrftoken) {
+          console.error('CSRF token bulunamadı.');
+          return;
+        }
+
+        fetch(`AFM/create_revise/${cardId}/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Kaybedildi işlemi başarısızz');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Kaybedildi işlemi başarılı', data);
+          location.reload();
+          var newUrl = "{% url 'sales_offer_edit' 0 %}".replace("0", cardId);
+          window.location.href = newUrl;
+        })
+        .catch(error => {
+          console.error('Hata:', error.message);
+        });
+        
+
+      }
+
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        return parts.length === 2 ? parts.pop().split(';').shift() : null;
+      }
+
+//                  CARD DRAG İŞLEMLERİ
+
+var dragItem = null;
+for (var i of rowcards) {
+  i.addEventListener("dragstart", dragStart);
+  i.addEventListener("dragend", dragEnd);
+}
+function dragStart() {
+  dragItem = this;
+  setTimeout(() => (this.style.display = "none"), 0);
+}
+function dragEnd() {
+  setTimeout(() => (this.style.display = "flex"), 0);
+}
+for (j of rows) {
+  j.addEventListener("dragover", dragOver);
+  j.addEventListener("dragenter", dragEnter);
+  j.addEventListener("dragleave", dragLeave);
+  j.addEventListener("drop", Drop);
+}
+function Drop() {
+  this.append(dragItem);
+  cardDateList(rowsElements);
+  totalSpanFormatForDrag();
+  //this.style.border = "none";
+  //this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+
+  var targetRowSituation = this.dataset.situation;
+  var cardId = dragItem.id;
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "{% url 'update_card_situation' %}", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      dragItem.dataset.situation = targetRowSituation;
+    }
+  };
+  xhr.send(
+    JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
+  );
+}
+function dragOver(e) {
+  e.preventDefault();
+  //this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
+}
+function dragEnter(e) {
+  e.preventDefault();
+}
+function dragLeave() {
+ // this.style.border = "none";
+ // this.style.borderRight = "6px solid rgba(41, 60, 73,0.9)";
+}
+    
+</script>
+
+  
 {% endblock %}

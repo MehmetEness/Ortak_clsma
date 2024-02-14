@@ -829,6 +829,54 @@ def deneme(request):
     }
     return render(request, "deneme.html", context)
 
+@login_required
+def deneme2(request):
+    sales_offer_card = SalesOfferCard.objects.all()
+   
+
+    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
+    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    potential_customers_count = potential_customers.count()
+
+    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
+    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    cost_customers_count = cost_customers.count()
+
+    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
+    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    price_customers_count = price_customers.count()
+
+    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
+    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    offer_customers_count = offer_customers.count()
+
+    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
+    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    presentation_customers_count = presentation_customers.count()
+
+    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
+    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    done_customers_count = done_customers.count()
+
+
+
+
+    context = {
+        'sales_offer_card':sales_offer_card,
+        'potential_customers_cost':potential_customers_cost,
+        'potential_customers_count':potential_customers_count,
+        'cost_customers_cost':cost_customers_cost,
+        'cost_customers_count':cost_customers_count,
+        'price_customers_cost':price_customers_cost,
+        'price_customers_count':price_customers_count,
+        'offer_customers_cost':offer_customers_cost,
+        'offer_customers_count':offer_customers_count,
+        'presentation_customers_cost':presentation_customers_cost,
+        'presentation_customers_count':presentation_customers_count,
+        'done_customers_cost':done_customers_cost,
+        'done_customers_count':done_customers_count,
+    }
+    return render(request, "deneme2.html", context)
 
 
 @login_required

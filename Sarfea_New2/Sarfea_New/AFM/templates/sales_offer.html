@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="{% static 'sales_offers.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-    #id_Offer_Comment_Card{
-    }
+    
     input[type="file"] {
       cursor: pointer !important;
       font: 300 14px sans-serif;
@@ -1040,8 +1039,7 @@ table thead th {
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
-                  <tr
-                    id="{{ card.id }}"
+                  <tr id="{{ card.id }}"
                     {% if card.Is_Gain == True %} class="gain-job"
                     {% elif card.Is_Lost == True %} class="lost-job"
                     {% elif card.Is_late == True %} class="wait-job"
@@ -1052,7 +1050,8 @@ table thead th {
                     {% elif card.Situation_Card == 'Teklif Hazır' %} class="tek-hazır"
                     {% elif card.Situation_Card == 'Teklif Sunuldu' %} class="tek-sunuldu"
                     {% elif card.Situation_Card == 'Sunum Sonrası Görüşme' %} class="sun-son-gor"
-                    {% endif %}>
+                    {% endif %}
+                    >
 
                     <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
                     {% if card.Is_Gain == True %}
