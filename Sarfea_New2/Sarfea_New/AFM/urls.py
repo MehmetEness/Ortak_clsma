@@ -29,6 +29,7 @@ urlpatterns = [
     path("income_add/", views.income_add, name='income_add'),
     path("deneme/", views.deneme, name='deneme'),
     path("deneme2/", views.deneme2, name='deneme2'),
+    path("deneme3/", views.deneme3, name='deneme3'),
     path("expenses_add_wp/<int:project_id>", views.expenses_add_wp, name='expenses_add_wp'),
     path("jobhistory_add_wp/<int:project_id>", views.jobhistory_add_wp, name='jobhistory_add_wp'),
     path("income_add_wp/<int:project_id>", views.income_add_wp, name='income_add_wp'),
