@@ -62,11 +62,11 @@ def upload_file_view(request):
 def post_client(request):
     if request.method == 'POST':
         
-        company_name_clients = request.POST.get('company_name_clients')
-        contact_person= request.POST.get('contact_person')
-        phone_number= request.POST.get('phone_number')
-        email= request.POST.get('email')
-        location= request.POST.get('location')
+        company_name_clients = request.POST.get('CompanyName_Clients')
+        contact_person= request.POST.get('ContactPerson')
+        phone_number= request.POST.get('PhoneNumber')
+        email= request.POST.get('Email')
+        location= request.POST.get('Location')
 
         Clients.objects.create(
             CompanyName_Clients=company_name_clients, 

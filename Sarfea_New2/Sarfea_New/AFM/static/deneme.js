@@ -28,16 +28,6 @@ document.getElementById("musteri-modal").addEventListener("click", function(){
     document.querySelector(".musteriWindow").style.display = "none";
 });
 
-//                  ZORUNLU İNPUTLAR  
-
-// createBtn.addEventListener("click", function(event) {
-//     event.preventDefault();
-//     var bool = controlSelectionInputs(locationInput, locationSpan, locations);
-//     if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputsReverse(reqInputs[0], reqLabels[0], companyList) && bool){      
-//         console.log("dfs")      
-//         form.submit();
-//     }
-// }); 
 
 //                  TELEFON NUMARASI FORMATLAMA
 
@@ -136,20 +126,28 @@ async function getAndRenderClients() {
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    try {
-        const formData = new FormData(form);
-        for(item of formData){
-            console.log(item[0],item[1])
+    var bool = controlSelectionInputs(locationInput, locationSpan, locations);
+    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputsReverse(reqInputs[0], reqLabels[0], companyList) && bool){      
+        try {
+            const formData = new FormData(form);
+            for(item of formData){
+                console.log(item); 
+            }
+            const response = await fetch('/post-client/', {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log(data); 
+            getAndRenderClients();
+            document.querySelector(".musteriWindow").style.display = "none";
+        } catch (error) {
+            console.error("Gönderme başarısız:", error);
         }
-        // const response = await fetch('/submit-form-url', {
-        //     method: 'POST',
-        //     body: formData
-        // });
-        // if (!response.ok) {
-        //     throw new Error('Network response was not ok');
-        // }
-        // const data = await response.json();
-    } catch (error) {
-        console.error("göndrme başarısız");
     }
-}); 
+});
+
+
