@@ -2,10 +2,10 @@ var rowsElements = document.querySelectorAll(
   '.rows[data-situation="Potansiyel Müşteri"], .rows[data-situation="Maliyet Hesaplama"],.rows[data-situation="Fiyat Belirleme"],.rows[data-situation="Teklif Hazırlama"],.rows[data-situation="Teklif Hazır"],.rows[data-situation="Teklif Sunuldu"],.rows[data-situation="Sunum Sonrası Görüşme"]'
 );
 var numericCells = document.querySelectorAll(
-  "#table td:nth-child(5), #table td:nth-child(6), #table td:nth-child(7), #table td:nth-child(8), #table td:nth-child(9), #table td:nth-child(10), #table td:nth-child(12), #table td:nth-child(13), #table td:nth-child(14), #table td:nth-child(15)"
+  "#table td:nth-child(6), #table td:nth-child(7), #table td:nth-child(8), #table td:nth-child(9), #table td:nth-child(10), #table td:nth-child(11), #table td:nth-child(13), #table td:nth-child(14), #table td:nth-child(15), #table td:nth-child(16)"
 );
 var textCells = document.querySelectorAll(
-  "#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(11), #table td:nth-child(16)"
+  "#table td:nth-child(2), #table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(12), #table td:nth-child(17)"
 );
 var mButtons = document.querySelectorAll(".mb");
 var closeModal = document.querySelectorAll(".modal-kapat");
@@ -131,9 +131,7 @@ document.getElementById("id_file_up").addEventListener("change", function () {
   var fileName = this.value.split("\\").pop();
   document.getElementById("details_span").innerText = fileName + " seçildi";
 });
-document
-  .getElementById("submit_btn")
-  .addEventListener("click", function (event) {
+document.getElementById("submit_btn").addEventListener("click", function (event) {
     event.preventDefault();
     uploadFile(cardId, fileType);
     setTimeout(function () {
@@ -674,3 +672,19 @@ function getCookie(name) {
 function openFile(url) {
   window.open(url, "_blank");
 }
+
+
+
+
+let xxx = document.querySelector(".xspan");
+
+xxx.addEventListener("click", ()=>{
+
+  const card = document.getElementById("85");
+  topMenuLi[2].classList.add("li-hover");
+  topMenuLi[0].classList.remove("li-hover");
+  handleMenuItemClick("sale_time");
+    if (card) {
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+});

@@ -345,7 +345,7 @@ table thead th {
           <div>
             <button id="hamburger_btn1" style="margin: 0; margin-left: 20px; display: none;"><i class="fa-solid fa-bars"></i></button>   
             <button id="hamburger_btn2" style="margin: 0; margin-left: 20px;"><i class="fa-solid fa-bars"></i></button>         
-            <span>Satış Teklif</span> 
+            <span class="xspan">Satış Teklif</span> 
           </div>   
           <ul class="top-menu-ul">
             <li id="list">Liste</li>           
@@ -1021,6 +1021,7 @@ table thead th {
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead><th></th>
+                  <th scope="col"><span>Durum</span></th>
                   <th scope="col"><span>Müşteri Adı</span></th>
                   <th scope="col"><span>Konum</span></th>
                   <th scope="col"><span>İlgili Kişi</span></th>
@@ -1032,11 +1033,10 @@ table thead th {
                   <th scope="col"><span>Toplam Teklif</span></th>
                   <th scope="col"><span>Arazi/Çatı</span></th>
                   <th scope="col"><span>Arazi Maliyeti</span></th>
-                  <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
-                  <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
+                  <th scope="col"><span>Arazi Dahil B.M.</span></th>
+                  <th scope="col"><span>Arazi Dahil T.T.</span></th>
                   <th scope="col"><span>Arazi Maliyeti</span></th>
                   <th scope="col"><span>Tarih</span></th>
-                  <th scope="col"><span>Durum</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1055,6 +1055,19 @@ table thead th {
                     {% endif %}>
 
                     <td class="list_firt_tr"><a href="{% url 'sales_offer_revises' card_id=card.id %}"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
+                    {% if card.Is_Gain == True %}
+                    <td class="gain-job">Kazanılan İş</td>
+
+                    {% elif card.Is_Lost == True %}
+                    <td class="lost-job">Kaybedilen İş</td>
+
+                    {% elif card.Is_late == True %}
+                    <td class="wait-job">Bekleyen İş</td>
+
+                    {% else %}
+                    <td class="run-job">{{card.Situation_Card}}</td>
+
+                    {% endif %}
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -1071,19 +1084,7 @@ table thead th {
                     <td>{{card.Profit_Rate_Card}}</td>
                     <td>{{card.Date_Card| date:"d F y"}}</td>
 
-                    {% if card.Is_Gain == True %}
-                    <td class="gain-job">Kazanılan İş</td>
-
-                    {% elif card.Is_Lost == True %}
-                    <td class="lost-job">Kaybedilen İş</td>
-
-                    {% elif card.Is_late == True %}
-                    <td class="wait-job">Bekleyen İş</td>
-
-                    {% else %}
-                    <td class="run-job">{{card.Situation_Card}}</td>
-
-                    {% endif %}
+                    
                   </tr>
                   {% endfor %}      
                </tbody>
@@ -1248,14 +1249,7 @@ table thead th {
 <script src="{% static 'functions.js' %}"></script> 
 <script src="{% static 'sales_offer.js' %}"></script> 
 
-<!-- Elementler -->
 
-<!-- Kaybedilen İş -->
-<script>
-  function openFile(url) {
-      window.open(url, '_blank');  // Dosyayı yeni bir sekmede açar
-  }
-</script>
 <script>
 // Revize  işlemleri 
       function reviseCard(cardId) {
