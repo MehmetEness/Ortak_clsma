@@ -58,30 +58,7 @@ def upload_file_view(request):
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
-<<<<<<< HEAD
-=======
-@csrf_exempt
-def post_client(request):
-    if request.method == 'POST':
-        
-        company_name_clients = request.POST.get('CompanyName_Clients')
-        contact_person= request.POST.get('ContactPerson')
-        phone_number= request.POST.get('PhoneNumber')
-        email= request.POST.get('Email')
-        location= request.POST.get('Location')
 
-        Clients.objects.create(
-            CompanyName_Clients=company_name_clients, 
-            ContactPerson=contact_person, 
-            PhoneNumber=phone_number, 
-            Email=email, 
-            Location=location, 
-        )
-
-        return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
->>>>>>> 6e663fe2961149c343ea5a95a61308c685248505
 
 @login_required
 def sales_offer_revises(request, card_id):
@@ -1024,11 +1001,11 @@ def get_incomes(request, project_name):
 def post_client(request):
     if request.method == 'POST':
         
-        company_name_clients = request.POST.get('company_name_clients')
-        contact_person= request.POST.get('contact_person')
-        phone_number= request.POST.get('phone_number')
-        email= request.POST.get('email')
-        location= request.POST.get('location')
+        company_name_clients = request.POST.get('CompanyName_Clients')
+        contact_person= request.POST.get('ContactPerson')
+        phone_number= request.POST.get('PhoneNumber')
+        email= request.POST.get('Email')
+        location= request.POST.get('Location')
 
         Clients.objects.create(
             CompanyName_Clients=company_name_clients, 
