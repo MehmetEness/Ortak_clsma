@@ -17,8 +17,6 @@ var locationSpan = document.querySelector("#konum_span")
 var locations = document.querySelectorAll("#dropdown1 .dropdown-item")
 
 
-
-
 //                  MÜŞTERİ EKLE BUTTON
 
 document.getElementById("musteri-ac").addEventListener("click", function(){    
