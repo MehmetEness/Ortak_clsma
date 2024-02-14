@@ -315,6 +315,14 @@ table thead th {
   color: #04eb22;
 }
 
+td, th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
   
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1019,8 +1027,8 @@ table thead th {
         <div style="display: none;" class="list-container container">
           <div class="lists">
             <table id="table" class="table table-sortable">
-               <thead><th></th>
-                  <th scope="col"><span>Durum</span></th>
+               <thead><th style="width: 100px;"></th>
+                  <th style="padding: 0px 80px;" scope="col"><span>Durum</span></th>
                   <th scope="col"><span>Müşteri Adı</span></th>
                   <th scope="col"><span>Konum</span></th>
                   <th scope="col"><span>İlgili Kişi</span></th>
@@ -1035,11 +1043,11 @@ table thead th {
                   <th scope="col"><span>Arazi Dahil B.M.</span></th>
                   <th scope="col"><span>Arazi Dahil T.T.</span></th>
                   <th scope="col"><span>Arazi Maliyeti</span></th>
-                  <th scope="col"><span>Tarih</span></th>
+                  <th style="padding: 0px 50px;" scope="col"><span>Tarih</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
-                  <tr id="{{ card.id }}"
+                  <tr data-id="{{ card.id }}"
                     {% if card.Is_Gain == True %} class="gain-job"
                     {% elif card.Is_Lost == True %} class="lost-job"
                     {% elif card.Is_late == True %} class="wait-job"

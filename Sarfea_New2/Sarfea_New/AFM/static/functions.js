@@ -123,9 +123,9 @@ function sortTable(table, columnIndex) {
       y = rows[i + 1].getElementsByTagName("td")[columnIndex];     
       console.log(rows[i].textContent)
       console.log(rows[i + 1].textContent)
-      if (!isNaN(x.textContent.replace(/[$,₺]/g, "").trim())) {
-        var xValue = parseFloat(x.textContent.replace(/[$,₺]/g, "").trim());
-        var yValue = parseFloat(y.textContent.replace(/[$,₺]/g, "").trim());
+      if (!isNaN(x.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim())) {
+        var xValue = parseFloat(x.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim());
+        var yValue = parseFloat(y.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim());
         if (!isNaN(xValue) && !isNaN(yValue) && xValue < yValue) {
           shouldSwitch = true;
           break;
