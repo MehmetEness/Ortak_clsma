@@ -7,37 +7,124 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
-<link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
 <style>
-    #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
-        text-align: center;
-    }
-    #table thead th:nth-child(2){
-        padding-left: 20px;
-    }
-    .lists{
-        overflow-y: scroll;
-    }
-    table thead th {
-      cursor: pointer;
-   }
-   table thead th span{
-      position: relative;
-   }
-   thead th span::after{
-   content: '';
-  position:absolute;
-  left: -18px;
-  top: 60%;
-  border-style: solid;
-  border-top-width: 10px;
-  border-right-width: 5px;
-  border-left-width: 5px;
-  border-color: #000 transparent transparent transparent;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
-   }
 
+.anket-container{
+   height: calc(100vh - 78px);
+   overflow: scroll;
+}
+.anket-title{
+   display: flex;
+   flex-direction: column;
+}
+.anket-title .row{
+    border-bottom: 1px solid #000;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+.anket-title input{
+    border: none;
+    font-size: 20px;
+    font-weight: 300;
+}
+.anket-title input:focus {
+    outline: none;
+}
+.anket-body{
+    display: flex;
+    flex-direction: column;
+}
+.anket-body .row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #000;
+    height: 90px;
+}
+.t-row{
+    display: flex;
+    font-size: 12px;    
+   
+}
+.time-box{
+    width: 190px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+.time-box .t-left{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.time-box .t-right{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.time-box .bottom{
+    height: 50%;    
+    padding: 5px 0;
+    display: flex;
+}
+.time-box .bottom div:first-child{
+   border-right: 1px solid #000;
+}
+.time-box .bottom p{
+    padding: 2px 2px;
+}
+.time-box .top{
+    height: 50%;
+    padding: 5px 0;
+    border-bottom: 1px solid #000;
+}
+.border_left{
+    border-left: 1px solid #000;
+}
+.anket-list .row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #000;
+    height: 50px;
+}
+.anket-list .row input{
+    width: 25%;
+}
+.row-block{
+    width: 100%;
+    height: 30px;
+    background-color: rgb(247, 164, 10);
+    border-bottom: 1px solid #000;
+}
+
+
+.r1{
+    width: 50px;
+}
+.r2{
+    width: 600px;
+}
+.r3{
+    width: 240px;
+}
+.r4{
+    width: 190px;
+}
+.r5{
+    width: 300px;
+    margin-left: 100px;
+}
 </style>
 {% endblock %}
 {% block title %} Projects {% endblock %}
@@ -56,35 +143,557 @@
             </div>
             <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
          </div>
-      </div>
-      <div class="fonction-butons">
-         <a href="{% url 'income_add' %}"><button class="button2" >Gelir</button></a>
-         <a href="{% url 'expenses_add' %}"><button class="button2" >Yapılan Ödeme</button></a>
-         <a href="{% url 'jobhistory_add' %}"><button class="button2" >Yapılan İş</button></a>
+         </div>
+         <div class="fonction-butons">
          <a href="{% url 'project_add' %}"><button class="button-project-start" >Proje Başlat</button></a>
+         </div>
       </div>
-   </div>
-   <div class="lists">
-      <div class="line"></div>
-      <table id="table" class="table table-sortable">
-         <thead>
-            <th scope="col"></th>
-            <th scope="col"><span>Proje Adı</span></th>
-            <th id="xx2" scope="col"><span>Konum</span></th>
-            <th scope="col"><span>AC Güç</span></th>
-            <th scope="col"><span>DC Güç</span></th>
-            <th scope="col"><span>İş Bedeli</span></th>
-            <th scope="col"><span>Arazi/Çatı</span></th>
-            <th scope="col"><span>Tarih</span></th>
-            <th scope="col"><span>Durum</span></th>
-         </thead>
-         <tbody>
-            {% for x in project %}
-            {% include 'partials/_table-row.html' %}
-            {% endfor %}
-         </tbody>
-        </table>
-      </div>
+      <div class="anket-container">
+         <div class="anket-title">
+             <div class="row">
+                 <label for="">FİRMA ADI / PROJE ADI :</label>
+                 <input type="text">
+             </div>
+             <div class="row">
+                 <label for="">TARİH :</label>
+                 <input type="text">
+             </div>
+         </div>
+         <div class="anket-body">
+             <div class="row">
+                 <span style="width: 50px;">NO</span>
+                 <span style="width: 600px;">SÖZLEŞME KAPSAMI OLAN HİZMETİN ADI</span>
+                 <span style="width: 240px;">KONTROL METODU</span>
+                 <div class="time-box">
+                     <div class="t-left">
+                         <div class="top">
+                             <span>6 AY SONUÇ/<br>6 MONTH RESULT</span>
+                         </div>
+                         <div class="bottom">
+                             <div>
+                                 <p>DEĞİL/</p>
+                                 <p>NOT OK</p>
+                             </div>
+                             <div>
+                                 <p>DEĞİL/</p>
+                                 <p>NOT OK</p>                                 
+                             </div>
+                         </div>
+                     </div>
+                     <div class="t-right">
+                         <div class="top">
+                             <span>1 YIL SONUÇ/<br>1 YEAR RESULT</span>
+                         </div>
+                         <div class="bottom">
+                             <div>
+                                 <p>DEĞİL/</p>
+                                 <p>NOT OK</p>
+                             </div>
+                             <div>
+                                 <p>DEĞİL/</p>
+                                 <p>NOT OK</p>                                 
+                             </div>
+                         </div>                                             
+                     </div>
+                 </div>
+                 <span style="margin-left: 100px;">NOTLAR/NOTES</span>
+             </div>
+         </div>
+         <div class="anket-list">
+             <div class="row">
+                 <div class="r1"><span>1.1</span></div>
+                 <div class="r2"><label for="">FV panel yüzey temizliği kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>1.2</span></div>
+                 <div class="r2"><label for="">FV panel fiziksel kontrolü (Kırıç-Çatlak-hücre Yanığı vs)</label></div>
+                 <div class="r3"><span>Görsel + Termal Kamera</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>1.3</span></div>
+                 <div class="r2"><label for="">Diziler arası kablo elektriksel bağlantı kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Termal Kamera</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>1.4</span></div>
+                 <div class="r2"><label for="">Diziler arası kablo terminal bağlantı kontrolü (JUNCTION BOX - KONNEKTÖR)</label></div>
+                 <div class="r3"><span>Görsel + Termal Kamera</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>1.5</span></div>
+                 <div class="r2"><label for="">Dizlerin açık devre gerilim ölçümü ( PANEL x 40-45V )</label></div>
+                 <div class="r3"><span>Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>1.6</span></div>
+                 <div class="r2"><label for="">Dizlerin kısa devre akım ölçümü (PANEL DATASHEET 12-13A)</label></div>
+                 <div class="r3"><span>Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>2.1</span></div>
+                 <div class="r2"><label for="">Çalışan ekipmanların durum kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.2</span></div>
+                 <div class="r2"><label for="">Tüm bağlantıların kontrol edilmesi (kablo, klemens vida vb.)</label></div>
+                 <div class="r3"><span>Görsel + Mek+Termal Kamera</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.3</span></div>
+                 <div class="r2"><label for="">DC-AC voltaj test ve kontrolü (en düşük ve en yüksek)</label></div>
+                 <div class="r3"><span>Görsel +Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.4</span></div>
+                 <div class="r2"><label for="">Hata kayıtları incelenmesi ve led ekran çalışma kontrolu</label></div>
+                 <div class="r3"><span>Görsel ve Yazılım</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.5</span></div>
+                 <div class="r2"><label for="">Kablo etiketleme kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.6</span></div>
+                 <div class="r2"><label for="">Giriş ve çıkış fan ızgaralarının ve ilgili filitrelerin kontrolu</label></div>
+                 <div class="r3"><span>Görsel ve Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>2.7</span></div>
+                 <div class="r2"><label for="">Fanın çalışma ve toz kontrolu</label></div>
+                 <div class="r3"><span>Görsel ve Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>3.1</span></div>
+                 <div class="r2"><label for="">Kablo yüzey kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>3.2</span></div>
+                 <div class="r2"><label for="">Kablo taşıma elemanları bağlantı kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>3.3</span></div>
+                 <div class="r2"><label for="">Kablo etiketleme kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>3.4</span></div>
+                 <div class="r2"><label for="">Kablo rogarları kontrol - Pano Güzergahı</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>4.1</span></div>
+                 <div class="r2"><label for="">Kablo bağlantı terminallerinin kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Termal Kamera</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>4.2</span></div>
+                 <div class="r2"><label for="">İkaz işaretleri kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>4.3</span></div>
+                 <div class="r2"><label for="">Sigorta, parafudur, devre kesicisi vs. kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>4.4</span></div>
+                 <div class="r2"><label for="">Su ve toz geçirkenlik kontrolü ve paslanma kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>4.5</span></div>
+                 <div class="r2"><label for="">Şalter Bağlantıları kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>5.1</span></div>
+                 <div class="r2"><label for="">Topraklama sisteminin genel kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>5.2</span></div>
+                 <div class="r2"><label for="">Topraklama iletkenlerinin bağlantı kontrolü, ölçülmesi ve denetlenmesi</label></div>
+                 <div class="r3"><span>Görsel ve ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>5.3</span></div>
+                 <div class="r2"><label for="">Topraklama direnci ölçümü</label></div>
+                 <div class="r3"><span>Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>5.4</span></div>
+                 <div class="r2"><label for="">Yıldırımdan koruma sisteminin kontrolu</label></div>
+                 <div class="r3"><span>Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>6.1</span></div>
+                 <div class="r2"><label for="">Korozyon kontrolü</label></div>
+                 <div class="r3"><span>Görsel ve Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>6.2</span></div>
+                 <div class="r2"><label for="">Bağlantı noktalarında cıvata gevşeklik kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>6.3</span></div>
+                 <div class="r2"><label for="">Panel bağlantı elemanları gevşeklik kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>6.4</span></div>
+                 <div class="r2"><label for="">Kolonların temel sağlamlık kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>6.5</span></div>
+                 <div class="r2"><label for="">Masalarda dalgalanma kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>6.6</span></div>
+                 <div class="r2"><label for="">Panel eğim açısı kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>7.1</span></div>
+                 <div class="r2"><label for="">Kamera ve Armatür sağlamlık kontrolleri</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.2</span></div>
+                 <div class="r2"><label for="">Kamera kapsama alanı ve armatür aydınlık seviyesi kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.3</span></div>
+                 <div class="r2"><label for="">Kamera montaj elemanları gevşeklik kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.4</span></div>
+                 <div class="r2"><label for="">Görüntü kalitesi kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.5</span></div>
+                 <div class="r2"><label for="">Kamera kayıt sistemi kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Yazılım</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.6</span></div>
+                 <div class="r2"><label for="">Kamera switch bağlantı kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>7.7</span></div>
+                 <div class="r2"><label for="">Aydınlatma elektriksel ve mekanik bağlantı kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>8.1</span></div>
+                 <div class="r2"><label for="">Genel Temizlik kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.2</span></div>
+                 <div class="r2"><label for="">OG hücre kontrolü (Giriş, Çıkış, Ölçü ve TR Koruma)</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.3</span></div>
+                 <div class="r2"><label for="">Orta Gerilim kablo izolasyolasyon kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.4</span></div>
+                 <div class="r2"><label for="">Topraklama izolasyolasyon kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.5</span></div>
+                 <div class="r2"><label for="">Trafo AG ve OG çıkış gerilimlerinin kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.6</span></div>
+                 <div class="r2"><label for="">Trafo sıcaklık kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.7</span></div>
+                 <div class="r2"><label for="">Redresör fonksiyon kontrolü</label></div>
+                 <div class="r3"><span>Görsel +Ölçü aleti</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>8.8</span></div>
+                 <div class="r2"><label for="">Trafo primer ve sekonder bağlantı kontrolü</label></div>
+                 <div class="r3"><span>Görsel + Mekanik</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row-block"></div>
+ 
+ 
+             <div class="row">
+                 <div class="r1"><span>9.1</span></div>
+                 <div class="r2"><label for="">Yüzey üzerindeki bitkilerin temizlik durumu raporlanması</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>9.2</span></div>
+                 <div class="r2"><label for="">Drenaj sistemi kontrol ve temizlik durumu raporlanması</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>9.3</span></div>
+                 <div class="r2"><label for="">Saha içi yolların durum raporu</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>9.4</span></div>
+                 <div class="r2"><label for="">Yangın tüplerinin kontrolü</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+             <div class="row">
+                 <div class="r1"><span>9.5</span></div>
+                 <div class="r2"><label for="">Sahadaki atık madde temizliğinin raporlanması</label></div>
+                 <div class="r3"><span>Görsel</span></div>
+                 <div  class="check-box r4">
+                     <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
+                 </div>
+                 <div class="r5"><span>Lorem ipsum dolor sit amet.</span></div>
+             </div>
+         </div>
+     </div>
     </div>
   </div>
 </div>
