@@ -22,4 +22,4 @@ def login_request(request):
 
 def logout_request(request):
     logout(request)
-    return render(request, "account/login.html")
+    return redirect("login")

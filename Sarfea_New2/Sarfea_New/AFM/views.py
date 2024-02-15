@@ -1096,7 +1096,7 @@ def post_supplier(request):
         email= request.POST.get('email')
         location= request.POST.get('location')
 
-        Clients.objects.create(
+        Supplier.objects.create(
             CompanyName_Supplier=company_name_supplier, 
             ContactPerson=contact_person, 
             PhoneNumber=phone_number, 
@@ -1104,6 +1104,6 @@ def post_supplier(request):
             Location=location, 
         )
 
-        return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
+        return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
