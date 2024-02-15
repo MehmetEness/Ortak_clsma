@@ -13,51 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-@csrf_exempt
-def upload_file_view(request):
-    if request.method == 'POST':
-        card_id = request.POST.get('card_id')
-        file_type = request.POST.get('file_type')
-        file = request.FILES.get('file')
-
-        try:
-            card = SalesOfferCard.objects.get(pk=card_id)
-        except SalesOfferCard.DoesNotExist:
-            return JsonResponse({'error': 'SalesOfferCard bulunamadı'}, status=404)
-
-        # Dosya tipine göre doğru alanı seçin ve dosyayı kaydedin
-        if file_type == 'M_File_Card':
-            # Burada birden fazla M_File_Card alanı varsa, hangisini kullanacağınıza karar vermeniz gerekebilir
-            card.M_File_Card = file
-        elif file_type == 'M_File_Card_2':
-
-            card.M_File_Card_2 = file
-        elif file_type == 'M_File_Card_3':
-
-            card.M_File_Card_3 = file
-        elif file_type == 'Offer_File_Card':
-
-            card.Offer_File_Card = file
-        elif file_type == 'Offer_File_Card_2':
-
-            card.Offer_File_Card_2 = file
-        elif file_type == 'Offer_File_Card_3':
-
-            card.Offer_File_Card_3 = file
-        elif file_type == 'Offer_File_Card_4':
-
-            card.Offer_File_Card_4 = file
-        elif file_type == 'Offer_File_Card_5':
-
-            card.Offer_File_Card_5 = file
-        else:
-            return JsonResponse({'error': 'Geçersiz dosya tipi'}, status=400)
-
-        card.save()
-        return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
 
 
 @login_required
@@ -1107,3 +1062,49 @@ def post_supplier(request):
         return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_card_file(request):
+    if request.method == 'POST':
+        card_id = request.POST.get('card_id')
+        file_type = request.POST.get('file_type')
+        file = request.FILES.get('file')
+
+        try:
+            card = SalesOfferCard.objects.get(pk=card_id)
+        except SalesOfferCard.DoesNotExist:
+            return JsonResponse({'error': 'SalesOfferCard bulunamadı'}, status=404)
+
+        # Dosya tipine göre doğru alanı seçin ve dosyayı kaydedin
+        if file_type == 'M_File_Card':
+            # Burada birden fazla M_File_Card alanı varsa, hangisini kullanacağınıza karar vermeniz gerekebilir
+            card.M_File_Card = file
+        elif file_type == 'M_File_Card_2':
+
+            card.M_File_Card_2 = file
+        elif file_type == 'M_File_Card_3':
+
+            card.M_File_Card_3 = file
+        elif file_type == 'Offer_File_Card':
+
+            card.Offer_File_Card = file
+        elif file_type == 'Offer_File_Card_2':
+
+            card.Offer_File_Card_2 = file
+        elif file_type == 'Offer_File_Card_3':
+
+            card.Offer_File_Card_3 = file
+        elif file_type == 'Offer_File_Card_4':
+
+            card.Offer_File_Card_4 = file
+        elif file_type == 'Offer_File_Card_5':
+
+            card.Offer_File_Card_5 = file
+        else:
+            return JsonResponse({'error': 'Geçersiz dosya tipi'}, status=400)
+
+        card.save()
+        return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+

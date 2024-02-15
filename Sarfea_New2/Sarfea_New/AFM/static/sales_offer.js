@@ -143,7 +143,7 @@ function uploadFile(cardId, fileType) {
   formData.append("card_id", cardId);
   formData.append("file_type", fileType);
 
-  fetch("/upload_file_view/", {
+  fetch("/post_card_file/", {
     method: "POST",
     body: formData,
   })
