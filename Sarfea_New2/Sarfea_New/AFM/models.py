@@ -267,11 +267,32 @@ class SalesOfferCard_Revise(models.Model):
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
     Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
 
+#bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 
+class Poll(models.Model):
+    Poll_Project=  models.ForeignKey(Project, on_delete=models.CASCADE)
+    Poll_Time = models.DateField(default=timezone.now,blank=True, null=True)
 
+class Poll_Question(models.Model):
+    Question_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE)
+    Questin_Type_Number= models.IntegerField(blank=True, null=True)
+    Questin_Number= models.IntegerField(blank=True, null=True)
 
+class Poll_Answer(models.Model):
+    Answer_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE)
+    Answer_Text= models.CharField(max_length=63, blank=True, null=True)
+    Answer_Value= models.BooleanField(blank=True, null=True)
 
+class Question_Note(models.Model):
+    Note_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE)
+    Note_Text= models.CharField(max_length=255, blank=True, null=True)
 
-
+class Time_Note(models.Model):
+    Note_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE)
+    Note_Text= models.CharField(max_length=2550, blank=True, null=True)
+    Note_Editör= models.CharField(max_length=255, blank=True, null=True)
+    Edit_Time = models.DateField(default=timezone.now,blank=True, null=True)
+    Note_Investigator= models.CharField(max_length=255, blank=True, null=True)
+    Investigation_Time = models.DateField(default=timezone.now,blank=True, null=True)
 
  
