@@ -268,9 +268,12 @@ class SalesOfferCard_Revise(models.Model):
     Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
+class Operation_Care(models.Model):
+    Operation_Care_Project=  models.ForeignKey(Project, on_delete=models.CASCADE)
+
 
 class Poll(models.Model):
-    Poll_Project=  models.ForeignKey(Project, on_delete=models.CASCADE)
+    Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE)
     Poll_Time = models.DateField(default=timezone.now,blank=True, null=True)
 
 class Poll_Question(models.Model):

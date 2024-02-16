@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
+<link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
+<style>
+    #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
+        text-align: center;
+    }
+    #table thead th:nth-child(2){
+        padding-left: 20px;
+    }
+    .lists{
+        overflow-y: scroll;
+    }
+    table thead th {
+      cursor: pointer;
+   }
+   table thead th span{
+      position: relative;
+   }
+   thead th span::after{
+   content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+   }
+
+</style>
+{% endblock %}
+{% block title %} Operation and Care {% endblock %}
+{% block content %}
+ <div class="body-div"> 
+    
+    
+    {% include 'partials/_left_nav_bar.html' %}
+    <div class="right-menu">
+      <div class="top-menu">
+        <div class="content">         
+          <div style="margin-left: 50px;" class="search active">
+              <div class="icon"></div>
+              <div class="input">
+                <input id="mysearch" type="text" placeholder="Ara">
+            </div>
+            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
+         </div>
+      </div>
+      <div class="fonction-butons">
+         
+         <a href="{% url 'operation_care_add' %}"><button class="button-project-start" >İşletme-Bakım Başlat</button></a>
+      </div>
+   </div>
+   <div class="lists">
+      <div class="line"></div>
+      <table id="table" class="table table-sortable">
+         <thead>
+            <th scope="col"></th>
+            <th scope="col"><span>Proje Adı</span></th>
+            <th id="xx2" scope="col"><span>Konum</span></th>
+            <th scope="col"><span>AC Güç</span></th>
+            <th scope="col"><span>DC Güç</span></th>
+            <th scope="col"><span>İş Bedeli</span></th>
+            <th scope="col"><span>Arazi/Çatı</span></th>
+            <th scope="col"><span>Tarih</span></th>
+            <th scope="col"><span>Durum</span></th>
+         </thead>
+         <tbody>
+            {% for x in project %}
+            {% include 'partials/_table-row.html' %}
+            {% endfor %}
+         </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block js_files %} 
+<script src="{% static 'functions.js' %}"></script> 
+<script src="{% static 'projects.js' %}"></script> 
+
+{% endblock %}

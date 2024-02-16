@@ -59,5 +59,7 @@ urlpatterns = [
     path("get_job_history/<str:project_name>/", views.get_job_history, name='get_job_history'),
     path("get_incomes/<str:project_name>/", views.get_incomes, name='get_incomes'),
     path('post-client/', views.post_client, name='post_client'),
+    path('operation_care/', views.operation_care, name='operation_care'),
+    path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
 
    ]

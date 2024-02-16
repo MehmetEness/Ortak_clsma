@@ -627,6 +627,55 @@ def projects(request):
     return render(request, "projects.html", context)
 
 @login_required
+def operation_care(request):
+    project = Project.objects.annotate(
+        custom_order_situation=Case(
+            When(Situation="Onay Bekliyor", then=Value(1)),
+            When(Situation="Devam Ediyor", then=Value(2)),
+            When(Situation="Tamamlandı", then=Value(3)),
+            default=Value(4),
+            output_field=IntegerField()
+        ),
+        custom_order_date=F('StartDate')
+    ).order_by('custom_order_situation', 'custom_order_date')
+
+    context = {
+        "project": project,
+        
+    }
+
+    return render(request, "operation_care.html", context)
+
+@login_required
+def operation_care_add(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('operation_care_add')
+    else:
+        form = ProjectForm()
+        client_form = ClientsForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "client_form":client_form,
+    }
+    return render(request, "operation_care_add.html", context)
+
+@login_required
 def project_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
