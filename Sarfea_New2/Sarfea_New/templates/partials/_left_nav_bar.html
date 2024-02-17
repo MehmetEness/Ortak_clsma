@@ -18,7 +18,7 @@
        <hr/>
        <div class="nav-button" onclick="window.location.href = sales_offerUrl;"><i class="fas fa-wallet"></i><a href="{% url 'sales_offer' %}"><span>Satış Teklif</span></a></div>            
        <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-box"></i><span>Stok</span></div>
-       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-wrench"></i><span>İşletme Bakım</span></div>
+       <div class="nav-button" onclick="window.location.href = operation_careUrl;"><i class="fas fa-wrench"></i><a href="{% url 'operation_care' %}"></a><span>İşletme Bakım</span></a></div>
        <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-chart-line"></i><span>Raporlama</span></div>
         <div id="nav-content-highlight"></div>
     </div>
@@ -45,6 +45,7 @@
     var clientUrl = "{% url 'client' %}";
     var supplierUrl = "{% url 'supplier' %}";
     var sales_offerUrl = "{% url 'sales_offer' %}";
+    var operation_careUrl = "{% url 'operation_care' %}";
 
 </script>
 

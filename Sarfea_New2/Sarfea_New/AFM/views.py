@@ -13,51 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-@csrf_exempt
-def upload_file_view(request):
-    if request.method == 'POST':
-        card_id = request.POST.get('card_id')
-        file_type = request.POST.get('file_type')
-        file = request.FILES.get('file')
-
-        try:
-            card = SalesOfferCard.objects.get(pk=card_id)
-        except SalesOfferCard.DoesNotExist:
-            return JsonResponse({'error': 'SalesOfferCard bulunamadı'}, status=404)
-
-        # Dosya tipine göre doğru alanı seçin ve dosyayı kaydedin
-        if file_type == 'M_File_Card':
-            # Burada birden fazla M_File_Card alanı varsa, hangisini kullanacağınıza karar vermeniz gerekebilir
-            card.M_File_Card = file
-        elif file_type == 'M_File_Card_2':
-
-            card.M_File_Card_2 = file
-        elif file_type == 'M_File_Card_3':
-
-            card.M_File_Card_3 = file
-        elif file_type == 'Offer_File_Card':
-
-            card.Offer_File_Card = file
-        elif file_type == 'Offer_File_Card_2':
-
-            card.Offer_File_Card_2 = file
-        elif file_type == 'Offer_File_Card_3':
-
-            card.Offer_File_Card_3 = file
-        elif file_type == 'Offer_File_Card_4':
-
-            card.Offer_File_Card_4 = file
-        elif file_type == 'Offer_File_Card_5':
-
-            card.Offer_File_Card_5 = file
-        else:
-            return JsonResponse({'error': 'Geçersiz dosya tipi'}, status=400)
-
-        card.save()
-        return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
 
 
 @login_required
@@ -672,6 +627,55 @@ def projects(request):
     return render(request, "projects.html", context)
 
 @login_required
+def operation_care(request):
+    project = Project.objects.annotate(
+        custom_order_situation=Case(
+            When(Situation="Onay Bekliyor", then=Value(1)),
+            When(Situation="Devam Ediyor", then=Value(2)),
+            When(Situation="Tamamlandı", then=Value(3)),
+            default=Value(4),
+            output_field=IntegerField()
+        ),
+        custom_order_date=F('StartDate')
+    ).order_by('custom_order_situation', 'custom_order_date')
+
+    context = {
+        "project": project,
+        
+    }
+
+    return render(request, "operation_care.html", context)
+
+@login_required
+def operation_care_add(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('operation_care_add')
+    else:
+        form = ProjectForm()
+        client_form = ClientsForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "client_form":client_form,
+    }
+    return render(request, "operation_care_add.html", context)
+
+@login_required
 def project_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
@@ -1107,3 +1111,49 @@ def post_supplier(request):
         return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_card_file(request):
+    if request.method == 'POST':
+        card_id = request.POST.get('card_id')
+        file_type = request.POST.get('file_type')
+        file = request.FILES.get('file')
+
+        try:
+            card = SalesOfferCard.objects.get(pk=card_id)
+        except SalesOfferCard.DoesNotExist:
+            return JsonResponse({'error': 'SalesOfferCard bulunamadı'}, status=404)
+
+        # Dosya tipine göre doğru alanı seçin ve dosyayı kaydedin
+        if file_type == 'M_File_Card':
+            # Burada birden fazla M_File_Card alanı varsa, hangisini kullanacağınıza karar vermeniz gerekebilir
+            card.M_File_Card = file
+        elif file_type == 'M_File_Card_2':
+
+            card.M_File_Card_2 = file
+        elif file_type == 'M_File_Card_3':
+
+            card.M_File_Card_3 = file
+        elif file_type == 'Offer_File_Card':
+
+            card.Offer_File_Card = file
+        elif file_type == 'Offer_File_Card_2':
+
+            card.Offer_File_Card_2 = file
+        elif file_type == 'Offer_File_Card_3':
+
+            card.Offer_File_Card_3 = file
+        elif file_type == 'Offer_File_Card_4':
+
+            card.Offer_File_Card_4 = file
+        elif file_type == 'Offer_File_Card_5':
+
+            card.Offer_File_Card_5 = file
+        else:
+            return JsonResponse({'error': 'Geçersiz dosya tipi'}, status=400)
+
+        card.save()
+        return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+

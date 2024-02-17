@@ -46,7 +46,7 @@ urlpatterns = [
     path('sales_offer/AFM/set_card_rewait/<card_id>/', views.set_card_rewait, name='set_card_rewait'),
     path('sales_offer/AFM/create_revise/<card_id>/', views.create_revise, name='create_revise'),
     path("sales_offer_revises/<card_id>/", views.sales_offer_revises, name='sales_offer_revises'),
-    path('upload_file_view/', views.upload_file_view, name='upload_file_view'),
+    path('post_card_file/', views.post_card_file, name='post_card_file'),
     path('get-clients/', views.get_clients, name='get_clients'),
     path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
     path('get_projects/', views.get_projects, name='get_projects'),
@@ -59,5 +59,7 @@ urlpatterns = [
     path("get_job_history/<str:project_name>/", views.get_job_history, name='get_job_history'),
     path("get_incomes/<str:project_name>/", views.get_incomes, name='get_incomes'),
     path('post-client/', views.post_client, name='post_client'),
+    path('operation_care/', views.operation_care, name='operation_care'),
+    path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
 
    ]
