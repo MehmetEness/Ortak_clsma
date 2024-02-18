@@ -91,6 +91,7 @@ async function getAndRenderClients() {
         const response = await fetch('/get-clients/');
         const data = await response.json();
         const clients = data.clients;
+        
 
         const tbody = document.getElementById('tbody');
         tbody.innerHTML = '';
