@@ -99,6 +99,11 @@
     color: #f1e5e6;
     background: linear-gradient(135deg, #71b7e6, #191970);
 }
+.calc_btns{
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 1px 8px;
+}
 
 
 </style>
@@ -170,11 +175,11 @@
               </div>
             </div>
             <div class="input-box">
-              <span class="details">Teklif Bedeli - KDV Hariç ($)</span>
+              <span class="details">Teklif Bedeli - KDV Hariç ($)<button type="button" id="teklif_bedeli_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
               <input class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
-              <span class="details">Birim Teklif</span>
+              <span class="details">Birim Teklif<button type="button" id="br_tek_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
               <input class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
 
             </div>
@@ -183,15 +188,15 @@
               <input class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
-              <span class="details">Toplam Maliyet</span>
+              <span class="details">Toplam Maliyet<button type="button" id="total_mal_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
               <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="0.1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
-              <span class="details">Birim Maliyet - KDV Hariç ($)</span>
+              <span class="details">Birim Maliyet - KDV Hariç ($)<button type="button" id="br_mal_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
               <input class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
-              <span class="details">DC Güç (kWp)</span>
+              <span class="details">DC Güç (kWp)<button type="button" id="dc_guc_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
               <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
             </div>
             <div class="input-box">
@@ -280,8 +285,11 @@
   {% block js_files %} 
   <!-- <script src="{% static 'project_add.js' %}"></script>  -->
 
+
+
+
   <!--   Elements    -->
-  <script>
+  <script>    
     let isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
     let birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
     let acGucInput = document.querySelector("#id_AC_Power_Card");
@@ -289,15 +297,102 @@
     let araziBedeli = document.querySelector("#id_Roof_Cost_Card");
     var amountInputReformatBtn = document.querySelector("#project-create-btn");
     var form = document.querySelector("#my-form");
-    var teklifBedeliInput = document.querySelector(
-      "#id_Offer_Cost_NotIncludingKDV_Card"
-    );
-    var birimTeklifInput = document.querySelector(
-      "#id_UnitOffer_NotIncludingKDV"
-    );
-   
+    var teklifBedeliInput = document.querySelector("#id_Offer_Cost_NotIncludingKDV_Card");
+    var birimTeklifInput = document.querySelector("#id_UnitOffer_NotIncludingKDV");
+
+    // cals btns
+    let teklifBedeliCalc = document.querySelector("#teklif_bedeli_btn");
+    let birimTeklifCalc = document.querySelector("#br_tek_btn");
+    let toplamMaliyetCalc = document.querySelector("#total_mal_btn");
+    let birimMaliyetCalc = document.querySelector("#br_mal_btn");
+    let dcGucCalc = document.querySelector("#dc_guc_btn");   
 
   </script>
+
+    <!-- MALİYET HESAPLAMA İŞLEMLERİ -->
+    <script>
+      teklifBedeliCalc.addEventListener("click", ()=> {
+        if(!(clear(birimTeklifInput.value) == "") && !(clear(dcGucInput.value) == "")){
+          var value = clear(birimTeklifInput.value) * clear(dcGucInput.value); 
+          teklifBedeliInput.value = format2(value.toString());              
+        }
+      });
+      birimTeklifCalc.addEventListener("click", ()=> {
+        if(!(clear(teklifBedeliInput.value) == "") && !(clear(dcGucInput.value) == "")){
+          var value = clear(teklifBedeliInput.value) / clear(dcGucInput.value); 
+          birimTeklifInput.value = format2(value.toString());              
+        }
+      });
+      toplamMaliyetCalc.addEventListener("click", ()=> {
+        if(!(clear(birimBasiMaliyetInput.value) == "") && !(clear(dcGucInput.value) == "")){
+          var value = clear(birimBasiMaliyetInput.value) * clear(dcGucInput.value); 
+          isBedeliInput.value = format2(value.toString());              
+        }
+      });
+      birimMaliyetCalc.addEventListener("click", ()=> {
+        if(!(clear(isBedeliInput.value) == "") && !(clear(dcGucInput.value) == "")){
+          var value = clear(isBedeliInput.value) / clear(dcGucInput.value); 
+          birimBasiMaliyetInput.value = format2(value.toString());              
+        }
+      });
+      dcGucCalc.addEventListener("click", ()=> {
+        if(!(clear(teklifBedeliInput.value) == "") && !(clear(birimTeklifInput.value) == "")){
+          var value = clear(teklifBedeliInput.value) / clear(birimTeklifInput.value); 
+          dcGucInput.value = format2(value.toString());              
+        }
+        if(!(clear(isBedeliInput.value) == "") && !(clear(birimBasiMaliyetInput.value) == "")){
+          var value = clear(isBedeliInput.value) / clear(birimBasiMaliyetInput.value); 
+          dcGucInput.value = format2(value.toString());              
+        }
+      });
+      // isBedeliInput.addEventListener("input", ()=>{
+        
+      //   if(!isNaN(clear(dcGucInput.value)) && !(clear(dcGucInput.value) == "")){
+      //     var value = clear(isBedeliInput.value) / clear(dcGucInput.value); 
+      //     birimBasiMaliyetInput.disabled = true;  
+      //     birimBasiMaliyetInput.value = format2(value.toString());          
+      //   }
+      // });
+      // birimBasiMaliyetInput.addEventListener("input", ()=>{
+      //   if(!isNaN(clear(isBedeliInput.value)) && !(clear(isBedeliInput.value) == "")){
+      //     var value = clear(isBedeliInput.value) / clear(birimBasiMaliyetInput.value); 
+      //     dcGucInput.value = format2(value.toString());          
+      //   }
+      //   if(!isNaN(clear(dcGucInput.value)) && !(clear(dcGucInput.value) == "") && dcBool){
+      //     var value = clear(isBedeliInput.value) / clear(dcGucInput.value); 
+      //     birimBasiMaliyetInput.value = format2(value.toString());
+          
+      //   }
+      // });
+      // dcGucInput.addEventListener("input", ()=>{
+      // });
+
+      function clear2(value) {
+      
+      if (value != undefined) {
+        var cleanString = value.replace(/,/g, ".");
+        return cleanString;
+      } else {
+        var cleanString = 0;
+        return cleanString;
+      }
+    }
+      function format2(number) {
+      
+      var indexOfDot = clear2(number).indexOf(".");
+
+      if (indexOfDot !== -1) {
+        var integerPart = number
+          .slice(0, indexOfDot)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var decimalPart = number.slice(indexOfDot + 1);
+        return integerPart + "." + decimalPart;
+      } else {
+        var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return formattedNumber;
+      }
+    }
+    </script>
 
    <!-- Firma Add button -->
   <script>   
