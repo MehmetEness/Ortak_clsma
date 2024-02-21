@@ -1,7 +1,7 @@
 var amountInput = document.querySelector("#id_Amount_Expenses");
 var createBtn = document.querySelector("#project-create-btn");
-var reqInputs = document.querySelectorAll("#id_CompanyName_Paying_Expenses");
-var reqLabels = document.querySelectorAll("#odeme_yapilan_firma_span");
+//var reqInputs = document.querySelectorAll("#id_CompanyName_Paying_Expenses");
+//var reqLabels = document.querySelectorAll("#odeme_yapilan_firma_span");
 var form = document.querySelector("#my-form");
 var dateInput = document.querySelector("#id_Date_Expenses");
 
@@ -21,23 +21,26 @@ var details = document.querySelectorAll("#dropdown3 .dropdown-item");
 var detailsInput = document.querySelector("#id_ExpensDetails_Expenses");
 var detailsLabel = document.querySelector("#gider_detay_span");
 
+var firmaAddInput = document.querySelector("#id_CompanyName_Supplier");          
+var firmaSubmitBtn = document.querySelector("#firma_add_btn");
+var firmaForm = document.querySelector("#firma_form");
+var firmaAddLabel = document.querySelector("#firma_add_label");
 
 
 
 //                  INPUTLARI FORMATLAMA
 
-runEventListeners(amountInput);
+inputForFormat(amountInput);
 
 //                  FORM SUBMİT ETME
 
-
 createBtn.addEventListener("click", function(event) {
     event.preventDefault();            
-   if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputs(payingFirmaInput, payingFirmaLabel, firmalar) && controlSelectionInputs(detailsInput, detailsLabel, details)){
+   if(payingFirmaInput.value != ""){
     dateInput.value = formatDateForSubmit(dateInput.value);
     amountInput.value = clear(amountInput.value);
     form.submit();
-   }    
+   }
 }); 
 
 //                  TARİH İNPUT FORMATLAMA
@@ -57,4 +60,25 @@ firmaAddBtn.addEventListener("click", function() {
 clientFirmaAddModal.addEventListener("click", function() {
     clientFirmaAddWindow.style.display = "none";
 });
+
+//                  FİRMA EKLEME İŞLEMİ
+
+
+firmaSubmitBtn.addEventListener("click", function(event){
+    event.preventDefault();       
+    if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+        firmaAddLabel.style.color = "black";
+        firmaAddLabel.style.fontWeight = "500";
+        firmaForm.submit();
+    }
+    else{
+        firmaAddLabel.style.color = "red";
+        firmaAddLabel.style.fontWeight = "600";
+    }   
+});
  
+form.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+    }
+});

@@ -1,7 +1,7 @@
 
 var phoneNumberInput = document.querySelector("#id_PhoneNumber");
-var reqInputs = document.querySelectorAll("#id_CompanyName_Clients_New");
-var reqLabels = document.querySelectorAll("#firma_adi_span");
+var companyNameInput = document.querySelector("#id_CompanyName_Clients_New");
+var companyNameLabel = document.querySelector("#firma_adi_span");
 var amountInputReformatBtn = document.querySelector("#kaydet_btn");
 var form = document.querySelector("#myForm");
 
@@ -25,8 +25,11 @@ phoneNumberInput.addEventListener("input", function (event) {
 
 amountInputReformatBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  console.log(requiredInputs(reqInputs, reqLabels));
-  if (requiredInputs(reqInputs, reqLabels)) {
+  console.log();
+  if (companyNameInput.value != "") {
     form.submit();
+  }else{
+    companyNameLabel.style.color = "red"
+    companyNameLabel.style.fontWeight = "600"
   }
 });

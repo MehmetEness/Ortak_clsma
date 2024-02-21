@@ -25,10 +25,16 @@ var details = document.querySelectorAll("#dropdown3 .dropdown-item");
 var detailsInput = document.querySelector("#id_ExpensDetails_Expenses");
 var detailsLabel = document.querySelector("#gider_detay_span");
 
+var firmaAddInput = document.querySelector("#id_CompanyName_Supplier");          
+var firmaSubmitBtn = document.querySelector("#firma_add_btn");
+var firmaForm = document.querySelector("#firma_form");
+var firmaAddLabel = document.querySelector("#firma_add_label");
+      
+
 
 //                  INPUTLARI FORMATLAMA
 
-runEventListeners(amountInput);
+inputForFormat(amountInput);
 
 //                  TARİH İNPUT FORMATLAMA
 
@@ -42,9 +48,8 @@ dateInput.addEventListener('input', function(event) {
  //                  FORM SUBMİT ETME
 
 createBtn.addEventListener("click", function(event) {
-    event.preventDefault();   
-    console.log(controlSelectionInputs(detailsInput, detailsLabel, details))        
-    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputs(payingFirmaInput, payingFirmaLabel, firmalar) && controlSelectionInputs(projeNameInput, projeNameLabel, projeler) && controlSelectionInputs(detailsInput, detailsLabel, details)){
+    event.preventDefault();          
+    if(requiredInputs(reqInputs, reqLabels)){
         dateInput.value = formatDateForSubmit(dateInput.value);
         amountInput.value = clear(amountInput.value);
         form.submit();
@@ -60,3 +65,17 @@ firmaAddBtn.addEventListener("click", function() {
      clientFirmaAddWindow.style.display = "none";
 });
 
+//                   FİRMA SUBMİT KONTROL
+
+firmaSubmitBtn.addEventListener("click", function(event){
+    event.preventDefault();       
+    if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+        firmaAddLabel.style.color = "black";
+        firmaAddLabel.style.fontWeight = "500";
+        firmaForm.submit();
+    }
+    else{
+        firmaAddLabel.style.color = "red";
+        firmaAddLabel.style.fontWeight = "600";
+    }   
+});

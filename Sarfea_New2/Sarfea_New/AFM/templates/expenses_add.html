@@ -158,25 +158,6 @@
     <script src="{% static 'expenses_add.js' %}"></script> 
     
 
-    <script>
-      var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
-      var firmaAddInput = document.querySelector("#id_CompanyName_Supplier");          
-      var firmaAddBtn = document.querySelector("#firma_add_btn");
-      var firmaForm = document.querySelector("#firma_form");
-      var firmaAddLabel = document.querySelector("#firma_add_label");
-      firmaAddBtn.addEventListener("click", function(){
-        event.preventDefault();       
-          if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
-              firmaAddLabel.style.color = "black";
-              firmaAddLabel.style.fontWeight = "500";
-              firmaForm.submit();
-          }
-          else{
-              firmaAddLabel.style.color = "red";
-              firmaAddLabel.style.fontWeight = "700";
-          }   
-      });
-      </script>
 
        <script>
         
