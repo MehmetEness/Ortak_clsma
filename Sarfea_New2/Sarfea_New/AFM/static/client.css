@@ -97,7 +97,6 @@
 }
 .lists table{ 
     width: 100%;
-    text-align: center;    
     border-collapse:collapse;
 }
 .lists table td:nth-child(2){ 
