@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
 
   topMenuLi[2].classList.add("li-hover");
-
   rowcards.forEach(function (item) {
     let cardTarih = item.querySelector("p:nth-child(2)");
     let araziCati = item.querySelector(".boxes:nth-of-type(4) p:nth-of-type(2)");

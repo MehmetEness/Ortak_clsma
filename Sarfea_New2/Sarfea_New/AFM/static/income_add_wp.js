@@ -10,7 +10,13 @@ var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
 var firmaAddBtn = document.getElementById("paying-firma-add-btn");
 var clientFirmaAddWindow = document.querySelector(".clientFirmaAddWindow");
 var ddMenu = document.querySelectorAll("#dropdown1 .dropdown-item");
+const paymentTypeInput = document.getElementById('id_PaymentType_Incomes');
 
+var firmaAddInput = document.querySelector("#id_CompanyName_Clients");          
+var firmaSubmitBtn = document.querySelector("#firma_add_btn");
+var firmaForm = document.querySelector("#firma_form");
+var firmaAddLabel = document.querySelector("#firma_add_label");
+var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
 
 
 //                  TARİH İNPUTLARI FORMATLAMA
@@ -36,7 +42,7 @@ inputForFormat(amountInput);
 
 createBtn.addEventListener("click", function(event) {
     event.preventDefault();       
-    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputs(reqInputs[0],reqLabels[0],ddMenu)){
+    if(requiredInputs(reqInputs, reqLabels)){
         dateInput.value = formatDateForSubmit(dateInput.value);
         lastDateInput.value = formatDateForSubmit(lastDateInput.value);
         amountInput.value = clear(amountInput.value);
@@ -46,28 +52,40 @@ createBtn.addEventListener("click", function(event) {
 
 //                  ÇEK SON KULLANIM İNPUT
 
-const paymentTypeInput = document.getElementById('id_PaymentType_Incomes');
 if (paymentTypeInput.value == "Çek") {
     chekLastDateBox.style.display = "block";
 } else {
     chekLastDateBox.style.display = "none";
 }
-paymentTypeInput.addEventListener('change', controlFunction);
-function controlFunction() {
+paymentTypeInput.addEventListener('change', ()=>{
     const selectedOption = paymentTypeInput.options[paymentTypeInput.selectedIndex].text;
     if (selectedOption.startsWith('Çek')) {
         chekLastDateBox.style.display = "block";
     } else {
         chekLastDateBox.style.display = "none";
     }
-}
+});
 
 //                  FİRMA EKLEME
 
 firmaAddBtn.addEventListener("click", function() {
     clientFirmaAddWindow.style.display = "flex";
 });
-var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
 clientFirmaAddModal.addEventListener("click", function() {
     clientFirmaAddWindow.style.display = "none";
 });
+
+//                  FİRMA SUBMİT KONTROLÜ
+
+firmaSubmitBtn.addEventListener("click", function(event){
+      event.preventDefault();       
+        if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+            firmaAddLabel.style.color = "black";
+            firmaAddLabel.style.fontWeight = "500";
+            firmaForm.submit();
+        }
+        else{
+            firmaAddLabel.style.color = "red";
+            firmaAddLabel.style.fontWeight = "600";
+        }   
+    });

@@ -7,6 +7,7 @@ var amountInput = document.querySelector("#id_Amount_Expenses");
 var createBtn = document.querySelector("#project-create-btn");
 
 
+
 var kurInput = document.querySelector("#id_Dollar_Rate_Expenses");  
 var dateForKur = document.querySelector("#id_Date_Expenses");  
 var timeForKur = document.querySelector("#kur-time");     
@@ -25,8 +26,9 @@ var detailsLabel = document.querySelector("#gider_detay_span");
 
 //                  INPUTLARI FORMATLAMA
 
-runEventListeners(amountInput);
+inputForFormat(amountInput);
 onPageLoad(amountInput);
+dateInputFormat(dateInput);
 
  //                  TARİH İNPUT FORMATLAMA
 
@@ -41,7 +43,8 @@ onPageLoad(amountInput);
 
 createBtn.addEventListener("click", function(event) {
     event.preventDefault();           
-    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputs(payingFirmaInput, payingFirmaLabel, firmalar) && controlSelectionInputs(detailsInput, detailsLabel, details)){
+    if(requiredInputs(reqInputs, reqLabels)){
+      console.log("asd")
         dateInput.value = formatDateForSubmit(dateInput.value);
         amountInput.value = clear(amountInput.value);
         form.submit();
@@ -49,24 +52,5 @@ createBtn.addEventListener("click", function(event) {
 }); 
 
 
-//----------
-var inputField = document.querySelector("#id_Date_Expenses");
-function tarihReFormat(tarih) {
-    if(tarih.length == 10){
-      var parcalar = tarih.split('-');
 
-  var yil = parcalar[0];
-  var ay = parcalar[1];
-  var gun = parcalar[2];
-
-  var yeniFormat = gun + '.' + ay + '.' + yil;
-
-  return yeniFormat;
-    }
-    else{
-      return "";
-    }
-  
-}   
-inputField.value = tarihReFormat(inputField.value);
 

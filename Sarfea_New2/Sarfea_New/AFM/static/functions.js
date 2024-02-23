@@ -8,6 +8,16 @@ var clearButton = document.querySelector(".clear");
 function clear(value){      
   if(value != undefined){
       var cleanString = value.replace(/[^0-9,]/g, '');
+      //var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
+      return cleanString;
+  }else{
+      var  cleanString = 0;
+      return cleanString;
+  } 
+}
+function clear2(value){      
+  if(value != undefined){
+      var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
       return cleanString;
   }else{
       var  cleanString = 0;
@@ -17,8 +27,7 @@ function clear(value){
 
 //                  FORMAT NUMBERS
 
-function formatNumber(number, fract) {
-  
+function formatNumber(number, fract) {  
   var value = new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
   return value.replace(/\./g, 'a').replace(/,/g, '.').replace(/a/g, ',');
 }
@@ -34,6 +43,58 @@ function format(number) {
   }
 }
 
+//                  SPAN FORMATLAMA
+
+function formatSpans(span, type) {
+  switch (type) {
+    case "kWe":        
+        var value = parseFloat(clear2(span.textContent));        
+        if (!isNaN(parseFloat(value))) {
+          span.textContent = formatNumber(value, 0) + " kWe";
+          span.title = formatNumber(value, 0) + " kWe";
+        } else {
+          span.textContent = "0 kWe";
+          span.title = "0 kWe";
+        }        
+      break;
+    case "kWp":
+      var value = parseFloat(clear2(span.textContent));        
+        if (!isNaN(parseFloat(value))) {
+          span.textContent = formatNumber(value, 0) + " kWp";
+          span.title = formatNumber(value, 0) + " kWp";
+        } else {
+          span.textContent = "0 kWp";
+          span.title = "0 kWp";
+        }  
+      break;
+    case "usd":
+      var value = parseFloat(clear2(span.textContent));        
+        if (!isNaN(parseFloat(value))) {
+          span.textContent = formatNumber(value, 2) + " $";
+          span.title = formatNumber(value, 2) + " $";
+        } else {
+          span.textContent = "0 $";
+          span.title = "0 $";
+        }  
+      break;
+    case "text":
+      
+      break;
+    case "numeric":
+      var value = parseFloat(clear2(span.textContent));        
+        if (!isNaN(parseFloat(value))) {
+          span.textContent = formatNumber(value, 2);
+          span.title = formatNumber(value, 2);
+        } else {
+          span.textContent = "0";
+          span.title = "0";
+        } 
+      break;
+
+    default:
+  }
+}
+
 //                  TABLE FORMAT
 
 function tableFormat(cells, type) {
@@ -41,7 +102,7 @@ function tableFormat(cells, type) {
     case "usd":
       cells.forEach(function (cell) {
         //var value = parseFloat(cell.textContent.replace(/,/g, "."));
-        var value = parseFloat(cell.textContent);
+        var value = parseFloat(clear2(cell.textContent));        
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -54,7 +115,7 @@ function tableFormat(cells, type) {
     case "tl":
       cells.forEach(function (cell) {
        // var value = parseFloat(cell.textContent.replace(/,/g, "."));
-        var value = parseFloat(cell.textContent);
+        var value = parseFloat(clear2(cell.textContent));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
@@ -66,7 +127,7 @@ function tableFormat(cells, type) {
       break;
     case "kur":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent);
+        var value = parseFloat(clear2(cell.textContent));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -89,10 +150,10 @@ function tableFormat(cells, type) {
       break;
     case "numeric":
       cells.forEach(function (cell) {
-        var value = parseFloat(cell.textContent);
+        var value = parseFloat(clear2(cell.textContent));
         if (!isNaN(parseFloat(value))) {
-          cell.textContent = formatNumber(value, 2);
-          cell.title = formatNumber(value, 2);
+          cell.textContent = formatNumber(value, 0);
+          cell.title = formatNumber(value, 0);
         } else {
           cell.textContent = "0";
           cell.title = "0";
@@ -247,23 +308,23 @@ function requiredInputs(inputs, labels) {
 
 //                  SELECTİON VE İNPUT KONTROLÜ
 
-function controlSelectionInputs(input, label,ddmenu) {
-  var optionCount = 0;
-  ddmenu.forEach(function(option){
-    if(input.value.trim() == option.textContent.trim()){
-      optionCount += 1;
-    }
-  });
-  if (optionCount == 0) {
-    label.style.color = "red";
-    label.style.fontWeight = "600";
-    return false;
-  } else {
-    label.style.color = "black";
-    label.style.fontWeight = "500";
-    return true;
-  }
-}
+// function controlSelectionInputs(input, label,ddmenu) {
+//   var optionCount = 0;
+//   ddmenu.forEach(function(option){
+//     if(input.value.trim() == option.textContent.trim()){
+//       optionCount += 1;
+//     }
+//   });
+//   if (optionCount == 0) {
+//     label.style.color = "red";
+//     label.style.fontWeight = "600";
+//     return false;
+//   } else {
+//     label.style.color = "black";
+//     label.style.fontWeight = "500";
+//     return true;
+//   }
+// }
 function controlSelectionInputsReverse(input, label,ddmenu) {
   var optionCount = 0;
   ddmenu.forEach(function(option){
@@ -294,11 +355,14 @@ function inputForFormat(input){
 }
 
 function onPageLoad(input) {
-var inputValue = input.value; 
-var clearValue = clear(inputValue);
-var formatValue = format(clearValue);
-input.value = formatValue;
-deger = formatValue;
+    var inputValue = parseFloat(input.value); 
+    if(!isNaN(inputValue)){
+        var formatValue = formatNumber(inputValue , 2);
+        input.value = formatValue;
+        deger = formatValue;
+    }else{
+        input.value = "0"
+    }
 }
 
 //                  FİRMA ADLARI KONTROLÜ
@@ -504,6 +568,24 @@ function isWeekend(date) {
       const day = date.getDay();
       return day === 0 || day === 6;
 }
+function dateInputFormat(input) {
+  let tarih = input.value;
+    if(tarih.length == 10){
+      var parcalar = tarih.split('-');
+
+  var yil = parcalar[0];
+  var ay = parcalar[1];
+  var gun = parcalar[2];
+
+  var yeniFormat = gun + '.' + ay + '.' + yil;
+
+  input.value = yeniFormat;
+    }
+    else{
+      input.value = "";
+    }
+  
+}  
 
 
 //            ***** DOM EVENTS *****
@@ -517,17 +599,27 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdownInputs.forEach((input) => {
       const dropdownId = input.getAttribute("data-dropdown");
       const dropdown = document.getElementById(dropdownId);
+      const dropBox = input.parentElement;
       const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
 
       input.addEventListener("focus", function () {
         dropdown.classList.add("show");
       });
 
-      input.addEventListener("blur", function () {
-        setTimeout(() => {
-          dropdown.classList.remove("show");
-        }, 200);
-      });
+      document.addEventListener("click", function(event) {                 
+        var isClickInput = dropBox.contains(event.target);                  
+        if(dropdown.classList.contains('show')){
+            if(!isClickInput){   
+                setTimeout(() => {
+                input.value = '';
+                dropdownItems.forEach((item)=>{
+                      item.style.display = "block";
+                });
+                      dropdown.classList.remove("show");
+                }, 10);
+            }        
+        }         
+      }); 
 
       input.addEventListener("input", function () {
         const filterText = input.value.toLowerCase();

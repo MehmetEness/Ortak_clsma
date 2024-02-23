@@ -260,24 +260,7 @@ table thead th {
 
   <script src="{% static 'functions.js' %}"></script> 
   <script src="{% static 'realized_cost.js' %}"></script> 
-  <script>
-    function showFullText(element) {
-    var fullText = element.textContent;
-    
-    var popup = document.createElement("div");
-    popup.className = "full-text-popup";
-    popup.innerHTML = fullText;
-
-    element.appendChild(popup);
-}
-
-function hideFullText(element) {
-    var popup = element.querySelector(".full-text-popup");
-    if (popup) {
-        element.removeChild(popup);
-    }
-}
-  </script>
+  
   
   {% endblock %}
 

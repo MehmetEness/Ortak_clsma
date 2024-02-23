@@ -97,8 +97,10 @@
 }
 .lists table{ 
     width: 100%;
-    text-align: left;    
     border-collapse:collapse;
+}
+.lists table td:nth-child(2){ 
+    text-align: left;    
 }
 .lists thead{
     line-height: 70px;

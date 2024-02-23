@@ -3,8 +3,8 @@ var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth
 
 var createBtn = document.querySelector("#kaydet_btn");
 var form = document.querySelector("#myForm");
-var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
-var reqLabels = document.querySelectorAll("#firma_adi_span");
+var companyNameInput = document.querySelector("#id_CompanyName_Clients");
+var companyNameLabel = document.querySelector("#firma_adi_span");
 
 var phoneInput = document.querySelector("#id_PhoneNumber");
 
@@ -33,10 +33,11 @@ document.getElementById("musteri-modal").addEventListener("click", function(){
 
 createBtn.addEventListener("click", function(event) {
     event.preventDefault();
-    var bool = controlSelectionInputs(locationInput, locationSpan, locations);
-    if(requiredInputs(reqInputs, reqLabels) && controlSelectionInputsReverse(reqInputs[0], reqLabels[0], companyList) && bool){      
-        console.log("dfs")      
+    if(companyNameInput.value != "" && controlSelectionInputsReverse(companyNameInput, companyNameLabel, companyList)){               
         form.submit();
+    }else{
+        companyNameLabel.style.color = "red"
+        companyNameLabel.style.fontWeight = "600"
     }
 }); 
 

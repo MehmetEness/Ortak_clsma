@@ -13,6 +13,11 @@
 #nav-bar{
   display:flex;
 }
+td, th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
@@ -55,6 +60,7 @@
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead>
+                  <th scope="col">Durum</th>
                   <th scope="col">Müşteri Adı</th>
                   <th scope="col">Konum</th>
                   <th scope="col">İlgili Kişi</th>
@@ -70,12 +76,11 @@
                   <th scope="col">Arazi Dahil Toplam Teklif</th>
                   <th scope="col">Arazi Maliyeti</th>
                   <th scope="col">Tarih</th>
-                  <th scope="col">Durum</th>
                   <th scope="col">Revize Alma Tarihi</th>
-
                </thead>
                <tbody>
                   <tr>
+                    <td>{{card.Situation_Card}}</td>
                     <td> {{card.Client_Card}} </td>
                     <td>{{card.Location_Card}}</td>
                     <td>{{card.Person_Deal}}</td>
@@ -90,13 +95,12 @@
                     <td>{{card.Unit_Cost_with_Roof_Cost}}</td>
                     <td>{{card.Unit_Offer_with_Roof_Cost}}</td>
                     <td>{{card.Profit_Rate_Card}}</td>
-
                     <td>{{card.Date_Card| date:"d F y"}}</td>
-                    <td>{{card.Situation_Card}}</td>
                     <td>Mevcut Durum</td>
                   </tr>
                   {% for revise in revises %}
                   <tr>
+                    <td>{{revise.Situation_Card}}</td>
                     <td> {{revise.Client_Card}} </td>
                     <td>{{revise.Location_Card}}</td>
                     <td>{{revise.Person_Deal}}</td>
@@ -111,8 +115,7 @@
                     <td>{{revise.Unit_Cost_with_Roof_Cost}}</td>
                     <td>{{revise.Unit_Offer_with_Roof_Cost}}</td>
                     <td>{{revise.Profit_Rate_Card}}</td>
-                    <td>{{revise.Date_Card| date:"d F y"}}</td>
-                    <td>{{revise.Situation_Card}}</td>
+                    <td>{{revise.Date_Card| date:"d F y"}}</td>                    
                     <td>{{ revise.Revize_created_at|date:"d-m-Y H:i" }}</td>
 
                     {% endfor %}
@@ -128,6 +131,7 @@
   {% endblock %}
 
 {% block js_files %} 
-
+<script src="{% static 'functions.js' %}"></script> 
+<script src="{% static 'sales_offer_revises.js' %}"></script> 
 
 {% endblock %}

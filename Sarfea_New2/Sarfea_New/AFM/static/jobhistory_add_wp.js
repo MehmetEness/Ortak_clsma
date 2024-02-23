@@ -9,8 +9,8 @@ var firmaAddLabel = document.querySelector("#firma_add_label");
 var firmaForm = document.querySelector("#firma_form");
 var dateInput = document.querySelector("#id_Date_JobHistory");
 var amountInput = document.querySelector("#id_Amount_JobHistory");
-var reqInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory, #id_ProjectName_JobHistory");
-var reqLabels = document.querySelectorAll("#is_yapilan_firma_span, #proje_adi_span");
+var reqInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory");
+var reqLabels = document.querySelectorAll("#is_yapilan_firma_span");
 var createBtn = document.querySelector("#project-create-btn");
 var form = document.querySelector("#my-form");
 

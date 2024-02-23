@@ -125,6 +125,27 @@
     width: 300px;
     margin-left: 100px;
 }
+
+
+#xxx{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#xxx ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    gap: 40px;
+    margin-right: 150px;
+    color: #8392a5;
+}
+#xxx ul li{
+    border-bottom: 2px solid #8392a5;
+}
 </style>
 {% endblock %}
 {% block title %} Projects {% endblock %}
@@ -144,8 +165,16 @@
             <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
          </div>
          </div>
+         <div id="xxx">
+            <ul>
+                <li>Bakım Kontrol Listesi</li>
+                <li>Santral Takip</li>
+                <li>Arıza Takip</li>
+                <li>İnventör</li>
+            </ul>
+         </div>
          <div class="fonction-butons">
-         <a href="{% url 'project_add' %}"><button class="button-project-start" >Proje Başlat</button></a>
+         <a href="{% url 'project_add' %}"><button class="button-project-start" >İnventör</button></a>
          </div>
       </div>
       <div class="anket-container">

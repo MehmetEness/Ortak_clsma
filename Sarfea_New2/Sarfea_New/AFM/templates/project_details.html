@@ -102,65 +102,31 @@
     <script src="{% static 'functions.js' %}"></script> 
     <script src="{% static 'project_details.js' %}"></script> 
 
-    <script>
-        
-var konumDiv = document.querySelector("#konum_div");
-var konumSpan = document.querySelector("#Konum_span");
-var typeDiv = document.querySelector("#type_div");
-var typeSpan = document.querySelector("#type_span");
+<script>
+    //                  BÖLÜMLERİ FORMATLAMA
 
-konumImgChange(konumSpan);
- function konumImgChange(konumSpan){
-    var KonumText = konumSpan.textContent.toLowerCase();
-        var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
-        konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+    formatSpans(acPowerSpan, "kWe");
+    formatSpans(dcPowerSpan, "kWp");
+    formatSpans(realizedCostSpan, "usd");
+
+    //                  KONUM VE ARAZİ/ÇATI RESİM YERLEŞTİRME
+
+    konumImgChange(konumSpan);
+    typeImgChange(typeSpan);
+    function konumImgChange(konumSpan){
+        var KonumText = konumSpan.textContent.toLowerCase();
+            var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
+            konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+    };
+    function typeImgChange(typeSpan){
+        var typeText = typeSpan.textContent.toLowerCase();
+        if(typeText == "çatı"){
+            typeText = typeText.replace("çatı", "cati");
+        }
+        console.log(typeText)
+        var newImageUrl = `{% static 'images/' %}${typeText}.png`;
+        typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
     };
 
-
-typeImgChange(typeSpan);
-function typeImgChange(typeSpan){
-    var typeText = typeSpan.textContent.toLowerCase();
-    if(typeText == "çatı"){
-        typeText = typeText.replace("çatı", "cati");
-    }
-    console.log(typeText)
-    var newImageUrl = `{% static 'images/' %}${typeText}.png`;
-    typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
-};
-
-    </script>
-    <script>
-    var realized_cost = document.querySelector("#realized_cost_span");
-    format(realized_cost);    
-    function format(number1) {
-        var indexOfDot = number1.textContent.indexOf('.');
-        
-        if(number1.textContent != "None $"){
-            if (indexOfDot !== -1) {
-                var integerPart = number1.textContent.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                var decimalPart = number1.textContent.slice(indexOfDot + 1);
-                realized_cost.textContent = integerPart + '.' + decimalPart;
-            } else {
-                var formattedNumber = number1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                realized_cost.textContent = formattedNumber; 
-            }
-        }else{
-            realized_cost.textContent = "0 $"; 
-        }
-    }
-    </script>
-    <!-- AC DC GÜÇ None = 0 -->
-    <script>
-        var realized_cost_ac = document.querySelector("#ac-power-span");
-        var realized_cost_dc = document.querySelector("#dc-power-span");
-    format(realized_cost_ac);  
-    format(realized_cost_dc);    
-    function format(number) {           
-        if(number.textContent == "NonekWe"){
-            realized_cost_ac.textContent = "0 kWe"; 
-        }if(number.textContent == "NonekWp"){
-            realized_cost_dc.textContent = "0 kWp"; 
-        }
-    }
-    </script>
+</script>
     {% endblock %}

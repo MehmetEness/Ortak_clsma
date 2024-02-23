@@ -88,6 +88,15 @@
     background: #848588;    
     color: #000;
 }
+#table thead th:nth-child(2){
+    padding-left: 10px;
+}
+tr td:not(:first-child):not(:nth-child(2)) {
+    text-align: center;
+}
+tr th:not(:first-child):not(:nth-child(2)) {
+    text-align: center;
+}
 #table tbody td{
     height: 50px;
 }
