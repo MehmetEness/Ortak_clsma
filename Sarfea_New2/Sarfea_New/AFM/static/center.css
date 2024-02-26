@@ -67,6 +67,16 @@
   margin-bottom: 15px;
   width: calc(100% / 3 - 20px);
 }
+.center2 .input-box {
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+.large{
+  width: calc(100% - 20px) !important ;
+}
+.medium{
+  width: calc(((100% / 3) * 2) - 10px ) !important;
+}
 .user-details .input-box .details {
   display: block;
   font-weight: 500;

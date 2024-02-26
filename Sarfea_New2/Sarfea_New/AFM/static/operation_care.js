@@ -8,7 +8,6 @@ var arizaTakipContainer = document.querySelector(".ariza_takip_container");
 
 
 
-
  document.addEventListener("DOMContentLoaded", function () {
     //                  CARD NONE VERİLERİ DÜZELTME
   
@@ -41,17 +40,20 @@ topMenuLi.forEach(function (item) {
         faturaContainer.style.display = "flex";
         isletmeBakimContainer.style.display = "none";
         arizaTakipContainer.style.display = "none";
+        arsivContainer.style.display = "none";
         break;
       case "isletme_bakim":
         faturaContainer.style.display = "none";
         isletmeBakimContainer.style.display = "flex";
         arizaTakipContainer.style.display = "none";
+        arsivContainer.style.display = "none";
         break;
       case "ariza_takip":
         faturaContainer.style.display = "none";
         isletmeBakimContainer.style.display = "none";
         arizaTakipContainer.style.display = "flex";
-        break;      
+        arsivContainer.style.display = "none";
+        break;        
       default:
         break;
     }

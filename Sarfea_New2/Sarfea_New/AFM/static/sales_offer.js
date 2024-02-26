@@ -236,8 +236,6 @@ hamburgerMenu2.addEventListener("click", () => {
 let cardMenu;
 let btn1;
 var boolClick = false;
-
-
 cardMenuBtn.forEach((btn) => {   
   btn.addEventListener("click", function () {
       let card = this.closest(".card");
