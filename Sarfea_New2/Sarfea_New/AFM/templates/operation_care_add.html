@@ -59,25 +59,16 @@
             </div>
 
             <div class="input-box" id="ProjectNameInput">
-              <span id="proje_adi_span" class="details">İnventör Adet</span>
+              <span id="proje_adi_span" class="details">İnventör Marka</span>
               <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" placeholder="Adet Giriniz" id="id_ProjectName" autocomplete="off">
             </div>
-
             <div
               class="input-box" 
               id="ProjectCodeInput"
             >
-              <span id="proje_kodu_span" class="details">İnventör Güç</span>
+              <span id="proje_kodu_span" class="details">Panel Markası</span>
               {{ form.ProjectCode }} 
-            </div>
-
-            
-
-            <div class="input-box">
-              <span class="details">Panel Gücü</span>
-          <input type="text">
-            </div>
-
+            </div>            
             <div class="input-box">
               <span id="konum_label" class="details">Konum</span>
               <div class="dropdown-container">
@@ -100,48 +91,47 @@
               </div>
             </div>
             <div class="input-box">
+              <span class="details">inventör Güç</span>
+          <input type="text">
+            </div>
+            <div class="input-box">
               <span class="details">Panel Gücü</span>
               <input class="coc-input" type="text" name="Cost_NotIncludingKDV" id="id_Cost_NotIncludingKDV" step="0.0001" autocomplete="off"/>
             </div>
             <div class="input-box">
-              <span class="details">AC Güç (kWe)</span>
+              <span class="details">Adres</span>
               <input class="coc-input" type="text" name="AC_Power" id="id_AC_Power" step="0.0001" autocomplete="off"/>
             </div>
             <div class="input-box">
-              <span class="details">DC Güç (kWp)</span>
+              <span class="details">İnventör Adet</span>
               <input class="coc-input" type="text" name="DC_Power" id="id_DC_Power" step="0.0001" autocomplete="off"/>
             </div>
             <div class="input-box">
-              <span class="details">Panel Markası</span>
-              <input
-                class="coc-input"
-                type="text"
-                name="CalculatedCost_NotIncludingKDV"
-                id="id_CalculatedCost_NotIncludingKDV"
-                step="0.0001"
-                autocomplete="off"
-
-              />
-            </div>
-
-            <div class="input-box">
               <span class="details">VOC</span>
-              <input                
-                id="tarih"
-                type="text"
-                name="StartDate"
-                
-              />
+              <input class="coc-input" type="text" name="CalculatedCost_NotIncludingKDV" id="id_CalculatedCost_NotIncludingKDV" step="0.0001" autocomplete="off"/>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Tesis Kurulu Gücü</span>
+              <input id="tarih" type="text" name="StartDate"/>
             </div>
             <div class="input-box">
-              <span class="details">PNL SY(1st ortpnlsy)</span>
-              <input
-                id="tarih2"
-                type="text"
-                name="FinishDate"
-                
-              />
+              <span class="details">AC Güç(kWe)</span>
+              <input id="tarih2" type="text" name="FinishDate"/>
             </div>
+            <div class="input-box">
+              <span class="details">1 stringteki Panel Sayısı</span>
+              <input id="tarih2" type="text" name="FinishDate"/>
+            </div>
+            <div class="input-box">
+              <span class="details">Arazi/Çatı</span>
+              {{form.Terrain_Roof}}
+            </div>
+            <div class="input-box">
+              <span class="details">DC Güç(kWp)</span>
+              <input id="tarih2" type="text" name="FinishDate"/>
+            </div>
+
             <div class="input-box">
               <span class="details">Yön</span>
               <select name="" id="">
@@ -152,8 +142,12 @@
               </select>
             </div>
             <div class="input-box">
-              <span class="details">Arazi/Çatı</span>
-              {{form.Terrain_Roof}}
+              <span class="details">Devreye Alınma Tarihi</span>
+              <input id="tarih2" type="text" name="FinishDate"/>
+            </div>
+            <div class="input-box">
+              <span class="details">Bakım Sözleşmesi Bitiş Tarihi</span>
+              <input id="tarih2" type="text" name="FinishDate"/>
             </div>
             
           </div>
