@@ -27,20 +27,23 @@ var rowsElements = document.querySelectorAll(
   let salesContainer = document.querySelector(".sales-container");
   let wonContainer = document.querySelector(".won-container");
   var tables = document.querySelectorAll(".table");
-  
-  var listTable = document.querySelector('.list-container table');  
+  var listTable = document.querySelector('.list-container table'); 
+  let thRowsList = listTable.querySelectorAll("th"); 
+  let trRowsList = listTable.querySelectorAll("tr");    
   var lostTable = document.querySelector('.lost-job-container table');  
   var salesTable = document.querySelector('.sales-container table'); 
-  var wonTable = document.querySelector('.won-container table');  
-  let thRowsList = listTable.querySelectorAll("th"); 
-  let trRowsList = listTable.querySelectorAll("tr"); 
+  var wonTable = document.querySelector('.won-container table');   
   let thRowsLost = lostTable.querySelectorAll("th");
   let thRowsSales = salesTable.querySelectorAll("th");
   let thRowsWon = wonTable.querySelectorAll("th");
+
+  getAndRenderList();
+  
   
   document.addEventListener("DOMContentLoaded", function () {
     //                  CARD NONE VERİLERİ DÜZELTME
-  
+   
+   
     topMenuLi[2].classList.add("li-hover");
   
     rowcards.forEach(function (item) {
@@ -643,7 +646,7 @@ var rowsElements = document.querySelectorAll(
   
 
 //                  LİSTE ÇEKME
-getAndRenderList();
+
 async function getAndRenderList(){
     try{
         const response = await fetch('/get_cards/');
@@ -683,7 +686,8 @@ async function getAndRenderList(){
                 tbody.insertAdjacentHTML('beforeend', row);                
             }            
         });  
-        colorTable()
+        let trRowsList = listTable.querySelectorAll("tr");   
+        colorTable(trRowsList);
     }catch{
         console.log("başarısız")
     }
@@ -720,10 +724,12 @@ function createTableRow(card) {
     return `<tr data-id="${card.id}"${classes ? ` class="${classes}"` : ''}>`;
 }
 
+
+
    //                  LİSTE İŞ RENGİ VERME
   
-   function colorTable(){
-    trRowsList.forEach((row) =>{
+   function colorTable(rowList){
+    rowList.forEach((row) =>{
         let span = row.querySelector(".icon-blue")
         switch (row.className) {
           case "gain-job":                     
