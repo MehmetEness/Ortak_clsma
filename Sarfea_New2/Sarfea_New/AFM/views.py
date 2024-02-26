@@ -676,6 +676,35 @@ def operation_care_add(request):
     return render(request, "operation_care_add.html", context)
 
 @login_required
+def fault_notification(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('fault_notification')
+    else:
+        form = ProjectForm()
+        client_form = ClientsForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "client_form":client_form,
+    }
+    return render(request, "fault_notification.html", context)
+
+@login_required
 def project_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()

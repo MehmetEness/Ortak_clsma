@@ -61,5 +61,6 @@ urlpatterns = [
     path('post-client/', views.post_client, name='post_client'),
     path('operation_care/', views.operation_care, name='operation_care'),
     path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
+    path('fault_notification/', views.fault_notification, name='fault_notification'),
 
    ]
