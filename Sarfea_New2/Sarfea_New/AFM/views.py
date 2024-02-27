@@ -437,7 +437,12 @@ def project_edit(request, project_name):
 
 @login_required
 def home(request):
-    return render(request, "home.html")
+    sales_offer_card = SalesOfferCard.objects.all()
+
+    context = {
+    'sales_offer_card':sales_offer_card,
+    }
+    return render(request, "home.html", context)
 
 @login_required
 def client(request):
@@ -1112,6 +1117,10 @@ def get_job_history(request, project_name):
 def get_incomes(request, project_name):
     incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
     return JsonResponse({'incomes': list(incomes)})
+
+def get_operation_care(request, project_name):
+    operation_care = Operation_Care.objects.filter(ProjectName_Incomes=project_name).values()
+    return JsonResponse({'operation_care': list(operation_care)})
 
 #***********************************************************
 #                       GET METHODLARI
