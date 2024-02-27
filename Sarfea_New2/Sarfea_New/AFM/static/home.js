@@ -72,11 +72,8 @@ async function getAndRenderCard(){
         const response = await fetch('/get_run_cards/');
         const data = await response.json();
         const cards = data.run_cards;
-        console.log(cards);
 
         cards.forEach((card) => {
-            console.log(card)
-           console.log(card.M_File_Card)
             const date = new Date(card.Date_Card);
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
             
@@ -147,7 +144,7 @@ async function getAndRenderCard(){
               }                  
             
         });
-
+        cardFormat();
     } catch(error) {
         console.error("Hata oluştu:", error);
     }
@@ -159,3 +156,41 @@ async function getAndRenderCard(){
 function openFile(url) {
     window.open(url, "_blank");
   }
+
+  //                  CARD FORMATLAMA
+
+
+function cardFormat() {
+    let rows = document.querySelectorAll(".rows");
+    rows.forEach(function (row) {
+    let cards = row.querySelectorAll(".card");
+    let totalCashSpan = row.querySelector(".total-cash span:nth-child(1)");
+    let customersCountSpan = row.querySelector(".total-cash span:nth-child(2)");
+    let totalCash = 0;
+    console.log(cards)
+    cards.forEach(function (card) {
+        
+      let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
+      let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
+      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
+      let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
+      let powerSpan = card.querySelector(".boxes:nth-of-type(4) p:nth-of-type(1)");
+      let totalTeklifCount = parseFloat(totalTeklif.textContent.replace(/,/g, ".")) || 0;
+      let unitTeklifCount = parseFloat(unitTeklif.textContent.replace(/,/g, ".")) || 0;
+      let totalMaliyetCount = parseFloat(totalMaliyet.textContent.replace(/,/g, ".")) || 0;
+      let unitMaliyetCount = parseFloat(unitMaliyet.textContent.replace(/,/g, ".")) || 0;
+      let powerCount = parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
+
+      totalTeklif.textContent = "$ " + formatNumber(totalTeklifCount, 2);
+      unitTeklif.textContent = formatNumber(unitTeklifCount, 0) + " USD/kWp";
+      totalMaliyet.textContent = "$ " + formatNumber(totalMaliyetCount, 2);
+      unitMaliyet.textContent = formatNumber(unitMaliyetCount, 0) + " USD/kWp";
+      powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
+
+      totalCash += totalMaliyetCount;
+    });
+
+    totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
+    customersCountSpan.textContent = `(${String(cards.length)})`;
+  });  
+}
