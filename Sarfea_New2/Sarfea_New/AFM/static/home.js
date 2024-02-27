@@ -69,9 +69,10 @@ async function getAndRenderCard(){
     try{
         
         const rowsDiv =document.querySelectorAll('.sales_container .rows');            
-        const response = await fetch('/get_cards/');
+        const response = await fetch('/get_run_cards/');
         const data = await response.json();
-        const cards = data.cards;
+        const cards = data.run_cards;
+        console.log(cards);
 
         cards.forEach((card) => {
             console.log(card)
@@ -101,11 +102,16 @@ async function getAndRenderCard(){
                 </div>
                 <div class="boxes">
                     <div class="buttons">
-                        ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card.url}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
-                        <!-- Diğer butonlar -->
+                        ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card.url}')">M1</button>` : ``}
+                        ${card.M_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_2.url}')">M2</button>` : ``}
+                        ${card.M_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_3.url}')">M3</button>` : ``}                        
                     </div>
                     <div class="buttons">
-                        <!-- Diğer butonlar -->
+                    ${card.Offer_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card.url}')">T1</button>` : ``}
+                    ${card.Offer_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_2.url}')">T2</button>` : ``}
+                    ${card.Offer_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_3.url}')">T3</button>` : ``}
+                    ${card.Offer_File_Card_4 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_4.url}')">T4</button>` : ``}
+                    ${card.Offer_File_Card_5 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_5.url}')">T5</button>` : ``}
                     </div>
                 </div>
                 <div class="flex-row">
@@ -147,3 +153,9 @@ async function getAndRenderCard(){
     }
 }
 
+
+//                  DOSYA YENİ SEKME AÇMA
+
+function openFile(url) {
+    window.open(url, "_blank");
+  }

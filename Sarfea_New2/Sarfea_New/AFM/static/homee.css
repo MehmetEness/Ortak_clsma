@@ -265,4 +265,13 @@
   .buttons button:hover {
     background: #d8d8d8;
   }
+
+  .blue {
+    background: #2c3e50;
+    color: #fff !important;
+  }
+  .blue:hover {
+    background: #445d77 !important;
+    color: #fff !important;
+  }
   
