@@ -63,3 +63,83 @@ function formatTableForPlace(){
     tableFormat(textCells, "text")
 }
 
+
+
+
+//                  LİSTE ÇEKME
+getAndRenderCard();
+async function getAndRenderCard(){
+    try{
+        const totalCashDiv = document.createElement('div');
+        totalCashDiv.classList.add('total-cash');
+        totalCashDiv.style.backgroundColor = '#D0DDFB';
+        totalCashDiv.innerHTML = `
+            <span>$ span1</span>
+            <span>span2</span>
+        `;
+
+        const rowsDiv = document.querySelector('.thazir');
+        rowsDiv.innerHTML = '';
+        rowsDiv.appendChild(totalCashDiv);
+
+        const response = await fetch('/get_cards/');
+        const data = await response.json();
+        const cards = data.cards;
+        console.log(cards)
+
+        cards.forEach((card) => {
+            console.log(card.Cost_NotIncludingKDV)
+            const date = new Date(card.Date_Card);
+            const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+            
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('card');
+
+            const cardContent = `
+                <div class="boxes">
+                    <p class="bold700">${card.Client_Card_Copy}</p>                        
+                </div>
+                <p>${formattedDate}</p>
+                <div class="boxes">
+                    <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
+                    <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
+                </div>
+                <div class="boxes">             
+                    <p>${card.Cost_NotIncludingKDV_Card}</p>
+                    <p>${card.UnitCost_NotIncludingKDV}</p>
+                </div>
+                <div class="boxes">             
+                    <p>5000kwp</p>
+                    <p>Çatı</p>
+                </div>
+                <div class="boxes">
+                    <div class="buttons">
+                        ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card.url}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
+                        <!-- Diğer butonlar -->
+                    </div>
+                    <div class="buttons">
+                        <!-- Diğer butonlar -->
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
+                </div>
+                <div class="card-menu">
+                    <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                    <ul class="card_menu">
+                        <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                        <li onclick="lostCard(${card.id})">Kaybedildi</li>
+                        <!-- Diğer menü seçenekleri -->
+                    </ul>
+                </div> 
+            `;
+            cardDiv.innerHTML = cardContent;
+        
+            rowsDiv.appendChild(cardDiv);
+        });
+
+    } catch(error) {
+        console.error("Hata oluştu:", error);
+    }
+}
+
