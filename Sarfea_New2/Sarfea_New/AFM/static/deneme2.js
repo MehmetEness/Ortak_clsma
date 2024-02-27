@@ -770,3 +770,5 @@ function createTableRow(card) {
       });
    }
   
+
+   

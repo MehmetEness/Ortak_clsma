@@ -12,15 +12,12 @@ async function getAndRenderList(){
         const data = await response.json();
         const projects = data.projects;        
 
-        console.log(projects)
 
         const tbody = document.querySelector(".business-maintenance tbody");
         tbody.innerHTML = '';
 
         projects.forEach((project) => {
-            console.log(project)
             const date = new Date(project.StartDate);
-            console.log(project)
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
             if(project.CompanyName){
                 const row = 
@@ -61,5 +58,113 @@ function formatTableForPlace(){
     let textCells = document.querySelectorAll('#project_table td:nth-child(1), #project_table td:nth-child(2), #project_table td:nth-child(4), #project_table td:nth-child(5), #project_table td:nth-child(6)');
     tableFormat(usdCells, "usd")
     tableFormat(textCells, "text")
+}
+
+
+
+
+//                  LİSTE ÇEKME
+getAndRenderCard();
+async function getAndRenderCard(){
+    try{
+        const totalCashDiv = document.createElement('div');
+        totalCashDiv.classList.add('total-cash');
+        totalCashDiv.style.backgroundColor = '#D0DDFB';
+        totalCashDiv.innerHTML = `
+            <span>$ span1</span>
+            <span>span2</span>
+        `;
+        const rowsDiv =document.querySelectorAll('.sales_container .rows');
+        rowsDiv.forEach((row)=>{
+            row.innerHTML = '';
+            row.appendChild(totalCashDiv);
+        });        
+        const response = await fetch('/get_cards/');
+        const data = await response.json();
+        const cards = data.cards;
+        console.log(cards)
+
+        cards.forEach((card) => {
+           
+            //console.log(card.Situation_Card)
+            const date = new Date(card.Date_Card);
+            const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+            
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('card');
+
+            const cardContent = `
+                <div class="boxes">
+                    <p class="bold700">${card.Client_Card_Copy}</p>                        
+                </div>
+                <p>${formattedDate}</p>
+                <div class="boxes">
+                    <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
+                    <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
+                </div>
+                <div class="boxes">             
+                    <p>${card.Cost_NotIncludingKDV_Card}</p>
+                    <p>${card.UnitCost_NotIncludingKDV}</p>
+                </div>
+                <div class="boxes">             
+                    <p>5000kwp</p>
+                    <p>Çatı</p>
+                </div>
+                <div class="boxes">
+                    <div class="buttons">
+                        ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card.url}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
+                        <!-- Diğer butonlar -->
+                    </div>
+                    <div class="buttons">
+                        <!-- Diğer butonlar -->
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
+                </div>
+                <div class="card-menu">
+                    <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+                    <ul class="card_menu">
+                        <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+                        <li onclick="lostCard(${card.id})">Kaybedildi</li>
+                        <!-- Diğer menü seçenekleri -->
+                    </ul>
+                </div> 
+            `;
+            console.log(card)
+            console.log(card.Situation_Card)
+            cardDiv.innerHTML = cardContent; 
+            switch (card.Situation_Card) {
+                case "Potansiyel Müşteri":
+                    rowsDiv[0].appendChild(cardDiv);
+                    break;
+                case "Maliyet Hesaplama":
+                    rowsDiv[1].appendChild(cardDiv);
+                    break;
+                case "Fiyat Belirleme":
+                    rowsDiv[2].appendChild(cardDiv);
+                    break;
+                case "Teklif Hazırlama":
+                    rowsDiv[3].appendChild(cardDiv);
+                    break;  
+                case "Teklif Hazır":
+                    rowsDiv[4].appendChild(cardDiv);
+                    break; 
+                case "Teklif Sunuldu":
+                    rowsDiv[5].appendChild(cardDiv);
+                    break;  
+                case "Sunum Sonrası Görüşme":
+                    rowsDiv[6].appendChild(cardDiv);
+                    break;
+                default:
+                    console.log("df")
+
+              }                  
+            
+        });
+
+    } catch(error) {
+        console.error("Hata oluştu:", error);
+    }
 }
 
