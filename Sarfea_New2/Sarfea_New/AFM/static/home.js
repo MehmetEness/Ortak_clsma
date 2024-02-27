@@ -67,26 +67,15 @@ function formatTableForPlace(){
 getAndRenderCard();
 async function getAndRenderCard(){
     try{
-        const totalCashDiv = document.createElement('div');
-        totalCashDiv.classList.add('total-cash');
-        totalCashDiv.style.backgroundColor = '#D0DDFB';
-        totalCashDiv.innerHTML = `
-            <span>$ span1</span>
-            <span>span2</span>
-        `;
-        const rowsDiv =document.querySelectorAll('.sales_container .rows');
-        rowsDiv.forEach((row)=>{
-            row.innerHTML = '';
-            row.appendChild(totalCashDiv);
-        });        
+        
+        const rowsDiv =document.querySelectorAll('.sales_container .rows');            
         const response = await fetch('/get_cards/');
         const data = await response.json();
         const cards = data.cards;
-        console.log(cards)
 
         cards.forEach((card) => {
-           
-            //console.log(card.Situation_Card)
+            console.log(card)
+           console.log(card.M_File_Card)
             const date = new Date(card.Date_Card);
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
             
@@ -121,18 +110,8 @@ async function getAndRenderCard(){
                 </div>
                 <div class="flex-row">
                     <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
-                </div>
-                <div class="card-menu">
-                    <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                    <ul class="card_menu">
-                        <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
-                        <li onclick="lostCard(${card.id})">Kaybedildi</li>
-                        <!-- Diğer menü seçenekleri -->
-                    </ul>
-                </div> 
+                </div>                
             `;
-            console.log(card)
-            console.log(card.Situation_Card)
             cardDiv.innerHTML = cardContent; 
             switch (card.Situation_Card) {
                 case "Potansiyel Müşteri":
