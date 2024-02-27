@@ -12,15 +12,12 @@ async function getAndRenderList(){
         const data = await response.json();
         const projects = data.projects;        
 
-        console.log(projects)
 
         const tbody = document.querySelector(".business-maintenance tbody");
         tbody.innerHTML = '';
 
         projects.forEach((project) => {
-            console.log(project)
             const date = new Date(project.StartDate);
-            console.log(project)
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
             if(project.CompanyName){
                 const row = 
@@ -77,18 +74,19 @@ async function getAndRenderCard(){
             <span>$ span1</span>
             <span>span2</span>
         `;
-
-        const rowsDiv = document.querySelector('.thazir');
-        rowsDiv.innerHTML = '';
-        rowsDiv.appendChild(totalCashDiv);
-
+        const rowsDiv =document.querySelectorAll('.sales_container .rows');
+        rowsDiv.forEach((row)=>{
+            row.innerHTML = '';
+            row.appendChild(totalCashDiv);
+        });        
         const response = await fetch('/get_cards/');
         const data = await response.json();
         const cards = data.cards;
         console.log(cards)
 
         cards.forEach((card) => {
-            console.log(card.Cost_NotIncludingKDV)
+           
+            //console.log(card.Situation_Card)
             const date = new Date(card.Date_Card);
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
             
@@ -133,9 +131,36 @@ async function getAndRenderCard(){
                     </ul>
                 </div> 
             `;
-            cardDiv.innerHTML = cardContent;
-        
-            rowsDiv.appendChild(cardDiv);
+            console.log(card)
+            console.log(card.Situation_Card)
+            cardDiv.innerHTML = cardContent; 
+            switch (card.Situation_Card) {
+                case "Potansiyel Müşteri":
+                    rowsDiv[0].appendChild(cardDiv);
+                    break;
+                case "Maliyet Hesaplama":
+                    rowsDiv[1].appendChild(cardDiv);
+                    break;
+                case "Fiyat Belirleme":
+                    rowsDiv[2].appendChild(cardDiv);
+                    break;
+                case "Teklif Hazırlama":
+                    rowsDiv[3].appendChild(cardDiv);
+                    break;  
+                case "Teklif Hazır":
+                    rowsDiv[4].appendChild(cardDiv);
+                    break; 
+                case "Teklif Sunuldu":
+                    rowsDiv[5].appendChild(cardDiv);
+                    break;  
+                case "Sunum Sonrası Görüşme":
+                    rowsDiv[6].appendChild(cardDiv);
+                    break;
+                default:
+                    console.log("df")
+
+              }                  
+            
         });
 
     } catch(error) {

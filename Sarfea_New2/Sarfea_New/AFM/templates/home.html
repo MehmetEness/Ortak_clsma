@@ -95,7 +95,7 @@ transition: transform 0.3s ease;
           
         </div>
         <div class="sales_container container">         
-            <div class="rows thazir" data-situation="Potansiyel Müşteri">    
+            <div class="rows" data-situation="Potansiyel Müşteri">    
                   <div style="background-color: #D0DDFB;" class="total-cash">
                     <span>$ span1</span>
                     <span>span2</span>
@@ -104,7 +104,7 @@ transition: transform 0.3s ease;
                   {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                   <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                     <div class="boxes">
-                      <p class="bold700">{{card.Client_Card}}</p>                        
+                      <p class="bold700">{{card.Client_Card_Copy}}</p>                        
                     </div>
                     <p>{{card.Date_Card}}</p>
                     <div class="boxes">
