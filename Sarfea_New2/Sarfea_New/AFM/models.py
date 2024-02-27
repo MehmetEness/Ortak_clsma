@@ -269,29 +269,74 @@ class SalesOfferCard_Revise(models.Model):
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 class Operation_Care(models.Model):
-    Operation_Care_Project=  models.ForeignKey(Project, on_delete=models.CASCADE)
+    Operation_Care_Company = models.CharField(max_length=63, blank=True, null=True)
+    Operation_Care_Location = models.CharField(max_length=200, blank=True, null=True)
+    Operation_Care_Inventor_Brand = models.CharField(max_length=200, blank=True, null=True)
+    Operation_Care_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
+    Operation_Care_Address = models.CharField(max_length=500, blank=True, null=True)
+    Operation_Care_Terrain_Roof = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Çatı', 'Çatı'),
+            ('Arazi', 'Arazi'),
+        ),
+    )        
+    Operation_Care_Direction= models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Kuzey', 'Kuzey'),
+            ('Güney', 'Güney'),
+            ('Doğu', 'Doğu'),
+            ('Batı', 'Batı'),
+        ),
+    )    
+    Operation_Care_Inventor_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Panel_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Inventor_Number = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_VOC = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_AC_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_DC_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Panel_Number_Str = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Capacity = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Start_Date = models.DateField(blank=True, null=True)
+    Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
+    Operation_Care_Has_Fail = models.BooleanField(default=False, blank=True, null=True)
+    Operation_Care_Fail_Number = models.IntegerField(blank=True, null=True, default="0")
 
+class Fail(models.Model):
+    Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
+    Fail_Central_Name = models.CharField(max_length=63, blank=True, null=True)
+    Fail_Information_Person = models.CharField(max_length=63, blank=True, null=True)
+    Fail_Guaranteed = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Evet', 'Evet'),
+            ('Hayır', 'Hayır'),
+        ),
+    )    
+    Fail_Detection_Date = models.DateField(blank=True, null=True)
+    Fail_Detail=models.CharField(max_length=400, blank=True, null=True)
 
 class Poll(models.Model):
-    Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE)
+    Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
     Poll_Time = models.DateField(default=timezone.now,blank=True, null=True)
 
 class Poll_Question(models.Model):
-    Question_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE)
+    Question_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE, blank=True, null=True)
     Questin_Type_Number= models.IntegerField(blank=True, null=True)
     Questin_Number= models.IntegerField(blank=True, null=True)
 
 class Poll_Answer(models.Model):
-    Answer_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE)
+    Answer_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE, blank=True, null=True)
     Answer_Text= models.CharField(max_length=63, blank=True, null=True)
     Answer_Value= models.BooleanField(blank=True, null=True)
 
 class Question_Note(models.Model):
-    Note_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE)
+    Note_Question=  models.ForeignKey(Poll_Question, on_delete=models.CASCADE, blank=True, null=True)
     Note_Text= models.CharField(max_length=255, blank=True, null=True)
 
 class Time_Note(models.Model):
-    Note_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE)
+    Note_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE, blank=True, null=True)
     Note_Text= models.CharField(max_length=2550, blank=True, null=True)
     Note_Editör= models.CharField(max_length=255, blank=True, null=True)
     Edit_Time = models.DateField(default=timezone.now,blank=True, null=True)
