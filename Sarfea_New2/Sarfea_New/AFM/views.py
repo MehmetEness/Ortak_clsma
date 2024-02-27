@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
@@ -1118,10 +1118,17 @@ def get_incomes(request, project_name):
     incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
     return JsonResponse({'incomes': list(incomes)})
 
-def get_operation_care(request, project_name):
-    operation_care = Operation_Care.objects.filter(ProjectName_Incomes=project_name).values()
+def get_operation_care(request):
+    operation_care = Operation_Care.objects.all.values()()
     return JsonResponse({'operation_care': list(operation_care)})
 
+def get_fail(request):
+    fail = Fail.objects.all.values()()
+    return JsonResponse({'fail': list(fail)})
+
+def get_fail_bill(request):
+    fail_bill = Fail_Bill.objects.all.values()()
+    return JsonResponse({'fail_bill': list(fail_bill)})
 #***********************************************************
 #                       GET METHODLARI
 #***********************************************************
