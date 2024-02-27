@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
@@ -628,19 +628,10 @@ def projects(request):
 
 @login_required
 def operation_care(request):
-    project = Project.objects.annotate(
-        custom_order_situation=Case(
-            When(Situation="Onay Bekliyor", then=Value(1)),
-            When(Situation="Devam Ediyor", then=Value(2)),
-            When(Situation="Tamamlandı", then=Value(3)),
-            default=Value(4),
-            output_field=IntegerField()
-        ),
-        custom_order_date=F('StartDate')
-    ).order_by('custom_order_situation', 'custom_order_date')
+    operations = Operation_Care.objects.all()
 
     context = {
-        "project": project,
+        "operations": operations,
         
     }
 
@@ -941,7 +932,7 @@ def deneme2(request):
     return render(request, "deneme2.html", context)
 
 @login_required
-def deneme3(request):
+def operation_care_detail(request):
     project = Project.objects.annotate(
         custom_order_situation=Case(
             When(Situation="Onay Bekliyor", then=Value(1)),
@@ -958,7 +949,7 @@ def deneme3(request):
         
     }
 
-    return render(request, "deneme3.html", context)
+    return render(request, "operation_care_detail.html", context)
 
 @login_required
 def expenses_add_wp(request, project_id):
@@ -1086,22 +1077,22 @@ def get_projects(request):
 
 @login_required
 def get_lost_cards(request):
-    lost_cards = SalesOfferCard.objects.filter(Is_Lost=True)
+    lost_cards = SalesOfferCard.objects.filter(Is_Lost=True).values()
     return JsonResponse({'lost_cards': list(lost_cards)})
 
 @login_required
 def get_gain_cards(request):
-    gain_cards = SalesOfferCard.objects.filter(Is_Gain=True)
+    gain_cards = SalesOfferCard.objects.filter(Is_Gain=True).values()
     return JsonResponse({'gain_cards': list(gain_cards)})
 
 @login_required
 def get_late_cards(request):
-    late_cards = SalesOfferCard.objects.filter(Is_late=True)
+    late_cards = SalesOfferCard.objects.filter(Is_late=True).values()
     return JsonResponse({'late_cards': list(late_cards)})
 
 @login_required
 def get_run_cards(request):
-    run_cards = SalesOfferCard.objects.filter(Is_late=False, Is_Gain=False, Is_Lost=False)
+    run_cards = SalesOfferCard.objects.filter(Is_late=False, Is_Gain=False, Is_Lost=False).values()
     return JsonResponse({'run_cards': list(run_cards)})
 
 @login_required
@@ -1111,15 +1102,15 @@ def get_cards(request):
 
 @login_required
 def get_expenses(request, project_name):
-    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name)
+    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name).values()
     return JsonResponse({'expenses': list(expenses)})
 
 def get_job_history(request, project_name):
-    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name)
+    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name).values()
     return JsonResponse({'jobhistory': list(jobhistory)})
 
 def get_incomes(request, project_name):
-    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
+    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
     return JsonResponse({'incomes': list(incomes)})
 
 #***********************************************************

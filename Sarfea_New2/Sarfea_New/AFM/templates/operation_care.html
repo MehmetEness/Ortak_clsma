@@ -143,13 +143,15 @@
                 <th scope="col"><span>Sonraki Bakım Tarihi</span></th>
              </thead>
              <tbody>
+              {% for operation in operations %}
               <tr>
-                <td><a href="{% url 'deneme3' %}">Aselsan</a></td>
-                <td>Ankara</td>
-                <td>5.000,00</td>
-                <td>3.000,00</td>
-                <td>51 Adet</td>           
+                <td><a href="{% url 'operation_care_detail' %}">{{operation.Operation_Care_Company}}</a></td>
+                <td>{{operation.Operation_Care_Inventor_Power}}</td>
+                <td>{{operation.Operation_Care_Location}}</td>
+                <td>{{operation.Operation_Care_Fail_Number}}</td>
+                <td>{{operation.Operation_Care_Finish_Date}}</td>           
               </tr>          
+              {% endfor %}
              </tbody>
             </table>
       </div>
