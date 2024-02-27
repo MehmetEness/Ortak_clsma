@@ -7,6 +7,37 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 <link rel="stylesheet" href="{% static 'home_style.css' %}">
+<style>
+  #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
+      text-align: center;
+  }
+  #table thead th:nth-child(2){
+      padding-left: 20px;
+  }
+  .lists{
+      overflow-y: scroll;
+  }
+  table thead th {
+    cursor: pointer;
+ }
+ table thead th span{
+    position: relative;
+ }
+ thead th span::after{
+ content: '';
+position:absolute;
+left: -18px;
+top: 60%;
+border-style: solid;
+border-top-width: 10px;
+border-right-width: 5px;
+border-left-width: 5px;
+border-color: #000 transparent transparent transparent;
+transform: translateY(-50%);
+transition: transform 0.3s ease;
+ }
+
+</style>
 {% endblock %}
 
 {% block title %} Home Page {% endblock %}
@@ -21,7 +52,157 @@
     <div style="background-image: url('{% static 'images/main3.png' %}');" class="stock card"></div>
   </div>
   <div class="down">
-    <div style="background-image: url('{% static 'images/project.png' %}');" class="business-maintenance card"></div>
+    <div class="business-maintenance card">
+        <table id="project_table" class="table table-sortable">
+           <thead>
+              <th scope="col"><span>Proje Adı</span></th>
+              <th scope="col"><span>Konum</span></th>
+              <th scope="col"><span>İş Bedeli</span></th>
+              <th scope="col"><span>Arazi/Çatı</span></th>
+              <th scope="col"><span>Tarih</span></th>
+              <th scope="col"><span>Durum</span></th>
+           </thead>
+           <tbody>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            <tr>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+              <td>asdasd</td>
+            </tr>
+            
+           </tbody>
+          </table>
+    </div>
     <div style="background-image: url('{% static 'images/sales_offer1.png' %}');" class="reporting card"></div>
   </div>
 </div>
@@ -31,3 +212,10 @@
 
    
     {% endblock %}
+
+    {% block js_files %} 
+  <script src="{% static 'functions.js' %}"></script> 
+  <script src="{% static 'home.js' %}"></script> 
+  
+  
+  {% endblock %}

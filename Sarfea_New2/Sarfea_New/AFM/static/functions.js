@@ -142,6 +142,7 @@ function tableFormat(cells, type) {
         if (
           cell.textContent.trim() == "None" ||
           cell.textContent.trim() == "" ||
+          cell.textContent.trim() == "null" ||
           cell.textContent.trim() == "NaN"
         ) {
           cell.textContent = "-";
