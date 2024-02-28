@@ -66,7 +66,6 @@ function cardShortWithDate(){
     var rowsElements = document.querySelectorAll(
         '.rows[data-situation="Potansiyel Müşteri"], .rows[data-situation="Maliyet Hesaplama"],.rows[data-situation="Fiyat Belirleme"],.rows[data-situation="Teklif Hazırlama"],.rows[data-situation="Teklif Hazır"],.rows[data-situation="Teklif Sunuldu"],.rows[data-situation="Sunum Sonrası Görüşme"]'
       );
-      console.log(rowsElements)
     cardDateList(rowsElements);
 }
 
