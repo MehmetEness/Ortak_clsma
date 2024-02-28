@@ -88,23 +88,23 @@ document.addEventListener("DOMContentLoaded", async () =>{
 
 async function getAndRenderClients() {
     try{
-        const response = await fetch('/get_run_cards/');
+        const response = await fetch('/get_operation_care/');
         const data = await response.json();
-        const run_cards = data.run_cards;
+        const run_cards = data.operation_care;
         
 
         const tbody = document.getElementById('tbody');
         tbody.innerHTML = '';
 
         run_cards.forEach((run_card) => {
-            if (run_card.Client_Card) {
+            if (run_card.Operation_Care_Company) {
                 const row = '<tr>' +
                     '<td></td>' +
-                    '<td>' + run_card.Client_Card + '</td>' +
-                    '<td>' + run_card.Offer_Subject_Card + '</td>' +
-                    '<td>' + run_card.DC_Power_Card + '</td>' +
-                    '<td>' + run_card.Situation_Card + '</td>' +
-                    '<td>' + run_card.Location_Card + '</td>' +
+                    '<td>' + run_card.Operation_Care_Company + '</td>' +
+                    '<td>' + run_card.Operation_Care_Inventor_Brand + '</td>' +
+                    '<td>' + run_card.Operation_Care_Panel_Brand + '</td>' +
+                    '<td>' + run_card.Operation_Care_Panel_Number_Str + '</td>' +
+                    '<td>' + run_card.Operation_Care_Start_Date + '</td>' +
                     '</tr>';
                 tbody.insertAdjacentHTML('beforeend', row);
             }

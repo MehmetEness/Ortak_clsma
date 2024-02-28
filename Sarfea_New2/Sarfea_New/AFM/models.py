@@ -330,6 +330,7 @@ class Fail_Bill(models.Model):
     Fail_Bill_Detail=models.CharField(max_length=400, blank=True, null=True) 
     Fail_Bill_File = models.FileField(upload_to='fail_bills', default="", blank=True, null=True)
 
+
 class Poll(models.Model):
     Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
     Poll_Time = models.DateField(default=timezone.now,blank=True, null=True)

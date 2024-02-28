@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm
+from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill
 from django.db.models import Q
 from django.views import View
@@ -647,7 +647,7 @@ def operation_care_add(request):
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
-        form = ProjectForm(request.POST or None )
+        form = Operation_CareForm(request.POST or None )
         client_form = ClientsForm(request.POST)
 
         if form.is_valid():
@@ -659,7 +659,7 @@ def operation_care_add(request):
             client_form.save()
             return redirect('operation_care_add')
     else:
-        form = ProjectForm()
+        form = Operation_CareForm()
         client_form = ClientsForm()
         
     context = {
@@ -1062,7 +1062,7 @@ def income_add_wp(request, project_id):
     }
     return render(request, "income_add_wp.html", context)
 #***********************************************************
-#                       GET METHODLARI
+#                       POST METHODLARI
 #***********************************************************
 
 @login_required
@@ -1119,16 +1119,17 @@ def get_incomes(request, project_name):
     return JsonResponse({'incomes': list(incomes)})
 
 def get_operation_care(request):
-    operation_care = Operation_Care.objects.all.values()()
+    operation_care = Operation_Care.objects.all().values()
     return JsonResponse({'operation_care': list(operation_care)})
 
 def get_fail(request):
-    fail = Fail.objects.all.values()()
+    fail = Fail.objects.all().values()
     return JsonResponse({'fail': list(fail)})
 
 def get_fail_bill(request):
-    fail_bill = Fail_Bill.objects.all.values()()
+    fail_bill = Fail_Bill.objects.all().values()
     return JsonResponse({'fail_bill': list(fail_bill)})
+
 #***********************************************************
 #                       GET METHODLARI
 #***********************************************************
