@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
 
     <style>
+      ::-webkit-scrollbar {
+        width: 0 !important;
+      }
       #paying-firma-add-btn-2{
         padding: 0 5px;
         border: 1px solid rgba(0, 0, 0, 0.5);
@@ -18,11 +21,11 @@
         font-size: 15px;
       }
       #firma_container{
-  width: 20%;
-}
-#firma_input_box{
-  width: 100%;
-}
+        width: 20%;
+      }
+      #firma_input_box{
+        width: 100%;
+      }
     </style>
 
     {% endblock %}

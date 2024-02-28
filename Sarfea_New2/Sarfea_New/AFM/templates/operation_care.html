@@ -65,96 +65,98 @@
     
     {% include 'partials/_left_nav_bar.html' %}
     <div class="right-menu">
-      <div class="top-menu">
-        <div class="content">         
-          <div style="margin-left: 50px;" class="search active">
-              <div class="icon"></div>
-              <div class="input">
-                <input id="mysearch" type="text" placeholder="Ara">
+        <div class="top-menu">
+              <div class="content">         
+                <div style="margin-left: 50px;" class="search active">
+                    <div class="icon"></div>
+                    <div class="input">
+                      <input id="mysearch" type="text" placeholder="Ara">
+                  </div>
+                  <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
+              </div>
             </div>
-            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
-         </div>
-      </div>
-      <ul class="top-menu-ul">
-        <li id="isletme_bakim">İşletme Bakım</li>           
-        <li id="ariza_takip">Arıza Takip</li> 
-        <li id="fatura">Faturalar</li>
-      </ul> 
-      <div class="fonction-butons">
-        <a href="{% url 'fault_notification' %}"><button class="button-project-start" >Arıza Bildir</button></a>
-         <a href="{% url 'operation_care_add' %}"><button class="button-project-start" >İşletme-Bakım Başlat</button></a>
-      </div>
-   </div>
-   <div style="display: none;" class="lists ariza_takip_container">
-      <div class="line"></div>
-      <table id="table" class="table table-sortable">
-         <thead>           
-            <th scope="col"><span>Santral İsmi</span></th>
-            <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
-            <th scope="col"><span>Arıza</span></th>
-            <th scope="col"><span>Ekip Bilgilendirme Tarihi</span></th>
-            <th scope="col"><span>Bilgi Verilen Kişi</span></th>
-            <th scope="col"><span>Arıza Onarım Tarihi</span></th>
-            <th scope="col"><span>Garanti Kapsam Durumu</span></th>
-            <th scope="col"><span>Arıza Durumu</span></th>
-         </thead>
-         <tbody>
-          <tr>
-            <td>Aselsan</td>
-            <td>Ankara</td>
-            <td>5.000,00</td>
-            <td>3.000,00</td>
-            <td>51 Adet</td>      
-            <td>3.000,00</td>
-            <td>51 Adet</td>       
-          </tr>          
-         </tbody>
-        </table>
-      </div>
-      <div style="display: none;" class="lists fatura_container">
+            <ul class="top-menu-ul">
+              <li id="isletme_bakim">İşletme Bakım</li>           
+              <li id="ariza_takip">Arıza Takip</li> 
+              <li id="fatura">Faturalar</li>
+            </ul> 
+            <div class="fonction-butons">
+              <a href="{% url 'fault_notification' %}"><button class="button-project-start" >Arıza Bildir</button></a>
+              <a href="{% url 'operation_care_add' %}"><button class="button-project-start" >İşletme-Bakım Başlat</button></a>
+            </div>
+        </div>
+        <div style="display: none;" class="lists ariza_takip_container">
         <div class="line"></div>
         <table id="table" class="table table-sortable">
-           <thead>           
+          <thead>           
               <th scope="col"><span>Santral İsmi</span></th>
-              <th id="xx2" scope="col"><span>Yapılan İşlem</span></th>
-              <th scope="col"><span>Açıklama</span></th>
-              <th scope="col"><span>Tarih</span></th>
-              <th scope="col"><span>Dosya</span></th>
-           </thead>
-           <tbody>
+              <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
+              <th scope="col"><span>Arıza</span></th>
+              <th scope="col"><span>Ekip Bilgilendirme Tarihi</span></th>
+              <th scope="col"><span>Bilgi Verilen Kişi</span></th>
+              <th scope="col"><span>Arıza Onarım Tarihi</span></th>
+              <th scope="col"><span>Garanti Kapsam Durumu</span></th>
+              <th scope="col"><span>Arıza Durumu</span></th>
+          </thead>
+          <tbody>
             <tr>
               <td>Aselsan</td>
               <td>Ankara</td>
               <td>5.000,00</td>
               <td>3.000,00</td>
-              <td>51 Adet</td>           
+              <td>51 Adet</td>      
+              <td>3.000,00</td>
+              <td>51 Adet</td>       
             </tr>          
-           </tbody>
+          </tbody>
           </table>
-      </div>
-      <div class="lists isletme_bakim_container">
+        </div>
+        <div style="display: none;" class="lists fatura_container">
           <div class="line"></div>
           <table id="table" class="table table-sortable">
-             <thead>           
-                <th scope="col"><span>Firma Adı</span></th>
-                <th id="xx2" scope="col"><span>İnventör Güç</span></th>
-                <th scope="col"><span>Konum</span></th>
-                <th scope="col"><span>Arıza Durumu</span></th>
-                <th scope="col"><span>Sonraki Bakım Tarihi</span></th>
-             </thead>
-             <tbody>
-              {% for operation in operations %}
+            <thead>           
+                <th scope="col"><span>Santral İsmi</span></th>
+                <th id="xx2" scope="col"><span>Yapılan İşlem</span></th>
+                <th scope="col"><span>Açıklama</span></th>
+                <th scope="col"><span>Tarih</span></th>
+                <th scope="col"><span>Dosya</span></th>
+            </thead>
+            <tbody>
               <tr>
-                <td><a href="{% url 'operation_care_detail' %}">{{operation.Operation_Care_Company}}</a></td>
-                <td>{{operation.Operation_Care_Inventor_Power}}</td>
-                <td>{{operation.Operation_Care_Location}}</td>
-                <td>{{operation.Operation_Care_Fail_Number}}</td>
-                <td>{{operation.Operation_Care_Finish_Date}}</td>           
+                <td>Aselsan</td>
+                <td>Ankara</td>
+                <td>5.000,00</td>
+                <td>3.000,00</td>
+                <td>51 Adet</td>           
               </tr>          
-              {% endfor %}
-             </tbody>
+            </tbody>
             </table>
-      </div>
+        </div>
+        <div class="lists isletme_bakim_container">
+            <div class="line"></div>
+            <table id="table" class="table table-sortable">
+              <thead>           
+                  <th scope="col"><span>Firma Adı</span></th>
+                  <th id="xx2" scope="col"><span>Tesis Grubu Gücü</span></th>
+                  <th scope="col"><span>Konum</span></th>
+                  <th scope="col"><span>Bakım Ücreti</span></th>
+                  <th scope="col"><span>Arıza Durumu</span></th>
+                  <th scope="col"><span>Sonraki Bakım Tarihi</span></th>
+              </thead>
+              <tbody>
+                {% for operation in operations %}
+                <tr>
+                  <td><a href="{% url 'operation_care_detail' %}">{{operation.Operation_Care_Company}}</a></td>
+                  <td>{{operation.Operation_Care_Inventor_Power}}</td>
+                  <td>{{operation.Operation_Care_Location}}</td>
+                  <td>51.000,00</td>
+                  <td>{{operation.Operation_Care_Fail_Number}}</td>
+                  <td>{{operation.Operation_Care_Finish_Date}}</td>           
+                </tr>          
+                {% endfor %}
+              </tbody>
+              </table>
+        </div>
     </div>
   </div>
 </div>

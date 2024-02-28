@@ -18,10 +18,10 @@ garantiSelection.addEventListener("change", function() {
 
 document.addEventListener("click", function(event) {                 
     var isClickInsideDiv = garantiDivContainer.contains(event.target); 
-    if(garantiContainer.style.display === "flex" && garantiSelection.value === "hayir"){
+    if(garantiContainer.style.display === "flex"){
         if(!isClickInsideDiv){                        
             garantiContainer.style.display = "none";    
-            garantiSelection.value = "evet"    
+            garantiSelection.value = "belirsiz"    
         } 
     }                   
 });

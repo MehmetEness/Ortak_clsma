@@ -146,24 +146,24 @@
 </style>
 <!-- inventör tablo -->
 <style>
-    .inventor_container table{
+    .bakim_takip_container table{
         width: 100%;
         height: 100%;
     }
-.inventor_container span{
+.bakim_takip_container span{
     display: inline-block;
     transform: rotate(-90deg);
 }
-.inventor_container tr{
+.bakim_takip_container tr{
     border: 1px solid rgba(0, 0, 0, 0.9);
 }
-.inventor_container td{
+.bakim_takip_container td{
     border: 1px solid rgba(0, 0, 0, 0.9);
     padding: 5px;
     font-size: 14px;
     text-align: center;
 }
-.inventor_container thead tr:first-child{
+.bakim_takip_container thead tr:first-child{
     background-color: #707070;
 }
 
@@ -184,8 +184,15 @@
     {% include 'partials/_left_nav_bar.html' %}
     <div class="right-menu">
       <div class="top-menu">
+            <div class="backBtn">
+                <a href="{% url 'operation_care' %}">
+                    <button id="backBtn" class="button-project">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </a>                                                  
+            </div> 
             <div class="content">         
-                <div style="margin-left: 50px;" class="search active">
+                <div style="margin-left: -140px;" class="search active">
                 <div class="icon"></div>
                     <div class="input">
                         <input id="mysearch" type="text" placeholder="Ara">
@@ -197,7 +204,7 @@
                     <li id="bakim_kontrol_listesi">Bakım Kontrol Listesi</li>
                     <li id="santral_takip">Santral Takip</li>
                     <li id="ariza_takip">Arıza Takip</li>
-                    <li id="inventör">Bakım Takip</li>
+                    <li id="bakim_takip">Bakım Takip</li>
             </ul>                         
             <div class="fonction-butons">
                 <a href="{% url 'inverter' %}"><button class="button-project-start" >İnventör</button></a>
@@ -755,7 +762,7 @@
      <div style="display: none;" class="ariza_takip_container">
         arıza takip
      </div>
-     <div style="display: none;" class="inventor_container">
+     <div style="display: none;" class="bakim_takip_container">
         <table style="border-collapse: collapse;">
             <thead>
                 <tr class="y">
