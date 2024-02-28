@@ -16,15 +16,47 @@
   }
 </style>
 <style>
-  .user-details{
+  .inventor_tables{
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
   }
-  .anket_inputs input{
-    /* text-align: center; */
+  .inventor_tables table{
+    margin-top: 10px;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  .inventor_tables th{
+    font-size: 15px;
+    padding: 5px 10px;
+    border: 1px solid #000;
+  }
+  .inventor_tables td{
+    font-size: 14px;
+    padding: 5px 10px;
+    border: 1px solid #000;
+  }
+  .inventor_tables input{
+    font-size: 14px;
+    text-align: center;
     width: 100px;
     border: none;
     outline: none;
+  }
+  .inventor_tables select{
+    text-align: center;
+    font-size: 14px;
+    width: 100px;
+    border: none;
+    height: 25px;
+    -webkit-appearance: none;
+    -moz-appearance: none; 
+    appearance: none;
+  }
+  .inventor_tables option{
+    text-align: center;
+    font-size: 14px;
   }
 </style>
 
@@ -53,7 +85,7 @@
           {% csrf_token %}
           <input type="hidden" name="form_type" value="form" />
 
-          <div class="user-details">
+          <div class="inventor_tables">
             <div class="left">
                 <table>
                     <thead>
@@ -63,6 +95,11 @@
                           <th>VOC</th>
                           <th>PNL MRK</th>
                           <th>PNL SY</th>
+                          <th> - </th>
+                          <th>İZALASYON</th>
+                          <th>TOPLAM V</th>
+                          <th>+</th>
+                          <th>-</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,6 +109,16 @@
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
                           <td>2</td>
@@ -79,6 +126,16 @@
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
                           <td>3</td>
@@ -86,236 +143,172 @@
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>4</td>
+                          <td>1</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>5</td>
+                          <td>2</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>6</td>
+                          <td>3</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>7</td>
+                          <td>1</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>8</td>
+                          <td>2</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>9</td>
+                          <td>3</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>10</td>
+                          <td>1</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>11</td>
+                          <td>2</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                         <tr>
-                          <td>12</td>
+                          <td>3</td>
                           <td>545</td>
                           <td>49,65</td>
                           <td>LONGİ</td>
                           <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>13</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>14</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>15</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>16</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>17</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
-                        </tr>
-                        <tr>
-                          <td>18</td>
-                          <td>545</td>
-                          <td>49,65</td>
-                          <td>LONGİ</td>
-                          <td>26</td>
+                          <td> - </td>
+                          <td>
+                            <select>
+                              <option value="ok">OK</option>
+                              <option value="FAULT">FAULT</option>
+                            </select>
+                          </td>
+                          <td><input type="text" value="1277"></td>
+                          <td><input type="text" value="634,00"></td>
+                          <td><input type="text" value="643,00"></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="right">
-              <table>
-                <thead>
-                    <tr>
-                      <th>İZALASYON</th>
-                      <th>TOPLAM V</th>
-                      <th>+</th>
-                      <th>-</th>
-                    </tr>
-                </thead>
-                <tbody class="anket_inputs">
-                    <tr>
-                      <td><input type="text" value="OK"></td>
-                      <td><input type="text" value="1277"></td>
-                      <td><input type="text" value="634,00"></td>
-                      <td><input type="text" value="643,00"></td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                    <tr>
-                      <td>ok</td>
-                      <td>1277</td>
-                      <td>634,00</td>
-                      <td>643,00</td>
-                    </tr>
-                </tbody>
-            </table>
             </div>
             
           </div>
@@ -350,6 +343,6 @@
   {% endblock %}
   {% block js_files %}
   <script src="{% static 'functions.js' %}"></script> 
-  <script src="{% static 'project_add.js' %}"></script> 
+  <script src="{% static 'inventor.js' %}"></script> 
   {% endblock %} 
 </div>
