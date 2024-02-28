@@ -937,21 +937,12 @@ def deneme2(request):
     return render(request, "deneme2.html", context)
 
 @login_required
-def operation_care_detail(request):
-    project = Project.objects.annotate(
-        custom_order_situation=Case(
-            When(Situation="Onay Bekliyor", then=Value(1)),
-            When(Situation="Devam Ediyor", then=Value(2)),
-            When(Situation="Tamamlandı", then=Value(3)),
-            default=Value(4),
-            output_field=IntegerField()
-        ),
-        custom_order_date=F('StartDate')
-    ).order_by('custom_order_situation', 'custom_order_date')
+def operation_care_detail(request,operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
+    fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
 
     context = {
-        "project": project,
-        
+        'fails':fails,
     }
 
     return render(request, "operation_care_detail.html", context)
