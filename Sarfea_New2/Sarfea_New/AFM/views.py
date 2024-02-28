@@ -701,7 +701,8 @@ def fault_notification(request):
     return render(request, "fault_notification.html", context)
 
 @login_required
-def inverter(request):
+def inverter(request, operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -726,6 +727,7 @@ def inverter(request):
         "client": client,
         "locations": locations,
         "client_form":client_form,
+        "operation_care":operation_care,
     }
     return render(request, "inverter.html", context)
 
@@ -943,6 +945,7 @@ def operation_care_detail(request,operation_care_id):
 
     context = {
         'fails':fails,
+        "operation_care":operation_care,
     }
 
     return render(request, "operation_care_detail.html", context)

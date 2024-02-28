@@ -60,6 +60,6 @@ urlpatterns = [
     path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
     path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
     path('fault_notification/', views.fault_notification, name='fault_notification'),
-    path('inverter/', views.inverter, name='inverter'),
+    path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
 
    ]

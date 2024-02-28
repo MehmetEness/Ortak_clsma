@@ -207,7 +207,7 @@
 }
 </style>
 {% endblock %}
-{% block title %} Projects {% endblock %}
+{% block title %} Operation and Care Details {% endblock %}
 {% block content %}
  <div class="body-div"> 
     
@@ -238,7 +238,7 @@
                     <li id="bakim_takip">Bakım Takip</li>
             </ul>                         
             <div class="fonction-butons">
-                <a href="{% url 'inverter' %}"><button class="button-project-start" >İnventör</button></a>
+                <a href="{% url 'inverter' operation_care_id=operation_care.id %}"><button class="button-project-start" >İnventör</button></a>
             </div>
       </div>
       <div class="anket-container">
