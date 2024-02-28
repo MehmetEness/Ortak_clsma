@@ -1,11 +1,9 @@
 from django import forms
 from datetime import datetime
-from .models import Project, ProjectNames, Expenses, Incomes, JobHistory ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations
+from .models import Project, ProjectNames, Expenses, Incomes, JobHistory, Operation_Care ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations
    
 min_date = datetime(2000, 1, 1)
 max_date = datetime(2099, 12, 30) 
-
-
 
 class ProjectForm(forms.ModelForm):
  
@@ -332,6 +330,7 @@ class SupplierForm(forms.ModelForm):
         fields = '__all__'   
 
 class SalesOfferCardForm(forms.ModelForm):
+
     Client_Card_Copy = forms.CharField(
          error_messages={
             'required': '! Lütfen Müşteri Seçiniz',
@@ -393,4 +392,10 @@ class SalesOfferCardForm(forms.ModelForm):
 
     class Meta:
         model = SalesOfferCard
+        fields = '__all__'
+
+class Operation_CareForm(forms.ModelForm):
+
+    class Meta:
+        model = Operation_Care
         fields = '__all__'
