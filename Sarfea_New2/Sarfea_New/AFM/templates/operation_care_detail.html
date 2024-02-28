@@ -8,7 +8,38 @@
 <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <style>
-
+    .lists{
+        height: calc(100vh - 78px);
+    }
+    
+#table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
+        text-align: center;
+    }
+    #table thead th:nth-child(2){
+        padding-left: 20px;
+    }
+    .lists{
+        overflow-y: scroll;
+    }
+    table thead th {
+      cursor: pointer;
+   }
+   table thead th span{
+      position: relative;
+   }
+   thead th span::after{
+   content: '';
+  position:absolute;
+  left: -18px;
+  top: 60%;
+  border-style: solid;
+  border-top-width: 10px;
+  border-right-width: 5px;
+  border-left-width: 5px;
+  border-color: #000 transparent transparent transparent;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+   }
 .anket-container{
    height: calc(100vh - 78px);
    overflow: scroll;
@@ -756,11 +787,55 @@
              </div>
          </div>
      </div>
-     <div style="display: none;" class="santral_takip_container">
-        santral
+     <div style="display: none;" class="lists santral_takip_container">
+        <table id="table" class="table table-sortable">
+            <thead>           
+                <th scope="col"><span>Santral İsmi</span></th>
+                <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
+                <th scope="col"><span>Arıza</span></th>
+                <th scope="col"><span>Ekip Bilgilendirme Tarihi</span></th>
+                <th scope="col"><span>Bilgi Verilen Kişi</span></th>
+                <th scope="col"><span>Arıza Onarım Tarihi</span></th>
+                <th scope="col"><span>Garanti Kapsam Durumu</span></th>
+                <th scope="col"><span>Arıza Durumu</span></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aselsan</td>
+                <td>Ankara</td>
+                <td>5.000,00</td>
+                <td>3.000,00</td>
+                <td>51 Adet</td>      
+                <td>3.000,00</td>
+                <td>51 Adet</td>       
+              </tr>          
+            </tbody>
+            </table>
      </div>
-     <div style="display: none;" class="ariza_takip_container">
-        arıza takip
+     <div style="display: none;" class="lists ariza_takip_container">
+        <table id="table" class="table table-sortable">
+            <thead>           
+                <th scope="col"><span>Santral İsmi</span></th>
+                <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
+                <th scope="col"><span>Arıza</span></th>
+                <th scope="col"><span>Ekip Bilgilendirme Tarihi</span></th>
+                <th scope="col"><span>Bilgi Verilen Kişi</span></th>
+                <th scope="col"><span>Arıza Onarım Tarihi</span></th>
+                <th scope="col"><span>Garanti Kapsam Durumu</span></th>
+                <th scope="col"><span>Arıza Durumu</span></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aselsan</td>
+                <td>Ankara</td>
+                <td>5.000,00</td>
+                <td>3.000,00</td>
+                <td>51 Adet</td>      
+                <td>3.000,00</td>
+                <td>51 Adet</td>       
+              </tr>          
+            </tbody>
+            </table>
      </div>
      <div style="display: none;" class="bakim_takip_container">
         <table style="border-collapse: collapse;">
