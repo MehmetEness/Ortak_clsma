@@ -4,6 +4,9 @@ var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
 
 //                  GENEL FUNCTİON
+function openFile(url) {
+  window.open(url, "_blank");
+}
 
 function clear(value){      
   if(value != undefined){
