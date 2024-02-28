@@ -297,6 +297,7 @@ class Operation_Care(models.Model):
     Operation_Care_AC_Power = TwoDecimalField(blank=True, null=True, default="0")
     Operation_Care_DC_Power = TwoDecimalField(blank=True, null=True, default="0")
     Operation_Care_Panel_Number_Str = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_Number_Str = TwoDecimalField(blank=True, null=True, default="0")
     Operation_Care_Capacity = TwoDecimalField(blank=True, null=True, default="0")
     Operation_Care_Start_Date = models.DateField(blank=True, null=True)
     Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
