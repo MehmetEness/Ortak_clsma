@@ -1,6 +1,5 @@
 var topMenuLi = document.querySelectorAll(".top-menu-ul li");
 var anketContainer = document.querySelector(".anket-container");
-var santralTakipContainer = document.querySelector(".santral_takip_container");
 var arizaTakipContainer = document.querySelector(".ariza_takip_container");
 var bakimTakipContainer = document.querySelector(".bakim_takip_container");
 
@@ -39,29 +38,62 @@ topMenuLi.forEach(function (item) {
     switch (clickedItemId) {
       case "bakim_kontrol_listesi":
         anketContainer.style.display = "block";
-        santralTakipContainer.style.display = "none";
-        arizaTakipContainer.style.display = "none";
-        bakimTakipContainer.style.display = "none";
-        break;
-      case "santral_takip":
-        anketContainer.style.display = "none";
-        santralTakipContainer.style.display = "block";
         arizaTakipContainer.style.display = "none";
         bakimTakipContainer.style.display = "none";
         break;
       case "ariza_takip":
         anketContainer.style.display = "none";
-        santralTakipContainer.style.display = "none";
         arizaTakipContainer.style.display = "block";
         bakimTakipContainer.style.display = "none";
         break;  
     case "bakim_takip":
         anketContainer.style.display = "none";
-        santralTakipContainer.style.display = "none";
         arizaTakipContainer.style.display = "none";
         bakimTakipContainer.style.display = "flex";
         break;         
       default:
         break;
+    }
+}
+
+getAndRenderList();
+
+async function getAndRenderList(){
+    try{
+        const response = await fetch('/get_operation_care/');
+        
+        const data = await response.json();
+        const inventors = data.operation_care;
+        inventors.forEach(inventor => {
+            console.log(inventor)
+            if(inventor.id == 5){
+                console.log(inventor)
+                const tbody = document.querySelector('.inventor_table_body');
+                tbody.innerHTML = '';
+                for(let i=0; i < inventor.Operation_Care_Number_Str; i++){                  
+                    
+                        const row = '<tr>' +
+                            `<td><span>İnventör 1</span></td>` +
+                            '<td>' + inventor.Operation_Care_Direction + '</td>' +
+                            '<td>' + inventor.Operation_Care_Number_Str + '</td>' +
+                            '<td>' + inventor.Operation_Care_Panel_Power + '</td>' +
+                            '<td>' + inventor.Operation_Care_VOC + '</td>' +
+                            '<td>' + inventor.Operation_Care_Panel_Brand + '</td>' +
+                            '<td>' + inventor.Operation_Care_Panel_Number_Str + '</td>' +
+                            '<td>OK</td>' +
+                            '<td>' + inventor.Operation_Care_Capacity + '</td>' +
+                            '<td>' + inventor.Operation_Care_AC_Power + '</td>' +
+                            '<td>' + inventor.Operation_Care_DC_Power + '</td>' +
+                            '<td>0.01</td>' +
+                            '<td>500</td>' +                            
+                            '</tr>';
+                        tbody.insertAdjacentHTML('beforeend', row);
+                                   
+                }                
+            }
+        });
+       
+    }catch(event){
+        console.log(event)
     }
 }
