@@ -207,7 +207,7 @@
 }
 </style>
 {% endblock %}
-{% block title %} Projects {% endblock %}
+{% block title %} Operation and Care Details {% endblock %}
 {% block content %}
  <div class="body-div"> 
     
@@ -238,7 +238,7 @@
                     <li id="bakim_takip">Bakım Takip</li>
             </ul>                         
             <div class="fonction-butons">
-                <a href="{% url 'inverter' %}"><button class="button-project-start" >İnventör</button></a>
+                <a href="{% url 'inverter' operation_care_id=operation_care.id %}"><button class="button-project-start" >İnventör</button></a>
             </div>
       </div>
       <div class="anket-container">
@@ -825,15 +825,19 @@
                 <th scope="col"><span>Arıza Durumu</span></th>
             </thead>
             <tbody>
+                {% for fail in fails %}
               <tr>
-                <td>Aselsan</td>
-                <td>Ankara</td>
-                <td>5.000,00</td>
-                <td>3.000,00</td>
-                <td>51 Adet</td>      
-                <td>3.000,00</td>
-                <td>51 Adet</td>       
+                <td>{{fail.Fail_Central_Name}}</td>
+                <td>{{fail.Fail_Detection_Date}}</td>
+                <td>{{fail.Fail_Detail}}</td>
+                <td>{{fail.Fail_Team_Info_Date}}</td>      
+                <td>{{fail.Fail_Information_Person}}</td>
+                <td>{{fail.Fail_Repair_Date}}</td>      
+                <td>{{fail.Fail_Guaranteed}}</td>
+                <td>{{fail.Fail_Situation}}</td>       
               </tr>          
+              {% endfor %}
+
             </tbody>
             </table>
      </div>

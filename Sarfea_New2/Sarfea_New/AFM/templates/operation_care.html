@@ -99,15 +99,18 @@
               <th scope="col"><span>Arıza Durumu</span></th>
           </thead>
           <tbody>
-            <tr>
-              <td>Aselsan</td>
-              <td>Ankara</td>
-              <td>5.000,00</td>
-              <td>3.000,00</td>
-              <td>51 Adet</td>      
-              <td>3.000,00</td>
-              <td>51 Adet</td>       
-            </tr>          
+              {% for fail in fails %}
+              <tr>
+                <td>{{fail.Fail_Central_Name}}</td>
+                <td>{{fail.Fail_Detection_Date}}</td>
+                <td>{{fail.Fail_Detail}}</td>
+                <td>{{fail.Fail_Team_Info_Date}}</td>      
+                <td>{{fail.Fail_Information_Person}}</td>
+                <td>{{fail.Fail_Repair_Date}}</td>      
+                <td>{{fail.Fail_Guaranteed}}</td>
+                <td>{{fail.Fail_Situation}}</td>       
+              </tr>          
+              {% endfor %}    
           </tbody>
           </table>
         </div>
@@ -122,13 +125,22 @@
                 <th scope="col"><span>Dosya</span></th>
             </thead>
             <tbody>
+              {% for bill in fail_bills %}
+
               <tr>
-                <td>Aselsan</td>
-                <td>Ankara</td>
-                <td>5.000,00</td>
-                <td>3.000,00</td>
-                <td>51 Adet</td>           
+                <td>{{bill.Fail_Bill_Central_Name}}</td>
+                <td>{{bill.Fail_Bill_Process}}</td>
+                <td>{{bill.Fail_Bill_Detail}}</td>
+                <td>{{bill.Fail_Bill_Date}}</td>
+                <td>
+                {% if bill.Fail_Bill_File %}
+                  <button class="mr-3 blue" onclick="openFile('{{ bill.Fail_Bill_File.url }}')">Faturayı Aç</button> 
+                {% else %}
+                Faruta Bulunamadı
+                {% endif %}
+              </td>
               </tr>          
+              {% endfor %}
             </tbody>
             </table>
         </div>
@@ -146,7 +158,7 @@
               <tbody>
                 {% for operation in operations %}
                 <tr>
-                  <td><a href="{% url 'operation_care_detail' %}">{{operation.Operation_Care_Company}}</a></td>
+                  <td><a href="{% url 'operation_care_detail' operation_care_id=operation.id %}">{{operation.Operation_Care_Company}}</a></td>
                   <td>{{operation.Operation_Care_Inventor_Power}}</td>
                   <td>{{operation.Operation_Care_Location}}</td>
                   <td>51.000,00</td>

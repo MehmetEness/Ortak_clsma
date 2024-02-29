@@ -24,7 +24,6 @@ urlpatterns = [
     path("income_add/", views.income_add, name='income_add'),
     path("deneme/", views.deneme, name='deneme'),
     path("deneme2/", views.deneme2, name='deneme2'),
-    path("operation_care_detail/", views.operation_care_detail, name='operation_care_detail'),
     path("expenses_add_wp/<int:project_id>", views.expenses_add_wp, name='expenses_add_wp'),
     path("jobhistory_add_wp/<int:project_id>", views.jobhistory_add_wp, name='jobhistory_add_wp'),
     path("income_add_wp/<int:project_id>", views.income_add_wp, name='income_add_wp'),
@@ -56,11 +55,11 @@ urlpatterns = [
     path('get_operation_care/', views.get_operation_care, name='get_operation_care'),
     path('get_fail/', views.get_fail, name='get_fail'),
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
-
     path('post_client/', views.post_client, name='post_client'),
     path('operation_care/', views.operation_care, name='operation_care'),
     path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
+    path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
     path('fault_notification/', views.fault_notification, name='fault_notification'),
-    path('inverter/', views.inverter, name='inverter'),
+    path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
 
    ]

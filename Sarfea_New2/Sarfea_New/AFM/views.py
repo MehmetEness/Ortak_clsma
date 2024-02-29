@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm
+from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm, Fail_BillForm
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill
 from django.db.models import Q
 from django.views import View
@@ -634,10 +634,13 @@ def projects(request):
 @login_required
 def operation_care(request):
     operations = Operation_Care.objects.all()
+    fails=Fail.objects.all()
+    fail_bills=Fail_Bill.objects.all()
 
     context = {
         "operations": operations,
-        
+        "fails": fails,
+        "fail_bills":fail_bills,
     }
 
     return render(request, "operation_care.html", context)
@@ -673,6 +676,30 @@ def operation_care_add(request):
 
 @login_required
 def fault_notification(request):
+    operation_cares=Operation_Care.objects.all()
+    if request.method == 'POST':
+        form = FailForm(request.POST or None )
+        form_bills=Fail_BillForm(request.POST, request.FILES )
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+        
+        elif form_bills.is_valid():
+            form_bills.save()
+            return redirect('fault_notification')  
+    else:
+        form = FailForm()
+        form_bills=Fail_BillForm()
+    context = {
+        "form": form,
+        "form_bills":form_bills,
+        "operation_cares":operation_cares,
+    }
+    return render(request, "fault_notification.html", context)
+
+@login_required
+def fail_edit(request, fail_id):
+    fail=Fail.objects.filter(id=fail_id).first()
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -700,8 +727,10 @@ def fault_notification(request):
     }
     return render(request, "fault_notification.html", context)
 
+
 @login_required
-def inverter(request):
+def inverter(request, operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -726,6 +755,7 @@ def inverter(request):
         "client": client,
         "locations": locations,
         "client_form":client_form,
+        "operation_care":operation_care,
     }
     return render(request, "inverter.html", context)
 
@@ -937,21 +967,13 @@ def deneme2(request):
     return render(request, "deneme2.html", context)
 
 @login_required
-def operation_care_detail(request):
-    project = Project.objects.annotate(
-        custom_order_situation=Case(
-            When(Situation="Onay Bekliyor", then=Value(1)),
-            When(Situation="Devam Ediyor", then=Value(2)),
-            When(Situation="Tamamlandı", then=Value(3)),
-            default=Value(4),
-            output_field=IntegerField()
-        ),
-        custom_order_date=F('StartDate')
-    ).order_by('custom_order_situation', 'custom_order_date')
+def operation_care_detail(request,operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
+    fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
 
     context = {
-        "project": project,
-        
+        'fails':fails,
+        "operation_care":operation_care,
     }
 
     return render(request, "operation_care_detail.html", context)

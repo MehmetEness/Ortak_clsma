@@ -317,7 +317,18 @@ class Fail(models.Model):
             ('Hayır', 'Hayır'),
         ),
     )    
+    Fail_Situation = models.CharField(
+        max_length=63,blank=True, null=True,
+        choices=(
+            ('Belirlendi', 'Belirlendi'),
+            ('Onarımda', 'Onarımda'),
+            ('Onarıldı', 'Onarıldı'),
+
+        ),
+    )    
     Fail_Detection_Date = models.DateField(blank=True, null=True)
+    Fail_Team_Info_Date = models.DateField(blank=True, null=True)
+    Fail_Repair_Date = models.DateField(blank=True, null=True)
     Fail_Detail=models.CharField(max_length=400, blank=True, null=True) 
     def __str__(self):
         return self.Fail_Operation_Care.Operation_Care_Company

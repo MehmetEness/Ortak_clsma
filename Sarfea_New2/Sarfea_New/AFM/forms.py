@@ -1,6 +1,6 @@
 from django import forms
 from datetime import datetime
-from .models import Project, ProjectNames, Expenses, Incomes, JobHistory, Operation_Care ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations
+from .models import Project, ProjectNames, Expenses, Incomes, JobHistory, Operation_Care ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations, Fail, Fail_Bill
    
 min_date = datetime(2000, 1, 1)
 max_date = datetime(2099, 12, 30) 
@@ -398,4 +398,16 @@ class Operation_CareForm(forms.ModelForm):
 
     class Meta:
         model = Operation_Care
+        fields = '__all__'
+
+class FailForm(forms.ModelForm):
+
+    class Meta:
+        model = Fail
+        fields = '__all__'
+
+class Fail_BillForm(forms.ModelForm):
+
+    class Meta:
+        model = Fail_Bill
         fields = '__all__'

@@ -111,7 +111,7 @@
 }
 </style>
 
-{% endblock %} {% block title %} Operation Care Add {% endblock %} {% block content %}
+{% endblock %} {% block title %} Fail Notification {% endblock %} {% block content %}
 <div class="body-div">
   {% include 'partials/_left_nav_bar.html' %}
   <div class="right-menu">
@@ -132,7 +132,7 @@
     <div class="center ariza-container">
       <div class="container projeBaslatContainer">
         <div class="title">Arıza Bildir</div>
-        <form id="my-form" action="{% url 'project_add' %}" method="post">
+        <form id="my-form" action="{% url 'fault_notification' %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="form_type" value="form" />
 
