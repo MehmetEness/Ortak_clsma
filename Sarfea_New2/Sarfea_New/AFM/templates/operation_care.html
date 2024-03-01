@@ -89,6 +89,7 @@
         <div class="line"></div>
         <table id="table" class="table table-sortable">
           <thead>           
+              <th scope="col"><span></span></th>
               <th scope="col"><span>Santral İsmi</span></th>
               <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
               <th scope="col"><span>Arıza</span></th>
@@ -101,6 +102,7 @@
           <tbody>
               {% for fail in fails %}
               <tr>
+                <td><a href="{% url 'fail_edit' fail_id=fail.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></td>
                 <td>{{fail.Fail_Central_Name}}</td>
                 <td>{{fail.Fail_Detection_Date}}</td>
                 <td>{{fail.Fail_Detail}}</td>

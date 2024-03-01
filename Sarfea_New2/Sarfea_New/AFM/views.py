@@ -634,17 +634,25 @@ def projects(request):
 @login_required
 def operation_care(request):
     operations = Operation_Care.objects.all()
-    fails=Fail.objects.all()
-    fail_bills=Fail_Bill.objects.all()
+    fails = Fail.objects.all()
+
+    for op in operations:
+        i = 0  # Her döngü başında i'yi sıfırla
+        for fa in fails:
+            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
+                i += 1
+        op.Operation_Care_Fail_Number = i
+        op.save()
+
+    fail_bills = Fail_Bill.objects.all()
 
     context = {
         "operations": operations,
         "fails": fails,
-        "fail_bills":fail_bills,
+        "fail_bills": fail_bills,
     }
 
     return render(request, "operation_care.html", context)
-
 @login_required
 def operation_care_add(request):
     client = Clients.objects.all()
@@ -717,33 +725,28 @@ def fault_notification(request):
 
 @login_required
 def fail_edit(request, fail_id):
-    fail=Fail.objects.filter(id=fail_id).first()
+    fail = get_object_or_404(Fail, id=fail_id)
+    operation_cares = Operation_Care.objects.all()
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
-        form = ProjectForm(request.POST or None )
-        client_form = ClientsForm(request.POST)
+        form = FailForm(request.POST, instance=fail)
 
         if form.is_valid():
             form.save()
             return redirect('operation_care')  
-          
-        elif client_form.is_valid():
-           
-            client_form.save()
-            return redirect('fault_notification')
     else:
         form = ProjectForm()
-        client_form = ClientsForm()
         
     context = {
         "form": form,
         'form_errors': form.errors,
         "client": client,
         "locations": locations,
-        "client_form":client_form,
+        "fail":fail,
+        "operation_cares":operation_cares
     }
-    return render(request, "fault_notification.html", context)
+    return render(request, "fail_edit.html", context)
 
 
 @login_required

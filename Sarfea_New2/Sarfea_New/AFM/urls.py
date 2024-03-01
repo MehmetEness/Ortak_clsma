@@ -63,6 +63,7 @@ urlpatterns = [
     path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
     path('operation_care_edit/<operation_care_id>/', views.operation_care_edit, name='operation_care_edit'),
     path('fault_notification/', views.fault_notification, name='fault_notification'),
+    path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
 
    ]
