@@ -40,6 +40,7 @@ urlpatterns = [
     path('sales_offer/AFM/set_card_rewait/<card_id>/', views.set_card_rewait, name='set_card_rewait'),
     path('sales_offer/AFM/create_revise/<card_id>/', views.create_revise, name='create_revise'),
     path("sales_offer_revises/<card_id>/", views.sales_offer_revises, name='sales_offer_revises'),
+
     path('post_card_file/', views.post_card_file, name='post_card_file'),
     path('get_clients/', views.get_clients, name='get_clients'),
     path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
@@ -56,9 +57,11 @@ urlpatterns = [
     path('get_fail/', views.get_fail, name='get_fail'),
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
     path('post_client/', views.post_client, name='post_client'),
+
     path('operation_care/', views.operation_care, name='operation_care'),
     path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
     path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
+    path('operation_care_edit/<operation_care_id>/', views.operation_care_edit, name='operation_care_edit'),
     path('fault_notification/', views.fault_notification, name='fault_notification'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
 

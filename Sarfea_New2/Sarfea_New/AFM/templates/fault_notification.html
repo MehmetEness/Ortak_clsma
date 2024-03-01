@@ -138,33 +138,39 @@
 
           <div class="user-details">
 
+            <div class="input-box" id="ProjectName_ExpensesInput">
+              <span  class="details">İşletme Bakım *</span>
+              <div class="dropdown-container">
+                <input autocomplete= 'off' type="text" id="id_Fail_Operation_Care_Copy" name="Fail_Operation_Care_Copy" class="myInput" placeholder="İşletme Bakım Seçiniz" data-dropdown="dropdown1">
+               
+              <div id="dropdown1" class="dropdown-content">
+                    {% for x in operation_cares %}
+                        <span value="{{x.id}}" class="dropdown-item">{{x.Operation_Care_Company}}</span>
+                    {% endfor %}
+              </div>
+            </div>
+            </div>
+
             <div class="input-box" id="ProjectNameInput">
               <span id="proje_adi_span" class="details">Santral İsmi</span>
-              <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" placeholder="Santral İsmi Giriniz" id="id_ProjectName" autocomplete="off">
+              <input autocomplete= 'off' type="text" name="Fail_Central_Name" maxlength="63" placeholder="Santral İsmi Giriniz" id="id_Fail_Central_Name" autocomplete="off">
             </div>
-            <div
-              class="input-box" 
-              id="ProjectCodeInput"
-            >
+            <div class="input-box" id="ProjectCodeInput" >
               <span id="proje_kodu_span" class="details">Bilgi Verilen Kişi</span>
-              <input type="text" placeholder="Bilgi Verilen Kişi Giriniz">
+              <input type="text" placeholder="Bilgi Verilen Kişi Giriniz" name="Fail_Information_Person" id="id_Fail_Information_Person">
             </div>           
            
             <div class="input-box">
               <span class="details">Arıza Tespit Tarihi</span>
-              <input type="text" placeholder="Arıza Tespit Tarihi Giriniz">
+              <input type="date" placeholder="Arıza Tespit Tarihi Giriniz" name="Fail_Detection_Date" id="id_Fail_Detection_Date">
             </div>
             <div class="input-box">
               <span class="details">Garanti Kapsam Durumu</span>
-              <select name="" id="garanti_select">
-                <option value="belirsiz">Belirsiz</option>
-                <option value="evet">Evet</option>
-                <option value="hayir">Hayır</option>
-              </select>
+              {{form.Fail_Guaranteed}}
             </div>
             <div class="input-box medium">
               <span class="details">Arıza Ayrıntısı</span>
-              <input class="coc-input" type="text" name="AC_Power" id="id_AC_Power" step="0.0001" autocomplete="off" placeholder="Arıza Ayrıntısı Giriniz"/>
+              {{form.Fail_Detail}}
             </div>
             
             
@@ -182,21 +188,23 @@
   <div style="display: none;" class="center garanti-container">
     <div class="container center2">
       <div class="title">Arıza Bakım Faturası</div>
-      <form id="my-form" action="{% url 'project_add' %}" method="post">
+      <form id="my-form" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
         <div class="user-details">
 
+          
+
           <div class="input-box" id="ProjectNameInput">
-            <span id="proje_adi_span" class="details">Santral İsmi</span>
+            <span  class="details">Santral İsmi</span>
             <input autocomplete= 'off' type="text" name="ProjectName" maxlength="63" placeholder="Santral İsmi Giriniz" id="id_ProjectName" autocomplete="off">
           </div>
           <div
             class="input-box" 
             id="ProjectCodeInput"
           >
-            <span id="proje_kodu_span" class="details">Yapılan İşlem</span>
+            <span  class="details">Yapılan İşlem</span>
             <input type="text" placeholder="Yapılan İşlemi Giriniz">
           </div>           
          

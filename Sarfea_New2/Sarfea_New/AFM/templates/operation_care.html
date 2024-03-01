@@ -148,6 +148,7 @@
             <div class="line"></div>
             <table id="table" class="table table-sortable">
               <thead>           
+                <th scope="col"><span></span></th>
                   <th scope="col"><span>Firma Adı</span></th>
                   <th id="xx2" scope="col"><span>Tesis Grubu Gücü</span></th>
                   <th scope="col"><span>Konum</span></th>
@@ -158,10 +159,17 @@
               <tbody>
                 {% for operation in operations %}
                 <tr>
+                  <td>
+                    <button type="button" class="edit-project-btn button2" style= "background: none; border:none;">
+                      <a href= "{% url 'operation_care_edit' operation_care_id=operation.id %}">
+                        <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                    </button> 
+                  </td>
                   <td><a href="{% url 'operation_care_detail' operation_care_id=operation.id %}">{{operation.Operation_Care_Company}}</a></td>
                   <td>{{operation.Operation_Care_Inventor_Power}}</td>
                   <td>{{operation.Operation_Care_Location}}</td>
-                  <td>51.000,00</td>
+                  <td>{{operation.Operation_Care_Cost}}</td>
                   <td>{{operation.Operation_Care_Fail_Number}}</td>
                   <td>{{operation.Operation_Care_Finish_Date}}</td>           
                 </tr>          

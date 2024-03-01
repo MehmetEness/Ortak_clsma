@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard
+from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard, Operation_Care, Fail
 from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
@@ -222,3 +222,15 @@ def update_client_card(sender, instance, **kwargs):
     finally:
         # Reconnect the signal
         post_save.connect(update_client_card, sender=SalesOfferCard)
+
+
+@receiver(pre_save, sender=Fail)
+def update_operation_forfail(sender, instance, **kwargs):
+    if instance.Fail_Operation_Care_Copy and instance.Fail_Operation_Care_Copy!=instance.Fail_Operation_Care:
+        try:
+            operation = Operation_Care.objects.get(Operation_Care_Company=instance.Fail_Operation_Care_Copy)
+            instance.Fail_Operation_Care = operation
+        except Operation_Care.DoesNotExist:
+            pass
+
+

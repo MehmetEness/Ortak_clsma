@@ -675,24 +675,42 @@ def operation_care_add(request):
     return render(request, "operation_care_add.html", context)
 
 @login_required
-def fault_notification(request):
-    operation_cares=Operation_Care.objects.all()
+def operation_care_edit(request, operation_care_id):
+    operation_care = get_object_or_404(Operation_Care, id=operation_care_id)
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
     if request.method == 'POST':
-        form = FailForm(request.POST or None )
-        form_bills=Fail_BillForm(request.POST, request.FILES )
+        form = Operation_CareForm(request.POST, instance=operation_care )
+
         if form.is_valid():
             form.save()
             return redirect('operation_care')  
-        
-        elif form_bills.is_valid():
-            form_bills.save()
-            return redirect('fault_notification')  
     else:
-        form = FailForm()
-        form_bills=Fail_BillForm()
+        form = Operation_CareForm()
+        
     context = {
         "form": form,
-        "form_bills":form_bills,
+        "client": client,
+        "locations": locations,
+        "operation_care":operation_care,
+    }
+    return render(request, "operation_care_edit.html", context)
+
+@login_required
+def fault_notification(request):
+
+    operation_cares=Operation_Care.objects.all()
+
+    if request.method == 'POST':
+        form = FailForm(request.POST or None )
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+    else:
+        form = FailForm()
+
+    context = {
+        "form": form,
         "operation_cares":operation_cares,
     }
     return render(request, "fault_notification.html", context)
