@@ -3,7 +3,7 @@ var faturaContainer = document.querySelector(".fatura_container");
 var isletmeBakimContainer = document.querySelector(".isletme_bakim_container");
 var arizaTakipContainer = document.querySelector(".ariza_takip_container");
 
-
+const isletmeBakimTable = document.querySelector(".isletme_bakim_container table")
 
 
 
@@ -58,3 +58,11 @@ topMenuLi.forEach(function (item) {
         break;
     }
   }
+
+
+
+var tarihRow = isletmeBakimTable.querySelectorAll("tbody tr")
+
+dateFormatForColor(tarihRow,6);
+
+

@@ -455,6 +455,66 @@ function parseCardDate(dateString) {
   return new Date(year, month, day);
 }
 
+//                  GÜN KONTROLÜ İÇİN TARİH FORMATLAMA
+function dateFormatForColor(tableRows, colIndex){
+  var today = new Date();
+  tableRows.forEach(function(row) {
+      var tableDate = row.querySelector(`td:nth-child(${colIndex})`).textContent;
+      var dateParts = tableDate.split(" ");
+      var day = parseInt(dateParts[0]);
+      var month = dateParts[1];
+      var year = parseInt(dateParts[2]);
+
+      var tableDateObj = new Date(year, monthIndex(month), day);
+      
+
+      var diffTime = Math.abs(tableDateObj - today);
+      var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (today === tableDateObj || today > tableDateObj) {
+          row.style.backgroundColor = "red";
+      } else if (diffDays <= 7 && today < tableDateObj) {
+          row.style.backgroundColor = "orange";
+      } else if (diffDays <= 15 && today < tableDateObj) {
+          row.style.backgroundColor = "yellow";
+      }
+  });
+
+}
+
+function monthIndex(month) {
+    var months = {
+        "Ocak": 0,
+        "Şubat": 1,
+        "Mart": 2,
+        "Nisan": 3,
+        "Mayıs": 4,
+        "Haziran": 5,
+        "Temmuz": 6,
+        "Ağustos": 7,
+        "Eylül": 8,
+        "Ekim": 9,
+        "Kasım": 10,
+        "Aralık": 11
+    };
+    return months[month];
+}
+
+function takeCurrentDay(){
+    var bugun = new Date();
+    var gun = bugun.getDate();
+    var ay = bugun.getMonth() + 1;
+    var yil = bugun.getFullYear();
+
+    if(gun < 10) {
+        gun = '0' + gun;
+    }
+    if(ay < 10) {
+        ay = '0' + ay;
+    }
+    var bugununTarihi = yil + '-' + ay + '-' + gun;
+    return bugununTarihi;
+}
+
 //                  CARDLARI TARİHE GÖRE SIRALAMA
 
 function cardDateList(rows) {
