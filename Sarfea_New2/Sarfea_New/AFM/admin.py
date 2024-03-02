@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from.models import Project, MyCompanyNames , Locations, Terrain_Roof, Banks, Situations, CompanyNames,SalesOfferCard
 from.models import Supplier, Clients, ProjectNames, Incomes, JobHistory, Expenses, PaymentFirms, Details, Worker, SalesOfferCard_Revise
-from.models import Poll, Poll_Question, Poll_Answer, Question_Note, Time_Note, Fail, Operation_Care, Fail_Bill
+from.models import Poll, Poll_Question, Poll_Answer, Question_Note, Time_Note, Fail, Operation_Care, Fail_Bill, Inventor, String
 admin.site.register(Project)
 admin.site.register(MyCompanyNames)
 admin.site.register(Locations)
@@ -29,3 +29,6 @@ admin.site.register(Time_Note)'''
 admin.site.register(Fail)
 admin.site.register(Operation_Care)
 admin.site.register(Fail_Bill)
+admin.site.register(Inventor)
+admin.site.register(String)
+

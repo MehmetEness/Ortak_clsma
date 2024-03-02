@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm, Fail_BillForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
@@ -634,17 +634,25 @@ def projects(request):
 @login_required
 def operation_care(request):
     operations = Operation_Care.objects.all()
-    fails=Fail.objects.all()
-    fail_bills=Fail_Bill.objects.all()
+    fails = Fail.objects.all()
+
+    for op in operations:
+        i = 0  # Her döngü başında i'yi sıfırla
+        for fa in fails:
+            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
+                i += 1
+        op.Operation_Care_Fail_Number = i
+        op.save()
+
+    fail_bills = Fail_Bill.objects.all()
 
     context = {
         "operations": operations,
         "fails": fails,
-        "fail_bills":fail_bills,
+        "fail_bills": fail_bills,
     }
 
     return render(request, "operation_care.html", context)
-
 @login_required
 def operation_care_add(request):
     client = Clients.objects.all()
@@ -675,57 +683,70 @@ def operation_care_add(request):
     return render(request, "operation_care_add.html", context)
 
 @login_required
-def fault_notification(request):
-    operation_cares=Operation_Care.objects.all()
+def operation_care_edit(request, operation_care_id):
+    operation_care = get_object_or_404(Operation_Care, id=operation_care_id)
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
     if request.method == 'POST':
-        form = FailForm(request.POST or None )
-        form_bills=Fail_BillForm(request.POST, request.FILES )
+        form = Operation_CareForm(request.POST, instance=operation_care )
+
         if form.is_valid():
             form.save()
             return redirect('operation_care')  
-        
-        elif form_bills.is_valid():
-            form_bills.save()
-            return redirect('fault_notification')  
     else:
-        form = FailForm()
-        form_bills=Fail_BillForm()
+        form = Operation_CareForm()
+        
     context = {
         "form": form,
-        "form_bills":form_bills,
+        "client": client,
+        "locations": locations,
+        "operation_care":operation_care,
+    }
+    return render(request, "operation_care_edit.html", context)
+
+@login_required
+def fault_notification(request):
+
+    operation_cares=Operation_Care.objects.all()
+
+    if request.method == 'POST':
+        form = FailForm(request.POST or None )
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+    else:
+        form = FailForm()
+
+    context = {
+        "form": form,
         "operation_cares":operation_cares,
     }
     return render(request, "fault_notification.html", context)
 
 @login_required
 def fail_edit(request, fail_id):
-    fail=Fail.objects.filter(id=fail_id).first()
+    fail = get_object_or_404(Fail, id=fail_id)
+    operation_cares = Operation_Care.objects.all()
     client = Clients.objects.all()
     locations = Locations.objects.all()
     if request.method == 'POST':
-        form = ProjectForm(request.POST or None )
-        client_form = ClientsForm(request.POST)
+        form = FailForm(request.POST, instance=fail)
 
         if form.is_valid():
             form.save()
             return redirect('operation_care')  
-          
-        elif client_form.is_valid():
-           
-            client_form.save()
-            return redirect('fault_notification')
     else:
         form = ProjectForm()
-        client_form = ClientsForm()
         
     context = {
         "form": form,
         'form_errors': form.errors,
         "client": client,
         "locations": locations,
-        "client_form":client_form,
+        "fail":fail,
+        "operation_cares":operation_cares
     }
-    return render(request, "fault_notification.html", context)
+    return render(request, "fail_edit.html", context)
 
 
 @login_required
@@ -970,10 +991,20 @@ def deneme2(request):
 def operation_care_detail(request,operation_care_id):
     operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
+    inventors =Inventor.objects.filter(Inventor_Owner=operation_care)
 
+    inventor_strings = {}
+
+    # Iterate through inventors
+    for inv in inventors:
+        # Get all strings related to the current inventor
+        strings = String.objects.filter(String_Owner=inv)
+        inventor_strings[inv] = strings          
     context = {
         'fails':fails,
         "operation_care":operation_care,
+        "inventors":inventors,
+        "inventor_strings": inventor_strings,
     }
 
     return render(request, "operation_care_detail.html", context)

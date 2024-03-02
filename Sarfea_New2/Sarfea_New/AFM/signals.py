@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard
+from .models import Project, CompanyNames, PaymentFirms, ProjectNames, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard, Operation_Care, Fail, Inventor, String
 from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
@@ -222,3 +222,45 @@ def update_client_card(sender, instance, **kwargs):
     finally:
         # Reconnect the signal
         post_save.connect(update_client_card, sender=SalesOfferCard)
+
+
+@receiver(pre_save, sender=Fail)
+def update_operation_forfail(sender, instance, **kwargs):
+    if instance.Fail_Operation_Care_Copy and instance.Fail_Operation_Care_Copy!=instance.Fail_Operation_Care:
+        try:
+            operation = Operation_Care.objects.get(Operation_Care_Company=instance.Fail_Operation_Care_Copy)
+            instance.Fail_Operation_Care = operation
+        except Operation_Care.DoesNotExist:
+            pass
+
+@receiver(post_save, sender=Operation_Care)
+def create_inventor(sender, instance, created, **kwargs):
+    if created:
+
+        num= instance.Operation_Care_Inventor_Number
+        for x in range(1, num+1):
+            inventor=Inventor.objects.create(
+                Inventor_Owner=instance,
+                Inventor_Direction=instance.Operation_Care_Direction,
+                Inventor_Number=x,
+                Inventor_Number_Str=instance.Operation_Care_Number_Str,
+                Inventor_Panel_Power=instance.Operation_Care_Panel_Power,
+                Inventor_Panel_Brand=instance.Operation_Care_Panel_Brand,
+                Inventor_VOC=instance.Operation_Care_VOC,
+                Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str,
+            )
+
+@receiver(post_save, sender=Inventor)
+def create_string(sender, instance, created, **kwargs):
+    if created:
+
+        num= instance.Inventor_Number_Str
+        for x in range(1, num+1):
+            string=String.objects.create(
+                String_Owner=instance,
+                String_Number=x,
+                String_Panel_Power=instance.Inventor_Panel_Power,
+                String_Panel_Brand=instance.Inventor_Panel_Brand,
+                String_VOC=instance.Inventor_VOC,
+                String_Panel_SY=instance.Inventor_Panel_SY,
+            )
