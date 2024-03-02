@@ -64,10 +64,11 @@ async function getAndRenderList(){
         
         const data = await response.json();
         const inventors = data.operation_care;
+        //console.log(inventors)
         inventors.forEach(inventor => {
             console.log(inventor)
             if(inventor.id == 5){
-                console.log(inventor)
+                //console.log(inventor)
                 const tbody = document.querySelector('.inventor_table_body');
                 tbody.innerHTML = '';
                 for(let i=0; i < inventor.Operation_Care_Number_Str; i++){                  
