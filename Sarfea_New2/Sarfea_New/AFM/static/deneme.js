@@ -9,9 +9,7 @@ var phoneInput = document.querySelector("#id_PhoneNumber");
 
 var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
-var table = document.getElementById("table");
-let thRows = table.querySelectorAll("th");
-var companyList = table.querySelectorAll("td:nth-child(2)")
+
 var locationInput = document.querySelector("#id_Location")
 var locationSpan = document.querySelector("#konum_span")
 var locations = document.querySelectorAll("#dropdown1 .dropdown-item")
@@ -59,13 +57,7 @@ clearButton.addEventListener("click", function() {
 
 //                  TABLO SIRALAMA
 
-thRows.forEach(header => {
-    header.addEventListener("click", function() {        
-        var columnIndex = Array.from(thRows).indexOf(header);
-        
-        sortTable(table, columnIndex);
-    });
-});
+
 
 
 //                  DOM LOADED
@@ -79,44 +71,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //------------------------------------------
 document.addEventListener("DOMContentLoaded", async () =>{
-    await getAndRenderClients();
+    await getAndRenderStrings();
     setInterval(async function() {
-        await getAndRenderClients();
+        await getAndRenderStrings();
     }, 5000);    
 });
 
-
-async function getAndRenderClients() {
-    try{
-        const response = await fetch('/get_operation_care/');
+async function getAndRenderStrings() {
+    try {
+        const response = await fetch(`/get_inventors/10/`);
         const data = await response.json();
-        const run_cards = data.operation_care;
-        
-
+        const inventors = data.inventors;
         const tbody = document.getElementById('tbody');
         tbody.innerHTML = '';
 
-        run_cards.forEach((run_card) => {
-            if (run_card.Operation_Care_Company) {
+        for (const inventor of inventors) {
+            const response2 = await fetch(`/get_strings/${inventor.id}/`);
+            const data2 = await response2.json();
+            const strings = data2.strings;
+
+            for (const string of strings) {
                 const row = '<tr>' +
-                    '<td></td>' +
-                    '<td>' + run_card.Operation_Care_Company + '</td>' +
-                    '<td>' + run_card.Operation_Care_Inventor_Brand + '</td>' +
-                    '<td>' + run_card.Operation_Care_Panel_Brand + '</td>' +
-                    '<td>' + run_card.Operation_Care_Panel_Number_Str + '</td>' +
-                    '<td>' + run_card.Operation_Care_Start_Date + '</td>' +
+                    '<td>' + 'INVENTOR' + inventor.Inventor_Number + '</td>' +
+                    '<td>' + string.String_Number + '</td>' +
+                    '<td>' + string.String_Panel_Power + '</td>' +
+                    '<td>' + string.String_Panel_Brand + '</td>' +
+                    '<td>' + string.String_VOC + '</td>' +
+                    '<td>' + string.String_Panel_SY + '</td>' +
                     '</tr>';
                 tbody.insertAdjacentHTML('beforeend', row);
             }
-        });
-        
-
-    }catch (error){
+        }
+    } catch (error) {
         console.error('Error fetching and rendering clients:', error);
     }
 }
 
 
+
+    
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
     var bool = controlSelectionInputs(locationInput, locationSpan, locations);
@@ -135,7 +128,7 @@ form.addEventListener('submit', async function(e) {
             }
             const data = await response.json();
             console.log(data); 
-            getAndRenderClients();
+            getAndRenderStrings();
             document.querySelector(".musteriWindow").style.display = "none";
         } catch (error) {
             console.error("Gönderme başarısız:", error);
