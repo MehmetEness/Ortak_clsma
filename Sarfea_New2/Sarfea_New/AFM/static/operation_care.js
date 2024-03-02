@@ -63,6 +63,6 @@ topMenuLi.forEach(function (item) {
 
 var tarihRow = isletmeBakimTable.querySelectorAll("tbody tr")
 
-dateFormatForColor(tarihRow,6);
+dateFormatForColor(tarihRow,7);
 
 

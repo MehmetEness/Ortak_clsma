@@ -464,7 +464,7 @@ function dateFormatForColor(tableRows, colIndex){
       var day = parseInt(dateParts[0]);
       var month = dateParts[1];
       var year = parseInt(dateParts[2]);
-
+      console.log(tableDate)
       var tableDateObj = new Date(year, monthIndex(month), day);
       
 
