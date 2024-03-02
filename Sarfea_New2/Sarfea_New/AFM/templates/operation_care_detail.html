@@ -879,10 +879,26 @@
                     <td>td3</td>
                     <td>td4</td>
                 </tr>
+
+
+
+                
             </tbody>
          </table>
+         <div>
+
+            {% for inventor, strings in inventor_strings.items %}
+            <h2>Inventor: {{ inventor }}</h2>
+            <ul>
+            {% for string in strings %}
+                <li>{{ string }}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+         </div>
      </div>
 
+    
     </div>
   </div>
 </div>
