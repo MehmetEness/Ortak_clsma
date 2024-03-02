@@ -343,7 +343,21 @@ class Fail_Bill(models.Model):
 
 class Inventor(models.Model):
     Inventor_Owner=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
+    Inventor_Direction= models.CharField( max_length=63,blank=True, null=True) 
+    Inventor_Number = models.IntegerField(blank=True, null=True)
+    Inventor_Number_Str = models.IntegerField(blank=True, null=True)
+    Inventor_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
+    Inventor_VOC = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
 
+class String(models.Model):
+    String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, blank=True, null=True)
+    String_Number = models.IntegerField(blank=True, null=True)
+    String_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
+    String_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
+    String_VOC = models.IntegerField(blank=True, null=True, default="0")
+    String_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
 
 class Poll(models.Model):
     Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
