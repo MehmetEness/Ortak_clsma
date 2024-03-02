@@ -1183,6 +1183,18 @@ def get_fail_bill(request):
     fail_bill = Fail_Bill.objects.all().values()
     return JsonResponse({'fail_bill': list(fail_bill)})
 
+@login_required
+def get_inventors(request, operation_care_id):
+    operation_care = Operation_Care.objects.filter(id=operation_care_id).first()
+    inventors = Inventor.objects.filter(Inventor_Owner=operation_care).values()
+    return JsonResponse({'inventors': list(inventors)})
+
+@login_required
+def get_strings(request, inventor_id):
+    inventor = Inventor.objects.filter(id=inventor_id).first()
+    strings = String.objects.filter(String_Owner=inventor).values()
+    return JsonResponse({'strings': list(strings)})
+
 #***********************************************************
 #                       GET METHODLARI
 #***********************************************************

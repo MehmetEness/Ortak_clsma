@@ -56,8 +56,10 @@ urlpatterns = [
     path('get_operation_care/', views.get_operation_care, name='get_operation_care'),
     path('get_fail/', views.get_fail, name='get_fail'),
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
-    path('post_client/', views.post_client, name='post_client'),
+    path("get_inventors/<operation_care_id>/", views.get_inventors, name='get_inventors'),
+    path("get_strings/<inventor_id>/", views.get_strings, name='get_strings'),
 
+    path('post_client/', views.post_client, name='post_client'),
     path('operation_care/', views.operation_care, name='operation_care'),
     path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
     path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
