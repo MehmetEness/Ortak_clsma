@@ -93,7 +93,7 @@
     color: #000;
 }
 #table tbody td{
-    height: 50px;
+    /* height: 50px; */
 }
 .lists table{ 
     width: 100%;

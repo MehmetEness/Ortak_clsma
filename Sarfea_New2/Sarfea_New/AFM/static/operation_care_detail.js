@@ -98,18 +98,44 @@ async function getAndRenderList(){
         console.log(event)
     }
 }
-getAndRenderListx();
-async function getAndRenderListx(){
-  try{
-      const response = await fetch(`/get_inventors/2/`);
-      
-      const data = await response.json();
-      const inventors = data.operation_care;
-      console.log(inventors)
-      
-     
-  }catch(event){
-      console.log(event)
-  }
-}
 
+
+//------------------------------------------
+document.addEventListener("DOMContentLoaded", async () =>{
+    await getAndRenderStrings();
+    setInterval(async function() {
+        await getAndRenderStrings();
+    }, 5000);    
+});
+
+async function getAndRenderStrings() {
+    try {
+        const response = await fetch(`/get_inventors/10/`);
+        const data = await response.json();
+        console.log(data)
+        const inventors = data.inventors;
+        console.log(inventors)
+        const tbody = document.getElementById('tbody');
+        tbody.innerHTML = '';
+
+        for (const inventor of inventors) {
+            const response2 = await fetch(`/get_strings/${inventor.id}/`);
+            const data2 = await response2.json();
+            const strings = data2.strings;
+
+            for (const string of strings) {
+                const row = '<tr>' +
+                    '<td>' + 'INVENTOR' + inventor.Inventor_Number + '</td>' +
+                    '<td>' + string.String_Number + '</td>' +
+                    '<td>' + string.String_Panel_Power + '</td>' +
+                    '<td>' + string.String_Panel_Brand + '</td>' +
+                    '<td>' + string.String_VOC + '</td>' +
+                    '<td>' + string.String_Panel_SY + '</td>' +
+                    '</tr>';
+                tbody.insertAdjacentHTML('beforeend', row);
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
+    }
+}
