@@ -58,6 +58,7 @@ urlpatterns = [
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
     path("get_inventors/<operation_care_id>/", views.get_inventors, name='get_inventors'),
     path("get_strings/<inventor_id>/", views.get_strings, name='get_strings'),
+    path("get_dollar_rate/str:<date>/", views.get_dollar_rate, name='get_dollar_rate'),
 
     path('post_client/', views.post_client, name='post_client'),
     path('operation_care/', views.operation_care, name='operation_care'),
