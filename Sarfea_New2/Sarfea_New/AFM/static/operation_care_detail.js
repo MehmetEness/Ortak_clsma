@@ -119,7 +119,7 @@ async function getAndRenderStrings() {
           console.log(strings.length)
           for (const string of strings) {
             const row = '<tr>' +
-          (bool ? `<td rowspan="${strings.length}"><span>İnventör ${i}</span></td>` : '') +
+          (bool ? `<td class = "rotate" rowspan="${strings.length}"><span>İnventör ${i}</span></td>` : '') +
           '<td>' +
           '<select class="directionSelect">' +
           '<option value="north">Kuzey</option>' +
