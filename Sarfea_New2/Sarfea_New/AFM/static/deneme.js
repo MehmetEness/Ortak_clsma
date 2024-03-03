@@ -65,6 +65,7 @@ async function getAndRenderStrings() {
             const response2 = await fetch(`/get_strings/${inventor.id}/`);
             const data2 = await response2.json();
             const strings = data2.strings;
+            console.log(strings)
 
             for (const string of strings) {
                 const row = '<tr>' +

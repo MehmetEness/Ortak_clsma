@@ -56,9 +56,8 @@ topMenuLi.forEach(function (item) {
     }
 }
 
-getAndRenderList();
 
-async function getAndRenderList(){
+async function getAndaRenderList(){
     try{
         const response = await fetch('/get_operation_care/');
         
@@ -99,43 +98,79 @@ async function getAndRenderList(){
     }
 }
 
-
+getAndRenderStrings() 
 //------------------------------------------
-document.addEventListener("DOMContentLoaded", async () =>{
-    await getAndRenderStrings();
-    setInterval(async function() {
-        await getAndRenderStrings();
-    }, 5000);    
-});
-
 async function getAndRenderStrings() {
-    try {
-        const response = await fetch(`/get_inventors/10/`);
-        const data = await response.json();
-        console.log(data)
-        const inventors = data.inventors;
-        console.log(inventors)
-        const tbody = document.getElementById('tbody');
-        tbody.innerHTML = '';
+  try {
+      const response = await fetch(`/get_inventors/10/`);
+      const data = await response.json();
+      const inventors = data.inventors;
+      console.log(inventors)
+      const tbody = document.querySelector(".inventor_table_body")
+      tbody.innerHTML = '';
+      let i = 1;
+      for ( const inventor of inventors) {
+        
+          const response2 = await fetch(`/get_strings/${inventor.id}/`);
+          const data2 = await response2.json();
+          const strings = data2.strings;
+          let bool = true;
+          console.log(strings)
+          console.log(strings.length)
+          for (const string of strings) {
+            const row = '<tr>' +
+          (bool ? `<td rowspan="${strings.length}"><span>İnventör ${i}</span></td>` : '') +
+          '<td>' +
+          '<select class="directionSelect">' +
+          '<option value="north">Kuzey</option>' +
+          '<option value="south">Güney</option>' +
+          '<option value="east">Doğu</option>' +
+          '<option value="west">Batı</option>' +
+          '</select>' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Number + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Panel_Power + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_VOC + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Panel_Brand + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Panel_SY + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + /* Burada eksik bir değer var */ + '">' +
+          '</td>' +
+          '</tr>';
+            tbody.insertAdjacentHTML('beforeend', row);
+            currentDirection(inventor);
+            bool = false;
+          }
+          i++;
 
-        for (const inventor of inventors) {
-            const response2 = await fetch(`/get_strings/${inventor.id}/`);
-            const data2 = await response2.json();
-            const strings = data2.strings;
+      }
+  } catch (error) {
+      console.error('Error fetching and rendering clients:', error);
+  }
+}
 
-            for (const string of strings) {
-                const row = '<tr>' +
-                    '<td>' + 'INVENTOR' + inventor.Inventor_Number + '</td>' +
-                    '<td>' + string.String_Number + '</td>' +
-                    '<td>' + string.String_Panel_Power + '</td>' +
-                    '<td>' + string.String_Panel_Brand + '</td>' +
-                    '<td>' + string.String_VOC + '</td>' +
-                    '<td>' + string.String_Panel_SY + '</td>' +
-                    '</tr>';
-                tbody.insertAdjacentHTML('beforeend', row);
-            }
-        }
-    } catch (error) {
-        console.error('Error fetching and rendering clients:', error);
-    }
+
+
+//                  YÖN KONTROLÜ YAPMA
+
+function currentDirection(inventor){
+  var defaultDirection = inventor.Inventor_Direction;
+  var directionSelect = document.querySelector(".directionSelect");
+  var options = directionSelect.options;
+  for (var i = 0; i < options.length; i++) {
+      if (options[i].value === defaultDirection) {
+          options[i].selected = true;
+          break;
+      }
+  }
 }
