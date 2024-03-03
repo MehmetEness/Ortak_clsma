@@ -98,19 +98,18 @@ async function getAndRenderList(){
         console.log(event)
     }
 }
-getAndRenderListx()
+getAndRenderListx();
 async function getAndRenderListx(){
   try{
-      const response = await fetch('/get_inventors/2/');
+      const response = await fetch(`/get_inventors/2/`);
       
       const data = await response.json();
       const inventors = data.operation_care;
       console.log(inventors)
-      inventors.forEach(inventor => {
-          
-      });
+      
      
   }catch(event){
       console.log(event)
   }
 }
+
