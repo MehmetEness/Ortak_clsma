@@ -13,8 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-
-
 @login_required
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
