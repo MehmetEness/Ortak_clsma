@@ -95,8 +95,15 @@ table {
 }
 
 #edit-text{
-  margin-right: 20px;
   font-size: 20px;
+}
+#table thead th:first-child{
+  width: 80px;
+  text-align: center !important;
+}
+#table tbody td:first-child{
+  width: 80px;
+  text-align: center !important;
 }
 /*  Tablolar   */
 
