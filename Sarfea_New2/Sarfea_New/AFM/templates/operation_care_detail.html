@@ -279,6 +279,9 @@
 .check-box :nth-child(1), .check-box :nth-child(2){
     pointer-events: none;
 }
+.bakim_takip_container{
+    overflow-y: scroll;
+}
 </style>
 {% endblock %}
 {% block title %} Operation and Care Details {% endblock %}
@@ -1078,7 +1081,7 @@
                 
             </tbody>
          </table>
-         <div>
+         <!-- <div>
 
             {% for inventor, strings in inventor_strings.items %}
             <h2>Inventor: {{ inventor }}</h2>
@@ -1088,7 +1091,7 @@
             {% endfor %}
             </ul>
         {% endfor %}
-         </div>
+         </div> -->
      </div>
 
     

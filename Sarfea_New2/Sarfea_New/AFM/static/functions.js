@@ -460,6 +460,7 @@ function dateFormatForColor(tableRows, colIndex){
   var today = new Date();
   tableRows.forEach(function(row) {
       var tableDate = row.querySelector(`td:nth-child(${colIndex})`).textContent;
+      var dateForColor = row.querySelector("td:nth-child(7) span")
       var dateParts = tableDate.split(" ");
       var day = parseInt(dateParts[0]);
       var month = dateParts[1];
@@ -471,11 +472,11 @@ function dateFormatForColor(tableRows, colIndex){
       var diffTime = Math.abs(tableDateObj - today);
       var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (today === tableDateObj || today > tableDateObj) {
-          row.style.backgroundColor = "red";
+          dateForColor.classList.add("timeIsUp");
       } else if (diffDays <= 7 && today < tableDateObj) {
-          row.style.backgroundColor = "orange";
+          dateForColor.classList.add("oneWeek");
       } else if (diffDays <= 15 && today < tableDateObj) {
-          row.style.backgroundColor = "yellow";
+          dateForColor.classList.add("twoWeek");
       }
   });
 

@@ -8,12 +8,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
+<link rel="stylesheet" href="{% static 'tedarikcii.css' %}">
 <style>
     #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
         text-align: center;
     }
-    #table thead th:nth-child(2){
-        padding-left: 20px;
+    #table thead th:first-child{
+        width: 80px;
     }
     .lists{
         overflow-y: scroll;

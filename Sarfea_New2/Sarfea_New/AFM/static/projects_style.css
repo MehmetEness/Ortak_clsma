@@ -95,7 +95,7 @@
     align-items: flex-start;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 78px);
     position: relative;
 }
 .lists a{
@@ -382,7 +382,6 @@ form .gender-details .category{
  }
  #edit-text{
     font-size: 20px;
-    margin-right: 20px;
 }
  .arazi{
     position: fixed;   
