@@ -172,3 +172,5 @@ function sortTable(column, sort_asc) {
     })
         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
 }
+
+

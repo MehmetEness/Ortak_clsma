@@ -10,8 +10,11 @@ from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+import evds as e
 
 # Create your views here.
+
+
 
 @login_required
 def sales_offer_revises(request, card_id):
@@ -1192,7 +1195,14 @@ def get_strings(request, inventor_id):
     inventor = Inventor.objects.filter(id=inventor_id).first()
     strings = String.objects.filter(String_Owner=inventor).values()
     return JsonResponse({'strings': list(strings)})
-
+@login_required
+def get_dollar_rate(request, date):
+    api='qYyWXNCbA0'
+    evds = e.evdsAPI(api)
+    dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)
+    rate=dollar.TP_DK_USD_S_YTL.values[0]
+    rate = round(rate, 4)  # 4 ondalık basamak
+    return JsonResponse({'rate': rate})
 #***********************************************************
 #                       GET METHODLARI
 #***********************************************************
