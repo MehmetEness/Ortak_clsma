@@ -348,8 +348,12 @@ class Inventor(models.Model):
     Inventor_Number_Str = models.IntegerField(blank=True, null=True)
     Inventor_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     Inventor_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
+    Inventor_Izolasion = models.CharField(max_length=200, blank=True, null=True)
     Inventor_VOC = models.IntegerField(blank=True, null=True, default="0")
     Inventor_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_AC_Power = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_DC_Power = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_Capacity = models.IntegerField(blank=True, null=True, default="0")
 
 class String(models.Model):
     String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, blank=True, null=True)
@@ -358,6 +362,11 @@ class String(models.Model):
     String_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
     String_VOC = models.IntegerField(blank=True, null=True, default="0")
     String_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
+    String_Izolasion = models.CharField(max_length=200, blank=True, null=True)
+    String_AC_Power = models.IntegerField(blank=True, null=True, default="0")
+    String_DC_Power = models.IntegerField(blank=True, null=True, default="0")
+    String_Capacity = models.IntegerField(blank=True, null=True, default="0")
+    String_Percent = TwoDecimalField(blank=True, null=True, default="0")
 
 class Poll(models.Model):
     Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
