@@ -248,6 +248,11 @@ def create_inventor(sender, instance, created, **kwargs):
                 Inventor_Panel_Brand=instance.Operation_Care_Panel_Brand,
                 Inventor_VOC=instance.Operation_Care_VOC,
                 Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str,
+                Inventor_AC_Power=instance.Operation_Care_AC_Power,
+                Inventor_DC_Power=instance.Operation_Care_DC_Power,
+                Inventor_Capacity=instance.Operation_Care_Capacity,
+                Inventor_Izolasion="OK",
+
             )
 
 @receiver(post_save, sender=Inventor)
@@ -263,4 +268,8 @@ def create_string(sender, instance, created, **kwargs):
                 String_Panel_Brand=instance.Inventor_Panel_Brand,
                 String_VOC=instance.Inventor_VOC,
                 String_Panel_SY=instance.Inventor_Panel_SY,
+                String_AC_Power=instance.Inventor_AC_Power,
+                String_DC_Power=instance.Inventor_DC_Power,
+                String_Capacity=instance.Inventor_Capacity,
+                String_Izolasion=instance.Inventor_Izolasion,
             )
