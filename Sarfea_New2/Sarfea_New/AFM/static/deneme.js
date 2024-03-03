@@ -44,78 +44,48 @@ document.addEventListener("DOMContentLoaded", function () {
     
 });
 
-//------------------------------------------
-// document.addEventListener("DOMContentLoaded", async () =>{
-//     await getAndRenderStrings();
-//     setInterval(async function() {
-//         await getAndRenderStrings();
-//     }, 5000);    
-// });
 
-// async function getAndRenderStrings() {
-//     try {
-//         const response = await fetch(`/get_inventors/10/`);
-//         const data = await response.json();
-//         const inventors = data.inventors;
-//         console.log(inventors)
-//         const tbody = document.getElementById('tbody');
-//         tbody.innerHTML = '';
+document.addEventListener("DOMContentLoaded", async () =>{
+    await getAndRenderStrings();
+    setInterval(async function() {
+        await getAndRenderStrings();
+    }, 5000);    
+});
 
-//         for (const inventor of inventors) {
-//             const response2 = await fetch(`/get_strings/${inventor.id}/`);
-//             const data2 = await response2.json();
-//             const strings = data2.strings;
-
-//             for (const string of strings) {
-//                 const row = '<tr>' +
-//                     '<td>' + 'INVENTOR' + inventor.Inventor_Number + '</td>' +
-//                     '<td>' + string.String_Number + '</td>' +
-//                     '<td>' + string.String_Panel_Power + '</td>' +
-//                     '<td>' + string.String_Panel_Brand + '</td>' +
-//                     '<td>' + string.String_VOC + '</td>' +
-//                     '<td>' + string.String_Panel_SY + '</td>' +
-//                     '</tr>';
-//                 tbody.insertAdjacentHTML('beforeend', row);
-//             }
-//         }
-//     } catch (error) {
-//         console.error('Error fetching and rendering clients:', error);
-//     }
-// }
-
-
-
-getAndRenderStrings()
 async function getAndRenderStrings() {
     try {
-        const response = await fetch(`/get_clients/`);
+        const response = await fetch(`/get_inventors/10/`);
         const data = await response.json();
-        const clients = data.clients;
-        console.log(clients)
+        const inventors = data.inventors;
+        console.log(inventors)
         const tbody = document.getElementById('tbody');
         tbody.innerHTML = '';
 
-        clients.forEach(client => {
-            console.log(client)
-            const row = '<tr>' +
-                    '<td>' + client.CompanyName_Clients + '</td>' +
-                    '<td>' + client.ContactPerson + '</td>' +
-                    '<td>' + client.PhoneNumber + '</td>' +
-                    '<td>' + client.Email + '</td>' +
-                    '<td>' + client.Location + '</td>' +
+        for (const inventor of inventors) {
+            const response2 = await fetch(`/get_strings/${inventor.id}/`);
+            const data2 = await response2.json();
+            const strings = data2.strings;
+
+            for (const string of strings) {
+                const row = '<tr>' +
+                    '<td>' + 'INVENTOR' + inventor.Inventor_Number + '</td>' +
+                    '<td>' + string.String_Number + '</td>' +
+                    '<td>' + string.String_Panel_Power + '</td>' +
+                    '<td>' + string.String_Panel_Brand + '</td>' +
+                    '<td>' + string.String_VOC + '</td>' +
+                    '<td>' + string.String_Panel_SY + '</td>' +
                     '</tr>';
                 tbody.insertAdjacentHTML('beforeend', row);
-        });          
-        let textCells = document.querySelectorAll('#table td:nth-child(1), #table td:nth-child(2), #table td:nth-child(4), #table td:nth-child(5)');
-        console.log(textCells)
-        search1.addEventListener('input', searchTable); 
-        tableFormat(textCells, "text")
-        sortingTable();
-       
+            }
+        }
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching and rendering clients:', error);
     }
 }
+
+
+
+
 
     
 form.addEventListener('submit', async function(e) {
