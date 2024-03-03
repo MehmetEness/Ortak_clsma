@@ -414,7 +414,7 @@
                 font-weight: 500;
              }
              .hide{
-                display: none;
+                /* display: none; */
             }
       /*    Dosya Seçme */
 input[type="file"] {
