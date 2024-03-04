@@ -45,20 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", async () =>{
-    await getAndRenderStrings();
-    setInterval(async function() {
-        await getAndRenderStrings();
-    }, 5000);    
-});
-
+// document.addEventListener("DOMContentLoaded", async () =>{
+//     await getAndRenderStrings();
+//     setInterval(async function() {
+//         await getAndRenderStrings();
+//     }, 5000);    
+// });
+getAndRenderStrings();
 async function getAndRenderStrings() {
     try {
         const response = await fetch(`/get_inventors/10/`);
         const data = await response.json();
         const inventors = data.inventors;
         console.log(inventors)
-        const tbody = document.getElementById('tbody');
+        const tbody = document.querySelector('.table__body tbody');
+        console.log(tbody)
         tbody.innerHTML = '';
 
         for (const inventor of inventors) {
@@ -74,11 +75,12 @@ async function getAndRenderStrings() {
                     '<td>' + string.String_Panel_Power + '</td>' +
                     '<td>' + string.String_Panel_Brand + '</td>' +
                     '<td>' + string.String_VOC + '</td>' +
-                    '<td>' + string.String_Panel_SY + '</td>' +
                     '</tr>';
                 tbody.insertAdjacentHTML('beforeend', row);
             }
         }
+        sortingTable();
+        searchTable();
     } catch (error) {
         console.error('Error fetching and rendering clients:', error);
     }
@@ -122,36 +124,40 @@ form.addEventListener('submit', async function(e) {
 
 
     // 1. Searching for specific data of HTML table
+   
 
-    function searchTable() {
-        let table_rows = document.querySelectorAll('tbody tr');
-        table_rows.forEach((row, i) => {
-            let table_data = row.textContent.toLowerCase(),
-                search_data = search1.value.toLowerCase();
-    
-            row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-            row.style.setProperty('--delay', i / 25 + 's');
-        })
-    
-        document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-           visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-        });
-    }
+// 1. Searching for specific data of HTML table
+search1.addEventListener('input', searchTable);
 
-    // 2. Sorting | Ordering data of HTML table
+function searchTable() {
+    let table_rows = document.querySelectorAll('.table__body tbody tr');
+    table_rows.forEach((row, i) => {
+        let table_data = row.textContent.toLowerCase(),
+            search_data = search1.value.toLowerCase();
+
+        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+        row.style.setProperty('--delay', i / 25 + 's');
+    })
+
+    document.querySelectorAll('.table__body tbody tr:not(.hide)').forEach((visible_row, i) => {
+       // visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+    });
+}
+
+// 2. Sorting | Ordering data of HTML table
+
 function sortingTable(){
-    let table_rows = document.querySelectorAll('tbody tr');
-    let table_headings = document.querySelectorAll('thead th');
+    let table_rows = document.querySelectorAll('.table__body tbody tr');
+    let table_headings = document.querySelectorAll('.table__body thead th');
     table_headings.forEach((head, i) => {
-    
         let sort_asc = true;
         head.onclick = () => {
             table_headings.forEach(head => head.classList.remove('active'));
             head.classList.add('active');
     
-            document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+            document.querySelectorAll('.table__body td').forEach(td => td.classList.remove('active'));
             table_rows.forEach(row => {
-                row.querySelectorAll('td')[i].classList.add('active');
+                row.querySelectorAll('.table__body td')[i].classList.add('active');
             })
     
             head.classList.toggle('asc', sort_asc);
@@ -162,15 +168,16 @@ function sortingTable(){
     })
 }
 
+
 function sortTable(column, sort_asc) {
-    let table_rows = document.querySelectorAll('tbody tr');
+    let table_rows = document.querySelectorAll('.table__body tbody tr');
     [...table_rows].sort((a, b) => {
-        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-            second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+        let first_row = a.querySelectorAll('.table__body td')[column].textContent.toLowerCase(),
+            second_row = b.querySelectorAll('.table__body td')[column].textContent.toLowerCase();
 
         return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
     })
-        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+        .map(sorted_row => document.querySelector('.table__body tbody').appendChild(sorted_row));
 }
 
 

@@ -34,49 +34,72 @@
    }
     </style> -->
     
-    <style>
-      
- 
-.main {
-  margin: auto;
-    width: 99%;
-    height: 90%;
-    background-color: rgb(255, 255, 255);
-    backdrop-filter: blur(7px);
-    box-shadow: 0 .4rem .8rem #0005; 
-    border-radius: .8rem;
-    overflow: hidden;
-}
-.table__header {
-    width: 30%;
-    height: 80%;
+ <style>
+
+
+
+/*@page {
+    size: landscape;
+    margin: 0; 
+}*/
+
+.right-menu {
+    height: 100vh;
+    background: url("{% static 'images/html_table.jpg' %}") center / cover;
+    
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+main.table {    
+    width: 82vw;
+    height: 97vh;
+    background-color: #fff5;
+
+    backdrop-filter: blur(7px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+
+    overflow: hidden;
+}
+
+.table__header {
+    width: 100%;
+    height: 10%;
+    background-color: #fff4;
+    padding: .8rem 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .table__header .input-group {
-    width: 70%;
+    width: 35%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.863);
+    background-color: #fff5;
     padding: 0 .8rem;
     border-radius: 2rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
     transition: .2s;
 }
+
 .table__header .input-group:hover {
-    width: 80%;
-    background-color: rgb(255, 255, 255);
+    width: 45%;
+    background-color: #fff8;
     box-shadow: 0 .1rem .4rem #0002;
-    color: #000;
 }
+
 .table__header .input-group img {
     width: 1.2rem;
     height: 1.2rem;
 }
+
 .table__header .input-group input {
     width: 100%;
     padding: 0 .5rem 0 .3rem;
@@ -85,94 +108,133 @@
     outline: none;
 }
 
-/*          TABLE BODY           */
-
-
 .table__body {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    max-height: calc(89% - .7rem);
     background-color: #fffb;
+
+    margin: .8rem auto;
     border-radius: .6rem;
 
     overflow: auto;
     overflow: overlay;
 }
+
+
 .table__body::-webkit-scrollbar{
     width: 0.5rem;
     height: 0.5rem;
 }
+
 .table__body::-webkit-scrollbar-thumb{
     border-radius: .5rem;
     background-color: #0004;
     visibility: hidden;
 }
+
 .table__body:hover::-webkit-scrollbar-thumb{ 
     visibility: visible;
 }
-table {
+
+
+.table__body table {
     width: 100%;
 }
-.table__body td img {
+
+td img {
     width: 36px;
     height: 36px;
     margin-right: .5rem;
     border-radius: 50%;
+
     vertical-align: middle;
 }
+
 table, th, td {
     border-collapse: collapse;
     padding: 1rem;
     text-align: left;
 }
+
 thead th {
     position: sticky;
     top: 0;
     left: 0;
-    background-color: #d5d1defe !important;
+    background-color: #d5d1defe;
     cursor: pointer;
     text-transform: capitalize;
 }
+
 tbody tr:nth-child(even) {
     background-color: #0000000b;
 }
+
 tbody tr {
-    --delay: .1s;
-    transition: .2s ease-in-out var(--delay), background-color 0s;
+    /* --delay: .1s;
+    transition: .2s ease-in-out var(--delay), background-color 0s; */
 }
+
 tbody tr.hide {
-    opacity: 0;   
+    opacity: 0;
+    /* transform: translateX(100%); */
 }
+
 tbody tr:hover {
     background-color: #fff6 !important;
 }
+
 tbody tr td,
-tbody tr td span,
+tbody tr td p,
 tbody tr td img {
-    transition: .2s ease-in-out !important;
+    transition: .2s ease-in-out;
 }
+
 tbody tr.hide td,
-tbody tr.hide td span {
-    padding: 0 !important;
-    font: 0 / 0 sans-serif !important;
-    transition: .2s ease-in-out .5s !important;
+tbody tr.hide td p {
+    padding: 0;
+    font: 0 / 0 sans-serif;
+    /* transition: .2s ease-in-out .5s; */
 }
+
 tbody tr.hide td img {
-    width: 0 !important;
-    height: 0 !important;
-    transition: .2s ease-in-out .5s !important;
+    width: 0;
+    height: 0;
+    transition: .2s ease-in-out .5s;
 }
+
 .status {
     padding: .4rem 0;
     border-radius: 2rem;
     text-align: center;
 }
+
+.status.delivered {
+    background-color: #86e49d;
+    color: #006b21;
+}
+
+.status.cancelled {
+    background-color: #d893a3;
+    color: #b30021;
+}
+
+.status.pending {
+    background-color: #ebc474;
+}
+
+.status.shipped {
+    background-color: #6fcaea;
+}
+
+
 @media (max-width: 1000px) {
     td:not(:first-of-type) {
         min-width: 12.1rem;
     }
 }
+
 thead th span.icon-arrow {
-  line-height: 15px;
+    font-family: sans-serif !important;
     display: inline-block;
     width: 1.3rem;
     height: 1.3rem;
@@ -180,21 +242,23 @@ thead th span.icon-arrow {
     border: 1.4px solid transparent;
     
     text-align: center;
-    font-size: 20px;
+    font-size: 1rem;
     
     margin-left: .5rem;
     transition: .2s ease-in-out;
 }
+
 thead th:hover span.icon-arrow{
-    border: 1.4px solid #345b81 !important;
+    border: 1.4px solid #6c00bd;
 }
 
 thead th:hover {
-    color: #345b81 !important;
+    color: #6c00bd;
 }
+
 thead th.active span.icon-arrow{
-    background-color: #345b81 !important;
-    color: #fff !important;
+    background-color: #6c00bd;
+    color: #fff;
 }
 
 thead th.asc span.icon-arrow{
@@ -202,15 +266,33 @@ thead th.asc span.icon-arrow{
 }
 
 thead th.active,tbody td.active {
-    color: #345b81 !important;
+    color: #6c00bd;
 }
-tr{
-  text-align: center !important;
+.export__file{
+    height: 100%;
+}
+.export__file button{
+    font-weight: 700;
+    font-size: 18px;
+    width: 150px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 0.8rem;
+    border-radius: 2rem;
+    border: none;
+    transition: .2s;
+} 
+
+
+.export__file button:hover { 
+    background-color: #fff;
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 
-    </style>
-  
+
+  </style>
   </head>
 <body>
   <div class="body-div">
@@ -257,40 +339,35 @@ tr{
     </div>
 
       {% include 'partials/_left_nav_bar.html' %}
-      <div class="right-menu"> 
-        <div class="top-menu">
-          <div class="span-box"><span>MÜŞTERİLER</span></div>
-          <div class="table__header">
-            <div class="input-group">
-                <input type="search" placeholder="Search Data...">
-                <img src="{% static 'images/search.png' %}" alt="">
-            </div>              
-        </div>
-          <div class="content">                     
-            
-            <button id="musteri-ac" class="button2" >Müşteri Ekle</button>          
-          </div>
-        </div>
-        
-
-        <div class="main" id="customers_table">          
-          <div class="table__body">
-              <table id="table">
-                  <thead>
-                      <tr>
-                          <th> Firma Adı <span class="icon-arrow">↑</span></th>
-                          <th> Muhatap <span class="icon-arrow">↑</span></th>
-                          <th> Telefon <span class="icon-arrow">↑</span></th>
-                          <th> E-posta <span class="icon-arrow">↑</span></th>
-                          <th> Bölge <span class="icon-arrow">↑</span></th>
-                      </tr>
-                  </thead>
-                  <tbody id="tbody">
-                      
-                  </tbody>
-              </table>
-          </div>
-      </div>
+      <div  class="right-menu"> 
+        <main class="table" id="customers_table">
+            <section class="table__header">
+                <h1>MÜŞTERİLER</h1>
+                <div class="input-group">
+                    <input type="search" placeholder="Search Data...">
+                    <img src="{% static 'images/search.png' %}" alt="">
+                </div>
+                <div class="export__file">
+                    <button id="musteri-ac" class="button2" >Müşteri Ekle</button>
+                </div>
+            </section>
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Customer <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Order Date <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </section>
+        </main>
       </div>        
   </div>
   {% endblock %}

@@ -1,17 +1,18 @@
 const garantiContainer = document.querySelector(".garanti-container");
 const arizaContainer = document.querySelector(".ariza-container");
-const garantiSelection = document.querySelector("#garanti_select");
+const garantiSelection = document.querySelector("#id_Fail_Guaranteed");
 const garantiDivContainer = document.querySelector(".center2");
 
 
 garantiSelection.addEventListener("change", function() {
   var selectedValue = garantiSelection.value;
+  console.log(selectedValue == "Evet")
   
-  if (selectedValue === "evet") {
-  } else if (selectedValue === "hayir") {
+  if (selectedValue == "Evet") {
+  } else if (selectedValue == "Hayır") {
     delayTimeout = setTimeout(function() {
         garantiContainer.style.display = "flex";
-      }, 5);
+      }, 15);
   }  
 });
 
@@ -21,7 +22,7 @@ document.addEventListener("click", function(event) {
     if(garantiContainer.style.display === "flex"){
         if(!isClickInsideDiv){                        
             garantiContainer.style.display = "none";    
-            garantiSelection.value = "belirsiz"    
+            garantiSelection.value = "Belirsiz"    
         } 
     }                   
 });
@@ -36,3 +37,4 @@ fileInput.addEventListener("change", function() {
   const fileName = this.files[0].name;
   fileNameSpan.textContent = fileName;
 });
+
