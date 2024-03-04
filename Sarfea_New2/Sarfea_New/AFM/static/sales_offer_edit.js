@@ -117,6 +117,13 @@ if (selectedText=="Arazi") {
 });
 
 //                  MALİYET HESAPLAMA İŞLEMLERİ
+var teklifBedeliInput = document.querySelector("#id_Offer_Cost_NotIncludingKDV_Card");
+var dcGucInput = document.querySelector('#id_DC_Power_Card');
+var birimTeklifInput = document.querySelector("#id_UnitOffer_NotIncludingKDV");
+
+var birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
+var isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
+
 
 teklifBedeliCalc.addEventListener("click", ()=> {
     if(!(clear(birimTeklifInput.value) == "") && !(clear(dcGucInput.value) == "")){
@@ -145,7 +152,7 @@ teklifBedeliCalc.addEventListener("click", ()=> {
   dcGucCalc.addEventListener("click", ()=> {
     if(!(clear(teklifBedeliInput.value) == "") && !(clear(birimTeklifInput.value) == "")){
       var value = clear(teklifBedeliInput.value) / clear(birimTeklifInput.value); 
-      dcGucInput.value = format(value.toString());              
+      dcGucInput.value = format(value.toString());                
     }
     if(!(clear(isBedeliInput.value) == "") && !(clear(birimBasiMaliyetInput.value) == "")){
       var value = clear(isBedeliInput.value) / clear(birimBasiMaliyetInput.value); 
