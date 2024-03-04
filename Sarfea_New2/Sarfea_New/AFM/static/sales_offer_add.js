@@ -117,37 +117,39 @@ var birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV
 var isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
 
 
+
+
 teklifBedeliCalc.addEventListener("click", ()=> {
-    if(!(clear(birimTeklifInput.value) == "") && !(clear(dcGucInput.value) == "")){
-      var value = clear(birimTeklifInput.value) * clear(dcGucInput.value); 
-      teklifBedeliInput.value = format(value.toString());              
-    }
-  });
-  birimTeklifCalc.addEventListener("click", ()=> {
-    if(!(clear(teklifBedeliInput.value) == "") && !(clear(dcGucInput.value) == "")){
-      var value = clear(teklifBedeliInput.value) / clear(dcGucInput.value); 
-      birimTeklifInput.value = format(value.toString());              
-    }
-  });
-  toplamMaliyetCalc.addEventListener("click", ()=> {
-    if(!(clear(birimBasiMaliyetInput.value) == "") && !(clear(dcGucInput.value) == "")){
-      var value = clear(birimBasiMaliyetInput.value) * clear(dcGucInput.value); 
-      isBedeliInput.value = format(value.toString());              
-    }
-  });
-  birimMaliyetCalc.addEventListener("click", ()=> {
-    if(!(clear(isBedeliInput.value) == "") && !(clear(dcGucInput.value) == "")){
-      var value = clear(isBedeliInput.value) / clear(dcGucInput.value); 
-      birimBasiMaliyetInput.value = format(value.toString());              
-    }
-  });
-  dcGucCalc.addEventListener("click", ()=> {
-    if(!(clear(teklifBedeliInput.value) == "") && !(clear(birimTeklifInput.value) == "")){
-      var value = clear(teklifBedeliInput.value) / clear(birimTeklifInput.value); 
-      dcGucInput.value = format(value.toString());                
-    }
-    if(!(clear(isBedeliInput.value) == "") && !(clear(birimBasiMaliyetInput.value) == "")){
-      var value = clear(isBedeliInput.value) / clear(birimBasiMaliyetInput.value); 
-      dcGucInput.value = format(value.toString());              
-    }
-  });
+  if(!(clear2(birimTeklifInput.value) == "") && !(clear2(dcGucInput.value) == "")){
+    var value = clear2(birimTeklifInput.value) * clear2(dcGucInput.value); 
+    teklifBedeliInput.value = formatNumber(value, 2);              
+  }
+});
+birimTeklifCalc.addEventListener("click", ()=> {
+  if(!(clear2(teklifBedeliInput.value) == "") && !(clear2(dcGucInput.value) == "")){
+    var value = clear2(teklifBedeliInput.value) / clear2(dcGucInput.value); 
+    birimTeklifInput.value = formatNumber(value, 2);              
+  }
+});
+toplamMaliyetCalc.addEventListener("click", ()=> {
+  if(!(clear2(birimBasiMaliyetInput.value) == "") && !(clear2(dcGucInput.value) == "")){
+    var value = clear2(birimBasiMaliyetInput.value) * clear2(dcGucInput.value); 
+    isBedeliInput.value = formatNumber(value, 2);              
+  }
+});
+birimMaliyetCalc.addEventListener("click", ()=> {
+  if(!(clear2(isBedeliInput.value) == "") && !(clear2(dcGucInput.value) == "")){
+    var value = clear2(isBedeliInput.value) / clear2(dcGucInput.value); 
+    birimBasiMaliyetInput.value = formatNumber(value, 2);              
+  }
+});
+dcGucCalc.addEventListener("click", ()=> {
+  if(!(clear2(teklifBedeliInput.value) == "") && !(clear2(birimTeklifInput.value) == "")){
+    var value = clear2(teklifBedeliInput.value) / clear2(birimTeklifInput.value); 
+    dcGucInput.value = formatNumber(value, 2);                
+  }
+  if(!(clear2(isBedeliInput.value) == "") && !(clear2(birimBasiMaliyetInput.value) == "")){
+    var value = clear2(isBedeliInput.value) / clear2(birimBasiMaliyetInput.value); 
+    dcGucInput.value = formatNumber(value, 2);              
+  }
+});
