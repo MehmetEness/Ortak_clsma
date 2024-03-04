@@ -84,6 +84,7 @@ async function getAndaRenderList(){
                             '<td>' + inventor.Operation_Care_Capacity + '</td>' +
                             '<td>' + inventor.Operation_Care_AC_Power + '</td>' +
                             '<td>' + inventor.Operation_Care_DC_Power + '</td>' +
+                            '<td>' + inventor.Operation_Care_DC_Power + '</td>' +
                             '<td>0.01</td>' +
                             '<td>500</td>' +                            
                             '</tr>';
@@ -105,6 +106,8 @@ async function getAndRenderStrings() {
       const response = await fetch(`/get_inventors/10/`);
       const data = await response.json();
       const inventors = data.inventors;
+
+      console.log("inventors")
       console.log(inventors)
       const tbody = document.querySelector(".inventor_table_body")
       tbody.innerHTML = '';
@@ -144,7 +147,19 @@ async function getAndRenderStrings() {
           '<input type="text" value="' + string.String_Panel_SY + '">' +
           '</td>' +
           '<td>' +
-          '<input type="text" value="' + /* Burada eksik bir değer var */ + '">' +
+          '<input type="text" value="' + "ok" + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Capacity + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_AC_Power + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_DC_Power + '">' +
+          '</td>' +
+          '<td>' +
+          '<input type="text" value="' + string.String_Percent + '">' +
           '</td>' +
           '</tr>';
             tbody.insertAdjacentHTML('beforeend', row);

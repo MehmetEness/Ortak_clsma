@@ -17,7 +17,7 @@
         overflow-y: scroll;
     }
     table thead th {
-      cursor: pointer;
+      text-align: center;      
    }
    /*  Top Menu UL  */
 .top-menu-ul {
@@ -156,6 +156,23 @@
     text-decoration: none;
     color: #000;
   }
+ 
+  .table__body tbody button{
+      font-weight: 700;
+      font-size: 15px;
+      /* width: 190px; */
+      height: 100%;
+      background-color: rgb(255, 255, 255);
+      padding: .5rem 1rem;
+      border-radius: 2rem;
+      border: none;
+      transition: .2s;
+  }   
+  .table__body tbody button:hover { 
+      background-color: #fff;
+      transform: scale(1.05);
+      cursor: pointer;
+  }
   
   
   table {
@@ -172,9 +189,10 @@
   }
   
   table, th, td {
+    height: 71px;
       border-collapse: collapse;
       padding: 1rem;
-      text-align: left;
+      text-align: center;
   }
   
   thead th {
@@ -215,6 +233,18 @@
       padding: 0;
       font: 0 / 0 sans-serif;
       /* transition: .2s ease-in-out .5s; */
+  }
+  #ariza_takip_table{
+      overflow-x: scroll;
+  }
+  #ariza_takip_table{
+      min-width: 1700px;
+  }
+  #isletme_bakim_table th:first-child, #ariza_takip_table th:first-child{
+    width: 50px;
+  }
+  #isletme_bakim_table td:first-child, #ariza_takip_table td:first-child{
+    padding: 1rem 15px 1rem 30px;
   }
   
   tbody tr.hide td img {
@@ -350,11 +380,9 @@
                   {% for operation in operations %}
                   <tr>
                     <td>
-                      <button type="button" class="edit-project-btn button2" style= "background: none; border:none;">
                         <a href= "{% url 'operation_care_edit' operation_care_id=operation.id %}">
                           <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                         </a>
-                      </button> 
                     </td>
                     <td><a href="{% url 'operation_care_detail' operation_care_id=operation.id %}">{{operation.Operation_Care_Company}}</a></td>
                     <td>{{operation.Operation_Care_Inventor_Power}}</td>
@@ -372,11 +400,11 @@
             </table>
             <table id="fatura_table" style="display: none;">
               <thead>           
-                  <th scope="col"><span>Santral İsmi</span></th>
-                  <th id="xx2" scope="col"><span>Yapılan İşlem</span></th>
-                  <th scope="col"><span>Açıklama</span></th>
-                  <th scope="col"><span>Tarih</span></th>
-                  <th scope="col"><span>Dosya</span></th>
+                  <th><span>Santral İsmi</span></th>
+                  <th><span>Yapılan İşlem</span></th>
+                  <th><span>Açıklama</span></th>
+                  <th><span>Tarih</span></th>
+                  <th><span>Dosya</span></th>
               </thead>
               <tbody>
                 {% for bill in fail_bills %}
@@ -399,15 +427,15 @@
             </table>
             <table id="ariza_takip_table" style="display: none;">
               <thead>           
-                  <th scope="col"><span></span></th>
-                  <th scope="col"><span>Santral İsmi</span></th>
-                  <th id="xx2" scope="col"><span>Arıza Tespit Tarihi</span></th>
-                  <th scope="col"><span>Arıza</span></th>
-                  <th scope="col"><span>Ekip Bilgilendirme Tarihi</span></th>
-                  <th scope="col"><span>Bilgi Verilen Kişi</span></th>
-                  <th scope="col"><span>Arıza Onarım Tarihi</span></th>
-                  <th scope="col"><span>Garanti Kapsam Durumu</span></th>
-                  <th scope="col"><span>Arıza Durumu</span></th>
+                  <th><span></span></th>
+                  <th>Santral İsmi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arıza Tespit Tarihi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arıza<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Ekip Bilgilendirme Tarihi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Bilgi Verilen Kişi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arıza Onarım Tarihi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Garanti Kapsam Durumu<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
               </thead>
               <tbody>
                   {% for fail in fails %}
