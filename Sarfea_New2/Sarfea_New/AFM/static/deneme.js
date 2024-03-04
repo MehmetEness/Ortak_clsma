@@ -181,3 +181,12 @@ function sortTable(column, sort_asc) {
 }
 
 
+function getDollarRate() {
+    var date = "24-03-2020"; // örnek bir tarih
+    fetch(`/get_dollar_rate/${date}/`)
+    .then(response => response.json())
+    .then(data => console.log("Dollar rate for", date, ":", data.rate))
+    .catch(error => console.error('Error getting dollar rate:', error));
+}
+getDollarRate();
+

@@ -1200,6 +1200,7 @@ def get_dollar_rate(request, date):
     api='qYyWXNCbA0'
     evds = e.evdsAPI(api)
     dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)
+    print(date)
     rate=dollar.TP_DK_USD_S_YTL.values[0]
     rate = round(rate, 4)  # 4 ondalık basamak
     return JsonResponse({'rate': rate})
@@ -1293,6 +1294,29 @@ def post_card_file(request):
 
         card.save()
         return JsonResponse({'message': 'Dosya başarıyla yüklendi'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_fail_bill(request):
+    if request.method == 'POST':
+        
+        Fail_Bill_Owner = request.POST.get('Fail_Bill_Owner')
+        Fail_Bill_Central_Name= request.POST.get('Fail_Bill_Central_Name')
+        Fail_Bill_Process= request.POST.get('Fail_Bill_Process')
+        Fail_Bill_Date= request.POST.get('Fail_Bill_Date')
+        Fail_Bill_Detail= request.POST.get('Fail_Bill_Detail')
+        Fail_Bill_File = request.FILES.get('Fail_Bill_File')
+
+        Fail_Bill.objects.create(
+            Fail_Bill_Owner=Fail_Bill_Owner, 
+            Fail_Bill_Central_Name=Fail_Bill_Central_Name, 
+            Fail_Bill_Date=Fail_Bill_Date, 
+            Fail_Bill_Detail=Fail_Bill_Detail, 
+            Fail_Bill_File=Fail_Bill_File, 
+        )
+
+        return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
