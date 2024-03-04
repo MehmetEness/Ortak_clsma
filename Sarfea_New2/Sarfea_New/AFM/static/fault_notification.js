@@ -8,8 +8,8 @@ garantiSelection.addEventListener("change", function() {
   var selectedValue = garantiSelection.value;
   console.log(selectedValue == "Evet")
   
-  if (selectedValue == "Hayır") {
-  } else if (selectedValue == "Evet") {
+  if (selectedValue == "Evet") {
+  } else if (selectedValue == "Hayır") {
     delayTimeout = setTimeout(function() {
         garantiContainer.style.display = "flex";
       }, 15);
