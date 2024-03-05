@@ -189,3 +189,27 @@ function currentDirection(inventor){
       }
   }
 }
+
+//                  ANKET VERİLERİNİ AL
+
+var anketVerileri = {};
+
+function kontrolEt(grupAdi) {
+    var secilenDugme;
+    var inputs = document.getElementsByName(grupAdi);
+
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
+            secilenDugme = inputs[i].value;
+            break;
+        }
+    }
+
+    if (secilenDugme) {
+        anketVerileri[grupAdi] = secilenDugme;
+        console.log("Anket verileri güncellendi:");
+        console.log(anketVerileri);
+    } else {
+        console.log(grupAdi + " grubundan herhangi bir düğme seçilmedi.");
+    }
+}
