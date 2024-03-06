@@ -229,11 +229,15 @@ thead th span::after{
         padding: 10px 20px;
         color: #8392a5;
         background-color: #18283b;
-        #7597c0
     }
+    
     .bakim_takip_container ul li:hover {
         color: #000;
         background-color: #7597c0;
+    }
+    .inv-li-hover{
+        color: #000 !important;
+        background-color: #7597c0 !important;
     }
     .bakim_takip_container table{
         width: 100%;

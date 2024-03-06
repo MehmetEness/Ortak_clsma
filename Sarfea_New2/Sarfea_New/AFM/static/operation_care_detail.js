@@ -25,6 +25,19 @@ topMenuLi.forEach(function (item) {
       this.classList.add("li-hover");
     });
   });
+  
+  function inventorLiClick(){
+    var inventorLi = document.querySelectorAll("#inventors_row li");
+    inventorLi.forEach(function (item) {
+      item.addEventListener("click", function () {
+        inventorLi.forEach(function (item) {
+          item.classList.remove("inv-li-hover");
+        });
+        this.classList.add("inv-li-hover");
+      });
+    });
+  }
+  
 
  //                  TOP MENU FONKSİYONLARI
 
@@ -190,6 +203,10 @@ async function getAndRenderInventors() {
         const tdElement = `<li onclick="getAndRenderStrings(${inventor.Inventor_Number})">${inventorName}</li>`;
         inventorsRow.insertAdjacentHTML('beforeend', tdElement);
       }
+      
+      inventorLiClick(); 
+      var inventorLi = document.querySelectorAll("#inventors_row li");
+      inventorLi[0].classList.add("inv-li-hover") ;
   } catch (error) {
       console.error('Error fetching and rendering clients:', error);
   }
