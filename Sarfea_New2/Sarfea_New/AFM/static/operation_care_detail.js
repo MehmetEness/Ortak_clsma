@@ -15,6 +15,7 @@ var bakimTakipContainer = document.querySelector(".bakim_takip_container");
    
     });
 
+
 //                  TOP MENÜ TIKLAMA
 
 topMenuLi.forEach(function (item) {
@@ -137,7 +138,7 @@ async function getAndRenderStrings(inventorNumber) {
           for (const string of strings) {
             const row = '<tr>' +
             (bool ? `<td class = "rotate" rowspan="${strings.length}"><span>İnventör ${inventorNumber}</span></td>` : '') +
-            '<td>' +
+            '<td style="width: 100px;">' +
             '<select class="directionSelect">' +
             '<option value="north">Kuzey</option>' +
             '<option value="south">Güney</option>' +
@@ -145,10 +146,10 @@ async function getAndRenderStrings(inventorNumber) {
             '<option value="west">Batı</option>' +
             '</select>' +
             '</td>' +
-            '<td>' +
+            '<td style="width: 90px;" >' +
             '<input type="text" value="' + string.String_Number + '">' +
             '</td>' +
-            '<td>' +
+            '<td style="width: 100px;">' +
             '<input type="text" value="' + string.String_Panel_Power + '">' +
             '</td>' +
             '<td>' +
@@ -174,6 +175,8 @@ async function getAndRenderStrings(inventorNumber) {
             '</td>' +
             '<td>' +
             '<input type="text" value="' + string.String_Percent + '">' +
+            '<td>' +
+            '<input type="text" value="">' +
             '</td>' +
             '</tr>';
               tbody.insertAdjacentHTML('beforeend', row);
@@ -182,6 +185,7 @@ async function getAndRenderStrings(inventorNumber) {
             }
           }
       }
+      
   } catch (error) {
       console.error('Error fetching and rendering clients:', error);
   }

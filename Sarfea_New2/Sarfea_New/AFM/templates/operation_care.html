@@ -295,15 +295,15 @@
   }
   
   thead th:hover span.icon-arrow{
-      border: 1.4px solid #6c00bd;
+      border: 1.4px solid #007cf8;
   }
   
   thead th:hover {
-      color: #6c00bd;
+      color: #007cf8;
   }
   
   thead th.active span.icon-arrow{
-      background-color: #6c00bd;
+      background-color: #007cf8;
       color: #fff;
   }
   
@@ -311,8 +311,8 @@
       transform: rotate(180deg);
   }
   
-  thead th.active,tbody td.active {
-      color: #6c00bd;
+  thead th.active,tbody td.active,tbody td.active a{
+      color: #007cf8;
   }
   .export__file{
       height: 100%;
@@ -354,9 +354,9 @@
                 <img src="{% static 'images/search.png' %}" alt="">
             </div>
             <ul class="top-menu-ul">
-              <li id="isletme_bakim">İşletme Bakım</li>           
-              <li id="ariza_takip">Arıza Takip</li> 
-              <li id="fatura">Faturalar</li>
+                <li id="bakim_kontrol_listesi">Bakım Kontrol Listesi</li>
+                <li id="ariza_takip">Arıza Takip</li>
+                <li id="bakim_takip">Bakım Takip</li>
             </ul> 
             <div class="export__file">
               <a href="{% url 'fault_notification' %}"><button style="width: 130px; margin-right: 10px;" class="button-project-start" >Arıza Bildir</button></a>
@@ -456,8 +456,6 @@
         </section>
     </main>
   </div>
-</div>
-</div>
 </div>
 {% endblock %}
 

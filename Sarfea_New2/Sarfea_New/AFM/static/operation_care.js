@@ -16,6 +16,28 @@ var arizaTakipTable = document.querySelector("#ariza_takip_table");
    
     });
 
+//                  TABLO FORMATLAMA
+isletmeTableFormat();
+function isletmeTableFormat(){
+  var numericCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(3)');
+  var tlCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(5)');
+  var textCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(2), #isletme_bakim_table td:nth-child(4), #isletme_bakim_table td:nth-child(6), #isletme_bakim_table td:nth-child(7)');
+
+  tableFormat(tlCells, "tl")
+  tableFormat(numericCells, "numeric")
+  tableFormat(textCells, "text")
+}
+arizaTableFormat();
+function arizaTableFormat(){
+  var textCells = document.querySelectorAll('#ariza_takip_table tr td:not(:first-child)');
+  tableFormat(textCells, "text")
+}
+faturaTableFormat();
+function faturaTableFormat(){
+  var textCells = document.querySelectorAll('#ariza_takip_table tr td');
+  tableFormat(textCells, "text")
+}
+
 //                  TOP MENÜ TIKLAMA
 
 topMenuLi.forEach(function (item) {
