@@ -481,7 +481,80 @@ width: 100%;
 }
 .anket-list{
     display: flex;
+    flex-direction: column;
 }
+.anket-list .top{
+    display: flex;
+    width: 100%;
+}
+.comments{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.comments-row{
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    padding: 5px;
+}
+.comment-inputs{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.comment-inputs .left,.comment-inputs .right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 49%;
+}
+.comment-inputs .left textarea,.comment-inputs .right textarea{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #000000c9;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.comment-bottom-inputs{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.comment-bottom-inputs .left textarea,.comment-bottom-inputs .right textarea{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #000000c9;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+}
+.comment-bottom-inputs .left, .comment-bottom-inputs .right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 49%;
+}
+.com-row{
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.com-row input{
+    width: 90%;
+    border: none;
+    outline: none;
+}
+.com-row label{
+    width: 10%;
+}
+
 .bakim_takip_container ul{
     display: flex;
     list-style-type: none;
