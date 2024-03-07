@@ -312,11 +312,13 @@ class Fail(models.Model):
     Fail_Central_Name = models.CharField(max_length=63, blank=True, null=True)
     Fail_Information_Person = models.CharField(max_length=63, blank=True, null=True)
     Fail_Guaranteed = models.CharField(
-        max_length=63,blank=True, null=True,
+        max_length=63, null=True,
         choices=(
+            ('Belirlenmedi', 'Belirlenmedi'),
             ('Evet', 'Evet'),
             ('Hayır', 'Hayır'),
         ),
+        default="Belirlenmedi"
     )    
     Fail_Situation = models.CharField(
         max_length=63,blank=True, null=True,

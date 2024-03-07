@@ -525,9 +525,6 @@ def income_add(request):
             if income_form.is_valid():
                 income_form.save()
                 return redirect('projects')
-            
-       
-
     else:
         income_form = IncomesForm()
         client_form = ClientsForm()
@@ -645,6 +642,7 @@ def income_add_wp(request, project_id):
         "client_form":client_form,
     }
     return render(request, "income_add_wp.html", context)
+
 # Satış Teklif Modülü
 
 @login_required
@@ -781,7 +779,6 @@ def sales_offer(request):
     }
     return render(request, "sales_offer.html", context)
 
-
 #İşletme Bakım Modülü
 
 @login_required
@@ -867,13 +864,17 @@ def fault_notification(request):
         bill_form = Fail_BillForm(request.POST, request.FILES )
 
         if form.is_valid():
-            fail_instance = form.save()  # Form kaydedildi
-            
+            data2 = form.cleaned_data
+            fail_instance = Fail.objects.create(
+                Fail_Operation_Care_Copy=data2['Fail_Operation_Care_Copy'],
+                Fail_Central_Name=data2['Fail_Central_Name'], 
+                Fail_Information_Person=data2['Fail_Information_Person'],
+                Fail_Guaranteed=data2['Fail_Guaranteed'], 
+                Fail_Detection_Date=data2['Fail_Detection_Date'], 
+                Fail_Situation=data2['Fail_Situation']
+                )
             if bill_form.is_valid():
                 data1 = bill_form.cleaned_data
-                Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
-
-                print(Fail_Bill_Central_Name)
                 fail_bill_instance = Fail_Bill.objects.create(
                     Fail_Bill_Owner=fail_instance, 
                     Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
@@ -941,6 +942,7 @@ def operation_care_detail(request,operation_care_id):
     }
 
     return render(request, "operation_care_detail.html", context)
+
 #deneme
 
 @login_required
