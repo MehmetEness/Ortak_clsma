@@ -77,11 +77,8 @@ async function getAndaRenderList(){
         
         const data = await response.json();
         const inventors = data.operation_care;
-        //console.log(inventors)
         inventors.forEach(inventor => {
-            console.log(inventor)
             if(inventor.id == 5){
-                //console.log(inventor)
                 const tbody = document.querySelector('.inventor_table_body');
                 tbody.innerHTML = '';
                 for(let i=0; i < inventor.Operation_Care_Number_Str; i++){                  
@@ -121,8 +118,6 @@ async function getAndRenderStrings(inventorNumber) {
       const data = await response.json();
       const inventors = data.inventors;
 
-      console.log("inventors")
-      console.log(inventors)
       const tbody = document.querySelector(".inventor_table_body")
       tbody.innerHTML = '';
       let i = 1;
@@ -133,11 +128,9 @@ async function getAndRenderStrings(inventorNumber) {
           const data2 = await response2.json();
           const strings = data2.strings;
           let bool = true;
-          console.log(inventor)
-          console.log(strings.length)
           for (const string of strings) {
-            const row = '<tr>' +
-            (bool ? `<td class = "rotate" rowspan="${strings.length}"><span>İnventör ${inventorNumber}</span></td>` : '') +
+            const row = `<tr id="${string.id}">` +
+            (bool ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${inventorNumber}">İnventör ${inventorNumber}</span></td>` : '') +
             '<td style="width: 100px;">' +
             '<select class="directionSelect">' +
             '<option value="north">Kuzey</option>' +
@@ -147,47 +140,52 @@ async function getAndRenderStrings(inventorNumber) {
             '</select>' +
             '</td>' +
             '<td style="width: 90px;" >' +
-            '<input type="text" value="' + string.String_Number + '">' +
+            '<input class="strNum" type="text" value="' + string.String_Number + '">' +
             '</td>' +
             '<td style="width: 100px;">' +
-            '<input type="text" value="' + string.String_Panel_Power + '">' +
+            '<input class="strPnlPwr" type="text" value="' + string.String_Panel_Power + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_VOC + '">' +
+            '<input class="strVOC" type="text" value="' + string.String_VOC + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_Panel_Brand + '">' +
+            '<input class="strPnlBrnd" type="text" value="' + string.String_Panel_Brand + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_Panel_SY + '">' +
+            '<input class="strPnlSy" type="text" value="' + string.String_Panel_SY + '">' +
+            '</td>' +
+            '<td>' +            
+                '<select class="izlsyn" class="directionSelect">' +
+                '<option value="ok">OK</option>' +
+                '<option value="fault">Fault</option>' +
+                '</select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + "ok" + '">' +
+            '<input class=""strCpt type="text" value="' + string.String_Capacity + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_Capacity + '">' +
+            '<input class="strACPwr" type="text" value="' + string.String_AC_Power + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_AC_Power + '">' +
+            '<input class="strDCPwr" type="text" value="' + string.String_DC_Power + '">' +
             '</td>' +
             '<td>' +
-            '<input type="text" value="' + string.String_DC_Power + '">' +
-            '</td>' +
+            '<input class="strPrcnt" type="text" value="' + string.String_Percent + '">' +
             '<td>' +
-            '<input type="text" value="' + string.String_Percent + '">' +
-            '<td>' +
-            '<input type="text" value="">' +
+            '<input class="pnlV" type="text" value="">' +
             '</td>' +
             '</tr>';
               tbody.insertAdjacentHTML('beforeend', row);
               currentDirection(inventor);
               bool = false;
+              
             }
           }
       }
+      xxxx()
       
   } catch (error) {
-      console.error('Error fetching and rendering clients:', error);
+      console.error('Error', error);
   }
 }
 
@@ -197,8 +195,6 @@ async function getAndRenderInventors() {
       const response = await fetch(`/get_inventors/10/`);
       const data = await response.json();
       const inventors = data.inventors;
-      console.log("inventors")
-      console.log(inventors)
       let inventorsRow = document.querySelector("#inventors_row")
       inventorsRow.innerHTML = '';
       let i = 1;
@@ -212,7 +208,7 @@ async function getAndRenderInventors() {
       var inventorLi = document.querySelectorAll("#inventors_row li");
       inventorLi[0].classList.add("inv-li-hover") ;
   } catch (error) {
-      console.error('Error fetching and rendering clients:', error);
+      console.error('Error', error);
   }
 }
 
@@ -253,4 +249,39 @@ function kontrolEt(grupAdi) {
     } else {
         console.log(grupAdi + " grubundan herhangi bir düğme seçilmedi.");
     }
+}
+
+const invFormSubmitBtn = document.querySelector("#invFormSubmitBtn");
+function inventorFormSubmit(){
+  const invFormSubmitBtn = document.querySelector("#invFormSubmitBtn");
+  invFormSubmitBtn.addEventListener("click", ()=>{
+
+  });
+}
+
+function xxxx(){
+  let data = [];
+  let tablerows = document.querySelectorAll(".bakim_takip_container tbody tr"); 
+  tablerows.forEach( (row)=>{
+    let cells = row.querySelectorAll("td:not(.rotate)"); 
+    let rowData = {
+      "ID": row.id,
+      "YON": cells[0].textContent,
+      "STRG_NUM": cells[1].textContent,
+      "PNL_GUCU": cells[2].textContent,
+      "VOC": cells[3].textContent,
+      "PNL_MRK": cells[4].textContent,
+      "PNL_SY": cells[5].textContent,
+      "IZALASYON": cells[6].textContent,
+      "TOPLAM_V": cells[7].textContent,
+      "AC": cells[8].textContent,
+      "DC": cells[9].textContent,
+      "PERCENT": cells[10].textContent,
+      "PANEL_V": cells[11].textContent
+    };
+    data.push(rowData);
+  });
+  console.log(data);
+  
+  
 }
