@@ -712,14 +712,33 @@ def fault_notification(request):
 
     if request.method == 'POST':
         form = FailForm(request.POST or None )
+        bill_form = Fail_BillForm(request.POST, request.FILES )
+
         if form.is_valid():
-            form.save()
+            fail_instance = form.save()  # Form kaydedildi
+            
+            if bill_form.is_valid():
+                data1 = bill_form.cleaned_data
+                Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+
+                print(Fail_Bill_Central_Name)
+                fail_bill_instance = Fail_Bill.objects.create(
+                                                        Fail_Bill_Owner=fail_instance, 
+                                                        Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+                                                        Fail_Bill_Process=data1['Fail_Bill_Process'], 
+                                                        Fail_Bill_Date=data1['Fail_Bill_Date'],
+                                                        Fail_Bill_Detail=data1['Fail_Bill_Detail'], 
+                                                        Fail_Bill_File=data1['Fail_Bill_File']
+                                                        )
+
             return redirect('operation_care')  
     else:
         form = FailForm()
+        bill_form = Fail_BillForm()
 
     context = {
         "form": form,
+        "bill_form":bill_form,
         "operation_cares":operation_cares,
     }
     return render(request, "fault_notification.html", context)
@@ -1314,9 +1333,35 @@ def post_fail_bill(request):
             Fail_Bill_Date=Fail_Bill_Date, 
             Fail_Bill_Detail=Fail_Bill_Detail, 
             Fail_Bill_File=Fail_Bill_File, 
+            Fail_Bill_Process= Fail_Bill_Process
+
         )
 
         return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_update_string(request, string_id):
+    string=String.objects.filter(id=string_id).first()
+    if string is None:
+        return JsonResponse({'error': 'String bulunamadı'}, status=404)
+    if request.method == 'POST':
+        
+        string.String_Number = request.POST.get('String_Number')
+        string.String_Panel_Power= request.POST.get('String_Panel_Power')
+        string.String_Panel_Brand= request.POST.get('String_Panel_Brand')
+        string.String_VOC= request.POST.get('String_VOC')
+        string.String_Panel_SY= request.POST.get('String_Panel_SY')
+        string.String_Izolasion= request.POST.get('String_Izolasion')
+        string.String_AC_Power= request.POST.get('String_AC_Power')
+        string.String_DC_Power= request.POST.get('String_DC_Power')
+        string.String_Capacity= request.POST.get('String_Capacity')
+        string.String_Percent= request.POST.get('String_Percent')
+
+        string.save()
+
+        return JsonResponse({'message': 'String Başarı ile güncellendi'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
