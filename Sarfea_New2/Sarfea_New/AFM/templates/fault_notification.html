@@ -176,7 +176,7 @@
             
           </div>
           <div class="button">
-            <input id="project-create-btn" type="submit" value="Arıza Bildir" />
+            <input id="ariza-create-btn" type="submit" value="Arıza Bildir" />
           </div>
         </form>
       </div>
@@ -188,7 +188,7 @@
   <div style="display: none;" class="center garanti-container">
     <div class="container center2">
       <div class="title">Arıza Bakım Faturası</div>
-      <form id="my-form" action="{% url 'fault_notification' %}" method="post">
+      <form id="fatura_form" action="{% url 'fault_notification' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
@@ -227,7 +227,7 @@
           
         </div>
         <div class="button">
-          <input type="button" id="project-create-btn" value="Arıza Bakım Faturası Ekle" />
+          <input type="button" id="fatura-create-btn" value="Arıza Bakım Faturası Ekle" />
         </div>
       </form>
     </div>

@@ -30,7 +30,7 @@ document.addEventListener("click", function(event) {
 
 //                  DOSYA YÜKLEME
 
-const fileInput = document.getElementById("fatura_file");
+const fileInput = document.getElementById("id_Fail_Bill_File");
 const fileNameSpan = document.querySelector("#fatura_file_span");
 
 fileInput.addEventListener("change", function() {
@@ -38,3 +38,21 @@ fileInput.addEventListener("change", function() {
   fileNameSpan.textContent = fileName;
 });
 
+let arizaForm = document.querySelector("#my-form");
+let faturaForm = document.querySelector("#fatura_form");
+let arizaFormButton = document.querySelector("#ariza-create-btn");
+let faturaFormButton = document.querySelector("#fatura-create-btn");
+
+let faturaContainer = document.querySelector(".garanti-container");
+
+
+faturaFormButton.addEventListener("click", () =>{
+  faturaContainer.style.display = "none";
+});
+
+arizaFormButton.addEventListener("click", (event) =>{
+  event.preventDefault();
+  
+  arizaForm.submit();
+  faturaForm.submit();
+});
