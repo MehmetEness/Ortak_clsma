@@ -9,275 +9,24 @@ from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobH
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import evds as e
 
-# Create your views here.
+#Test
+def isAdmin(user):
+    return user.is_superuser
 
-
-
+#Home
 @login_required
-def sales_offer_revises(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    revises = SalesOfferCard_Revise.objects.filter(Revise_Owner=card)
-
-
-    context={
-        'card':card,
-        'revises':revises,
-    }
-    return render(request, "sales_offer_revises.html", context)
-
-@require_POST
-def create_revise(request, card_id):
-    # Retrieve the existing SalesOfferCard instance
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-
-    # Create a new SalesOfferCard_Revise instance
-    revise = SalesOfferCard_Revise(
-        Revise_Owner=card,
-        Client_Card_Copy=card.Client_Card_Copy,
-        Client_Card=card.Client_Card,
-        Offer_Subject_Card=card.Offer_Subject_Card,
-        Location_Card=card.Location_Card,
-        Cost_NotIncludingKDV_Card=card.Cost_NotIncludingKDV_Card,
-        Offer_Cost_NotIncludingKDV_Card=card.Offer_Cost_NotIncludingKDV_Card,
-        AC_Power_Card=card.AC_Power_Card,
-        DC_Power_Card=card.DC_Power_Card,
-        UnitCost_NotIncludingKDV=card.UnitCost_NotIncludingKDV,
-        UnitOffer_NotIncludingKDV=card.UnitOffer_NotIncludingKDV,
-        Situation_Card=card.Situation_Card,
-        Date_Card=card.Date_Card,
-        Terrain_Roof_Card=card.Terrain_Roof_Card,
-        Roof_Cost_Card=card.Roof_Cost_Card,
-        Comment_Date_Card=card.Comment_Date_Card,
-        Offer_Comment_Card=card.Offer_Comment_Card,
-        Person_Deal=card.Person_Deal,
-        Person_Related=card.Person_Related,
-        Offer_File_Card=card.Offer_File_Card,
-        Offer_File_Card_2=card.Offer_File_Card_2,
-        Offer_File_Card_3=card.Offer_File_Card_3,
-        Offer_File_Card_4=card.Offer_File_Card_4,
-        Offer_File_Card_5=card.Offer_File_Card_5,
-        M_File_Card=card.M_File_Card,
-        M_File_Card_2=card.M_File_Card_2,
-        M_File_Card_3=card.M_File_Card_3,
-        Is_Lost=card.Is_Lost,
-        Is_Gain=card.Is_Gain,
-        Is_late=card.Is_late,
-        Unit_Cost_with_Roof_Cost=card.Unit_Cost_with_Roof_Cost,
-        Unit_Offer_with_Roof_Cost=card.Unit_Offer_with_Roof_Cost,
-        Profit_Rate_Card=card.Profit_Rate_Card,
-    )
-
-    # Save the new SalesOfferCard_Revise instance
-    revise.save()
-
-    # Return a JSON response
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_wait(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_late = True
-    card.save()
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_rewait(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_late = False
-    card.save()
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_gain(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_Gain = True
-    card.save()
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_regain(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_Gain = False
-    card.save()
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_lost(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_Lost = True
-    card.save()
-    return JsonResponse({'success': True})
-
-@require_POST
-def set_card_relost(request, card_id):
-    card = get_object_or_404(SalesOfferCard, id=card_id)
-    print("id alındı")
-    card.Is_Lost = False
-    card.save()
-    return JsonResponse({'success': True})
-
-def delete_salesoffercard(request, card_id):
-    try:
-        card = SalesOfferCard.objects.get(id=card_id)
-
-        # Modeli silme
-        card.delete()
-
-        # Başarılı bir silme işlemi sonrasında yapılacak işlemler
-        # Örneğin, bir mesaj gösterme veya başka bir sayfaya yönlendirme
-
-    except card.DoesNotExist:
-        # Model bulunamadıysa yapılacak işlemler
-        # Örneğin, bir hata mesajı gösterme veya başka bir sayfaya yönlendirme
-        return HttpResponse("Silme işlemi başarısız")
-
-@login_required
-def sales_offer_edit(request, sales_offer_id):
-    client = Clients.objects.all()
-    workers = Worker.objects.all()
-    locations = Locations.objects.all()
-    sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
-    
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
-        client_form = ClientsForm(request.POST or None )
-        print("form.is_valid")
-
-        if sales_form.is_valid():
-
-            print("sales_form.is_valid")
-            sales_form.save()
-            return redirect('sales_offer')  
-        
-        elif  client_form.is_valid():
-
-            print("client_form.is_valid")
-            client_form.save()
-            return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
-        
-    else:  
-        print("else.is_valid")
-
-        sales_form = SalesOfferCardForm(instance=sales_offer_edit_curr)
-        client_form = ClientsForm()
-
-    context={
-        'sales_form':sales_form,
-        'client':client,
-        'locations':locations,
-        'client_form':client_form,
-        'sales_offer_edit_curr':sales_offer_edit_curr,
-        'workers':workers
-    }
-    return render(request, "sales_offer_edit.html", context)
-
-@login_required
-def sales_offer_add(request):
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    workers = Worker.objects.all()
-
-    if request.method == 'POST':
-        sales_form = SalesOfferCardForm(request.POST, request.FILES )
-        client_form = ClientsForm(request.POST or None )
-        if sales_form.is_valid():
-            sales_form.save()
-            return redirect('sales_offer')  
-        elif client_form.is_valid():
-            client_form.save()
-            return redirect('sales_offer_add')
-        
-    else:  
-        sales_form = SalesOfferCardForm()
-        client_form = ClientsForm()
-
-    context={
-        'sales_form':sales_form,
-        'client':client,
-        'locations':locations,
-        'client_form':client_form,
-        'error': sales_form.errors,
-        'workers':workers
-
-    }
-    return render(request, "sales_offer_add.html", context)
-
-@csrf_exempt  # Temporarily disable CSRF for simplicity. Add proper CSRF handling in production.
-def update_card_situation(request):
-    if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        card_id = data.get('card_id')
-        new_situation = data.get('new_situation')
-
-        # Update the card's situation in the database
-        try:
-            card = SalesOfferCard.objects.get(id=card_id)
-            card.Situation_Card = new_situation
-            card.save()
-            return JsonResponse({'success': True})
-        except SalesOfferCard.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Card not found'})
-
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
-
-@login_required
-def sales_offer(request):
+def home(request):
     sales_offer_card = SalesOfferCard.objects.all()
-   
-
-    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
-    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    potential_customers_count = potential_customers.count()
-
-    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
-    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    cost_customers_count = cost_customers.count()
-
-    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
-    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    price_customers_count = price_customers.count()
-
-    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
-    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    offer_customers_count = offer_customers.count()
-
-    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
-    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    presentation_customers_count = presentation_customers.count()
-
-    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
-    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    done_customers_count = done_customers.count()
-
-
-
 
     context = {
-        'sales_offer_card':sales_offer_card,
-        'potential_customers_cost':potential_customers_cost,
-        'potential_customers_count':potential_customers_count,
-        'cost_customers_cost':cost_customers_cost,
-        'cost_customers_count':cost_customers_count,
-        'price_customers_cost':price_customers_cost,
-        'price_customers_count':price_customers_count,
-        'offer_customers_cost':offer_customers_cost,
-        'offer_customers_count':offer_customers_count,
-        'presentation_customers_cost':presentation_customers_cost,
-        'presentation_customers_count':presentation_customers_count,
-        'done_customers_cost':done_customers_cost,
-        'done_customers_count':done_customers_count,
+    'sales_offer_card':sales_offer_card,
     }
-    return render(request, "sales_offer.html", context)
+    return render(request, "home.html", context)
+
+# Proje Modülü.
 
 @login_required
 def expenses_edit(request, expenses_id):
@@ -435,15 +184,6 @@ def project_edit(request, project_name):
         'situations':situations,
     }
     return render(request, "project_edit.html", context)
-
-@login_required
-def home(request):
-    sales_offer_card = SalesOfferCard.objects.all()
-
-    context = {
-    'sales_offer_card':sales_offer_card,
-    }
-    return render(request, "home.html", context)
 
 @login_required
 def client(request):
@@ -633,143 +373,6 @@ def projects(request):
     return render(request, "projects.html", context)
 
 @login_required
-def operation_care(request):
-    operations = Operation_Care.objects.all()
-    fails = Fail.objects.all()
-
-    for op in operations:
-        i = 0  # Her döngü başında i'yi sıfırla
-        for fa in fails:
-            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
-                i += 1
-        op.Operation_Care_Fail_Number = i
-        op.save()
-
-    fail_bills = Fail_Bill.objects.all()
-
-    context = {
-        "operations": operations,
-        "fails": fails,
-        "fail_bills": fail_bills,
-    }
-
-    return render(request, "operation_care.html", context)
-@login_required
-def operation_care_add(request):
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        form = Operation_CareForm(request.POST or None )
-        client_form = ClientsForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('operation_care')  
-          
-        elif client_form.is_valid():
-           
-            client_form.save()
-            return redirect('operation_care_add')
-    else:
-        form = Operation_CareForm()
-        client_form = ClientsForm()
-        
-    context = {
-        "form": form,
-        'form_errors': form.errors,
-        "client": client,
-        "locations": locations,
-        "client_form":client_form,
-    }
-    return render(request, "operation_care_add.html", context)
-
-@login_required
-def operation_care_edit(request, operation_care_id):
-    operation_care = get_object_or_404(Operation_Care, id=operation_care_id)
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        form = Operation_CareForm(request.POST, instance=operation_care )
-
-        if form.is_valid():
-            form.save()
-            return redirect('operation_care')  
-    else:
-        form = Operation_CareForm()
-        
-    context = {
-        "form": form,
-        "client": client,
-        "locations": locations,
-        "operation_care":operation_care,
-    }
-    return render(request, "operation_care_edit.html", context)
-
-@login_required
-def fault_notification(request):
-
-    operation_cares=Operation_Care.objects.all()
-
-    if request.method == 'POST':
-        form = FailForm(request.POST or None )
-        bill_form = Fail_BillForm(request.POST, request.FILES )
-
-        if form.is_valid():
-            fail_instance = form.save()  # Form kaydedildi
-            
-            if bill_form.is_valid():
-                data1 = bill_form.cleaned_data
-                Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
-
-                print(Fail_Bill_Central_Name)
-                fail_bill_instance = Fail_Bill.objects.create(
-                                                        Fail_Bill_Owner=fail_instance, 
-                                                        Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
-                                                        Fail_Bill_Process=data1['Fail_Bill_Process'], 
-                                                        Fail_Bill_Date=data1['Fail_Bill_Date'],
-                                                        Fail_Bill_Detail=data1['Fail_Bill_Detail'], 
-                                                        Fail_Bill_File=data1['Fail_Bill_File']
-                                                        )
-
-            return redirect('operation_care')  
-    else:
-        form = FailForm()
-        bill_form = Fail_BillForm()
-
-    context = {
-        "form": form,
-        "bill_form":bill_form,
-        "operation_cares":operation_cares,
-    }
-    return render(request, "fault_notification.html", context)
-
-@login_required
-def fail_edit(request, fail_id):
-    fail = get_object_or_404(Fail, id=fail_id)
-    operation_cares = Operation_Care.objects.all()
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        form = FailForm(request.POST, instance=fail)
-
-        if form.is_valid():
-            form.save()
-            return redirect('operation_care')  
-    else:
-        form = ProjectForm()
-        
-    context = {
-        "form": form,
-        'form_errors': form.errors,
-        "client": client,
-        "locations": locations,
-        "fail":fail,
-        "operation_cares":operation_cares
-    }
-    return render(request, "fail_edit.html", context)
-
-
-@login_required
 def inverter(request, operation_care_id):
     operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     client = Clients.objects.all()
@@ -938,98 +541,6 @@ def income_add(request):
     return render(request, "income_add.html", context)
 
 @login_required
-def deneme(request):
-
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        client_form = ClientsForm(request.POST)
-        if client_form.is_valid():
-            client_form.save()
-            return redirect('client')
-    else:
-        client_form = ClientsForm()
-
-    clients = Clients.objects.all()
-
-    context = {
-        'clients': clients,
-        'client_form': client_form,
-        "locations": locations
-    }
-    return render(request, "deneme.html", context)
-
-@login_required
-def deneme2(request):
-    sales_offer_card = SalesOfferCard.objects.all()
-   
-
-    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
-    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    potential_customers_count = potential_customers.count()
-
-    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
-    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    cost_customers_count = cost_customers.count()
-
-    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
-    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    price_customers_count = price_customers.count()
-
-    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
-    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    offer_customers_count = offer_customers.count()
-
-    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
-    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    presentation_customers_count = presentation_customers.count()
-
-    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
-    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
-    done_customers_count = done_customers.count()
-
-
-
-
-    context = {
-        'sales_offer_card':sales_offer_card,
-        'potential_customers_cost':potential_customers_cost,
-        'potential_customers_count':potential_customers_count,
-        'cost_customers_cost':cost_customers_cost,
-        'cost_customers_count':cost_customers_count,
-        'price_customers_cost':price_customers_cost,
-        'price_customers_count':price_customers_count,
-        'offer_customers_cost':offer_customers_cost,
-        'offer_customers_count':offer_customers_count,
-        'presentation_customers_cost':presentation_customers_cost,
-        'presentation_customers_count':presentation_customers_count,
-        'done_customers_cost':done_customers_cost,
-        'done_customers_count':done_customers_count,
-    }
-    return render(request, "deneme2.html", context)
-
-@login_required
-def operation_care_detail(request,operation_care_id):
-    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
-    fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
-    inventors =Inventor.objects.filter(Inventor_Owner=operation_care)
-
-    inventor_strings = {}
-
-    # Iterate through inventors
-    for inv in inventors:
-        # Get all strings related to the current inventor
-        strings = String.objects.filter(String_Owner=inv)
-        inventor_strings[inv] = strings          
-    context = {
-        'fails':fails,
-        "operation_care":operation_care,
-        "inventors":inventors,
-        "inventor_strings": inventor_strings,
-    }
-
-    return render(request, "operation_care_detail.html", context)
-
-@login_required
 def expenses_add_wp(request, project_id):
     details = Details.objects.all()
     supplier = Supplier.objects.all()
@@ -1134,6 +645,376 @@ def income_add_wp(request, project_id):
         "client_form":client_form,
     }
     return render(request, "income_add_wp.html", context)
+# Satış Teklif Modülü
+
+@login_required
+def sales_offer_revises(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    revises = SalesOfferCard_Revise.objects.filter(Revise_Owner=card)
+
+
+    context={
+        'card':card,
+        'revises':revises,
+    }
+    return render(request, "sales_offer_revises.html", context)
+
+@login_required
+def sales_offer_edit(request, sales_offer_id):
+    client = Clients.objects.all()
+    workers = Worker.objects.all()
+    locations = Locations.objects.all()
+    sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
+    
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
+        client_form = ClientsForm(request.POST or None )
+        print("form.is_valid")
+
+        if sales_form.is_valid():
+
+            print("sales_form.is_valid")
+            sales_form.save()
+            return redirect('sales_offer')  
+        
+        elif  client_form.is_valid():
+
+            print("client_form.is_valid")
+            client_form.save()
+            return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
+        
+    else:  
+        print("else.is_valid")
+
+        sales_form = SalesOfferCardForm(instance=sales_offer_edit_curr)
+        client_form = ClientsForm()
+
+    context={
+        'sales_form':sales_form,
+        'client':client,
+        'locations':locations,
+        'client_form':client_form,
+        'sales_offer_edit_curr':sales_offer_edit_curr,
+        'workers':workers
+    }
+    return render(request, "sales_offer_edit.html", context)
+
+@login_required
+def sales_offer_add(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    workers = Worker.objects.all()
+
+    if request.method == 'POST':
+        sales_form = SalesOfferCardForm(request.POST, request.FILES )
+        client_form = ClientsForm(request.POST or None )
+        if sales_form.is_valid():
+            sales_form.save()
+            return redirect('sales_offer')  
+        elif client_form.is_valid():
+            client_form.save()
+            return redirect('sales_offer_add')
+        
+    else:  
+        sales_form = SalesOfferCardForm()
+        client_form = ClientsForm()
+
+    context={
+        'sales_form':sales_form,
+        'client':client,
+        'locations':locations,
+        'client_form':client_form,
+        'error': sales_form.errors,
+        'workers':workers
+
+    }
+    return render(request, "sales_offer_add.html", context)
+
+@user_passes_test(isAdmin, login_url='/home')
+def sales_offer(request):
+    sales_offer_card = SalesOfferCard.objects.all()
+   
+
+    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
+    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    potential_customers_count = potential_customers.count()
+
+    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
+    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    cost_customers_count = cost_customers.count()
+
+    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
+    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    price_customers_count = price_customers.count()
+
+    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
+    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    offer_customers_count = offer_customers.count()
+
+    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
+    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    presentation_customers_count = presentation_customers.count()
+
+    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
+    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    done_customers_count = done_customers.count()
+
+
+
+
+    context = {
+        'sales_offer_card':sales_offer_card,
+        'potential_customers_cost':potential_customers_cost,
+        'potential_customers_count':potential_customers_count,
+        'cost_customers_cost':cost_customers_cost,
+        'cost_customers_count':cost_customers_count,
+        'price_customers_cost':price_customers_cost,
+        'price_customers_count':price_customers_count,
+        'offer_customers_cost':offer_customers_cost,
+        'offer_customers_count':offer_customers_count,
+        'presentation_customers_cost':presentation_customers_cost,
+        'presentation_customers_count':presentation_customers_count,
+        'done_customers_cost':done_customers_cost,
+        'done_customers_count':done_customers_count,
+    }
+    return render(request, "sales_offer.html", context)
+
+
+#İşletme Bakım Modülü
+
+@login_required
+def operation_care(request):
+    operations = Operation_Care.objects.all()
+    fails = Fail.objects.all()
+
+    for op in operations:
+        i = 0  # Her döngü başında i'yi sıfırla
+        for fa in fails:
+            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
+                i += 1
+        op.Operation_Care_Fail_Number = i
+        op.save()
+
+    fail_bills = Fail_Bill.objects.all()
+
+    context = {
+        "operations": operations,
+        "fails": fails,
+        "fail_bills": fail_bills,
+    }
+
+    return render(request, "operation_care.html", context)
+
+@login_required
+def operation_care_add(request):
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = Operation_CareForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('operation_care_add')
+    else:
+        form = Operation_CareForm()
+        client_form = ClientsForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "client_form":client_form,
+    }
+    return render(request, "operation_care_add.html", context)
+
+@login_required
+def operation_care_edit(request, operation_care_id):
+    operation_care = get_object_or_404(Operation_Care, id=operation_care_id)
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = Operation_CareForm(request.POST, instance=operation_care )
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+    else:
+        form = Operation_CareForm()
+        
+    context = {
+        "form": form,
+        "client": client,
+        "locations": locations,
+        "operation_care":operation_care,
+    }
+    return render(request, "operation_care_edit.html", context)
+
+@login_required
+def fault_notification(request):
+    operation_cares=Operation_Care.objects.all()
+
+    if request.method == 'POST':
+        form = FailForm(request.POST or None )
+        bill_form = Fail_BillForm(request.POST, request.FILES )
+
+        if form.is_valid():
+            fail_instance = form.save()  # Form kaydedildi
+            
+            if bill_form.is_valid():
+                data1 = bill_form.cleaned_data
+                Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+
+                print(Fail_Bill_Central_Name)
+                fail_bill_instance = Fail_Bill.objects.create(
+                    Fail_Bill_Owner=fail_instance, 
+                    Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+                    Fail_Bill_Process=data1['Fail_Bill_Process'], 
+                    Fail_Bill_Date=data1['Fail_Bill_Date'],
+                    Fail_Bill_Detail=data1['Fail_Bill_Detail'], 
+                    Fail_Bill_File=data1['Fail_Bill_File']
+                    )
+
+            return redirect('operation_care')  
+    else:
+        form = FailForm()
+        bill_form = Fail_BillForm()
+
+    context = {
+        "form": form,
+        "bill_form":bill_form,
+        "operation_cares":operation_cares,
+    }
+    return render(request, "fault_notification.html", context)
+
+@login_required
+def fail_edit(request, fail_id):
+    fail = get_object_or_404(Fail, id=fail_id)
+    operation_cares = Operation_Care.objects.all()
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = FailForm(request.POST, instance=fail)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+    else:
+        form = ProjectForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "fail":fail,
+        "operation_cares":operation_cares
+    }
+    return render(request, "fail_edit.html", context)
+
+@login_required
+def operation_care_detail(request,operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
+    fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
+    inventors =Inventor.objects.filter(Inventor_Owner=operation_care)
+
+    inventor_strings = {}
+
+    # Iterate through inventors
+    for inv in inventors:
+        # Get all strings related to the current inventor
+        strings = String.objects.filter(String_Owner=inv)
+        inventor_strings[inv] = strings          
+    context = {
+        'fails':fails,
+        "operation_care":operation_care,
+        "inventors":inventors,
+        "inventor_strings": inventor_strings,
+    }
+
+    return render(request, "operation_care_detail.html", context)
+#deneme
+
+@login_required
+def deneme(request):
+
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        client_form = ClientsForm(request.POST)
+        if client_form.is_valid():
+            client_form.save()
+            return redirect('client')
+    else:
+        client_form = ClientsForm()
+
+    clients = Clients.objects.all()
+
+    context = {
+        'clients': clients,
+        'client_form': client_form,
+        "locations": locations
+    }
+    return render(request, "deneme.html", context)
+
+@login_required
+def deneme2(request):
+    sales_offer_card = SalesOfferCard.objects.all()
+   
+
+    potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
+    potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    potential_customers_count = potential_customers.count()
+
+    cost_customers = sales_offer_card.filter(Situation_Card='Maliyet Hesaplama', Cost_NotIncludingKDV_Card__isnull=False)
+    cost_customers_cost = cost_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    cost_customers_count = cost_customers.count()
+
+    price_customers = sales_offer_card.filter(Situation_Card='Fiyat Belirleme', Cost_NotIncludingKDV_Card__isnull=False)
+    price_customers_cost = price_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    price_customers_count = price_customers.count()
+
+    offer_customers = sales_offer_card.filter(Situation_Card='Teklif Hazırlama', Cost_NotIncludingKDV_Card__isnull=False)
+    offer_customers_cost = offer_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    offer_customers_count = offer_customers.count()
+
+    presentation_customers = sales_offer_card.filter(Situation_Card='Sunum Sonrası Görüşme', Cost_NotIncludingKDV_Card__isnull=False)
+    presentation_customers_cost = presentation_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    presentation_customers_count = presentation_customers.count()
+
+    done_customers = sales_offer_card.filter(Situation_Card='Teklif Sunuldu', Cost_NotIncludingKDV_Card__isnull=False)
+    done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
+    done_customers_count = done_customers.count()
+
+
+
+
+    context = {
+        'sales_offer_card':sales_offer_card,
+        'potential_customers_cost':potential_customers_cost,
+        'potential_customers_count':potential_customers_count,
+        'cost_customers_cost':cost_customers_cost,
+        'cost_customers_count':cost_customers_count,
+        'price_customers_cost':price_customers_cost,
+        'price_customers_count':price_customers_count,
+        'offer_customers_cost':offer_customers_cost,
+        'offer_customers_count':offer_customers_count,
+        'presentation_customers_cost':presentation_customers_cost,
+        'presentation_customers_count':presentation_customers_count,
+        'done_customers_cost':done_customers_cost,
+        'done_customers_count':done_customers_count,
+    }
+    return render(request, "deneme2.html", context)
+
+
+
 #***********************************************************
 #                       POST METHODLARI
 #***********************************************************
@@ -1223,9 +1104,139 @@ def get_dollar_rate(request, date):
     rate=dollar.TP_DK_USD_S_YTL.values[0]
     rate = round(rate, 4)  # 4 ondalık basamak
     return JsonResponse({'rate': rate})
+
 #***********************************************************
 #                       GET METHODLARI
 #***********************************************************
+
+@require_POST
+def create_revise(request, card_id):
+    # Retrieve the existing SalesOfferCard instance
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+
+    # Create a new SalesOfferCard_Revise instance
+    revise = SalesOfferCard_Revise(
+        Revise_Owner=card,
+        Client_Card_Copy=card.Client_Card_Copy,
+        Client_Card=card.Client_Card,
+        Offer_Subject_Card=card.Offer_Subject_Card,
+        Location_Card=card.Location_Card,
+        Cost_NotIncludingKDV_Card=card.Cost_NotIncludingKDV_Card,
+        Offer_Cost_NotIncludingKDV_Card=card.Offer_Cost_NotIncludingKDV_Card,
+        AC_Power_Card=card.AC_Power_Card,
+        DC_Power_Card=card.DC_Power_Card,
+        UnitCost_NotIncludingKDV=card.UnitCost_NotIncludingKDV,
+        UnitOffer_NotIncludingKDV=card.UnitOffer_NotIncludingKDV,
+        Situation_Card=card.Situation_Card,
+        Date_Card=card.Date_Card,
+        Terrain_Roof_Card=card.Terrain_Roof_Card,
+        Roof_Cost_Card=card.Roof_Cost_Card,
+        Comment_Date_Card=card.Comment_Date_Card,
+        Offer_Comment_Card=card.Offer_Comment_Card,
+        Person_Deal=card.Person_Deal,
+        Person_Related=card.Person_Related,
+        Offer_File_Card=card.Offer_File_Card,
+        Offer_File_Card_2=card.Offer_File_Card_2,
+        Offer_File_Card_3=card.Offer_File_Card_3,
+        Offer_File_Card_4=card.Offer_File_Card_4,
+        Offer_File_Card_5=card.Offer_File_Card_5,
+        M_File_Card=card.M_File_Card,
+        M_File_Card_2=card.M_File_Card_2,
+        M_File_Card_3=card.M_File_Card_3,
+        Is_Lost=card.Is_Lost,
+        Is_Gain=card.Is_Gain,
+        Is_late=card.Is_late,
+        Unit_Cost_with_Roof_Cost=card.Unit_Cost_with_Roof_Cost,
+        Unit_Offer_with_Roof_Cost=card.Unit_Offer_with_Roof_Cost,
+        Profit_Rate_Card=card.Profit_Rate_Card,
+    )
+
+    # Save the new SalesOfferCard_Revise instance
+    revise.save()
+
+    # Return a JSON response
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_wait(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_late = True
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_rewait(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_late = False
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_gain(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Gain = True
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_regain(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Gain = False
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_lost(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Lost = True
+    card.save()
+    return JsonResponse({'success': True})
+
+@require_POST
+def set_card_relost(request, card_id):
+    card = get_object_or_404(SalesOfferCard, id=card_id)
+    print("id alındı")
+    card.Is_Lost = False
+    card.save()
+    return JsonResponse({'success': True})
+
+def delete_salesoffercard(request, card_id):
+    try:
+        card = SalesOfferCard.objects.get(id=card_id)
+
+        # Modeli silme
+        card.delete()
+
+        # Başarılı bir silme işlemi sonrasında yapılacak işlemler
+        # Örneğin, bir mesaj gösterme veya başka bir sayfaya yönlendirme
+
+    except card.DoesNotExist:
+        # Model bulunamadıysa yapılacak işlemler
+        # Örneğin, bir hata mesajı gösterme veya başka bir sayfaya yönlendirme
+        return HttpResponse("Silme işlemi başarısız")
+
+@csrf_exempt  # Temporarily disable CSRF for simplicity. Add proper CSRF handling in production.
+def update_card_situation(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        card_id = data.get('card_id')
+        new_situation = data.get('new_situation')
+
+        # Update the card's situation in the database
+        try:
+            card = SalesOfferCard.objects.get(id=card_id)
+            card.Situation_Card = new_situation
+            card.save()
+            return JsonResponse({'success': True})
+        except SalesOfferCard.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Card not found'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 @csrf_exempt
 def post_client(request):
