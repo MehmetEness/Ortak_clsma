@@ -189,11 +189,8 @@ def update_client_card(sender, instance, **kwargs):
         except Clients.DoesNotExist:
             # Optional handling for non-existent client
             pass
-    if instance.UnitOffer_NotIncludingKDV is not None and instance.DC_Power_Card is not None and instance.Offer_Cost_NotIncludingKDV_Card is None:
-        instance.Offer_Cost_NotIncludingKDV_Card = instance.DC_Power_Card * instance.UnitOffer_NotIncludingKDV
     
-    if instance.UnitCost_NotIncludingKDV is not None and instance.DC_Power_Card is not None and instance.Cost_NotIncludingKDV_Card is None:
-        instance.Cost_NotIncludingKDV_Card = instance.DC_Power_Card * instance.UnitCost_NotIncludingKDV
+    
         
     if instance.Roof_Cost_Card and instance.UnitOffer_NotIncludingKDV:
         instance.Unit_Cost_with_Roof_Cost = instance.Roof_Cost_Card + instance.UnitOffer_NotIncludingKDV

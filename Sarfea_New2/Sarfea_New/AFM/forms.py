@@ -347,7 +347,11 @@ class SalesOfferCardForm(forms.ModelForm):
     Location_Card = forms.CharField(
         required=False,
     )    
-    Cost_NotIncludingKDV_Card = forms.FloatField(required=False, initial="0")        
+    Cost_NotIncludingKDV_Card = forms.DecimalField(  
+        max_digits=10,
+        decimal_places=2,
+        required=False,
+    )      
     AC_Power_Card = forms.IntegerField(required=False,)
     DC_Power_Card = forms.IntegerField(required=False,)
     UnitCost_NotIncludingKDV = forms.DecimalField(  

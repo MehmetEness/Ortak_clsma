@@ -193,7 +193,7 @@ class SalesOfferCard(models.Model):
             ('Arazi', 'Arazi'),
         ),
     )    
-    Roof_Cost_Card = models.IntegerField(blank=True, null=True)
+    Roof_Cost_Card = TwoDecimalField(blank=True, null=True)
     Comment_Date_Card = models.DateField(blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
     Person_Related= models.CharField(max_length=63, blank=True, null=True)
