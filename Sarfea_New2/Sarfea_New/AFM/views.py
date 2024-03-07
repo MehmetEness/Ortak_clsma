@@ -1333,9 +1333,32 @@ def post_fail_bill(request):
             Fail_Bill_Date=Fail_Bill_Date, 
             Fail_Bill_Detail=Fail_Bill_Detail, 
             Fail_Bill_File=Fail_Bill_File, 
+            Fail_Bill_Process= Fail_Bill_Process
+
         )
 
         return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_update_string(request, string_id):
+    string=String.objects.filter(id=string_id).first()
+    if request.method == 'POST':
+        
+        string.String_Number = request.POST.get('String_Number')
+        string.String_Panel_Power= request.POST.get('String_Panel_Power')
+        string.String_Panel_Brand= request.POST.get('String_Panel_Brand')
+        string.String_VOC= request.POST.get('String_VOC')
+        string.String_Panel_SY= request.POST.get('String_Panel_SY')
+        string.String_Izolasion= request.POST.get('String_Izolasion')
+        string.String_AC_Power= request.POST.get('String_AC_Power')
+        string.String_DC_Power= request.POST.get('String_DC_Power')
+        string.String_Capacity= request.POST.get('String_Capacity')
+        string.String_Percent= request.POST.get('String_Percent')
+
+
+        return JsonResponse({'message': 'String Başarı ile güncellendi'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
