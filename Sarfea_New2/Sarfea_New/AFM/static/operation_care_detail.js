@@ -203,7 +203,7 @@ async function getAndRenderInventors() {
       inventorsRow.innerHTML = '';
       let i = 1;
       for (const inventor of inventors) {
-        const inventorName = `inventör${inventor.Inventor_Number}`; 
+        const inventorName = `İnventör ${inventor.Inventor_Number}`; 
         const tdElement = `<li onclick="getAndRenderStrings(${inventor.Inventor_Number})">${inventorName}</li>`;
         inventorsRow.insertAdjacentHTML('beforeend', tdElement);
       }
