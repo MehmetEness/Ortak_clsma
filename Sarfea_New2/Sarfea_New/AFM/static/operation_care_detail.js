@@ -15,6 +15,7 @@ var bakimTakipContainer = document.querySelector(".bakim_takip_container");
    
     });
 
+
 //                  TOP MENÜ TIKLAMA
 
 topMenuLi.forEach(function (item) {
@@ -25,6 +26,19 @@ topMenuLi.forEach(function (item) {
       this.classList.add("li-hover");
     });
   });
+  
+  function inventorLiClick(){
+    var inventorLi = document.querySelectorAll("#inventors_row li");
+    inventorLi.forEach(function (item) {
+      item.addEventListener("click", function () {
+        inventorLi.forEach(function (item) {
+          item.classList.remove("inv-li-hover");
+        });
+        this.classList.add("inv-li-hover");
+      });
+    });
+  }
+  
 
  //                  TOP MENU FONKSİYONLARI
 
@@ -99,9 +113,9 @@ async function getAndaRenderList(){
     }
 }
 
-getAndRenderStrings() 
 //------------------------------------------
-async function getAndRenderStrings() {
+getAndRenderStrings(1) 
+async function getAndRenderStrings(inventorNumber) {
   try {
       const response = await fetch(`/get_inventors/10/`);
       const data = await response.json();
@@ -114,66 +128,93 @@ async function getAndRenderStrings() {
       let i = 1;
       for ( const inventor of inventors) {
         
-          const response2 = await fetch(`/get_strings/${inventor.id}/`);
+          if(inventor.Inventor_Number == inventorNumber){
+            const response2 = await fetch(`/get_strings/${inventor.id}/`);
           const data2 = await response2.json();
           const strings = data2.strings;
           let bool = true;
-          console.log(strings)
+          console.log(inventor)
           console.log(strings.length)
           for (const string of strings) {
             const row = '<tr>' +
-          (bool ? `<td class = "rotate" rowspan="${strings.length}"><span>İnventör ${i}</span></td>` : '') +
-          '<td>' +
-          '<select class="directionSelect">' +
-          '<option value="north">Kuzey</option>' +
-          '<option value="south">Güney</option>' +
-          '<option value="east">Doğu</option>' +
-          '<option value="west">Batı</option>' +
-          '</select>' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Number + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Panel_Power + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_VOC + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Panel_Brand + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Panel_SY + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + "ok" + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Capacity + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_AC_Power + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_DC_Power + '">' +
-          '</td>' +
-          '<td>' +
-          '<input type="text" value="' + string.String_Percent + '">' +
-          '</td>' +
-          '</tr>';
-            tbody.insertAdjacentHTML('beforeend', row);
-            currentDirection(inventor);
-            bool = false;
+            (bool ? `<td class = "rotate" rowspan="${strings.length}"><span>İnventör ${inventorNumber}</span></td>` : '') +
+            '<td style="width: 100px;">' +
+            '<select class="directionSelect">' +
+            '<option value="north">Kuzey</option>' +
+            '<option value="south">Güney</option>' +
+            '<option value="east">Doğu</option>' +
+            '<option value="west">Batı</option>' +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 90px;" >' +
+            '<input type="text" value="' + string.String_Number + '">' +
+            '</td>' +
+            '<td style="width: 100px;">' +
+            '<input type="text" value="' + string.String_Panel_Power + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_VOC + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_Panel_Brand + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_Panel_SY + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + "ok" + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_Capacity + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_AC_Power + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_DC_Power + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" value="' + string.String_Percent + '">' +
+            '<td>' +
+            '<input type="text" value="">' +
+            '</td>' +
+            '</tr>';
+              tbody.insertAdjacentHTML('beforeend', row);
+              currentDirection(inventor);
+              bool = false;
+            }
           }
-          i++;
-
       }
+      
   } catch (error) {
       console.error('Error fetching and rendering clients:', error);
   }
 }
 
+getAndRenderInventors();
+async function getAndRenderInventors() {
+  try {
+      const response = await fetch(`/get_inventors/10/`);
+      const data = await response.json();
+      const inventors = data.inventors;
+      console.log("inventors")
+      console.log(inventors)
+      let inventorsRow = document.querySelector("#inventors_row")
+      inventorsRow.innerHTML = '';
+      let i = 1;
+      for (const inventor of inventors) {
+        const inventorName = `inventör${inventor.Inventor_Number}`; 
+        const tdElement = `<li onclick="getAndRenderStrings(${inventor.Inventor_Number})">${inventorName}</li>`;
+        inventorsRow.insertAdjacentHTML('beforeend', tdElement);
+      }
+      
+      inventorLiClick(); 
+      var inventorLi = document.querySelectorAll("#inventors_row li");
+      inventorLi[0].classList.add("inv-li-hover") ;
+  } catch (error) {
+      console.error('Error fetching and rendering clients:', error);
+  }
+}
 
 
 //                  YÖN KONTROLÜ YAPMA
