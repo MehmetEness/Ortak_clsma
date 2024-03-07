@@ -1344,6 +1344,8 @@ def post_fail_bill(request):
 @csrf_exempt
 def post_update_string(request, string_id):
     string=String.objects.filter(id=string_id).first()
+    if string is None:
+        return JsonResponse({'error': 'String bulunamadı'}, status=404)
     if request.method == 'POST':
         
         string.String_Number = request.POST.get('String_Number')
@@ -1357,6 +1359,7 @@ def post_update_string(request, string_id):
         string.String_Capacity= request.POST.get('String_Capacity')
         string.String_Percent= request.POST.get('String_Percent')
 
+        string.save()
 
         return JsonResponse({'message': 'String Başarı ile güncellendi'})
 
