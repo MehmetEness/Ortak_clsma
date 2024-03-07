@@ -259,29 +259,30 @@ function inventorFormSubmit(){
   });
 }
 
-function xxxx(){
+function xxxx() {
   let data = [];
-  let tablerows = document.querySelectorAll(".bakim_takip_container tbody tr"); 
-  tablerows.forEach( (row)=>{
-    let cells = row.querySelectorAll("td:not(.rotate)"); 
+  let tablerows = document.querySelectorAll(".bakim_takip_container tbody tr");
+
+  tablerows.forEach((row) => {
+    let cells = row.querySelectorAll("td:not(.rotate)");
+
     let rowData = {
       "ID": row.id,
-      "YON": cells[0].textContent,
-      "STRG_NUM": cells[1].textContent,
-      "PNL_GUCU": cells[2].textContent,
-      "VOC": cells[3].textContent,
-      "PNL_MRK": cells[4].textContent,
-      "PNL_SY": cells[5].textContent,
-      "IZALASYON": cells[6].textContent,
-      "TOPLAM_V": cells[7].textContent,
-      "AC": cells[8].textContent,
-      "DC": cells[9].textContent,
-      "PERCENT": cells[10].textContent,
-      "PANEL_V": cells[11].textContent
+      "YON": cells[0].querySelector('select').value,
+      "STRG_NUM": cells[1].querySelector('input').value,
+      "PNL_GUCU": cells[2].querySelector('input').value,
+      "VOC": cells[3].querySelector('input').value,
+      "PNL_MRK": cells[4].querySelector('input').value,
+      "PNL_SY": cells[5].querySelector('input').value,
+      "IZALASYON": cells[6].querySelector('select').value,
+      "TOPLAM_V": cells[7].querySelector('input').value,
+      "AC": cells[8].querySelector('input').value,
+      "DC": cells[9].querySelector('input').value,
+      "PERCENT": cells[10].querySelector('input').value,
+      "PANEL_V": cells[11].querySelector('input').value
     };
     data.push(rowData);
   });
+
   console.log(data);
-  
-  
 }
