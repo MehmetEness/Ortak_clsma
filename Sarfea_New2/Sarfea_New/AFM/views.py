@@ -712,14 +712,33 @@ def fault_notification(request):
 
     if request.method == 'POST':
         form = FailForm(request.POST or None )
+        bill_form = Fail_BillForm(request.POST, request.FILES )
+
         if form.is_valid():
-            form.save()
+            fail_instance = form.save()  # Form kaydedildi
+            
+            if bill_form.is_valid():
+                data1 = bill_form.cleaned_data
+                Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+
+                print(Fail_Bill_Central_Name)
+                fail_bill_instance = Fail_Bill.objects.create(
+                                                        Fail_Bill_Owner=fail_instance, 
+                                                        Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
+                                                        Fail_Bill_Process=data1['Fail_Bill_Process'], 
+                                                        Fail_Bill_Date=data1['Fail_Bill_Date'],
+                                                        Fail_Bill_Detail=data1['Fail_Bill_Detail'], 
+                                                        Fail_Bill_File=data1['Fail_Bill_File']
+                                                        )
+
             return redirect('operation_care')  
     else:
         form = FailForm()
+        bill_form = Fail_BillForm()
 
     context = {
         "form": form,
+        "bill_form":bill_form,
         "operation_cares":operation_cares,
     }
     return render(request, "fault_notification.html", context)
