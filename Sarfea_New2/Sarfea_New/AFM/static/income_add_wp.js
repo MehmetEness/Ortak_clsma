@@ -45,7 +45,7 @@ createBtn.addEventListener("click", function(event) {
     if(requiredInputs(reqInputs, reqLabels)){
         dateInput.value = formatDateForSubmit(dateInput.value);
         lastDateInput.value = formatDateForSubmit(lastDateInput.value);
-        amountInput.value = clear(amountInput.value);
+        amountInput.value = clearForSubmit(amountInput.value);
         form.submit();
     }  
 });  

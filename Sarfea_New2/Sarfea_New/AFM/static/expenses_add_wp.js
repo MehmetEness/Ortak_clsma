@@ -38,7 +38,7 @@ createBtn.addEventListener("click", function(event) {
     event.preventDefault();            
    if(payingFirmaInput.value != ""){
     dateInput.value = formatDateForSubmit(dateInput.value);
-    amountInput.value = clear(amountInput.value);
+    amountInput.value = clearForSubmit(amountInput.value);
     form.submit();
    }
 }); 

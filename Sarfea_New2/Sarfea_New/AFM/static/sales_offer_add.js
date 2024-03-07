@@ -59,14 +59,14 @@ createBtn.addEventListener("click", function(event) {
     event.preventDefault();          
     if(requiredInputs(reqInputs, reqLabels)){
         dateInput.value = formatDateForSubmit(dateInput.value);
-        offerCostInput.value = clear(offerCostInput.value);
-        unitOfferInput.value = clear(unitOfferInput.value);
-        acPowerInput.value = clear(acPowerInput.value);
-        dcPowerInput.value = clear(dcPowerInput.value);        
-        totalCostInput.value = clear(totalCostInput.value);
-        unitCostInput.value = clear(unitCostInput.value);
-        roofCostInput.value = clear(roofCostInput.value);
-       form.submit();
+        offerCostInput.value = clearForSubmit(offerCostInput.value);
+        unitOfferInput.value = clearForSubmit(unitOfferInput.value);
+        acPowerInput.value = clearForSubmit(acPowerInput.value);
+        dcPowerInput.value = clearForSubmit(dcPowerInput.value);        
+        totalCostInput.value = clearForSubmit(totalCostInput.value);
+        unitCostInput.value = clearForSubmit(unitCostInput.value);
+        roofCostInput.value = clearForSubmit(roofCostInput.value);
+        form.submit();
     }    
 }); 
 

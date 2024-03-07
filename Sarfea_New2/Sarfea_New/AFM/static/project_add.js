@@ -51,10 +51,10 @@ createBtn.addEventListener("click", function(event) {
     if(requiredInputs(reqInputs, reqLabels)){
         startDateInput.value = formatDateForSubmit(startDateInput.value);
         finishDateInput.value = formatDateForSubmit(finishDateInput.value);
-        isBedeliInput.value = clear(isBedeliInput.value);
-        hesaplananMaliyetInput.value = clear(hesaplananMaliyetInput.value);
-        acPowerInput.value = clear(acPowerInput.value);
-        dcPowerInput.value = clear(dcPowerInput.value);
+        isBedeliInput.value = clearForSubmit(isBedeliInput.value);
+        hesaplananMaliyetInput.value = clearForSubmit(hesaplananMaliyetInput.value);
+        acPowerInput.value = clearForSubmit(acPowerInput.value);
+        dcPowerInput.value = clearForSubmit(dcPowerInput.value);
         form.submit();
     }    
 }); 

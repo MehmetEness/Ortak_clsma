@@ -11,6 +11,15 @@ function openFile(url) {
 function clear(value){      
   if(value != undefined){
       var cleanString = value.replace(/[^0-9,]/g, '');
+      return cleanString;
+  }else{
+      var  cleanString = 0;
+      return cleanString;
+  } 
+}
+function clearForSubmit(value){      
+  if(value != undefined){
+      var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
       //var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
       return cleanString;
   }else{
