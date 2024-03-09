@@ -1253,16 +1253,16 @@ def post_client(request):
         phone_number= request.POST.get('PhoneNumber')
         email= request.POST.get('Email')
         location= request.POST.get('Location')
+        if company_name_clients:
+            Clients.objects.create(
+                CompanyName_Clients=company_name_clients, 
+                ContactPerson=contact_person, 
+                PhoneNumber=phone_number, 
+                Email=email, 
+                Location=location, 
+            )
 
-        Clients.objects.create(
-            CompanyName_Clients=company_name_clients, 
-            ContactPerson=contact_person, 
-            PhoneNumber=phone_number, 
-            Email=email, 
-            Location=location, 
-        )
-
-        return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
+            return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
@@ -1275,16 +1275,18 @@ def post_supplier(request):
         phone_number= request.POST.get('phone_number')
         email= request.POST.get('email')
         location= request.POST.get('location')
+        if company_name_supplier:
+            Supplier.objects.create(
+                CompanyName_Supplier=company_name_supplier, 
+                ContactPerson=contact_person, 
+                PhoneNumber=phone_number, 
+                Email=email, 
+                Location=location, 
+            )
 
-        Supplier.objects.create(
-            CompanyName_Supplier=company_name_supplier, 
-            ContactPerson=contact_person, 
-            PhoneNumber=phone_number, 
-            Email=email, 
-            Location=location, 
-        )
+            return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
+        return JsonResponse({'message':  ' Post alındı ama Supplier oluşturulamadı'})
 
-        return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
