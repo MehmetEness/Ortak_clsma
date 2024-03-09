@@ -20,7 +20,6 @@ function clear(value){
 function clearForSubmit(value){      
   if(value != undefined){
       var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
-      //var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
       return cleanString;
   }else{
       var  cleanString = 0;
@@ -119,8 +118,8 @@ function tableFormat(cells, type) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
         } else {
-          cell.textContent = "0$";
-          cell.title = "0$";
+          cell.textContent = "0.00$";
+          cell.title = "0.00$";
         }
       });
       break;
@@ -132,8 +131,8 @@ function tableFormat(cells, type) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
         } else {
-          cell.textContent = "0₺";
-          cell.title = "0₺";
+          cell.textContent = "0.00₺";
+          cell.title = "0.00₺";
         }
       });
       break;
@@ -144,8 +143,8 @@ function tableFormat(cells, type) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
         } else {
-          cell.textContent = "0₺";
-          cell.title = "0₺";
+          cell.textContent = "0.00₺";
+          cell.title = "0.00₺";
         }
       });
       break;
@@ -180,82 +179,106 @@ function tableFormat(cells, type) {
 
 //                  SIRALAMA İŞLEMLERİ
 
-function sortTable(table, columnIndex) {
-  //const headers = table.querySelectorAll('thead th span');
-  var rows, switching, i, x, y, shouldSwitch;
-  var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-  switching = true;
-  
-  while (switching) {    
-    switching = false;
-    var tbody = table.querySelector('tbody');
-    rows = tbody.rows;
-    
-    for (i = 0; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("td")[columnIndex];
-      y = rows[i + 1].getElementsByTagName("td")[columnIndex];     
-      console.log(rows[i].textContent)
-      console.log(rows[i + 1].textContent)
-      if (!isNaN(x.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim())) {
-        var xValue = parseFloat(x.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim());
-        var yValue = parseFloat(y.textContent.replace(/[$.₺]/g, "").replace(/,/g, ".").trim());
-        if (!isNaN(xValue) && !isNaN(yValue) && xValue < yValue) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (datePattern.test(x.textContent)) {
-        var date1 = x.textContent.trim();
-        var date2 = y.textContent.trim();
+const search1 = document.querySelector('.input-group input');
+search1.addEventListener('input', searchTable);
 
-        if (compareDates(date1, date2) > 0) {
-          shouldSwitch = true;
-          break;
-        }
-      } else {
-        var xText = x.textContent.toLowerCase().trim().replace(/-/g, "zzzz");
-        var yText = y.textContent.toLowerCase().trim().replace(/-/g, "zzzz");
-        if (xText > yText) {
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
+    // SEARCHİNG
+function searchTable() {
+    const table_rows = document.querySelectorAll('tbody tr');
+    table_rows.forEach((row, i) => {
+        let table_data = row.textContent.toLowerCase(),
+            search_data = search1.value.toLowerCase();  
+        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+        row.style.setProperty('--delay', i / 25 + 's');
+    })  
+    document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+       visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+    });
+}
+  // SORTİNG
+function sortingTable(table){
+    const table_headings = table.querySelectorAll('thead th');
+    const table_rows = table.querySelectorAll('tbody tr');
+    const tableBody = table.querySelector('tbody');
+    table_headings.forEach((head, i) => {
       
-    }
-  }  
+        let sort_asc = true;
+        head.onclick = () => {
+            table_headings.forEach(head => head.classList.remove('active'));
+            head.classList.add('active');    
+            table.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+            table_rows.forEach(row => {
+                row.querySelectorAll('td')[i].classList.add('active');
+            })
+    
+            head.classList.toggle('asc', sort_asc);
+            sort_asc = head.classList.contains('asc') ? false : true;
+    
+            sortTable(i, sort_asc, table_rows, tableBody);
+        }
+    })
+}
+function sortTable(column, sort_asc, table_rows, tableBody) {
+    [...table_rows].sort((a, b) => {
+      let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+        second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+        let first_number = first_row.replace(/\./g, '').replace('$', '').replace('₺', '').replace(',', '.');
+        let second_number = second_row.replace(/\./g, '').replace('$', '').replace('₺', '').replace(',', '.');
+
+        
+     
+       // const datePattern = /^\d{1,2} [a-zA-Z]+ \d{4}$/;
+       const datePattern = /^(0?[1-9]|[12][0-9]|3[01])\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+\d{4}$/;
+
+      if (datePattern.test(first_row) && datePattern.test(second_row)) {
+        return sort_asc ? compareDates(second_row, first_row) : compareDates(first_row, second_row);
+      }
+      if(!isNaN(parseFloat(first_number)) && !isNaN(parseFloat(second_number))){
+        first_number = parseFloat(first_number);
+        second_number = parseFloat(second_number);
+        return sort_asc ? (first_number < second_number ? 1 : -1) : (first_number < second_number ? -1 : 1);
+      }else {
+        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+      }
+    })
+    .map(sorted_row => tableBody.appendChild(sorted_row));
+}
+function sortTableForStart(table, columnIndex) {
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+  rows.sort((rowA, rowB) => {
+      const cellA = rowA.querySelectorAll("td")[columnIndex].textContent.trim();
+      const cellB = rowB.querySelectorAll("td")[columnIndex].textContent.trim();
+      return cellA.localeCompare(cellB);
+  });
+
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
+  rows.forEach(row => {
+      tbody.appendChild(row);
+  });
 }
 function compareDates(date1, date2) {
-  var parts1 = date1.split("/");
-  var parts2 = date2.split("/");
+  const months = {
+      "ocak": 0, "şubat": 1, "mart": 2, "nisan": 3, "mayıs": 4, "haziran": 5,
+      "temmuz": 6, "ağustos": 7, "eylül": 8, "ekim": 9, "kasım": 10, "aralık": 11
+  };
 
-  var day1 = parseInt(parts1[0], 10);
-  var month1 = parseInt(parts1[1], 10);
-  var year1 = parseInt(parts1[2], 10);
+  const [day1, month1, year1] = date1.split(' ');
+  const [day2, month2, year2] = date2.split(' ');
 
-  var day2 = parseInt(parts2[0], 10);
-  var month2 = parseInt(parts2[1], 10);
-  var year2 = parseInt(parts2[2], 10);
-
-  if (year1 !== year2) {
-    return year1 - year2;
+  const d1 = new Date(year1, months[month1], day1);
+  const d2 = new Date(year2, months[month2], day2);
+  console.log(year1, months[month1], day1)
+  console.log(year2, months[month2], day2)
+  if (d1 > d2) {
+      return 1;
+  } else if (d1 < d2) {
+      return -1;
+  } else {
+      return 1;
   }
-
-  if (month1 !== month2) {
-    return month1 - month2;
-  }
-
-  return day1 - day2;
 }
-/*xxx.forEach(header => {
-    header.addEventListener("click", function() {        
-        var columnIndex = Array.from(xxx).indexOf(header);
-        sortTable(yyy, columnIndex);
-    });
-});*/
 
 //                  TABLO SEARCH İŞLEMLERİ
 
@@ -462,6 +485,12 @@ function parseCardDate(dateString) {
   var year = parseInt(dateParts[2]);
 
   return new Date(year, month, day);
+}
+
+//                  GET MONTH NAME
+function getMonthName(monthIndex) {
+  const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+  return months[monthIndex];
 }
 
 //                  GÜN KONTROLÜ İÇİN TARİH FORMATLAMA

@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-<link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'projects.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
 <style>
@@ -373,7 +373,7 @@
                       <th >Konum<span class="icon-arrow">&UpArrow;</span></th>
                       <th >Bakım Ücreti<span class="icon-arrow">&UpArrow;</span></th>
                       <th >Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
-                      <th >Sonraki Bakım Tarihi<span class="icon-arrow">&UpArrow;</span></th>
+                      <th class="first_sorting_element" >Sonraki Bakım Tarihi<span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -392,7 +392,7 @@
                     {% if operation.Operation_Care_Fail_Number == 0 %}
                     <td><span class="status">{{operation.Operation_Care_Finish_Date}}</span></td>  
                     {% else %}         
-                    <td><span class="status timeIsUp">{{operation.Operation_Care_Finish_Date}}</span></td>  
+                    <td><span class="status">{{operation.Operation_Care_Finish_Date}}</span></td>  
                     {% endif %}         
                   </tr>          
                   {% endfor %}

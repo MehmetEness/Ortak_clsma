@@ -1,45 +1,77 @@
-
-var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
-
-var createBtn = document.querySelector("#kaydet_btn");
-var form = document.querySelector("#myForm");
-var companyNameInput = document.querySelector("#id_CompanyName_Clients");
-var companyNameLabel = document.querySelector("#firma_adi_span");
-
+const clientTable = document.querySelector("#client_table");
+const clientTableBody = clientTable.querySelector("tbody");
+const clientAddBtn = document.querySelector(".client-add-btn");
+var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
+var reqLabels = document.querySelectorAll("#firma_adi_span");
 var phoneInput = document.querySelector("#id_PhoneNumber");
 
-var searchInput = document.getElementById("mysearch");
-var clearButton = document.querySelector(".clear");
-var table = document.getElementById("table");
-let thRows = table.querySelectorAll("th");
-var companyList = table.querySelectorAll("td:nth-child(2)")
-var locationInput = document.querySelector("#id_Location")
-var locationSpan = document.querySelector("#konum_span")
-var locations = document.querySelectorAll("#dropdown1 .dropdown-item")
 
-
-
-
-//                  MÜŞTERİ EKLE BUTTON
-
-document.getElementById("musteri-ac").addEventListener("click", function(){    
-        document.querySelector(".musteriWindow").style.display = "flex";    
-});
-document.getElementById("musteri-modal").addEventListener("click", function(){
-    document.querySelector(".musteriWindow").style.display = "none";
+document.addEventListener("DOMContentLoaded", async () =>{
+    await getSupplier();
+    setInterval(async function() {        
+        await getSupplier();
+    }, 5000);    
 });
 
-//                  ZORUNLU İNPUTLAR  
+async function getSupplier() {
+    try {
+        let currentRows  = clientTableBody.querySelectorAll("tr");
+        const response = await fetch(`/get_clients/`);
+        const data = await response.json();
+        const clients = data.clients; 
+        console.log(data)
+        console.log(clients)
+        console.log()
+        let rows = '';
+        for (const client of clients) {           
+            const row = '<tr>' +
+                '<td>' + 
+                    `<button id="${client.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
+                        '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
+                    '</button>' +
+                '</td>'  +
+                '<td>' + client.CompanyName_Clients + '</td>' +
+                '<td>' + client.ContactPerson + '</td>' +
+                '<td>' + client.PhoneNumber + '</td>' +
+                '<td>' + client.Email + '</td>' +
+                '<td>' + client.Location + '</td>' +
+                '</tr>';
+                rows += row;          
+        }
+        if(clients.length > currentRows.length){
+            clientTableBody.innerHTML = '';
+            clientTableBody.insertAdjacentHTML('beforeend', rows);
+            sortTableForStart(clientTable, 1);
+            sortingTable(clientTable);
+            allTableFormat();
 
-createBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    if(companyNameInput.value != "" && controlSelectionInputsReverse(companyNameInput, companyNameLabel, companyList)){               
-        form.submit();
-    }else{
-        companyNameLabel.style.color = "red"
-        companyNameLabel.style.fontWeight = "600"
+            
+        }        
+        
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
     }
+}
+
+//                  OPEN ADD WİNDOW
+
+const clientAddWindow = document.querySelector(".client-add-window");
+clientAddBtn.addEventListener("click", () =>{    
+    setTimeout(() =>{clientAddWindow.style.display = "flex";}, 10);
 }); 
+document.addEventListener('click', (event) =>{
+    const clientAddContainer = document.querySelector(".client-add-window .container");
+    if (!clientAddContainer.contains(event.target)) {
+        clientAddWindow.style.display = "none";
+    }
+});
+// KAPATMA
+let xBtn = document.querySelectorAll(".close-window");
+xBtn.forEach((btn)=>{
+    btn.addEventListener("click", ()=>{
+        clientAddWindow.style.display = "none";
+    })
+})
 
 //                  TELEFON NUMARASI FORMATLAMA
 
@@ -51,42 +83,20 @@ phoneInput.addEventListener('input', function(event) {
     }
 });
 
-//                  SEARCH İŞLEMLERİ
+//                  TABLO FORMATLAMA
 
-searchInput.addEventListener("input", function() {
-    filterTable(searchInput, table);
-});
-clearButton.addEventListener("click", function() {
-    searchInput.value = "";
-    showAllRows(table);
-});
-
-//                  TABLO FİLİTRELEME
-
-searchInput.addEventListener("input", function(){
-    filterTable(searchInput, table);
-});
-clearButton.addEventListener("click", function() {
-    searchInput.value = "";
-    showAllRows(table);
-});
-
-//                  TABLO SIRALAMA
-
-thRows.forEach(header => {
-    header.addEventListener("click", function() {        
-        var columnIndex = Array.from(thRows).indexOf(header);
-        
-        sortTable(table, columnIndex);
-    });
-});
-
-
-//                  DOM LOADED
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    //Tablo Formatlama
+function allTableFormat(){    
+    var textCells = clientTable.querySelectorAll('td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)');
     tableFormat(textCells, "text")
-    
-});
+}
+
+//----
+// createBtn.addEventListener("click", function(event) {
+//     event.preventDefault();
+//     if(companyNameInput.value != "" && controlSelectionInputsReverse(companyNameInput, companyNameLabel, companyList)){               
+//         form.submit();
+//     }else{
+//         companyNameLabel.style.color = "red"
+//         companyNameLabel.style.fontWeight = "600"
+//     }
+// }); 

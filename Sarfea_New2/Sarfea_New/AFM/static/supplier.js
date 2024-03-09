@@ -1,34 +1,74 @@
-var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
-var amountInputReformatBtn = document.querySelector("#kaydet_btn");
-var form = document.querySelector("#myForm");
+const supplierTable = document.querySelector("#tedarikci_table");
+const supplierTableBody = supplierTable.querySelector("tbody");
+const supplierAddBtn = document.querySelector(".supplier-add-btn");
 var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
-var table = document.getElementById("table");
-let thRows = table.querySelectorAll("th");
-
+var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
 var phoneInput = document.querySelector("#id_PhoneNumber");
 
-var searchInput = document.getElementById("mysearch");
-var clearButton = document.querySelector(".clear");
 
-//                  TEDARİKÇİ EKLE BUTTON
-
-document.getElementById("tedarikci-ac").addEventListener("click", function(){
-    document.querySelector(".tedarikciWindow").style.display = "flex";
-});
-document.getElementById("tedarikci-modal").addEventListener("click", function(){
-    document.querySelector(".tedarikciWindow").style.display = "none";
+document.addEventListener("DOMContentLoaded", async () =>{
+    await getSupplier();
+    setInterval(async function() {        
+        await getSupplier();
+    }, 5000);    
 });
 
-
-//                  ZORUNLU İNPUTLAR  
-
-amountInputReformatBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    if(requiredInputs(reqInputs, reqLabels)){            
-        form.submit();
+async function getSupplier() {
+    try {
+        let currentRows  = supplierTableBody.querySelectorAll("tr");
+        const response = await fetch(`/get_suppliers/`);
+        const data = await response.json();
+        const suppliers = data.suppliers; 
+        let rows = '';
+        for (const supplier of suppliers) {           
+            const row = '<tr>' +
+                '<td>' + 
+                    `<button id="${supplier.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
+                        '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
+                    '</button>' +
+                '</td>'  +
+                '<td>' + supplier.CompanyName_Supplier + '</td>' +
+                '<td>' + supplier.ContactPerson + '</td>' +
+                '<td>' + supplier.PhoneNumber + '</td>' +
+                '<td>' + supplier.Email + '</td>' +
+                '<td>' + supplier.Location + '</td>' +
+                '</tr>';
+                rows += row;          
+        }
+        if(suppliers.length > currentRows.length){
+            supplierTableBody.innerHTML = '';
+            supplierTableBody.insertAdjacentHTML('beforeend', rows);
+            sortTableForStart(supplierTable, 1);
+            allTableFormat()
+            sortingTable(supplierTable)
+        }        
+        
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
     }
+}
+
+//                  OPEN ADD WİNDOW
+
+const supplierAddWindow = document.querySelector(".supplier-add-window");
+
+supplierAddBtn.addEventListener("click", () =>{    
+    setTimeout(() =>{supplierAddWindow.style.display = "flex";}, 10);
 }); 
+document.addEventListener('click', (event) =>{
+    const supplierAddContainer = document.querySelector(".supplier-add-window .container");
+    if (!supplierAddContainer.contains(event.target)) {
+        supplierAddWindow.style.display = "none";
+    }
+});
+// KAPATMA
+let xBtn = document.querySelectorAll(".close-window");
+xBtn.forEach((btn)=>{
+    btn.addEventListener("click", ()=>{
+        supplierAddWindow.style.display = "none";
+    })
+})
 
 //                  TELEFON NUMARASI FORMATLAMA
 
@@ -40,33 +80,63 @@ phoneInput.addEventListener('input', function(event) {
     }
 });
 
-//                  SEARCH İŞLEMLERİ
+//                  TABLO FORMATLAMA
 
-searchInput.addEventListener("input", function() {
-    filterTable(searchInput, table);
-});
-
-clearButton.addEventListener("click", function() {
-    searchInput.value = "";
-    showAllRows(table);
-});
-
-//                  TABLO SIRALAMA
-
-thRows.forEach(header => {
-    header.addEventListener("click", function() {        
-        var columnIndex = Array.from(thRows).indexOf(header);
-        sortTable(table, columnIndex);
-    });
-});
-
-
-
-//                  DOM LOADED
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    //Tablo Formatlama
+function allTableFormat(){    
+    var textCells = supplierTable.querySelectorAll('td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)');
     tableFormat(textCells, "text")
-    
-});
+}
+
+//                  SUPPLİER ADD FUNCTİON
+
+const subblierAddBtn = document.querySelector("#kaydet_btn")
+
+subblierAddBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    if(requiredInputs(reqInputs, reqLabels)){  
+        const supplier = {
+            'company_name_supplier': document.querySelector("#id_CompanyName_Supplier").value ,
+            'contact_person': document.querySelector("#id_ContactPerson_Supplier").value,
+            'phone_number': document.querySelector("#id_PhoneNumber").value,
+            'email': document.querySelector("#id_email").value,
+            'location': document.querySelector("#id_Location").value
+        };
+        postSupplier(supplier);
+        supplierAddWindow.style.display = "none";
+    }
+}); 
+
+async function postSupplier(data) {    
+
+    try {
+        console.log(data)
+        console.log(JSON.stringify(data))
+        const response = await fetch('/post_supplier/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken') 
+            },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        console.log(responseData.message);
+    } catch (error) {
+        console.error('There was an error!', error);
+    }
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

@@ -1,66 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'tedarikcii.css' %}">
-    <link rel="stylesheet" href="{% static 'all_style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>    
+    <link rel="stylesheet" href="{% static 'all_style.css' %}">    
     <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
+    <link rel="stylesheet" href="{% static 'supplier.css' %}">
 
-    <style>
-#table thead{        
-  position: sticky;
-  top: 0;
-}
-.lists th:not(:nth-child(1)){
-    width: 19%;
-}
-  table thead th {
-  cursor: pointer;
-}
-  table thead th span{
-  position: relative;
-}
-thead th span::after{
-  content: '';
-  position:absolute;
-  left: -18px;
-  top: 60%;
-  border-style: solid;
-  border-top-width: 10px;
-  border-right-width: 5px;
-  border-left-width: 5px;
-  border-color: #000 transparent transparent transparent;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
-}
-    </style>
+   
 {% endblock %}
     {% block title %} Supplier {% endblock %}
     {% block content %}
   <div class="body-div">
-    <div class="window tedarikciWindow">
+    <div class="window supplier-add-window">
       <div class="container">
-          <h3 id="tedarikci-modal" class="modal-kapat">X</h3>
+          <h3 id="supplier-X" class="close-window">X</h3>
           <div class="title">Tedarikci Ekle</div>
           <form id="myForm" action="{% url 'supplier' %}" method="post">
             {% csrf_token %}
             <div class="user-details"> 
                 <div class="input-box" name="CompanyName_Supplier">
                   <span id="firma_adi_span" class="details">Firma Adı*</span>
-                  {{ supplier_form.CompanyName_Supplier }}
-                   
+                  <input id="id_CompanyName_Supplier" type="text">                   
                 </div>    
                 <div class="input-box" name="ContactPerson">
                   <span class="details">Muhatap</span>
-                  {{ supplier_form.ContactPerson }}
+                  <input id="id_ContactPerson_Supplier" type="text">
                 </div>  
                 <div class="input-box" name="PhoneNumber">
                   <span class="details">Telefon</span>
-                  {{ supplier_form.PhoneNumber }}
+                  <input id="id_PhoneNumber" type="text">
                 </div>    
                 <div class="input-box" name="Email">
                   <span class="details">E-posta</span>
-                  {{ supplier_form.Email }}
+                  <input id="id_email" type="text">
                 </div>    
                 <div class="input-box" name="Location">
                   <span class="details">Bölge</span>
@@ -82,49 +55,39 @@ thead th span::after{
            <p style="color: red;">hata{{ error }}</p>
           {% endfor %}
       </div>
-  </div>
+    </div>
 
   {% include 'partials/_left_nav_bar.html' %}
-      <div class="right-menu"> 
-        <div class="top-menu">
-          <span>TEDARİKÇİLER</span>
-          <div class="content">                      
-            <div class="search">
-              <div class="icon"></div>
-              <div class="input">
-                <input id="mysearch" type="text" placeholder="Ara">
-            </div>
-            <span class="clear" onclick="document.getElementById('mysearch').value = '' "></span>
-         </div> 
-            <button id="tedarikci-ac" class="button2" >Tedarikçi Ekle</button>          
-          </div>
-        </div>
-
-        <div class="lists">         
-          <table id="table" class="table table-sortable">   
-            <thead>
-              <th></th>
-              <th><span>Firma Adı</span></th>
-              <th scope="col"><span>Muhatap</span></th>
-              <th scope="col"><span>Telefon</span></th>
-              <th scope="col"><span>E-posta</span></th>
-              <th scope="col"><span>Bölge</span></th>
-            </thead>  
-            <tbody id="tbody">  
-              {% for sup in supplier %}
-              <tr>
-                  <td><button type="button" class="edit-supplier-btn button2" style= "background: none; border:none;"><a href= "{% url 'supplier_edit' supplier_name=sup.CompanyName_Supplier %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
-                  <td>{{ sup.CompanyName_Supplier }} </td>
-                  <td>{{ sup.ContactPerson }}</td>
-                  <td>{{ sup.PhoneNumber }} </td>
-                  <td>{{ sup.Email }}</td>
-                  <td>{{ sup.Location }}</td>
-              </tr>
-              {% endfor %}                                    
-            </tbody>
-          </table>      
-        </div>
-      </div>   
+  <div class="right-menu">
+      <main class="table" id="customers_table">
+          <section class="table__header">
+              <p>TEDARİKÇİLER</p>
+              <div class="input-group">
+                  <input type="search" placeholder="Tedarikçi Ara...">
+                  <img src="{% static 'images/search.png' %}" alt="">
+              </div>          
+              <div class="export__file">
+                  <button class="supplier-add-btn" >Tedarikçi Ekle</button>
+              </div>
+          </section>
+          <section class="table__body">
+              <table id="tedarikci_table">
+                  <thead>
+                    <tr>
+                      <th><span></span></th>
+                      <th>Firma Adı<span class="icon-arrow">&UpArrow;</span></th>
+                      <th>Muhatap<span class="icon-arrow">&UpArrow;</span></th>
+                      <th>Telefon<span class="icon-arrow">&UpArrow;</span></th>
+                      <th>E-posta<span class="icon-arrow">&UpArrow;</span></th>
+                      <th>Bölge<span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>                    
+                  </thead> 
+                  <tbody>                
+                  </tbody>
+              </table>         
+          </section>
+    </main>
+</div> 
   </div>
   {% endblock %}
 {% block js_files %} 

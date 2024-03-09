@@ -390,9 +390,28 @@ tbody tr.hide td p {
     font: 0 / 0 sans-serif;
     /* transition: .2s ease-in-out .5s; */
 }
+#ariza_takip_table{
+    overflow-x: scroll;
+}
+#ariza_takip_table{
+    min-width: 1700px;
+}
+#isletme_bakim_table th:first-child, #ariza_takip_table th:first-child{
+  width: 50px;
+}
+#isletme_bakim_table td:first-child, #ariza_takip_table td:first-child{
+  padding: 1rem 15px 1rem 30px;
+}
+
+tbody tr.hide td img {
+    width: 0;
+    height: 0;
+    transition: .2s ease-in-out .5s;
+}
+
 .status {
-    display: inline-block;
-    width: 70%;
+  display: inline-block;
+  width: 70%;
     padding: .4rem .7rem;
     border-radius: 2rem;
     text-align: center;

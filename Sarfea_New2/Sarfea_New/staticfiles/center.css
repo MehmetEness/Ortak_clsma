@@ -36,7 +36,7 @@
   border-radius: 15px;
   margin-bottom: 60px;
 }
-.projeBaslatContainer {
+.project-add-window .container {
   max-width: 1000px;
 }
 .container .title {
@@ -63,7 +63,7 @@
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }
-.projeBaslatContainer .input-box {
+.project-add-window .input-box {
   margin-bottom: 15px;
   width: calc(100% / 3 - 20px);
 }
