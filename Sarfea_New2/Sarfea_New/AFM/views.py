@@ -1270,18 +1270,18 @@ def post_client(request):
 def post_supplier(request):
     if request.method == 'POST':
         
-        company_name_supplier = request.POST.get('company_name_supplier')
-        contact_person= request.POST.get('contact_person')
-        phone_number= request.POST.get('phone_number')
-        email= request.POST.get('email')
-        location= request.POST.get('location')
-        if company_name_supplier:
+        CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
+        ContactPerson= request.POST.get('ContactPerson')
+        PhoneNumber= request.POST.get('PhoneNumber')
+        Email= request.POST.get('Email')
+        Location= request.POST.get('Location')
+        if CompanyName_Supplier:
             Supplier.objects.create(
-                CompanyName_Supplier=company_name_supplier, 
-                ContactPerson=contact_person, 
-                PhoneNumber=phone_number, 
-                Email=email, 
-                Location=location, 
+                CompanyName_Supplier=CompanyName_Supplier, 
+                ContactPerson=ContactPerson, 
+                PhoneNumber=PhoneNumber, 
+                Email=Email, 
+                Location=Location, 
             )
 
             return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
