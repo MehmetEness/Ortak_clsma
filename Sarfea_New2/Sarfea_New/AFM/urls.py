@@ -72,9 +72,11 @@ urlpatterns = [
     
     #MODUL-POST
     path('post_client/', views.post_client, name='post_client'),
+    path('post_supplier/', views.post_supplier, name='post_supplier'),
     path('post_update_string/<string_id>/', views.post_update_string, name='post_update_string'),
     path('post_card_file/', views.post_card_file, name='post_card_file'),
-    
+    path('post_fail_bill/', views.post_fail_bill, name='post_fail_bill'),
+
     #MODUL-DENEME
     path("deneme/", views.deneme, name='deneme'),
     path("deneme2/", views.deneme2, name='deneme2'),
