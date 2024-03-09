@@ -1269,12 +1269,12 @@ def post_client(request):
 @csrf_exempt
 def post_supplier(request):
     if request.method == 'POST':
-        
         CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
-        ContactPerson= request.POST.get('ContactPerson')
-        PhoneNumber= request.POST.get('PhoneNumber')
-        Email= request.POST.get('Email')
-        Location= request.POST.get('Location')
+        ContactPerson = request.POST.get('ContactPerson')
+        PhoneNumber = request.POST.get('PhoneNumber')
+        Email = request.POST.get('Email')
+        Location = request.POST.get('Location')
+        
         if CompanyName_Supplier:
             Supplier.objects.create(
                 CompanyName_Supplier=CompanyName_Supplier, 
@@ -1285,8 +1285,7 @@ def post_supplier(request):
             )
 
             return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
-        return JsonResponse({'message':  ' Post alındı ama Supplier oluşturulamadı'})
-
+        return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 

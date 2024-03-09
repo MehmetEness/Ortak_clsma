@@ -16,29 +16,29 @@
       <div class="container">
           <h3 id="supplier-X" class="close-window">X</h3>
           <div class="title">Tedarikci Ekle</div>
-          <form id="myForm" action="{% url 'supplier' %}" method="post">
+          <form id="myForm" method="post">
             {% csrf_token %}
             <div class="user-details"> 
-                <div class="input-box" name="CompanyName_Supplier">
+                <div class="input-box">
                   <span id="firma_adi_span" class="details">Firma Adı*</span>
-                  <input id="id_CompanyName_Supplier" type="text">                   
+                  <input name="CompanyName_Supplier" id="id_CompanyName_Supplier" type="text">                   
                 </div>    
-                <div class="input-box" name="ContactPerson">
+                <div class="input-box">
                   <span class="details">Muhatap</span>
-                  <input id="id_ContactPerson_Supplier" type="text">
+                  <input name="ContactPerson" id="id_ContactPerson_Supplier" type="text">
                 </div>  
-                <div class="input-box" name="PhoneNumber">
+                <div class="input-box">
                   <span class="details">Telefon</span>
-                  <input id="id_PhoneNumber" type="text">
+                  <input name="PhoneNumber" id="id_PhoneNumber" type="text">
                 </div>    
-                <div class="input-box" name="Email">
+                <div class="input-box">
                   <span class="details">E-posta</span>
-                  <input id="id_email" type="text">
+                  <input name="Email" id="id_email" type="text">
                 </div>    
                 <div class="input-box" name="Location">
                   <span class="details">Bölge</span>
                   <div class="dropdown-container">
-                    <input autocomplete= 'off' value="{{supplier_edit.Location}}" type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
+                    <input autocomplete= 'off' type="text" id="id_Location" name="Location" class="myInput" placeholder="Bölge Seçiniz" data-dropdown="dropdown1">
                   <div id="dropdown1" class="dropdown-content">
                         {% for x in locations %}
                             <span value="{{x.id}}" class="dropdown-item">{{x.Location}}</span>
