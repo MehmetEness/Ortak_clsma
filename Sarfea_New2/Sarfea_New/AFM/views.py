@@ -1021,6 +1021,26 @@ def deneme2(request):
 #                       POST METHODLARI
 #***********************************************************
 
+
+
+@login_required
+def get_projects(request):
+    projects = Project.objects.all().values()  # Tüm müşterileri JSON formatında al
+    return JsonResponse({'projects': list(projects)})
+
+@login_required
+def get_expenses(request, project_name):
+    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name).values()
+    return JsonResponse({'expenses': list(expenses)})
+
+def get_job_history(request, project_name):
+    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name).values()
+    return JsonResponse({'jobhistory': list(jobhistory)})
+
+def get_incomes(request, project_name):
+    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
+    return JsonResponse({'incomes': list(incomes)})
+
 @login_required
 def get_clients(request):
     clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
@@ -1032,9 +1052,9 @@ def get_suppliers(request):
     return JsonResponse({'suppliers': list(suppliers)})
 
 @login_required
-def get_projects(request):
-    projects = Project.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'projects': list(projects)})
+def get_cards(request):
+    cards = SalesOfferCard.objects.all().values()  
+    return JsonResponse({'cards': list(cards)})
 
 @login_required
 def get_lost_cards(request):
@@ -1056,23 +1076,6 @@ def get_run_cards(request):
     run_cards = SalesOfferCard.objects.filter(Is_late=False, Is_Gain=False, Is_Lost=False).values()
     return JsonResponse({'run_cards': list(run_cards)})
 
-@login_required
-def get_cards(request):
-    cards = SalesOfferCard.objects.all().values()  
-    return JsonResponse({'cards': list(cards)})
-
-@login_required
-def get_expenses(request, project_name):
-    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name).values()
-    return JsonResponse({'expenses': list(expenses)})
-
-def get_job_history(request, project_name):
-    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name).values()
-    return JsonResponse({'jobhistory': list(jobhistory)})
-
-def get_incomes(request, project_name):
-    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
-    return JsonResponse({'incomes': list(incomes)})
 
 def get_operation_care(request):
     operation_care = Operation_Care.objects.all().values()
@@ -1097,6 +1100,7 @@ def get_strings(request, inventor_id):
     inventor = Inventor.objects.filter(id=inventor_id).first()
     strings = String.objects.filter(String_Owner=inventor).values()
     return JsonResponse({'strings': list(strings)})
+
 @login_required
 def get_dollar_rate(request, date):
     api='qYyWXNCbA0'
