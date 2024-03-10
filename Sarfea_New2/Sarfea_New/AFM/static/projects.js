@@ -68,6 +68,25 @@ function allTableFormat(){
 }
 
 
+//                  FİRMA EKLEME
+
+const clientAddWindow = document.querySelector(".client-add-window");
+const companyAddBtns = document.querySelectorAll(".paying-company-add-btn");
+const companyX = document.querySelector(".close-company-window");
+companyAddBtns.forEach((btn)=>{
+    btn.addEventListener("click", ()=>{
+        setTimeout(() =>{clientAddWindow.style.display = "flex";}, 20);
+    })
+    document.addEventListener('click', (event) =>{
+        const clientAddContainer = clientAddWindow.querySelector(".container");
+        if (!clientAddContainer.contains(event.target)) {
+            setTimeout(() =>{clientAddWindow.style.display = "none";}, 15);
+        }
+    });
+});
+companyX.addEventListener("click", ()=>{
+    setTimeout(() =>{clientAddWindow.style.display = "none";}, 15);
+});
 
 //                  EKLEME BUTTONLARI
 
@@ -78,7 +97,7 @@ projectAddWindowButton.addEventListener("click", () =>{
 }); 
 document.addEventListener('click', (event) =>{
     const projectAddContainer = projectAddWindow.querySelector(".container");
-    if (!projectAddContainer.contains(event.target)) {
+    if (!projectAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
         projectAddWindow.style.display = "none";
     }
 });
@@ -90,7 +109,7 @@ incomeAddWindowButton.addEventListener("click", () =>{
 }); 
 document.addEventListener('click', (event) =>{
     const incomeAddContainer = incomeAddWindow.querySelector(".container");
-    if (!incomeAddContainer.contains(event.target)) {
+    if (!incomeAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
         incomeAddWindow.style.display = "none";
     }
 });
@@ -102,7 +121,7 @@ expensesAddWindowButton.addEventListener("click", () =>{
 }); 
 document.addEventListener('click', (event) =>{
     const expensesAddContainer = expensesAddWindow.querySelector(".container");
-    if (!expensesAddContainer.contains(event.target)) {
+    if (!expensesAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
         expensesAddWindow.style.display = "none";
     }
 });
@@ -114,7 +133,7 @@ jobhistoryAddWindowButton.addEventListener("click", () =>{
 }); 
 document.addEventListener('click', (event) =>{
     const jobhistoryAddContainer = jobhistoryAddWindow.querySelector(".container");
-    if (!jobhistoryAddContainer.contains(event.target)) {
+    if (!jobhistoryAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
         jobhistoryAddWindow.style.display = "none";
     }
 });
@@ -128,4 +147,5 @@ xBtn.forEach((btn)=>{
         jobhistoryAddWindow.style.display = "none";
     })
 })
+
 

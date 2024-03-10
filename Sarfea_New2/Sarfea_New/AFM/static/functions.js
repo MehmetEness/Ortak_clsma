@@ -341,7 +341,12 @@ function requiredInputs(inputs, labels) {
     return false;
   }
 }
-
+function clearInputAfterSave(form){
+    let inputs = form.querySelectorAll("input");
+    inputs.forEach((input)=>{
+      input.value = "";
+    })
+}
 //                  SELECTİON VE İNPUT KONTROLÜ
 
 // function controlSelectionInputs(input, label,ddmenu) {

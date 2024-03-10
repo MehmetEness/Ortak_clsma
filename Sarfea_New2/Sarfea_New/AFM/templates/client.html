@@ -14,12 +14,12 @@
       <div class="container">
           <h3 id="client-X" class="close-window">X</h3>
           <div class="title">Tedarikci Ekle</div>
-          <form id="myForm" action="{% url 'supplier' %}" method="post">
+          <form id="client_add_form" action="{% url 'supplier' %}" method="post">
             {% csrf_token %}
             <div class="user-details"> 
                 <div class="input-box" name="CompanyName_Supplier">
                   <span id="firma_adi_span" class="details">Firma Adı*</span>
-                  <input name="CompanyName_Supplier" id="id_CompanyName_Supplier" type="text">                   
+                  <input name="CompanyName_Clients" id="id_CompanyName_Supplier" type="text">                   
                 </div>    
                 <div class="input-box" name="ContactPerson">
                   <span class="details">Muhatap</span>
@@ -27,11 +27,11 @@
                 </div>  
                 <div class="input-box" name="PhoneNumber">
                   <span class="details">Telefon</span>
-                  <input name="PhoneNumber" id="id_PhoneNumber" type="text">
+                  <input name="PhoneNumber" id="id_PhoneNumber" type="text" maxlength="15">
                 </div>    
                 <div class="input-box" name="Email">
                   <span class="details">E-posta</span>
-                  <input name="Email" id="id_E-mail" type="text">
+                  <input name="Email" id="id_E-mail" type="email">
                 </div>    
                 <div class="input-box" name="Location">
                   <span class="details">Bölge</span>
