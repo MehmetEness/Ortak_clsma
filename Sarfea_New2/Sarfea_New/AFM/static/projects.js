@@ -27,7 +27,7 @@ async function getProjects() {
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
 
             const row = '<tr>' +
-                '<td>' + 
+            `<td>` + 
                     `<button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
                         '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
                     '</button>' +
@@ -48,6 +48,7 @@ async function getProjects() {
             projectsTableBody.insertAdjacentHTML('beforeend', rows);
             sortingTable(projectsTable)
             allTableFormat();
+            editButtonsEvents()
         }        
         
     } catch (error) {
@@ -150,4 +151,15 @@ xBtn.forEach((btn)=>{
     })
 })
 
+//                  EDİT BUTONLARI
+
+function editButtonsEvents(){
+    const editButtons = projectsTable.querySelectorAll("tr td:first-child button");
+    editButtons.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            let clickedButtonId = btn.id;
+            setTimeout(() =>{projectAddWindow.style.display = "flex";}, 10);
+        });
+    })    
+}
 
