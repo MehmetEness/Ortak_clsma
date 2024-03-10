@@ -1267,6 +1267,29 @@ def post_client(request):
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
+def post_update_client(request, client_id):
+    curr_client = get_object_or_404(Clients, id=client_id)
+    if request.method == 'POST':
+        
+        company_name_clients = request.POST.get('CompanyName_Clients')
+        contact_person= request.POST.get('ContactPerson')
+        phone_number= request.POST.get('PhoneNumber')
+        email= request.POST.get('Email')
+        location= request.POST.get('Location')
+        if company_name_clients:
+            
+            curr_client.CompanyName_Clients=company_name_clients, 
+            curr_client.ContactPerson=contact_person, 
+            curr_client.PhoneNumber=phone_number, 
+            curr_client.Email=email, 
+            curr_client.Location=location, 
+            curr_client.save()
+            return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+
+@csrf_exempt
 def post_supplier(request):
     if request.method == 'POST':
         CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
@@ -1284,6 +1307,29 @@ def post_supplier(request):
                 Location=Location, 
             )
 
+            return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
+        return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_update_supplier(request, supplier_id):
+    curr_supplier = get_object_or_404(Supplier, id=supplier_id)
+
+    if request.method == 'POST':
+        CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
+        ContactPerson = request.POST.get('ContactPerson')
+        PhoneNumber = request.POST.get('PhoneNumber')
+        Email = request.POST.get('Email')
+        Location = request.POST.get('Location')
+        
+        if CompanyName_Supplier:
+            curr_supplier.CompanyName_Supplier=CompanyName_Supplier, 
+            curr_supplier.ContactPerson=ContactPerson, 
+            curr_supplier.PhoneNumber=PhoneNumber, 
+            curr_supplier.Email=Email, 
+            curr_supplier.Location=Location, 
+            curr_supplier.save()
             return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
         return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
 
