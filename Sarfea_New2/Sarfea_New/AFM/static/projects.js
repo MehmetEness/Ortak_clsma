@@ -27,7 +27,7 @@ async function getProjects() {
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
 
             const row = '<tr>' +
-                '<td>' + 
+            `<td>` + 
                     `<button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
                         '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
                     '</button>' +
@@ -48,6 +48,7 @@ async function getProjects() {
             projectsTableBody.insertAdjacentHTML('beforeend', rows);
             sortingTable(projectsTable)
             allTableFormat();
+            editButtonsEvents()
         }        
         
     } catch (error) {
@@ -91,7 +92,15 @@ companyX.addEventListener("click", ()=>{
 //                  EKLEME BUTTONLARI
 
 var projectAddWindow = document.querySelector('.project-add-window');  
-const projectAddWindowButton = document.querySelector('.project-add-btn');  
+const projectAddWindowButton = document.querySelector('.project-add-btn'); 
+var incomeAddWindow = document.querySelector('.income-add-window');  
+var incomeAddWindowButton = document.querySelector('.income-add-btn');   
+var expensesAddWindow = document.querySelector('.expenses-add-window');  
+var expensesAddWindowButton = document.querySelector('.expenses-add-btn');  
+var jobhistoryAddWindow = document.querySelector('.jobhistory-add-window');  
+var jobhistoryAddWindowButton = document.querySelector('.jobhistory-add-btn');  
+
+//----- PROJECT
 projectAddWindowButton.addEventListener("click", () =>{    
     setTimeout(() =>{projectAddWindow.style.display = "flex";}, 10);
 }); 
@@ -101,9 +110,7 @@ document.addEventListener('click', (event) =>{
         projectAddWindow.style.display = "none";
     }
 });
-//-----
-var incomeAddWindow = document.querySelector('.income-add-window');  
-var incomeAddWindowButton = document.querySelector('.income-add-btn');  
+//----- İNCOME
 incomeAddWindowButton.addEventListener("click", () =>{    
     setTimeout(() =>{incomeAddWindow.style.display = "flex";}, 10);
 }); 
@@ -113,9 +120,7 @@ document.addEventListener('click', (event) =>{
         incomeAddWindow.style.display = "none";
     }
 });
-//-----
-var expensesAddWindow = document.querySelector('.expenses-add-window');  
-var expensesAddWindowButton = document.querySelector('.expenses-add-btn');  
+//----- EXPENSES
 expensesAddWindowButton.addEventListener("click", () =>{    
     setTimeout(() =>{expensesAddWindow.style.display = "flex";}, 10);
 }); 
@@ -125,9 +130,7 @@ document.addEventListener('click', (event) =>{
         expensesAddWindow.style.display = "none";
     }
 });
-//-----
-var jobhistoryAddWindow = document.querySelector('.jobhistory-add-window');  
-var jobhistoryAddWindowButton = document.querySelector('.jobhistory-add-btn');  
+//----- JOBHİSTORY
 jobhistoryAddWindowButton.addEventListener("click", () =>{    
     setTimeout(() =>{jobhistoryAddWindow.style.display = "flex";}, 10);
 }); 
@@ -141,11 +144,22 @@ document.addEventListener('click', (event) =>{
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn)=>{
     btn.addEventListener("click", ()=>{
-        projectAddWindow.style.display = "none";
+        projectAddWindow.style.display = "none";       
         incomeAddWindow.style.display = "none";
         expensesAddWindow.style.display = "none";
         jobhistoryAddWindow.style.display = "none";
     })
 })
 
+//                  EDİT BUTONLARI
+
+function editButtonsEvents(){
+    const editButtons = projectsTable.querySelectorAll("tr td:first-child button");
+    editButtons.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            let clickedButtonId = btn.id;
+            setTimeout(() =>{projectAddWindow.style.display = "flex";}, 10);
+        });
+    })    
+}
 
