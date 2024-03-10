@@ -89,27 +89,32 @@ function allTableFormat(){
 
 //                  SUPPLİER ADD FUNCTİON
 
-const subblierAddBtn = document.querySelector("#kaydet_btn")
+const supplierFormAddBtn = document.querySelector("#kaydet_btn")
 
-subblierAddBtn.addEventListener("click", async function(event) {
+supplierFormAddBtn.addEventListener("click", async function(event) {
     event.preventDefault();
 
-    const myForm = document.getElementById("myForm");
-    const formData = new FormData(myForm);
-
-    try {
-        const response = await fetch('/post_supplier/', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: formData
-        });
-        const responseData = await response.json();
-        console.log(responseData.message);
-    } catch (error) {
-        console.error('There was an error!', error);
-    }
+    if(requiredInputs(reqInputs, reqLabels)){
+        const supplierAddForm = document.getElementById("supplier_add_form");
+        const formData = new FormData(supplierAddForm);
+    
+        try {
+            const response = await fetch('/post_supplier/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: formData
+            });
+            //const responseData = await response.json();
+            //console.log(responseData.message);
+            getSupplier();
+            supplierAddWindow.style.display = "none";
+            clearInputAfterSave(supplierAddForm);
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    }    
 });
 
 function getCookie(name) {

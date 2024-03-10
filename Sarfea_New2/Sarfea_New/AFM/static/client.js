@@ -19,9 +19,6 @@ async function getSupplier() {
         const response = await fetch(`/get_clients/`);
         const data = await response.json();
         const clients = data.clients; 
-        console.log(data)
-        console.log(clients)
-        console.log()
         let rows = '';
         for (const client of clients) {           
             const row = '<tr>' +
@@ -100,3 +97,47 @@ function allTableFormat(){
 //         companyNameLabel.style.fontWeight = "600"
 //     }
 // }); 
+//                  SUPPLİER ADD FUNCTİON
+
+const clientFormAddBtn = document.querySelector("#kaydet_btn")
+
+clientFormAddBtn.addEventListener("click", async function(event) {
+    event.preventDefault();
+
+    if(requiredInputs(reqInputs, reqLabels)){
+        const clientAddForm = document.getElementById("client_add_form");
+        const formData = new FormData(clientAddForm);
+    
+        try {
+            const response = await fetch('/post_client/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: formData
+            });
+            //const responseData = await response.json();
+            //console.log(responseData.message);
+            getSupplier();
+            clientAddWindow.style.display = "none";
+            clearInputAfterSave(clientAddForm);
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    }    
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
