@@ -1029,16 +1029,16 @@ def get_projects(request):
     return JsonResponse({'projects': list(projects)})
 
 @login_required
-def get_expenses(request, project_name):
-    expenses = Expenses.objects.filter(ProjectName_Expenses=project_name).values()
+def get_expenses(request):
+    expenses = Expenses.objects.all().values()
     return JsonResponse({'expenses': list(expenses)})
 
-def get_job_history(request, project_name):
-    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name).values()
+def get_job_history(request):
+    jobhistory = JobHistory.objects.all().values()
     return JsonResponse({'jobhistory': list(jobhistory)})
 
-def get_incomes(request, project_name):
-    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name).values()
+def get_incomes(request):
+    incomes = Incomes.objects.all().values()
     return JsonResponse({'incomes': list(incomes)})
 
 @login_required
@@ -1504,8 +1504,6 @@ def post_update_income(request, income_id):
         return JsonResponse({'message': ' Post alındı ancak Incomes Başarı ile gücellenemedi'})
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
-
-
 @csrf_exempt
 def post_client(request):
     if request.method == 'POST':
@@ -1549,7 +1547,6 @@ def post_update_client(request, client_id):
             return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
 
 @csrf_exempt
 def post_supplier(request):
@@ -1596,6 +1593,52 @@ def post_update_supplier(request, supplier_id):
         return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_sales_offer(request):
+    if request.method == 'POST':
+        Client_Card_Copy = request.POST.get('Client_Card_Copy')
+        Offer_Subject_Card = request.POST.get('Offer_Subject_Card')
+        Location_Card = request.POST.get('Location_Card')
+        Cost_NotIncludingKDV_Card = request.POST.get('Cost_NotIncludingKDV_Card')
+        Offer_Cost_NotIncludingKDV_Card = request.POST.get('Offer_Cost_NotIncludingKDV_Card')
+        AC_Power_Card = request.POST.get('AC_Power_Card')
+        DC_Power_Card = request.POST.get('DC_Power_Card')
+        UnitCost_NotIncludingKDV = request.POST.get('UnitCost_NotIncludingKDV')
+        UnitOffer_NotIncludingKDV = request.POST.get('UnitOffer_NotIncludingKDV')
+        Situation_Card = request.POST.get('Situation_Card')
+        Date_Card = request.POST.get('Date_Card')
+        Terrain_Roof_Card = request.POST.get('Terrain_Roof_Card')
+        Roof_Cost_Card = request.POST.get('Roof_Cost_Card')
+        Person_Deal = request.POST.get('Person_Deal')
+        Person_Related = request.POST.get('Person_Related')
+        Offer_Comment_Card = request.POST.get('Offer_Comment_Card')
+        if Client_Card_Copy:
+            SalesOfferCard.objects.create(
+                Client_Card_Copy = Client_Card_Copy,
+                Offer_Subject_Card = Offer_Subject_Card ,
+                Location_Card = Location_Card,
+                Cost_NotIncludingKDV_Card =Cost_NotIncludingKDV_Card ,
+                Offer_Cost_NotIncludingKDV_Card = Offer_Cost_NotIncludingKDV_Card,
+                AC_Power_Card = AC_Power_Card,
+                DC_Power_Card = DC_Power_Card,
+                UnitCost_NotIncludingKDV = UnitCost_NotIncludingKDV,
+                UnitOffer_NotIncludingKDV =UnitOffer_NotIncludingKDV,
+                Situation_Card =Situation_Card,
+                Date_Card =Date_Card,
+                Terrain_Roof_Card =Terrain_Roof_Card,
+                Roof_Cost_Card =Roof_Cost_Card,
+                Person_Deal = Person_Deal,
+                Person_Related =Person_Related,
+                Offer_Comment_Card =Offer_Comment_Card
+            )
+            return JsonResponse({'message': 'SalesOfferCard Başarı ile oluşturuldu'})
+        return JsonResponse({'message': 'Post alındı ama SalesOfferCard oluşturulamadı'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+
+
 
 @csrf_exempt
 def post_card_file(request):

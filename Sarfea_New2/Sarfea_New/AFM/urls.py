@@ -60,9 +60,9 @@ urlpatterns = [
     path('get_late_cards/', views.get_late_cards, name='get_late_cards'),
     path('get_run_cards/', views.get_run_cards, name='get_run_cards'),
     path('get_cards/', views.get_cards, name='get_cards'),
-    path("get_expenses/<str:project_name>/", views.get_expenses, name='get_expenses'),
-    path("get_job_history/<str:project_name>/", views.get_job_history, name='get_job_history'),
-    path("get_incomes/<str:project_name>/", views.get_incomes, name='get_incomes'),
+    path("get_expenses/", views.get_expenses, name='get_expenses'),
+    path("get_job_history/", views.get_job_history, name='get_job_history'),
+    path("get_incomes/", views.get_incomes, name='get_incomes'),
     path('get_operation_care/', views.get_operation_care, name='get_operation_care'),
     path('get_fail/', views.get_fail, name='get_fail'),
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
@@ -88,6 +88,8 @@ urlpatterns = [
 
     path('post_supplier/', views.post_supplier, name='post_supplier'),
     path('post_update_supplier/<supplier_id>/', views.post_update_supplier, name='post_update_supplier'),
+
+    path('post_sales_offer/', views.post_sales_offer, name='post_sales_offer'),
 
     path('post_update_string/<string_id>/', views.post_update_string, name='post_update_string'),
     path('post_card_file/', views.post_card_file, name='post_card_file'),
