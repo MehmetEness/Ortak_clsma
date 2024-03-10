@@ -25,14 +25,14 @@ async function getProjects() {
         for (const project of projects) {    
             const date = new Date(project.StartDate);
             const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
-
+            var projectDetailsUrl = `/project_details/${project.id}/`;
             const row = '<tr>' +
             `<td>` + 
                     `<button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
                         '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
                     '</button>' +
                 '</td>'  +
-                '<td>' + project.ProjectName + '</td>' +
+                '<td><a href="' + projectDetailsUrl + '">' + project.ProjectName + '</a></td>' +
                 '<td>' + project.Location + '</td>' +
                 '<td>' + project.AC_Power + '</td>' +
                 '<td>' + project.DC_Power + '</td>' +
@@ -163,3 +163,17 @@ function editButtonsEvents(){
     })    
 }
 
+
+
+async function getProjects11() {
+    try {
+        const response = await fetch(`/get_dollar_rate/2024-03-10`);
+        const data = await response.json();
+        const projects = data.projects; 
+        console.log(projects)
+             
+        
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
+    }
+}

@@ -6,7 +6,6 @@ var reqLabels = document.querySelectorAll("#firma_adi_span");
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const clientAddForm = document.getElementById("client_add_form");
 
-
 document.addEventListener("DOMContentLoaded", async () =>{
     await getSupplier();
     setInterval(async function() {        
