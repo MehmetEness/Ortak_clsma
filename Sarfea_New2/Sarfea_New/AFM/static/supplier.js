@@ -5,6 +5,7 @@ var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
 var textCells = document.querySelectorAll('#table td:nth-child(3), #table td:nth-child(4), #table td:nth-child(5), #table td:nth-child(6)');
 var phoneInput = document.querySelector("#id_PhoneNumber");
+const supplierAddForm = document.getElementById("supplier_add_form");
 
 
 document.addEventListener("DOMContentLoaded", async () =>{
@@ -67,6 +68,7 @@ let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn)=>{
     btn.addEventListener("click", ()=>{
         supplierAddWindow.style.display = "none";
+        supplierAddForm.reset();
     })
 })
 
@@ -94,8 +96,7 @@ const supplierFormAddBtn = document.querySelector("#kaydet_btn")
 supplierFormAddBtn.addEventListener("click", async function(event) {
     event.preventDefault();
 
-    if(requiredInputs(reqInputs, reqLabels)){
-        const supplierAddForm = document.getElementById("supplier_add_form");
+    if(requiredInputs(reqInputs, reqLabels)){        
         const formData = new FormData(supplierAddForm);
     
         try {

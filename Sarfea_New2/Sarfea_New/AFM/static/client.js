@@ -4,6 +4,7 @@ const clientAddBtn = document.querySelector(".client-add-btn");
 var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
 var phoneInput = document.querySelector("#id_PhoneNumber");
+const clientAddForm = document.getElementById("client_add_form");
 
 
 document.addEventListener("DOMContentLoaded", async () =>{
@@ -67,6 +68,7 @@ let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn)=>{
     btn.addEventListener("click", ()=>{
         clientAddWindow.style.display = "none";
+        clientAddForm.reset();
     })
 })
 
@@ -104,8 +106,7 @@ const clientFormAddBtn = document.querySelector("#kaydet_btn")
 clientFormAddBtn.addEventListener("click", async function(event) {
     event.preventDefault();
 
-    if(requiredInputs(reqInputs, reqLabels)){
-        const clientAddForm = document.getElementById("client_add_form");
+    if(requiredInputs(reqInputs, reqLabels)){        
         const formData = new FormData(clientAddForm);
     
         try {
