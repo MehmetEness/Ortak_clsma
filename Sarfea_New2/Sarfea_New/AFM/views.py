@@ -227,8 +227,8 @@ def supplier(request):
     return render(request, "supplier.html", context)
 
 @login_required
-def project_details(request, project_name):
-    project = Project.objects.filter(ProjectName=project_name).first()
+def project_details(request, project_id):
+    project = Project.objects.filter(id=project_id).first()
     return render(request, 'project_details.html', {'project': project})
 
 @login_required
@@ -1243,6 +1243,87 @@ def update_card_situation(request):
             return JsonResponse({'success': False, 'error': 'Card not found'})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+@csrf_exempt
+def post_projects(request):
+    if request.method == 'POST':
+        
+        ProjectName = request.POST.get('ProjectName')
+        ProjectCode= request.POST.get('ProjectCode')
+        CompanyName= request.POST.get('CompanyName')
+        CompanyUndertakingWork= request.POST.get('CompanyUndertakingWork')
+        Location= request.POST.get('Location')
+        Cost_NotIncludingKDV = request.POST.get('Cost_NotIncludingKDV')
+        AC_Power= request.POST.get('AC_Power')
+        DC_Power= request.POST.get('DC_Power')
+        CalculatedCost_NotIncludingKDV= request.POST.get('CalculatedCost_NotIncludingKDV')
+        StartDate = request.POST.get('StartDate')
+        FinishDate= request.POST.get('FinishDate')
+        KDV_Rate= request.POST.get('KDV_Rate')
+        Terrain_Roof= request.POST.get('Terrain_Roof')
+        Incentive= request.POST.get('Incentive')
+       
+        if ProjectName:
+            Project.objects.create(
+                ProjectName=ProjectName,
+                ProjectCode= ProjectCode,
+                CompanyName=CompanyName,
+                CompanyUndertakingWork=CompanyUndertakingWork,
+                Location=Location,
+                Cost_NotIncludingKDV =Cost_NotIncludingKDV,
+                AC_Power= AC_Power,
+                DC_Power=DC_Power,
+                CalculatedCost_NotIncludingKDV=CalculatedCost_NotIncludingKDV,
+                StartDate =StartDate,
+                FinishDate=FinishDate,
+                KDV_Rate= KDV_Rate,
+                Terrain_Roof=Terrain_Roof,
+                Incentive=Incentive,
+            )
+            return JsonResponse({'message': 'Project Başarı ile oluşturuldu'})
+        return JsonResponse({'message': ' Post alındı ancak Project Başarı ile oluşturulamadı'})
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+
+@csrf_exempt
+def post_update_projects(request, project_id):
+    curr_project = get_object_or_404(Project, id=project_id)
+
+    if request.method == 'POST':
+        
+        ProjectName = request.POST.get('ProjectName')
+        ProjectCode= request.POST.get('ProjectCode')
+        CompanyName= request.POST.get('CompanyName')
+        CompanyUndertakingWork= request.POST.get('CompanyUndertakingWork')
+        Location= request.POST.get('Location')
+        Cost_NotIncludingKDV = request.POST.get('Cost_NotIncludingKDV')
+        AC_Power= request.POST.get('AC_Power')
+        DC_Power= request.POST.get('DC_Power')
+        CalculatedCost_NotIncludingKDV= request.POST.get('CalculatedCost_NotIncludingKDV')
+        StartDate = request.POST.get('StartDate')
+        FinishDate= request.POST.get('FinishDate')
+        KDV_Rate= request.POST.get('KDV_Rate')
+        Terrain_Roof= request.POST.get('Terrain_Roof')
+        Incentive= request.POST.get('Incentive')
+       
+        if ProjectName:
+            curr_project.ProjectName=ProjectName,
+            curr_project.ProjectCode= ProjectCode,
+            curr_project.CompanyName=CompanyName,
+            curr_project.CompanyUndertakingWork=CompanyUndertakingWork,
+            curr_project.Location=Location,
+            curr_project.Cost_NotIncludingKDV =Cost_NotIncludingKDV,
+            curr_project.AC_Power= AC_Power,
+            curr_project.DC_Power=DC_Power,
+            curr_project.CalculatedCost_NotIncludingKDV=CalculatedCost_NotIncludingKDV,
+            curr_project.StartDate =StartDate,
+            curr_project.FinishDate=FinishDate,
+            curr_project.KDV_Rate= KDV_Rate,
+            curr_project.Terrain_Roof=Terrain_Roof,
+            curr_project.Incentive=Incentive,
+            curr_project.save()
+            return JsonResponse({'message': 'Project Başarı ile güncellendi'})
+        return JsonResponse({'message': ' Post alındı ancak Project Başarı ile güncellenemedi'})
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
 def post_client(request):

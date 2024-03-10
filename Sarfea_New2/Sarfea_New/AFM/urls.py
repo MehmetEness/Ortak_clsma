@@ -8,7 +8,7 @@ urlpatterns = [
     #MODUL-1
     path("home", views.home, name='home'),
     path("projects/", views.projects, name='projects'),
-    path('project_details/<str:project_name>/', views.project_details, name='project_details'),
+    path('project_details/<project_id>/', views.project_details, name='project_details'),
     path("realized_cost/<str:project_name>/", views.realized_cost, name='realized_cost'),
     path('income_details/<str:project_name>/', views.income_details, name='income_details'),
     path("client/", views.client, name='client'),
@@ -71,6 +71,9 @@ urlpatterns = [
     path("get_dollar_rate/<str:date>/", views.get_dollar_rate, name='get_dollar_rate'),
     
     #MODUL-POST
+    path('post_projects/', views.post_projects, name='post_projects'),
+    path('post_update_projects/<project_id>/', views.post_update_projects, name='post_update_projects'),    
+
     path('post_client/', views.post_client, name='post_client'),
     path('post_update_client/<client_id>/', views.post_update_client, name='post_update_client'),
 

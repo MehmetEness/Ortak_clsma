@@ -93,7 +93,7 @@ table thead th {
 
     <div id="top-right-menu">
       <div class="menu-icon">
-        <a href="{% url 'project_details' project_name=project.ProjectName %}"><button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button></a>
+        <a href="{% url 'project_details' project_id=project.id %}"><button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button></a>
       </div>
       <a href="{% url 'jobhistory_add_wp' project_id=project.id  %}"><button class="button2">Yapılan İş</button></a>
       <div id="gerceklesen-maliyet-text"><span>{{project.ProjectName}}</span></div>

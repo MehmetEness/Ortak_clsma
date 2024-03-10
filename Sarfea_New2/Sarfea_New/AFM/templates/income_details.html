@@ -57,7 +57,7 @@
         <div id="top-right-menu">
           <div class="menu-icon">
             {% if project %}
-            <a href="{% url 'project_details' project_name=project.ProjectName %}">
+            <a href="{% url 'project_details' project_id=project.id %}">
                 <button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button>
             </a>
         {% endif %}        
