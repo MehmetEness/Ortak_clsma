@@ -8,253 +8,138 @@
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"t
-    />
-    <link rel="stylesheet" type="text/css" href="{% static 'realized_costrr.css' %}"> 
-    <link rel="stylesheet" href="{% static 'all_style.css' %}">
-    <link rel="stylesheet" href="{% static 'sec-inputs.css' %}">
-    <style>
-      ::-webkit-scrollbar {
-  width: 0 !important;
-}
-      .paying-firma-add-btn {
-    margin-left: 7px;
-    padding: 0px 4px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    font-size: 13px;
-    cursor: pointer;
-} 
-.table tbody td{
-    text-align: left;
-  }
-  .table thead th{
-    padding-left: 20px;
-    text-align: left;
-  }
-#table thead th:first-child, #table-2 thead th:first-child {
-  width: 40px;
-    text-align: center;
-}
-#table thead th:not(:nth-child(2)), #table-2 thead th:not(:nth-child(2)) {
-    text-align: center;
-}
-#table tbody td:first-child, #table-2 tbody td:first-child {
-  width: 40px;
-    text-align: center;
-}
-#table tbody td:not(:nth-child(2)), #table-2 tbody td:not(:nth-child(2)) {
-    text-align: center;
-}
-  
-.full-text-popup {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    display: none;
-    z-index: 999;
-}
-
-table thead th {
-      cursor: pointer;
-   }
-   table thead th span{
-      position: relative;
-   }
-   thead th span::after{
-   content: '';
-  position:absolute;
-  left: -18px;
-  top: 60%;
-  border-style: solid;
-  border-top-width: 10px;
-  border-right-width: 5px;
-  border-left-width: 5px;
-  border-color: #000 transparent transparent transparent;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
-   }
-
-    </style>
-
+    />    
+    <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'sec-inputs.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'realized_cost.css' %}"> 
+   
     {% endblock %}
 
 {% block title %} Realized Cost {% endblock %}
 {% block content %}
 
-<div class="body-div">     
-  <div class="top-menu">
-    <div id="title-div">
-      <a href="{% url 'home' %}">
-          <span class="first-line">SOVO</span>
-          <span class="second-line">TOZOGLU</span>
-      </a>
-    </div>
-
-    <div id="top-right-menu">
-      <div class="menu-icon">
-        <a href="{% url 'project_details' project_id=project.id %}"><button id="backBtn" class="button-project"><i class="fa-solid fa-arrow-left"></i></button></a>
-      </div>
-      <a href="{% url 'jobhistory_add_wp' project_id=project.id  %}"><button class="button2">Yapılan İş</button></a>
-      <div id="gerceklesen-maliyet-text"><span>{{project.ProjectName}}</span></div>
-      <a href="{% url 'expenses_add_wp' project_id=project.id  %}"><button  class="button2" >Yapılan Ödeme</button></a>
-      
-      <div class="content">
-        
-        <div class="search">
-          <div class="icon"></div>
-          <div class="input">
-            <input id="mysearch" type="text" placeholder="Ara">
-          </div>
-          <span class="clear" onclick="document.getElementById('mysearch').value = ''"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-    <div id="container">
+  <div class="body-div">           
       <div class="firma-bar">
-        <ul id="firmaUl">
-          {% for company_name in distinct_company_names %}
-              {% if company_name %}
-                  <li id="company-li" class="company-link" data-company="{{ company_name }}">
-                    <a>{{ company_name }}</a>
-                      <br>
-                  </li>
-              {% endif %}
-          {% endfor %}
-      </ul>      
-        <button type="submit" id="toplam-maliyet">Toplam Maliyet</button>
-    </div>
-    
-          
-          
-        <div class="right-menu">
-          <div class="total-table view-2">
-             <div id="total-table-head" class="head">
-            </div>
-            <table id="total-cost-table" class="table table-sortable">
-                  <thead>
-                    <tr>
-                      <th><span>Firma Adı</span></th>
-                      <th><span>Toplam İş Miktarı (TL)</span></th>
-                      <th><span>Toplam İş Miktarı (USD)</span></th>
-                      <th><span>Toplam Gider (TL)</span></th>
-                      <th><span>Toplam Gider (USD)</span></th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody">
-                    {% for data in Total_Amount_List %}
-                    {% if data.CompanyName %}
+          <div id="title-div">
+              <a href="{% url 'home' %}">
+                  <span class="first-line">SOVO</span>
+                  <span class="second-line">TOZOGLU</span>
+              </a>
+          </div> 
+          <ul id="firmaUl">
+              {% for company_name in distinct_company_names %}
+                  {% if company_name %}
+                      <li id="company-li" class="company-link" data-company="{{ company_name }}">
+                        <a>{{ company_name }}</a>
+                          <br>
+                      </li>
+                  {% endif %}
+              {% endfor %}
+          </ul>      
+          <button type="submit" id="toplam-maliyet">Toplam Maliyet</button>
+      </div>
+      <div class="right-menu">
+            <main class="table" id="customers_table">
+              <section class="table__header">    
+                  <button class="back-button" ><i class="fa-solid fa-angles-left"></i></button> 
+                  <button style="width: 137px;" class="button" >Yapılan İş</button>                  
+                  <p>TEDARİKÇİLER</p>
+                  <button class="button" >Yapılan Ödeme</button>  
+                  <div class="input-group">
+                    <input type="search" placeholder="Tedarikçi Ara...">
+                    <img src="{% static 'images/search.png' %}" alt="">
+                </div> 
+              </section>
+              <section class="table__body">
+                  <table id="tedarikci_table">
+                      <thead>
+                        <tr>
+                          <th><span></span></th>
+                          <th>Fatura No<span class="icon-arrow">&UpArrow;</span></th>
+                          <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
+                          <th>Cinsi<span class="icon-arrow">&UpArrow;</span></th>
+                          <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+                          <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
+                          <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>                    
+                      </thead> 
+                      <tbody>  
+                        <tr>
+                          <td></td>
+                          <td>adsfasdf</td>
+                          <td>adsfasdf</td>
+                          <td>adsfasdf</td>
+                          <td>adsfasdf</td>
+                          <td>adsfasdf</td>
+                          <td>adsfasdf</td>
+                      </tr>   
                       <tr>
-                        <td>{{ data.CompanyName }}</td>
-                        <td>{{ data.Job_TL }}</td>
-                        <td>{{ data.Job_USD }}</td>
-                        <td>{{ data.Expenses_TL }}</td>
-                        <td>{{ data.Expenses_USD }}</td>
-                      </tr>
-                      {% endif %}
-                    {% endfor %}
-                  </tbody>
-                  <tfoot>
-                  <tr>                    
-                    <td class="right">Toplam:</td>
-                    <td id="solTotalTableToplamTL" class="right">0</td>
-                    <td id="solTotalTableToplamUSD" class="right">0</td>
-                    <td id="sagTotalTableToplamTL" class="right">0</td>
-                    <td id="sagTotalTableToplamUSD" class="right">0</td>
-                  </tr>
-                </tfoot>
-          </table>  
-
-          </div>
-            <div id="c1" class="column view-1">
-              <div id="head-is-ac" class="head"><span>Yapılan İş</span></div>
-            <table id="table" class="table table-sortable">
-              <thead>                    
-                    <th></th>
-                    <th><span>Fatura No</span></th>
-                    <th scope="col"><span>Tarih</span></th>
-                    <th scope="col"><span>Cinsi</span></th>
-                    <th scope="col"><span>Tutar(TL)</span></th>
-                    <th scope="col"><span>Kur</span></th>
-                    <th scope="col"><span>Tutar(USD)</span></th>
-                    
-                </thead>  
-                  <tbody id="tbody3">   
-                      {% for history in jobhistory %}
-                      <tr id="tablotr-is-ac" class="table-row" data-company="{{ history.CompanyName_Job_JobHistory }}">
-                        <td><button type="button" class="edit-jobhistory-btn button2" style= "background: none; border:none;"><a href= "{% url 'jobhistory_edit' jobhistory_id=history.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
-                          <td>{{ history.Invoice_No_JobHistory }} </td>
-                          <td>{{ history.Date_JobHistory|date:"d/m/Y"}} </td>
-                          <td title="{{ history.ExpensDetails_JobHistory }}" class="ellipsis">{{ history.ExpensDetails_JobHistory}}</td>
-                          <td class="ellipsis">{{ history.Amount_JobHistory }}₺</td>
-                          <td>{{ history.Dollar_Rate_JobHistory }}₺</td>
-                          <td class="ellipsis">{{ history.Amount_USD_JobHistory }}$</td>
-                          <td style="display: none;">{{ history.CompanyName_Job_JobHistory}}</td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                <tfoot>
+                        <td></td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                    </tr>  
+                    <tr>
+                      <td></td>
+                      <td>adsfasdf</td>
+                      <td>adsfasdf</td>
+                      <td>adsfasdf</td>
+                      <td>adsfasdf</td>
+                      <td>adsfasdf</td>
+                      <td>adsfasdf</td>
+                  </tr>                     
+                      </tbody>
+                  </table>
+                  <table id="tedarikci_table">
+                    <thead>
+                      <tr>
+                        <th><span></span></th>
+                        <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Açıklama<span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Banka<span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+                      </tr>                    
+                    </thead> 
+                    <tbody>  
+                      <tr>
+                        <td></td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                    </tr>   
+                    <tr>
+                        <td></td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                  </tr>  
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td class="right">Toplam:</td>
-                    <td id="solTableToplamTL" class="right"></td>
-                    <td></td>
-                    <td id="solTableToplamUSD" class="right"></td>
-                  </tr>
-                </tfoot>
-              </table>           
-            </div>
-            <div class="head-line view-1"></div>
-            <div id="c2" class="column column2 view-1">
-              <div id="head-gider-ac" class="head"><span>Yapılan Ödeme</span></div>
-              <table id="table-2" class="table table-sortable">   
-                <thead>
-                  <th></th>
-                    <th><span>Tarih</span></th>
-                    <th scope="col"><span>Açıklama</span></th>
-                    <th scope="col"><span>Banka</span></th>
-                    <th scope="col"><span>Tutar(TL)</span></th>
-                    <th scope="col"><span>Kur</span></th>
-                    <th scope="col"><span>Tutar(USD)</span></th>
-                </thead>  
-                  <tbody id="tbody-2">   
-                      {% for expense in expenses %}
-                      <tr class="table-row" data-company="{{ expense.CompanyName_Paying_Expenses }}"> 
-                        <td><button type="button" class="edit-expenses-btn button2" style= "background: none; border:none;"><a href= "{% url 'expenses_edit' expenses_id=expense.id %}"><i id="edit-text" class="fa-solid fa-pen-to-square"></i></a></button></td>
-
-                        <td>{{ expense.Date_Expenses|date:"d/m/Y" }} </td>
-                          <td class="ellipsis">{{ expense.ExpensDetails_Expenses }}</td>
-                          <td>{{ expense.Bank_Expenses }} </td>
-                          <td class="ellipsis"> {{ expense.Amount_Expenses }}</td>
-                          <td>{{ expense.Dollar_Rate_Expenses }}</td>
-                          <td class="ellipsis">{{ expense.USD_Expenses }}</td>
-                          <td style="display: none;">{{ expense.CompanyName_Paying_Expenses }}</td>
-                      </tr>
-                      {% endfor %}
+                        <td></td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                        <td>adsfasdf</td>
+                </tr>             
                     </tbody>
-                <tfoot>
-                  <tr>
-                    <td></td>
-                    <td></td>                   
-                    <td class="right" >Toplam:</td>
-                    <td id="sagTableToplamTL" class="right">0.00₺</td>
-                    <td></td>
-                    <td id="sagTableToplamUSD" class="right">0.00$</td>
-                  </tr>
-                </tfoot>
-            </table>
-          </div>            
+                </table>           
+              </section>
+        </main>          
 
-        </div>        
-        <div id="genel-toplam">
-          <span class="view-1">Genel Toplam</span>
-          <label id="genelToplamTL" class="view-1" for="">0.00₺</label>
-          <label id="genelToplamUSD" class="view-1" for="">0.00$</label>
-        </div>            
-      </div>   
-
+      </div>                  
   </div>
 
   {% endblock %}

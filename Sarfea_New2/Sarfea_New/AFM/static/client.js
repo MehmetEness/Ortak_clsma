@@ -1,10 +1,12 @@
 const clientTable = document.querySelector("#client_table");
 const clientTableBody = clientTable.querySelector("tbody");
 const clientAddBtn = document.querySelector(".client-add-btn");
+
 var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier");
 var reqLabels = document.querySelectorAll("#firma_adi_span");
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const clientAddForm = document.getElementById("client_add_form");
+
 
 document.addEventListener("DOMContentLoaded", async () =>{
     await getSupplier();
@@ -41,7 +43,7 @@ async function getSupplier() {
             sortTableForStart(clientTable, 1);
             sortingTable(clientTable);
             allTableFormat();
-
+            editButtonsEvents();
             
         }        
         
@@ -52,9 +54,18 @@ async function getSupplier() {
 
 //                  OPEN ADD WİNDOW
 
+const clientFormAddBtn = document.querySelector("#kaydet_btn");
+const formTitle = document.querySelector(".title");
+var editMode = false;
+let clientId;
+
 const clientAddWindow = document.querySelector(".client-add-window");
 clientAddBtn.addEventListener("click", () =>{    
-    setTimeout(() =>{clientAddWindow.style.display = "flex";}, 10);
+    setTimeout(() =>{
+        editMode = false;
+        formTitle.textContent ="Tedarikci Ekle";
+        clientAddWindow.style.display = "flex";
+    }, 10);
 }); 
 document.addEventListener('click', (event) =>{
     const clientAddContainer = document.querySelector(".client-add-window .container");
@@ -70,6 +81,20 @@ xBtn.forEach((btn)=>{
         clientAddForm.reset();
     })
 })
+//                  EDİT BUTONLARI
+
+function editButtonsEvents(){
+    const editButtons = clientTable.querySelectorAll("tr td:first-child button");
+    editButtons.forEach((btn)=>{
+        btn.addEventListener("click", async ()=>{
+            editMode = true;
+            clientId = btn.id;         
+            const nextTdContent = btn.parentElement.nextElementSibling.textContent.trim();            
+            formTitle.textContent =nextTdContent;
+            setTimeout(() =>{clientAddWindow.style.display = "flex";}, 10);
+        });
+    })    
+}
 
 //                  TELEFON NUMARASI FORMATLAMA
 
@@ -88,19 +113,7 @@ function allTableFormat(){
     tableFormat(textCells, "text")
 }
 
-//----
-// createBtn.addEventListener("click", function(event) {
-//     event.preventDefault();
-//     if(companyNameInput.value != "" && controlSelectionInputsReverse(companyNameInput, companyNameLabel, companyList)){               
-//         form.submit();
-//     }else{
-//         companyNameLabel.style.color = "red"
-//         companyNameLabel.style.fontWeight = "600"
-//     }
-// }); 
-//                  SUPPLİER ADD FUNCTİON
-
-const clientFormAddBtn = document.querySelector("#kaydet_btn")
+//                  SUPPLİER ADD-EDİT FUNCTİON
 
 clientFormAddBtn.addEventListener("click", async function(event) {
     event.preventDefault();
@@ -108,24 +121,79 @@ clientFormAddBtn.addEventListener("click", async function(event) {
     if(requiredInputs(reqInputs, reqLabels)){        
         const formData = new FormData(clientAddForm);
     
-        try {
-            const response = await fetch('/post_client/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: formData
-            });
-            //const responseData = await response.json();
-            //console.log(responseData.message);
-            getSupplier();
-            clientAddWindow.style.display = "none";
-            clearInputAfterSave(clientAddForm);
-        } catch (error) {
-            console.error('There was an error!', error);
-        }
+       if(!editMode){
+            try {
+                const response = await fetch('/post_client/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: formData
+                });
+                getSupplier();
+                clientAddWindow.style.display = "none";
+                clearInputAfterSave(clientAddForm);
+            } catch (error) {
+                console.error('There was an error!', error);
+            }
+       }else{
+            try {
+                console.log(`/post_update_client/${clientId}`)
+                const response = await fetch(`/post_update_client/${clientId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: formData
+                });
+                getSupplier();
+                clientAddWindow.style.display = "none";
+                clearInputAfterSave(clientAddForm);
+            } catch (error) {
+                console.error('There was an error!', error);
+            }
+       }
     }    
 });
+//                  SUPPLİER EDİT FUNCTİON
+
+// clientFormAddBtn.addEventListener("click", async function(event) {
+//     event.preventDefault();
+
+//     if(requiredInputs(reqInputs, reqLabels)){        
+//         const formData = new FormData(clientAddForm);
+    
+//         try {
+//             const response = await fetch('/post_update_client/', {
+//                 method: 'POST',
+//                 headers: {
+//                     'X-CSRFToken': getCookie('csrftoken')
+//                 },
+//                 body: formData
+//             });
+//             //const responseData = await response.json();
+//             //console.log(responseData.message);
+//             getSupplier();
+//             clientAddWindow.style.display = "none";
+//             clearInputAfterSave(clientAddForm);
+//         } catch (error) {
+//             console.error('There was an error!', error);
+//         }
+//     }    
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getCookie(name) {
     let cookieValue = null;

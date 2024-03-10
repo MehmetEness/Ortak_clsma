@@ -342,7 +342,7 @@ function requiredInputs(inputs, labels) {
   }
 }
 function clearInputAfterSave(form){
-    let inputs = form.querySelectorAll("input");
+    let inputs = form.querySelectorAll("input:not([type='button']");
     inputs.forEach((input)=>{
       input.value = "";
     })

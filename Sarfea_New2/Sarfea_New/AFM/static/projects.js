@@ -56,9 +56,6 @@ async function getProjects() {
     }
 }
 
-
-
-
 function allTableFormat(){    
     var usdCells = projectsTable.querySelectorAll('td:nth-child(6)');  
     var numericCells = projectsTable.querySelectorAll('td:nth-child(4), td:nth-child(5)');
