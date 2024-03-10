@@ -86,7 +86,7 @@
            <h3 id="gelir-modal" class="modal-kapat">X</h3>
            <div class="title">Gelir Ekle</div>
           {% if project %}
-           <form id="my-form" action="{% url 'income_details' project_name=project.ProjectName %}" method="post">
+           <form id="my-form" action="{% url 'income_details' project_id=project.id %}" method="post">
                   {% csrf_token %}
                 <div class="user-details">
 

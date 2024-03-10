@@ -232,13 +232,13 @@ def project_details(request, project_id):
     return render(request, 'project_details.html', {'project': project})
 
 @login_required
-def realized_cost(request, project_name):
+def realized_cost(request, project_id):
     payment_firms = PaymentFirms.objects.all()
     payment_firms_names = [pf.PaymentFirmsName for pf in payment_firms]
 
-    project = get_object_or_404(Project, ProjectName=project_name)
+    project = get_object_or_404(Project, id=project_id)
     expenses = Expenses.objects.filter(Q(ProjectName_Expenses=project.ProjectName) & Q(CompanyName_Paying_Expenses__in=payment_firms_names))
-    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project_name)
+    jobhistory = JobHistory.objects.filter(ProjectName_JobHistory=project.ProjectName)
     supplier = Supplier.objects.all()
     details = Details.objects.all()
 
@@ -248,8 +248,8 @@ def realized_cost(request, project_name):
     distinct_payment_firms = PaymentFirms.objects.all().values('PaymentFirmsName').distinct()
 
     # Get distinct companies from Expenses and JobHistory
-    distinct_expenses_companies = Expenses.objects.filter(ProjectName_Expenses=project_name).values('CompanyName_Paying_Expenses').distinct()
-    distinct_job_history_companies = JobHistory.objects.filter(ProjectName_JobHistory=project_name).values('CompanyName_Job_JobHistory').distinct()
+    distinct_expenses_companies = Expenses.objects.filter(ProjectName_Expenses=project.ProjectName).values('CompanyName_Paying_Expenses').distinct()
+    distinct_job_history_companies = JobHistory.objects.filter(ProjectName_JobHistory=project.ProjectName).values('CompanyName_Job_JobHistory').distinct()
 
     # Combine the distinct companies from Expenses and JobHistory
     distinct_expenses_companies_names = [expense['CompanyName_Paying_Expenses'] for expense in distinct_expenses_companies]
@@ -329,9 +329,9 @@ def realized_cost(request, project_name):
     return render(request, "realized_cost.html", context)
 
 @login_required
-def income_details(request, project_name):
-    project = Project.objects.filter(ProjectName=project_name).first()
-    incomes = Incomes.objects.filter(ProjectName_Incomes=project_name)
+def income_details(request, project_id):
+    project = Project.objects.filter(id=project_id).first()
+    incomes = Incomes.objects.filter(ProjectName_Incomes=project.ProjectName)
     incomes_form = IncomesForm()
     client = Clients.objects.all()
 
@@ -340,7 +340,7 @@ def income_details(request, project_name):
         if incomes_form.is_valid():
             incomes_form.instance.CompanyName_Incomes = project.CompanyName
             incomes_form.instance.save()
-            return redirect('income_details', project_name=project_name)
+            return redirect('income_details', project_id=project.id)
         else:
             incomes_form = IncomesForm()
 

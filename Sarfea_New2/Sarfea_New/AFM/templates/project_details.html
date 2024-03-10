@@ -56,7 +56,7 @@
                             <span><i class="fa-solid fa-dollar-sign"></i></span>
                             <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
                             <span>İş Bedeli</span>                        
-                          <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_name=project.ProjectName %}">a</a>
+                          <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
                       </div>
                       <div id="type_div" class="column-2 card">
                           <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div></div>
@@ -70,7 +70,7 @@
                           <div class="span"><span></span></div></div>
                       <div id="gerceklesenMaliyet" class="column-2 card">
                           <div class="span"><span>Gerçekleşen Maliyet</span></div>
-                          <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_name=project.ProjectName %}"></a>
+                          <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
                       </div>
                       <div style="background-image:url('{% static 'images/arka2.png' %}');" class="column-2 card">
                           <div class="span">
