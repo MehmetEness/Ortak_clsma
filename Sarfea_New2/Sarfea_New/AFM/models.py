@@ -103,7 +103,7 @@ class Expenses(models.Model):
     CompanyName_Paying_Expenses = models.CharField(max_length=63, default="Genel Gider",blank=True, null=True)
     ExpensDetails_Expenses = models.CharField(max_length=1000, blank=True, null=True)
     Amount_Expenses = FourDecimalField(blank=True, null=True)
-    Amount_TL_Expenses = FourDecimalField(blank=True, null=True)
+    Amount_USD_Expenses = FourDecimalField(blank=True, null=True)
     Dollar_Rate_Expenses = FourDecimalField(blank=True, null=True)
     Bank_Expenses = models.CharField(max_length=63, blank=True, null=True)
     Date_Expenses = models.DateField(blank=True, null=True)
@@ -117,7 +117,7 @@ class JobHistory(models.Model):
     ExpensDetails_JobHistory = models.CharField(max_length=1000, blank=True, null=True)
     Invoice_No_JobHistory = models.CharField(max_length=63, blank=True, null=True) 
     Amount_JobHistory = FourDecimalField(blank=True, null=True)
-    Amount_TL_JobHistory = FourDecimalField(blank=True, null=True)
+    Amount_USD_JobHistory = FourDecimalField(blank=True, null=True)
     Dollar_Rate_JobHistory = FourDecimalField(blank=True, null=True)
     Date_JobHistory = models.DateField(blank=True, null=True)
 

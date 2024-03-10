@@ -62,10 +62,10 @@ def update_expenses_company_name(sender, instance, **kwargs):
             print(f"Project with ProjectName {instance.ProjectName_Expenses} not found.")
     
     if instance.Amount_Expenses is not None and instance.Dollar_Rate_Expenses is not None:
-        # Calculate the new value for Amount_TL_Expenses
-        amount_tl_expenses = instance.Amount_Expenses / instance.Dollar_Rate_Expenses
+        # Calculate the new value for Amount_usd_Expenses
+        amount_usd_expenses = instance.Amount_Expenses / instance.Dollar_Rate_Expenses
         # Update the instance with the new value
-        instance.Amount_TL_Expenses = amount_tl_expenses
+        instance.Amount_USD_Expenses = amount_usd_expenses
 
 @receiver(pre_save, sender=JobHistory)
 def update_jobhistory_company_name(sender, instance, **kwargs):
@@ -92,10 +92,10 @@ def update_jobhistory_company_name(sender, instance, **kwargs):
             print(f"Project with ProjectName {instance.ProjectName_JobHistory} not found.")
     
     if instance.Amount_JobHistory is not None and instance.Dollar_Rate_JobHistory is not None:
-        # Calculate the new value for Amount_TL_Expenses
-        amount_tl_JobHistory = instance.Amount_JobHistory / instance.Dollar_Rate_JobHistory
+        # Calculate the new value for Amount_usd_Expenses
+        amount_usd_JobHistory = instance.Amount_JobHistory / instance.Dollar_Rate_JobHistory
         # Update the instance with the new value
-        instance.Amount_TL_JobHistory = amount_tl_JobHistory
+        instance.Amount_USD_JobHistory = amount_usd_JobHistory
 
     company_name_job = instance.CompanyName_Job_JobHistory
     if company_name_job:
@@ -118,7 +118,7 @@ def update_Incomes_Tl(sender, instance, **kwargs):
             print(f"Project with ProjectName {instance.ProjectName_Incomes} not found.")
     
     if instance.Amount_Incomes is not None and instance.Dollar_Rate_Incomes is not None:
-        # Calculate the new value for Amount_TL_Expenses
+        # Calculate the new value forusd_Expenses
         amount_usd_Incomes = instance.Amount_Incomes / instance.Dollar_Rate_Incomes
         # Update the instance with the new value
         instance.Amount_Usd_Incomes = amount_usd_Incomes
