@@ -189,7 +189,7 @@ table thead th {
                           <td title="{{ history.ExpensDetails_JobHistory }}" class="ellipsis">{{ history.ExpensDetails_JobHistory}}</td>
                           <td class="ellipsis">{{ history.Amount_JobHistory }}₺</td>
                           <td>{{ history.Dollar_Rate_JobHistory }}₺</td>
-                          <td class="ellipsis">{{ history.Amount_TL_JobHistory }}$</td>
+                          <td class="ellipsis">{{ history.Amount_USD_JobHistory }}$</td>
                           <td style="display: none;">{{ history.CompanyName_Job_JobHistory}}</td>
                       </tr>
                       {% endfor %}
@@ -229,7 +229,7 @@ table thead th {
                           <td>{{ expense.Bank_Expenses }} </td>
                           <td class="ellipsis"> {{ expense.Amount_Expenses }}</td>
                           <td>{{ expense.Dollar_Rate_Expenses }}</td>
-                          <td class="ellipsis">{{ expense.Amount_TL_Expenses }}</td>
+                          <td class="ellipsis">{{ expense.USD_Expenses }}</td>
                           <td style="display: none;">{{ expense.CompanyName_Paying_Expenses }}</td>
                       </tr>
                       {% endfor %}

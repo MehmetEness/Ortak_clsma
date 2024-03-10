@@ -212,7 +212,8 @@ class SalesOfferCard(models.Model):
     Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)
-
+    def __str__(self):
+            return self.Client_Card.CompanyName_Clients
 class SalesOfferCard_Revise(models.Model):
     Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE, blank=True, null=True)
     Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)

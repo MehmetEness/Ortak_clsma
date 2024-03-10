@@ -277,14 +277,14 @@ def realized_cost(request, project_id):
         }
 
         for exp in expenses:
-            if exp.CompanyName_Paying_Expenses == dcn and exp.Amount_Expenses is not None and exp.Amount_TL_Expenses is not None:
+            if exp.CompanyName_Paying_Expenses == dcn and exp.Amount_Expenses is not None and exp.Amount_USD_Expenses is not None:
                 total_amount["Expenses_TL"] += exp.Amount_Expenses
-                total_amount["Expenses_USD"] += exp.Amount_TL_Expenses
+                total_amount["Expenses_USD"] += exp.Amount_USD_Expenses
 
         for job in jobhistory:
-            if job.CompanyName_Job_JobHistory == dcn and job.Amount_JobHistory is not None and job.Amount_TL_JobHistory is not None:
+            if job.CompanyName_Job_JobHistory == dcn and job.Amount_JobHistory is not None and job.Amount_USD_JobHistory is not None:
                 total_amount["Job_TL"] += job.Amount_JobHistory
-                total_amount["Job_USD"] += job.Amount_TL_JobHistory
+                total_amount["Job_USD"] += job.Amount_USD_JobHistory
 
         if any(value != 0 for value in total_amount.values()):
             Total_Amount_List.append(total_amount)
