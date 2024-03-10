@@ -74,6 +74,15 @@ urlpatterns = [
     path('post_projects/', views.post_projects, name='post_projects'),
     path('post_update_projects/<project_id>/', views.post_update_projects, name='post_update_projects'),    
 
+    path('post_expenses/', views.post_expenses, name='post_expenses'),
+    path('post_update_expenses/<expenses_id>/', views.post_update_expenses, name='post_update_expenses'),    
+    
+    path('post_jobhistory/', views.post_jobhistory, name='post_jobhistory'),
+    path('post_update_jobhistory/<jobhistory_id>/', views.post_update_jobhistory, name='post_update_jobhistory'),    
+    
+    path('post_income/', views.post_income, name='post_income'),
+    path('post_update_income/<income_id>/', views.post_update_income, name='post_update_income'),    
+
     path('post_client/', views.post_client, name='post_client'),
     path('post_update_client/<client_id>/', views.post_update_client, name='post_update_client'),
 
