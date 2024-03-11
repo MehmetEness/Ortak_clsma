@@ -650,9 +650,8 @@ def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
     revises = SalesOfferCard_Revise.objects.filter(Revise_Owner=card)
 
-
     context={
-        'card':card,
+        'card':card,    
         'revises':revises,
     }
     return render(request, "sales_offer_revises.html", context)
@@ -1613,6 +1612,17 @@ def post_sales_offer(request):
         Person_Deal = request.POST.get('Person_Deal')
         Person_Related = request.POST.get('Person_Related')
         Offer_Comment_Card = request.POST.get('Offer_Comment_Card')
+
+        M_File_Card = request.FILES.get('M_File_Card')
+        M_File_Card_2 = request.FILES.get('M_File_Card_2')
+        M_File_Card_3 = request.FILES.get('M_File_Card_3')
+        Offer_File_Card = request.FILES.get('Offer_File_Card')
+        Offer_File_Card_2 = request.FILES.get('Offer_File_Card_2')
+        Offer_File_Card_3 = request.FILES.get('Offer_File_Card_3')
+        Offer_File_Card_4 = request.FILES.get('Offer_File_Card_4')
+        Offer_File_Card_5 = request.FILES.get('Offer_File_Card_5')
+
+
         if Client_Card_Copy:
             SalesOfferCard.objects.create(
                 Client_Card_Copy = Client_Card_Copy,
@@ -1630,13 +1640,81 @@ def post_sales_offer(request):
                 Roof_Cost_Card =Roof_Cost_Card,
                 Person_Deal = Person_Deal,
                 Person_Related =Person_Related,
-                Offer_Comment_Card =Offer_Comment_Card
+                Offer_Comment_Card =Offer_Comment_Card,
+                M_File_Card =M_File_Card,
+                M_File_Card_2 =M_File_Card_2,
+                M_File_Card_3 =M_File_Card_3,
+                Offer_File_Card =Offer_File_Card,
+                Offer_File_Card_2 =Offer_File_Card_2,
+                Offer_File_Card_3 =Offer_File_Card_3,
+                Offer_File_Card_4 =Offer_File_Card_4,
+                Offer_File_Card_5 =Offer_File_Card_5
             )
             return JsonResponse({'message': 'SalesOfferCard Başarı ile oluşturuldu'})
         return JsonResponse({'message': 'Post alındı ama SalesOfferCard oluşturulamadı'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
+@csrf_exempt
+def post_update_sales_offer(request, sales_offer_id):
+    curr_sales_offer = get_object_or_404(SalesOfferCard, id=sales_offer_id)
+    if request.method == 'POST':
+        Client_Card_Copy = request.POST.get('Client_Card_Copy')
+        Offer_Subject_Card = request.POST.get('Offer_Subject_Card')
+        Location_Card = request.POST.get('Location_Card')
+        Cost_NotIncludingKDV_Card = request.POST.get('Cost_NotIncludingKDV_Card')
+        Offer_Cost_NotIncludingKDV_Card = request.POST.get('Offer_Cost_NotIncludingKDV_Card')
+        AC_Power_Card = request.POST.get('AC_Power_Card')
+        DC_Power_Card = request.POST.get('DC_Power_Card')
+        UnitCost_NotIncludingKDV = request.POST.get('UnitCost_NotIncludingKDV')
+        UnitOffer_NotIncludingKDV = request.POST.get('UnitOffer_NotIncludingKDV')
+        Situation_Card = request.POST.get('Situation_Card')
+        Date_Card = request.POST.get('Date_Card')
+        Terrain_Roof_Card = request.POST.get('Terrain_Roof_Card')
+        Roof_Cost_Card = request.POST.get('Roof_Cost_Card')
+        Person_Deal = request.POST.get('Person_Deal')
+        Person_Related = request.POST.get('Person_Related')
+        Offer_Comment_Card = request.POST.get('Offer_Comment_Card')
+
+        M_File_Card = request.FILES.get('M_File_Card')
+        M_File_Card_2 = request.FILES.get('M_File_Card_2')
+        M_File_Card_3 = request.FILES.get('M_File_Card_3')
+        Offer_File_Card = request.FILES.get('Offer_File_Card')
+        Offer_File_Card_2 = request.FILES.get('Offer_File_Card_2')
+        Offer_File_Card_3 = request.FILES.get('Offer_File_Card_3')
+        Offer_File_Card_4 = request.FILES.get('Offer_File_Card_4')
+        Offer_File_Card_5 = request.FILES.get('Offer_File_Card_5')
+
+        if Client_Card_Copy:
+            curr_sales_offer.Client_Card_Copy = Client_Card_Copy,
+            curr_sales_offer.Offer_Subject_Card = Offer_Subject_Card ,
+            curr_sales_offer.Location_Card = Location_Card,
+            curr_sales_offer.Cost_NotIncludingKDV_Card =Cost_NotIncludingKDV_Card ,
+            curr_sales_offer.Offer_Cost_NotIncludingKDV_Card = Offer_Cost_NotIncludingKDV_Card,
+            curr_sales_offer.AC_Power_Card = AC_Power_Card,
+            curr_sales_offer.DC_Power_Card = DC_Power_Card,
+            curr_sales_offer.UnitCost_NotIncludingKDV = UnitCost_NotIncludingKDV,
+            curr_sales_offer.UnitOffer_NotIncludingKDV =UnitOffer_NotIncludingKDV,
+            curr_sales_offer.Situation_Card =Situation_Card,
+            curr_sales_offer.Date_Card =Date_Card,
+            curr_sales_offer.Terrain_Roof_Card =Terrain_Roof_Card,
+            curr_sales_offer.Roof_Cost_Card =Roof_Cost_Card,
+            curr_sales_offer.Person_Deal = Person_Deal,
+            curr_sales_offer.Person_Related =Person_Related,
+            curr_sales_offer.Offer_Comment_Card =Offer_Comment_Card,
+            curr_sales_offer.M_File_Card =M_File_Card,
+            curr_sales_offer.M_File_Card_2 =M_File_Card_2,
+            curr_sales_offer.M_File_Card_3 =M_File_Card_3,
+            curr_sales_offer.Offer_File_Card =Offer_File_Card,
+            curr_sales_offer.Offer_File_Card_2 =Offer_File_Card_2,
+            curr_sales_offer.Offer_File_Card_3 =Offer_File_Card_3,
+            curr_sales_offer.Offer_File_Card_4 =Offer_File_Card_4,
+            curr_sales_offer.Offer_File_Card_5 =Offer_File_Card_5
+            curr_sales_offer.save()
+            return JsonResponse({'message': 'SalesOfferCard Başarı ile oluşturuldu'})
+        return JsonResponse({'message': 'Post alındı ama SalesOfferCard oluşturulamadı'})
+
+    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 
 

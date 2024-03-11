@@ -90,6 +90,7 @@ urlpatterns = [
     path('post_update_supplier/<supplier_id>/', views.post_update_supplier, name='post_update_supplier'),
 
     path('post_sales_offer/', views.post_sales_offer, name='post_sales_offer'),
+    path('post_update_sales_offer/<sales_offer_id>/', views.post_update_sales_offer, name='post_update_sales_offer'),
 
     path('post_update_string/<string_id>/', views.post_update_string, name='post_update_string'),
     path('post_card_file/', views.post_card_file, name='post_card_file'),
