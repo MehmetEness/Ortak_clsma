@@ -711,7 +711,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
 
       input.addEventListener("focus", function () {
-        dropdown.classList.add("show");
+        console.log("asd")
+                setTimeout(() =>{dropdown.classList.add("show");}, 100);
       });
 
       document.addEventListener("click", function(event) {                 
@@ -724,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       item.style.display = "block";
                 });
                       dropdown.classList.remove("show");
-                }, 10);
+                }, 1);
             }        
         }         
       }); 
