@@ -8,49 +8,54 @@ function openFile(url) {
   window.open(url, "_blank");
 }
 
-function clear(value){      
-  if(value != undefined){
-      var cleanString = value.replace(/[^0-9,]/g, '');
-      return cleanString;
-  }else{
-      var  cleanString = 0;
-      return cleanString;
-  } 
+function clear(value) {
+  if (value != undefined) {
+    var cleanString = value.replace(/[^0-9,]/g, "");
+    return cleanString;
+  } else {
+    var cleanString = 0;
+    return cleanString;
+  }
 }
-function clearForSubmit(value){      
-  if(value != undefined){
-      var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
-      return cleanString;
-  }else{
-      var  cleanString = 0;
-      return cleanString;
-  } 
+function clearForSubmit(value) {
+  if (value != undefined) {
+    var cleanString = value.replace(/[^0-9,]/g, "").replace(/,/g, ".");
+    return cleanString;
+  } else {
+    var cleanString = 0;
+    return cleanString;
+  }
 }
-function clear2(value){      
-  if(value != undefined){
-      var cleanString = value.replace(/[^0-9,]/g, '').replace(/,/g, '.');
-      return cleanString;
-  }else{
-      var  cleanString = 0;
-      return cleanString;
-  } 
+function clear2(value) {
+  if (value != undefined) {
+    var cleanString = value.replace(/[^0-9,]/g, "").replace(/,/g, ".");
+    return cleanString;
+  } else {
+    var cleanString = 0;
+    return cleanString;
+  }
 }
 
 //                  FORMAT NUMBERS
 
-function formatNumber(number, fract) {  
-  var value = new Intl.NumberFormat("en-US", {minimumFractionDigits: fract, maximumFractionDigits: fract}).format(number.toFixed(fract));
-  return value.replace(/\./g, 'a').replace(/,/g, '.').replace(/a/g, ',');
+function formatNumber(number, fract) {
+  var value = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: fract,
+    maximumFractionDigits: fract,
+  }).format(number.toFixed(fract));
+  return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
 }
 function format(number) {
-  var indexOfDot = number.indexOf(',');  
+  var indexOfDot = number.indexOf(",");
   if (indexOfDot !== -1) {
-    var integerPart = number.slice(0, indexOfDot).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    var integerPart = number
+      .slice(0, indexOfDot)
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     var decimalPart = number.slice(indexOfDot + 1);
-    return integerPart + ',' + decimalPart;
+    return integerPart + "," + decimalPart;
   } else {
     var formattedNumber = number.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return formattedNumber; 
+    return formattedNumber;
   }
 }
 
@@ -58,48 +63,47 @@ function format(number) {
 
 function formatSpans(span, type) {
   switch (type) {
-    case "kWe":        
-        var value = parseFloat(clear2(span.textContent));        
-        if (!isNaN(parseFloat(value))) {
-          span.textContent = formatNumber(value, 0) + " kWe";
-          span.title = formatNumber(value, 0) + " kWe";
-        } else {
-          span.textContent = "0 kWe";
-          span.title = "0 kWe";
-        }        
+    case "kWe":
+      var value = parseFloat(clear2(span.textContent));
+      if (!isNaN(parseFloat(value))) {
+        span.textContent = formatNumber(value, 0) + " kWe";
+        span.title = formatNumber(value, 0) + " kWe";
+      } else {
+        span.textContent = "0 kWe";
+        span.title = "0 kWe";
+      }
       break;
     case "kWp":
-      var value = parseFloat(clear2(span.textContent));        
-        if (!isNaN(parseFloat(value))) {
-          span.textContent = formatNumber(value, 0) + " kWp";
-          span.title = formatNumber(value, 0) + " kWp";
-        } else {
-          span.textContent = "0 kWp";
-          span.title = "0 kWp";
-        }  
+      var value = parseFloat(clear2(span.textContent));
+      if (!isNaN(parseFloat(value))) {
+        span.textContent = formatNumber(value, 0) + " kWp";
+        span.title = formatNumber(value, 0) + " kWp";
+      } else {
+        span.textContent = "0 kWp";
+        span.title = "0 kWp";
+      }
       break;
     case "usd":
-      var value = parseFloat(clear2(span.textContent));        
-        if (!isNaN(parseFloat(value))) {
-          span.textContent = formatNumber(value, 2) + " $";
-          span.title = formatNumber(value, 2) + " $";
-        } else {
-          span.textContent = "0 $";
-          span.title = "0 $";
-        }  
+      var value = parseFloat(clear2(span.textContent));
+      if (!isNaN(parseFloat(value))) {
+        span.textContent = formatNumber(value, 2) + " $";
+        span.title = formatNumber(value, 2) + " $";
+      } else {
+        span.textContent = "0 $";
+        span.title = "0 $";
+      }
       break;
     case "text":
-      
       break;
     case "numeric":
-      var value = parseFloat(clear2(span.textContent));        
-        if (!isNaN(parseFloat(value))) {
-          span.textContent = formatNumber(value, 2);
-          span.title = formatNumber(value, 2);
-        } else {
-          span.textContent = "0";
-          span.title = "0";
-        } 
+      var value = parseFloat(clear2(span.textContent));
+      if (!isNaN(parseFloat(value))) {
+        span.textContent = formatNumber(value, 2);
+        span.title = formatNumber(value, 2);
+      } else {
+        span.textContent = "0";
+        span.title = "0";
+      }
       break;
 
     default:
@@ -113,7 +117,7 @@ function tableFormat(cells, type) {
     case "usd":
       cells.forEach(function (cell) {
         //var value = parseFloat(cell.textContent.replace(/,/g, "."));
-        var value = parseFloat(clear2(cell.textContent));        
+        var value = parseFloat(clear2(cell.textContent));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -125,7 +129,7 @@ function tableFormat(cells, type) {
       break;
     case "tl":
       cells.forEach(function (cell) {
-       // var value = parseFloat(cell.textContent.replace(/,/g, "."));
+        // var value = parseFloat(cell.textContent.replace(/,/g, "."));
         var value = parseFloat(clear2(cell.textContent));
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
@@ -179,104 +183,143 @@ function tableFormat(cells, type) {
 
 //                  SIRALAMA İŞLEMLERİ
 
-const search1 = document.querySelector('.input-group input');
-search1.addEventListener('input', searchTable);
+const search1 = document.querySelector(".input-group input");
+search1.addEventListener("input", searchTable);
 
-    // SEARCHİNG
+// SEARCHİNG
 function searchTable() {
-    const table_rows = document.querySelectorAll('tbody tr');
-    table_rows.forEach((row, i) => {
-        let table_data = row.textContent.toLowerCase(),
-            search_data = search1.value.toLowerCase();  
-        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-        row.style.setProperty('--delay', i / 25 + 's');
-    })  
-    document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-       visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-    });
+  const table_rows = document.querySelectorAll("tbody tr");
+  table_rows.forEach((row, i) => {
+    let table_data = row.textContent.toLowerCase(),
+      search_data = search1.value.toLowerCase();
+    row.classList.toggle("hide", table_data.indexOf(search_data) < 0);
+    row.style.setProperty("--delay", i / 25 + "s");
+  });
+  document.querySelectorAll("tbody tr:not(.hide)").forEach((visible_row, i) => {
+    visible_row.style.backgroundColor =
+      i % 2 == 0 ? "transparent" : "#0000000b";
+  });
 }
-  // SORTİNG
-function sortingTable(table){
-    const table_headings = table.querySelectorAll('thead th');
-    const table_rows = table.querySelectorAll('tbody tr');
-    const tableBody = table.querySelector('tbody');
-    table_headings.forEach((head, i) => {
-      
-        let sort_asc = true;
-        head.onclick = () => {
-            table_headings.forEach(head => head.classList.remove('active'));
-            head.classList.add('active');    
-            table.querySelectorAll('td').forEach(td => td.classList.remove('active'));
-            table_rows.forEach(row => {
-                row.querySelectorAll('td')[i].classList.add('active');
-            })
-    
-            head.classList.toggle('asc', sort_asc);
-            sort_asc = head.classList.contains('asc') ? false : true;
-    
-            sortTable(i, sort_asc, table_rows, tableBody);
-        }
-    })
+// SORTİNG
+function sortingTable(table) {
+  const table_headings = table.querySelectorAll("thead th");
+  const table_rows = table.querySelectorAll("tbody tr");
+  const tableBody = table.querySelector("tbody");
+  table_headings.forEach((head, i) => {
+    let sort_asc = true;
+    head.onclick = () => {
+      table_headings.forEach((head) => head.classList.remove("active"));
+      head.classList.add("active");
+      table
+        .querySelectorAll("td")
+        .forEach((td) => td.classList.remove("active"));
+      table_rows.forEach((row) => {
+        row.querySelectorAll("td")[i].classList.add("active");
+      });
+
+      head.classList.toggle("asc", sort_asc);
+      sort_asc = head.classList.contains("asc") ? false : true;
+
+      sortTable(i, sort_asc, table_rows, tableBody);
+    };
+  });
 }
 function sortTable(column, sort_asc, table_rows, tableBody) {
-    [...table_rows].sort((a, b) => {
-      let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-        second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
-        let first_number = first_row.replace(/\./g, '').replace('$', '').replace('₺', '').replace(',', '.');
-        let second_number = second_row.replace(/\./g, '').replace('$', '').replace('₺', '').replace(',', '.');
+  [...table_rows]
+    .sort((a, b) => {
+      let first_row = a
+          .querySelectorAll("td")
+          [column].textContent.toLowerCase(),
+        second_row = b.querySelectorAll("td")[column].textContent.toLowerCase();
+      let first_number = first_row
+        .replace(/\./g, "")
+        .replace("$", "")
+        .replace("₺", "")
+        .replace(",", ".");
+      let second_number = second_row
+        .replace(/\./g, "")
+        .replace("$", "")
+        .replace("₺", "")
+        .replace(",", ".");
 
-        
-     
-       // const datePattern = /^\d{1,2} [a-zA-Z]+ \d{4}$/;
-       const datePattern = /^(0?[1-9]|[12][0-9]|3[01])\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+\d{4}$/;
+      // const datePattern = /^\d{1,2} [a-zA-Z]+ \d{4}$/;
+      const datePattern =
+        /^(0?[1-9]|[12][0-9]|3[01])\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+\d{4}$/;
 
       if (datePattern.test(first_row) && datePattern.test(second_row)) {
-        return sort_asc ? compareDates(second_row, first_row) : compareDates(first_row, second_row);
+        return sort_asc
+          ? compareDates(second_row, first_row)
+          : compareDates(first_row, second_row);
       }
-      if(!isNaN(parseFloat(first_number)) && !isNaN(parseFloat(second_number))){
+      if (
+        !isNaN(parseFloat(first_number)) &&
+        !isNaN(parseFloat(second_number))
+      ) {
         first_number = parseFloat(first_number);
         second_number = parseFloat(second_number);
-        return sort_asc ? (first_number < second_number ? 1 : -1) : (first_number < second_number ? -1 : 1);
-      }else {
-        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+        return sort_asc
+          ? first_number < second_number
+            ? 1
+            : -1
+          : first_number < second_number
+          ? -1
+          : 1;
+      } else {
+        return sort_asc
+          ? first_row < second_row
+            ? 1
+            : -1
+          : first_row < second_row
+          ? -1
+          : 1;
       }
     })
-    .map(sorted_row => tableBody.appendChild(sorted_row));
+    .map((sorted_row) => tableBody.appendChild(sorted_row));
 }
 function sortTableForStart(table, columnIndex) {
   const rows = Array.from(table.querySelectorAll("tbody tr"));
 
   rows.sort((rowA, rowB) => {
-      const cellA = rowA.querySelectorAll("td")[columnIndex].textContent.trim();
-      const cellB = rowB.querySelectorAll("td")[columnIndex].textContent.trim();
-      return cellA.localeCompare(cellB);
+    const cellA = rowA.querySelectorAll("td")[columnIndex].textContent.trim();
+    const cellB = rowB.querySelectorAll("td")[columnIndex].textContent.trim();
+    return cellA.localeCompare(cellB);
   });
 
   const tbody = table.querySelector("tbody");
   tbody.innerHTML = "";
-  rows.forEach(row => {
-      tbody.appendChild(row);
+  rows.forEach((row) => {
+    tbody.appendChild(row);
   });
 }
 function compareDates(date1, date2) {
   const months = {
-      "ocak": 0, "şubat": 1, "mart": 2, "nisan": 3, "mayıs": 4, "haziran": 5,
-      "temmuz": 6, "ağustos": 7, "eylül": 8, "ekim": 9, "kasım": 10, "aralık": 11
+    ocak: 0,
+    şubat: 1,
+    mart: 2,
+    nisan: 3,
+    mayıs: 4,
+    haziran: 5,
+    temmuz: 6,
+    ağustos: 7,
+    eylül: 8,
+    ekim: 9,
+    kasım: 10,
+    aralık: 11,
   };
 
-  const [day1, month1, year1] = date1.split(' ');
-  const [day2, month2, year2] = date2.split(' ');
+  const [day1, month1, year1] = date1.split(" ");
+  const [day2, month2, year2] = date2.split(" ");
 
   const d1 = new Date(year1, months[month1], day1);
   const d2 = new Date(year2, months[month2], day2);
-  console.log(year1, months[month1], day1)
-  console.log(year2, months[month2], day2)
+  console.log(year1, months[month1], day1);
+  console.log(year2, months[month2], day2);
   if (d1 > d2) {
-      return 1;
+    return 1;
   } else if (d1 < d2) {
-      return -1;
+    return -1;
   } else {
-      return 1;
+    return 1;
   }
 }
 
@@ -341,11 +384,11 @@ function requiredInputs(inputs, labels) {
     return false;
   }
 }
-function clearInputAfterSave(form){
-    let inputs = form.querySelectorAll("input:not([type='button']");
-    inputs.forEach((input)=>{
-      input.value = "";
-    })
+function clearInputAfterSave(form) {
+  let inputs = form.querySelectorAll("input:not([type='button']");
+  inputs.forEach((input) => {
+    input.value = "";
+  });
 }
 //                  SELECTİON VE İNPUT KONTROLÜ
 
@@ -366,14 +409,14 @@ function clearInputAfterSave(form){
 //     return true;
 //   }
 // }
-function controlSelectionInputsReverse(input, label,ddmenu) {
+function controlSelectionInputsReverse(input, label, ddmenu) {
   var optionCount = 0;
-  ddmenu.forEach(function(option){
-    if(input.value.trim() == option.textContent.trim()){
+  ddmenu.forEach(function (option) {
+    if (input.value.trim() == option.textContent.trim()) {
       optionCount += 1;
     }
   });
-  if (optionCount == 0) {    
+  if (optionCount == 0) {
     label.style.color = "black";
     label.style.fontWeight = "500";
     return true;
@@ -386,35 +429,35 @@ function controlSelectionInputsReverse(input, label,ddmenu) {
 
 //                  INPUTLARI FORMATLAMA
 
-function inputForFormat(input){
-  input.addEventListener("input", function(event) {
-      var inputValue = event.target.value;
-      var clearValue = clear(inputValue);
-      var formatValue = format(clearValue);
-      input.value = formatValue;
+function inputForFormat(input) {
+  input.addEventListener("input", function (event) {
+    var inputValue = event.target.value;
+    var clearValue = clear(inputValue);
+    var formatValue = format(clearValue);
+    input.value = formatValue;
   });
 }
 
 function onPageLoad(input) {
-    var inputValue = parseFloat(input.value); 
-    if(!isNaN(inputValue)){
-        var formatValue = formatNumber(inputValue , 2);
-        input.value = formatValue;
-        deger = formatValue;
-    }else{
-        input.value = "0"
-    }
+  var inputValue = parseFloat(input.value);
+  if (!isNaN(inputValue)) {
+    var formatValue = formatNumber(inputValue, 2);
+    input.value = formatValue;
+    deger = formatValue;
+  } else {
+    input.value = "0";
+  }
 }
 
 //                  FİRMA ADLARI KONTROLÜ
 
-function firmaCount(firmalar, input){
+function firmaCount(firmalar, input) {
   var firmaCount = 0;
-  firmalar.forEach(function(firma){
-      if(input.value.trim() == firma.textContent.trim()){
-          firmaCount += 1;
-      }
-  });  
+  firmalar.forEach(function (firma) {
+    if (input.value.trim() == firma.textContent.trim()) {
+      firmaCount += 1;
+    }
+  });
   return firmaCount;
 }
 
@@ -494,69 +537,80 @@ function parseCardDate(dateString) {
 
 //                  GET MONTH NAME
 function getMonthName(monthIndex) {
-  const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+  const months = [
+    "Ocak",
+    "Şubat",
+    "Mart",
+    "Nisan",
+    "Mayıs",
+    "Haziran",
+    "Temmuz",
+    "Ağustos",
+    "Eylül",
+    "Ekim",
+    "Kasım",
+    "Aralık",
+  ];
   return months[monthIndex];
 }
 
 //                  GÜN KONTROLÜ İÇİN TARİH FORMATLAMA
-function dateFormatForColor(tableRows, colIndex){
+function dateFormatForColor(tableRows, colIndex) {
   var today = new Date();
-  tableRows.forEach(function(row) {
-      var tableDate = row.querySelector(`td:nth-child(${colIndex})`).textContent;
-      var dateForColor = row.querySelector("td:nth-child(7) span")
-      var dateParts = tableDate.split(" ");
-      var day = parseInt(dateParts[0]);
-      var month = dateParts[1];
-      var year = parseInt(dateParts[2]);
-      console.log(tableDate)
-      var tableDateObj = new Date(year, monthIndex(month), day);
-      
+  tableRows.forEach(function (row) {
+    var tableDate = row.querySelector(`td:nth-child(${colIndex})`).textContent;
+    var dateForColor = row.querySelector("td:nth-child(7) span");
+    var dateParts = tableDate.split(" ");
+    var day = parseInt(dateParts[0]);
+    var month = dateParts[1];
+    var year = parseInt(dateParts[2]);
+    console.log(tableDate);
+    var tableDateObj = new Date(year, monthIndex(month), day);
 
-      var diffTime = Math.abs(tableDateObj - today);
-      var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      if (today === tableDateObj || today > tableDateObj) {
-          dateForColor.classList.add("timeIsUp");
-      } else if (diffDays <= 7 && today < tableDateObj) {
-          dateForColor.classList.add("oneWeek");
-      } else if (diffDays <= 15 && today < tableDateObj) {
-          dateForColor.classList.add("twoWeek");
-      }
+    var diffTime = Math.abs(tableDateObj - today);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (today === tableDateObj || today > tableDateObj) {
+      dateForColor.classList.add("timeIsUp");
+    } else if (diffDays <= 7 && today < tableDateObj) {
+      dateForColor.classList.add("oneWeek");
+    } else if (diffDays <= 15 && today < tableDateObj) {
+      dateForColor.classList.add("twoWeek");
+    }
   });
-
 }
 
 function monthIndex(month) {
-    var months = {
-        "Ocak": 0,
-        "Şubat": 1,
-        "Mart": 2,
-        "Nisan": 3,
-        "Mayıs": 4,
-        "Haziran": 5,
-        "Temmuz": 6,
-        "Ağustos": 7,
-        "Eylül": 8,
-        "Ekim": 9,
-        "Kasım": 10,
-        "Aralık": 11
-    };
-    return months[month];
+  var months = {
+    Ocak: 0,
+    Şubat: 1,
+    Mart: 2,
+    Nisan: 3,
+    Mayıs: 4,
+    Haziran: 5,
+    Temmuz: 6,
+    Ağustos: 7,
+    Eylül: 8,
+    Ekim: 9,
+    Kasım: 10,
+    Aralık: 11,
+  };
+  return months[month];
 }
 
-function takeCurrentDay(){
-    var bugun = new Date();
-    var gun = bugun.getDate();
-    var ay = bugun.getMonth() + 1;
-    var yil = bugun.getFullYear();
+function takeCurrentDay() {
+  var bugun = new Date();
+  var gun = bugun.getDate();
+  var ay = bugun.getMonth() + 1;
+  var yil = bugun.getFullYear();
 
-    if(gun < 10) {
-        gun = '0' + gun;
-    }
-    if(ay < 10) {
-        ay = '0' + ay;
-    }
-    var bugununTarihi = yil + '-' + ay + '-' + gun;
-    return bugununTarihi;
+  if (gun < 10) {
+    gun = "0" + gun;
+  }
+  if (ay < 10) {
+    ay = "0" + ay;
+  }
+  var bugununTarihi = yil + "-" + ay + "-" + gun;
+  return bugununTarihi;
 }
 
 //                  CARDLARI TARİHE GÖRE SIRALAMA
@@ -615,31 +669,27 @@ function formatDate(date) {
       return `${formatted.slice(0, 2)}.${formatted.slice(2, 4)}.2999`;
     }
   }
-}                
+}
 function formatDateForSubmit(date) {
-  if(date.length == 10){
-    var splits = date.split('.');
+  if (date.length == 10) {
+    var splits = date.split(".");
 
-var gun = splits[0];
-var ay = splits[1];
-var yil = splits[2];
+    var gun = splits[0];
+    var ay = splits[1];
+    var yil = splits[2];
 
-var newFormat = yil + '-' + ay + '-' + gun;
+    var newFormat = yil + "-" + ay + "-" + gun;
 
-return newFormat;
-  }
-  else{
+    return newFormat;
+  } else {
     return "";
   }
-
 }
-function convertDateFormat (tarih){
-  var date = tarih.split('.');
+function convertDateFormat(tarih) {
+  var date = tarih.split(".");
   date = `${date[1]}.${date[0]}.${date[2]}`;
   return date;
-}   
-
-
+}
 
 //                 DOLAR KURU İÇİN TARİH ÇEKME
 
@@ -648,15 +698,15 @@ function tarihFormatiniDegistir(tarih) {
   const dateObj = new Date(tarih);
   dateObj.setDate(dateObj.getDate() + 1);
   if (isWeekend(dateObj)) {
-      dateObj.setDate(dateObj.getDate() + 1);
+    dateObj.setDate(dateObj.getDate() + 1);
   }
   while (isWeekend(dateObj)) {
-      dateObj.setDate(dateObj.getDate() + 1);
+    dateObj.setDate(dateObj.getDate() + 1);
   }
   const yil = dateObj.getFullYear();
-  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-  const gun = dateObj.getDate().toString().padStart(2, '0');
-  const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
+  const ay = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const gun = dateObj.getDate().toString().padStart(2, "0");
+  const yeniFormatliTarih = gun + "-" + ay + "-" + yil;
   return yeniFormatliTarih;
 }
 function birGunOncekiTarih(dateString) {
@@ -664,37 +714,34 @@ function birGunOncekiTarih(dateString) {
   const dateObj = new Date(dateString);
   dateObj.setDate(dateObj.getDate());
   while (isWeekend(dateObj)) {
-      dateObj.setDate(dateObj.getDate() + 1);
+    dateObj.setDate(dateObj.getDate() + 1);
   }
   const yil = dateObj.getFullYear();
-  const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-  const gun = dateObj.getDate().toString().padStart(2, '0');
-  const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
+  const ay = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const gun = dateObj.getDate().toString().padStart(2, "0");
+  const yeniFormatliTarih = gun + "-" + ay + "-" + yil;
   return yeniFormatliTarih;
-}  
+}
 function isWeekend(date) {
-      const day = date.getDay();
-      return day === 0 || day === 6;
+  const day = date.getDay();
+  return day === 0 || day === 6;
 }
 function dateInputFormat(input) {
   let tarih = input.value;
-    if(tarih.length == 10){
-      var parcalar = tarih.split('-');
+  if (tarih.length == 10) {
+    var parcalar = tarih.split("-");
 
-  var yil = parcalar[0];
-  var ay = parcalar[1];
-  var gun = parcalar[2];
+    var yil = parcalar[0];
+    var ay = parcalar[1];
+    var gun = parcalar[2];
 
-  var yeniFormat = gun + '.' + ay + '.' + yil;
+    var yeniFormat = gun + "." + ay + "." + yil;
 
-  input.value = yeniFormat;
-    }
-    else{
-      input.value = "";
-    }
-  
-}  
-
+    input.value = yeniFormat;
+  } else {
+    input.value = "";
+  }
+}
 
 //            ***** DOM EVENTS *****
 
@@ -711,24 +758,26 @@ document.addEventListener("DOMContentLoaded", function () {
       const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
 
       input.addEventListener("focus", function () {
-        console.log("asd")
-                setTimeout(() =>{dropdown.classList.add("show");}, 100);
+        console.log("asd");
+        setTimeout(() => {
+          dropdown.classList.add("show");
+        }, 100);
       });
 
-      document.addEventListener("click", function(event) {                 
-        var isClickInput = dropBox.contains(event.target);                  
-        if(dropdown.classList.contains('show')){
-            if(!isClickInput){   
-                setTimeout(() => {
-                input.value = '';
-                dropdownItems.forEach((item)=>{
-                      item.style.display = "block";
-                });
-                      dropdown.classList.remove("show");
-                }, 1);
-            }        
-        }         
-      }); 
+      document.addEventListener("click", function (event) {
+        var isClickInput = dropBox.contains(event.target);
+        if (dropdown.classList.contains("show")) {
+          if (!isClickInput) {
+            setTimeout(() => {
+              input.value = "";
+              dropdownItems.forEach((item) => {
+                item.style.display = "block";
+              });
+              dropdown.classList.remove("show");
+            }, 1);
+          }
+        }
+      });
 
       input.addEventListener("input", function () {
         const filterText = input.value.toLowerCase();
@@ -752,3 +801,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+/***********************************************************
+#                       KUR
+***********************************************************/
+async function getUSDKur(date) {
+  try {
+    const response = await fetch(`/get_dollar_rate/${date}/`);
+    const data = await response.json();
+    return data.rate.toString();
+  } catch (error) {
+    return "0";
+  }
+}

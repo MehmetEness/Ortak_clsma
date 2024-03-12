@@ -21,6 +21,8 @@ async function getSupplier() {
         const response = await fetch(`/get_suppliers/`);
         const data = await response.json();
         const suppliers = data.suppliers; 
+        console.log(response);
+        console.log(data);
         let rows = '';
         for (const supplier of suppliers) {           
             const row = '<tr>' +

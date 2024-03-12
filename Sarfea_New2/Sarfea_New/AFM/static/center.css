@@ -27,7 +27,7 @@
   top: 5px;
   cursor: pointer;
 }
-.close-company-window{
+.close-company-window {
   position: absolute;
   right: 11px;
   top: 5px;
@@ -45,7 +45,7 @@
 .project-add-window .container {
   max-width: 1000px;
 }
-.client-add-window .container{
+.client-add-window .container {
   /* max-width: 400px; */
 }
 .container .title {
@@ -80,13 +80,13 @@
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }
-.large{
+.large {
   width: calc(100% - 20px) !important ;
 }
-.medium{
-  width: calc(((100% / 3) * 2) - 10px ) !important;
+.medium {
+  width: calc(((100% / 3) * 2) - 10px) !important;
 }
-.paying-company-add-btn{
+.paying-company-add-btn {
   margin-left: 5px;
   padding: 0 5px;
   border: 1px solid #00000070;
@@ -95,8 +95,8 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-.paying-company-add-btn:hover{
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.5); 
+.paying-company-add-btn:hover {
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.5);
   background: #fff;
 }
 .user-details .input-box .details {
@@ -120,8 +120,12 @@ select {
 .user-details .input-box input,
 .user-details .input-box input,
 .user-details .input-box select,
-.user-details .input-box .select2-selection__rendered
-.user-details .input-box #id_CompanyName {
+.user-details
+  .input-box
+  .select2-selection__rendered
+  .user-details
+  .input-box
+  #id_CompanyName {
   border-color: #191970 !important;
 }
 form .gender-details .gender-title {
@@ -161,10 +165,10 @@ form .button {
   margin-top: 25px;
   margin-bottom: 0;
 }
-#firma_container{
+#firma_container {
   width: 20%;
 }
-#firma_input_box{
+#firma_input_box {
   width: 100%;
 }
 form .button input {
@@ -242,12 +246,8 @@ form .button input:hover {
 .hide {
   display: none;
 }
-#id_boxLastChekDate_Incomes {
 
-  display: none;
-}
-
-#id_CompanyName span span{
+#id_CompanyName span span {
   height: 45px;
   width: 100%;
   outline: none;
@@ -271,7 +271,7 @@ form .button input:hover {
   transition: all 0.3s ease;
   border-color: #191970 !important;
 } */
-.select2-selection{
+.select2-selection {
   height: 45px;
   width: 100%;
   outline: none;
@@ -283,17 +283,18 @@ form .button input:hover {
   transition: all 0.3s ease;
   border-color: #191970 !important;
 }
-.select2-container--default{
+.select2-container--default {
   border: none;
   border-bottom-width: 2px;
   border: solid 1px #ccc;
 }
-#payment_type_label{
+#payment_type_label {
   display: flex;
 }
-#last-date-add-btn, #last-date-delete-btn{
+#last-date-add-btn,
+#last-date-delete-btn {
   margin-left: 7px;
   padding: 3px 8px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 5px;
-} 
+}
