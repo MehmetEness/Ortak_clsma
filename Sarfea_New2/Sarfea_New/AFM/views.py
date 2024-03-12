@@ -1020,7 +1020,9 @@ def deneme2(request):
 #                       GET METHODLARI
 #***********************************************************
 
-
+from AFM.serializers import ClientSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 @login_required
 def get_projects(request):
@@ -1040,10 +1042,21 @@ def get_incomes(request):
     incomes = Incomes.objects.all().values()
     return JsonResponse({'incomes': list(incomes)})
 
-@login_required
+
+@api_view(['GET'])
 def get_clients(request):
-    clients = Clients.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'clients': list(clients)})
+    clients = Clients.objects.all() # Tüm müşterileri JSON formatında al
+    serializer = ClientSerializer(clients, many=True)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_client_id(request, client_id):
+    client = get_object_or_404(Clients, id=client_id)
+
+    serializer = ClientSerializer(client)
+
+    return Response(serializer.data)
 
 @login_required
 def get_suppliers(request):
@@ -1504,48 +1517,27 @@ def post_update_income(request, income_id):
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
+@api_view(['POST'])
 def post_client(request):
-    if request.method == 'POST':
-        
-        company_name_clients = request.POST.get('CompanyName_Clients')
-        contact_person= request.POST.get('ContactPerson')
-        phone_number= request.POST.get('PhoneNumber')
-        email= request.POST.get('Email')
-        location= request.POST.get('Location')
-        if company_name_clients:
-            Clients.objects.create(
-                CompanyName_Clients=company_name_clients, 
-                ContactPerson=contact_person, 
-                PhoneNumber=phone_number, 
-                Email=email, 
-                Location=location, 
-            )
-
-            return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+    serializer= ClientSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 
 @csrf_exempt
+@api_view(['PUT'])
 def post_update_client(request, client_id):
     curr_client = get_object_or_404(Clients, id=client_id)
-    if request.method == 'POST':
-        
-        company_name_clients = request.POST.get('CompanyName_Clients')
-        contact_person= request.POST.get('ContactPerson')
-        phone_number= request.POST.get('PhoneNumber')
-        email= request.POST.get('Email')
-        location= request.POST.get('Location')
-        if company_name_clients:
-            
-            curr_client.CompanyName_Clients=company_name_clients, 
-            curr_client.ContactPerson=contact_person, 
-            curr_client.PhoneNumber=phone_number, 
-            curr_client.Email=email, 
-            curr_client.Location=location, 
-            curr_client.save()
-            return JsonResponse({'message': 'Client Başarı ile oluşturuldu'})
 
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+    serializer = ClientSerializer(curr_client, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+    
 
 @csrf_exempt
 def post_supplier(request):

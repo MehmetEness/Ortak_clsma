@@ -52,22 +52,27 @@ urlpatterns = [
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
     
     #MODUL-GET
-    path('get_clients/', views.get_clients, name='get_clients'),
-    path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
     path('get_projects/', views.get_projects, name='get_projects'),
+    path('get_clients/', views.get_clients, name='get_clients'),
+    path('get_client_id/<client_id>', views.get_client_id, name='get_client_id'),
+
+    path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
+    path("get_expenses/", views.get_expenses, name='get_expenses'),
+    path("get_job_history/", views.get_job_history, name='get_job_history'),
+    path("get_incomes/", views.get_incomes, name='get_incomes'),
+
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
     path('get_late_cards/', views.get_late_cards, name='get_late_cards'),
     path('get_run_cards/', views.get_run_cards, name='get_run_cards'),
     path('get_cards/', views.get_cards, name='get_cards'),
-    path("get_expenses/", views.get_expenses, name='get_expenses'),
-    path("get_job_history/", views.get_job_history, name='get_job_history'),
-    path("get_incomes/", views.get_incomes, name='get_incomes'),
+
     path('get_operation_care/', views.get_operation_care, name='get_operation_care'),
     path('get_fail/', views.get_fail, name='get_fail'),
     path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
     path("get_inventors/<operation_care_id>/", views.get_inventors, name='get_inventors'),
     path("get_strings/<inventor_id>/", views.get_strings, name='get_strings'),
+    
     path("get_dollar_rate/<str:date>/", views.get_dollar_rate, name='get_dollar_rate'),
     
     #MODUL-POST
