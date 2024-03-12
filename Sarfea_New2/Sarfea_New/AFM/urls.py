@@ -57,6 +57,8 @@ urlpatterns = [
     path('get_client_id/<client_id>', views.get_client_id, name='get_client_id'),
 
     path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
+    path('get_supplier_id/<supplier_id>', views.get_supplier_id, name='get_supplier_id'),
+
     path("get_expenses/", views.get_expenses, name='get_expenses'),
     path("get_job_history/", views.get_job_history, name='get_job_history'),
     path("get_incomes/", views.get_incomes, name='get_incomes'),

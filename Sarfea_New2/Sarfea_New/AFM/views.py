@@ -1020,7 +1020,7 @@ def deneme2(request):
 #                       GET METHODLARI
 #***********************************************************
 
-from AFM.serializers import ClientSerializer
+from AFM.serializers import ClientSerializer, SupplierSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -1058,10 +1058,21 @@ def get_client_id(request, client_id):
 
     return Response(serializer.data)
 
+@api_view(['GET'])
 @login_required
 def get_suppliers(request):
-    suppliers = Supplier.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'suppliers': list(suppliers)})
+    suppliers = Supplier.objects.all()
+    serializer = SupplierSerializer(suppliers, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@login_required
+def get_supplier_id(request, supplier_id):
+    supplier = get_object_or_404(Supplier, id=supplier_id)
+
+    serializer = SupplierSerializer(supplier)
+
+    return Response(serializer.data)
 
 @login_required
 def get_cards(request):
@@ -1539,51 +1550,27 @@ def post_update_client(request, client_id):
 
     
 
-@csrf_exempt
+csrf_exempt
+@api_view(['POST'])
 def post_supplier(request):
-    if request.method == 'POST':
-        CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
-        ContactPerson = request.POST.get('ContactPerson')
-        PhoneNumber = request.POST.get('PhoneNumber')
-        Email = request.POST.get('Email')
-        Location = request.POST.get('Location')
-        
-        if CompanyName_Supplier:
-            Supplier.objects.create(
-                CompanyName_Supplier=CompanyName_Supplier, 
-                ContactPerson=ContactPerson, 
-                PhoneNumber=PhoneNumber, 
-                Email=Email, 
-                Location=Location, 
-            )
-
-            return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
-        return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+    serializer= SupplierSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 
 @csrf_exempt
+@api_view(['PUT'])
 def post_update_supplier(request, supplier_id):
     curr_supplier = get_object_or_404(Supplier, id=supplier_id)
 
-    if request.method == 'POST':
-        CompanyName_Supplier = request.POST.get('CompanyName_Supplier')
-        ContactPerson = request.POST.get('ContactPerson')
-        PhoneNumber = request.POST.get('PhoneNumber')
-        Email = request.POST.get('Email')
-        Location = request.POST.get('Location')
-        
-        if CompanyName_Supplier:
-            curr_supplier.CompanyName_Supplier=CompanyName_Supplier, 
-            curr_supplier.ContactPerson=ContactPerson, 
-            curr_supplier.PhoneNumber=PhoneNumber, 
-            curr_supplier.Email=Email, 
-            curr_supplier.Location=Location, 
-            curr_supplier.save()
-            return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
-        return JsonResponse({'message': 'Post alındı ama Supplier oluşturulamadı'})
+    serializer = SupplierSerializer(curr_supplier, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
 
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
 def post_sales_offer(request):
