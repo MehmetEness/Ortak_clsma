@@ -45,9 +45,7 @@
 .project-add-window .container {
   max-width: 1000px;
 }
-.client-add-window .container {
-  /* max-width: 400px; */
-}
+
 .container .title {
   font-size: 25px;
   font-weight: 500;

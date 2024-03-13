@@ -183,33 +183,14 @@
         <input type="hidden" name="form_type" value="income_form" />
         <div class="user-details">
           <div class="input-box">
-            <span id="odeme_yapan_firma_span" class="details"
-              >Ödeme Yapan Firma*
-              <button
-                type="button"
-                id="paying-firma-add-btn"
-                class="paying-company-add-btn"
-              >
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </span>
+            <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                type="text"
-                id="id_CompanyName_Pay_Incomes"
-                name="CompanyName_Pay_Incomes"
-                class="myInput"
-                placeholder="Firma Adını Seçiniz"
-                data-dropdown="dropdown2"
-              />
-
-              <div id="dropdown2" class="dropdown-content">
-                {% for x in client %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.CompanyName_Clients}}</span
-                >
-                {% endfor %}
+                <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1">
+               
+              <div id="income_dropdown1" class="dropdown-content">
+                <span value="1" class="dropdown-item">müşteri 1</span>
+                <span value="2" class="dropdown-item">müşteri 2</span>
+                <span value="3" class="dropdown-item">müşteri 3</span>
               </div>
             </div>
           </div>
@@ -217,22 +198,10 @@
           <div class="input-box" id="ProjectName_IncomesInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                type="text"
-                id="id_ProjectName_Incomes"
-                name="ProjectName_Incomes"
-                class="myInput"
-                placeholder="Proje Adını Seçiniz"
-                data-dropdown="dropdown1"
-              />
+              <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes" class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2"/>
 
-              <div id="dropdown1" class="dropdown-content">
-                {% for x in project %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.ProjectName}}</span
-                >
-                {% endfor %}
+              <div id="income_dropdown2" class="dropdown-content">                
+                <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
               </div>
             </div>
           </div>
