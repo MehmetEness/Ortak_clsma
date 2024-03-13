@@ -31,17 +31,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function getProjects() {
   try {
     let currentRows = projectsTable.querySelectorAll("tr");
-    const response = await fetch(`/get_projects/`);
+    const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
     const data = await response.json();
     const projects = data.projects;
     //console.log(projects);
     let rows = "";
-    for (const project of projects) {
+    for (const project of data) {
       const date = new Date(project.StartDate);
       const formattedDate = `${date.getDate()} ${getMonthName(
         date.getMonth()
       )} ${date.getFullYear()}`;
-      var projectDetailsUrl = `/project_details/${project.id}/`;
+      var projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
       const row =
         "<tr>" +
         `<td>` +
@@ -78,7 +78,7 @@ async function getProjects() {
         "</tr>";
       rows += row;
     }
-    if (projects.length > currentRows.length) {
+    if (data.length > currentRows.length) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);
@@ -91,31 +91,28 @@ async function getProjects() {
 }
 
 
+//                  DROPDOWN MENÜLER
+//getClients();
 async function getClients() {
   try {
     const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
     const data = await response.json();
     let rows = "";
+    //console.log(data)
     for (const client of data) {
-      console.log(client)
-      const row = `<td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>`;
+     // console.log(client)
+      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients_New}</span>`;
       rows += row;
     }
-    const projectsTableBody = document.querySelector("#projectsTableBody");
-    if (projects.length > 0) {
-      projectsTableBody.innerHTML = rows;
-      sortingTable(projectsTableBody.parentElement);
-      allTableFormat();
-      editButtonsEvents();
-    }
+    const clientDropdowns = document.querySelectorAll(".client-dropdown");    
+    clientDropdowns.forEach(async (clientDropdown)=>{
+      clientDropdown.innerHTML = rows;
+    })     
+    dropdownActive();    
   } catch (error) {
     console.error("Error fetching and rendering projects:", error);
   }
 }
-
-
-
-
 
 
 //                  TABLO FORMATLAMA
@@ -174,6 +171,7 @@ var jobhistoryAddWindowButton = document.querySelector(".jobhistory-add-btn");
 projectAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     projectAddWindow.style.display = "flex";
+    getClients();
   }, 10);
 });
 document.addEventListener("click", (event) => {
@@ -189,6 +187,7 @@ document.addEventListener("click", (event) => {
 incomeAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     incomeAddWindow.style.display = "flex";
+    getClients();
   }, 10);
 });
 document.addEventListener("click", (event) => {
@@ -204,6 +203,7 @@ document.addEventListener("click", (event) => {
 expensesAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     expensesAddWindow.style.display = "flex";
+    getClients();
   }, 10);
 });
 document.addEventListener("click", (event) => {
@@ -219,6 +219,7 @@ document.addEventListener("click", (event) => {
 jobhistoryAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     jobhistoryAddWindow.style.display = "flex";
+    getClients();
   }, 10);
 });
 document.addEventListener("click", (event) => {
@@ -325,6 +326,8 @@ incomeTimeForKur.addEventListener("change", async function () {
   }
 });
 
+
+let editMode = false;
 /***********************************************************
 #                       EXPENSES ADD - EDİT
 ***********************************************************/
@@ -390,3 +393,77 @@ jobhistoryTimeForKur.addEventListener("change", async function () {
 /***********************************************************
 #                       PROJECT ADD - EDİT
 ***********************************************************/
+const projectAddForm = document.getElementById("project_add_form");
+const projectFormAddBtn = document.getElementById("project-create-btn");
+projectFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    const formData = new FormData(projectAddForm);
+
+    if (!editMode) {
+      try {
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+          jsonObject[key] = value;
+        });
+        const jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData)
+
+        const response = await fetch("http://127.0.0.1:8000/post_projects/", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: formData,
+        });
+        getProjects()
+        projectAddWindow.style.display = "none";
+        clearInputAfterSave(projectAddForm);
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+    } else {
+      // try {
+      //   const jsonObject = {};
+      //   formData.forEach((value, key) => {
+      //     jsonObject[key] = value;
+      //   });
+      //   const jsonData = JSON.stringify(jsonObject);
+      //   console.log(jsonData)
+      //   const response = await fetch(`http://127.0.0.1:8000/post_update_client/${clientId}`, {
+      //     method: "PUT",
+      //     headers: {
+      //       "X-CSRFToken": getCookie("csrftoken"),
+      //     },
+      //     body: jsonData,
+      //   });
+        
+      //   getClient();
+      //   clientAddWindow.style.display = "none";
+      //   clearInputAfterSave(clientAddForm);
+      // } catch (error) {
+      //   console.error("There was an error!", error);
+      // }
+    }
+  }
+});
+
+
+
+
+///---------///
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}

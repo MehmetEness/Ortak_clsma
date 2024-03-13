@@ -22,12 +22,12 @@ async function getSupplier() {
     const response = await fetch(`http://127.0.0.1:8000/get_suppliers/`);
     const data = await response.json();
     const suppliers = data.suppliers;
-    console.log(response);
-    console.log(data);
+    //console.log(response);
+    //console.log(data);
 
     let rows = "";
     for (const supplier of data) {
-      console.log(supplier.CompanyName_Supplier);
+      //console.log(supplier.CompanyName_Supplier);
       const row = `
                 <tr>
                     <td>
@@ -108,22 +108,26 @@ const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
-  if (requiredInputs(reqInputs, reqLabels)) {
+  if (true) {
     const formData = new FormData(supplierAddForm);
 
     try {
-      const response = await fetch("/post_supplier/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      //const responseData = await response.json();
-      //console.log(responseData.message);
-      getSupplier();
-      supplierAddWindow.style.display = "none";
-      clearInputAfterSave(supplierAddForm);
+      const jsonObject = {};
+        formData.forEach((value, key) => {
+          jsonObject[key] = value;
+        });
+        const jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData)
+        const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: formData,
+        });
+        getSupplier();
+        supplierAddWindow.style.display = "none";
+        clearInputAfterSave(supplierAddForm);
     } catch (error) {
       console.error("There was an error!", error);
     }

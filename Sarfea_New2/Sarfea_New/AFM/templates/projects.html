@@ -14,73 +14,40 @@
     <div class="container">
       <h3 id="project-X" class="close-window">X</h3>
       <div class="title">Proje Ekle</div>
-      <form id="my-form" action="{% url 'project_add' %}" method="post">
+      <form id="project_add_form" action="{% url 'project_add' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
         <div class="user-details">
           <div class="input-box" id="CompanyNameInput">
-            <span id="firma_adi_span" class="details"
-              >Firma Adı*<button
-                type="button"
-                id="paying-firma-add-btn"
-                class="paying-company-add-btn"
-              >
-                <i class="fa-solid fa-plus"></i></button
-            ></span>
+            <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-company-add-btn">
+              <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                type="text"
-                id="id_CompanyName"
-                name="CompanyName"
-                class="myInput"
-                placeholder="Firma Adını Seçiniz"
-                data-dropdown="dropdown1"
-              />
-              <div id="dropdown1" class="dropdown-content">
-                {% for x in client %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.CompanyName_Clients}}</span
-                >
-                {% endfor %}
+              <input autocomplete="off" type="text" id="id_CompanyName" name="CompanyName" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="project-add-dropdown1"/>
+              <div id="project-add-dropdown1" class="dropdown-content client-dropdown">                
+                <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Clients}}</span>                
               </div>
             </div>
           </div>
 
           <div class="input-box" id="ProjectNameInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
-            <input
-              autocomplete="off"
-              type="text"
-              name="ProjectName"
-              maxlength="63"
-              id="id_ProjectName"
-              autocomplete="off"
-            />
+            <input autocomplete="off" type="text" name="ProjectName" maxlength="63" id="id_ProjectName" autocomplete="off"/>
           </div>
           <div class="input-box" id="ProjectCodeInput">
             <span id="proje_kodu_span" class="details">Proje Kodu*</span>
-            <input type="text" />
+            <input name="ProjectCode" type="text"/>
           </div>
 
           <div class="input-box">
             <span class="details">İşi Üstlenen Firma</span>
-            <input type="text" />
+            <input name="CompanyUndertakingWork" type="text" />
           </div>
 
           <div class="input-box">
             <span id="konum_label" class="details">Konum</span>
             <div class="dropdown-container">
-              <input
-                type="text"
-                id="id_Location"
-                name="Location"
-                class="myInput"
-                placeholder="Konum Seçiniz"
-                data-dropdown="dropdown2"
-                autocomplete="off"
-              />
+              <input type="text" id="id_Location" name="Location" class="myInput" placeholder="Konum Seçiniz" data-dropdown="dropdown2" autocomplete="off"/>
               <div id="dropdown2" class="dropdown-content">
                 {% for x in locations %}
                 <span value="{{x.id}}" class="dropdown-item"
@@ -157,19 +124,19 @@
           </div>
           <div class="input-box">
             <span class="details">KDV Oranı (%)</span>
-            <input type="text" />
+            <input name="KDV_Rate" type="text" />
           </div>
           <div class="input-box">
             <span class="details">Arazi/Çatı</span>
-            <input type="text" />
+            <input name="Terrain_Roof" type="text" />
           </div>
           <div class="input-box">
             <span class="details">Teşvikli (Evet/Hayır)</span>
-            <input type="text" />
+            <input name="Incentive" type="text" />
           </div>
         </div>
         <div class="button">
-          <input id="project-create-btn" type="submit" value="Proje Ekle" />
+          <input id="project-create-btn" type="button" value="Proje Ekle" />
         </div>
       </form>
     </div>

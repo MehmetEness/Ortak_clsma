@@ -743,11 +743,15 @@ function dateInputFormat(input) {
 
 //            ***** DOM EVENTS *****
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  
+
+ 
+ 
+});
+ //                  DROPDOWN İNPUTS
+ function dropdownActive(){
   var dropdownInputs = document.querySelectorAll(".myInput");
-
-  //                  DROPDOWN İNPUTS
-
   if (dropdownInputs) {
     dropdownInputs.forEach((input) => {
       const dropdownId = input.getAttribute("data-dropdown");
@@ -756,10 +760,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const dropdownItems = dropdown.querySelectorAll(".dropdown-item");
 
       input.addEventListener("focus", function () {
-        console.log("asd");
         setTimeout(() => {
           dropdown.classList.add("show");
-        }, 100);
+        }, 10);
       });
 
       document.addEventListener("click", function (event) {
@@ -791,14 +794,16 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       dropdownItems.forEach((item) => {
+        
         item.addEventListener("click", function () {
+          console.log("ddd")
           input.value = this.textContent;
           dropdown.classList.remove("show");
         });
       });
     });
   }
-});
+}
 
 /***********************************************************
 #                       KUR
