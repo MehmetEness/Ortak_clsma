@@ -19,7 +19,7 @@ def isAdmin(user):
 #Home
 @login_required
 def home(request):
-    sales_offer_card = SalesOfferCard.objects.all()    
+    sales_offer_card = SalesOfferCard.objects.all()   
 
 
     context = {
