@@ -90,6 +90,34 @@ async function getProjects() {
   }
 }
 
+
+async function getClients() {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
+    const data = await response.json();
+    let rows = "";
+    for (const client of data) {
+      console.log(client)
+      const row = `<td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>`;
+      rows += row;
+    }
+    const projectsTableBody = document.querySelector("#projectsTableBody");
+    if (projects.length > 0) {
+      projectsTableBody.innerHTML = rows;
+      sortingTable(projectsTableBody.parentElement);
+      allTableFormat();
+      editButtonsEvents();
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
+
+
+
+
+
+
 //                  TABLO FORMATLAMA
 
 function allTableFormat() {
