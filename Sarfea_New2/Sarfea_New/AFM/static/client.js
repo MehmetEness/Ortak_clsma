@@ -24,31 +24,23 @@ async function getClient() {
     console.log(data);
     let rows = "";
     for (const client of data) {
-      const row =
-        "<tr>" +
-        "<td>" +
-        `<button id="${client.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
-        '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
-        "</button>" +
-        "</td>" +
-        "<td>" +
-        client.CompanyName_Clients +
-        "</td>" +
-        "<td>" +
-        client.ContactPerson +
-        "</td>" +
-        "<td>" +
-        client.PhoneNumber +
-        "</td>" +
-        "<td>" +
-        client.Email +
-        "</td>" +
-        "<td>" +
-        client.Location +
-        "</td>" +
-        "</tr>";
+      const row = `
+          <tr>
+              <td>
+                  <button id="${client.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+                      <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                  </button>
+              </td>
+              <td>${client.CompanyName_Clients}</td>
+              <td>${client.ContactPerson}</td>
+              <td>${client.PhoneNumber}</td>
+              <td>${client.Email}</td>
+              <td>${client.Location}</td>
+          </tr>
+      `;
       rows += row;
-    }
+  }
+  
     if (data.length > currentRows.length) {
       clientTableBody.innerHTML = "";
       clientTableBody.insertAdjacentHTML("beforeend", rows);
