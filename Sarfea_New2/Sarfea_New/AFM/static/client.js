@@ -20,8 +20,8 @@ async function getClient() {
     const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
     const data = await response.json();
     //const clients = data.clients;
-    console.log(response);
-    console.log(data);
+    //console.log(response);
+    //console.log(data);
     let rows = "";
     for (const client of data) {
       const row = `
@@ -121,7 +121,7 @@ function allTableFormat() {
   tableFormat(textCells, "text");
 }
 
-//                  SUPPLİER ADD-EDİT FUNCTİON
+//                  CLİENT ADD-EDİT FUNCTİON
 
 clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
@@ -131,7 +131,8 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 
     if (!editMode) {
       try {
-        const response = await fetch("/post_client/", {
+        console.log(formData);
+        const response = await fetch("http://127.0.0.1:8000/post_client/", {
           method: "POST",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
@@ -146,14 +147,20 @@ clientFormAddBtn.addEventListener("click", async function (event) {
       }
     } else {
       try {
-        console.log(`/post_update_client/${clientId}`);
-        const response = await fetch(`/post_update_client/${clientId}`, {
-          method: "POST",
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+          jsonObject[key] = value;
+        });
+        const jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData)
+        const response = await fetch(`http://127.0.0.1:8000/post_update_client/${clientId}`, {
+          method: "PUT",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: formData,
+          body: jsonData,
         });
+        
         getClient();
         clientAddWindow.style.display = "none";
         clearInputAfterSave(clientAddForm);
