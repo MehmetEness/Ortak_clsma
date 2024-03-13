@@ -1020,28 +1020,70 @@ def deneme2(request):
 #                       GET METHODLARI
 #***********************************************************
 
-from AFM.serializers import ClientSerializer, SupplierSerializer
+from AFM.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+@api_view(['GET'])
 @login_required
 def get_projects(request):
-    projects = Project.objects.all().values()  # Tüm müşterileri JSON formatında al
-    return JsonResponse({'projects': list(projects)})
+    projects = Project.objects.all()  # Tüm müşterileri JSON formatında al
+    serializer= ProjectSerializer(projects, many=True)
 
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@login_required
+def get_project_id(request, project_id):
+    project = get_object_or_404(Project, id=project_id)  # Tüm müşterileri JSON formatında al
+    serializer= ProjectSerializer(project)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
 @login_required
 def get_expenses(request):
-    expenses = Expenses.objects.all().values()
-    return JsonResponse({'expenses': list(expenses)})
+    expenses = Expenses.objects.all()
+    serializer= ExpensesSerializer(expenses, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+@login_required
+def get_expenses_id(request, expenses_id):
+    expenses = get_object_or_404(Expenses, id=expenses_id)  # Tüm müşterileri JSON formatında al
+    serializer= ExpensesSerializer(expenses)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@login_required
 def get_job_history(request):
-    jobhistory = JobHistory.objects.all().values()
-    return JsonResponse({'jobhistory': list(jobhistory)})
+    jobhistory = JobHistory.objects.all()
+    serializer= JobHistorySerializer(jobhistory, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+@login_required
+def get_job_history_id(request, jobhistory_id):
+    job_history = get_object_or_404(JobHistory, id=jobhistory_id)  # Tüm müşterileri JSON formatında al
+    serializer= JobHistorySerializer(job_history)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@login_required
 def get_incomes(request):
-    incomes = Incomes.objects.all().values()
-    return JsonResponse({'incomes': list(incomes)})
+    incomes = Incomes.objects.all()
+    serializer= IncomesSerializer(incomes, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+@login_required
+def get_income_id(request, incomes_id):
+    income = get_object_or_404(Incomes, id=incomes_id)  # Tüm müşterileri JSON formatında al
+    serializer= IncomesSerializer(income)
+
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def get_clients(request):
