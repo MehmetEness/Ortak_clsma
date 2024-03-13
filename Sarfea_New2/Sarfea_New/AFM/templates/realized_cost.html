@@ -1,336 +1,467 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block css_files %}
+{% extends "base.html" %} {% load static %} {% block css_files %}
 <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"t
-    />    
-    <link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}">    
-    <link rel="stylesheet" type="text/css" href="{% static 'sec-inputs.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'realized_cost.css' %}"> 
-   
-    {% endblock %}
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+  t
+/>
+<link rel="stylesheet" type="text/css" href="{% static 'all_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'sec-inputs.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'realized_cost.css' %}"
+/>
 
-{% block title %} Sovo-Tozoglu {% endblock %}
-{% block content %}
+{% endblock %} {% block title %} Sovo-Tozoglu {% endblock %} {% block content %}
 
-  <div class="body-div">     
-    <div class="window expenses-add-window">
-      <div class="container">
-          <h3 id="expenses-X" class="close-window">X</h3>
-          <div class="title">Gider Ekle</div>
-          <form id="my-form" action="{% url 'expenses_add_wp' project_id=project.id  %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="form_type" value="expenses_form">
-            <div class="user-details">
-              
-               <div style="display:none;" class="input-box" id="ProjectName_ExpensesInput">
-                <span class="details">Proje Adı</span>
-                <div class="dropdown-container">
-                  <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Expenses" name="ProjectName_Expenses" placeholder="Proje Adını Seçiniz" >
-                </div>
-               </div>
-
-               <div class="input-box " id="CompanyName_Paying_ExpensesInput">
-                <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
-                <div class="dropdown-container">
-                    <input autocomplete= 'off' type="text" id="id_CompanyName_Paying_Expenses" name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
-                   
-                  <div id="dropdown2" class="dropdown-content">
-                        {% for x in supplier %}
-                            <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
-                        {% endfor %}
-                  </div>
-                </div>
-              </div>
-
-               <div class="input-box" name="CompanyName_FromPaymentMade_Expenses"> 
-                  <span class="details">Ödeme Yapan Firma</span>
-                  {{ expenses_form.CompanyName_FromPaymentMade_Expenses }}
-               </div>
-
-               <div class="input-box">
-                <span id="gider_detay_span" class="details">Gider Detayı</span>
-                <div class="dropdown-container">
-                    <input autocomplete= 'off' type="text" id="id_ExpensDetails_Expenses" name="ExpensDetails_Expenses" class="myInput" placeholder="Gider Detayı Seçiniz" data-dropdown="dropdown3">
-                  <div id="dropdown3" class="dropdown-content">
-                        {% for x in details %}
-                            <span value="{{x.id}}" class="dropdown-item">{{x.Detail}}</span>
-                        {% endfor %}
-                  </div>
-                </div> 
-            </div>
-               <div class="input-box">
-                  <span class="details">Tutar (₺)</span>
-                  <input autocomplete= 'off' class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses" step="0.0001" placeholder="0.00">
-               </div>
-               <div class="input-box">
-                  <span class="details">Dolar Kuru (₺)</span>
-                  {{ expenses_form.Dollar_Rate_Expenses }}
-               </div>
-               <div class="input-box">
-                  <span class="details">Banka</span>
-                  {{ expenses_form.Bank_Expenses }}
-               </div>
-              <div class="input-box">
-                  <span class="details">Tarih</span>
-                  <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" placeholder="01.01.2000" maxlength="10"/>
-               </div>
-               <div class="input-box">
-                  <span class="details">Kur Saati</span>
-                  <select name="" id="kur-time">
-                    <option value="secenek1">Kur Saati Seçiniz</option>
-                     <option value="secenek2">15:30'dan Önce</option>
-                     <option value="secenek3">15:30'dan Sonra</option>
-                  </select>
-               </div>
-            </div>
-            
-                <div class="button">
-                <input id="project-create-btn" type="submit" value="Gider Ekle" />
-                </div>
-        </form>
-      </div>
-  </div>
-  <div class="window jobhistory-add-window">
-      <div class="container">
-          <h3 id="jobhistory-X" class="close-window">X</h3>
-          <div class="title">Yapılan İş Ekle</div>
-          <form id="my-form" action="{% url 'jobhistory_add_wp' project_id=project.id %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="form_type" value="jobhistory_form">
+<div class="body-div">
+  <div class="window expenses-add-window">
+    <div class="container">
+      <h3 id="expenses-X" class="close-window">X</h3>
+      <div class="title">Gider Ekle</div>
+      <form
+        id="my-form"
+        action="{% url 'expenses_add_wp' project_id=project.id  %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="expenses_form" />
         <div class="user-details">
-
-
-        <div style="display:none;" class="input-box" id="ProjectName_JobHistoryInput">
+          <div
+            style="display: none"
+            class="input-box"
+            id="ProjectName_ExpensesInput"
+          >
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" placeholder="Proje Adını Seçiniz">
-              
-          </div>
+              <input
+                value="{{project.ProjectName}}"
+                type="text"
+                id="id_ProjectName_Expenses"
+                name="ProjectName_Expenses"
+                placeholder="Proje Adını Seçiniz"
+              />
+            </div>
           </div>
 
-        <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
-            <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+          <div class="input-box" id="CompanyName_Paying_ExpensesInput">
+            <span id="odeme_yapilan_firma_span" class="details"
+              >Ödeme Yapılan Firma*<button
+                type="button"
+                id="paying-firma-add-btn-2"
+                class="paying-firma-add-btn"
+              >
+                <i class="fa-solid fa-plus"></i></button
+            ></span>
             <div class="dropdown-container">
-                <input autocomplete= 'off' type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown2">
-              
+              <input
+                autocomplete="off"
+                type="text"
+                id="id_CompanyName_Paying_Expenses"
+                name="CompanyName_Paying_Expenses"
+                class="myInput"
+                placeholder="Firma Adını Seçiniz"
+                data-dropdown="dropdown2"
+              />
+
               <div id="dropdown2" class="dropdown-content">
-                    {% for x in supplier %}
-                        <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
-                    {% endfor %}
+                {% for x in supplier %}
+                <span value="{{x.id}}" class="dropdown-item"
+                  >{{x.CompanyName_Supplier}}</span
+                >
+                {% endfor %}
               </div>
             </div>
           </div>
 
-        <div class="input-box" name="ExpensDetails_JobHistory">
-            <span class="details">Cinsi</span>
-            {{ jobhistory_form.ExpensDetails_JobHistory }}
-        </div>
-        <div class="input-box" name="Amount_JobHistory">
+          <div class="input-box" name="CompanyName_FromPaymentMade_Expenses">
+            <span class="details">Ödeme Yapan Firma</span>
+            {{ expenses_form.CompanyName_FromPaymentMade_Expenses }}
+          </div>
+
+          <div class="input-box">
+            <span id="gider_detay_span" class="details">Gider Detayı</span>
+            <div class="dropdown-container">
+              <input
+                autocomplete="off"
+                type="text"
+                id="id_ExpensDetails_Expenses"
+                name="ExpensDetails_Expenses"
+                class="myInput"
+                placeholder="Gider Detayı Seçiniz"
+                data-dropdown="dropdown3"
+              />
+              <div id="dropdown3" class="dropdown-content">
+                {% for x in details %}
+                <span value="{{x.id}}" class="dropdown-item">{{x.Detail}}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="input-box">
             <span class="details">Tutar (₺)</span>
-            <input autocomplete= 'off' class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory" step="0.0001" placeholder="0.00">
-        </div>
-        <div class="input-box" name="Dollar_Rate_JobHistory">
+            <input
+              autocomplete="off"
+              class="coc-input"
+              type="text"
+              name="Amount_Expenses"
+              id="id_Amount_Expenses"
+              step="0.0001"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="input-box">
             <span class="details">Dolar Kuru (₺)</span>
-            {{ jobhistory_form.Dollar_Rate_JobHistory }}
-        </div>
-        <div class="input-box">
+            {{ expenses_form.Dollar_Rate_Expenses }}
+          </div>
+          <div class="input-box">
+            <span class="details">Banka</span>
+            {{ expenses_form.Bank_Expenses }}
+          </div>
+          <div class="input-box">
             <span class="details">Tarih</span>
-            <input class="coc-input" id="id_Date_JobHistory" type="text" name="Date_JobHistory"  placeholder="01.01.2000" maxlength="10"/>
-        </div>
-        <div class="input-box" name="Invoice_No_JobHistory">
-            <span class="details">Fatura Numarası</span>
-            {{ jobhistory_form.Invoice_No_JobHistory }}
-        </div>
-        <div class="input-box">
+            <input
+              class="coc-input"
+              id="id_Date_Expenses"
+              type="text"
+              name="Date_Expenses"
+              placeholder="01.01.2000"
+              maxlength="10"
+            />
+          </div>
+          <div class="input-box">
             <span class="details">Kur Saati</span>
             <select name="" id="kur-time">
-                <option value="secenek1">Kur Saati Seçiniz</option>
-                <option value="secenek2">15:30'dan Önce</option>
-                <option value="secenek3">15:30'dan Sonra</option>
+              <option value="secenek1">Kur Saati Seçiniz</option>
+              <option value="secenek2">15:30'dan Önce</option>
+              <option value="secenek3">15:30'dan Sonra</option>
             </select>
+          </div>
         </div>
+
+        <div class="button">
+          <input id="project-create-btn" type="submit" value="Gider Ekle" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="window jobhistory-add-window">
+    <div class="container">
+      <h3 id="jobhistory-X" class="close-window">X</h3>
+      <div class="title">Yapılan İş Ekle</div>
+      <form
+        id="my-form"
+        action="{% url 'jobhistory_add_wp' project_id=project.id %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="jobhistory_form" />
+        <div class="user-details">
+          <div
+            style="display: none"
+            class="input-box"
+            id="ProjectName_JobHistoryInput"
+          >
+            <span class="details">Proje Adı</span>
+            <div class="dropdown-container">
+              <input
+                value="{{project.ProjectName}}"
+                type="text"
+                id="id_ProjectName_JobHistory"
+                name="ProjectName_JobHistory"
+                placeholder="Proje Adını Seçiniz"
+              />
             </div>
-                <div class="button">
-                <input id="project-create-btn" type="submit" value="Yapılan İş Ekle" />
-                </div>
-        </form>
-      </div>
-  </div> 
+          </div>
+
+          <div
+            class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}"
+            id="CompanyName_Job_JobHistoryInput"
+          >
+            <span id="is_yapilan_firma_span" class="details"
+              >İş Yapılan Firma*<button
+                type="button"
+                id="paying-firma-add-btn-2"
+                class="paying-firma-add-btn"
+              >
+                <i class="fa-solid fa-plus"></i></button
+            ></span>
+            <div class="dropdown-container">
+              <input
+                autocomplete="off"
+                type="text"
+                id="id_CompanyName_Job_JobHistory"
+                name="CompanyName_Job_JobHistory"
+                class="myInput"
+                placeholder="Firma Adını Seçiniz"
+                data-dropdown="dropdown2"
+              />
+
+              <div id="dropdown2" class="dropdown-content">
+                {% for x in supplier %}
+                <span value="{{x.id}}" class="dropdown-item"
+                  >{{x.CompanyName_Supplier}}</span
+                >
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <div class="input-box" name="ExpensDetails_JobHistory">
+            <span class="details">Cinsi</span>
+            {{ jobhistory_form.ExpensDetails_JobHistory }}
+          </div>
+          <div class="input-box" name="Amount_JobHistory">
+            <span class="details">Tutar (₺)</span>
+            <input
+              autocomplete="off"
+              class="coc-input"
+              type="text"
+              name="Amount_JobHistory"
+              id="id_Amount_JobHistory"
+              step="0.0001"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="input-box" name="Dollar_Rate_JobHistory">
+            <span class="details">Dolar Kuru (₺)</span>
+            {{ jobhistory_form.Dollar_Rate_JobHistory }}
+          </div>
+          <div class="input-box">
+            <span class="details">Tarih</span>
+            <input
+              class="coc-input"
+              id="id_Date_JobHistory"
+              type="text"
+              name="Date_JobHistory"
+              placeholder="01.01.2000"
+              maxlength="10"
+            />
+          </div>
+          <div class="input-box" name="Invoice_No_JobHistory">
+            <span class="details">Fatura Numarası</span>
+            {{ jobhistory_form.Invoice_No_JobHistory }}
+          </div>
+          <div class="input-box">
+            <span class="details">Kur Saati</span>
+            <select name="" id="kur-time">
+              <option value="secenek1">Kur Saati Seçiniz</option>
+              <option value="secenek2">15:30'dan Önce</option>
+              <option value="secenek3">15:30'dan Sonra</option>
+            </select>
+          </div>
+        </div>
+        <div class="button">
+          <input
+            id="project-create-btn"
+            type="submit"
+            value="Yapılan İş Ekle"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="window payingFirmaAddWindow">
     <div id="firma_container" class="container">
-        <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
-        <div class="title">Firma Ekle</div>
-    <form id="firma_form" action="{% url 'jobhistory_add_wp' project_id=project.id %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="form_type" value="supplier_form">
-            <div class="user-details"> 
-                <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
-                <span id="firma_add_label" class="details">Firma Adı*</span>
-                {{ supplier_form.CompanyName_Supplier }}
-                </div>                        
+      <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
+      <div class="title">Firma Ekle</div>
+      <form
+        id="firma_form"
+        action="{% url 'jobhistory_add_wp' project_id=project.id %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="supplier_form" />
+        <div class="user-details">
+          <div
+            id="firma_input_box"
+            class="input-box"
+            name="CompanyName_Supplier"
+          >
+            <span id="firma_add_label" class="details">Firma Adı*</span>
+            {{ supplier_form.CompanyName_Supplier }}
+          </div>
         </div>
-            <div class="button">
-                <input id="firma_add_btn" type="submit" value="Kaydet">
-            </div>
-    </form>
+        <div class="button">
+          <input id="firma_add_btn" type="submit" value="Kaydet" />
+        </div>
+      </form>
     </div>
-</div>
-<div class="window payingFirmaAddWindow">
-  <div id="firma_container" class="container">
-        <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
-        <div class="title">Firma Ekle</div>
-     <form id="firma_form" action="{% url 'expenses_add_wp' project_id=project.id  %}" method="post">
-           {% csrf_token %}
-           <input type="hidden" name="form_type" value="supplier_form">
-           <div class="user-details"> 
-              <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
-                <span id="firma_add_label" class="details">Firma Adı*</span>
-                {{ supplier_form.CompanyName_Supplier }}
-              </div>                        
+  </div>
+  <div class="window payingFirmaAddWindow">
+    <div id="firma_container" class="container">
+      <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
+      <div class="title">Firma Ekle</div>
+      <form
+        id="firma_form"
+        action="{% url 'expenses_add_wp' project_id=project.id  %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="supplier_form" />
+        <div class="user-details">
+          <div
+            id="firma_input_box"
+            class="input-box"
+            name="CompanyName_Supplier"
+          >
+            <span id="firma_add_label" class="details">Firma Adı*</span>
+            {{ supplier_form.CompanyName_Supplier }}
+          </div>
         </div>
-           <div class="button">
-                 <input id="firma_add_btn" type="submit" value="Kaydet">
-           </div>
-     </form>
+        <div class="button">
+          <input id="firma_add_btn" type="submit" value="Kaydet" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="left-menu">
+    <nav>
+      <div class="sidebar-top">
+        <span class="shrink-btn">
+          <i class="bx bx-chevron-left"></i>
+        </span>
+        <img src="{% static 'images/sovo_logo.png' %}" class="logo" alt="" />
+        <h3 class="hide-for-menu">Sovo-Tozoglu</h3>
+      </div>
+
+      <div class="searchForNav">
+        <i class="bx bx-search"></i>
+        <input type="text" class="hide-for-menu" placeholder="Ara..." />
+      </div>
+
+      <div class="sidebar-links">
+        <ul>
+          <div class="active-tab"></div>
+          <li class="tooltip-element" data-tooltip="0">
+            <a href="{% url 'home' %}" class="active" data-active="0">
+              <span class="link hide-for-menu">Anasayfa</span>
+            </a>
+          </li>
+          <li class="tooltip-element" data-tooltip="0">
+            <a href="{% url 'home' %}" class="active" data-active="0">
+              <span class="link hide-for-menu">Anasayfa</span>
+            </a>
+          </li>
+          
+      </div>
+
+      <div class="sidebar-footer">
+        <button type="submit" id="toplam-maliyet">Toplam Maliyet</button>
+      </div>
+    </nav>
+  </div>
+  <div class="right-menu">
+    <main class="table" id="customers_table">
+      <section class="table__header">
+        <a href="{% url 'project_details' project_id=project.id %}">
+          <button style="color: rgb(47, 65, 79);" class="back-button">
+            <i class="fa-solid fa-angles-left"></i>
+          </button>
+        </a>
+        <button style="width: 137px" class="button jobhistory-add-btn">
+          Yapılan İş
+        </button>
+        <p>TEDARİKÇİLER</p>
+        <button class="button expenses-add-btn">Yapılan Ödeme</button>
+      </section>
+      <section class="table__body">
+        <table id="jobhistory_table">
+          <thead>
+            <tr>
+              <th><span></span></th>
+              <th>Fatura No<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Cinsi<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+          </tbody>
+        </table>
+        <table id="expenses_table">
+          <thead>
+            <tr>
+              <th><span></span></th>
+              <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Açıklama<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Banka<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+              <td>adsfasdf</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
   </div>
 </div>
-      <div class="firma-bar">
-          <div id="title-div">
-              <a href="{% url 'home' %}">
-                  <span class="first-line">SOVO</span>
-                  <span class="second-line">TOZOGLU</span>
-              </a>
-          </div> 
-          <ul id="firmaUl">
-              {% for company_name in distinct_company_names %}
-                  {% if company_name %}
-                      <li id="company-li" class="company-link" data-company="{{ company_name }}">
-                        <a>{{ company_name }}</a>
-                          <br>
-                      </li>
-                  {% endif %}
-              {% endfor %}
-          </ul>      
-          <button type="submit" id="toplam-maliyet">Toplam Maliyet</button>
-      </div>
-      <div class="right-menu">
-            <main class="table" id="customers_table">
-              <section class="table__header">    
-                  <button style="color: rgb(47, 65, 79);" class="back-button" ><i class="fa-solid fa-angles-left"></i></button> 
-                  <button style="width: 137px;" class="button jobhistory-add-btn" >Yapılan İş</button>                  
-                  <p>TEDARİKÇİLER</p>
-                  <button class="button expenses-add-btn" >Yapılan Ödeme</button>  
-                  <div class="input-group">
-                    <input type="search" placeholder="Tedarikçi Ara...">
-                    <img src="{% static 'images/search.png' %}" alt="">
-                </div> 
-              </section>
-              <section class="table__body">
-                  <table id="jobhistory_table">
-                      <thead>
-                        <tr>
-                          <th><span></span></th>
-                          <th>Fatura No<span class="icon-arrow">&UpArrow;</span></th>
-                          <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
-                          <th>Cinsi<span class="icon-arrow">&UpArrow;</span></th>
-                          <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
-                          <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
-                          <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
-                        </tr>                    
-                      </thead> 
-                      <tbody>  
-                        <tr>
-                          <td></td>
-                          <td>adsfasdf</td>
-                          <td>adsfasdf</td>
-                          <td>adsfasdf</td>
-                          <td>adsfasdf</td>
-                          <td>adsfasdf</td>
-                          <td>adsfasdf</td>
-                      </tr>   
-                      <tr>
-                        <td></td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                    </tr>  
-                    <tr>
-                      <td></td>
-                      <td>adsfasdf</td>
-                      <td>adsfasdf</td>
-                      <td>adsfasdf</td>
-                      <td>adsfasdf</td>
-                      <td>adsfasdf</td>
-                      <td>adsfasdf</td>
-                  </tr>                     
-                      </tbody>
-                  </table>
-                  <table id="expenses_table">
-                    <thead>
-                      <tr>
-                        <th><span></span></th>
-                        <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Açıklama<span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Banka<span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
-                      </tr>                    
-                    </thead> 
-                    <tbody>  
-                      <tr>
-                        <td></td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                    </tr>   
-                    <tr>
-                        <td></td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                  </tr>  
-                  <tr>
-                        <td></td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                        <td>adsfasdf</td>
-                </tr>             
-                    </tbody>
-                </table>           
-              </section>
-        </main>          
 
-      </div>                  
-  </div>
+{% endblock %} {% block js_files %}
 
-  {% endblock %}
+<script src="{% static 'functions.js' %}"></script>
+<script src="{% static 'realized_cost.js' %}"></script>
 
-  {% block js_files %}
-
-  <script src="{% static 'functions.js' %}"></script> 
-  <script src="{% static 'realized_cost.js' %}"></script> 
-  
-  
-  {% endblock %}
-
-
+{% endblock %}

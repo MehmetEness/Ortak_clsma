@@ -91,7 +91,11 @@
           <div class="right-menu">            
             <main class="table" id="customers_table">
               <section class="table__header">
-                  <button style="color: rgb(47, 65, 79);" class="back-button" ><i class="fa-solid fa-angles-left"></i></button> 
+                <a href="{% url 'project_details' project_id=project.id %}">
+                  <button style="color: rgb(47, 65, 79);" class="back-button">
+                    <i class="fa-solid fa-angles-left"></i>
+                  </button>
+                </a>
                   <p>Firma Adı</p>
                   <div class="input-group">
                       <input type="search" placeholder="Gelir Ara...">

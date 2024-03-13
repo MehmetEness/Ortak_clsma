@@ -10,12 +10,16 @@
 
 .body-div{
     display: flex;
-    height: 100vh;   
-    flex-direction: row; 
+    height: 100vh;
+    width: 100vw;
+    background: url("/static/images/html_table.jpg") center / cover;
+    justify-content: center;
+    align-items: center;
 }
 .right-menu{
-    width: calc(100% - 256px);
+    width: calc(100% - 18rem);
     height: 100vh;
+    margin-left: 0.8rem;
     display: flex;
     flex-direction: column;
 }

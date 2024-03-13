@@ -1,6 +1,4 @@
 var icon = document.querySelector(".icon");
-var search = document.querySelector(".search");
-var searchInput = document.getElementById("mysearch");
 var clearButton = document.querySelector(".clear");
 
 //                  GENEL FUNCTİON
@@ -183,15 +181,15 @@ function tableFormat(cells, type) {
 
 //                  SIRALAMA İŞLEMLERİ
 
-const search1 = document.querySelector(".input-group input");
-search1.addEventListener("input", searchTable);
+const search = document.querySelector(".searchForNav input");
+search.addEventListener("input", searchTable);
 
 // SEARCHİNG
 function searchTable() {
   const table_rows = document.querySelectorAll("tbody tr");
   table_rows.forEach((row, i) => {
     let table_data = row.textContent.toLowerCase(),
-      search_data = search1.value.toLowerCase();
+      search_data = search.value.toLowerCase();
     row.classList.toggle("hide", table_data.indexOf(search_data) < 0);
     row.style.setProperty("--delay", i / 25 + "s");
   });
@@ -325,44 +323,44 @@ function compareDates(date1, date2) {
 
 //                  TABLO SEARCH İŞLEMLERİ
 
-function filterTable(searchInput, table) {
-  var filter = searchInput.value.toLowerCase();
-  var rows = table.getElementsByTagName("tr");
+// function filterTable(searchInput, table) {
+//   var filter = searchInput.value.toLowerCase();
+//   var rows = table.getElementsByTagName("tr");
 
-  for (var i = 0; i < rows.length; i++) {
-    var row = rows[i];
+//   for (var i = 0; i < rows.length; i++) {
+//     var row = rows[i];
 
-    if (!row.querySelector("th")) {
-      var cells = row.getElementsByTagName("td");
-      var shouldShow = false;
+//     if (!row.querySelector("th")) {
+//       var cells = row.getElementsByTagName("td");
+//       var shouldShow = false;
 
-      for (var j = 0; j < cells.length; j++) {
-        var cell = cells[j];
+//       for (var j = 0; j < cells.length; j++) {
+//         var cell = cells[j];
 
-        if (cell) {
-          var text = cell.textContent || cell.innerText;
+//         if (cell) {
+//           var text = cell.textContent || cell.innerText;
 
-          if (text.toLowerCase().indexOf(filter) > -1) {
-            shouldShow = true;
-            break;
-          }
-        }
-      }
+//           if (text.toLowerCase().indexOf(filter) > -1) {
+//             shouldShow = true;
+//             break;
+//           }
+//         }
+//       }
 
-      if (shouldShow) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    }
-  }
-}
-function showAllRows(table) {
-  var rows = table.getElementsByTagName("tr");
-  for (var i = 0; i < rows.length; i++) {
-    rows[i].style.display = "";
-  }
-}
+//       if (shouldShow) {
+//         row.style.display = "";
+//       } else {
+//         row.style.display = "none";
+//       }
+//     }
+//   }
+// }
+// function showAllRows(table) {
+//   var rows = table.getElementsByTagName("tr");
+//   for (var i = 0; i < rows.length; i++) {
+//     rows[i].style.display = "";
+//   }
+// }
 
 //                  ZORUNLU İNPUT BİLDİRİMLERİ
 

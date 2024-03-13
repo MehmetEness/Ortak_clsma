@@ -39,8 +39,7 @@ async function getClient() {
           </tr>
       `;
       rows += row;
-  }
-  
+  }  
     if (data.length > currentRows.length) {
       clientTableBody.innerHTML = "";
       clientTableBody.insertAdjacentHTML("beforeend", rows);
