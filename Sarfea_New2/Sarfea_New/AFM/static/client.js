@@ -31,7 +31,7 @@ async function getClient() {
                       <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                   </button>
               </td>
-              <td>${client.CompanyName_Clients}</td>
+              <td>${client.CompanyName_Clients_New}</td>
               <td>${client.ContactPerson}</td>
               <td>${client.PhoneNumber}</td>
               <td>${client.Email}</td>
