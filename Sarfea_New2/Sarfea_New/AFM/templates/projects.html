@@ -280,8 +280,13 @@
           </div>
           <div class="input-box">
             <span class="details">Banka</span>
-            <input type="text"/>
-          </div>
+            <select name="Bank_Expenses" id="id_Bank_Expenses">
+              <option value="" selected >Banka Seçiniz</option>
+              {% for bank in banks %}
+              <option value="{{bank}}">{{bank}}</option>
+              {% endfor  %}
+            </select>         
+           </div>
         </div>
 
         <div class="button">

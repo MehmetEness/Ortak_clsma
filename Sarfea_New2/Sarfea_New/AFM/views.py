@@ -355,6 +355,7 @@ def income_details(request, project_id):
 
 @login_required
 def projects(request):
+    banks= Banks.objects.all()
     project = Project.objects.annotate(
         custom_order_situation=Case(
             When(Situation="Onay Bekliyor", then=Value(1)),
@@ -368,7 +369,7 @@ def projects(request):
 
     context = {
         "project": project,
-        
+        "banks":banks
     }
 
     return render(request, "projects.html", context)
@@ -1314,45 +1315,16 @@ def update_card_situation(request):
 #                       POST METHODLARI
 #***********************************************************
 
+
 @csrf_exempt
+@api_view(['POST'])
 def post_projects(request):
-    if request.method == 'POST':
-        
-        ProjectName = request.POST.get('ProjectName')
-        ProjectCode= request.POST.get('ProjectCode')
-        CompanyName= request.POST.get('CompanyName')
-        CompanyUndertakingWork= request.POST.get('CompanyUndertakingWork')
-        Location= request.POST.get('Location')
-        Cost_NotIncludingKDV = request.POST.get('Cost_NotIncludingKDV')
-        AC_Power= request.POST.get('AC_Power')
-        DC_Power= request.POST.get('DC_Power')
-        CalculatedCost_NotIncludingKDV= request.POST.get('CalculatedCost_NotIncludingKDV')
-        StartDate = request.POST.get('StartDate')
-        FinishDate= request.POST.get('FinishDate')
-        KDV_Rate= request.POST.get('KDV_Rate')
-        Terrain_Roof= request.POST.get('Terrain_Roof')
-        Incentive= request.POST.get('Incentive')
-       
-        if ProjectName:
-            Project.objects.create(
-                ProjectName=ProjectName,
-                ProjectCode= ProjectCode,
-                CompanyName=CompanyName,
-                CompanyUndertakingWork=CompanyUndertakingWork,
-                Location=Location,
-                Cost_NotIncludingKDV =Cost_NotIncludingKDV,
-                AC_Power= AC_Power,
-                DC_Power=DC_Power,
-                CalculatedCost_NotIncludingKDV=CalculatedCost_NotIncludingKDV,
-                StartDate =StartDate,
-                FinishDate=FinishDate,
-                KDV_Rate= KDV_Rate,
-                Terrain_Roof=Terrain_Roof,
-                Incentive=Incentive,
-            )
-            return JsonResponse({'message': 'Project Başarı ile oluşturuldu'})
-        return JsonResponse({'message': ' Post alındı ancak Project Başarı ile oluşturulamadı'})
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+    serializer= ProjectSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 
 @csrf_exempt
 def post_update_projects(request, project_id):
@@ -1395,35 +1367,16 @@ def post_update_projects(request, project_id):
         return JsonResponse({'message': ' Post alındı ancak Project Başarı ile güncellenemedi'})
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
+
 @csrf_exempt
+@api_view(['POST'])
 def post_expenses(request):
-    if request.method == 'POST':
-        
-        ProjectName_Expenses = request.POST.get('ProjectName_Expenses')
-        CompanyName_FromPaymentMade_Expenses= request.POST.get('CompanyName_FromPaymentMade_Expenses')
-        CompanyName_Paying_Expenses= request.POST.get('CompanyName_Paying_Expenses')
-        ExpensDetails_Expenses= request.POST.get('ExpensDetails_Expenses')
-        Amount_Expenses = request.POST.get('Amount_Expenses')
-        Dollar_Rate_Expenses= request.POST.get('Dollar_Rate_Expenses')
-        Bank_Expenses= request.POST.get('Bank_Expenses')
-        Date_Expenses= request.POST.get('Date_Expenses')
-        
-        if ProjectName_Expenses:
-            Expenses.objects.create(
-                ProjectName_Expenses=ProjectName_Expenses,
-                CompanyName_FromPaymentMade_Expenses= CompanyName_FromPaymentMade_Expenses,
-                ExpensDetails_Expenses=ExpensDetails_Expenses,
-                Amount_Expenses=Amount_Expenses,
-                Dollar_Rate_Expenses=Dollar_Rate_Expenses,
-                Bank_Expenses =Bank_Expenses,
-                Date_Expenses= Date_Expenses,
-                CompanyName_Paying_Expenses= CompanyName_Paying_Expenses,
-
-            )
-            return JsonResponse({'message': 'Expenses Başarı ile oluşturuldu'})
-        return JsonResponse({'message': ' Post alındı ancak Expenses Başarı ile oluşturulamadı'})
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
+    serializer= ExpensesSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 @csrf_exempt
 def post_update_expenses(request, expenses_id):
     curr_expenses = get_object_or_404(Expenses, id=expenses_id)
@@ -1456,31 +1409,14 @@ def post_update_expenses(request, expenses_id):
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
+@api_view(['POST'])
 def post_jobhistory(request):
-    if request.method == 'POST':
-        
-        ProjectName_JobHistory = request.POST.get('ProjectName_JobHistory')
-        CompanyName_FromJobMade_JobHistory= request.POST.get('CompanyName_FromJobMade_JobHistory')
-        ExpensDetails_JobHistory= request.POST.get('ExpensDetails_JobHistory')
-        Amount_JobHistory = request.POST.get('Amount_JobHistory')
-        Dollar_Rate_JobHistory= request.POST.get('Dollar_Rate_JobHistory')
-        Date_JobHistory= request.POST.get('Date_JobHistory')
-        Invoice_No_JobHistory= request.POST.get('Invoice_No_JobHistory')
-        
-        if ProjectName_JobHistory:
-            JobHistory.objects.create(
-                ProjectName_JobHistory=ProjectName_JobHistory,
-                CompanyName_FromJobMade_JobHistory= CompanyName_FromJobMade_JobHistory,
-                ExpensDetails_JobHistory=ExpensDetails_JobHistory,
-                Amount_JobHistory=Amount_JobHistory,
-                Dollar_Rate_JobHistory=Dollar_Rate_JobHistory,
-                Date_JobHistory =Date_JobHistory,
-                Invoice_No_JobHistory= Invoice_No_JobHistory,
-                
-            )
-            return JsonResponse({'message': 'JobHistory Başarı ile oluşturuldu'})
-        return JsonResponse({'message': ' Post alındı ancak JobHistory Başarı ile oluşturulamadı'})
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
+    serializer= JobHistorySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 
 @csrf_exempt
 def post_update_jobhistory(request, jobhistory_id):
@@ -1510,35 +1446,16 @@ def post_update_jobhistory(request, jobhistory_id):
         return JsonResponse({'message': ' Post alındı ancak JobHistory Başarı ile gücellenemedi'})
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
+
 @csrf_exempt
+@api_view(['POST'])
 def post_income(request):
-    if request.method == 'POST':
-        
-        ProjectName_Incomes = request.POST.get('ProjectName_Incomes')
-        CompanyName_Pay_Incomes= request.POST.get('CompanyName_Pay_Incomes')
-        CompanyName_ReceivePayment_Incomes= request.POST.get('CompanyName_ReceivePayment_Incomes')
-        Amount_Incomes = request.POST.get('Amount_Incomes')
-        PaymentType_Incomes= request.POST.get('PaymentType_Incomes')
-        Dollar_Rate_Incomes= request.POST.get('Dollar_Rate_Incomes')
-        ChekDate_Incomes= request.POST.get('ChekDate_Incomes')
-        LastChekDate_Incomes= request.POST.get('LastChekDate_Incomes')
-
-        if ProjectName_Incomes:
-            Incomes.objects.create(
-                ProjectName_Incomes=ProjectName_Incomes,
-                CompanyName_Pay_Incomes= CompanyName_Pay_Incomes,
-                CompanyName_ReceivePayment_Incomes=CompanyName_ReceivePayment_Incomes,
-                Amount_Incomes=Amount_Incomes,
-                PaymentType_Incomes=PaymentType_Incomes,
-                Dollar_Rate_Incomes =Dollar_Rate_Incomes,
-                ChekDate_Incomes= ChekDate_Incomes,
-                LastChekDate_Incomes= LastChekDate_Incomes,
-
-            )
-            return JsonResponse({'message': 'Incomes Başarı ile oluşturuldu'})
-        return JsonResponse({'message': ' Post alındı ancak Incomes Başarı ile oluşturulamadı'})
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
+    serializer= IncomesSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors)
 @csrf_exempt
 def post_update_income(request, income_id):
     curr_income = get_object_or_404(Incomes, id=income_id)
