@@ -1591,8 +1591,6 @@ def post_update_client(request, client_id):
         return Response(serializer.data)
     return Response(serializer.errors)
 
-    
-
 csrf_exempt
 @api_view(['POST'])
 def post_supplier(request):
@@ -1737,7 +1735,6 @@ def post_update_sales_offer(request, sales_offer_id):
         return JsonResponse({'message': 'Post alındı ama SalesOfferCard oluşturulamadı'})
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
-
 
 
 @csrf_exempt
