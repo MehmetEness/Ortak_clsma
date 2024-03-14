@@ -53,6 +53,8 @@ urlpatterns = [
     
     #MODUL-GET
     path('get_projects/', views.get_projects, name='get_projects'),
+    path('get_project_id/<project_id>', views.get_project_id, name='get_project_id'),
+
     path('get_clients/', views.get_clients, name='get_clients'),
     path('get_client_id/<client_id>', views.get_client_id, name='get_client_id'),
 
@@ -60,8 +62,13 @@ urlpatterns = [
     path('get_supplier_id/<supplier_id>', views.get_supplier_id, name='get_supplier_id'),
 
     path("get_expenses/", views.get_expenses, name='get_expenses'),
+    path('get_expenses_id/<expenses_id>', views.get_expenses_id, name='get_expenses_id'),
+
     path("get_job_history/", views.get_job_history, name='get_job_history'),
+    path('get_job_history_id/<jobhistory_id>', views.get_job_history_id, name='get_job_history_id'),
+
     path("get_incomes/", views.get_incomes, name='get_incomes'),
+    path('get_income_id/<incomes_id>', views.get_income_id, name='get_income_id'),
 
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
