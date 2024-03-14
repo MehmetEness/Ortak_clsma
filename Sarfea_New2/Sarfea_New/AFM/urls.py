@@ -52,7 +52,7 @@ urlpatterns = [
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
     
-    #MODUL-GET
+    #******************************* A P I ***********************************
     path('api_projects/', api_view.ProjectListAPIView.as_view(), name='api_projects'),
     path('api_project_detail/<project_id>', api_view.ProjectDetailAPIView.as_view(), name='api_project_detail'),
 
@@ -70,6 +70,7 @@ urlpatterns = [
 
     path("api_incomes/", api_view.IncomesListAPIView.as_view(), name='api_incomes'),
     path('api_income_detail/<incomes_id>', api_view.IncomeDetailAPIView.as_view(), name='api_income_detail'),
+    #******************************* ------- ***********************************
 
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
