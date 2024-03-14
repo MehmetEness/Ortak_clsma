@@ -93,6 +93,15 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+.paying-supplier-add-btn {
+  margin-left: 5px;
+  padding: 0 5px;
+  border: 1px solid #00000070;
+  border-radius: 5px;
+  background: #f2f2f2;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
 .paying-company-add-btn:hover {
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.5);
   background: #fff;

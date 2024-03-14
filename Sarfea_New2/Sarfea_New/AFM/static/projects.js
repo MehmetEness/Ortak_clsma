@@ -30,55 +30,38 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function getProjects() {
   try {
-    let currentRows = projectsTable.querySelectorAll("tr");
+    let currentRows = projectsTable.querySelectorAll("tbody tr");
+
     const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
     const data = await response.json();
     const projects = data.projects;
-    //console.log(projects);
+    //console.log(data);
     let rows = "";
     for (const project of data) {
       const date = new Date(project.StartDate);
-      const formattedDate = `${date.getDate()} ${getMonthName(
-        date.getMonth()
-      )} ${date.getFullYear()}`;
-      var projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
-      const row =
-        "<tr>" +
-        `<td>` +
-        `<button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">` +
-        '<i id="edit-text" class="fa-solid fa-pen-to-square"></i>' +
-        "</button>" +
-        "</td>" +
-        '<td><a href="' +
-        projectDetailsUrl +
-        '">' +
-        project.ProjectName +
-        "</a></td>" +
-        "<td>" +
-        project.Location +
-        "</td>" +
-        "<td>" +
-        project.AC_Power +
-        "</td>" +
-        "<td>" +
-        project.DC_Power +
-        "</td>" +
-        "<td>" +
-        project.CalculatedCost_NotIncludingKDV +
-        "</td>" +
-        "<td>" +
-        project.Terrain_Roof +
-        "</td>" +
-        "<td>" +
-        formattedDate +
-        "</td>" +
-        "<td>" +
-        project.Situation +
-        "</td>" +
-        "</tr>";
+      const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+      const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
+
+      const row = `
+        <tr>
+          <td>
+            <button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
+          <td>${project.Location}</td>
+          <td>${project.AC_Power}</td>
+          <td>${project.DC_Power}</td>
+          <td>${project.CalculatedCost_NotIncludingKDV}</td>
+          <td>${project.Terrain_Roof}</td>
+          <td>${formattedDate}</td>
+          <td>${project.Situation}</td>
+        </tr>`;
+
       rows += row;
     }
-    if (data.length > currentRows.length) {
+    if (data.length > currentRows.length || currentRows.length == 1) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);
@@ -91,28 +74,7 @@ async function getProjects() {
 }
 
 
-//                  DROPDOWN MENÜLER
-//getClients();
-async function getClients() {
-  try {
-    const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
-    const data = await response.json();
-    let rows = "";
-    //console.log(data)
-    for (const client of data) {
-     // console.log(client)
-      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients_New}</span>`;
-      rows += row;
-    }
-    const clientDropdowns = document.querySelectorAll(".client-dropdown");    
-    clientDropdowns.forEach(async (clientDropdown)=>{
-      clientDropdown.innerHTML = rows;
-    })     
-    dropdownActive();    
-  } catch (error) {
-    console.error("Error fetching and rendering projects:", error);
-  }
-}
+
 
 
 //                  TABLO FORMATLAMA
@@ -134,7 +96,8 @@ function allTableFormat() {
 
 const clientAddWindow = document.querySelector(".client-add-window");
 const companyAddBtns = document.querySelectorAll(".paying-company-add-btn");
-const companyX = document.querySelector(".close-company-window");
+
+const companyX = clientAddWindow.querySelector(".close-window");
 companyAddBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     setTimeout(() => {
@@ -150,11 +113,27 @@ companyAddBtns.forEach((btn) => {
     }
   });
 });
-companyX.addEventListener("click", () => {
-  setTimeout(() => {
-    clientAddWindow.style.display = "none";
-  }, 15);
+
+const supplierAddWindow = document.querySelector(".supplier-add-window");
+const supplierAddBtns = document.querySelectorAll(".paying-supplier-add-btn");
+
+const supplierX = supplierAddWindow.querySelector(".close-window");
+supplierAddBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    setTimeout(() => {
+      supplierAddWindow.style.display = "flex";
+    }, 20);
+  });
+  document.addEventListener("click", (event) => {
+    const supplierAddContainer = supplierAddWindow.querySelector(".container");
+    if (!supplierAddContainer.contains(event.target)) {
+      setTimeout(() => {
+        supplierAddWindow.style.display = "none";
+      }, 15);
+    }
+  });
 });
+
 
 //                  EKLEME BUTTONLARI
 
@@ -166,20 +145,20 @@ var expensesAddWindow = document.querySelector(".expenses-add-window");
 var expensesAddWindowButton = document.querySelector(".expenses-add-btn");
 var jobhistoryAddWindow = document.querySelector(".jobhistory-add-window");
 var jobhistoryAddWindowButton = document.querySelector(".jobhistory-add-btn");
+let editMode = false;
+
 
 //----- PROJECT
 projectAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
+    editMode = false;
     projectAddWindow.style.display = "flex";
     getClients();
   }, 10);
 });
 document.addEventListener("click", (event) => {
   const projectAddContainer = projectAddWindow.querySelector(".container");
-  if (
-    !projectAddContainer.contains(event.target) &&
-    clientAddWindow.style.display == "none"
-  ) {
+  if (!projectAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
     projectAddWindow.style.display = "none";
   }
 });
@@ -188,14 +167,12 @@ incomeAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     incomeAddWindow.style.display = "flex";
     getClients();
+    getprojectName()
   }, 10);
 });
 document.addEventListener("click", (event) => {
   const incomeAddContainer = incomeAddWindow.querySelector(".container");
-  if (
-    !incomeAddContainer.contains(event.target) &&
-    clientAddWindow.style.display == "none"
-  ) {
+  if (!incomeAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
     incomeAddWindow.style.display = "none";
   }
 });
@@ -203,15 +180,13 @@ document.addEventListener("click", (event) => {
 expensesAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     expensesAddWindow.style.display = "flex";
-    getClients();
+    getSuppliers()
+    getprojectName()
   }, 10);
 });
 document.addEventListener("click", (event) => {
   const expensesAddContainer = expensesAddWindow.querySelector(".container");
-  if (
-    !expensesAddContainer.contains(event.target) &&
-    clientAddWindow.style.display == "none"
-  ) {
+  if (!expensesAddContainer.contains(event.target) && supplierAddWindow.style.display == "none") {
     expensesAddWindow.style.display = "none";
   }
 });
@@ -219,16 +194,14 @@ document.addEventListener("click", (event) => {
 jobhistoryAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     jobhistoryAddWindow.style.display = "flex";
-    getClients();
+    getSuppliers()
+    getprojectName()
   }, 10);
 });
 document.addEventListener("click", (event) => {
   const jobhistoryAddContainer =
     jobhistoryAddWindow.querySelector(".container");
-  if (
-    !jobhistoryAddContainer.contains(event.target) &&
-    clientAddWindow.style.display == "none"
-  ) {
+  if (!jobhistoryAddContainer.contains(event.target) && supplierAddWindow.style.display == "none") {
     jobhistoryAddWindow.style.display = "none";
   }
 });
@@ -236,10 +209,10 @@ document.addEventListener("click", (event) => {
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
-    projectAddWindow.style.display = "none";
-    incomeAddWindow.style.display = "none";
-    expensesAddWindow.style.display = "none";
-    jobhistoryAddWindow.style.display = "none";
+    const btnParentDiv = btn.parentElement;
+    if (btnParentDiv && btnParentDiv.parentElement) {
+      setTimeout(() => { btnParentDiv.parentElement.style.display = "none"; }, 10);
+    }
   });
 });
 
@@ -250,9 +223,22 @@ function editButtonsEvents() {
     "tr td:first-child button"
   );
   editButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       let clickedButtonId = btn.id;
+        const response = await fetch(`http://127.0.0.1:8000/get_project_id/${clickedButtonId}/`);
+        const data = await response.json();
+        // console.log(data)
+        // document.querySelector('input[name="project_id"]').value = project.id;
+        // document.querySelector('input[name="project_name"]').value = project.ProjectName;
+        // document.querySelector('input[name="location"]').value = project.Location;
+        // document.querySelector('input[name="ac_power"]').value = project.AC_Power;
+        // document.querySelector('input[name="dc_power"]').value = project.DC_Power;
+        // document.querySelector('input[name="calculated_cost"]').value = project.CalculatedCost_NotIncludingKDV;
+        // document.querySelector('input[name="terrain_roof"]').value = project.Terrain_Roof;
+        // document.querySelector('input[name="start_date"]').value = formattedDate;
+        // document.querySelector('input[name="situation"]').value = project.Situation;
       setTimeout(() => {
+        editMode = true        
         projectAddWindow.style.display = "flex";
       }, 10);
     });
@@ -327,7 +313,7 @@ incomeTimeForKur.addEventListener("change", async function () {
 });
 
 
-let editMode = false;
+
 /***********************************************************
 #                       EXPENSES ADD - EDİT
 ***********************************************************/
@@ -364,11 +350,11 @@ expensesTimeForKur.addEventListener("change", async function () {
 ***********************************************************/
 
 // TARİH İNPUTLARI FORMATLAMA
-jobhistoryDateInput.addEventListener('input', function(event) {
-    var userInput = jobhistoryDateInput.value;    
-    if (event.inputType !== 'deleteContentBackward') {
-        jobhistoryDateInput.value = formatDate(userInput);
-    }
+jobhistoryDateInput.addEventListener('input', function (event) {
+  var userInput = jobhistoryDateInput.value;
+  if (event.inputType !== 'deleteContentBackward') {
+    jobhistoryDateInput.value = formatDate(userInput);
+  }
 });
 
 // INPUT FORMATLAMA
@@ -424,30 +410,83 @@ projectFormAddBtn.addEventListener("click", async function (event) {
         console.error("There was an error!", error);
       }
     } else {
-      // try {
-      //   const jsonObject = {};
-      //   formData.forEach((value, key) => {
-      //     jsonObject[key] = value;
-      //   });
-      //   const jsonData = JSON.stringify(jsonObject);
-      //   console.log(jsonData)
-      //   const response = await fetch(`http://127.0.0.1:8000/post_update_client/${clientId}`, {
-      //     method: "PUT",
-      //     headers: {
-      //       "X-CSRFToken": getCookie("csrftoken"),
-      //     },
-      //     body: jsonData,
-      //   });
-        
-      //   getClient();
-      //   clientAddWindow.style.display = "none";
-      //   clearInputAfterSave(clientAddForm);
-      // } catch (error) {
-      //   console.error("There was an error!", error);
-      // }
+      try {
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+          jsonObject[key] = value;
+        });
+        const jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData)
+        const response = await fetch(`http://127.0.0.1:8000/post_update_client/${clientId}`, {
+          method: "PUT",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: jsonData,
+        });
+
+        getClient();
+        clientAddWindow.style.display = "none";
+        clearInputAfterSave(clientAddForm);
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
     }
   }
 });
+/***********************************************************
+#                       CLİENT SUPPLİER ADD 
+***********************************************************/
+const clientAddForm = document.getElementById("firma_add_form");
+const clientFormAddBtn = document.querySelector("#firma_submit_btn");
+clientFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    const formData = new FormData(firma_add_form);    
+    try {
+      const response = await fetch("http://127.0.0.1:8000/post_client/", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: formData,
+      });
+      clientAddWindow.style.display = "none";
+      getClients();
+      clearInputAfterSave(clientAddForm);
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+  }
+});
+const supplierAddForm = document.getElementById("supplier_add_form");
+const supplerFormAddBtn = document.querySelector("#supplier_add_btn");
+supplerFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    const formData = new FormData(supplier_add_form);    
+    try {
+      const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: formData,
+      });
+      supplierAddWindow.style.display = "none";
+      getSuppliers();
+      clearInputAfterSave(supplierAddForm);
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+  }
+});
+
+
+
+
 
 
 
@@ -466,4 +505,68 @@ function getCookie(name) {
     }
   }
   return cookieValue;
+}
+
+
+//                  DROPDOWN MENÜLER
+//getClients();
+async function getClients() {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
+    const data = await response.json();
+    let rows = "";
+    //console.log(data)
+    for (const client of data) {
+      // console.log(client)
+      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients_New}</span>`;
+      rows += row;
+    }
+    const clientDropdowns = document.querySelectorAll(".client-dropdown");
+    clientDropdowns.forEach(async (clientDropdown) => {
+      clientDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
+async function getSuppliers() {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/get_suppliers/`);
+    const data = await response.json();
+    let rows = "";
+    //console.log(data)
+    for (const supplier of data) {
+      // console.log(client)
+      const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier_New}</span>`;
+      rows += row;
+    }
+    const supplierDropdowns = document.querySelectorAll(".supplier_dropdown");
+    //console.log(supplierDropdowns)
+    supplierDropdowns.forEach(async (supplierDropdown) => {
+      supplierDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
+async function getprojectName() {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
+    const data = await response.json();
+    let rows = "";
+    for (const project of data) {
+      // console.log(client)
+      const row = `<span value="${project.id}" class="dropdown-item">${project.ProjectName}</span>`;
+      rows += row;
+    }
+    const projectDropdowns = document.querySelectorAll(".projects_dropdown");
+    projectDropdowns.forEach(async (projectDropdown) => {
+      projectDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
 }

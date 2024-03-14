@@ -120,7 +120,8 @@
         <div class="user-details">
           <div class="input-box">
             <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*<button type="button"
-                id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                id="paying-company-add-btn" class="paying-company-add-btn"><i
+                  class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes"
                 class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1">
@@ -137,8 +138,7 @@
               <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
 
-              <div id="income_dropdown2" class="dropdown-content">
-                <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
+              <div id="income_dropdown2" class="dropdown-content projects_dropdown">                
               </div>
             </div>
           </div>
@@ -205,16 +205,16 @@
         <div class="user-details">
           <div class="input-box" id="CompanyName_Paying_ExpensesInput">
             <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*
-              <button type="button" id="paying-firma-add-btn-2" class="paying-company-add-btn">
+              <button type="button" id="paying-firma-add-btn-2" class="paying-supplier-add-btn">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Paying_Expenses"
                 name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz"
-                data-dropdown="jobhistory_dropdown1" />
+                data-dropdown="expenses_dropdown1" />
 
-              <div id="jobhistory_dropdown1" class="dropdown-content supplier_dropdown">
+              <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
                 {% for x in supplier %}
                 <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
                 {% endfor %}
@@ -226,9 +226,9 @@
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="ProjectName_Expenses"
-                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
+                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
 
-              <div id="jobhistory_dropdown2" class="dropdown-content projects_dropdown ">
+              <div id="expenses_dropdown2" class="dropdown-content projects_dropdown ">
                 {% for x in project %}
                 <span value="{{x.id}}" class="dropdown-item">{{x.ProjectName}}</span>
                 {% endfor %}
@@ -281,12 +281,12 @@
           <div class="input-box">
             <span class="details">Banka</span>
             <select name="Bank_Expenses" id="id_Bank_Expenses">
-              <option value="" selected >Banka Seçiniz</option>
+              <option value="" selected>Banka Seçiniz</option>
               {% for bank in banks %}
               <option value="{{bank}}">{{bank}}</option>
-              {% endfor  %}
-            </select>         
-           </div>
+              {% endfor %}
+            </select>
+          </div>
         </div>
 
         <div class="button">
@@ -306,14 +306,14 @@
           <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}"
             id="CompanyName_Job_JobHistoryInput">
             <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button"
-                id="paying-firma-add-btn-2" class="paying-company-add-btn"><i
+                id="paying-firma-add-btn-2" class="paying-supplier-add-btn"><i
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory"
                 class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1" />
 
-              <div id="jobhistory_dropdown1" class="dropdown-content supplier-dropdown">
-                <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
+              <div id="jobhistory_dropdown1" class="dropdown-content supplier_dropdown">
+
               </div>
             </div>
           </div>
@@ -324,10 +324,8 @@
               <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
 
-              <div id="jobhistory_dropdown2" class="dropdown-content">
-                {% for x in project %}
-                <span value="{{x.id}}" class="dropdown-item projects_dropdown">{{x.ProjectName}}</span>
-                {% endfor %}
+              <div id="jobhistory_dropdown2" class="dropdown-content projects_dropdown">
+                
               </div>
             </div>
           </div>
@@ -381,7 +379,7 @@
   </div>
   <div class="window client-add-window">
     <div style="width: 400px" id="client_container" class="container">
-      <h3 id="client-X" class="close-company-window">X</h3>
+      <h3 id="client-X" class="close-window clientx">X</h3>
       <div class="title">Firma Ekle</div>
       <form id="firma_add_form" action="#" method="post">
         {% csrf_token %}
@@ -390,7 +388,7 @@
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="CompanyName_Clients">
             <span id="firma_add_label" class="details">Firma Adı*</span>
-            <input name="CompanyName_Clients" type="text" />
+            <input name="CompanyName_Clients_New" type="text" />
           </div>
         </div>
         <div class="button">
@@ -400,24 +398,24 @@
     </div>
   </div>
   <div class="window supplier-add-window">
-    <div id="supplier_container" class="container">
-          <h3 id="supplier-X" class="close-supplier-window">X</h3>
-          <div class="title">Firma Ekle</div>
-       <form id="supplier_add_form" action="#" method="post">
-             {% csrf_token %}
-             <input type="hidden" name="form_type" value="supplier_form">
-             <div class="user-details"> 
-                <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
-                  <span id="firma_add_label" class="details">Firma Adı*</span>
-                  <input name="CompanyName_Clientssss" type="text" />
-                </div>                        
+    <div style="width: 400px" id="supplier_container" class="container">
+      <h3 id="supplier-X" class="close-window supplierx">X</h3>
+      <div class="title">Firma Ekle</div>
+      <form id="supplier_add_form" action="#" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="supplier_form">
+        <div class="user-details">
+          <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
+            <span id="firma_add_label" class="details">Firma Adı*</span>
+            <input name="CompanyName_Supplier_New" type="text" />
           </div>
-             <div class="button">
-                   <input id="supplier_add_btn" type="submit" value="Kaydet">
-             </div>
-       </form>
+        </div>
+        <div class="button">
+          <input id="supplier_add_btn" type="submit" value="Kaydet">
+        </div>
+      </form>
     </div>
- </div>
+  </div>
 
   {% include 'partials/_left_nav_bar.html' %}
   <div class="right-menu">
