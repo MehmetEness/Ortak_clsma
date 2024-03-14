@@ -30,7 +30,7 @@ class ProjectDetailAPIView(APIView):
         return Response(serializer.data)
     def put(self, request, project_id):
         project = get_object_or_404(Project,id=project_id)
-        serializer= ProjectSerializer(data=request.data)
+        serializer= ProjectSerializer(project, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
@@ -83,7 +83,37 @@ def api_project_detail(request, project_id):
 '''
 
 
-@api_view(['GET'])
+class ExpensesListAPIView(APIView):
+    def get(self, request):
+        expenses = Expenses.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= ExpensesSerializer(expenses, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= ExpensesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class ExpenseDetailAPIView(APIView):
+    def get(self, request, expenses_id):
+        expense = get_object_or_404(Expenses,id=expenses_id)
+        serializer= ExpensesSerializer(expense)
+        return Response(serializer.data)
+    def put(self, request, expenses_id):
+        expense = get_object_or_404(Expenses,id=expenses_id)
+        serializer= ExpensesSerializer(expense, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, expenses_id):
+        expense = get_object_or_404(Expenses,id=expenses_id)
+        expense.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+
+'''@api_view(['GET'])
 @login_required
 def get_expenses(request):
     expenses = Expenses.objects.all()
@@ -119,8 +149,37 @@ def post_update_expenses(request, expenses_id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors)
+'''
 
-
+class JobHistoryListAPIView(APIView):
+    def get(self, request):
+        jobs = JobHistory.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= JobHistorySerializer(jobs, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= JobHistorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class JobHistoryDetailAPIView(APIView):
+    def get(self, request, jobhistory_id):
+        job = get_object_or_404(JobHistory,id=jobhistory_id)
+        serializer= JobHistorySerializer(job)
+        return Response(serializer.data)
+    def put(self, request, jobhistory_id):
+        job = get_object_or_404(JobHistory,id=jobhistory_id)
+        serializer= JobHistorySerializer(job, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, jobhistory_id):
+        job = get_object_or_404(JobHistory,id=jobhistory_id)
+        job.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+'''
 @api_view(['GET'])
 @login_required
 def get_job_history(request):
@@ -156,7 +215,38 @@ def post_update_jobhistory(request, jobhistory_id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors)
+'''
 
+class IncomesListAPIView(APIView):
+    def get(self, request):
+        incomes = Incomes.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= IncomesSerializer(incomes, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= IncomesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class IncomeDetailAPIView(APIView):
+    def get(self, request, incomes_id):
+        income = get_object_or_404(Incomes,id=incomes_id)
+        serializer= IncomesSerializer(income)
+        return Response(serializer.data)
+    def put(self, request, incomes_id):
+        income = get_object_or_404(Incomes,id=incomes_id)
+        serializer= IncomesSerializer(income, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, incomes_id):
+        income = get_object_or_404(Incomes,id=incomes_id)
+        income.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+'''
 @api_view(['GET'])
 @login_required
 def get_incomes(request):
@@ -191,7 +281,38 @@ def post_update_income(request, income_id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors)
+'''
 
+class ClientsListAPIView(APIView):
+    def get(self, request):
+        clients = Clients.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= ClientSerializer(clients, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= ClientSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class ClientDetailAPIView(APIView):
+    def get(self, request, client_id):
+        client = get_object_or_404(Clients,id=client_id)
+        serializer= ClientSerializer(client)
+        return Response(serializer.data)
+    def put(self, request, client_id):
+        client = get_object_or_404(Clients,id=client_id)
+        serializer= ClientSerializer(client, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, client_id):
+        client = get_object_or_404(Clients,id=client_id)
+        client.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+    
+'''
 @api_view(['GET'])
 def get_clients(request):
     clients = Clients.objects.all() # Tüm müşterileri JSON formatında al
@@ -227,7 +348,38 @@ def post_update_client(request, client_id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors)
+'''
 
+
+class SuppliersListAPIView(APIView):
+    def get(self, request):
+        suppliers = Supplier.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= SupplierSerializer(suppliers, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= SupplierSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class SupplierDetailAPIView(APIView):
+    def get(self, request, supplier_id):
+        supplier = get_object_or_404(Supplier,id=supplier_id)
+        serializer= SupplierSerializer(supplier)
+        return Response(serializer.data)
+    def put(self, request, supplier_id):
+        supplier = get_object_or_404(Supplier,id=supplier_id)
+        serializer= SupplierSerializer(supplier, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, supplier_id):
+        supplier = get_object_or_404(Supplier,id=supplier_id)
+        supplier.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+'''
 @api_view(['GET'])
 @login_required
 def get_suppliers(request):
@@ -265,3 +417,4 @@ def post_update_supplier(request, supplier_id):
         return Response(serializer.data)
     return Response(serializer.errors)
 
+'''
