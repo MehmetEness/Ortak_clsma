@@ -99,8 +99,8 @@
           <div class="input-box">
             <span class="details">Teşvikli (Evet/Hayır)</span>
             <select name="Incentive" id="">
-              <option value="">Evet</option>
-              <option value="">Hayır</option>
+              <option value="Evet">Evet</option>
+              <option value="Hayır">Hayır</option>
             </select>
           </div>
         </div>
@@ -138,7 +138,7 @@
               <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
 
-              <div id="income_dropdown2" class="dropdown-content projects_dropdown">                
+              <div id="income_dropdown2" class="dropdown-content projects_dropdown">
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@
     <div class="container">
       <h3 id="expenses-X" class="close-window">X</h3>
       <div class="title">Gider Ekle</div>
-      <form id="my-form" action="{% url 'expenses_add' %}" method="post">
+      <form id="expenses_add_form" action="#" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="expenses_form" />
         <div class="user-details">
@@ -215,9 +215,7 @@
                 data-dropdown="expenses_dropdown1" />
 
               <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
-                {% for x in supplier %}
-                <span value="{{x.id}}" class="dropdown-item">{{x.CompanyName_Supplier}}</span>
-                {% endfor %}
+                
               </div>
             </div>
           </div>
@@ -325,7 +323,7 @@
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
 
               <div id="jobhistory_dropdown2" class="dropdown-content projects_dropdown">
-                
+
               </div>
             </div>
           </div>

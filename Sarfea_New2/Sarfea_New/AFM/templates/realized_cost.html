@@ -23,11 +23,7 @@
     <div class="container">
       <h3 id="expenses-X" class="close-window">X</h3>
       <div class="title">Gider Ekle</div>
-      <form
-        id="my-form"
-        action="{% url 'expenses_add_wp' project_id=project.id  %}"
-        method="post"
-      >
+      <form id="expenses_add_form" action="#" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="expenses_form" />
         <div class="user-details">
@@ -49,31 +45,16 @@
           </div>
 
           <div class="input-box" id="CompanyName_Paying_ExpensesInput">
-            <span id="odeme_yapilan_firma_span" class="details"
-              >Ödeme Yapılan Firma*<button
-                type="button"
-                id="paying-firma-add-btn-2"
-                class="paying-firma-add-btn"
-              >
-                <i class="fa-solid fa-plus"></i></button
-            ></span>
+            <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*<button type="button" id="paying-firma-add-btn-2" class="paying-supplier-add-btn">
+              <i class="fa-solid fa-plus"></i>
+            </button></span>
             <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                type="text"
-                id="id_CompanyName_Paying_Expenses"
-                name="CompanyName_Paying_Expenses"
-                class="myInput"
-                placeholder="Firma Adını Seçiniz"
-                data-dropdown="dropdown2"
-              />
+              <input autocomplete="off" type="text" id="id_CompanyName_Paying_Expenses"
+                name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz"
+                data-dropdown="expenses_dropdown1" />
 
-              <div id="dropdown2" class="dropdown-content">
-                {% for x in supplier %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.CompanyName_Supplier}}</span
-                >
-                {% endfor %}
+              <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
+                
               </div>
             </div>
           </div>
@@ -161,52 +142,22 @@
         {% csrf_token %}
         <input type="hidden" name="form_type" value="jobhistory_form" />
         <div class="user-details">
-          <div
-            style="display: none"
-            class="input-box"
-            id="ProjectName_JobHistoryInput"
-          >
+          <div style="display: none" class="input-box" id="ProjectName_JobHistoryInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input
-                value="{{project.ProjectName}}"
-                type="text"
-                id="id_ProjectName_JobHistory"
-                name="ProjectName_JobHistory"
-                placeholder="Proje Adını Seçiniz"
-              />
+              <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory" placeholder="Proje Adını Seçiniz"/>
             </div>
           </div>
 
-          <div
-            class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}"
-            id="CompanyName_Job_JobHistoryInput"
-          >
-            <span id="is_yapilan_firma_span" class="details"
-              >İş Yapılan Firma*<button
-                type="button"
-                id="paying-firma-add-btn-2"
-                class="paying-firma-add-btn"
-              >
-                <i class="fa-solid fa-plus"></i></button
-            ></span>
+          <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}" id="CompanyName_Job_JobHistoryInput">
+            <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button"
+              id="paying-firma-add-btn-2" class="paying-supplier-add-btn"><i
+                class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                type="text"
-                id="id_CompanyName_Job_JobHistory"
-                name="CompanyName_Job_JobHistory"
-                class="myInput"
-                placeholder="Firma Adını Seçiniz"
-                data-dropdown="dropdown2"
-              />
+              <input autocomplete="off" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1"/>
 
-              <div id="dropdown2" class="dropdown-content">
-                {% for x in supplier %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.CompanyName_Supplier}}</span
-                >
-                {% endfor %}
+              <div id="jobhistory_dropdown1" class="dropdown-content supplier_dropdown">
+                
               </div>
             </div>
           </div>
@@ -265,15 +216,11 @@
       </form>
     </div>
   </div>
-  <div class="window payingFirmaAddWindow">
-    <div id="firma_container" class="container">
-      <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
+  <div class="window supplier-add-window">
+    <div style="width: 400px" id="supplier_container" class="container">
+      <h3 id="supplier-X" class="close-window supplierx">X</h3>
       <div class="title">Firma Ekle</div>
-      <form
-        id="firma_form"
-        action="{% url 'jobhistory_add_wp' project_id=project.id %}"
-        method="post"
-      >
+      <form id="supplier_add_form" action="#" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="supplier_form" />
         <div class="user-details">
@@ -283,38 +230,11 @@
             name="CompanyName_Supplier"
           >
             <span id="firma_add_label" class="details">Firma Adı*</span>
-            {{ supplier_form.CompanyName_Supplier }}
+            <input name="CompanyName_Supplier_New" type="text" />
           </div>
         </div>
         <div class="button">
-          <input id="firma_add_btn" type="submit" value="Kaydet" />
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="window payingFirmaAddWindow">
-    <div id="firma_container" class="container">
-      <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
-      <div class="title">Firma Ekle</div>
-      <form
-        id="firma_form"
-        action="{% url 'expenses_add_wp' project_id=project.id  %}"
-        method="post"
-      >
-        {% csrf_token %}
-        <input type="hidden" name="form_type" value="supplier_form" />
-        <div class="user-details">
-          <div
-            id="firma_input_box"
-            class="input-box"
-            name="CompanyName_Supplier"
-          >
-            <span id="firma_add_label" class="details">Firma Adı*</span>
-            {{ supplier_form.CompanyName_Supplier }}
-          </div>
-        </div>
-        <div class="button">
-          <input id="firma_add_btn" type="submit" value="Kaydet" />
+          <input id="supplier_add_btn" type="button" value="Kaydet" />
         </div>
       </form>
     </div>
@@ -382,34 +302,7 @@
               <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
+          <tbody>          
           </tbody>
         </table>
         <table id="expenses_table">
@@ -424,34 +317,7 @@
               <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-              <td>adsfasdf</td>
-            </tr>
+          <tbody>           
           </tbody>
         </table>
       </section>
