@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Clients, Supplier, Project, Expenses, JobHistory, Incomes # Make sure to import your Clients model
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes # Make sure to import your Clients model
 
 class ClientSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
