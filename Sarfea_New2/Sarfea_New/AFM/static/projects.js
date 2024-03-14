@@ -146,7 +146,7 @@ var expensesAddWindowButton = document.querySelector(".expenses-add-btn");
 var jobhistoryAddWindow = document.querySelector(".jobhistory-add-window");
 var jobhistoryAddWindowButton = document.querySelector(".jobhistory-add-btn");
 let editMode = false;
-
+let projectId;
 
 //----- PROJECT
 projectAddWindowButton.addEventListener("click", () => {
@@ -224,21 +224,26 @@ function editButtonsEvents() {
   );
   editButtons.forEach((btn) => {
     btn.addEventListener("click", async () => {
-      let clickedButtonId = btn.id;
-        const response = await fetch(`http://127.0.0.1:8000/get_project_id/${clickedButtonId}/`);
-        const data = await response.json();
-        // console.log(data)
-        // document.querySelector('input[name="project_id"]').value = project.id;
-        // document.querySelector('input[name="project_name"]').value = project.ProjectName;
-        // document.querySelector('input[name="location"]').value = project.Location;
-        // document.querySelector('input[name="ac_power"]').value = project.AC_Power;
-        // document.querySelector('input[name="dc_power"]').value = project.DC_Power;
-        // document.querySelector('input[name="calculated_cost"]').value = project.CalculatedCost_NotIncludingKDV;
-        // document.querySelector('input[name="terrain_roof"]').value = project.Terrain_Roof;
-        // document.querySelector('input[name="start_date"]').value = formattedDate;
-        // document.querySelector('input[name="situation"]').value = project.Situation;
+      projectId = btn.id;
+      const response = await fetch(`http://127.0.0.1:8000/get_project_id/${projectId}`);
+      const data = await response.json();
+      console.log(data)
+      document.querySelector('input[name="CompanyName"]').value = data.CompanyName;
+      document.querySelector('input[name="ProjectName"]').value = data.ProjectName;
+      document.querySelector('input[name="ProjectCode"]').value = data.ProjectCode;
+      document.querySelector('select[name="CompanyUndertakingWork"]').value = data.CompanyUndertakingWork;
+      document.querySelector('input[name="Location"]').value = data.Location;
+      document.querySelector('input[name="Cost_NotIncludingKDV"]').value = data.Cost_NotIncludingKDV;
+      document.querySelector('input[name="AC_Power"]').value = data.AC_Power;
+      document.querySelector('input[name="DC_Power"]').value = data.DC_Power;
+      document.querySelector('input[name="CalculatedCost_NotIncludingKDV"]').value = data.CalculatedCost_NotIncludingKDV;
+      document.querySelector('input[name="StartDate"]').value = data.StartDate;
+      document.querySelector('input[name="FinishDate"]').value = data.FinishDate;
+      document.querySelector('input[name="KDV_Rate"]').value = data.KDV_Rate;
+      document.querySelector('select[name="Terrain_Roof"]').value = data.Terrain_Roof;
+      document.querySelector('select[name="Incentive"]').value = data.Incentive;
       setTimeout(() => {
-        editMode = true        
+        editMode = true
         projectAddWindow.style.display = "flex";
       }, 10);
     });
@@ -386,14 +391,16 @@ projectFormAddBtn.addEventListener("click", async function (event) {
 
   if (true) {
     const formData = new FormData(projectAddForm);
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
 
+    // JavaScript nesnesini JSON'a dönüştürme
+    const jsonData = JSON.stringify(formDataObject);
     if (!editMode) {
       try {
-        const jsonObject = {};
-        formData.forEach((value, key) => {
-          jsonObject[key] = value;
-        });
-        const jsonData = JSON.stringify(jsonObject);
+        console.log("add")
         console.log(jsonData)
 
         const response = await fetch("http://127.0.0.1:8000/post_projects/", {
@@ -409,29 +416,26 @@ projectFormAddBtn.addEventListener("click", async function (event) {
       } catch (error) {
         console.error("There was an error!", error);
       }
-    } else {
-      try {
-        const jsonObject = {};
-        formData.forEach((value, key) => {
-          jsonObject[key] = value;
-        });
-        const jsonData = JSON.stringify(jsonObject);
-        console.log(jsonData)
-        const response = await fetch(`http://127.0.0.1:8000/post_update_client/${clientId}`, {
-          method: "PUT",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: jsonData,
-        });
-
-        getClient();
-        clientAddWindow.style.display = "none";
-        clearInputAfterSave(clientAddForm);
-      } catch (error) {
-        console.error("There was an error!", error);
-      }
     }
+    // else {
+    //   try {
+    //     console.log(formData)
+    //     console.log("formData")
+    //     const response = await fetch(`http://127.0.0.1:8000/post_update_client/${projectId}`, {
+    //       method: "PUT",
+    //       headers: {
+    //         "X-CSRFToken": getCookie("csrftoken"),
+    //       },
+    //       body: formData,
+    //     });
+
+    //     getProjects()
+    //     projectAddWindow.style.display = "none";
+    //     clearInputAfterSave(projectAddForm);
+    //   } catch (error) {
+    //     console.error("There was an error!", error);
+    //   }
+    // }
   }
 });
 /***********************************************************
@@ -443,7 +447,7 @@ clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(firma_add_form);    
+    const formData = new FormData(firma_add_form);
     try {
       const response = await fetch("http://127.0.0.1:8000/post_client/", {
         method: "POST",
@@ -466,7 +470,7 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(supplier_add_form);    
+    const formData = new FormData(supplier_add_form);
     try {
       const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
         method: "POST",

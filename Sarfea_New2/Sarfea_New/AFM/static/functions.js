@@ -115,7 +115,7 @@ function tableFormat(cells, type) {
     case "usd":
       cells.forEach(function (cell) {
         //var value = parseFloat(cell.textContent.replace(/,/g, "."));
-        var value = parseFloat(clear2(cell.textContent));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "$";
           cell.title = formatNumber(value, 2) + "$";
@@ -128,7 +128,7 @@ function tableFormat(cells, type) {
     case "tl":
       cells.forEach(function (cell) {
         // var value = parseFloat(cell.textContent.replace(/,/g, "."));
-        var value = parseFloat(clear2(cell.textContent));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 2) + "₺";
           cell.title = formatNumber(value, 2) + "₺";
@@ -140,7 +140,7 @@ function tableFormat(cells, type) {
       break;
     case "kur":
       cells.forEach(function (cell) {
-        var value = parseFloat(clear2(cell.textContent));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -164,7 +164,7 @@ function tableFormat(cells, type) {
       break;
     case "numeric":
       cells.forEach(function (cell) {
-        var value = parseFloat(clear2(cell.textContent));
+        var value = parseFloat(cell.textContent);
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 0);
           cell.title = formatNumber(value, 0);
@@ -182,7 +182,8 @@ function tableFormat(cells, type) {
 //                  SIRALAMA İŞLEMLERİ
 
 const search = document.querySelector(".searchForNav input");
-search.addEventListener("input", searchTable);
+if (search) { search.addEventListener("input", searchTable); }
+
 
 // SEARCHİNG
 function searchTable() {
@@ -226,8 +227,8 @@ function sortTable(column, sort_asc, table_rows, tableBody) {
   [...table_rows]
     .sort((a, b) => {
       let first_row = a
-          .querySelectorAll("td")
-          [column].textContent.toLowerCase(),
+        .querySelectorAll("td")
+      [column].textContent.toLowerCase(),
         second_row = b.querySelectorAll("td")[column].textContent.toLowerCase();
       let first_number = first_row
         .replace(/\./g, "")
@@ -260,16 +261,16 @@ function sortTable(column, sort_asc, table_rows, tableBody) {
             ? 1
             : -1
           : first_number < second_number
-          ? -1
-          : 1;
+            ? -1
+            : 1;
       } else {
         return sort_asc
           ? first_row < second_row
             ? 1
             : -1
           : first_row < second_row
-          ? -1
-          : 1;
+            ? -1
+            : 1;
       }
     })
     .map((sorted_row) => tableBody.appendChild(sorted_row));
@@ -744,13 +745,13 @@ function dateInputFormat(input) {
 //            ***** DOM EVENTS *****
 
 document.addEventListener("DOMContentLoaded", async function () {
-  
 
- 
- 
+
+
+
 });
- //                  DROPDOWN İNPUTS
- function dropdownActive(){
+//                  DROPDOWN İNPUTS
+function dropdownActive() {
   var dropdownInputs = document.querySelectorAll(".myInput");
   if (dropdownInputs) {
     dropdownInputs.forEach((input) => {
@@ -794,7 +795,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
 
       dropdownItems.forEach((item) => {
-        
+
         item.addEventListener("click", function () {
           console.log("ddd")
           input.value = this.textContent;
