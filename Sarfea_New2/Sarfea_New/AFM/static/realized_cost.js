@@ -178,3 +178,20 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+const totalTableBtn = document.querySelector("#toplam-maliyet");
+const twoTableSection = document.querySelector("#two_table_section");
+const totalTableSection = document.querySelector("#total_table_section");
+
+totalTableBtn.addEventListener("click", () => {
+    
+    if(twoTableSection.style.display == "flex"){
+        twoTableSection.style.display = "none";
+        totalTableSection.style.display = "flex";
+    }else{
+        twoTableSection.style.display = "flex";
+        totalTableSection.style.display = "none";
+    }
+   
+   
+})
