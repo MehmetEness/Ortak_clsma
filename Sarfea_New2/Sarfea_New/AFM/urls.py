@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from django.views.static import serve
 from django.conf import settings
-from . import views
+from AFM.api import views  as api_view
+from AFM import views
 
 urlpatterns = [
     #MODUL-1
@@ -51,24 +52,25 @@ urlpatterns = [
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
     
-    #MODUL-GET
-    path('get_projects/', views.get_projects, name='get_projects'),
-    path('get_project_id/<project_id>', views.get_project_id, name='get_project_id'),
+    #******************************* A P I ***********************************
+    path('api_projects/', api_view.ProjectListAPIView.as_view(), name='api_projects'),
+    path('api_project_detail/<project_id>', api_view.ProjectDetailAPIView.as_view(), name='api_project_detail'),
 
-    path('get_clients/', views.get_clients, name='get_clients'),
-    path('get_client_id/<client_id>', views.get_client_id, name='get_client_id'),
+    path('api_clients/', api_view.ClientsListAPIView.as_view(), name='api_clients'),
+    path('api_client_detail/<client_id>', api_view.ClientDetailAPIView.as_view(), name='api_client_detail'),
 
-    path('get_suppliers/', views.get_suppliers, name='get_suppliers'),
-    path('get_supplier_id/<supplier_id>', views.get_supplier_id, name='get_supplier_id'),
+    path('api_suppliers/', api_view.SuppliersListAPIView.as_view(), name='api_suppliers'),
+    path('api_supplier_detail/<supplier_id>', api_view.SupplierDetailAPIView.as_view(), name='api_supplier_detail'),
 
-    path("get_expenses/", views.get_expenses, name='get_expenses'),
-    path('get_expenses_id/<expenses_id>', views.get_expenses_id, name='get_expenses_id'),
+    path("api_expenses/", api_view.ExpensesListAPIView.as_view(), name='api_expenses'),
+    path('api_expenses_detail/<expenses_id>', api_view.ExpenseDetailAPIView.as_view(), name='api_expenses_detail'),
 
-    path("get_job_history/", views.get_job_history, name='get_job_history'),
-    path('get_job_history_id/<jobhistory_id>', views.get_job_history_id, name='get_job_history_id'),
+    path("api_job_history/", api_view.JobHistoryListAPIView.as_view(), name='api_job_history'),
+    path('api_job_history_detail/<jobhistory_id>', api_view.JobHistoryDetailAPIView.as_view(), name='api_job_history_detail'),
 
-    path("get_incomes/", views.get_incomes, name='get_incomes'),
-    path('get_income_id/<incomes_id>', views.get_income_id, name='get_income_id'),
+    path("api_incomes/", api_view.IncomesListAPIView.as_view(), name='api_incomes'),
+    path('api_income_detail/<incomes_id>', api_view.IncomeDetailAPIView.as_view(), name='api_income_detail'),
+    #******************************* ------- ***********************************
 
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
@@ -85,24 +87,7 @@ urlpatterns = [
     path("get_dollar_rate/<str:date>/", views.get_dollar_rate, name='get_dollar_rate'),
     
     #MODUL-POST
-    path('post_projects/', views.post_projects, name='post_projects'),
-    path('post_update_projects/<project_id>/', views.post_update_projects, name='post_update_projects'),    
-
-    path('post_expenses/', views.post_expenses, name='post_expenses'),
-    path('post_update_expenses/<expenses_id>/', views.post_update_expenses, name='post_update_expenses'),    
-    
-    path('post_jobhistory/', views.post_jobhistory, name='post_jobhistory'),
-    path('post_update_jobhistory/<jobhistory_id>/', views.post_update_jobhistory, name='post_update_jobhistory'),    
-    
-    path('post_income/', views.post_income, name='post_income'),
-    path('post_update_income/<income_id>/', views.post_update_income, name='post_update_income'),    
-
-    path('post_client/', views.post_client, name='post_client'),
-    path('post_update_client/<client_id>/', views.post_update_client, name='post_update_client'),
-
-    path('post_supplier/', views.post_supplier, name='post_supplier'),
-    path('post_update_supplier/<supplier_id>/', views.post_update_supplier, name='post_update_supplier'),
-
+   
     path('post_sales_offer/', views.post_sales_offer, name='post_sales_offer'),
     path('post_update_sales_offer/<sales_offer_id>/', views.post_update_sales_offer, name='post_update_sales_offer'),
 

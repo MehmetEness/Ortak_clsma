@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Clients, Supplier, Project, Expenses, JobHistory, Incomes # Make sure to import your Clients model
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes # Make sure to import your Clients model
 
 class ClientSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -98,10 +98,11 @@ class ExpensesSerializer(serializers.Serializer):
     CompanyName_FromPaymentMade_Expenses = serializers.CharField(required=False)
     CompanyName_Paying_Expenses = serializers.CharField(required=False)
     ExpensDetails_Expenses = serializers.CharField(required=False)
-    Amount_Expenses = serializers.CharField(required=False)
-    Dollar_Rate_Expenses = serializers.CharField(required=False)
+    Amount_Expenses = serializers.DecimalField(required=False, max_digits=13, decimal_places=2)
+    Dollar_Rate_Expenses = serializers.DecimalField(required=False, max_digits=8, decimal_places=4)
+    Amount_USD_Expenses = serializers.DecimalField(read_only=True, max_digits=13, decimal_places=2)
     Bank_Expenses = serializers.CharField(required=False)
-    Date_Expenses = serializers.CharField(required=False)
+    Date_Expenses = serializers.DateField(required=False)
 
     
     def create(self, validated_data):
@@ -129,8 +130,9 @@ class JobHistorySerializer(serializers.Serializer):
     CompanyName_Job_JobHistory = serializers.CharField(required=False)
     ExpensDetails_JobHistory = serializers.CharField(required=False)
     Invoice_No_JobHistory = serializers.CharField(required=False)
-    Amount_JobHistory = serializers.CharField(required=False)
-    Dollar_Rate_JobHistory = serializers.CharField(required=False)
+    Amount_JobHistory = serializers.DecimalField(required=False, max_digits=13, decimal_places=2)
+    Dollar_Rate_JobHistory = serializers.DecimalField(required=False, max_digits=8, decimal_places=4)
+    Amount_USD_JobHistory = serializers.DecimalField(read_only=True, max_digits=13, decimal_places=2)
     Date_JobHistory = serializers.CharField(required=False)
 
     
@@ -156,8 +158,9 @@ class IncomesSerializer(serializers.Serializer):
     ProjectName_Incomes_Copy = serializers.CharField(required=True)
     CompanyName_ReceivePayment_Incomes = serializers.CharField(required=False)
     CompanyName_Pay_Incomes = serializers.CharField(required=False)
-    Amount_Incomes = serializers.CharField(required=False)
-    Dollar_Rate_Incomes = serializers.CharField(required=False)
+    Amount_Incomes = serializers.DecimalField(required=False, max_digits=13, decimal_places=2)
+    Dollar_Rate_Incomes = serializers.DecimalField(required=False, max_digits=8, decimal_places=4)
+    Amount_Usd_Incomes = serializers.DecimalField(read_only=True, max_digits=13, decimal_places=2)
     PaymentType_Incomes = serializers.CharField(required=False)
     ChekDate_Incomes = serializers.CharField(required=False)
     LastChekDate_Incomes = serializers.CharField(required=False)
