@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function getSupplier() {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
-    const data = await apiFunctions("suppliers", "GET");
+    const data = await apiFunctions("supplier", "GET");
     let rows = "";
     for (const supplier of data) {
       const row = `

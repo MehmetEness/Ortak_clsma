@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function getClient() {
 
     let currentRows = clientTableBody.querySelectorAll("tr");
-    const data = await apiFunctions("clients", "GET");
+    const data = await apiFunctions("client", "GET");
     let rows = "";
     for (const client of data) {
       const row = `
