@@ -20,7 +20,6 @@ async function getSupplier() {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
     const data = await apiFunctions("suppliers", "GET");
-    console.log(data)
     let rows = "";
     for (const supplier of data) {
       const row = `
