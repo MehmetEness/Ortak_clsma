@@ -8,6 +8,7 @@ var textCells = document.querySelectorAll(
 );
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const supplierAddForm = document.getElementById("supplier_add_form");
+let editMode = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await getSupplier();
@@ -41,6 +42,7 @@ async function getSupplier() {
     if (data.length > currentRows.length) {
       supplierTableBody.innerHTML = "";
       supplierTableBody.insertAdjacentHTML("beforeend", rows);
+      editBtns();
       sortTableForStart(supplierTable, 1);
       allTableFormat();
       sortingTable(supplierTable);
@@ -56,6 +58,7 @@ const supplierAddWindow = document.querySelector(".supplier-add-window");
 
 supplierAddBtn.addEventListener("click", () => {
   setTimeout(() => {
+    editMode = false;
     supplierAddWindow.style.display = "flex";
   }, 10);
 });
@@ -96,49 +99,36 @@ function allTableFormat() {
 }
 
 //                  SUPPLİER ADD FUNCTİON
-
+let = btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
-
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
-  if (true) {
-    const formData = new FormData(supplierAddForm);
-
-    try {
-      const jsonObject = {};
-      formData.forEach((value, key) => {
-        jsonObject[key] = value;
-      });
-      const jsonData = JSON.stringify(jsonObject);
-      console.log(jsonData)
-      const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      getSupplier();
-      supplierAddWindow.style.display = "none";
-      clearInputAfterSave(supplierAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+  if (editMode == false) {
+    await apiFunctions("supplier", "POST", supplierAddForm);
+    getSupplier();
+    supplierAddWindow.style.display = "none";
+    clearInputAfterSave(supplierAddForm);
+  } else {
+    console.log(btnID)
+    await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
+    getSupplier();
+    supplierAddWindow.style.display = "none";
+    clearInputAfterSave(supplierAddForm);
   }
 });
 
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
+//                  SUPPLİER EDİT FUNCTİON
+
+function editBtns() {
+  let editButtons = document.querySelectorAll(".edit-supplier-btn");
+  editButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setTimeout(() => {
+        editMode = true;
+        btnID = button.id;
+        supplierAddWindow.style.display = "flex";
+      }, 10);
+    })
+  });
 }

@@ -825,22 +825,23 @@ async function getUSDKur(date) {
 }
 
 //  CLİENT KURU
-async function apiFunctions(name, type, formData){
+async function apiFunctions(name, type, myForm, id) {
 
-switch (type) {
+  switch (type) {
     case "GET":
-      try{
+      try {
         const response = await fetch(`/api_${name}/`);
         const data = await response.json();
         return data;
-      }catch(error){
+      } catch (error) {
         console.error("There was an error!", error);
       }
-        break;
+      break;
 
     case "POST":
       try {
-        const response = await fetch(`/api_${name}/`, {
+        const formData = new FormData(myForm);
+        await fetch(`/api_${name}/`, {
           method: "POST",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
@@ -850,26 +851,29 @@ switch (type) {
       } catch (error) {
         console.error("There was an error!", error);
       }
-        break;
+      break;
 
     case "PUT":
       try {
-        const response = await fetch(`/api_clients/${"x"}`, {
+        const formData = new FormData(myForm);
+        console.log(`/api_${name}/${id}`)
+        await fetch(`/api_${name}/${id}`, {
           method: "PUT",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: jsonData,
+          body: formData,
         });
 
       } catch (error) {
         console.error("There was an error!", error);
       }
-        break;
+      break;
     default:
-        
-}
- 
+
+
+  }
+
 }
 
 
@@ -886,3 +890,21 @@ switch (type) {
 
 
 //  JOBHİSTORY KURU
+
+
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}

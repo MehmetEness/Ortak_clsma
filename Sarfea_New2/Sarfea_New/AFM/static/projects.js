@@ -35,10 +35,14 @@ async function getProjects() {
     //const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
     const data = await apiFunctions("project", "GET");
     console.log(data);
+    let formattedDate;
     let rows = "";
     for (const project of data) {
-      const date = new Date(project.StartDate);
-      const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+      if(project.StartDate){
+        let date = new Date(project.StartDate);
+        formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+      }else{formattedDate = "-"}
+            
       const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
 
       const row = `
@@ -71,9 +75,6 @@ async function getProjects() {
     console.error("Error fetching and rendering clients:", error);
   }
 }
-
-
-
 
 
 //                  TABLO FORMATLAMA
