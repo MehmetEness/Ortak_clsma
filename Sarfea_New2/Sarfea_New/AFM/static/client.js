@@ -15,13 +15,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function getClient() {
-  try {
+
     let currentRows = clientTableBody.querySelectorAll("tr");
-    const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
-    const data = await response.json();
-    //const clients = data.clients;
-    //console.log(response);
-    //console.log(data);
+    const data = await apiFunctions("clients", "GET");
     let rows = "";
     for (const client of data) {
       const row = `
@@ -39,7 +35,7 @@ async function getClient() {
           </tr>
       `;
       rows += row;
-  }  
+    }
     if (data.length > currentRows.length) {
       clientTableBody.innerHTML = "";
       clientTableBody.insertAdjacentHTML("beforeend", rows);
@@ -47,10 +43,7 @@ async function getClient() {
       sortingTable(clientTable);
       allTableFormat();
       editButtonsEvents();
-    }
-  } catch (error) {
-    console.error("Error fetching and rendering clients:", error);
-  }
+    }  
 }
 
 //                  OPEN ADD WİNDOW
@@ -131,8 +124,7 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 
     if (!editMode) {
       try {
-        console.log(formData);
-        const response = await fetch("http://127.0.0.1:8000/post_client/", {
+        const response = await fetch("/api_client/", {
           method: "POST",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
@@ -160,7 +152,7 @@ clientFormAddBtn.addEventListener("click", async function (event) {
           },
           body: jsonData,
         });
-        
+
         getClient();
         clientAddWindow.style.display = "none";
         clearInputAfterSave(clientAddForm);
@@ -210,4 +202,23 @@ function getCookie(name) {
     }
   }
   return cookieValue;
+}
+
+
+
+
+getClientdsf()
+
+async function getClientdsf() {
+  try {
+    //let currentRows = clientTableBody.querySelectorAll("tr");
+    const response = await fetch(`/api_clients/`);
+    const data = await response.json();
+    //const clients = data.clients;
+    console.log(response);
+    console.log(data);
+
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
 }
