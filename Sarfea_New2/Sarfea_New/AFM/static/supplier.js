@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }, 5000);
 });
 
-async function getSupplier() {
+async function getSupplier(isEdit) {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
     const data = await apiFunctions("supplier", "GET");
@@ -39,7 +39,7 @@ async function getSupplier() {
             `;
       rows += row;
     }
-    if (data.length > currentRows.length) {
+    if (data.length > currentRows.length || isEdit) {
       supplierTableBody.innerHTML = "";
       supplierTableBody.insertAdjacentHTML("beforeend", rows);
       editBtns();
@@ -99,6 +99,7 @@ function allTableFormat() {
 }
 
 //                  SUPPLİER ADD FUNCTİON
+
 let = btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
@@ -112,7 +113,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
   } else {
     console.log(btnID)
     await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
-    getSupplier();
+    getSupplier("EDİT");
     supplierAddWindow.style.display = "none";
     clearInputAfterSave(supplierAddForm);
   }
