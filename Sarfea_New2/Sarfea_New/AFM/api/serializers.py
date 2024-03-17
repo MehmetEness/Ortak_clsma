@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes # Make sure to import your Clients model
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, SalesOfferCard,SalesOfferCard_Revise
 
 class ClientSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -134,3 +134,92 @@ class IncomesSerializer(serializers.ModelSerializer):
         instance.LastChekDate_Incomes = validated_data.get('LastChekDate_Incomes', instance.LastChekDate_Incomes)
         instance.save()
         return instance
+
+class SalesOfferCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SalesOfferCard
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        return SalesOfferCard.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Client_Card = validated_data.get('Client_Card', instance.Client_Card)
+        instance.Offer_Subject_Card = validated_data.get('Offer_Subject_Card', instance.Offer_Subject_Card)
+        instance.Location_Card = validated_data.get('Location_Card', instance.Location_Card)
+        instance.Cost_NotIncludingKDV_Card = validated_data.get('Cost_NotIncludingKDV_Card', instance.Cost_NotIncludingKDV_Card)
+        instance.Offer_Cost_NotIncludingKDV_Card = validated_data.get('Offer_Cost_NotIncludingKDV_Card', instance.Offer_Cost_NotIncludingKDV_Card)
+        instance.AC_Power_Card = validated_data.get('AC_Power_Card', instance.AC_Power_Card)
+        instance.DC_Power_Card = validated_data.get('DC_Power_Card', instance.DC_Power_Card)
+        instance.UnitCost_NotIncludingKDV = validated_data.get('UnitCost_NotIncludingKDV', instance.UnitCost_NotIncludingKDV)
+        instance.UnitOffer_NotIncludingKDV = validated_data.get('UnitOffer_NotIncludingKDV', instance.UnitOffer_NotIncludingKDV)
+        instance.Situation_Card = validated_data.get('Situation_Card', instance.Situation_Card)
+        instance.Date_Card = validated_data.get('Date_Card', instance.Date_Card)
+        instance.Terrain_Roof_Card = validated_data.get('Terrain_Roof_Card', instance.Terrain_Roof_Card)
+        instance.Roof_Cost_Card = validated_data.get('Roof_Cost_Card', instance.Roof_Cost_Card)
+        instance.Comment_Date_Card = validated_data.get('Comment_Date_Card', instance.Comment_Date_Card)
+        instance.Person_Deal = validated_data.get('Person_Deal', instance.Person_Deal)
+        instance.Person_Related = validated_data.get('Person_Related', instance.Person_Related)
+        instance.Offer_Comment_Card = validated_data.get('Offer_Comment_Card', instance.Offer_Comment_Card)
+        instance.Offer_File_Card = validated_data.get('Offer_File_Card', instance.Offer_File_Card)
+        instance.Offer_File_Card_2 = validated_data.get('Offer_File_Card_2', instance.Offer_File_Card_2)
+        instance.Offer_File_Card_3 = validated_data.get('Offer_File_Card_3', instance.Offer_File_Card_3)
+        instance.Offer_File_Card_4 = validated_data.get('Offer_File_Card_4', instance.Offer_File_Card_4)
+        instance.Offer_File_Card_5 = validated_data.get('Offer_File_Card_5', instance.Offer_File_Card_5)
+        instance.M_File_Card = validated_data.get('M_File_Card', instance.M_File_Card)
+        instance.M_File_Card_2 = validated_data.get('M_File_Card_2', instance.M_File_Card_2)
+        instance.M_File_Card_3 = validated_data.get('M_File_Card_3', instance.M_File_Card_3)
+        instance.Is_Lost = validated_data.get('Is_Lost', instance.Is_Lost)
+        instance.Is_Gain = validated_data.get('Is_Gain', instance.Is_Gain)
+        instance.Is_late = validated_data.get('Is_late', instance.Is_late)
+        instance.Unit_Cost_with_Roof_Cost = validated_data.get('Unit_Cost_with_Roof_Cost', instance.Unit_Cost_with_Roof_Cost)
+        instance.Unit_Offer_with_Roof_Cost = validated_data.get('Unit_Offer_with_Roof_Cost', instance.Unit_Offer_with_Roof_Cost)
+        instance.Profit_Rate_Card = validated_data.get('Profit_Rate_Card', instance.Profit_Rate_Card)
+        instance.save()
+        return instance
+    
+class SalesOfferCardReviseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SalesOfferCard_Revise
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        return SalesOfferCard_Revise.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Revise_Owner = validated_data.get('Revise_Owner', instance.Revise_Owner)
+        instance.Client_Card = validated_data.get('Client_Card', instance.Client_Card)
+        instance.Offer_Subject_Card = validated_data.get('Offer_Subject_Card', instance.Offer_Subject_Card)
+        instance.Location_Card = validated_data.get('Location_Card', instance.Location_Card)
+        instance.Cost_NotIncludingKDV_Card = validated_data.get('Cost_NotIncludingKDV_Card', instance.Cost_NotIncludingKDV_Card)
+        instance.Offer_Cost_NotIncludingKDV_Card = validated_data.get('Offer_Cost_NotIncludingKDV_Card', instance.Offer_Cost_NotIncludingKDV_Card)
+        instance.AC_Power_Card = validated_data.get('AC_Power_Card', instance.AC_Power_Card)
+        instance.DC_Power_Card = validated_data.get('DC_Power_Card', instance.DC_Power_Card)
+        instance.UnitCost_NotIncludingKDV = validated_data.get('UnitCost_NotIncludingKDV', instance.UnitCost_NotIncludingKDV)
+        instance.UnitOffer_NotIncludingKDV = validated_data.get('UnitOffer_NotIncludingKDV', instance.UnitOffer_NotIncludingKDV)
+        instance.Situation_Card = validated_data.get('Situation_Card', instance.Situation_Card)
+        instance.Date_Card = validated_data.get('Date_Card', instance.Date_Card)
+        instance.Terrain_Roof_Card = validated_data.get('Terrain_Roof_Card', instance.Terrain_Roof_Card)
+        instance.Roof_Cost_Card = validated_data.get('Roof_Cost_Card', instance.Roof_Cost_Card)
+        instance.Comment_Date_Card = validated_data.get('Comment_Date_Card', instance.Comment_Date_Card)
+        instance.Person_Deal = validated_data.get('Person_Deal', instance.Person_Deal)
+        instance.Person_Related = validated_data.get('Person_Related', instance.Person_Related)
+        instance.Offer_Comment_Card = validated_data.get('Offer_Comment_Card', instance.Offer_Comment_Card)
+        instance.Offer_File_Card = validated_data.get('Offer_File_Card', instance.Offer_File_Card)
+        instance.Offer_File_Card_2 = validated_data.get('Offer_File_Card_2', instance.Offer_File_Card_2)
+        instance.Offer_File_Card_3 = validated_data.get('Offer_File_Card_3', instance.Offer_File_Card_3)
+        instance.Offer_File_Card_4 = validated_data.get('Offer_File_Card_4', instance.Offer_File_Card_4)
+        instance.Offer_File_Card_5 = validated_data.get('Offer_File_Card_5', instance.Offer_File_Card_5)
+        instance.M_File_Card = validated_data.get('M_File_Card', instance.M_File_Card)
+        instance.M_File_Card_2 = validated_data.get('M_File_Card_2', instance.M_File_Card_2)
+        instance.M_File_Card_3 = validated_data.get('M_File_Card_3', instance.M_File_Card_3)
+        instance.Is_Lost = validated_data.get('Is_Lost', instance.Is_Lost)
+        instance.Is_Gain = validated_data.get('Is_Gain', instance.Is_Gain)
+        instance.Is_late = validated_data.get('Is_late', instance.Is_late)
+        instance.Unit_Cost_with_Roof_Cost = validated_data.get('Unit_Cost_with_Roof_Cost', instance.Unit_Cost_with_Roof_Cost)
+        instance.Unit_Offer_with_Roof_Cost = validated_data.get('Unit_Offer_with_Roof_Cost', instance.Unit_Offer_with_Roof_Cost)
+        instance.Profit_Rate_Card = validated_data.get('Profit_Rate_Card', instance.Profit_Rate_Card)
+        instance.Revize_created_at = validated_data.get('Revize_created_at', instance.Revize_created_at)
+        instance.save()
+        return instance
+

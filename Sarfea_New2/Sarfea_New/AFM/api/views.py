@@ -5,7 +5,7 @@ from rest_framework import status
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer
+from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer
 from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details 
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
@@ -418,3 +418,61 @@ def post_update_supplier(request, supplier_id):
     return Response(serializer.errors)
 
 '''
+
+class SalesOfferListAPIView(APIView):
+    def get(self, request):
+        sales_offers = SalesOfferCard.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= SalesOfferCardSerializer(sales_offers, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= SalesOfferCardSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class SalesOfferDetailAPIView(APIView):
+    def get(self, request, sales_offer_id):
+        sales_offer = get_object_or_404(SalesOfferCard,id=sales_offer_id)
+        serializer= SalesOfferCardSerializer(sales_offer)
+        return Response(serializer.data)
+    def put(self, request, sales_offer_id):
+        sales_offer = get_object_or_404(SalesOfferCard,id=sales_offer_id)
+        serializer= SalesOfferCardSerializer(sales_offer, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, sales_offer_id):
+        sales_offer = get_object_or_404(SalesOfferCard,id=sales_offer_id)
+        sales_offer.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+class SalesOfferReviseListAPIView(APIView):
+    def get(self, request):
+        sales_offer_revises = SalesOfferCard_Revise.objects.all()  # Tüm müşterileri JSON formatında al
+        serializer= SalesOfferCardReviseSerializer(sales_offer_revises, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer= SalesOfferCardReviseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+class SalesOfferReviseDetailAPIView(APIView):
+    def get(self, request, sales_offer_revise_id):
+        sales_offer_revise = get_object_or_404(SalesOfferCard_Revise,id=sales_offer_revise_id)
+        serializer= SalesOfferCardReviseSerializer(sales_offer_revise)
+        return Response(serializer.data)
+    def put(self, request, sales_offer_revise_id):
+        sales_offer_revise = get_object_or_404(SalesOfferCard_Revise,id=sales_offer_revise_id)
+        serializer= SalesOfferCardReviseSerializer(sales_offer_revise, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, sales_offer_revise_id):
+        sales_offer_revise = get_object_or_404(SalesOfferCard_Revise,id=sales_offer_revise_id)
+        sales_offer_revise.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)

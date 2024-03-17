@@ -151,7 +151,6 @@ class Incomes(models.Model):
 
     
 class SalesOfferCard(models.Model):
-    Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)
     Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
@@ -203,9 +202,9 @@ class SalesOfferCard(models.Model):
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)
     def __str__(self):
             return self.Client_Card.CompanyName_Clients
+    
 class SalesOfferCard_Revise(models.Model):
     Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE, blank=True, null=True)
-    Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)
     Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)

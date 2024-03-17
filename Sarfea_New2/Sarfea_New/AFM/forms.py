@@ -316,11 +316,6 @@ class SupplierForm(forms.ModelForm):
 
 class SalesOfferCardForm(forms.ModelForm):
 
-    Client_Card_Copy = forms.CharField(
-         error_messages={
-            'required': '! Lütfen Müşteri Seçiniz',
-        }
-    )
     Client_Card = forms.ModelChoiceField(
         queryset=Clients.objects.all(),
         required=False,

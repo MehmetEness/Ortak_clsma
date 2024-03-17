@@ -37,18 +37,7 @@ def update_Incomes_Tl(sender, instance, **kwargs):
 @receiver(post_save, sender=SalesOfferCard)
 def update_client_card(sender, instance, **kwargs):
     need_save = False
-
-    if instance.Client_Card_Copy:
-        try:
-            client = Clients.objects.get(CompanyName_Clients=instance.Client_Card_Copy)
-            instance.Client_Card = client
-            need_save = True
-        except Clients.DoesNotExist:
-            # Optional handling for non-existent client
-            pass
-    
-    
-        
+       
     if instance.Roof_Cost_Card and instance.UnitOffer_NotIncludingKDV:
         instance.Unit_Cost_with_Roof_Cost = instance.Roof_Cost_Card + instance.UnitOffer_NotIncludingKDV
         need_save = True
@@ -72,7 +61,7 @@ def update_client_card(sender, instance, **kwargs):
 
     # Save the instance
     try:
-        instance.save(update_fields=['Client_Card', 'Unit_Cost_with_Roof_Cost', 'Unit_Offer_with_Roof_Cost', 'Profit_Rate_Card','Cost_NotIncludingKDV_Card', 'Offer_Cost_NotIncludingKDV_Card'])
+        instance.save(update_fields=[ 'Unit_Cost_with_Roof_Cost', 'Unit_Offer_with_Roof_Cost', 'Profit_Rate_Card','Cost_NotIncludingKDV_Card', 'Offer_Cost_NotIncludingKDV_Card'])
     finally:
         # Reconnect the signal
         post_save.connect(update_client_card, sender=SalesOfferCard)

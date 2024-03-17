@@ -52,26 +52,7 @@ urlpatterns = [
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
     
-    #******************************* A P I ***********************************
-    path('api_project/', api_view.ProjectListAPIView.as_view(), name='api_projects'),
-    path('api_project/<project_id>', api_view.ProjectDetailAPIView.as_view(), name='api_project_detail'),
-
-    path('api_client/', api_view.ClientsListAPIView.as_view(), name='api_clients'),
-    path('api_client/<client_id>', api_view.ClientDetailAPIView.as_view(), name='api_client_detail'),
-
-    path('api_supplier/', api_view.SuppliersListAPIView.as_view(), name='api_suppliers'),
-    path('api_supplier/<supplier_id>', api_view.SupplierDetailAPIView.as_view(), name='api_supplier_detail'),
-
-    path("api_expense/", api_view.ExpensesListAPIView.as_view(), name='api_expenses'),
-    path('api_expense/<expenses_id>', api_view.ExpenseDetailAPIView.as_view(), name='api_expenses_detail'),
-
-    path("api_job_history/", api_view.JobHistoryListAPIView.as_view(), name='api_job_history'),
-    path('api_job_history/<jobhistory_id>', api_view.JobHistoryDetailAPIView.as_view(), name='api_job_history_detail'),
-
-    path("api_income/", api_view.IncomesListAPIView.as_view(), name='api_incomes'),
-    path('api_income/<incomes_id>', api_view.IncomeDetailAPIView.as_view(), name='api_income_detail'),
-    #******************************* ------- ***********************************
-
+   
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
     path('get_late_cards/', views.get_late_cards, name='get_late_cards'),
@@ -88,9 +69,6 @@ urlpatterns = [
     
     #MODUL-POST
    
-    path('post_sales_offer/', views.post_sales_offer, name='post_sales_offer'),
-    path('post_update_sales_offer/<sales_offer_id>/', views.post_update_sales_offer, name='post_update_sales_offer'),
-
     path('post_update_string/<string_id>/', views.post_update_string, name='post_update_string'),
     path('post_card_file/', views.post_card_file, name='post_card_file'),
     path('post_fail_bill/', views.post_fail_bill, name='post_fail_bill'),

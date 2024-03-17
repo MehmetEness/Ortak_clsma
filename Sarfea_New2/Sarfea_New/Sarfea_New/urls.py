@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('',include('AFM.urls')),
+    path('',include('AFM.api.urls')),
     path('account/',include('account.urls')),
     path('', RedirectView.as_view(url='/account/login/', permanent=True)),  # Ana URL'yi /account/login/ sayfasına yönlendirin
     path("admin/", admin.site.urls),

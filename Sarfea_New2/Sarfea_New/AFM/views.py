@@ -1045,7 +1045,6 @@ def create_revise(request, card_id):
     # Create a new SalesOfferCard_Revise instance
     revise = SalesOfferCard_Revise(
         Revise_Owner=card,
-        Client_Card_Copy=card.Client_Card_Copy,
         Client_Card=card.Client_Card,
         Offer_Subject_Card=card.Offer_Subject_Card,
         Location_Card=card.Location_Card,
