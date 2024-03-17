@@ -100,4 +100,4 @@ urlpatterns = [
     path("deneme2/", views.deneme2, name='deneme2'),
     
 
-   ]
+   ]   

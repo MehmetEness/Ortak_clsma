@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from.models import Project, MyCompanyNames , Locations, Terrain_Roof, Banks, Situations, CompanyNames,SalesOfferCard
-from.models import Supplier, Clients, ProjectNames, Incomes, JobHistory, Expenses, PaymentFirms, Details, Worker, SalesOfferCard_Revise
+from.models import Supplier, Clients,  Incomes, JobHistory, Expenses, PaymentFirms, Details, Worker, SalesOfferCard_Revise
 from.models import Poll, Poll_Question, Poll_Answer, Question_Note, Time_Note, Fail, Operation_Care, Fail_Bill, Inventor, String
 admin.site.register(Project)
 admin.site.register(MyCompanyNames)
@@ -12,7 +12,6 @@ admin.site.register(Situations)
 admin.site.register(CompanyNames)
 admin.site.register(Supplier)
 admin.site.register(Clients)
-admin.site.register(ProjectNames)
 admin.site.register(Incomes)
 admin.site.register(JobHistory)
 admin.site.register(Expenses)

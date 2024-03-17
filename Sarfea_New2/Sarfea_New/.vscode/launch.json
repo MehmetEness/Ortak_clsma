@@ -12,5 +12,8 @@
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
         }
+    ],
+    "python.autoComplete.extraPaths": [
+        "/Users/ahmetkemalyilmaz/Documents/VsCode/GITHUB/Ortak_clsma/Sarfea_New2/Sarfea_New/ake_env/lib/python3.12/site-packages",
     ]
 }

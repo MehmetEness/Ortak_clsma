@@ -1,6 +1,6 @@
 from django import forms
 from datetime import datetime
-from .models import Project, ProjectNames, Expenses, Incomes, JobHistory, Operation_Care ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations, Fail, Fail_Bill
+from .models import Project, Expenses, Incomes, JobHistory, Operation_Care ,CompanyNames, SalesOfferCard, MyCompanyNames, Locations, Terrain_Roof, Banks, Clients, Supplier, Details, Situations, Fail, Fail_Bill
    
 min_date = datetime(2000, 1, 1)
 max_date = datetime(2099, 12, 30) 
@@ -272,15 +272,8 @@ class IncomesForm(forms.ModelForm):
                   ]
 
 class ClientsForm(forms.ModelForm):
-    CompanyName_Clients_New = forms.CharField(
-        max_length=63, 
-        required=False,
-        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
-        error_messages={
-            'required': '! Lütfen Firma Adını Giriniz',
-            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
-        }
-        )
+    
+        
     CompanyName_Clients = forms.CharField(
         max_length=63,
         widget=forms.TextInput(attrs={'autocomplete': 'off'}),
@@ -300,15 +293,7 @@ class ClientsForm(forms.ModelForm):
         fields = '__all__'
 
 class SupplierForm(forms.ModelForm):
-    CompanyName_Supplier_New = forms.CharField(
-        max_length=63,
-        required=False,
-        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
-        error_messages={
-            'required': '! Lütfen Firma Adını Giriniz',
-            'unique': '! Bu İsime Sahip bir Firma Mevcut'  # Özel hata mesajı
-        }
-    )
+
     
     CompanyName_Supplier = forms.CharField(
         max_length=63,

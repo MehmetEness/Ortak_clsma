@@ -6,7 +6,7 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
 from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer
-from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, ProjectNames
+from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details 
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test

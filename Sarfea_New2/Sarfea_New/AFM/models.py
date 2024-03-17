@@ -72,10 +72,30 @@ class Worker(models.Model):
     def __str__(self):
         return self.Worker_Name
 
+class Clients(models.Model):
+    CompanyName_Clients = models.CharField(max_length=63, unique=True)
+    ContactPerson = models.CharField(max_length=63, blank=True, null=True)
+    PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
+    Email= models.CharField(max_length=63, blank=True, null=True)
+    Location = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.CompanyName_Clients}-{self.id}'
+
+class Supplier(models.Model):
+    CompanyName_Supplier = models.CharField(max_length=63, unique=True)
+    ContactPerson = models.CharField(max_length=63, blank=True, null=True)
+    PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
+    Email= models.CharField(max_length=63, blank=True, null=True)
+    Location = models.CharField(max_length=200, blank=True, null=True)
+    
+    def __str__(self):
+        return f'{self.CompanyName_Supplier}-{self.id}'
+
 class Project(models.Model):
     ProjectName = models.CharField(max_length=63, blank=True, null=True, unique=True)
     ProjectCode = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName = models.CharField(max_length=63, blank=True, null=True)
+    Company_id = models.ForeignKey(Clients, on_delete=models.SET_NULL, blank=True, null=True)
     CompanyUndertakingWork = models.CharField(max_length=63, blank=True, null=True)
     Location = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV = models.FloatField( blank=True, null=True, default=0)
@@ -93,14 +113,13 @@ class Project(models.Model):
     KDV_Rate = models.CharField(default="20", blank=True, null=True, max_length=12)
     Terrain_Roof = models.CharField(max_length=63, blank=True, null=True)
     Incentive = models.BooleanField(default=False)
+    def __str__(self):
+        return self.ProjectName
     
 class Expenses(models.Model):
-    ProjectName_Expenses_Copy = models.CharField(max_length=63, blank=True, null=True)
-    ProjectName_Expenses = models.CharField(max_length=63, blank=True, null=True)
-    ProjectCode_Expenses = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Expenses = models.CharField(max_length=63, blank=True, null=True)
+    Project_Expenses = models.ForeignKey(Project, on_delete=models.CASCADE)
     CompanyName_FromPaymentMade_Expenses = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Paying_Expenses = models.CharField(max_length=63, default="Genel Gider",blank=True, null=True)
+    CompanyName_Paying_Expenses = models.ForeignKey(Supplier, on_delete=models.SET_NULL, blank=True, null=True)
     ExpensDetails_Expenses = models.CharField(max_length=1000, blank=True, null=True)
     Amount_Expenses = FourDecimalField(blank=True, null=True)
     Amount_USD_Expenses = FourDecimalField(blank=True, null=True)
@@ -109,11 +128,9 @@ class Expenses(models.Model):
     Date_Expenses = models.DateField(blank=True, null=True)
 
 class JobHistory(models.Model):
-    ProjectName_JobHistory_Copy = models.CharField(max_length=63, blank=True, null=True)
-    ProjectName_JobHistory = models.CharField(max_length=63,blank=True, null=True)
-    CompanyName_JobHistory = models.CharField(max_length=63, blank=True, null=True)
+    Project_JobHistory = models.ForeignKey(Project, on_delete=models.CASCADE)
     CompanyName_FromJobMade_JobHistory = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Job_JobHistory = models.CharField(max_length=63, blank=True, null=True)
+    CompanyName_Job_JobHistory = models.ForeignKey(Supplier, on_delete=models.SET_NULL, blank=True, null=True)
     ExpensDetails_JobHistory = models.CharField(max_length=1000, blank=True, null=True)
     Invoice_No_JobHistory = models.CharField(max_length=63, blank=True, null=True) 
     Amount_JobHistory = FourDecimalField(blank=True, null=True)
@@ -122,45 +139,17 @@ class JobHistory(models.Model):
     Date_JobHistory = models.DateField(blank=True, null=True)
 
 class Incomes(models.Model):
-    ProjectName_Incomes_Copy = models.CharField(max_length=63, blank=True, null=True)
-    ProjectName_Incomes = models.CharField(max_length=63, blank=True, null=True)
+    Project_Incomes = models.ForeignKey(Project, on_delete=models.CASCADE)
     CompanyName_ReceivePayment_Incomes = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Pay_Incomes = models.CharField(max_length=63, blank=True, null=True)
+    CompanyName_Pay_Incomes = models.ForeignKey(Clients, on_delete=models.SET_NULL, blank=True, null=True)
     Amount_Incomes = FourDecimalField(blank=True, null=True)
     Dollar_Rate_Incomes = FourDecimalField(blank=True, null=True)
-    PaymentType_Incomes = models.CharField(max_length=63, blank=True, null=True)     
+    PaymentType_Incomes = models.CharField(max_length=63, blank=True, null=True)
     ChekDate_Incomes = models.DateField(blank=True, null=True)
     LastChekDate_Incomes = models.DateField(blank=True, null=True)
     Amount_Usd_Incomes = FourDecimalField(blank=True, null=True)
 
-class ProjectNames(models.Model):
-    ProjectName = models.CharField(max_length=63) 
-    ProjectCode = models.CharField(max_length=63,blank=True, null=True)
-    def __str__(self):
-        return self.ProjectName
     
-class Clients(models.Model):
-    CompanyName_Clients_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Clients = models.CharField(max_length=63, blank=True, null=True, unique=True)
-    ContactPerson = models.CharField(max_length=63, blank=True, null=True)
-    PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
-    Email= models.CharField(max_length=63, blank=True, null=True)
-    Location = models.CharField(max_length=200, blank=True, null=True)
-
-    def __str__(self):
-        return self.CompanyName_Clients
-
-class Supplier(models.Model):
-    CompanyName_Supplier_New = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Supplier = models.CharField(max_length=63, blank=True, null=True, unique=True)
-    ContactPerson = models.CharField(max_length=63, blank=True, null=True)
-    PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
-    Email= models.CharField(max_length=63, blank=True, null=True)
-    Location = models.CharField(max_length=200, blank=True, null=True)
-    
-    def __str__(self):
-        return self.CompanyName_Supplier
-
 class SalesOfferCard(models.Model):
     Client_Card_Copy = models.CharField(max_length=63, blank=True, null=True)
     Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
