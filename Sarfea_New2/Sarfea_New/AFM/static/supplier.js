@@ -30,7 +30,7 @@ async function getSupplier(isEdit) {
                             <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                         </button>
                     </td>
-                    <td>${supplier.CompanyName_Supplier_New}</td>
+                    <td>${supplier.CompanyName_Supplier}</td>
                     <td>${supplier.ContactPerson}</td>
                     <td>${supplier.PhoneNumber}</td>
                     <td>${supplier.Email}</td>

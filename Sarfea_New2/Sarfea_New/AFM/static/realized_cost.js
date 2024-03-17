@@ -144,7 +144,7 @@ async function getSuppliers() {
         //console.log(data)
         for (const supplier of data) {
             // console.log(client)
-            const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier_New}</span>`;
+            const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
             rows += row;
         }
         const supplierDropdowns = document.querySelectorAll(".supplier_dropdown");

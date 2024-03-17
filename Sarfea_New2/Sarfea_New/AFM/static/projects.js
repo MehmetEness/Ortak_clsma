@@ -522,7 +522,7 @@ async function getClients() {
     //console.log(data)
     for (const client of data) {
       // console.log(client)
-      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients_New}</span>`;
+      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
       rows += row;
     }
     const clientDropdowns = document.querySelectorAll(".client-dropdown");
@@ -542,7 +542,7 @@ async function getSuppliers() {
     //console.log(data)
     for (const supplier of data) {
       // console.log(client)
-      const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier_New}</span>`;
+      const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
       rows += row;
     }
     const supplierDropdowns = document.querySelectorAll(".supplier_dropdown");

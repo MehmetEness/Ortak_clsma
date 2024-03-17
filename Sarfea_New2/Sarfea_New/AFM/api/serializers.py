@@ -14,7 +14,7 @@ class ClientSerializer(serializers.Serializer):
         return Clients.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.CompanyName_Clients = validated_data.get('CompanyName_Clients_New', instance.CompanyName_Clients_New)
+        instance.CompanyName_Clients = validated_data.get('CompanyName_Clients', instance.CompanyName_Clients)
         instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
         instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
         instance.Email = validated_data.get('Email', instance.Email)
@@ -36,7 +36,7 @@ class SupplierSerializer(serializers.Serializer):
         return Supplier.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.CompanyName_Supplier_New = validated_data.get('CompanyName_Supplier_New', instance.CompanyName_Supplier_New)
+        instance.CompanyName_Supplier = validated_data.get('CompanyName_Supplier', instance.CompanyName_Supplier)
         instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
         instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
         instance.Email = validated_data.get('Email', instance.Email)
