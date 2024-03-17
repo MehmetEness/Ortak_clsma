@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 class ProjectListAPIView(APIView):
     def get(self, request):
-        projects = Project.objects.all()  # Tüm müşterileri JSON formatında al
+        projects = Project.objects.all() 
         serializer= ProjectSerializer(projects, many=True)
         return Response(serializer.data)
     def post(self, request):

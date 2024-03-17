@@ -80,7 +80,7 @@ class Clients(models.Model):
     Location = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.CompanyName_Clients}-{self.id}'
+        return f'{self.CompanyName_Clients}'
 
 class Supplier(models.Model):
     CompanyName_Supplier = models.CharField(max_length=63, unique=True)
@@ -90,7 +90,7 @@ class Supplier(models.Model):
     Location = models.CharField(max_length=200, blank=True, null=True)
     
     def __str__(self):
-        return f'{self.CompanyName_Supplier}-{self.id}'
+        return f'{self.CompanyName_Supplier}'
 
 class Project(models.Model):
     ProjectName = models.CharField(max_length=63, blank=True, null=True, unique=True)
@@ -121,8 +121,8 @@ class Expenses(models.Model):
     CompanyName_FromPaymentMade_Expenses = models.CharField(max_length=63, blank=True, null=True)
     CompanyName_Paying_Expenses = models.ForeignKey(Supplier, on_delete=models.SET_NULL, blank=True, null=True)
     ExpensDetails_Expenses = models.CharField(max_length=1000, blank=True, null=True)
-    Amount_Expenses = FourDecimalField(blank=True, null=True)
-    Amount_USD_Expenses = FourDecimalField(blank=True, null=True)
+    Amount_Expenses = TwoDecimalField(blank=True, null=True)
+    Amount_USD_Expenses = TwoDecimalField(blank=True, null=True)
     Dollar_Rate_Expenses = FourDecimalField(blank=True, null=True)
     Bank_Expenses = models.CharField(max_length=63, blank=True, null=True)
     Date_Expenses = models.DateField(blank=True, null=True)

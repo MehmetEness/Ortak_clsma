@@ -1,6 +1,7 @@
 from django.urls import path
 from AFM.api import views  as api_view
 
+
 urlpatterns = [
  #******************************* A P I ***********************************
     path('api_project/', api_view.ProjectListAPIView.as_view(), name='api_projects'),
