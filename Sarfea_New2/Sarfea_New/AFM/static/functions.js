@@ -806,9 +806,14 @@ function dropdownActive() {
   }
 }
 
+
+
+
 /***********************************************************
-#                       KUR
+#                       APİ FUNCTİONS
 ***********************************************************/
+
+//  DOLAR KURU
 async function getUSDKur(date) {
   try {
     const response = await fetch(`/get_dollar_rate/${date}/`);
@@ -817,4 +822,89 @@ async function getUSDKur(date) {
   } catch (error) {
     return "0";
   }
+}
+
+//  CLİENT KURU
+async function apiFunctions(name, type, myForm, id) {
+
+  switch (type) {
+    case "GET":
+      try {
+        const response = await fetch(`/api_${name}/`);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
+
+    case "POST":
+      try {
+        const formData = new FormData(myForm);
+        await fetch(`/api_${name}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: formData,
+        });
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
+
+    case "PUT":
+      try {
+        const formData = new FormData(myForm);
+        console.log(`/api_${name}/${id}`)
+        await fetch(`/api_${name}/${id}`, {
+          method: "PUT",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: formData,
+        });
+
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
+    default:
+
+
+  }
+
+}
+
+
+//  SUPPLİER KURU
+
+
+//  PROJECT KURU
+
+
+//  İNCOME KURU
+
+
+//  EXPENSES KURU
+
+
+//  JOBHİSTORY KURU
+
+
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
 }

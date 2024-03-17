@@ -8,6 +8,7 @@ var textCells = document.querySelectorAll(
 );
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const supplierAddForm = document.getElementById("supplier_add_form");
+let editMode = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await getSupplier();
@@ -16,18 +17,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }, 5000);
 });
 
-async function getSupplier() {
+async function getSupplier(isEdit) {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
-    const response = await fetch(`http://127.0.0.1:8000/get_suppliers/`);
-    const data = await response.json();
-    const suppliers = data.suppliers;
-    //console.log(response);
-    //console.log(data);
-
+    const data = await apiFunctions("supplier", "GET");
     let rows = "";
     for (const supplier of data) {
-      //console.log(supplier.CompanyName_Supplier);
       const row = `
                 <tr>
                     <td>
@@ -44,9 +39,10 @@ async function getSupplier() {
             `;
       rows += row;
     }
-    if (data.length > currentRows.length) {
+    if (data.length > currentRows.length || isEdit) {
       supplierTableBody.innerHTML = "";
       supplierTableBody.insertAdjacentHTML("beforeend", rows);
+      editBtns();
       sortTableForStart(supplierTable, 1);
       allTableFormat();
       sortingTable(supplierTable);
@@ -62,6 +58,7 @@ const supplierAddWindow = document.querySelector(".supplier-add-window");
 
 supplierAddBtn.addEventListener("click", () => {
   setTimeout(() => {
+    editMode = false;
     supplierAddWindow.style.display = "flex";
   }, 10);
 });
@@ -103,48 +100,36 @@ function allTableFormat() {
 
 //                  SUPPLİER ADD FUNCTİON
 
+let = btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
-
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
-  if (true) {
-    const formData = new FormData(supplierAddForm);
-
-    try {
-      const jsonObject = {};
-        formData.forEach((value, key) => {
-          jsonObject[key] = value;
-        });
-        const jsonData = JSON.stringify(jsonObject);
-        console.log(jsonData)
-        const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: formData,
-        });
-        getSupplier();
-        supplierAddWindow.style.display = "none";
-        clearInputAfterSave(supplierAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+  if (editMode == false) {
+    await apiFunctions("supplier", "POST", supplierAddForm);
+    getSupplier();
+    supplierAddWindow.style.display = "none";
+    clearInputAfterSave(supplierAddForm);
+  } else {
+    console.log(btnID)
+    await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
+    getSupplier("EDİT");
+    supplierAddWindow.style.display = "none";
+    clearInputAfterSave(supplierAddForm);
   }
 });
 
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
+//                  SUPPLİER EDİT FUNCTİON
+
+function editBtns() {
+  let editButtons = document.querySelectorAll(".edit-supplier-btn");
+  editButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setTimeout(() => {
+        editMode = true;
+        btnID = button.id;
+        supplierAddWindow.style.display = "flex";
+      }, 10);
+    })
+  });
 }
