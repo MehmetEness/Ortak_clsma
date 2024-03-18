@@ -118,7 +118,7 @@
     <div class="container">
       <h3 id="income-X" class="close-window">X</h3>
       <div class="title">Gelir Ekle</div>
-      <form id="my-form" action="{% url 'income_add' %}" method="post">
+      <form id="income_add_form" action="{% url 'income_add' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="income_form" />
         <div class="user-details">
@@ -194,7 +194,7 @@
           </div>
         </div>
         <div class="button">
-          <input id="project-create-btn" type="button" value="Gelir Ekle" />
+          <input id="income-create-btn" type="button" value="Gelir Ekle" />
         </div>
       </form>
     </div>
@@ -292,7 +292,7 @@
         </div>
 
         <div class="button">
-          <input id="project-create-btn" type="button" value="Gider Ekle" />
+          <input id="expenses-create-btn" type="button" value="Gider Ekle" />
         </div>
       </form>
     </div>
@@ -374,7 +374,7 @@
           </div>
         </div>
         <div class="button">
-          <input id="project-create-btn" type="button" value="Yapılan İş Ekle" />
+          <input id="jobhistory-create-btn" type="button" value="Yapılan İş Ekle" />
         </div>
       </form>
     </div>

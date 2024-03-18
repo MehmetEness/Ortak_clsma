@@ -41,8 +41,7 @@ async function getIncomes() {
         let currentRows = incomeTable.querySelectorAll("tbody tr");
         let totalTl = 0;
         let totalUsd = 0;
-        const response = await fetch(`http://127.0.0.1:8000/get_incomes/`);
-        const data = await response.json();
+        const data = await apiFunctions("income", "GET");
         console.log(data);
         let rows = "";
         for (const income of data) {

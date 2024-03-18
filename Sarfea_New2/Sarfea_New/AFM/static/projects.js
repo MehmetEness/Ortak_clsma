@@ -215,39 +215,6 @@ xBtn.forEach((btn) => {
   });
 });
 
-//                  EDİT BUTONLARI
-
-// function editButtonsEvents() {
-//   const editButtons = projectsTable.querySelectorAll(
-//     "tr td:first-child button"
-//   );
-//   editButtons.forEach((btn) => {
-//     btn.addEventListener("click", async () => {
-//       projectId = btn.id;
-//       const response = await fetch(`http://127.0.0.1:8000/get_project_id/${projectId}`);
-//       const data = await response.json();
-//       console.log(data)
-//       document.querySelector('input[name="CompanyName"]').value = data.CompanyName;
-//       document.querySelector('input[name="ProjectName"]').value = data.ProjectName;
-//       document.querySelector('input[name="ProjectCode"]').value = data.ProjectCode;
-//       document.querySelector('select[name="CompanyUndertakingWork"]').value = data.CompanyUndertakingWork;
-//       document.querySelector('input[name="Location"]').value = data.Location;
-//       document.querySelector('input[name="Cost_NotIncludingKDV"]').value = data.Cost_NotIncludingKDV;
-//       document.querySelector('input[name="AC_Power"]').value = data.AC_Power;
-//       document.querySelector('input[name="DC_Power"]').value = data.DC_Power;
-//       document.querySelector('input[name="CalculatedCost_NotIncludingKDV"]').value = data.CalculatedCost_NotIncludingKDV;
-//       document.querySelector('input[name="StartDate"]').value = data.StartDate;
-//       document.querySelector('input[name="FinishDate"]').value = data.FinishDate;
-//       document.querySelector('input[name="KDV_Rate"]').value = data.KDV_Rate;
-//       document.querySelector('select[name="Terrain_Roof"]').value = data.Terrain_Roof;
-//       document.querySelector('select[name="Incentive"]').value = data.Incentive;
-//       setTimeout(() => {
-//         editMode = true
-//         projectAddWindow.style.display = "flex";
-//       }, 10);
-//     });
-//   });
-// }
 
 // TARİH İNPUTLARI FORMATLAMA
 const dateInputs = document.querySelectorAll(".date-inputs");
@@ -292,6 +259,19 @@ function editButtonsEvents() {
 #                       İNCOME ADD 
 ***********************************************************/
 
+const incomeAddForm = document.getElementById("income_add_form");
+const incomeFormAddBtn = document.querySelector("#income-create-btn");
+incomeFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    await apiFunctions("income", "POST", incomeAddForm);
+    incomeAddWindow.style.display = "none";
+    getClients();
+    clearInputAfterSave(incomeAddForm);
+  }
+});
+
 // ÇEK SON KULLANIM İNPUT
 if (incomePaymentTypeInput.value == "cek") {
   incomeLastDateInput.disabled = false;
@@ -334,6 +314,18 @@ incomeTimeForKur.addEventListener("change", async function () {
 #                       EXPENSES ADD
 ***********************************************************/
 
+const expensesAddForm = document.getElementById("expenses_add_form");
+const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
+expensesFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    await apiFunctions("expense", "POST", expensesAddForm);
+    expensesAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(expensesAddForm);
+  }
+});
 // TARİH İNPUT FORMATLAMA
 expensesDateInput.addEventListener("input", function (event) {
   var userInput = expensesDateInput.value;
@@ -361,6 +353,18 @@ expensesTimeForKur.addEventListener("change", async function () {
 /***********************************************************
 #                       JOBHİSTORY ADD
 ***********************************************************/
+const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
+const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
+jobhistoryFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    await apiFunctions("job_history", "POST", jobhistoryAddForm);
+    jobhistoryAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(jobhistoryAddForm);
+  }
+});
 
 // TARİH İNPUTLARI FORMATLAMA
 jobhistoryDateInput.addEventListener('input', function (event) {
