@@ -289,10 +289,8 @@ function editButtonsEvents() {
 }
 
 /***********************************************************
-#                       İNCOME ADD - EDİT
+#                       İNCOME ADD 
 ***********************************************************/
-
-
 
 // ÇEK SON KULLANIM İNPUT
 if (incomePaymentTypeInput.value == "cek") {
@@ -333,11 +331,8 @@ incomeTimeForKur.addEventListener("change", async function () {
 
 
 /***********************************************************
-#                       EXPENSES ADD - EDİT
+#                       EXPENSES ADD
 ***********************************************************/
-
-// INPUTLARI FORMATLAMA
-inputForFormat(expensesAmountInput);
 
 // TARİH İNPUT FORMATLAMA
 expensesDateInput.addEventListener("input", function (event) {
@@ -364,7 +359,7 @@ expensesTimeForKur.addEventListener("change", async function () {
 });
 
 /***********************************************************
-#                       JOBHİSTORY ADD - EDİT
+#                       JOBHİSTORY ADD
 ***********************************************************/
 
 // TARİH İNPUTLARI FORMATLAMA
@@ -374,9 +369,6 @@ jobhistoryDateInput.addEventListener('input', function (event) {
     jobhistoryDateInput.value = formatDate(userInput);
   }
 });
-
-// INPUT FORMATLAMA
-inputForFormat(jobhistoryAmountInput);
 
 // KUR HESAPLAMA
 var jobhistoryKurInput = document.querySelector("#Dollar_Rate_JobHistory");
@@ -425,21 +417,10 @@ clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(firma_add_form);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/post_client/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      clientAddWindow.style.display = "none";
-      getClients();
-      clearInputAfterSave(clientAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    await apiFunctions("client", "POST", clientAddForm);
+    clientAddWindow.style.display = "none";
+    getClients();
+    clearInputAfterSave(clientAddForm);
   }
 });
 const supplierAddForm = document.getElementById("supplier_add_form");
@@ -448,21 +429,10 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(supplier_add_form);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      supplierAddWindow.style.display = "none";
-      getSuppliers();
-      clearInputAfterSave(supplierAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    await apiFunctions("supplier", "POST", supplierAddForm);
+    supplierAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(supplierAddForm);
   }
 });
 
