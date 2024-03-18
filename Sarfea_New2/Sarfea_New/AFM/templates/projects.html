@@ -21,7 +21,7 @@
                 class="paying-company-add-btn">
                 <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_CompanyName" name="CompanyName" class="myInput"
+              <input autocomplete="off" type="text" id="id_CompanyName" name="Company_id" class="myInput"
                 placeholder="Firma Adını Seçiniz" data-dropdown="project-add-dropdown1" />
               <div id="project-add-dropdown1" class="dropdown-content client-dropdown">
               </div>
@@ -60,30 +60,30 @@
           </div>
           <div class="input-box">
             <span class="details">İş Bedeli - KDV Hariç ($)</span>
-            <input class="coc-input" type="text" name="Cost_NotIncludingKDV" id="id_Cost_NotIncludingKDV" step="0.0001"
+            <input class="coc-input formatInputs" type="text" name="Cost_NotIncludingKDV" id="id_Cost_NotIncludingKDV" step="0.0001"
               autocomplete="off" />
           </div>
           <div class="input-box">
             <span class="details">AC Güç (kWe)</span>
-            <input class="coc-input" type="text" name="AC_Power" id="id_AC_Power" step="0.0001" autocomplete="off" />
+            <input class="coc-input formatInputs" type="text" name="AC_Power" id="id_AC_Power" step="0.0001" autocomplete="off" />
           </div>
           <div class="input-box">
             <span class="details">DC Güç (kWp)</span>
-            <input class="coc-input" type="text" name="DC_Power" id="id_DC_Power" step="0.0001" autocomplete="off" />
+            <input class="coc-input formatInputs" type="text" name="DC_Power" id="id_DC_Power" step="0.0001" autocomplete="off" />
           </div>
           <div class="input-box">
             <span class="details">Hesaplanan Maliyet - KDV Hariç ($)</span>
-            <input class="coc-input" type="text" name="CalculatedCost_NotIncludingKDV"
+            <input class="coc-input formatInputs" type="text" name="CalculatedCost_NotIncludingKDV"
               id="id_CalculatedCost_NotIncludingKDV" step="0.0001" autocomplete="off" />
           </div>
 
           <div class="input-box">
             <span class="details"> işin Başlama Tarihi</span>
-            <input id="tarih" type="text" name="StartDate" placeholder="Tarih Seçiniz" maxlength="10" />
+            <input class="date-inputs" id="tarih" type="text" name="StartDate" placeholder="Tarih Seçiniz" maxlength="10" />
           </div>
           <div class="input-box">
             <span class="details">Bitirme Tarihi</span>
-            <input id="tarih2" type="text" name="FinishDate" placeholder="Tarih Seçiniz" maxlength="10" />
+            <input class="date-inputs" id="tarih2" type="text" name="FinishDate" placeholder="Tarih Seçiniz" maxlength="10" />
           </div>
           <div class="input-box">
             <span class="details">KDV Oranı (%)</span>
@@ -92,15 +92,15 @@
           <div class="input-box">
             <span class="details">Arazi/Çatı</span>
             <select name="Terrain_Roof" id="">
-              <option value="">Arazi</option>
-              <option value="">Çatı</option>
+              <option value="Arazi">Arazi</option>
+              <option value="Çatı">Çatı</option>
             </select>
           </div>
           <div class="input-box">
             <span class="details">Teşvikli (Evet/Hayır)</span>
             <select name="Incentive" id="">
-              <option value="Evet">Evet</option>
-              <option value="Hayır">Hayır</option>
+              <option value="true">Evet</option>
+              <option value="false">Hayır</option>
             </select>
           </div>
         </div>
@@ -153,7 +153,7 @@
 
           <div class="input-box" name="Amount_Incomes">
             <span class="details">Alınan Miktar (₺)</span>
-            <input autocomplete="off" class="coc-input" type="text" name="Amount_Incomes" id="id_Amount_Incomes"
+            <input autocomplete="off" class="coc-input formatInputs" type="text" name="Amount_Incomes" id="id_Amount_Incomes"
               step="0.0001" placeholder="0.00" />
           </div>
 
@@ -167,12 +167,12 @@
           </div>
           <div class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
             <span class="details">Çek Son Kullanma Tarihi </span>
-            <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"
+            <input class="coc-input date-inputs" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"
               placeholder="01.01.2000" maxlength="10" disabled />
           </div>
           <div class="input-box" id="chek_date_box">
             <span class="details">Tarih </span>
-            <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes"
+            <input class="coc-input date-inputs" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes"
               placeholder="01.01.2000" maxlength="10" />
           </div>
           <div class="input-box" name="Dollar_Rate_Incomes">
@@ -215,7 +215,7 @@
                 data-dropdown="expenses_dropdown1" />
 
               <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
-                
+
               </div>
             </div>
           </div>
@@ -256,7 +256,7 @@
           </div>
           <div class="input-box">
             <span class="details">Tutar (₺)</span>
-            <input autocomplete="off" class="coc-input" type="text" name="Amount_Expenses" id="id_Amount_Expenses"
+            <input autocomplete="off" class="coc-input formatInputs" type="text" name="Amount_Expenses" id="id_Amount_Expenses"
               step="0.0001" placeholder="0.00" />
           </div>
           <div class="input-box">
@@ -265,7 +265,7 @@
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
-            <input class="coc-input" id="id_Date_Expenses" type="text" name="Date_Expenses" placeholder="01.01.2000"
+            <input class="coc-input date-inputs" id="id_Date_Expenses" type="text" name="Date_Expenses" placeholder="01.01.2000"
               maxlength="10" />
           </div>
           <div class="input-box">
@@ -343,7 +343,7 @@
           </div>
           <div class="input-box" name="Amount_JobHistory">
             <span class="details">Tutar (₺)</span>
-            <input autocomplete="off" class="coc-input" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory"
+            <input autocomplete="off" class="coc-input formatInputs" type="text" name="Amount_JobHistory" id="id_Amount_JobHistory"
               step="0.0001" placeholder="0.00" />
           </div>
           <div class="input-box" name="Dollar_Rate_JobHistory">
@@ -352,7 +352,7 @@
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
-            <input class="coc-input" id="id_Date_JobHistory" type="text" name="Date_JobHistory" placeholder="01.01.2000"
+            <input class="coc-input date-inputs" id="id_Date_JobHistory" type="text" name="Date_JobHistory" placeholder="01.01.2000"
               maxlength="10" />
           </div>
           <div class="input-box" name="Invoice_No_JobHistory">

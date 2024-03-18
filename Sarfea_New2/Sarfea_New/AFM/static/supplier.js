@@ -62,10 +62,8 @@ supplierAddBtn.addEventListener("click", () => {
     supplierAddWindow.style.display = "flex";
   }, 10);
 });
-document.addEventListener("click", (event) => {
-  const supplierAddContainer = document.querySelector(
-    ".supplier-add-window .container"
-  );
+document.addEventListener("mousedown", (event) => {
+  const supplierAddContainer = document.querySelector(".supplier-add-window .container");
   if (!supplierAddContainer.contains(event.target)) {
     supplierAddWindow.style.display = "none";
   }
@@ -100,7 +98,7 @@ function allTableFormat() {
 
 //                  SUPPLİER ADD FUNCTİON
 
-let = btnID = -1;
+let btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
@@ -111,7 +109,6 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
     supplierAddWindow.style.display = "none";
     clearInputAfterSave(supplierAddForm);
   } else {
-    console.log(btnID)
     await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
     getSupplier("EDİT");
     supplierAddWindow.style.display = "none";
@@ -125,9 +122,18 @@ function editBtns() {
   let editButtons = document.querySelectorAll(".edit-supplier-btn");
   editButtons.forEach(button => {
     button.addEventListener("click", () => {
-      setTimeout(() => {
+      setTimeout(async () => {
         editMode = true;
         btnID = button.id;
+        const data = await apiFunctions("supplier", "GETID", "x", btnID)
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            var element = document.querySelector('input[name="' + key + '"]');
+            if (element) {
+              element.value = data[key];
+            }
+          }
+        }
         supplierAddWindow.style.display = "flex";
       }, 10);
     })
