@@ -436,7 +436,16 @@ function inputForFormat(input) {
     input.value = formatValue;
   });
 }
-
+function inputsForFormat(inputs) {
+  inputs.forEach(input => {
+    input.addEventListener("input", function (event) {
+      var inputValue = event.target.value;
+      var clearValue = clear(inputValue);
+      var formatValue = format(clearValue);
+      input.value = formatValue;
+    });
+  });
+}
 function onPageLoad(input) {
   var inputValue = parseFloat(input.value);
   if (!isNaN(inputValue)) {
@@ -446,6 +455,18 @@ function onPageLoad(input) {
   } else {
     input.value = "0";
   }
+}
+function onPageLoads(inputs) {
+  inputs.forEach(input => {
+    var inputValue = parseFloat(input.value);
+    if (!isNaN(inputValue)) {
+      var formatValue = formatNumber(inputValue, 2);
+      input.value = formatValue;
+      deger = formatValue;
+    } else {
+      input.value = "0";
+    }
+  })
 }
 
 //                  FİRMA ADLARI KONTROLÜ
@@ -636,7 +657,27 @@ function cardDateList(rows) {
 }
 
 //                  TARİH FORMATLAMA
-
+function formatDateInputs(inputs) {
+  inputs.forEach(input => {
+    input.addEventListener("input", function (event) {
+      var userInput = input.value;
+      if (event.inputType !== "deleteContentBackward") {
+        input.value = formatDate(userInput);
+      }
+    });
+  })
+}
+function formatDateInputsForLoad(inputs) {
+  inputs.forEach(input => {
+    let userInput = tarihFormatReverse(input.value)
+    input.value = formatDate(userInput);
+  })
+}
+function tarihFormatReverse(date) {
+  var datePiece = date.split("-");
+  var newDate = datePiece[2] + datePiece[1] + datePiece[0];
+  return newDate;
+}
 function formatDate(date) {
   var cleaned = date.replace(/[^\d+]/g, "");
   var formatted = cleaned;
@@ -806,25 +847,9 @@ function dropdownActive() {
   }
 }
 
-
-
-
 /***********************************************************
 #                       APİ FUNCTİONS
 ***********************************************************/
-
-//  DOLAR KURU
-async function getUSDKur(date) {
-  try {
-    const response = await fetch(`/get_dollar_rate/${date}/`);
-    const data = await response.json();
-    return data.rate.toString();
-  } catch (error) {
-    return "0";
-  }
-}
-
-//  CLİENT KURU
 async function apiFunctions(name, type, myForm, id) {
 
   switch (type) {
@@ -838,9 +863,25 @@ async function apiFunctions(name, type, myForm, id) {
       }
       break;
 
+    case "GETID":
+      try {
+        const response = await fetch(`/api_${name}/${id}`);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
+
     case "POST":
       try {
         const formData = new FormData(myForm);
+        const jsonData = {};
+        formData.forEach((value, key) => {
+          jsonData[key] = value;
+        });
+
+        console.log(jsonData);
         await fetch(`/api_${name}/`, {
           method: "POST",
           headers: {
@@ -856,7 +897,7 @@ async function apiFunctions(name, type, myForm, id) {
     case "PUT":
       try {
         const formData = new FormData(myForm);
-        console.log(`/api_${name}/${id}`)
+        //console.log(`/api_${name}/${id}`)
         await fetch(`/api_${name}/${id}`, {
           method: "PUT",
           headers: {
@@ -876,23 +917,16 @@ async function apiFunctions(name, type, myForm, id) {
 
 }
 
-
-//  SUPPLİER KURU
-
-
-//  PROJECT KURU
-
-
-//  İNCOME KURU
-
-
-//  EXPENSES KURU
-
-
-//  JOBHİSTORY KURU
-
-
-
+//  DOLAR KURU
+async function getUSDKur(date) {
+  try {
+    const response = await fetch(`/get_dollar_rate/${date}/`);
+    const data = await response.json();
+    return data.rate.toString();
+  } catch (error) {
+    return "0";
+  }
+}
 
 function getCookie(name) {
   let cookieValue = null;

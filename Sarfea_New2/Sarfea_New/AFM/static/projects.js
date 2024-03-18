@@ -28,27 +28,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   }, 5000);
 });
 
-async function getProjects() {
+async function getProjects(isEdit) {
   try {
     let currentRows = projectsTable.querySelectorAll("tbody tr");
 
-    //const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
     const data = await apiFunctions("project", "GET");
     console.log(data);
     let formattedDate;
     let rows = "";
     for (const project of data) {
-      if(project.StartDate){
+      if (project.StartDate) {
         let date = new Date(project.StartDate);
         formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
-      }else{formattedDate = "-"}
-            
+      } else { formattedDate = "-" }
+
       const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
 
       const row = `
         <tr>
           <td>
-            <button id="${project.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+            <button id="${project.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
@@ -64,7 +63,7 @@ async function getProjects() {
 
       rows += row;
     }
-    if (data.length > currentRows.length || currentRows.length == 1) {
+    if (data.length > currentRows.length || isEdit) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);
@@ -216,70 +215,62 @@ xBtn.forEach((btn) => {
   });
 });
 
-//                  EDİT BUTONLARI
 
+// TARİH İNPUTLARI FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+// INPUT FORMATLAMA
+//inputForFormat(incomeAmountInput);
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
+
+//                  PROJECT EDİT FUNCTİON
+
+let btnID = -1;
 function editButtonsEvents() {
-  const editButtons = projectsTable.querySelectorAll(
-    "tr td:first-child button"
-  );
-  editButtons.forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      projectId = btn.id;
-      const response = await fetch(`http://127.0.0.1:8000/get_project_id/${projectId}`);
-      const data = await response.json();
-      console.log(data)
-      document.querySelector('input[name="CompanyName"]').value = data.CompanyName;
-      document.querySelector('input[name="ProjectName"]').value = data.ProjectName;
-      document.querySelector('input[name="ProjectCode"]').value = data.ProjectCode;
-      document.querySelector('select[name="CompanyUndertakingWork"]').value = data.CompanyUndertakingWork;
-      document.querySelector('input[name="Location"]').value = data.Location;
-      document.querySelector('input[name="Cost_NotIncludingKDV"]').value = data.Cost_NotIncludingKDV;
-      document.querySelector('input[name="AC_Power"]').value = data.AC_Power;
-      document.querySelector('input[name="DC_Power"]').value = data.DC_Power;
-      document.querySelector('input[name="CalculatedCost_NotIncludingKDV"]').value = data.CalculatedCost_NotIncludingKDV;
-      document.querySelector('input[name="StartDate"]').value = data.StartDate;
-      document.querySelector('input[name="FinishDate"]').value = data.FinishDate;
-      document.querySelector('input[name="KDV_Rate"]').value = data.KDV_Rate;
-      document.querySelector('select[name="Terrain_Roof"]').value = data.Terrain_Roof;
-      document.querySelector('select[name="Incentive"]').value = data.Incentive;
-      setTimeout(() => {
-        editMode = true
+  let editButtons = document.querySelectorAll(".edit-project-btn");
+  editButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setTimeout(async () => {
+        editMode = true;
+        btnID = button.id;
+        const data = await apiFunctions("project", "GETID", "x", btnID)
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            var element = document.querySelector('input[name="' + key + '"]');
+            var selectElement = document.querySelector('select[name="' + key + '"]');
+            if (element) {
+              element.value = data[key];
+            } else if (selectElement) {
+              selectElement.value = data[key];
+            }
+          }
+        }
+        onPageLoads(formatedInputs)
+        formatDateInputsForLoad(dateInputs)
         projectAddWindow.style.display = "flex";
       }, 10);
-    });
+    })
   });
-}
-async function getProjects11() {
-  try {
-    const response = await fetch(`/get_dollar_rate/2024-03-10`);
-    const data = await response.json();
-    const projects = data.projects;
-    console.log(projects);
-  } catch (error) {
-    console.error("Error fetching and rendering clients:", error);
-  }
 }
 
 /***********************************************************
-#                       İNCOME ADD - EDİT
+#                       İNCOME ADD 
 ***********************************************************/
 
-// TARİH İNPUTLARI FORMATLAMA
-incomeDateInput.addEventListener("input", function (event) {
-  var userInput = incomeDateInput.value;
-  if (event.inputType !== "deleteContentBackward") {
-    incomeDateInput.value = formatDate(userInput);
-  }
-});
-incomeLastDateInput.addEventListener("input", function (event) {
-  var userInput = incomeLastDateInput.value;
-  if (event.inputType !== "deleteContentBackward") {
-    incomeLastDateInput.value = formatDate(userInput);
-  }
-});
+const incomeAddForm = document.getElementById("income_add_form");
+const incomeFormAddBtn = document.querySelector("#income-create-btn");
+incomeFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
 
-// INPUT FORMATLAMA
-inputForFormat(incomeAmountInput);
+  if (true) {
+    await apiFunctions("income", "POST", incomeAddForm);
+    incomeAddWindow.style.display = "none";
+    getClients();
+    clearInputAfterSave(incomeAddForm);
+  }
+});
 
 // ÇEK SON KULLANIM İNPUT
 if (incomePaymentTypeInput.value == "cek") {
@@ -320,12 +311,21 @@ incomeTimeForKur.addEventListener("change", async function () {
 
 
 /***********************************************************
-#                       EXPENSES ADD - EDİT
+#                       EXPENSES ADD
 ***********************************************************/
 
-// INPUTLARI FORMATLAMA
-inputForFormat(expensesAmountInput);
+const expensesAddForm = document.getElementById("expenses_add_form");
+const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
+expensesFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
 
+  if (true) {
+    await apiFunctions("expense", "POST", expensesAddForm);
+    expensesAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(expensesAddForm);
+  }
+});
 // TARİH İNPUT FORMATLAMA
 expensesDateInput.addEventListener("input", function (event) {
   var userInput = expensesDateInput.value;
@@ -351,8 +351,20 @@ expensesTimeForKur.addEventListener("change", async function () {
 });
 
 /***********************************************************
-#                       JOBHİSTORY ADD - EDİT
+#                       JOBHİSTORY ADD
 ***********************************************************/
+const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
+const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
+jobhistoryFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  if (true) {
+    await apiFunctions("job_history", "POST", jobhistoryAddForm);
+    jobhistoryAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(jobhistoryAddForm);
+  }
+});
 
 // TARİH İNPUTLARI FORMATLAMA
 jobhistoryDateInput.addEventListener('input', function (event) {
@@ -361,9 +373,6 @@ jobhistoryDateInput.addEventListener('input', function (event) {
     jobhistoryDateInput.value = formatDate(userInput);
   }
 });
-
-// INPUT FORMATLAMA
-inputForFormat(jobhistoryAmountInput);
 
 // KUR HESAPLAMA
 var jobhistoryKurInput = document.querySelector("#Dollar_Rate_JobHistory");
@@ -389,55 +398,20 @@ const projectFormAddBtn = document.getElementById("project-create-btn");
 projectFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
-  if (true) {
-    const formData = new FormData(projectAddForm);
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
-
-    // JavaScript nesnesini JSON'a dönüştürme
-    const jsonData = JSON.stringify(formDataObject);
-    if (!editMode) {
-      try {
-        console.log("add")
-        console.log(jsonData)
-
-        const response = await fetch("http://127.0.0.1:8000/post_projects/", {
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: formData,
-        });
-        getProjects()
-        projectAddWindow.style.display = "none";
-        clearInputAfterSave(projectAddForm);
-      } catch (error) {
-        console.error("There was an error!", error);
-      }
-    }
-    // else {
-    //   try {
-    //     console.log(formData)
-    //     console.log("formData")
-    //     const response = await fetch(`http://127.0.0.1:8000/post_update_client/${projectId}`, {
-    //       method: "PUT",
-    //       headers: {
-    //         "X-CSRFToken": getCookie("csrftoken"),
-    //       },
-    //       body: formData,
-    //     });
-
-    //     getProjects()
-    //     projectAddWindow.style.display = "none";
-    //     clearInputAfterSave(projectAddForm);
-    //   } catch (error) {
-    //     console.error("There was an error!", error);
-    //   }
-    // }
+  if (editMode == false) {
+    await apiFunctions("project", "POST", projectAddForm);
+    getProjects()
+    console.log("asd")
+    projectAddWindow.style.display = "none";
+    clearInputAfterSave(projectAddForm);
+  } else {
+    await apiFunctions("project", "PUT", projectAddForm, btnID);
+    getProjects("EDİT")
+    projectAddWindow.style.display = "none";
+    clearInputAfterSave(projectAddForm);
   }
 });
+
 /***********************************************************
 #                       CLİENT SUPPLİER ADD 
 ***********************************************************/
@@ -447,21 +421,10 @@ clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(firma_add_form);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/post_client/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      clientAddWindow.style.display = "none";
-      getClients();
-      clearInputAfterSave(clientAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    await apiFunctions("client", "POST", clientAddForm);
+    clientAddWindow.style.display = "none";
+    getClients();
+    clearInputAfterSave(clientAddForm);
   }
 });
 const supplierAddForm = document.getElementById("supplier_add_form");
@@ -470,21 +433,10 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    const formData = new FormData(supplier_add_form);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: formData,
-      });
-      supplierAddWindow.style.display = "none";
-      getSuppliers();
-      clearInputAfterSave(supplierAddForm);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    await apiFunctions("supplier", "POST", supplierAddForm);
+    supplierAddWindow.style.display = "none";
+    getSuppliers();
+    clearInputAfterSave(supplierAddForm);
   }
 });
 
@@ -495,33 +447,15 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
 
 
 
-///---------///
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
 
 
 //                  DROPDOWN MENÜLER
-//getClients();
+
 async function getClients() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
-    const data = await response.json();
+    const data = await apiFunctions("client", "GET")
     let rows = "";
-    //console.log(data)
     for (const client of data) {
-      // console.log(client)
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
       rows += row;
     }
@@ -536,17 +470,13 @@ async function getClients() {
 }
 async function getSuppliers() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/get_suppliers/`);
-    const data = await response.json();
+    const data = await apiFunctions("supplier", "GET")
     let rows = "";
-    //console.log(data)
     for (const supplier of data) {
-      // console.log(client)
       const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
       rows += row;
     }
     const supplierDropdowns = document.querySelectorAll(".supplier_dropdown");
-    //console.log(supplierDropdowns)
     supplierDropdowns.forEach(async (supplierDropdown) => {
       supplierDropdown.innerHTML = rows;
     })
@@ -557,11 +487,9 @@ async function getSuppliers() {
 }
 async function getprojectName() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/get_projects/`);
-    const data = await response.json();
+    const data = await apiFunctions("project", "GET")
     let rows = "";
     for (const project of data) {
-      // console.log(client)
       const row = `<span value="${project.id}" class="dropdown-item">${project.ProjectName}</span>`;
       rows += row;
     }
