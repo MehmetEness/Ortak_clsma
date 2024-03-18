@@ -55,7 +55,7 @@ async function getProjects(isEdit) {
           <td>${project.Location}</td>
           <td>${project.AC_Power}</td>
           <td>${project.DC_Power}</td>
-          <td>${project.CalculatedCost_NotIncludingKDV}</td>
+          <td>${project.Cost_NotIncludingKDV}</td>
           <td>${project.Terrain_Roof}</td>
           <td>${formattedDate}</td>
           <td>${project.Situation}</td>

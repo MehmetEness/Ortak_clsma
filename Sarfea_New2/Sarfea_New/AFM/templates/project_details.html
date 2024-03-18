@@ -1,106 +1,121 @@
 {%extends "base.html" %}
 {% load static %}
 
-{% block css_files %} 
+{% block css_files %}
 
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-        <link
-            rel='stylesheet'
-            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-            <link rel="stylesheet" href="{% static 'details_projects.css' %}">
-            <link rel="stylesheet" href="{% static 'all_style.css' %}">
-            {% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+<link rel="stylesheet" href="{% static 'details_projects.css' %}">
+<link rel="stylesheet" href="{% static 'all_style.css' %}">
+{% endblock %}
 
-            {% block title %} Project Details {% endblock %}
-            {% block content %} 
-        <div class="body-div">
-            {% include 'partials/_left_nav_bar.html' %}
-        <div class="right-menu">
-            <div class="nav-bar">
-                <div class="nav-span">
-                    <div class="backBtn">
-                        <a href="{% url 'projects' %}">
-                            <button id="backBtn" class="button-project">
-                                <i class="fa-solid fa-arrow-left"></i>
-                            </button>
-                        </a>                                                  
-                    </div>                    
-                    <span> {{project.CompanyName}}</span>
-                    <span>{{project.ProjectName}}</span>
-                    <span id="last-span">{{project.CompanyUndertakingWork}}</span>                   
-                 </div>
+{% block title %} Project Details {% endblock %}
+{% block content %}
+<div class="body-div">
+    {% include 'partials/_left_nav_bar.html' %}
+    <div class="right-menu">
+        <div class="nav-bar">
+            <div class="nav-span">
+                <div class="backBtn">
+                    <a href="{% url 'projects' %}">
+                        <button id="backBtn" class="button-project">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </a>
+                </div>
+                <span> {{project.CompanyName}}</span>
+                <span>{{project.ProjectName}}</span>
+                <span id="last-span">{{project.CompanyUndertakingWork}}</span>
             </div>
+        </div>
 
-            <div class="main">
-                <div class="row">
-                    <div id="konum_div" style="background-image: url('{% static 'images/konum.png' %}');" class="column-2 card">
-                      <div style="display: none;" class="span">
+        <div class="main">
+            <div class="row">
+                <div id="konum_div" style="background-image: url('{% static 'images/konum.png' %}');"
+                    class="column-2 card">
+                    <div style="display: none;" class="span">
                         <span>Konum</span>
                         {% if project.Location %}
                         <span id="Konum_span">{{project.Location}}</span>
                         {% endif %}
 
-                    </div></div>
-                      <div id="flex"  class="column-2 card flex">
-                        <span><i class="fa-solid fa-power-off"></i></span>
-                        <span id="ac-power-span">{{project.AC_Power}} kWe</span>
-                        <span>AC Güç</span>                          
-                        </div>
-                      <div class="column-2 card flex">
-                          <span><i class="fa-solid fa-power-off"></i></span>
-                          <span id="dc-power-span">{{project.DC_Power}}kWp</span>
-                          <span>DC Güç</span>
-                        </div>
-                      <div class="column-2 card flex">                         
-                            <span><i class="fa-solid fa-dollar-sign"></i></span>
-                            <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
-                            <span>İş Bedeli</span>                        
-                          <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
-                      </div>
-                      <div id="type_div" class="column-2 card">
-                          <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div></div>
-                  </div>
-                  <div class="row">
-                      <div style="background-image:url('{% static 'images/arka6.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/arka5.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/arka1.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div id="gerceklesenMaliyet" class="column-2 card">
-                          <div class="span"><span>Gerçekleşen Maliyet</span></div>
-                          <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
-                      </div>
-                      <div style="background-image:url('{% static 'images/arka2.png' %}');" class="column-2 card">
-                          <div class="span">
-                            {% if project.Incentive %}
-                                <span>Teşvikli</span>
-                            {% else %}
-                                <span>Teşviksiz</span>
-                            {% endif %}
-                          </div>
-                      </div>
-                 </div>
-                  <div class="row">
-                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
-                          <div class="span"><span></span></div></div>
-                      <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
-                          <div class="span"><span>{{project.StartDate|date:"d/m/Y"}}</span><span>{{project.FinishDate|date:"d/m/Y"}}</span></div></div>                    
-                  </div>
+                    </div>
+                </div>
+                <div id="flex" class="column-2 card flex">
+                    <span><i class="fa-solid fa-power-off"></i></span>
+                    <span id="ac-power-span">{{project.AC_Power}} kWe</span>
+                    <span>AC Güç</span>
+                </div>
+                <div class="column-2 card flex">
+                    <span><i class="fa-solid fa-power-off"></i></span>
+                    <span id="dc-power-span">{{project.DC_Power}}kWp</span>
+                    <span>DC Güç</span>
+                </div>
+                <div class="column-2 card flex">
+                    <span><i class="fa-solid fa-dollar-sign"></i></span>
+                    <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                    <span>İş Bedeli</span>
+                    <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
+                </div>
+                <div id="type_div" class="column-2 card">
+                    <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="background-image:url('{% static 'images/arka6.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div style="background-image:url('{% static 'images/arka5.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div style="background-image:url('{% static 'images/arka1.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div id="gerceklesenMaliyet" class="column-2 card flex">
+                    <span><i class="fa-solid fa-dollar-sign"></i></span>
+                    <span id="realized_cost_span2">{{project.RealizedCost_NotIncludingKDV}} $</span>
+                    <span>İş Bedeli</span>
+                    <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
+                </div>
+                <div class="column-2 card flex">
+                    <span><i class="fa-solid fa-money-bill-transfer"></i></span>
+                    {% if project.Incentive %}
+                    <span class="title">Teşvikli</span>
+                    {% else %}
+                    <span class="title">Teşviksiz</span>
+                    {% endif %}
+                    <span>Teşvik Durumu</span>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div style="background-image:url('{% static 'images/bos.png' %}');" class="column-2 card">
+                    <div class="span"><span></span></div>
+                </div>
+                <div class="column-2 card flex">
+                    <span><i class="fa-solid fa-calendar-days"></i></span>
+                    <span class="date-span">{{project.StartDate|date:"d/m/Y"}}</span>                    
+                    <span>Başlama Tarihi</span>
+                </div>
+                <div class="column-2 card flex">
+                    <span><i class="fa-solid fa-calendar-days"></i></span>
+                    <span class="date-span">{{project.FinishDate|date:"d/m/Y"}}</span>
+                    <span>Bitirme Tarihi</span>
+                </div>
             </div>
         </div>
     </div>
-    {% endblock %}
-    {% block js_files %}
-    <script src="{% static 'functions.js' %}"></script> 
-    <script src="{% static 'project_details.js' %}"></script> 
+</div>
+{% endblock %}
+{% block js_files %}
+<script src="{% static 'functions.js' %}"></script>
+<script src="{% static 'project_details.js' %}"></script>
 
 <script>
     //                  BÖLÜMLERİ FORMATLAMA
@@ -108,19 +123,20 @@
     formatSpans(acPowerSpan, "kWe");
     formatSpans(dcPowerSpan, "kWp");
     formatSpans(realizedCostSpan, "usd");
+    formatSpans(realizedCostSpan2, "usd");
 
     //                  KONUM VE ARAZİ/ÇATI RESİM YERLEŞTİRME
 
     konumImgChange(konumSpan);
     typeImgChange(typeSpan);
-    function konumImgChange(konumSpan){
+    function konumImgChange(konumSpan) {
         var KonumText = konumSpan.textContent.toLowerCase();
-            var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
-            konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+        var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
+        konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
     };
-    function typeImgChange(typeSpan){
+    function typeImgChange(typeSpan) {
         var typeText = typeSpan.textContent.toLowerCase();
-        if(typeText == "çatı"){
+        if (typeText == "çatı") {
             typeText = typeText.replace("çatı", "cati");
         }
         console.log(typeText)
@@ -129,4 +145,4 @@
     };
 
 </script>
-    {% endblock %}
+{% endblock %}
