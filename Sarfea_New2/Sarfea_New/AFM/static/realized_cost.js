@@ -109,7 +109,6 @@ function expensesTableFormat(){
     tableFormat(tlCells, "tl");
     tableFormat(textCells, "text");
 }
-
 function jobhistoryTableFormat(){
     var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
     var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
@@ -172,37 +171,22 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
 
     if (true) {
-        const formData = new FormData(supplier_add_form);
-        try {
-            const response = await fetch("http://127.0.0.1:8000/post_supplier/", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: formData,
-            });
-            supplierAddWindow.style.display = "none";
-            getSuppliers();
-            clearInputAfterSave(supplierAddForm);
-        } catch (error) {
-            console.error("There was an error!", error);
-        }
+        await apiFunctions("supplier", "POST", supplierAddForm)
+        supplierAddWindow.style.display = "none";
+        getSuppliers();
+        clearInputAfterSave(supplierAddForm);        
     }
 });
 
 async function getSuppliers() {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/get_suppliers/`);
-        const data = await response.json();
+        const data = await apiFunctions("supplier", "GET");
         let rows = "";
-        //console.log(data)
         for (const supplier of data) {
-            // console.log(client)
             const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
             rows += row;
         }
         const supplierDropdowns = document.querySelectorAll(".supplier_dropdown");
-        //console.log(supplierDropdowns)
         supplierDropdowns.forEach(async (supplierDropdown) => {
             supplierDropdown.innerHTML = rows;
         })
@@ -213,25 +197,6 @@ async function getSuppliers() {
 }
 
 
-
-
-
-
-///---------///
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 const totalTableBtn = document.querySelector("#toplam-maliyet");
 const twoTableSection = document.querySelector("#two_table_section");
@@ -249,7 +214,6 @@ totalTableBtn.addEventListener("click", () => {
 
 
 })
-
 
 const realizedCostCompnay = document.querySelector(".sidebar-links ul")
 getCompany();
