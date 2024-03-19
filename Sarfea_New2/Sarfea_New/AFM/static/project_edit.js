@@ -30,33 +30,33 @@ onPageLoad(dcPowerInput);
 
 //                  TARİH İNPUTLARI FORMATLAMA
 
-startDateInput.addEventListener('input', function(event) {
-  var userInput = startDateInput.value; 
- if (event.inputType !== 'deleteContentBackward') {
-  startDateInput.value = formatDate(userInput);
- }
+startDateInput.addEventListener('input', function (event) {
+  var userInput = startDateInput.value;
+  if (event.inputType !== 'deleteContentBackward') {
+    startDateInput.value = formatDate(userInput);
+  }
 });
-finishDateInput.addEventListener('input', function(event) {
-  var userInput = finishDateInput.value; 
- if (event.inputType !== 'deleteContentBackward') {
-  finishDateInput.value = formatDate(userInput);
- }
+finishDateInput.addEventListener('input', function (event) {
+  var userInput = finishDateInput.value;
+  if (event.inputType !== 'deleteContentBackward') {
+    finishDateInput.value = formatDate(userInput);
+  }
 });
 
 //                  FORM SUBMİT ETME
 
-createBtn.addEventListener("click", function(event) {
-  event.preventDefault();          
-  if(requiredInputs(reqInputs, reqLabels)){
-      startDateInput.value = formatDateForSubmit(startDateInput.value);
-      finishDateInput.value = formatDateForSubmit(finishDateInput.value);
-      isBedeliInput.value = clearForSubmit(isBedeliInput.value);
-      hesaplananMaliyetInput.value = clearForSubmit(hesaplananMaliyetInput.value);
-      acPowerInput.value = clearForSubmit(acPowerInput.value);
-      dcPowerInput.value = clearForSubmit(dcPowerInput.value);
-      form.submit();
-  }    
-}); 
+createBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (requiredInputs(reqInputs, reqLabels)) {
+    startDateInput.value = formatDateForSubmit(startDateInput.value);
+    finishDateInput.value = formatDateForSubmit(finishDateInput.value);
+    isBedeliInput.value = clearForSubmit(isBedeliInput.value);
+    hesaplananMaliyetInput.value = clearForSubmit(hesaplananMaliyetInput.value);
+    acPowerInput.value = clearForSubmit(acPowerInput.value);
+    dcPowerInput.value = clearForSubmit(dcPowerInput.value);
+    form.submit();
+  }
+});
 
 //                  KDV % DEĞERİ KOYMA
 
@@ -68,7 +68,7 @@ kdvRateInput.addEventListener("input", function () {
 function addPercentageSymbol(input) {
   let enteredValue = input.value;
   let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
-  let formattedValue =  "%" + numericValue;
+  let formattedValue = "%" + numericValue;
   input.value = formattedValue;
 }
 

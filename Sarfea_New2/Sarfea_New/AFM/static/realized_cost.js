@@ -10,9 +10,8 @@ getJobhistory()
 async function getJobhistory() {
     try {
         let currentRows = jobHistoryTable.querySelectorAll("tr");
-        const response = await fetch(`http://127.0.0.1:8000/get_job_history/`);
-        const data = await response.json();
-        console.log(data)
+        const data = await apiFunctions("job_history", "GET")
+        //console.log(data)
         let rows = '';
         for (const jobHistory of data) {
             const row = `
@@ -35,9 +34,45 @@ async function getJobhistory() {
         if (true) {
             jobHistoryTableBody.innerHTML = '';
             jobHistoryTableBody.insertAdjacentHTML('beforeend', rows);
-            // sortTableForStart(supplierTable, 1);
-            // allTableFormat()
-            // sortingTable(supplierTable)
+            sortTableForStart(jobHistoryTable, 1);
+            jobhistoryTableFormat()
+            sortingTable(jobHistoryTable)
+        }
+
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
+    }
+}
+getExpenses()
+async function getExpenses() {
+    try {
+        let currentRows = expensesTableBody.querySelectorAll("tr");
+        const data = await apiFunctions("expense", "GET")
+        console.log(data)
+        let rows = '';
+        for (const expenses of data) {
+            const row = `
+        <tr>
+          <td>
+            <button id="${expenses.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td>${expenses.Date_Expenses}</td>
+          <td>${expenses.ExpensDetails_Expenses}</td>
+          <td>${expenses.Bank_Expenses}</td>
+          <td>${expenses.Amount_Expenses}</td>
+          <td>${expenses.Dollar_Rate_Expenses}</td>
+          <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
+        </tr>`;
+            rows += row;
+        }
+        if (true) {
+            expensesTableBody.innerHTML = '';
+            expensesTableBody.insertAdjacentHTML('beforeend', rows);
+            sortTableForStart(expensesTable, 1);
+            expensesTableFormat();
+            sortingTable(expensesTable)
         }
 
     } catch (error) {
@@ -64,6 +99,25 @@ supplierAddBtns.forEach((btn) => {
         }
     });
 });
+
+
+function expensesTableFormat(){
+    var usdCells = expensesTableBody.querySelectorAll("td:nth-child(7)");
+    var tlCells = expensesTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
+    var textCells = expensesTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
+    tableFormat(usdCells, "usd");
+    tableFormat(tlCells, "tl");
+    tableFormat(textCells, "text");
+}
+
+function jobhistoryTableFormat(){
+    var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
+    var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
+    var textCells = jobHistoryTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
+    tableFormat(usdCells, "usd");
+    tableFormat(tlCells, "tl");
+    tableFormat(textCells, "text");
+}
 
 //                  EKLEME BUTTONLARI
 
@@ -184,14 +238,40 @@ const twoTableSection = document.querySelector("#two_table_section");
 const totalTableSection = document.querySelector("#total_table_section");
 
 totalTableBtn.addEventListener("click", () => {
-    
-    if(twoTableSection.style.display == "flex"){
+
+    if (twoTableSection.style.display == "flex") {
         twoTableSection.style.display = "none";
         totalTableSection.style.display = "flex";
-    }else{
+    } else {
         twoTableSection.style.display = "flex";
         totalTableSection.style.display = "none";
     }
-   
-   
+
+
 })
+
+
+const realizedCostCompnay = document.querySelector(".sidebar-links ul")
+getCompany();
+async function getCompany() {
+    try {
+        //const response = await apiFunctions("supplier", "GET")
+        const data = await apiFunctions("supplier", "GET")
+        realizedCostCompnay.innerHTML = "";
+        data.forEach(supplier => {
+            let li =
+                `<li class="tooltip-element" data-tooltip="0" id="${supplier.id}">
+                <a href="#" class="active" data-active="0">
+                    <span class="link hide-for-menu">${supplier.CompanyName_Supplier}</span>
+                </a>
+            </li>`;
+            realizedCostCompnay.insertAdjacentHTML("beforeend", li);
+        })
+
+
+
+    } catch (error) {
+        console.error("Error fetching and rendering projects:", error);
+    }
+}
+
