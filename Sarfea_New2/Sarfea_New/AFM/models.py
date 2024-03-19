@@ -95,7 +95,7 @@ class Supplier(models.Model):
 class Project(models.Model):
     ProjectName = models.CharField(max_length=63, blank=True, null=True, unique=True)
     ProjectCode = models.CharField(max_length=63, blank=True, null=True)
-    Company_id = models.ForeignKey(Clients, on_delete=models.SET_NULL, blank=True, null=True)
+    Company_id = models.ForeignKey(Clients, on_delete=models.SET_NULL, related_name="projects", blank=True, null=True)
     CompanyUndertakingWork = models.CharField(max_length=63, blank=True, null=True)
     Location = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV = models.FloatField( blank=True, null=True, default=0)
@@ -117,9 +117,9 @@ class Project(models.Model):
         return self.ProjectName
     
 class Expenses(models.Model):
-    Project_Expenses = models.ForeignKey(Project, on_delete=models.CASCADE)
+    Project_Expenses = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_expenses")
     CompanyName_FromPaymentMade_Expenses = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Paying_Expenses = models.ForeignKey(Supplier, on_delete=models.SET_NULL, blank=True, null=True)
+    CompanyName_Paying_Expenses = models.ForeignKey(Supplier, on_delete=models.SET_NULL, related_name="supplier_expenses", blank=True, null=True)
     ExpensDetails_Expenses = models.CharField(max_length=1000, blank=True, null=True)
     Amount_Expenses = TwoDecimalField(blank=True, null=True)
     Amount_USD_Expenses = TwoDecimalField(blank=True, null=True)
@@ -128,9 +128,9 @@ class Expenses(models.Model):
     Date_Expenses = models.DateField(blank=True, null=True)
 
 class JobHistory(models.Model):
-    Project_JobHistory = models.ForeignKey(Project, on_delete=models.CASCADE)
+    Project_JobHistory = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_jobhistories")
     CompanyName_FromJobMade_JobHistory = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Job_JobHistory = models.ForeignKey(Supplier, on_delete=models.SET_NULL, blank=True, null=True)
+    CompanyName_Job_JobHistory = models.ForeignKey(Supplier, on_delete=models.SET_NULL, related_name="supplier_jobhistories", blank=True, null=True)
     ExpensDetails_JobHistory = models.CharField(max_length=1000, blank=True, null=True)
     Invoice_No_JobHistory = models.CharField(max_length=63, blank=True, null=True) 
     Amount_JobHistory = FourDecimalField(blank=True, null=True)
@@ -139,9 +139,9 @@ class JobHistory(models.Model):
     Date_JobHistory = models.DateField(blank=True, null=True)
 
 class Incomes(models.Model):
-    Project_Incomes = models.ForeignKey(Project, on_delete=models.CASCADE)
+    Project_Incomes = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_incomes")
     CompanyName_ReceivePayment_Incomes = models.CharField(max_length=63, blank=True, null=True)
-    CompanyName_Pay_Incomes = models.ForeignKey(Clients, on_delete=models.SET_NULL, blank=True, null=True)
+    CompanyName_Pay_Incomes = models.ForeignKey(Clients, on_delete=models.SET_NULL, related_name="client_incomes", blank=True, null=True)
     Amount_Incomes = FourDecimalField(blank=True, null=True)
     Dollar_Rate_Incomes = FourDecimalField(blank=True, null=True)
     PaymentType_Incomes = models.CharField(max_length=63, blank=True, null=True)
@@ -151,7 +151,7 @@ class Incomes(models.Model):
 
     
 class SalesOfferCard(models.Model):
-    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
+    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE,related_name="client_salesoffers", blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
@@ -204,8 +204,8 @@ class SalesOfferCard(models.Model):
             return self.Client_Card.CompanyName_Clients
     
 class SalesOfferCard_Revise(models.Model):
-    Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE, blank=True, null=True)
-    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
+    Revise_Owner=  models.ForeignKey(SalesOfferCard, on_delete=models.CASCADE,related_name="salesoffer_revises", blank=True, null=True)
+    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE,related_name="client_salesoffer_revises", blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")

@@ -1084,6 +1084,9 @@ def create_revise(request, card_id):
     # Return a JSON response
     return JsonResponse({'success': True})
 
+def isUserAdmin(user):
+    return JsonResponse({'success': user.is_superuser})
+
 @require_POST
 def set_card_wait(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
