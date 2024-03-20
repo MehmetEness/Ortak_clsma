@@ -838,8 +838,11 @@ function dropdownActive() {
       dropdownItems.forEach((item) => {
 
         item.addEventListener("click", function () {
-          console.log("ddd")
+          
+          input.setAttribute('data-id', this.getAttribute('value'));
           input.value = this.textContent;
+
+          //input.setAttribute('data-id', `${}`);
           dropdown.classList.remove("show");
         });
       });
@@ -866,6 +869,7 @@ async function apiFunctions(name, type, myForm, id) {
     case "GETID":
       try {
         const response = await fetch(`/api_${name}/${id}`);
+        console.log(`/api_${name}/${id}`)
         const data = await response.json();
         return data;
       } catch (error) {
@@ -875,19 +879,12 @@ async function apiFunctions(name, type, myForm, id) {
 
     case "POST":
       try {
-        const formData = new FormData(myForm);
-        const jsonData = {};
-        formData.forEach((value, key) => {
-          jsonData[key] = value;
-        });
-
-        console.log(jsonData);
         await fetch(`/api_${name}/`, {
           method: "POST",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: formData,
+          body: myForm,
         });
       } catch (error) {
         console.error("There was an error!", error);
@@ -896,14 +893,14 @@ async function apiFunctions(name, type, myForm, id) {
 
     case "PUT":
       try {
-        const formData = new FormData(myForm);
+        //const formData = new FormData(myForm);
         //console.log(`/api_${name}/${id}`)
         await fetch(`/api_${name}/${id}`, {
           method: "PUT",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: formData,
+          body: myForm,
         });
 
       } catch (error) {

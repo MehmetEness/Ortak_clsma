@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
 }
-.container {
+.window .container {
   border: 3px solid #18283b;
   border-radius: 20px;
 }
@@ -33,7 +33,7 @@
   top: 5px;
   cursor: pointer;
 }
-.container {
+.window  .container {
   position: relative;
   max-width: 700px;
   width: 100%;
@@ -46,12 +46,12 @@
   max-width: 1000px;
 }
 
-.container .title {
+.window  .container .title {
   font-size: 25px;
   font-weight: 500;
   position: relative;
 }
-.container .title::before {
+.window  .container .title::before {
   content: "";
   position: absolute;
   height: 3px;
@@ -60,13 +60,13 @@
   bottom: 0;
   background: linear-gradient(135deg, #71b7e6, #191970);
 }
-.container form .user-details {
+.window  .container form .user-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 20px 0 12px 0;
 }
-.container .input-box {
+.window .container .input-box {
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }

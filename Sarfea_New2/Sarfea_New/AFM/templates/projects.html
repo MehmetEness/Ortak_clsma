@@ -100,7 +100,7 @@
               <option value="Çatı">Çatı</option>
             </select>
           </div>
-          
+
 
           <div class="input-box">
             <span class="details">Teşvikli (Evet/Hayır)</span>
@@ -139,7 +139,7 @@
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes"
-                class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1">
+                class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1" data-id="">
 
               <div id="income_dropdown1" class="dropdown-content client-dropdown">
 
@@ -150,8 +150,8 @@
           <div class="input-box" id="ProjectName_IncomesInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes"
-                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
+              <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="Project_Incomes" class="myInput"
+                placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
 
               <div id="income_dropdown2" class="dropdown-content projects_dropdown">
               </div>
@@ -174,7 +174,7 @@
 
           <div class="input-box" name="PaymentType_Incomes">
             <span id="payment_type_label" class="details">Ödeme Türü</span>
-            <select name="id_PaymentType_Incomes" id="id_PaymentType_Incomes">
+            <select name="PaymentType_Incomes" id="id_PaymentType_Incomes">
               <option value="kredi_karti">Kredi Kartı</option>
               <option value="cek">Çek</option>
               <option value="eft">EFT</option>
@@ -192,7 +192,7 @@
           </div>
           <div class="input-box" name="Dollar_Rate_Incomes">
             <span class="details">Dolar Kuru (₺)</span>
-            <input id="id_Dollar_Rate_Incomes" name="id_Dollar_Rate_Incomes" type="text" />
+            <input id="id_Dollar_Rate_Incomes" name="Dollar_Rate_Incomes" type="text" />
           </div>
 
           <div class="input-box">
@@ -238,8 +238,8 @@
           <div class="input-box" id="ProjectName_ExpensesInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="ProjectName_Expenses"
-                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
+              <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="Project_Expenses" class="myInput"
+                placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
 
               <div id="expenses_dropdown2" class="dropdown-content projects_dropdown ">
                 {% for x in project %}
@@ -276,7 +276,7 @@
           </div>
           <div class="input-box">
             <span class="details">Dolar Kuru (₺)</span>
-            <input id="id_Dollar_Rate_Expenses" name="id_Dollar_Rate_Expenses" type="text" />
+            <input id="id_Dollar_Rate_Expenses" name="Dollar_Rate_Expenses" type="text" />
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
@@ -334,7 +334,7 @@
             id="ProjectName_JobHistoryInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory"
+              <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="Project_JobHistory"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
 
               <div id="jobhistory_dropdown2" class="dropdown-content projects_dropdown">
@@ -346,12 +346,12 @@
           <div class="input-box" name="ExpensDetails_JobHistory">
             <span class="details">Cinsi</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="ProjectName_JobHistory"
+              <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="ExpensDetails_JobHistory"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
 
               <div id="jobhistory_dropdown3" class="dropdown-content">
                 {% for x in project %}
-                <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x.ProjectName}}</span>
+                <!-- <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x.ProjectName}}</span> -->
                 {% endfor %}
               </div>
             </div>

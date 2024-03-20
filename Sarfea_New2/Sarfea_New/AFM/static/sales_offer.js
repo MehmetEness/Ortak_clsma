@@ -216,20 +216,7 @@ mButtons.forEach(function (item) {
   });
 });
 
-//                  HAMBURGER MENÜ
 
-hamburgerMenu1.addEventListener("click", () => {
-  hamburgerMenu1.style.display = "none";
-  hamburgerMenu2.style.display = "inline-block";
-  leftMenu.style.display = "none";
-  rightMenu.style.width = "100%";
-});
-hamburgerMenu2.addEventListener("click", () => {
-  hamburgerMenu2.style.display = "none";
-  hamburgerMenu1.style.display = "inline-block";
-  leftMenu.style.display = "flex";
-  rightMenu.style.width = "calc(100% - 256px)";
-});
 
 //                  CARD MENÜ
 
@@ -370,20 +357,7 @@ topMenuLi.forEach(function (item) {
   });
 });
 
-//                    TABLO FİLİTRELEME İŞLEMLERİ
 
-searchInput.addEventListener("input", function(){
-  tables.forEach(function(table){
-    filterTable(searchInput, table);
-  });  
-});
-clearButton.addEventListener("click", function() {
-  tables.forEach(function(table){
-    searchInput.value = "";
-  showAllRows(table);
-  });  
-  
-});
 
 //                  TABLO SIRALAMA
 
@@ -685,4 +659,32 @@ trRowsList.forEach((tr) =>{
             }                      
         });
     }     
+});
+
+
+//                  OPEN ADD WİNDOW
+
+const salesOfferAddWindow = document.querySelector(".sales-offer-add-window");
+const salesOfferAddBtn = document.querySelector(".project-add-btn");
+const salesOfferAddForm = document.getElementById("sales_offer_add_form");
+
+salesOfferAddBtn.addEventListener("click", () => {
+  setTimeout(() => {
+    editMode = false;
+    salesOfferAddWindow.style.display = "flex";
+  }, 10);
+});
+document.addEventListener("mousedown", (event) => {
+  const salesOfferAddContainer = document.querySelector(".sales-offer-add-window .container");
+  if (!salesOfferAddContainer.contains(event.target)) {
+    salesOfferAddWindow.style.display = "none";
+  }
+});
+// KAPATMA
+let xBtn = document.querySelectorAll(".close-window");
+xBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    salesOfferAddWindow.style.display = "none";
+    salesOfferAddForm.reset();
+  });
 });

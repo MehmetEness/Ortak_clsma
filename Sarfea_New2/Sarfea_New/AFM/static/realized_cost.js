@@ -101,7 +101,7 @@ supplierAddBtns.forEach((btn) => {
 });
 
 
-function expensesTableFormat(){
+function expensesTableFormat() {
     var usdCells = expensesTableBody.querySelectorAll("td:nth-child(7)");
     var tlCells = expensesTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
     var textCells = expensesTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
@@ -109,7 +109,7 @@ function expensesTableFormat(){
     tableFormat(tlCells, "tl");
     tableFormat(textCells, "text");
 }
-function jobhistoryTableFormat(){
+function jobhistoryTableFormat() {
     var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
     var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
     var textCells = jobHistoryTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
@@ -174,7 +174,7 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
         await apiFunctions("supplier", "POST", supplierAddForm)
         supplierAddWindow.style.display = "none";
         getSuppliers();
-        clearInputAfterSave(supplierAddForm);        
+        clearInputAfterSave(supplierAddForm);
     }
 });
 
@@ -220,17 +220,19 @@ getCompany();
 async function getCompany() {
     try {
         //const response = await apiFunctions("supplier", "GET")
-        const data = await apiFunctions("supplier", "GET")
-        realizedCostCompnay.innerHTML = "";
-        data.forEach(supplier => {
-            let li =
-                `<li class="tooltip-element" data-tooltip="0" id="${supplier.id}">
-                <a href="#" class="active" data-active="0">
-                    <span class="link hide-for-menu">${supplier.CompanyName_Supplier}</span>
-                </a>
-            </li>`;
-            realizedCostCompnay.insertAdjacentHTML("beforeend", li);
-        })
+        const data = await apiFunctions("project", "GETID", "x", "47")
+
+        console.log(data)
+        // realizedCostCompnay.innerHTML = "";
+        // data.forEach(supplier => {
+        //     let li =
+        //         `<li class="tooltip-element" data-tooltip="0" id="${supplier.id}">
+        //         <a href="#" class="active" data-active="0">
+        //             <span class="link hide-for-menu">${supplier.CompanyName_Supplier}</span>
+        //         </a>
+        //     </li>`;
+        //     realizedCostCompnay.insertAdjacentHTML("beforeend", li);
+        // })
 
 
 

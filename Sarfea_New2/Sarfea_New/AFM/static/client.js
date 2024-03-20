@@ -105,7 +105,8 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (editMode == false) {
-    await apiFunctions("client", "POST", clientAddForm);
+    const formData = new FormData(clientAddForm);
+    await apiFunctions("client", "POST", formData);
     getClient();
     clientAddWindow.style.display = "none";
     clearInputAfterSave(clientAddForm);

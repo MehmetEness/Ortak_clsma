@@ -241,12 +241,19 @@ function editButtonsEvents() {
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              element.value = data[key];
+              console.log(key)
+              if (key == "Company_id") {
+                element.value = data["client"].CompanyName_Clients;
+                element.setAttribute('data-id', data[key]);
+              } else {
+                element.value = data[key];
+              }
             } else if (selectElement) {
               selectElement.value = data[key];
             }
           }
         }
+        getClients();
         onPageLoads(formatedInputs)
         formatDateInputsForLoad(dateInputs)
         projectAddWindow.style.display = "flex";
@@ -262,10 +269,22 @@ function editButtonsEvents() {
 const incomeAddForm = document.getElementById("income_add_form");
 const incomeFormAddBtn = document.querySelector("#income-create-btn");
 incomeFormAddBtn.addEventListener("click", async function (event) {
+
   event.preventDefault();
 
   if (true) {
-    await apiFunctions("income", "POST", incomeAddForm);
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    incomeAmountInput.value = incomeAmountInput.value.replace(/\./g, "");
+    const formData = new FormData(incomeAddForm);
+    const inputs = document.querySelectorAll(".income-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+
+    await apiFunctions("income", "POST", formData);
     incomeAddWindow.style.display = "none";
     getClients();
     clearInputAfterSave(incomeAddForm);
@@ -320,7 +339,18 @@ expensesFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    await apiFunctions("expense", "POST", expensesAddForm);
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    expensesAmountInput.value = expensesAmountInput.value.replace(/\./g, "");
+    const formData = new FormData(expensesAddForm);
+    const inputs = document.querySelectorAll(".expenses-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+
+    await apiFunctions("expense", "POST", formData);
     expensesAddWindow.style.display = "none";
     getSuppliers();
     clearInputAfterSave(expensesAddForm);
@@ -359,7 +389,17 @@ jobhistoryFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    await apiFunctions("job_history", "POST", jobhistoryAddForm);
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    jobhistoryAmountInput.value = jobhistoryAmountInput.value.replace(/\./g, "");
+    const formData = new FormData(jobhistoryAddForm);
+    const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    await apiFunctions("job_history", "POST", formData);
     jobhistoryAddWindow.style.display = "none";
     getSuppliers();
     clearInputAfterSave(jobhistoryAddForm);
@@ -397,15 +437,30 @@ const projectAddForm = document.getElementById("project_add_form");
 const projectFormAddBtn = document.getElementById("project-create-btn");
 projectFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
-
+  dateInputs.forEach(input => {
+    input.value = formatDateForSubmit(input.value)
+  })
+  var formatInputss = projectAddWindow.querySelectorAll(".formatInputs")
+  formatInputss.forEach(input => {
+    input.value = input.value.replace(/\./g, "");
+  })
+  const formData = new FormData(projectAddForm);
+  const inputs = document.querySelectorAll(".project-add-window input[data-id]");
+  inputs.forEach(input => {
+    const dataId = input.getAttribute('data-id');
+    formData.set(input.getAttribute('name'), dataId);
+  });
+  for (const pair of formData.entries()) {
+    console.log(pair[0] + ': ' + pair[1]);
+  }
   if (editMode == false) {
-    await apiFunctions("project", "POST", projectAddForm);
+
+    await apiFunctions("project", "POST", formData);
     getProjects()
-    console.log("asd")
     projectAddWindow.style.display = "none";
     clearInputAfterSave(projectAddForm);
   } else {
-    await apiFunctions("project", "PUT", projectAddForm, btnID);
+    await apiFunctions("project", "PUT", formData, btnID);
     getProjects("EDİT")
     projectAddWindow.style.display = "none";
     clearInputAfterSave(projectAddForm);
@@ -421,7 +476,8 @@ clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    await apiFunctions("client", "POST", clientAddForm);
+    const formData = new FormData(clientAddForm);
+    await apiFunctions("client", "POST", formData);
     clientAddWindow.style.display = "none";
     getClients();
     clearInputAfterSave(clientAddForm);
@@ -433,7 +489,8 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
 
   if (true) {
-    await apiFunctions("supplier", "POST", supplierAddForm);
+    const formData = new FormData(supplierAddForm);
+    await apiFunctions("supplier", "POST", formData);
     supplierAddWindow.style.display = "none";
     getSuppliers();
     clearInputAfterSave(supplierAddForm);

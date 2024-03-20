@@ -183,10 +183,10 @@ nav{
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-color: #f8f8ff;
+  background-color: #ffffff80;
 }
 .card:hover {
-  background-color: #ededfc;
+  background-color: #ffffffc5;
 }
 .icon-blue {
   font-size: 35px;
@@ -229,7 +229,7 @@ nav{
 .title-div {
   background-color: #fff;
 }
-.title {
+.titles .title {
   font-weight: 600;
   color: #000;
   margin-right: -20px;
@@ -244,10 +244,10 @@ nav{
   background-color: #ffffff80;
   overflow: hidden;
 }
-.title:first-child {
+.titles .title:first-child {
   clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0 49%, 0% 0%);
 }
-.title:last-child {
+.titles .title:last-child {
   clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 10% 50%, 0% 0%);
 }
 .total-cash {
@@ -297,7 +297,7 @@ nav{
 }
 
 /*    *************************    List  **********************          */
-.container {
+.right-menu .container {
   /* width: 100%; */
   height: 100%;
   overflow: hidden;
