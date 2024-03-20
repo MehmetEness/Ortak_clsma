@@ -74,7 +74,7 @@
                 <div id="gerceklesenMaliyet" class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
                     <span id="realized_cost_span2">{{project.RealizedCost_NotIncludingKDV}} $</span>
-                    <span>İş Bedeli</span>
+                    <span>Gerçekleşen Maliyet</span>
                     <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
                 </div>
                 <div class="column-2 card flex">
@@ -85,7 +85,7 @@
                     <span class="title">Teşviksiz</span>
                     {% endif %}
                     <span>Teşvik Durumu</span>
-                    
+
                 </div>
             </div>
             <div class="row">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-calendar-days"></i></span>
-                    <span class="date-span">{{project.StartDate|date:"d/m/Y"}}</span>                    
+                    <span class="date-span">{{project.StartDate|date:"d/m/Y"}}</span>
                     <span>Başlama Tarihi</span>
                 </div>
                 <div class="column-2 card flex">

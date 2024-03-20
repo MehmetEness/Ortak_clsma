@@ -72,7 +72,7 @@
 }
 .project-add-window .input-box {
   margin-bottom: 15px;
-  width: calc(100% / 3 - 20px);
+  width: calc(100% / 3 - 20px) !important;
 }
 .center2 .input-box {
   margin-bottom: 15px;

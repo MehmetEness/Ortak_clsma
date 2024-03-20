@@ -242,6 +242,9 @@ function editButtonsEvents() {
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
               console.log(key)
+              console.log(data[key])
+              //let projectNameForEdit = document.querySelector("#id_ProjectName");
+              //projectNameForEdit.setAttribute('data-id', btnID);
               if (key == "Company_id") {
                 element.value = data["client"].CompanyName_Clients;
                 element.setAttribute('data-id', data[key]);
@@ -271,12 +274,14 @@ const incomeFormAddBtn = document.querySelector("#income-create-btn");
 incomeFormAddBtn.addEventListener("click", async function (event) {
 
   event.preventDefault();
-
+  dateInputs.forEach(input => {
+    input.value = formatDateForSubmit(input.value)
+  })
+  var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
+  formatInputss.forEach(input => {
+    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+  })
   if (true) {
-    dateInputs.forEach(input => {
-      input.value = formatDateForSubmit(input.value)
-    })
-    incomeAmountInput.value = incomeAmountInput.value.replace(/\./g, "");
     const formData = new FormData(incomeAddForm);
     const inputs = document.querySelectorAll(".income-add-window input[data-id]");
     inputs.forEach(input => {
@@ -337,19 +342,20 @@ const expensesAddForm = document.getElementById("expenses_add_form");
 const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
 expensesFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
-
+  dateInputs.forEach(input => {
+    input.value = formatDateForSubmit(input.value)
+  })
+  var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
+  formatInputss.forEach(input => {
+    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+  })
   if (true) {
-    dateInputs.forEach(input => {
-      input.value = formatDateForSubmit(input.value)
-    })
-    expensesAmountInput.value = expensesAmountInput.value.replace(/\./g, "");
     const formData = new FormData(expensesAddForm);
     const inputs = document.querySelectorAll(".expenses-add-window input[data-id]");
     inputs.forEach(input => {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
-
     await apiFunctions("expense", "POST", formData);
     expensesAddWindow.style.display = "none";
     getSuppliers();
@@ -387,12 +393,16 @@ const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
 const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
 jobhistoryFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
+  dateInputs.forEach(input => {
+    input.value = formatDateForSubmit(input.value)
+  })
+  var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
+  formatInputss.forEach(input => {
+    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+  })
 
   if (true) {
-    dateInputs.forEach(input => {
-      input.value = formatDateForSubmit(input.value)
-    })
-    jobhistoryAmountInput.value = jobhistoryAmountInput.value.replace(/\./g, "");
+
     const formData = new FormData(jobhistoryAddForm);
     const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
     inputs.forEach(input => {
@@ -442,7 +452,7 @@ projectFormAddBtn.addEventListener("click", async function (event) {
   })
   var formatInputss = projectAddWindow.querySelectorAll(".formatInputs")
   formatInputss.forEach(input => {
-    input.value = input.value.replace(/\./g, "");
+    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
   })
   const formData = new FormData(projectAddForm);
   const inputs = document.querySelectorAll(".project-add-window input[data-id]");
@@ -454,7 +464,6 @@ projectFormAddBtn.addEventListener("click", async function (event) {
     console.log(pair[0] + ': ' + pair[1]);
   }
   if (editMode == false) {
-
     await apiFunctions("project", "POST", formData);
     getProjects()
     projectAddWindow.style.display = "none";
@@ -474,6 +483,7 @@ const clientAddForm = document.getElementById("firma_add_form");
 const clientFormAddBtn = document.querySelector("#firma_submit_btn");
 clientFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
+
 
   if (true) {
     const formData = new FormData(clientAddForm);

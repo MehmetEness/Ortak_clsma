@@ -2,33 +2,44 @@ const jobHistoryTable = document.querySelector('#jobhistory_table');
 const jobHistoryTableBody = jobHistoryTable.querySelector('tbody');
 const expensesTable = document.querySelector('#expenses_table');
 const expensesTableBody = expensesTable.querySelector('tbody');
+const totalTable = document.querySelector('#total_table');
+const totalTableBody = totalTable.querySelector('tbody');
 
+const expensesDateInput = document.querySelector("#id_Date_Expenses");
+const expensesAmountInput = document.querySelector("#id_Amount_Expenses");
 
+const jobhistoryDateInput = document.querySelector("#id_Date_JobHistory");
+const jobhistoryAmountInput = document.querySelector("#id_Amount_JobHistory");
+
+const projectId = document.querySelector(".table__header p").id;
+let supplierId = 0;
 //                  JOBHISTORY TABLE
 
-getJobhistory()
-async function getJobhistory() {
+async function getJobhistory(id) {
     try {
         let currentRows = jobHistoryTable.querySelectorAll("tr");
-        const data = await apiFunctions("job_history", "GET")
+        //const data = await apiFunctions("job_history", "GET")
         //console.log(data)
+        const data = await apiFunctions("project", "GETID", "x", projectId)
         let rows = '';
-        for (const jobHistory of data) {
-            const row = `
-        <tr>
-          <td>
-            <button id="${jobHistory.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
-              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
-            </button>
-          </td>
-          <td>${jobHistory.Invoice_No_JobHistory}</td>
-          <td>${jobHistory.Date_JobHistory}</td>
-          <td>${jobHistory.ExpensDetails_JobHistory}</td>
-          <td>${jobHistory.Amount_JobHistory}</td>
-          <td>${jobHistory.Dollar_Rate_JobHistory}</td>
-          <td>${parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)}</td>
-        </tr>`;
-            rows += row;
+        for (const jobHistory of data.project_jobhistories) {
+            if (jobHistory.supplier_jobhistories.id == id) {
+                const row = `
+                <tr>
+                    <td>
+                        <button id="${jobHistory.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+                        <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                    <td>${jobHistory.Invoice_No_JobHistory}</td>
+                    <td>${jobHistory.Date_JobHistory}</td>
+                    <td>${jobHistory.ExpensDetails_JobHistory}</td>
+                    <td>${jobHistory.Amount_JobHistory}</td>
+                    <td>${jobHistory.Dollar_Rate_JobHistory}</td>
+                    <td>${parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)}</td>
+                </tr>`;
+                rows += row;
+            }
         }
         //currentRows.length
         if (true) {
@@ -43,29 +54,31 @@ async function getJobhistory() {
         console.error('Error fetching and rendering clients:', error);
     }
 }
-getExpenses()
-async function getExpenses() {
+async function getExpenses(id) {
     try {
         let currentRows = expensesTableBody.querySelectorAll("tr");
-        const data = await apiFunctions("expense", "GET")
-        console.log(data)
+        //const data = await apiFunctions("expense", "GET")
+        //console.log(data)
+        const data = await apiFunctions("project", "GETID", "x", projectId)
         let rows = '';
-        for (const expenses of data) {
-            const row = `
-        <tr>
-          <td>
-            <button id="${expenses.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
-              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
-            </button>
-          </td>
-          <td>${expenses.Date_Expenses}</td>
-          <td>${expenses.ExpensDetails_Expenses}</td>
-          <td>${expenses.Bank_Expenses}</td>
-          <td>${expenses.Amount_Expenses}</td>
-          <td>${expenses.Dollar_Rate_Expenses}</td>
-          <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
-        </tr>`;
-            rows += row;
+        for (const expenses of data.project_expenses) {
+            if (expenses.supplier_expenses.id == id) {
+                const row = `
+                <tr>
+                    <td>
+                        <button id="${expenses.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+                        <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                    <td>${expenses.Date_Expenses}</td>
+                    <td>${expenses.ExpensDetails_Expenses}</td>
+                    <td>${expenses.Bank_Expenses}</td>
+                    <td>${expenses.Amount_Expenses}</td>
+                    <td>${expenses.Dollar_Rate_Expenses}</td>
+                    <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
+                </tr>`;
+                rows += row;
+            }
         }
         if (true) {
             expensesTableBody.innerHTML = '';
@@ -73,6 +86,79 @@ async function getExpenses() {
             sortTableForStart(expensesTable, 1);
             expensesTableFormat();
             sortingTable(expensesTable)
+        }
+
+    } catch (error) {
+        console.error('Error fetching and rendering clients:', error);
+    }
+}
+async function getTotalTable() {
+    try {
+        let currentRows = totalTableBody.querySelectorAll("tr");
+        //const data = await apiFunctions("expense", "GET")
+        //console.log(data)
+        const data = await apiFunctions("project", "GETID", "x", projectId)
+        console.log(data)
+        var supplierList = {};
+
+        data.project_expenses.forEach(function (obj) {
+
+            var supplierName = obj.supplier_expenses.CompanyName_Supplier;
+            if (!supplierList.hasOwnProperty(supplierName)) {
+                supplierList[supplierName] = {
+                    id: obj.supplier_expenses.id,
+                    name: obj.supplier_expenses.CompanyName_Supplier,
+                    expensesTl: parseFloat(obj.Amount_Expenses),
+                    expensesUsd: parseFloat(obj.Amount_USD_Expenses)
+                };
+            } else {
+                supplierList[supplierName].expensesTl += parseFloat(obj.Amount_Expenses);
+                supplierList[supplierName].expensesUsd += parseFloat(obj.Amount_USD_Expenses);
+            }
+        });
+        data.project_jobhistories.forEach(function (obj) {
+            //console.log(obj.Amount_JobHistory)
+            var supplierName = obj.supplier_jobhistories.CompanyName_Supplier;
+            if (!supplierList.hasOwnProperty(supplierName)) {
+                supplierList[supplierName] = {
+                    id: obj.supplier_jobhistories.id,
+                    name: obj.supplier_jobhistories.CompanyName_Supplier,
+                    jobhistoryTl: parseFloat(obj.Amount_JobHistory),
+                    jobhistoryUsd: parseFloat(obj.Amount_USD_JobHistory)
+                };
+                //console.log(parseFloat(obj.Amount_JobHistory))
+            } else {
+                if (typeof supplierList[supplierName].jobHistoryTl !== 'number') {
+                    supplierList[supplierName].jobHistoryTl = 0;
+                }
+                if (typeof supplierList[supplierName].jobHistoryTl !== 'number') {
+                    supplierList[supplierName].jobhistoryUsd = 0;
+                }
+                supplierList[supplierName].jobHistoryTl += parseFloat(obj.Amount_JobHistory);
+                supplierList[supplierName].jobhistoryUsd += parseFloat(obj.Amount_USD_JobHistory);
+            }
+        });
+        console.log(supplierList)
+        let rows = '';
+        for (var key in supplierList) {
+            const row = `
+                <tr>              
+                    <td></td>      
+                    <td>${supplierList[key].name}</td>
+                    <td>${supplierList[key].jobhistoryTl}</td>
+                    <td>${supplierList[key].jobhistoryUsd}</td>
+                    <td>${supplierList[key].expensesTl}</td>
+                    <td>${supplierList[key].expensesUsd}</td>
+                </tr>`;
+            rows += row;
+
+        }
+        if (true) {
+            totalTableBody.innerHTML = '';
+            totalTableBody.insertAdjacentHTML('beforeend', rows);
+            sortTableForStart(totalTable, 1);
+            expensesTableFormat();
+            sortingTable(totalTable)
         }
 
     } catch (error) {
@@ -117,6 +203,18 @@ function jobhistoryTableFormat() {
     tableFormat(tlCells, "tl");
     tableFormat(textCells, "text");
 }
+function totalTableFormat() {
+    var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
+    var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
+    var textCells = jobHistoryTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
+    tableFormat(usdCells, "usd");
+    tableFormat(tlCells, "tl");
+    tableFormat(textCells, "text");
+}
+
+//                  İNPUT FORMATLAMA
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
 
 //                  EKLEME BUTTONLARI
 
@@ -163,6 +261,123 @@ xBtn.forEach((btn) => {
     });
 });
 
+// TARİH İNPUTLARI FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+
+/***********************************************************
+#                       EXPENSES ADD
+***********************************************************/
+
+const expensesAddForm = document.getElementById("expenses_add_form");
+const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
+expensesFormAddBtn.addEventListener("click", async function (event) {
+    event.preventDefault();
+    dateInputs.forEach(input => {
+        input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+    if (true) {
+        const formData = new FormData(expensesAddForm);
+
+        const inputs = document.querySelectorAll(".expenses-add-window input[data-id]");
+        inputs.forEach(input => {
+            const dataId = input.getAttribute('data-id');
+            formData.set(input.getAttribute('name'), dataId);
+        });
+        await apiFunctions("expense", "POST", formData);
+        expensesAddWindow.style.display = "none";
+        getCompany()
+        getExpenses(supplierId)
+        getSuppliers();
+        clearInputAfterSave(expensesAddForm);
+        getTotalTable();
+    }
+});
+// TARİH İNPUT FORMATLAMA
+expensesDateInput.addEventListener("input", function (event) {
+    var userInput = expensesDateInput.value;
+    if (event.inputType !== "deleteContentBackward") {
+        expensesDateInput.value = formatDate(userInput);
+    }
+});
+
+// KUR HESAPLAMA
+var expensesKurInput = document.querySelector("#id_Dollar_Rate_Expenses");
+var expensesTimeForKur = document.querySelector("#expenses-kur-time");
+
+expensesTimeForKur.addEventListener("change", async function () {
+    const secilenDeger = expensesTimeForKur.value;
+    if (secilenDeger === "secenek1") {
+    } else if (secilenDeger === "secenek2") {
+        tarih = birGunOncekiTarih(expensesDateInput.value);
+        expensesKurInput.value = await getUSDKur(tarih);
+    } else if (secilenDeger === "secenek3") {
+        tarih = tarihFormatiniDegistir(expensesDateInput.value);
+        expensesKurInput.value = await getUSDKur(tarih);
+    }
+});
+
+/***********************************************************
+#                       JOBHİSTORY ADD
+***********************************************************/
+const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
+const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
+jobhistoryFormAddBtn.addEventListener("click", async function (event) {
+    event.preventDefault();
+    dateInputs.forEach(input => {
+        input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+    if (true) {
+
+        const formData = new FormData(jobhistoryAddForm);
+        const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
+        inputs.forEach(input => {
+            const dataId = input.getAttribute('data-id');
+            formData.set(input.getAttribute('name'), dataId);
+        });
+        await apiFunctions("job_history", "POST", formData);
+        jobhistoryAddWindow.style.display = "none";
+        getCompany()
+        getSuppliers();
+        getJobhistory(supplierId)
+        clearInputAfterSave(jobhistoryAddForm);
+        getTotalTable();
+    }
+});
+
+// TARİH İNPUTLARI FORMATLAMA
+jobhistoryDateInput.addEventListener('input', function (event) {
+    var userInput = jobhistoryDateInput.value;
+    if (event.inputType !== 'deleteContentBackward') {
+        jobhistoryDateInput.value = formatDate(userInput);
+    }
+});
+
+// KUR HESAPLAMA
+var jobhistoryKurInput = document.querySelector("#Dollar_Rate_JobHistory");
+var jobhistoryTimeForKur = document.querySelector("#jobhistory-kur-time");
+
+jobhistoryTimeForKur.addEventListener("change", async function () {
+    const secilenDeger = jobhistoryTimeForKur.value;
+    if (secilenDeger === "secenek1") {
+    } else if (secilenDeger === "secenek2") {
+        tarih = birGunOncekiTarih(jobhistoryDateInput.value);
+        jobhistoryKurInput.value = await getUSDKur(tarih);
+    } else if (secilenDeger === "secenek3") {
+        tarih = tarihFormatiniDegistir(jobhistoryDateInput.value);
+        jobhistoryKurInput.value = await getUSDKur(tarih);
+    }
+});
+
 //                    SUPPLİER ADD
 
 const supplierAddForm = document.getElementById("supplier_add_form");
@@ -171,7 +386,8 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
 
     if (true) {
-        await apiFunctions("supplier", "POST", supplierAddForm)
+        const formData = new FormData(supplierAddForm);
+        await apiFunctions("supplier", "POST", formData)
         supplierAddWindow.style.display = "none";
         getSuppliers();
         clearInputAfterSave(supplierAddForm);
@@ -206,34 +422,56 @@ totalTableBtn.addEventListener("click", () => {
 
     if (twoTableSection.style.display == "flex") {
         twoTableSection.style.display = "none";
+        getTotalTable();
         totalTableSection.style.display = "flex";
     } else {
         twoTableSection.style.display = "flex";
         totalTableSection.style.display = "none";
     }
-
-
 })
+
+function getSupplierInfo(id) {
+    twoTableSection.style.display = "flex";
+    totalTableSection.style.display = "none";
+    supplierId = id;
+    getExpenses(id)
+    getJobhistory(id)
+}
+
+
+
 
 const realizedCostCompnay = document.querySelector(".sidebar-links ul")
 getCompany();
 async function getCompany() {
     try {
         //const response = await apiFunctions("supplier", "GET")
-        const data = await apiFunctions("project", "GETID", "x", "47")
 
-        console.log(data)
-        // realizedCostCompnay.innerHTML = "";
-        // data.forEach(supplier => {
-        //     let li =
-        //         `<li class="tooltip-element" data-tooltip="0" id="${supplier.id}">
-        //         <a href="#" class="active" data-active="0">
-        //             <span class="link hide-for-menu">${supplier.CompanyName_Supplier}</span>
-        //         </a>
-        //     </li>`;
-        //     realizedCostCompnay.insertAdjacentHTML("beforeend", li);
-        // })
+        const data = await apiFunctions("project", "GETID", "x", projectId)
+        var supplierList = {};
 
+        data.project_expenses.forEach(function (obj) {
+            var supplierName = obj.supplier_expenses.CompanyName_Supplier;
+            if (!supplierList.hasOwnProperty(supplierName)) {
+                supplierList[supplierName] = { id: obj.supplier_expenses.id, name: obj.supplier_expenses.CompanyName_Supplier };
+            }
+        });
+        data.project_jobhistories.forEach(function (obj) {
+            var supplierName = obj.supplier_jobhistories.CompanyName_Supplier;
+            if (!supplierList.hasOwnProperty(supplierName)) {
+                supplierList[supplierName] = { id: obj.supplier_jobhistories.id, name: obj.supplier_jobhistories.CompanyName_Supplier };
+            }
+        });
+        realizedCostCompnay.innerHTML = "";
+        for (var key in supplierList) {
+            let li =
+                `<li onclick="getSupplierInfo(this.id)" class="tooltip-element" data-tooltip="0" id="${supplierList[key].id}">
+            <a href="#" class="active" data-active="0">
+                <span class="link hide-for-menu">${supplierList[key].name}</span>
+            </a>
+        </li>`;
+            realizedCostCompnay.insertAdjacentHTML("beforeend", li);
+        }
 
 
     } catch (error) {

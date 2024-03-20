@@ -713,7 +713,7 @@ function formatDate(date) {
 function formatDateForSubmit(date) {
   if (date.length == 10) {
     var splits = date.split(".");
-
+    console.log(splits)
     var gun = splits[0];
     var ay = splits[1];
     var yil = splits[2];
@@ -838,7 +838,7 @@ function dropdownActive() {
       dropdownItems.forEach((item) => {
 
         item.addEventListener("click", function () {
-          
+
           input.setAttribute('data-id', this.getAttribute('value'));
           input.value = this.textContent;
 
