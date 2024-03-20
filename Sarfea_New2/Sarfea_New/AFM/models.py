@@ -149,7 +149,7 @@ class Incomes(models.Model):
     LastChekDate_Incomes = models.DateField(blank=True, null=True)
     Amount_Usd_Incomes = FourDecimalField(blank=True, null=True)
 
-    
+
 class SalesOfferCard(models.Model):
     Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE,related_name="client_salesoffers", blank=True, null=True)
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)

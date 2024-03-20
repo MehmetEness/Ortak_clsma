@@ -1,7 +1,46 @@
 from rest_framework import serializers
 from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, SalesOfferCard,SalesOfferCard_Revise
 
+class ClientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Clients
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Clients.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.CompanyName_Clients = validated_data.get('CompanyName_Clients', instance.CompanyName_Clients)
+        instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
+        instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
+        instance.Email = validated_data.get('Email', instance.Email)
+        instance.Location = validated_data.get('Location', instance.Location)
+
+        instance.save()
+        return instance
+
+class SupplierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Supplier
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Supplier.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.CompanyName_Supplier = validated_data.get('CompanyName_Supplier', instance.CompanyName_Supplier)
+        instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
+        instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
+        instance.Email = validated_data.get('Email', instance.Email)
+        instance.Location = validated_data.get('Location', instance.Location)
+
+        instance.save()
+        return instance
+    
 class ExpensesSerializer(serializers.ModelSerializer):
+    supplier_expenses = SupplierSerializer(source='CompanyName_Paying_Expenses', read_only=True)
+
     class Meta:
         model = Expenses
         fields = '__all__'
@@ -22,6 +61,8 @@ class ExpensesSerializer(serializers.ModelSerializer):
         return instance
 
 class JobHistorySerializer(serializers.ModelSerializer):
+    supplier_jobhistories = SupplierSerializer(source='CompanyName_Job_JobHistory', read_only=True)
+
     class Meta:
         model = JobHistory
         fields = '__all__'
@@ -43,6 +84,8 @@ class JobHistorySerializer(serializers.ModelSerializer):
         return instance
     
 class IncomesSerializer(serializers.ModelSerializer):
+    client_incomes = ClientSerializer(source='CompanyName_Pay_Incomes', read_only=True)
+
     class Meta:
         model = Incomes
         fields = '__all__'
@@ -153,28 +196,6 @@ class SalesOfferCardSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class ClientSerializer(serializers.ModelSerializer):
-    client_incomes= IncomesSerializer(many=True, read_only=True)
-    client_salesoffers= SalesOfferCardSerializer(many=True, read_only=True)
-    client_salesoffer_revises= SalesOfferCardReviseSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Clients
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Clients.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.CompanyName_Clients = validated_data.get('CompanyName_Clients', instance.CompanyName_Clients)
-        instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
-        instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
-        instance.Email = validated_data.get('Email', instance.Email)
-        instance.Location = validated_data.get('Location', instance.Location)
-
-        instance.save()
-        return instance
-
 class ProjectSerializer(serializers.ModelSerializer):
     project_expenses= ExpensesSerializer(many=True, read_only=True)
     project_jobhistories= JobHistorySerializer(many=True, read_only=True)
@@ -207,25 +228,3 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-    
-class SupplierSerializer(serializers.ModelSerializer):
-    supplier_expenses= ExpensesSerializer(many=True, read_only=True)
-    supplier_jobhistories= JobHistorySerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Supplier
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Supplier.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.CompanyName_Supplier = validated_data.get('CompanyName_Supplier', instance.CompanyName_Supplier)
-        instance.ContactPerson = validated_data.get('ContactPerson', instance.ContactPerson)
-        instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
-        instance.Email = validated_data.get('Email', instance.Email)
-        instance.Location = validated_data.get('Location', instance.Location)
-
-        instance.save()
-        return instance
