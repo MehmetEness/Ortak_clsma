@@ -22,6 +22,10 @@ async function getJobhistory(id) {
         //console.log(data)
         const data = await apiFunctions("project", "GETID", "x", projectId)
         let rows = '';
+        let totalTlSpan = document.querySelector("#jobhistory_tl_td");
+        let totalUSDSpan = document.querySelector("#jobhistory_usd_td");
+        let totalTl = 0;
+        let totalUSD = 0;
         for (const jobHistory of data.project_jobhistories) {
             if (jobHistory.supplier_jobhistories.id == id) {
                 const row = `
@@ -39,9 +43,12 @@ async function getJobhistory(id) {
                     <td>${parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)}</td>
                 </tr>`;
                 rows += row;
+                totalTl += parseFloat(jobHistory.Amount_JobHistory);
+                totalUSD += (parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory));
             }
         }
-        //currentRows.length
+        totalTlSpan.textContent = formatNumber(parseFloat(totalTl.toString()), 2);
+        totalUSDSpan.textContent = formatNumber(parseFloat(totalUSD.toString()), 2);
         if (true) {
             jobHistoryTableBody.innerHTML = '';
             jobHistoryTableBody.insertAdjacentHTML('beforeend', rows);
@@ -60,6 +67,10 @@ async function getExpenses(id) {
         //const data = await apiFunctions("expense", "GET")
         //console.log(data)
         const data = await apiFunctions("project", "GETID", "x", projectId)
+        let totalTlSpan = document.querySelector("#expenses_tl_td");
+        let totalUSDSpan = document.querySelector("#expenses_usd_td");
+        let totalTl = 0;
+        let totalUSD = 0;
         let rows = '';
         for (const expenses of data.project_expenses) {
             if (expenses.supplier_expenses.id == id) {
@@ -78,7 +89,11 @@ async function getExpenses(id) {
                     <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
                 </tr>`;
                 rows += row;
+                totalTl += parseFloat(expenses.Amount_Expenses);
+                totalUSD += (parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses));
             }
+            totalTlSpan.textContent = formatNumber(parseFloat(totalTl.toString()), 2);
+            totalUSDSpan.textContent = formatNumber(parseFloat(totalUSD.toString()), 2);
         }
         if (true) {
             expensesTableBody.innerHTML = '';
@@ -98,6 +113,11 @@ async function getTotalTable() {
         //const data = await apiFunctions("expense", "GET")
         //console.log(data)
         const data = await apiFunctions("project", "GETID", "x", projectId)
+
+        let totalTlLeft = 0;
+        let totalUSDLeft = 0;
+        let totalTlRight = 0;
+        let totalUSDRight = 0;
         console.log(data)
         var supplierList = {};
 
@@ -112,52 +132,72 @@ async function getTotalTable() {
                     expensesUsd: parseFloat(obj.Amount_USD_Expenses)
                 };
             } else {
+                if (typeof supplierList[supplierName].expensesTl !== 'number') {
+                    supplierList[supplierName].expensesTl = 0;
+                }
+                if (typeof supplierList[supplierName].expensesUsd !== 'number') {
+                    supplierList[supplierName].expensesUsd = 0;
+                }
                 supplierList[supplierName].expensesTl += parseFloat(obj.Amount_Expenses);
                 supplierList[supplierName].expensesUsd += parseFloat(obj.Amount_USD_Expenses);
             }
         });
         data.project_jobhistories.forEach(function (obj) {
-            //console.log(obj.Amount_JobHistory)
             var supplierName = obj.supplier_jobhistories.CompanyName_Supplier;
+
             if (!supplierList.hasOwnProperty(supplierName)) {
                 supplierList[supplierName] = {
                     id: obj.supplier_jobhistories.id,
                     name: obj.supplier_jobhistories.CompanyName_Supplier,
-                    jobhistoryTl: parseFloat(obj.Amount_JobHistory),
+                    jobHistoryTl: parseFloat(obj.Amount_JobHistory),
                     jobhistoryUsd: parseFloat(obj.Amount_USD_JobHistory)
                 };
-                //console.log(parseFloat(obj.Amount_JobHistory))
             } else {
-                if (typeof supplierList[supplierName].jobHistoryTl !== 'number') {
+                if (isNaN(parseFloat(supplierList[supplierName].jobHistoryTl))) {
                     supplierList[supplierName].jobHistoryTl = 0;
                 }
-                if (typeof supplierList[supplierName].jobHistoryTl !== 'number') {
+                if (isNaN(parseFloat(supplierList[supplierName].jobhistoryUsd))) {
                     supplierList[supplierName].jobhistoryUsd = 0;
                 }
                 supplierList[supplierName].jobHistoryTl += parseFloat(obj.Amount_JobHistory);
                 supplierList[supplierName].jobhistoryUsd += parseFloat(obj.Amount_USD_JobHistory);
             }
         });
-        console.log(supplierList)
+        let totalTlSpanLeft = document.querySelector("#total_left_tl_td");
+        let totalUSDSpanLeft = document.querySelector("#total_left_usd_td");
+        let totalTlSpanRight = document.querySelector("#total_right_tl_td");
+        let totalUSDSpanRight = document.querySelector("#total_right_usd_td");
         let rows = '';
         for (var key in supplierList) {
             const row = `
                 <tr>              
                     <td></td>      
                     <td>${supplierList[key].name}</td>
-                    <td>${supplierList[key].jobhistoryTl}</td>
+                    <td>${supplierList[key].jobHistoryTl}</td>
                     <td>${supplierList[key].jobhistoryUsd}</td>
                     <td>${supplierList[key].expensesTl}</td>
                     <td>${supplierList[key].expensesUsd}</td>
                 </tr>`;
             rows += row;
-
+            totalTlLeft += !isNaN(parseFloat(supplierList[key].jobHistoryTl)) ? parseFloat(supplierList[key].jobHistoryTl) : 0;
+            
+            totalUSDLeft += !isNaN(parseFloat(supplierList[key].jobhistoryUsd)) ? parseFloat(supplierList[key].jobhistoryUsd) : 0;
+            
+            totalTlRight += !isNaN(parseFloat(supplierList[key].expensesTl)) ? parseFloat(supplierList[key].expensesTl) : 0;
+            
+            totalUSDRight += !isNaN(parseFloat(supplierList[key].expensesUsd)) ? parseFloat(supplierList[key].expensesUsd) : 0;
+            
         }
+        totalTlSpanLeft.textContent = formatNumber(parseFloat(totalTlLeft.toString()), 2);
+        totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2);
+        totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2);
+        totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2);
         if (true) {
             totalTableBody.innerHTML = '';
             totalTableBody.insertAdjacentHTML('beforeend', rows);
             sortTableForStart(totalTable, 1);
             expensesTableFormat();
+            totalTableFormat()
             sortingTable(totalTable)
         }
 
@@ -204,12 +244,10 @@ function jobhistoryTableFormat() {
     tableFormat(textCells, "text");
 }
 function totalTableFormat() {
-    var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
-    var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
-    var textCells = jobHistoryTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
+    var usdCells = totalTableBody.querySelectorAll("td:nth-child(4),td:nth-child(6)");
+    var tlCells = totalTableBody.querySelectorAll("td:nth-child(3), td:nth-child(5)");
     tableFormat(usdCells, "usd");
     tableFormat(tlCells, "tl");
-    tableFormat(textCells, "text");
 }
 
 //                  İNPUT FORMATLAMA

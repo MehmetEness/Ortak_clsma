@@ -103,6 +103,7 @@ section.table__header p {
 
 /* TABLO */
 main.table {
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: #fff5;
@@ -721,4 +722,17 @@ body.shrink .admin-profile {
 
 body.shrink .tooltip {
   display: grid;
+}
+
+.total_div{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  gap: 10px;
+  height: 60px;
+  background: #fffb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

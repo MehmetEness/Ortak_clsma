@@ -44,8 +44,8 @@
 
           <div class="input-box" name="CompanyName_FromPaymentMade_Expenses">
             <span class="details">Ödeme Yapan Firma</span>
-           
-            
+
+
             <select name="CompanyName_FromPaymentMade_Expenses" id=" id_CompanyName_FromPaymentMade_Expenses">
               <option value="Sovo">Sovo</option>
               <option value="Tozoğlu">Tozoğlu</option>
@@ -250,6 +250,16 @@
           </thead>
           <tbody>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3"></td>
+              <td style="font-weight: 600;" colspan="2"><b>Toplam(TL) : </b> <span style="margin-left: 10px;"
+                  id="jobhistory_tl_td">0.00₺</span></td>
+
+              <td style="font-weight: 600;" colspan="2"><b>Toplam(USD) : <span style="margin-left: 10px;"
+                    id="jobhistory_usd_td">0.00$</span></td>
+            </tr>
+          </tfoot>
         </table>
         <table id="expenses_table">
           <thead>
@@ -265,6 +275,16 @@
           </thead>
           <tbody>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3"></td>
+              <td style="font-weight: 600;" colspan="2"><b>Toplam(TL) : </b> <span style="margin-left: 10px;"
+                  id="expenses_tl_td">0.00₺</span></td>
+
+              <td style="font-weight: 600;" colspan="2"><b>Toplam(USD) : <span style="margin-left: 10px;"
+                    id="expenses_usd_td">0.00$</span></td>
+            </tr>
+          </tfoot>
         </table>
       </section>
       <section style="display: none;" id="total_table_section" class="table__body">
@@ -281,9 +301,27 @@
           </thead>
           <tbody>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td style="font-weight: 600;" colspan="1"><b>Toplam : </b> <span style="margin-left: 10px;"
+                  id="total_left_tl_td">0.00₺</span></td>
+              <td style="font-weight: 600;" colspan="1"><b>Toplam : <span style="margin-left: 10px;"
+                    id="total_left_usd_td">0.00$</span></td>
+              <td style="font-weight: 600;" colspan="1"><b>Toplam : </b> <span style="margin-left: 10px;"
+                  id="total_right_tl_td">0.00₺</span></td>
+              <td style="font-weight: 600;" colspan="1"><b>Toplam : <span style="margin-left: 10px;"
+                    id="total_right_usd_td">0.00$</span></td>
+            </tr>
+          </tfoot>
         </table>
 
       </section>
+      <div class="total_div">
+        <span style="font-weight: 600; margin-right: 10px;">Genel Toplam : </span>
+        <span style="font-weight: 600; margin-right: 25px;" id="genel_tl"> 0.00₺</span>
+        <span style="font-weight: 600;" id="genel_usd"> 0.00$</span>
+      </div>
     </main>
   </div>
 </div>
