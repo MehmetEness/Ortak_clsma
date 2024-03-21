@@ -305,7 +305,10 @@ def income_details(request, project_id):
 
 @login_required
 def projects(request):
+    locations = Locations.objects.all()
     banks= Banks.objects.all()
+    details = Details.objects.all()
+
     project = Project.objects.annotate(
         custom_order_situation=Case(
             When(Situation="Onay Bekliyor", then=Value(1)),
@@ -319,7 +322,9 @@ def projects(request):
 
     context = {
         "project": project,
-        "banks":banks
+        "banks":banks,
+        "locations":locations,
+        "details":details
     }
 
     return render(request, "projects.html", context)
