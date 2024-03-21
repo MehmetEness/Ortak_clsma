@@ -350,8 +350,8 @@
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
 
               <div id="jobhistory_dropdown3" class="dropdown-content">
-                {% for x in project %}
-                <!-- <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x.ProjectName}}</span> -->
+                {% for x in details %}
+                 <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x}}</span> 
                 {% endfor %}
               </div>
             </div>
