@@ -5,6 +5,12 @@ var clearButton = document.querySelector(".clear");
 function openFile(url) {
   window.open(url, "_blank");
 }
+function bekleme(milisaniye) {
+  return new Promise(resolve => {
+    setTimeout(resolve, milisaniye);
+  });
+}
+
 
 function clear(value) {
   if (value != undefined) {
@@ -28,6 +34,16 @@ function clear2(value) {
   if (value != undefined) {
     var cleanString = value.replace(/[^0-9,]/g, "").replace(/,/g, ".");
     return cleanString;
+  } else {
+    var cleanString = 0;
+    return cleanString;
+  }
+}
+function clearForCalc(value) {
+  if (value != undefined) {    
+    var numString = value.replace(/\./g, "").replace(",", ".");
+    var num = parseFloat(numString);
+    return num;
   } else {
     var cleanString = 0;
     return cleanString;

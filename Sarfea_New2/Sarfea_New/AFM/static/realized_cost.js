@@ -180,13 +180,13 @@ async function getTotalTable() {
                 </tr>`;
             rows += row;
             totalTlLeft += !isNaN(parseFloat(supplierList[key].jobHistoryTl)) ? parseFloat(supplierList[key].jobHistoryTl) : 0;
-            
+
             totalUSDLeft += !isNaN(parseFloat(supplierList[key].jobhistoryUsd)) ? parseFloat(supplierList[key].jobhistoryUsd) : 0;
-            
+
             totalTlRight += !isNaN(parseFloat(supplierList[key].expensesTl)) ? parseFloat(supplierList[key].expensesTl) : 0;
-            
+
             totalUSDRight += !isNaN(parseFloat(supplierList[key].expensesUsd)) ? parseFloat(supplierList[key].expensesUsd) : 0;
-            
+
         }
         totalTlSpanLeft.textContent = formatNumber(parseFloat(totalTlLeft.toString()), 2);
         totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2);
@@ -474,8 +474,20 @@ function getSupplierInfo(id) {
     supplierId = id;
     getExpenses(id)
     getJobhistory(id)
-}
+    genelToplam()
 
+}
+async function genelToplam() {
+    var genelTl = document.querySelector("#genel_tl")
+    var genelUsd = document.querySelector("#genel_usd")
+    var jobTlForCal = document.querySelector("#jobhistory_tl_td")
+    var jobUsdForCal = document.querySelector("#jobhistory_usd_td")
+    var expTlForCal = document.querySelector("#expenses_tl_td")
+    var expUsdForCal = document.querySelector("#expenses_usd_td")
+    await bekleme(300)
+    genelTl.textContent = formatNumber((clearForCalc(jobTlForCal.textContent) - clearForCalc(expTlForCal.textContent)), 2) + " ₺";
+    genelUsd.textContent = formatNumber((clearForCalc(jobUsdForCal.textContent) - clearForCalc(expUsdForCal.textContent)), 2) + " $";
+}
 
 
 
