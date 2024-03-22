@@ -40,7 +40,7 @@ function clear2(value) {
   }
 }
 function clearForCalc(value) {
-  if (value != undefined) {    
+  if (value != undefined && value != null && value != NaN) {
     var numString = value.replace(/\./g, "").replace(",", ".");
     var num = parseFloat(numString);
     return num;
@@ -56,7 +56,7 @@ function formatNumber(number, fract) {
   var value = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: fract,
     maximumFractionDigits: fract,
-  }).format(number.toFixed(fract));
+  }).format(number);
   return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
 }
 function format(number) {
@@ -157,6 +157,7 @@ function tableFormat(cells, type) {
     case "kur":
       cells.forEach(function (cell) {
         var value = parseFloat(cell.textContent);
+        console.log(value)
         if (!isNaN(parseFloat(value))) {
           cell.textContent = formatNumber(value, 4) + "₺";
           cell.title = formatNumber(value, 4) + "₺";
@@ -400,7 +401,8 @@ function requiredInputs(inputs, labels) {
   }
 }
 function clearInputAfterSave(form) {
-  let inputs = form.querySelectorAll("input:not([type='button']");
+  //let inputs = form.querySelectorAll("input:not([type='button']");
+  var inputs = form.querySelectorAll("input:not([type='button']):not(.not_this)");
   inputs.forEach((input) => {
     input.value = "";
   });

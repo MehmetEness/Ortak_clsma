@@ -26,7 +26,13 @@ async function getJobhistory(id) {
         let totalUSDSpan = document.querySelector("#jobhistory_usd_td");
         let totalTl = 0;
         let totalUSD = 0;
+        let formattedDate;
         for (const jobHistory of data.project_jobhistories) {
+
+            if (jobHistory.Date_JobHistory) {
+                let date = new Date(jobHistory.Date_JobHistory);
+                formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+            } else { formattedDate = "-" }
             if (jobHistory.supplier_jobhistories.id == id) {
                 const row = `
                 <tr>
@@ -36,15 +42,15 @@ async function getJobhistory(id) {
                         </button>
                     </td>
                     <td>${jobHistory.Invoice_No_JobHistory}</td>
-                    <td>${jobHistory.Date_JobHistory}</td>
+                    <td>${formattedDate}</td>
                     <td>${jobHistory.ExpensDetails_JobHistory}</td>
                     <td>${jobHistory.Amount_JobHistory}</td>
                     <td>${jobHistory.Dollar_Rate_JobHistory}</td>
                     <td>${parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)}</td>
                 </tr>`;
                 rows += row;
-                totalTl += parseFloat(jobHistory.Amount_JobHistory);
-                totalUSD += (parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory));
+                totalTl += parseFloat(jobHistory.Amount_JobHistory) || 0;
+                totalUSD += (parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)) || 0;
             }
         }
         totalTlSpan.textContent = formatNumber(parseFloat(totalTl.toString()), 2);
@@ -72,7 +78,12 @@ async function getExpenses(id) {
         let totalTl = 0;
         let totalUSD = 0;
         let rows = '';
+        let formattedDate;
         for (const expenses of data.project_expenses) {
+            if (expenses.Date_Expenses) {
+                let date = new Date(expenses.Date_Expenses);
+                formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+            } else { formattedDate = "-" }
             if (expenses.supplier_expenses.id == id) {
                 const row = `
                 <tr>
@@ -81,7 +92,7 @@ async function getExpenses(id) {
                         <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                         </button>
                     </td>
-                    <td>${expenses.Date_Expenses}</td>
+                    <td>${formattedDate}</td>
                     <td>${expenses.ExpensDetails_Expenses}</td>
                     <td>${expenses.Bank_Expenses}</td>
                     <td>${expenses.Amount_Expenses}</td>
@@ -89,8 +100,8 @@ async function getExpenses(id) {
                     <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
                 </tr>`;
                 rows += row;
-                totalTl += parseFloat(expenses.Amount_Expenses);
-                totalUSD += (parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses));
+                totalTl += parseFloat(expenses.Amount_Expenses) || 0;
+                totalUSD += (parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)) || 0;
             }
             totalTlSpan.textContent = formatNumber(parseFloat(totalTl.toString()), 2);
             totalUSDSpan.textContent = formatNumber(parseFloat(totalUSD.toString()), 2);
@@ -180,23 +191,19 @@ async function getTotalTable() {
                 </tr>`;
             rows += row;
             totalTlLeft += !isNaN(parseFloat(supplierList[key].jobHistoryTl)) ? parseFloat(supplierList[key].jobHistoryTl) : 0;
-
             totalUSDLeft += !isNaN(parseFloat(supplierList[key].jobhistoryUsd)) ? parseFloat(supplierList[key].jobhistoryUsd) : 0;
-
             totalTlRight += !isNaN(parseFloat(supplierList[key].expensesTl)) ? parseFloat(supplierList[key].expensesTl) : 0;
-
             totalUSDRight += !isNaN(parseFloat(supplierList[key].expensesUsd)) ? parseFloat(supplierList[key].expensesUsd) : 0;
 
         }
-        totalTlSpanLeft.textContent = formatNumber(parseFloat(totalTlLeft.toString()), 2);
-        totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2);
-        totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2);
-        totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2);
+        totalTlSpanLeft.textContent = formatNumber(parseFloat(totalTlLeft.toString()), 2) + " ₺";
+        totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2) + " $";
+        totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2) + " ₺";
+        totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2) + " $";
         if (true) {
             totalTableBody.innerHTML = '';
             totalTableBody.insertAdjacentHTML('beforeend', rows);
             sortTableForStart(totalTable, 1);
-            expensesTableFormat();
             totalTableFormat()
             sortingTable(totalTable)
         }
@@ -229,19 +236,23 @@ supplierAddBtns.forEach((btn) => {
 
 function expensesTableFormat() {
     var usdCells = expensesTableBody.querySelectorAll("td:nth-child(7)");
-    var tlCells = expensesTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
+    var tlCells = expensesTableBody.querySelectorAll("td:nth-child(5)");
+    var kurCells = expensesTableBody.querySelectorAll("td:nth-child(6)");
     var textCells = expensesTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
     tableFormat(usdCells, "usd");
     tableFormat(tlCells, "tl");
     tableFormat(textCells, "text");
+    tableFormat(kurCells, "kur");
 }
 function jobhistoryTableFormat() {
     var usdCells = jobHistoryTableBody.querySelectorAll("td:nth-child(7)");
-    var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5), td:nth-child(6)");
+    var tlCells = jobHistoryTableBody.querySelectorAll("td:nth-child(5)");
+    var kurCells = jobHistoryTableBody.querySelectorAll("td:nth-child(6)");
     var textCells = jobHistoryTableBody.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4)");
     tableFormat(usdCells, "usd");
     tableFormat(tlCells, "tl");
     tableFormat(textCells, "text");
+    tableFormat(kurCells, "kur");
 }
 function totalTableFormat() {
     var usdCells = totalTableBody.querySelectorAll("td:nth-child(4),td:nth-child(6)");

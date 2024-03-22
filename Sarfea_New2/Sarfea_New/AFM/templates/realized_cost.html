@@ -21,7 +21,7 @@
           <div style="display: none" class="input-box" id="ProjectName_ExpensesInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.id}}" type="text" id="id_ProjectName_Expenses" name="Project_Expenses"
+              <input value="{{project.id}}" type="text" id="id_ProjectName_Expenses" class="not_this" name="Project_Expenses"
                 placeholder="Proje Adını Seçiniz" />
             </div>
           </div>
@@ -109,7 +109,7 @@
           <div style="display: none" class="input-box" id="ProjectName_JobHistoryInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.id}}" type="text" id="id_ProjectName_JobHistory" name="Project_JobHistory"
+              <input value="{{project.id}}" type="text" id="id_ProjectName_JobHistory" class="not_this" name="Project_JobHistory"
                 placeholder="Proje Adını Seçiniz" />
             </div>
           </div>
@@ -236,52 +236,58 @@
         <button style="margin-right: 330px;" class="button expenses-add-btn">Yapılan Ödeme</button>
       </section>
       <section id="two_table_section" class="table__body">
-        <table id="jobhistory_table">
-          <thead>
-            <tr>
-              <th><span></span></th>
-              <th>Fatura No<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Cinsi<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="4"></td>
-              <td style="font-weight: 700; text-align: left;" colspan="2"><span id="jobhistory_tl_td">0.00</span>₺</td>
-
-              <td style="font-weight: 700; text-align: left;" colspan="1"><span id="jobhistory_usd_td">0.00</span>$</td>
-            </tr>
-          </tfoot>
-        </table>
+        <div class="overflow">
+          <table id="jobhistory_table">
+            <thead>
+              <tr>
+                <th style="width: 3%;"><span></span></th>
+                <th style="width: 18%;">Fatura No<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 15%;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 14%;">Cinsi<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 18%;">Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 12%;">Kur<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 20%;">Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2"></td>
+                <td colspan="2"><b>Toplam : </b></td>
+                <td style="font-weight: 600;" colspan="1"><span id="jobhistory_tl_td">0.00</span>₺</td>
+                <td></td>
+                <td style="font-weight: 600;" colspan="1"><span id="jobhistory_usd_td">0.00</span>$</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+       <div class="overflow">
         <table id="expenses_table">
           <thead>
             <tr>
-              <th><span></span></th>
-              <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Açıklama<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Banka<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Kur<span class="icon-arrow">&UpArrow;</span></th>
-              <th>Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 3%;"><span></span></th>
+              <th style="width: 15%;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 18%;">Açıklama<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 14%;">Banka<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 18%;">Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 12%;">Kur<span class="icon-arrow">&UpArrow;</span></th>
+              <th style="width: 20%;">Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
             </tr>
           </thead>
           <tbody>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="4"></td>
-              <td style="font-weight: 700; text-align: left;" colspan="2"><span id="expenses_tl_td">0.00</span>₺</td>
-
-              <td style="font-weight: 700; text-align: left;" colspan="1"><span id="expenses_usd_td">0.00</span>$</td>
+              <td colspan="2"></td>
+              <td colspan="2"><b>Toplam : </b></td>
+              <td style="font-weight: 600;" colspan="1"><span id="expenses_tl_td">0.00</span>₺</td>
+              <td></td>
+              <td style="font-weight: 600;" colspan="1"><span id="expenses_usd_td">0.00</span>$</td>
             </tr>
           </tfoot>
         </table>
+       </div>
       </section>
       <section style="display: none;" id="total_table_section" class="table__body">
         <table style="width: 100%;" id="total_table">
@@ -299,24 +305,25 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2"></td>
-              <td style="font-weight: 600;" colspan="1"><b>Toplam : </b> <span style="margin-left: 10px;"
+              <td></td>
+              <td><b>Toplam : </b></td>
+              <td style="font-weight: 700;" colspan="1"><span style="margin-left: 10px;"
                   id="total_left_tl_td">0.00₺</span></td>
-              <td style="font-weight: 600;" colspan="1"><b>Toplam : <span style="margin-left: 10px;"
-                    id="total_left_usd_td">0.00$</span></td>
-              <td style="font-weight: 600;" colspan="1"><b>Toplam : </b> <span style="margin-left: 10px;"
+              <td style="font-weight: 700;" colspan="1"><span style="margin-left: 10px;"
+                  id="total_left_usd_td">0.00$</span></td>
+              <td style="font-weight: 700;" colspan="1"><span style="margin-left: 10px;"
                   id="total_right_tl_td">0.00₺</span></td>
-              <td style="font-weight: 600;" colspan="1"><b>Toplam : <span style="margin-left: 10px;"
-                    id="total_right_usd_td">0.00$</span></td>
+              <td style="font-weight: 700;" colspan="1"><span style="margin-left: 10px;"
+                  id="total_right_usd_td">0.00$</span></td>
             </tr>
           </tfoot>
         </table>
 
       </section>
       <div class="total_div">
-        <span style="font-weight: 600; margin-right: 10px;">Genel Toplam : </span>
-        <span style="font-weight: 600; margin-right: 25px;" id="genel_tl"> 0.00₺</span>
-        <span style="font-weight: 600;" id="genel_usd"> 0.00$</span>
+        <span style="font-weight: 700; margin-right: 10px;">Genel Toplam : </span>
+        <span style="font-weight: 700; margin-right: 25px;" id="genel_tl"> 0.00₺</span>
+        <span style="font-weight: 700;" id="genel_usd"> 0.00$</span>
       </div>
     </main>
   </div>

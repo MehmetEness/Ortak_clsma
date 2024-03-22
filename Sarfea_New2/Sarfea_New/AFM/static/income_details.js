@@ -6,6 +6,14 @@ var incomeTable = document.querySelector('#income_table');
 var incomeTableBody = incomeTable.querySelector('tbody');
 var incomeTableFoot = incomeTable.querySelector('tfoot');
 const clientAddWindow = document.querySelector(".client-add-window");
+
+const incomeDateInput = document.querySelector("#id_ChekDate_Incomes");
+const incomeLastDateInput = document.querySelector("#id_LastChekDate_Incomes");
+const incomeAmountInput = document.querySelector("#id_Amount_Incomes");
+const incomePaymentTypeInput = document.getElementById("id_PaymentType_Incomes");
+
+const incomeP = document.querySelector("#income_p")
+incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2)) + " $";
 //----- İNCOME
 incomeAddWindowButton.addEventListener("click", () => {
     getClients();
@@ -59,19 +67,19 @@ async function getIncomes() {
                 <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
               </button>
             </td>
-            <td>${income.CompanyName_Pay_Incomes}</td>
+            <td>${income.client_incomes.CompanyName_Clients}</td>
             <td>${income.CompanyName_ReceivePayment_Incomes}</td>
             <td>${formattedDate}</td>
             <td>${income.PaymentType_Incomes}</td>
             <td>${income.Amount_Incomes}</td>
             <td>${income.Dollar_Rate_Incomes}</td>            
-            <td>${(income.Amount_Incomes) / (income.Dollar_Rate_Incomes)}</td>
+            <td>${parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)}</td>
           </tr>`;
             rows += row;
-            totalTl += parseFloat(income.Amount_Incomes);
-            totalUsd += parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes);
-            console.log(totalTl)
-            console.log(totalUsd)
+            totalTl += parseFloat(income.Amount_Incomes || 0);
+            totalUsd += (parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0;
+            //console.log(totalTl)
+            //console.log(totalUsd)
         }
 
         if (data.length > currentRows.length || currentRows.length == 1) {
@@ -81,9 +89,10 @@ async function getIncomes() {
             document.querySelector("#usd_td").insertAdjacentHTML("beforeend", formatNumber(totalUsd, 2) + "$");
             incomeTableBody.innerHTML = "";
             incomeTableBody.insertAdjacentHTML("beforeend", rows);
+            document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) - parseFloat(totalUsd), 2) + "$";
             sortingTable(incomeTable);
             allTableFormat();
-            // editButtonsEvents();
+            //editButtonsEvents();
         }
     } catch (error) {
         console.error("Error fetching and rendering clients:", error);
@@ -147,42 +156,13 @@ clientFormAddBtn.addEventListener("click", async function (event) {
     }
 });
 
-//                  İNCOME FORM EKLEME
-
-const incomeAddForm = document.getElementById("income_add_form");
-const incomeFormAddBtn = document.querySelector("#income-create-btn");
-incomeFormAddBtn.addEventListener("click", async function (event) {
-    event.preventDefault();
-
-    if (true) {
-        const formData = new FormData(income_add_form);
-        try {
-            const response = await fetch("http://127.0.0.1:8000/post_income/", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: formData,
-            });
-            incomeAddWindow.style.display = "none";
-            getIncomes();
-            clearInputAfterSave(incomeAddForm);
-        } catch (error) {
-            console.error("There was an error!", error);
-        }
-    }
-});
-
 //                  DROPDOWN MENÜLER
 
 async function getClients() {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/get_clients/`);
-        const data = await response.json();
+        const data = await apiFunctions("client", "GET")
         let rows = "";
-        //console.log(data)
         for (const client of data) {
-            // console.log(client)
             const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
             rows += row;
         }
@@ -196,18 +176,88 @@ async function getClients() {
     }
 }
 
-///---------///
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+// TARİH İNPUTLARI FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+// INPUT FORMATLAMA
+//inputForFormat(incomeAmountInput);
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
+
+
+/***********************************************************
+#                       İNCOME ADD 
+***********************************************************/
+
+const incomeAddForm = document.getElementById("income_add_form");
+const incomeFormAddBtn = document.querySelector("#income-create-btn");
+incomeFormAddBtn.addEventListener("click", async function (event) {
+
+    event.preventDefault();
+    dateInputs.forEach(input => {
+        input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+    if (true) {
+        const formData = new FormData(incomeAddForm);
+        const inputs = document.querySelectorAll(".income-add-window input[data-id]");
+        inputs.forEach(input => {
+            const dataId = input.getAttribute('data-id');
+            formData.set(input.getAttribute('name'), dataId);
+        });
+        let formDataString = '';
+
+        for (const [name, value] of formData) {
+            formDataString += `${name}: ${value}\n`;
         }
+
+        console.log(formDataString);
+        await apiFunctions("income", "POST", formData);
+        incomeAddWindow.style.display = "none";
+        getClients();
+        clearInputAfterSave(incomeAddForm);
     }
-    return cookieValue;
+});
+
+// ÇEK SON KULLANIM İNPUT
+if (incomePaymentTypeInput.value == "cek") {
+    incomeLastDateInput.disabled = false;
+    incomeLastDateInput.value = "";
+} else {
+    incomeLastDateInput.disabled = true;
 }
+incomePaymentTypeInput.addEventListener("change", () => {
+    const selectedOption =
+        incomePaymentTypeInput.options[incomePaymentTypeInput.selectedIndex].text;
+    if (selectedOption.startsWith("Çek")) {
+        incomeLastDateInput.disabled = false;
+    } else {
+        incomeLastDateInput.disabled = true;
+        incomeLastDateInput.value = "";
+    }
+});
+
+// KUR HESAPLAMA
+var incomeKurInput = document.querySelector("#id_Dollar_Rate_Incomes");
+var incomeTimeForKur = document.querySelector("#income-kur-time");
+
+incomeTimeForKur.addEventListener("change", async function () {
+    const secilenDeger = incomeTimeForKur.value;
+    if (secilenDeger === "secenek1") {
+    } else if (secilenDeger === "secenek2") {
+        tarih = birGunOncekiTarih(incomeDateInput.value);
+        incomeKurInput.value = await getUSDKur(tarih);
+        console.log(await getUSDKur(tarih));
+    } else if (secilenDeger === "secenek3") {
+        console.log("fds");
+        tarih = tarihFormatiniDegistir(incomeDateInput.value);
+        incomeKurInput.value = await getUSDKur(tarih);
+    }
+});
+
+
+
