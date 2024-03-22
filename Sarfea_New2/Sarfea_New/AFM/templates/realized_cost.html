@@ -21,8 +21,8 @@
           <div style="display: none" class="input-box" id="ProjectName_ExpensesInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.id}}" type="text" id="id_ProjectName_Expenses" class="not_this" name="Project_Expenses"
-                placeholder="Proje Adını Seçiniz" />
+              <input value="{{project.id}}" type="text" id="id_ProjectName_Expenses" class="not_this"
+                name="Project_Expenses" placeholder="Proje Adını Seçiniz" />
             </div>
           </div>
 
@@ -33,7 +33,7 @@
               </button></span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Paying_Expenses"
-                name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz"
+                name="CompanyName_Paying_Expenses" class="myInput  need_id" placeholder="Firma Adını Seçiniz"
                 data-dropdown="expenses_dropdown1" />
 
               <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
@@ -109,8 +109,8 @@
           <div style="display: none" class="input-box" id="ProjectName_JobHistoryInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.id}}" type="text" id="id_ProjectName_JobHistory" class="not_this" name="Project_JobHistory"
-                placeholder="Proje Adını Seçiniz" />
+              <input value="{{project.id}}" type="text" id="id_ProjectName_JobHistory" class="not_this"
+                name="Project_JobHistory" placeholder="Proje Adını Seçiniz" />
             </div>
           </div>
 
@@ -121,7 +121,7 @@
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory"
-                class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1" />
+                class="myInput  need_id" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1" />
 
               <div id="jobhistory_dropdown1" class="dropdown-content supplier_dropdown">
 
@@ -262,32 +262,32 @@
             </tfoot>
           </table>
         </div>
-       <div class="overflow">
-        <table id="expenses_table">
-          <thead>
-            <tr>
-              <th style="width: 3%;"><span></span></th>
-              <th style="width: 15%;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
-              <th style="width: 18%;">Açıklama<span class="icon-arrow">&UpArrow;</span></th>
-              <th style="width: 14%;">Banka<span class="icon-arrow">&UpArrow;</span></th>
-              <th style="width: 18%;">Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
-              <th style="width: 12%;">Kur<span class="icon-arrow">&UpArrow;</span></th>
-              <th style="width: 20%;">Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2"></td>
-              <td colspan="2"><b>Toplam : </b></td>
-              <td style="font-weight: 600;" colspan="1"><span id="expenses_tl_td">0.00</span>₺</td>
-              <td></td>
-              <td style="font-weight: 600;" colspan="1"><span id="expenses_usd_td">0.00</span>$</td>
-            </tr>
-          </tfoot>
-        </table>
-       </div>
+        <div class="overflow">
+          <table id="expenses_table">
+            <thead>
+              <tr>
+                <th style="width: 3%;"><span></span></th>
+                <th style="width: 15%;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 18%;">Açıklama<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 14%;">Banka<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 18%;">Tutar(TL)<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 12%;">Kur<span class="icon-arrow">&UpArrow;</span></th>
+                <th style="width: 20%;">Tutar(USD)<span class="icon-arrow">&UpArrow;</span></th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2"></td>
+                <td colspan="2"><b>Toplam : </b></td>
+                <td style="font-weight: 600;" colspan="1"><span id="expenses_tl_td">0.00</span>₺</td>
+                <td></td>
+                <td style="font-weight: 600;" colspan="1"><span id="expenses_usd_td">0.00</span>$</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </section>
       <section style="display: none;" id="total_table_section" class="table__body">
         <table style="width: 100%;" id="total_table">

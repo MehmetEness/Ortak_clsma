@@ -21,7 +21,7 @@
                 class="paying-company-add-btn">
                 <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_CompanyName" name="Company_id" class="myInput"
+              <input autocomplete="off" type="text" id="id_CompanyName" name="Company_id" class="myInput  need_id"
                 placeholder="Firma Adını Seçiniz" data-dropdown="project-add-dropdown1" />
               <div id="project-add-dropdown1" class="dropdown-content client-dropdown">
               </div>
@@ -139,7 +139,7 @@
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete='off' type="text" id="id_CompanyName_Pay_Incomes" name="CompanyName_Pay_Incomes"
-                class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1" data-id="">
+                class="myInput need_id" placeholder="Firma Adını Seçiniz" data-dropdown="income_dropdown1">
 
               <div id="income_dropdown1" class="dropdown-content client-dropdown">
 
@@ -150,8 +150,8 @@
           <div class="input-box" id="ProjectName_IncomesInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="Project_Incomes" class="myInput"
-                placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
+              <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="Project_Incomes"
+                class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
 
               <div id="income_dropdown2" class="dropdown-content projects_dropdown">
               </div>
@@ -226,7 +226,7 @@
             </span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Paying_Expenses"
-                name="CompanyName_Paying_Expenses" class="myInput" placeholder="Firma Adını Seçiniz"
+                name="CompanyName_Paying_Expenses" class="myInput  need_id" placeholder="Firma Adını Seçiniz"
                 data-dropdown="expenses_dropdown1" />
 
               <div id="expenses_dropdown1" class="dropdown-content supplier_dropdown">
@@ -238,8 +238,8 @@
           <div class="input-box" id="ProjectName_ExpensesInput">
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="Project_Expenses" class="myInput"
-                placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
+              <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="Project_Expenses"
+                class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
 
               <div id="expenses_dropdown2" class="dropdown-content projects_dropdown ">
                 {% for x in project %}
@@ -323,7 +323,7 @@
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_CompanyName_Job_JobHistory" name="CompanyName_Job_JobHistory"
-                class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1" />
+                class="myInput  need_id" placeholder="Firma Adını Seçiniz" data-dropdown="jobhistory_dropdown1" />
 
               <div id="jobhistory_dropdown1" class="dropdown-content supplier_dropdown">
 
@@ -335,7 +335,7 @@
             <span id="proje_adi_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="Project_JobHistory"
-                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
+                class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
 
               <div id="jobhistory_dropdown2" class="dropdown-content projects_dropdown">
 
@@ -350,8 +350,13 @@
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
 
               <div id="jobhistory_dropdown3" class="dropdown-content">
+<<<<<<< HEAD
+                {% for x in details %}
+                <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x}}</span>
+=======
                 {% for detail in details %}
                  <span value="{{detail.id}}" class="dropdown-item gender_dropdown">{{detail}}</span> 
+>>>>>>> 130ee44b47177f501e717d03a093e6ec5b8d9fc7
                 {% endfor %}
               </div>
             </div>

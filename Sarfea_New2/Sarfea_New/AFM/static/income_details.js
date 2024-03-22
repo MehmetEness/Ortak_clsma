@@ -14,12 +14,19 @@ const incomePaymentTypeInput = document.getElementById("id_PaymentType_Incomes")
 
 const incomeP = document.querySelector("#income_p")
 incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2)) + " $";
+
+var editMode = false;
+let clientId;
+
 //----- İNCOME
 incomeAddWindowButton.addEventListener("click", () => {
     getClients();
-    setTimeout(() => { incomeAddWindow.style.display = "flex"; }, 30);
+    setTimeout(() => {
+        editMode = false;
+        incomeAddWindow.style.display = "flex";
+    }, 30);
 });
-document.addEventListener('click', (event) => {
+document.addEventListener('mousedown', (event) => {
     const incomeAddContainer = incomeAddWindow.querySelector(".container");
     if (!incomeAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
         incomeAddWindow.style.display = "none";
@@ -31,7 +38,10 @@ xBtn.forEach((btn) => {
     btn.addEventListener("click", () => {
         const btnParentDiv = btn.parentElement;
         if (btnParentDiv && btnParentDiv.parentElement) {
-            setTimeout(() => { btnParentDiv.parentElement.style.display = "none"; }, 10);
+            setTimeout(() => {
+                btnParentDiv.parentElement.style.display = "none";
+                clearInputAfterSave(btn.nextElementSibling.nextElementSibling);
+            }, 10);
         }
     });
 });
@@ -63,7 +73,7 @@ async function getIncomes() {
             const row = `
           <tr>
             <td>
-              <button id="${income.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+              <button id="${income.id}" type="button" class="edit-income-btn" style="background: none; border:none;">
                 <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
               </button>
             </td>
@@ -92,6 +102,7 @@ async function getIncomes() {
             document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) - parseFloat(totalUsd), 2) + "$";
             sortingTable(incomeTable);
             allTableFormat();
+            editBtns()
             //editButtonsEvents();
         }
     } catch (error) {
@@ -139,14 +150,16 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 
     if (true) {
         const formData = new FormData(firma_add_form);
+
         try {
-            const response = await fetch("http://127.0.0.1:8000/post_client/", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: formData,
-            });
+            // const response = await fetch("http://127.0.0.1:8000/post_client/", {
+            //     method: "POST",
+            //     headers: {
+            //         "X-CSRFToken": getCookie("csrftoken"),
+            //     },
+            //     body: formData,
+            // });
+            apiFunctions("client", "POST", formData)
             clientAddWindow.style.display = "none";
             getClients();
             clearInputAfterSave(clientAddForm);
@@ -215,9 +228,10 @@ incomeFormAddBtn.addEventListener("click", async function (event) {
             formDataString += `${name}: ${value}\n`;
         }
 
-        console.log(formDataString);
+        //console.log(formDataString);
         await apiFunctions("income", "POST", formData);
         incomeAddWindow.style.display = "none";
+        getIncomes()
         getClients();
         clearInputAfterSave(incomeAddForm);
     }
@@ -261,3 +275,28 @@ incomeTimeForKur.addEventListener("change", async function () {
 
 
 
+//                  INCOME EDİT FUNCTİON
+
+function editBtns() {
+    let editButtons = document.querySelectorAll(".edit-income-btn");
+    editButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            setTimeout(async () => {
+                editMode = true;
+                btnID = button.id;
+                const data = await apiFunctions("income", "GETID", "x", btnID)
+                console.log(data)
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var element = document.querySelector('input[name="' + key + '"]');
+                        if (element) {
+                             element.value = data[key];
+                        }
+                    }
+                }
+                console.log("dsf")
+                incomeAddWindow.style.display = "flex";
+            }, 10);
+        })
+    });
+}

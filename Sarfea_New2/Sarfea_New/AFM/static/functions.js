@@ -856,8 +856,9 @@ function dropdownActive() {
       dropdownItems.forEach((item) => {
 
         item.addEventListener("click", function () {
-
-          input.setAttribute('data-id', this.getAttribute('value'));
+          if (input.classList.contains('need_id')) {
+            input.setAttribute('data-id', this.getAttribute('value'));
+          }
           input.value = this.textContent;
 
           //input.setAttribute('data-id', `${}`);
