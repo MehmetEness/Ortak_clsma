@@ -150,12 +150,13 @@ let projectId;
 //----- PROJECT
 projectAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
+    if(editMode == true){clearInputAfterSave(projectAddForm)}
     editMode = false;
     projectAddWindow.style.display = "flex";
     getClients();
   }, 10);
 });
-document.addEventListener("click", (event) => {
+document.addEventListener("mousedown", (event) => {
   const projectAddContainer = projectAddWindow.querySelector(".container");
   if (!projectAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
     projectAddWindow.style.display = "none";
@@ -169,7 +170,7 @@ incomeAddWindowButton.addEventListener("click", () => {
     getprojectName()
   }, 10);
 });
-document.addEventListener("click", (event) => {
+document.addEventListener("mousedown", (event) => {
   const incomeAddContainer = incomeAddWindow.querySelector(".container");
   if (!incomeAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
     incomeAddWindow.style.display = "none";
@@ -183,7 +184,7 @@ expensesAddWindowButton.addEventListener("click", () => {
     getprojectName()
   }, 10);
 });
-document.addEventListener("click", (event) => {
+document.addEventListener("mousedown", (event) => {
   const expensesAddContainer = expensesAddWindow.querySelector(".container");
   if (!expensesAddContainer.contains(event.target) && supplierAddWindow.style.display == "none") {
     expensesAddWindow.style.display = "none";
@@ -197,7 +198,7 @@ jobhistoryAddWindowButton.addEventListener("click", () => {
     getprojectName()
   }, 10);
 });
-document.addEventListener("click", (event) => {
+document.addEventListener("mousedown", (event) => {
   const jobhistoryAddContainer =
     jobhistoryAddWindow.querySelector(".container");
   if (!jobhistoryAddContainer.contains(event.target) && supplierAddWindow.style.display == "none") {
@@ -210,7 +211,10 @@ xBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
     const btnParentDiv = btn.parentElement;
     if (btnParentDiv && btnParentDiv.parentElement) {
-      setTimeout(() => { btnParentDiv.parentElement.style.display = "none"; }, 10);
+      setTimeout(() => {
+        btnParentDiv.parentElement.style.display = "none";
+        clearInputAfterSave(btn.nextElementSibling.nextElementSibling);
+      }, 10);
     }
   });
 });

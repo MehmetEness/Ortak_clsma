@@ -26,7 +26,7 @@
           <div style="display:none;" class="input-box" id="ProjectName_IncomesInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.id}}" type="text" id="id_ProjectName_Incomes" name="Project_Incomes"
+              <input value="{{project.id}}" type="text" id="id_ProjectName_Incomes" class="not_this" name="Project_Incomes"
                 placeholder="Proje Adını Seçiniz">
 
             </div>
@@ -121,7 +121,7 @@
             <i class="fa-solid fa-angles-left"></i>
           </button>
         </a>
-        <p id="project.id">{{project.ProjectName}}</p>
+        <p id="{{project.id}}" class="project_id">{{project.ProjectName}}</p>
         <p id="income_p">{{project.Cost_NotIncludingKDV}}</p>
         <div class="input-group">
           <input type="search" placeholder="Gelir Ara...">

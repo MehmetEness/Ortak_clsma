@@ -100,8 +100,8 @@ async function getExpenses(id) {
                     <td>${parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)}</td>
                 </tr>`;
                 rows += row;
-                totalTl += parseFloat(expenses.Amount_Expenses);
-                totalUSD += (parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses));
+                totalTl += parseFloat(expenses.Amount_Expenses) || 0;
+                totalUSD += (parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)) || 0;
             }
             totalTlSpan.textContent = formatNumber(parseFloat(totalTl.toString()), 2);
             totalUSDSpan.textContent = formatNumber(parseFloat(totalUSD.toString()), 2);
@@ -204,7 +204,6 @@ async function getTotalTable() {
             totalTableBody.innerHTML = '';
             totalTableBody.insertAdjacentHTML('beforeend', rows);
             sortTableForStart(totalTable, 1);
-            expensesTableFormat();
             totalTableFormat()
             sortingTable(totalTable)
         }

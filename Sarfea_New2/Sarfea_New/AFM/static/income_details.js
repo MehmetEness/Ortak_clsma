@@ -10,9 +10,7 @@ const clientAddWindow = document.querySelector(".client-add-window");
 const incomeDateInput = document.querySelector("#id_ChekDate_Incomes");
 const incomeLastDateInput = document.querySelector("#id_LastChekDate_Incomes");
 const incomeAmountInput = document.querySelector("#id_Amount_Incomes");
-const incomePaymentTypeInput = document.getElementById(
-    "id_PaymentType_Incomes"
-);
+const incomePaymentTypeInput = document.getElementById("id_PaymentType_Incomes");
 
 const incomeP = document.querySelector("#income_p")
 incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2)) + " $";
@@ -75,11 +73,11 @@ async function getIncomes() {
             <td>${income.PaymentType_Incomes}</td>
             <td>${income.Amount_Incomes}</td>
             <td>${income.Dollar_Rate_Incomes}</td>            
-            <td>${(income.Amount_Incomes) / (income.Dollar_Rate_Incomes)}</td>
+            <td>${parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)}</td>
           </tr>`;
             rows += row;
-            totalTl += parseFloat(income.Amount_Incomes);
-            totalUsd += parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes);
+            totalTl += parseFloat(income.Amount_Incomes || 0);
+            totalUsd += (parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0;
             //console.log(totalTl)
             //console.log(totalUsd)
         }
