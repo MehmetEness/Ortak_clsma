@@ -53,7 +53,7 @@
                 data-dropdown="project-add-dropdown2" autocomplete="off" />
               <div id="project-add-dropdown2" class="dropdown-content">
                 {% for x in locations %}
-                <span value="{{x.id}}" class="dropdown-item">{{x.Location}}</span>
+                <span value="{{x.Location}}" class="dropdown-item">{{x.Location}}</span>
                 {% endfor %}
               </div>
             </div>
@@ -111,7 +111,7 @@
           </div>
           <div class="input-box">
             <span class="details">Durum</span>
-            <select name="Situations" id="id_Situations">
+            <select name="Situation" id="id_Situation">
               <option value="Onay Bekliyor">Onay Bekliyor</option>
               <option value="Devam Ediyor">Devam Ediyor</option>
               <option value="Tamamlandı">Tamamlandı</option>
@@ -350,8 +350,13 @@
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
 
               <div id="jobhistory_dropdown3" class="dropdown-content">
+<<<<<<< HEAD
                 {% for x in details %}
                 <span value="{{x.id}}" class="dropdown-item gender_dropdown">{{x}}</span>
+=======
+                {% for detail in details %}
+                 <span value="{{detail.id}}" class="dropdown-item gender_dropdown">{{detail}}</span> 
+>>>>>>> 130ee44b47177f501e717d03a093e6ec5b8d9fc7
                 {% endfor %}
               </div>
             </div>
