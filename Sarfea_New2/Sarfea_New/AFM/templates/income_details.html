@@ -26,7 +26,7 @@
           <div style="display:none;" class="input-box" id="ProjectName_IncomesInput">
             <span class="details">Proje Adı</span>
             <div class="dropdown-container">
-              <input value="{{project.ProjectName}}" type="text" id="id_ProjectName_Incomes" name="ProjectName_Incomes"
+              <input value="{{project.id}}" type="text" id="id_ProjectName_Incomes" name="Project_Incomes"
                 placeholder="Proje Adını Seçiniz">
 
             </div>
@@ -52,8 +52,8 @@
 
           <div class="input-box" name="Amount_Incomes">
             <span class="details">Alınan Miktar (₺)</span>
-            <input autocomplete='off' class="coc-input" type="text" name="Amount_Incomes" id="id_Amount_Incomes"
-              step="0.0001" placeholder="0.00">
+            <input autocomplete='off' class="coc-input formatInputs" type="text" name="Amount_Incomes"
+              id="id_Amount_Incomes" step="0.0001" placeholder="0.00">
           </div>
 
           <div class="input-box" name="Dollar_Rate_Incomes">
@@ -62,7 +62,7 @@
           </div>
           <div class="input-box" id="chek_date_box">
             <span class="details">Tarih </span>
-            <input class="coc-input" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes"
+            <input class="coc-input date-inputs" type="text" name="ChekDate_Incomes" id="id_ChekDate_Incomes"
               placeholder="01.01.2000" maxlength="10">
           </div>
           <div class="input-box" name="PaymentType_Incomes">
@@ -71,7 +71,7 @@
           </div>
           <div class="input-box">
             <span class="details">Kur Saati</span>
-            <select name="" id="kur-time">
+            <select name="" id="income-kur-time">
               <option value="secenek1">Kur Saati Seçiniz</option>
               <option value="secenek2">15:30'dan Önce</option>
               <option value="secenek3">15:30'dan Sonra</option>
@@ -79,7 +79,7 @@
           </div>
           <div style="display: none;" class="input-box chek-last-date-box" id="id_boxLastChekDate_Incomes">
             <span class="details">Çek Son Kullanma Tarihi </span>
-            <input class="coc-input" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"
+            <input class="coc-input date-inputs" type="text" name="LastChekDate_Incomes" id="id_LastChekDate_Incomes"
               placeholder="01.01.2000" maxlength="10">
           </div>
 
@@ -122,13 +122,14 @@
           </button>
         </a>
         <p id="project.id">{{project.ProjectName}}</p>
-        <p>{{project.Cost_NotIncludingKDV}}</p>
-
+        <p id="income_p">{{project.Cost_NotIncludingKDV}}</p>
         <div class="input-group">
           <input type="search" placeholder="Gelir Ara...">
           <img src="{% static 'images/search.png' %}" alt="">
         </div>
+
         <div class="export__file">
+
           <button class="income-add-btn">Gelir Ekle</button>
         </div>
       </section>
@@ -150,13 +151,13 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan=""></td>
-              <td style="font-weight: 600;" colspan="2"><b>Toplam(TL) : </b> <span style="margin-left: 10px;"
-                  id="tl_td"> 0.00₺</span></td>
-              <td style="font-weight: 600;" colspan="2"><b>Kalan(TL) : </b><span style="margin-left: 10px;"
-                  id="result_td"> 0.00₺</span></td>
-              <td style="font-weight: 600;" colspan="2"><b>Toplam(USD) : <span style="margin-left: 10px;" id="usd_td">
-                    0.00$</span></td>
+              <td colspan="4"></td>
+
+              <td><b>Toplam :</b></td>
+              <td style="font-weight: 600;"><span id="tl_td">0.00₺</span></td>
+              <td style="font-weight: 600;"><span id="result_td">0.00₺</span></td>
+              <td style="font-weight: 600;"><span id="usd_td">0.00$</span>
+              </td>
             </tr>
           </tfoot>
         </table>

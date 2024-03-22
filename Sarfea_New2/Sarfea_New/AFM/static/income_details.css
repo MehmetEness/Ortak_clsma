@@ -26,7 +26,7 @@
 }
 section.table__header p{
     margin-left: 20px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
 }
 
@@ -245,7 +245,7 @@ main.table {
 }
 
 .table__header .input-group {
-    width: 25%;
+    width: 20%;
     height: 100%;
     background-color: #fff5;
     padding: 0 .8rem;
@@ -259,7 +259,7 @@ main.table {
 }
 
 .table__header .input-group:hover {
-    width: 35%;
+    /* width: 35%; */
     background-color: #fff8;
     box-shadow: 0 .1rem .4rem #0002;
 }
