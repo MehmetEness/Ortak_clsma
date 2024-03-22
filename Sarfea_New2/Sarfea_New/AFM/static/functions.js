@@ -400,32 +400,71 @@ function requiredInputs(inputs, labels) {
     return false;
   }
 }
-function clearInputAfterSave(form) {
+async function supplierNameControl(input, label) {
+  var data = await apiFunctions("supplier", "GET");
+  let exClient = input.value.trim().toLowerCase();
+  let bool = true;
+
+  for (var supplier of data) {
+    let reClient = supplier.CompanyName_Supplier.trim().toLowerCase();
+    if (reClient == exClient) {
+      label.style.color = "red";
+      label.style.fontWeight = "600";
+      bool = false;
+      break;
+    } else {
+      label.style.color = "black";
+      label.style.fontWeight = "500";
+    }
+  }
+  return bool;
+}
+async function clientNameControl(input, label) {
+  var data = await apiFunctions("client", "GET");
+  let exClient = input.value.trim().toLowerCase();
+  let bool = true;
+
+  for (var supplier of data) {
+    let reClient = supplier.CompanyName_Clients.trim().toLowerCase();
+    if (reClient == exClient) {
+      label.style.color = "red";
+      label.style.fontWeight = "600";
+      bool = false;
+      break;
+    } else {
+      label.style.color = "black";
+      label.style.fontWeight = "500";
+    }
+  }
+  return bool;
+}
+async function projectNameControl(input, label) {
+  var data = await apiFunctions("project", "GET");
+  let exClient = input.value.trim().toLowerCase();
+  let bool = true;
+  for (var supplier of data) {
+    let reClient = supplier.ProjectName.trim().toLowerCase();
+    if (reClient == exClient) {
+      label.style.color = "red";
+      label.style.fontWeight = "600";
+      bool = false;
+      break;
+    } else {
+      label.style.color = "black";
+      label.style.fontWeight = "500";
+    }
+  }
+  return bool;
+}
+async function clearInputAfterSave(form) {
   //let inputs = form.querySelectorAll("input:not([type='button']");
   var inputs = form.querySelectorAll("input:not([type='button']):not(.not_this)");
   inputs.forEach((input) => {
     input.value = "";
   });
 }
-//                  SELECTİON VE İNPUT KONTROLÜ
 
-// function controlSelectionInputs(input, label,ddmenu) {
-//   var optionCount = 0;
-//   ddmenu.forEach(function(option){
-//     if(input.value.trim() == option.textContent.trim()){
-//       optionCount += 1;
-//     }
-//   });
-//   if (optionCount == 0) {
-//     label.style.color = "red";
-//     label.style.fontWeight = "600";
-//     return false;
-//   } else {
-//     label.style.color = "black";
-//     label.style.fontWeight = "500";
-//     return true;
-//   }
-// }
+
 function controlSelectionInputsReverse(input, label, ddmenu) {
   var optionCount = 0;
   ddmenu.forEach(function (option) {

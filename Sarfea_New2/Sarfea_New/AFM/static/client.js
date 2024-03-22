@@ -102,19 +102,23 @@ function allTableFormat() {
 let = btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
+  var firmaInput = document.querySelector("#id_CompanyName_Supplier")
+  var firmaSpan = document.querySelector("#firma_adi_span")
   event.preventDefault();
 
-  if (editMode == false) {
-    const formData = new FormData(clientAddForm);
-    await apiFunctions("client", "POST", formData);
-    getClient();
-    clientAddWindow.style.display = "none";
-    clearInputAfterSave(clientAddForm);
-  } else {
-    await apiFunctions("client", "PUT", clientAddForm, btnID);
-    getClient("EDİT");
-    clientAddWindow.style.display = "none";
-    clearInputAfterSave(clientAddForm);
+  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+    if (editMode == false) {
+      const formData = new FormData(clientAddForm);
+      await apiFunctions("client", "POST", formData);
+      getClient();
+      clientAddWindow.style.display = "none";
+      clearInputAfterSave(clientAddForm);
+    } else {
+      await apiFunctions("client", "PUT", clientAddForm, btnID);
+      getClient("EDİT");
+      clientAddWindow.style.display = "none";
+      clearInputAfterSave(clientAddForm);
+    }
   }
 });
 

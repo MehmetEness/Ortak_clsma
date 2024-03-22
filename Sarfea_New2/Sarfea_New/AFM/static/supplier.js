@@ -10,6 +10,8 @@ var phoneInput = document.querySelector("#id_PhoneNumber");
 const supplierAddForm = document.getElementById("supplier_add_form");
 let editMode = false;
 
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   await getSupplier();
   setInterval(async function () {
@@ -102,19 +104,26 @@ let btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
+  var firmaInput = document.querySelector("#id_CompanyName_Supplier")
+  var firmaISpan = document.querySelector("#firma_adi_span")
 
-  if (editMode == false) {
-    const formData = new FormData(supplierAddForm);
-    await apiFunctions("supplier", "POST", formData);
-    getSupplier();
-    supplierAddWindow.style.display = "none";
-    clearInputAfterSave(supplierAddForm);
-  } else {
-    await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
-    getSupplier("EDİT");
-    supplierAddWindow.style.display = "none";
-    clearInputAfterSave(supplierAddForm);
+
+  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaISpan)) {
+    if (editMode == false) {
+      const formData = new FormData(supplierAddForm);
+      await apiFunctions("supplier", "POST", formData);
+      getSupplier();
+      supplierAddWindow.style.display = "none";
+      clearInputAfterSave(supplierAddForm);
+    } else {
+      await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
+      getSupplier("EDİT");
+      supplierAddWindow.style.display = "none";
+      clearInputAfterSave(supplierAddForm);
+    }
   }
+
+
 });
 
 //                  SUPPLİER EDİT FUNCTİON
