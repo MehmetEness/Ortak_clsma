@@ -8,6 +8,12 @@ const totalTableBody = totalTable.querySelector('tbody');
 const expensesDateInput = document.querySelector("#id_Date_Expenses");
 const expensesAmountInput = document.querySelector("#id_Amount_Expenses");
 
+const reqExpensesInput = document.querySelectorAll("#id_CompanyName_Paying_Expenses");
+const reqExpensesLabels = document.querySelectorAll("#odeme_yapilan_firma_span");
+
+const reqJobhistoryInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory");
+const reqJobhistoryLabels = document.querySelectorAll("#is_yapilan_firma_span");
+
 const jobhistoryDateInput = document.querySelector("#id_Date_JobHistory");
 const jobhistoryAmountInput = document.querySelector("#id_Amount_JobHistory");
 
@@ -305,8 +311,8 @@ xBtn.forEach((btn) => {
     btn.addEventListener("click", () => {
         const btnParentDiv = btn.parentElement;
         if (btnParentDiv && btnParentDiv.parentElement) {
-            setTimeout(() => { 
-                btnParentDiv.parentElement.style.display = "none"; 
+            setTimeout(() => {
+                btnParentDiv.parentElement.style.display = "none";
                 clearInputAfterSave(btn.nextElementSibling.nextElementSibling);
             }, 10);
         }
@@ -326,16 +332,16 @@ const expensesAddForm = document.getElementById("expenses_add_form");
 const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
 expensesFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
-    dateInputs.forEach(input => {
-        input.value = formatDateForSubmit(input.value)
-    })
-    var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
-    formatInputss.forEach(input => {
-        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-    })
-    if (true) {
-        const formData = new FormData(expensesAddForm);
 
+    if (requiredInputs(reqExpensesInput, reqExpensesLabels)) {
+        dateInputs.forEach(input => {
+            input.value = formatDateForSubmit(input.value)
+        })
+        var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
+        formatInputss.forEach(input => {
+            input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+        })
+        const formData = new FormData(expensesAddForm);
         const inputs = document.querySelectorAll(".expenses-add-window input[data-id]");
         inputs.forEach(input => {
             const dataId = input.getAttribute('data-id');
@@ -381,15 +387,15 @@ const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
 const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
 jobhistoryFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
-    dateInputs.forEach(input => {
-        input.value = formatDateForSubmit(input.value)
-    })
-    var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
-    formatInputss.forEach(input => {
-        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-    })
-    if (true) {
 
+    if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
+        dateInputs.forEach(input => {
+            input.value = formatDateForSubmit(input.value)
+        })
+        var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
+        formatInputss.forEach(input => {
+            input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+        })
         const formData = new FormData(jobhistoryAddForm);
         const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
         inputs.forEach(input => {
@@ -435,9 +441,13 @@ jobhistoryTimeForKur.addEventListener("change", async function () {
 const supplierAddForm = document.getElementById("supplier_add_form");
 const supplerFormAddBtn = document.querySelector("#supplier_add_btn");
 supplerFormAddBtn.addEventListener("click", async function (event) {
+    var firmaInput = document.querySelector("#id_CompanyName_Supplier")
+    var firmaSpan = document.querySelector("#firma_add_label")
+    var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier")
+    var reqLabels = document.querySelectorAll("#firma_add_label")
     event.preventDefault();
 
-    if (true) {
+    if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan)) {
         const formData = new FormData(supplierAddForm);
         await apiFunctions("supplier", "POST", formData)
         supplierAddWindow.style.display = "none";
