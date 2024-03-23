@@ -8,12 +8,23 @@ var numericCells = document.querySelectorAll(
 var textCells = document.querySelectorAll(
   "#table td:nth-child(3), #table td:nth-child(7), #table td:nth-child(8)"
 );
+
+const reqIncomeInputs = document.querySelectorAll("#id_CompanyName_Pay_Incomes, #id_ProjectName_Incomes")
+const reqIncomeLabels = document.querySelectorAll("#income_firma_span, #income_proje_span")
+
+const reqExpensesInputs = document.querySelectorAll("#id_CompanyName_Paying_Expenses, #id_ProjectName_Expenses")
+const reqExpensesLabels = document.querySelectorAll("#expenses_firma_span, #expenses_proje_span")
+
+const reqJobhistoryInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory, #id_ProjectName_JobHistory")
+const reqJobhistoryLabels = document.querySelectorAll("#jobhistory_firma_span, #jobhistory_proje_span")
+
+const reqProjectInputs = document.querySelectorAll("#id_CompanyName, #id_ProjectName, #id_ProjectCode")
+const reqProjectLabels = document.querySelectorAll("#proje_firma_span, #proje_span, #proje_kodu_span")
+
 const incomeDateInput = document.querySelector("#id_ChekDate_Incomes");
 const incomeLastDateInput = document.querySelector("#id_LastChekDate_Incomes");
 const incomeAmountInput = document.querySelector("#id_Amount_Incomes");
-const incomePaymentTypeInput = document.getElementById(
-  "id_PaymentType_Incomes"
-);
+const incomePaymentTypeInput = document.getElementById("id_PaymentType_Incomes");
 
 const expensesDateInput = document.querySelector("#id_Date_Expenses");
 const expensesAmountInput = document.querySelector("#id_Amount_Expenses");
@@ -150,7 +161,7 @@ let projectId;
 //----- PROJECT
 projectAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
-    if(editMode == true){clearInputAfterSave(projectAddForm)}
+    if (editMode == true) { clearInputAfterSave(projectAddForm) }
     editMode = false;
     projectAddWindow.style.display = "flex";
     getClients();
@@ -278,14 +289,17 @@ const incomeFormAddBtn = document.querySelector("#income-create-btn");
 incomeFormAddBtn.addEventListener("click", async function (event) {
 
   event.preventDefault();
-  dateInputs.forEach(input => {
-    input.value = formatDateForSubmit(input.value)
-  })
-  var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
-  formatInputss.forEach(input => {
-    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-  })
-  if (true) {
+
+  if (requiredInputs(reqIncomeInputs, reqIncomeLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+
     const formData = new FormData(incomeAddForm);
     const inputs = document.querySelectorAll(".income-add-window input[data-id]");
     inputs.forEach(input => {
@@ -346,14 +360,17 @@ const expensesAddForm = document.getElementById("expenses_add_form");
 const expensesFormAddBtn = document.querySelector("#expenses-create-btn");
 expensesFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
-  dateInputs.forEach(input => {
-    input.value = formatDateForSubmit(input.value)
-  })
-  var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
-  formatInputss.forEach(input => {
-    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-  })
-  if (true) {
+
+  if (requiredInputs(reqExpensesInputs, reqExpensesLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = expensesAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+
     const formData = new FormData(expensesAddForm);
     const inputs = document.querySelectorAll(".expenses-add-window input[data-id]");
     inputs.forEach(input => {
@@ -397,15 +414,17 @@ const jobhistoryAddForm = document.getElementById("jobhistory_add_form");
 const jobhistoryFormAddBtn = document.querySelector("#jobhistory-create-btn");
 jobhistoryFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
-  dateInputs.forEach(input => {
-    input.value = formatDateForSubmit(input.value)
-  })
-  var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
-  formatInputss.forEach(input => {
-    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-  })
 
-  if (true) {
+
+  if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
 
     const formData = new FormData(jobhistoryAddForm);
     const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
@@ -450,33 +469,38 @@ jobhistoryTimeForKur.addEventListener("change", async function () {
 const projectAddForm = document.getElementById("project_add_form");
 const projectFormAddBtn = document.getElementById("project-create-btn");
 projectFormAddBtn.addEventListener("click", async function (event) {
+  var projecInput = document.querySelector("#id_ProjectName")
+  var projectISpan = document.querySelector("#proje_span")
   event.preventDefault();
-  dateInputs.forEach(input => {
-    input.value = formatDateForSubmit(input.value)
-  })
-  var formatInputss = projectAddWindow.querySelectorAll(".formatInputs")
-  formatInputss.forEach(input => {
-    input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-  })
-  const formData = new FormData(projectAddForm);
-  const inputs = document.querySelectorAll(".project-add-window input[data-id]");
-  inputs.forEach(input => {
-    const dataId = input.getAttribute('data-id');
-    formData.set(input.getAttribute('name'), dataId);
-  });
-  for (const pair of formData.entries()) {
-    console.log(pair[0] + ': ' + pair[1]);
-  }
-  if (editMode == false) {
-    await apiFunctions("project", "POST", formData);
-    getProjects()
-    projectAddWindow.style.display = "none";
-    clearInputAfterSave(projectAddForm);
-  } else {
-    await apiFunctions("project", "PUT", formData, btnID);
-    getProjects("EDİT")
-    projectAddWindow.style.display = "none";
-    clearInputAfterSave(projectAddForm);
+
+  if (requiredInputs(reqProjectInputs, reqProjectLabels) && await projectNameControl(projecInput, projectISpan)) {
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = projectAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+    const formData = new FormData(projectAddForm);
+    const inputs = document.querySelectorAll(".project-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+    if (editMode == false) {
+      await apiFunctions("project", "POST", formData);
+      getProjects()
+      projectAddWindow.style.display = "none";
+      clearInputAfterSave(projectAddForm);
+    } else {
+      await apiFunctions("project", "PUT", formData, btnID);
+      getProjects("EDİT")
+      projectAddWindow.style.display = "none";
+      clearInputAfterSave(projectAddForm);
+    }
   }
 });
 
@@ -486,10 +510,14 @@ projectFormAddBtn.addEventListener("click", async function (event) {
 const clientAddForm = document.getElementById("firma_add_form");
 const clientFormAddBtn = document.querySelector("#firma_submit_btn");
 clientFormAddBtn.addEventListener("click", async function (event) {
+
+  var firmaInput = document.querySelector("#id_CompanyName_Clients")
+  var firmaSpan = document.querySelector("#firma_add_label")
+  var reqInputs = document.querySelectorAll("#id_CompanyName_Clients")
+  var reqLabels = document.querySelectorAll("#firma_add_label")
+
   event.preventDefault();
-
-
-  if (true) {
+  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
     const formData = new FormData(clientAddForm);
     await apiFunctions("client", "POST", formData);
     clientAddWindow.style.display = "none";
@@ -500,9 +528,15 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 const supplierAddForm = document.getElementById("supplier_add_form");
 const supplerFormAddBtn = document.querySelector("#supplier_add_btn");
 supplerFormAddBtn.addEventListener("click", async function (event) {
+
+  var firmaInput = document.querySelector("#id_CompanyName_Supplier")
+  var firmaSpan = document.querySelector("#supplier_add_label")
+  var reqInputs = document.querySelectorAll("#id_CompanyName_Supplier")
+  var reqLabels = document.querySelectorAll("#supplier_add_label")
+
   event.preventDefault();
 
-  if (true) {
+  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan)) {
     const formData = new FormData(supplierAddForm);
     await apiFunctions("supplier", "POST", formData);
     supplierAddWindow.style.display = "none";

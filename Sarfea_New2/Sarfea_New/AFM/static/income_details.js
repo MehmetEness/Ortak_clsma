@@ -7,6 +7,9 @@ var incomeTableBody = incomeTable.querySelector('tbody');
 var incomeTableFoot = incomeTable.querySelector('tfoot');
 const clientAddWindow = document.querySelector(".client-add-window");
 
+const reqIncomeInputs = document.querySelectorAll("#id_CompanyName_Pay_Incomes")
+const reqIncomeLabels = document.querySelectorAll("#odeme_yapan_firma_span")
+
 const incomeDateInput = document.querySelector("#id_ChekDate_Incomes");
 const incomeLastDateInput = document.querySelector("#id_LastChekDate_Incomes");
 const incomeAmountInput = document.querySelector("#id_Amount_Incomes");
@@ -129,7 +132,6 @@ const companyAddBtns = document.querySelectorAll(".paying-company-add-btn");
 const companyX = clientAddWindow.querySelector(".close-window");
 companyAddBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-        console.log("fsdas")
         setTimeout(() => {
             clientAddWindow.style.display = "flex";
         }, 20);
@@ -146,19 +148,15 @@ companyAddBtns.forEach((btn) => {
 const clientAddForm = document.getElementById("firma_add_form");
 const clientFormAddBtn = document.querySelector("#firma_submit_btn");
 clientFormAddBtn.addEventListener("click", async function (event) {
+    var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
+    var reqLabels = document.querySelectorAll("#firma_add_label")
+    var firmaInput = document.querySelector("#id_CompanyName_Clients");
+    var firmaSpan = document.querySelector("#firma_add_label")
     event.preventDefault();
 
-    if (true) {
-        const formData = new FormData(firma_add_form);
-
+    if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
         try {
-            // const response = await fetch("http://127.0.0.1:8000/post_client/", {
-            //     method: "POST",
-            //     headers: {
-            //         "X-CSRFToken": getCookie("csrftoken"),
-            //     },
-            //     body: formData,
-            // });
+            const formData = new FormData(firma_add_form);
             apiFunctions("client", "POST", formData)
             clientAddWindow.style.display = "none";
             getClients();
@@ -208,14 +206,16 @@ const incomeFormAddBtn = document.querySelector("#income-create-btn");
 incomeFormAddBtn.addEventListener("click", async function (event) {
 
     event.preventDefault();
-    dateInputs.forEach(input => {
-        input.value = formatDateForSubmit(input.value)
-    })
-    var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
-    formatInputss.forEach(input => {
-        input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-    })
-    if (true) {
+   
+    if (requiredInputs(reqIncomeInputs, reqIncomeLabels)) {
+        dateInputs.forEach(input => {
+            input.value = formatDateForSubmit(input.value)
+        })
+        var formatInputss = incomeAddWindow.querySelectorAll(".formatInputs")
+        formatInputss.forEach(input => {
+            input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+        })
+
         const formData = new FormData(incomeAddForm);
         const inputs = document.querySelectorAll(".income-add-window input[data-id]");
         inputs.forEach(input => {
@@ -290,7 +290,7 @@ function editBtns() {
                     if (data.hasOwnProperty(key)) {
                         var element = document.querySelector('input[name="' + key + '"]');
                         if (element) {
-                             element.value = data[key];
+                            element.value = data[key];
                         }
                     }
                 }

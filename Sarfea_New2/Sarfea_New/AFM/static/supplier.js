@@ -105,10 +105,10 @@ const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
   event.preventDefault();
   var firmaInput = document.querySelector("#id_CompanyName_Supplier")
-  var firmaISpan = document.querySelector("#firma_adi_span")
+  var firmaSpan = document.querySelector("#firma_adi_span")
 
 
-  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaISpan)) {
+  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan)) {
     if (editMode == false) {
       const formData = new FormData(supplierAddForm);
       await apiFunctions("supplier", "POST", formData);

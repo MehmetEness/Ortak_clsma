@@ -17,7 +17,7 @@
 
         <div class="user-details">
           <div class="input-box" id="CompanyNameInput">
-            <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn"
+            <span id="proje_firma_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn"
                 class="paying-company-add-btn">
                 <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
@@ -29,13 +29,13 @@
           </div>
 
           <div class="input-box" id="ProjectNameInput">
-            <span id="proje_adi_span" class="details">Proje Adı*</span>
+            <span id="proje_span" class="details">Proje Adı*</span>
             <input autocomplete="off" type="text" name="ProjectName" maxlength="63" id="id_ProjectName"
               autocomplete="off" />
           </div>
           <div class="input-box" id="ProjectCodeInput">
             <span id="proje_kodu_span" class="details">Proje Kodu*</span>
-            <input name="ProjectCode" type="text" />
+            <input id="id_ProjectCode" name="ProjectCode" type="text" />
           </div>
 
           <div class="input-box">
@@ -134,7 +134,7 @@
         <input type="hidden" name="form_type" value="income_form" />
         <div class="user-details">
           <div class="input-box">
-            <span id="odeme_yapan_firma_span" class="details">Ödeme Yapan Firma*<button type="button"
+            <span id="income_firma_span" class="details">Ödeme Yapan Firma*<button type="button"
                 id="paying-company-add-btn" class="paying-company-add-btn"><i
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
@@ -148,7 +148,7 @@
           </div>
 
           <div class="input-box" id="ProjectName_IncomesInput">
-            <span id="proje_adi_span" class="details">Proje Adı*</span>
+            <span id="income_proje_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_ProjectName_Incomes" name="Project_Incomes"
                 class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="income_dropdown2" />
@@ -219,7 +219,7 @@
         <input type="hidden" name="form_type" value="expenses_form" />
         <div class="user-details">
           <div class="input-box" id="CompanyName_Paying_ExpensesInput">
-            <span id="odeme_yapilan_firma_span" class="details">Ödeme Yapılan Firma*
+            <span id="expenses_firma_span" class="details">Ödeme Yapılan Firma*
               <button type="button" id="paying-firma-add-btn-2" class="paying-supplier-add-btn">
                 <i class="fa-solid fa-plus"></i>
               </button>
@@ -236,7 +236,7 @@
           </div>
 
           <div class="input-box" id="ProjectName_ExpensesInput">
-            <span id="proje_adi_span" class="details">Proje Adı*</span>
+            <span id="expenses_proje_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_ProjectName_Expenses" name="Project_Expenses"
                 class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="expenses_dropdown2" />
@@ -318,7 +318,7 @@
         <div class="user-details">
           <div class="input-box {% if jobhistory_form.CompanyName_Job_JobHistory.errors %}error{% endif %}"
             id="CompanyName_Job_JobHistoryInput">
-            <span id="is_yapilan_firma_span" class="details">İş Yapılan Firma*<button type="button"
+            <span id="jobhistory_firma_span" class="details">İş Yapılan Firma*<button type="button"
                 id="paying-firma-add-btn-2" class="paying-supplier-add-btn"><i
                   class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
@@ -332,7 +332,7 @@
           </div>
           <div class="input-box {% if jobhistory_form.ProjectName_JobHistory.errors %}error{% endif %}"
             id="ProjectName_JobHistoryInput">
-            <span id="proje_adi_span" class="details">Proje Adı*</span>
+            <span id="jobhistory_proje_span" class="details">Proje Adı*</span>
             <div class="dropdown-container">
               <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="Project_JobHistory"
                 class="myInput  need_id" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown2" />
@@ -346,7 +346,7 @@
           <div class="input-box" name="ExpensDetails_JobHistory">
             <span class="details">Cinsi</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_ProjectName_JobHistory" name="ExpensDetails_JobHistory"
+              <input autocomplete="off" type="text" id="id_ExpensDetails_JobHistory" name="ExpensDetails_JobHistory"
                 class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
 
               <div id="jobhistory_dropdown3" class="dropdown-content">
@@ -401,7 +401,7 @@
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="CompanyName_Clients">
             <span id="firma_add_label" class="details">Firma Adı*</span>
-            <input name="CompanyName_Clients" type="text" />
+            <input id="id_CompanyName_Clients" name="CompanyName_Clients" type="text" />
           </div>
         </div>
         <div class="button">
@@ -419,8 +419,8 @@
         <input type="hidden" name="form_type" value="supplier_form">
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="CompanyName_Supplier">
-            <span id="firma_add_label" class="details">Firma Adı*</span>
-            <input name="CompanyName_Supplier" type="text" />
+            <span id="supplier_add_label" class="details">Firma Adı*</span>
+            <input id="id_CompanyName_Supplier" name="CompanyName_Supplier" type="text" />
           </div>
         </div>
         <div class="button">

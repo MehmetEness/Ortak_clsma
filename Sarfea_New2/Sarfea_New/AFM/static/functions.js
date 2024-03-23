@@ -384,6 +384,8 @@ function compareDates(date1, date2) {
 
 function requiredInputs(inputs, labels) {
   var value = 0;
+  console.log(inputs)
+  console.log(labels)
   inputs.forEach(function (input, index) {
     if (input.value == "") {
       labels[index].style.color = "red";
