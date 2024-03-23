@@ -688,3 +688,44 @@ xBtn.forEach((btn) => {
     salesOfferAddForm.reset();
   });
 });
+
+
+/***********************************************************
+#                       SALES OFFER ADD
+***********************************************************/
+const addForm = document.getElementById("sales_offer_add_form");
+const formAddBtn = document.querySelector("#sales-offer-create-btn");
+formAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+
+
+  // if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
+
+  //   dateInputs.forEach(input => {
+  //     input.value = formatDateForSubmit(input.value)
+  //   })
+  //   var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
+  //   formatInputss.forEach(input => {
+  //     input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+  //   })
+
+    const formData = new FormData(addForm);
+    // const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
+    // inputs.forEach(input => {
+    //   const dataId = input.getAttribute('data-id');
+    //   formData.set(input.getAttribute('name'), dataId);
+    // });
+    await apiFunctions("api_sales_offer", "POST", formData);
+    //jobhistoryAddWindow.style.display = "none";
+    //getSuppliers();
+    clearInputAfterSave(addForm);
+  // }
+});
+
+// TARİH İNPUTLARI FORMATLAMA
+// jobhistoryDateInput.addEventListener('input', function (event) {
+//   var userInput = jobhistoryDateInput.value;
+//   if (event.inputType !== 'deleteContentBackward') {
+//     jobhistoryDateInput.value = formatDate(userInput);
+//   }
+// });

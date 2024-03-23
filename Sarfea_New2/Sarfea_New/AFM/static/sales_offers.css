@@ -28,12 +28,12 @@
   top: 234.5px !important;
 }
 ::-webkit-scrollbar {
-  width: 0 !important;
-}
-::-webkit-scrollbar-thumb {
+  width: 0 ;
+} 
+/* ::-webkit-scrollbar-thumb {
   background-color: #18283b;
   border: 2px solid #fff;
-}
+}  */
 .bold700 {
   font-size: 0.8vw;
   font-weight: 700 !important;
@@ -298,18 +298,25 @@ nav{
 
 /*    *************************    List  **********************          */
 .right-menu .container {
-  /* width: 100%; */
+  width: 100%;
   height: 100%;
   overflow: hidden;
   overflow-y: scroll;
-  overflow-x: auto;
+  overflow-x: auto; 
 }
-
+.top-container{
+  border-radius: 20px;
+  width: 100%;
+  height: 88% !important;
+  background-color: #ffffff80;
+  backdrop-filter: blur(7px);
+}
+/*
 .lists {
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  /* width: 100%; */
+   width: 100%; 
   height: 100%;
   position: relative;
 }
@@ -321,15 +328,7 @@ nav{
   text-decoration: none;
   color: #000;
 }
-#table thead th {
-  padding: 0px 30px;
-  height: 50px;
-  background: #848588;
-  color: #000;
-}
-#table tbody td {
-  height: 50px;
-}
+
 .lists table {
   max-height: 200px;
   overflow-y: scroll;
@@ -342,9 +341,9 @@ nav{
   position: sticky;
   top: 0;
 }
-/* .lists th:first-child {
+ .lists th:first-child {
   padding-left: 50px;
-} */
+} 
 .lists tbody {
   line-height: 45px;
 }
@@ -356,10 +355,70 @@ nav{
 }
 .list-container tbody tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
+}*/
 #column {
   width: 3px;
   left: 350px;
   background: #000;
   height: 100%;
+}
+
+.top-container table{
+  width: 2800px;
+}
+
+thead th span.icon-arrow {
+  font-family: sans-serif !important;
+  display: inline-block;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  border: 1.4px solid transparent;
+
+  text-align: center;
+  font-size: 1rem;
+
+  margin-left: 0.5rem;
+  transition: 0.2s ease-in-out;
+}
+
+thead th:hover span.icon-arrow {
+  border: 1.4px solid #007cf8;
+}
+
+thead th:hover {
+  color: #007cf8;
+}
+
+thead th.active span.icon-arrow {
+  background-color: #007cf8;
+  color: #fff;
+}
+
+thead th.asc span.icon-arrow {
+  transform: rotate(180deg);
+}
+
+thead th.active,
+tbody td.active,
+tbody td.active a {
+  color: #007cf8;
+}
+.top-container::-webkit-scrollbar {
+  z-index: 111111;
+  /* width: 0.5rem; */
+  height: 0.8rem;
+  margin: 0 10px;
+}
+
+.top-container::-webkit-scrollbar-thumb {
+  z-index: 111111;
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.658);
+  /* visibility: hidden; */
+}
+.list_firt_tr a {
+  text-decoration: none;
+  color: #000;
+  
 }

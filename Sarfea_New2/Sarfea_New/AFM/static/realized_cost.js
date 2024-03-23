@@ -482,11 +482,11 @@ const totalTableSection = document.querySelector("#total_table_section");
 
 totalTableBtn.addEventListener("click", () => {
 
-    if (twoTableSection.style.display == "flex") {
+    if (totalTableSection.style.display == "none") {
         twoTableSection.style.display = "none";
         getTotalTable();
         totalTableSection.style.display = "flex";
-    } else {
+    } else {        
         twoTableSection.style.display = "flex";
         totalTableSection.style.display = "none";
     }

@@ -96,4 +96,6 @@ sortingTable(document.querySelector("#fatura_table"))
 sortingTable(document.querySelector("#ariza_takip_table"))
 
 
+console.log(apiFunctions("sales_offer", "GET"))
+
 

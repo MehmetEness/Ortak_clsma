@@ -172,9 +172,7 @@
   font-size: 18px;
   font-weight: 700;
 }
-.right-menu{
-   width:100%;
-}
+
 #nav-bar{
   display:none;
 }
@@ -283,7 +281,7 @@ table thead th {
    table thead th span{
       position: relative;
    }
-   thead th span::after{
+   /* thead th span::after{
    content: '';
   position:absolute;
   left: -18px;
@@ -295,7 +293,7 @@ table thead th {
   border-color: #000 transparent transparent transparent;
   transform: translateY(-50%);
   transition: transform 0.3s ease;
-   }
+   } */
   .list_firt_tr{
     display: flex;
     justify-content: center;
@@ -347,6 +345,114 @@ td, th {
 .sales-offer-add-window .container{
   max-width: 1000px !important;
 }
+
+.table__body {    
+    overflow: auto;
+    overflow: overlay;
+} 
+
+.table__body::-webkit-scrollbar {
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+}
+
+.table__body::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem !important;
+  background-color: #0004 !important;
+  visibility: hidden !important; 
+}
+
+.table__body:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+.table__body a {
+  text-decoration: none;
+  color: #000;
+}
+
+.table__body tbody button {
+  font-weight: 700;
+  font-size: 15px;
+  /* width: 190px; */
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: none;
+  transition: 0.2s;
+}
+.table__body tbody button:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+}
+
+td img {
+  width: 36px;
+  height: 36px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+
+  vertical-align: middle;
+}
+
+table,
+th,
+td {
+  height: 71px;
+  border-collapse: collapse;
+  padding: 1rem;
+  text-align: center;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #d5d1defe;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #0000000b;
+}
+
+thead th:nth-child(2) {
+  text-align: left;
+}
+tbody tr td:first-child {
+  padding: 0;
+  padding-left: 10px;
+}
+tbody tr td:nth-child(2) {
+  text-align: left;
+}
+
+tbody tr.hide {
+  opacity: 0;
+}
+
+tbody tr:hover {
+  background-color: #fff6 !important;
+}
+
+tbody tr td,
+tbody tr td p,
+tbody tr td img {
+  transition: 0.2s ease-in-out;
+}
+
+tbody tr.hide td,
+tbody tr.hide td p {
+  padding: 0;
+  font: 0 / 0 sans-serif;
+  /* transition: .2s ease-in-out .5s; */
+}
   
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -358,7 +464,7 @@ td, th {
       <div style="display: none;" class="file_upload">
         <div class="container">
           <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
-          <form id="file-form" enctype="multipart/form-data">
+          <form id="sales_offer_add_form" enctype="multipart/form-data">
             <span class="details"></span>
                   <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
                   <label id="file_label" for="id_file_up">
@@ -505,7 +611,7 @@ td, th {
                 
               </div>
               <div class="button">
-                <input id="project-create-btn" type="button" value="Satış Teklifi Ekle" />
+                <input id="sales-offer-create-btn" type="button" value="Satış Teklifi Ekle" />
               </div>
             </form>
         </div>
@@ -1176,26 +1282,26 @@ td, th {
         
           </div>
         </div>   
-        <div style="display: none;" class="list-container container">
+        <div style="display: none;" class="list-container container top-container">
           <div class="lists">
             <table id="table" class="table table-sortable">
                <thead><th style="width: 100px;"></th>
-                  <th style="padding: 0px 80px;" scope="col"><span>Durum</span></th>
-                  <th scope="col"><span>Müşteri Adı</span></th>
-                  <th scope="col"><span>Konum</span></th>
-                  <th scope="col"><span>İlgili Kişi</span></th>
-                  <th scope="col"><span>AC Güç</span></th>
-                  <th scope="col"><span>DC Güç</span></th>
-                  <th scope="col"><span>Birim Maliyet</span></th>
-                  <th scope="col"><span>Toplam Maliyet</span></th>
-                  <th scope="col"><span>Birim Teklif</span></th>
-                  <th scope="col"><span>Toplam Teklif</span></th>
-                  <th scope="col"><span>Arazi/Çatı</span></th>
-                  <th scope="col"><span>Arazi Maliyeti</span></th>
-                  <th scope="col"><span>Arazi Dahil B.M.</span></th>
-                  <th scope="col"><span>Arazi Dahil T.T.</span></th>
-                  <th scope="col"><span>Arazi Maliyeti</span></th>
-                  <th style="padding: 0px 50px;" scope="col"><span>Tarih</span></th>
+                  <th style="padding: 0px 80px;">Durum<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Konum<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>İlgili Kişi<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>AC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>DC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Toplam Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Birim Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arazi/Çatı<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arazi Dahil B.M.<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arazi Dahil T.T.<span class="icon-arrow">&UpArrow;</span></th>
+                  <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                  <th style="padding: 0px 50px;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1250,26 +1356,26 @@ td, th {
               </table>
             </div>
         </div>
-        <div style="display: none;" class="lost-job-container container">
+        <div style="display: none;" class="lost-job-container container top-container">          
           <div class="lists">
-            <table id="table" class="table table-sortable table_row">
+            <table id="table">
                <thead>
                 <th></th>
-                <th scope="col"><span>Müşteri Adı</span></th>
-                <th scope="col"><span>Konum</span></th>
-                <th scope="col"><span>İlgili Kişi</span></th>
-                <th scope="col"><span>AC Güç</span></th>
-                <th scope="col"><span>DC Güç</span></th>
-                <th scope="col"><span>Birim Maliyet</span></th>
-                <th scope="col"><span>Toplam Maliyet</span></th>
-                <th scope="col"><span>Birim Teklif</span></th>
-                <th scope="col"><span>Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi/Çatı</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
-                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Tarih</span></th>
+                <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Konum<span class="icon-arrow">&UpArrow;</span></th>
+                <th>İlgili Kişi<span class="icon-arrow">&UpArrow;</span></th>
+                <th>AC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>DC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi/Çatı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card %}
@@ -1303,26 +1409,26 @@ td, th {
               </table>
             </div>
         </div>
-        <div style="display: none;" class="sales-container container">
+        <div style="display: none;" class="sales-container container top-container">
           <div class="lists">
             <table id="table" class="table table-sortable table_row">
                <thead>
                 <th></th>
-                <th scope="col"><span>Müşteri Adı</span></th>
-                <th scope="col"><span>Konum</span></th>
-                <th scope="col"><span>İlgili Kişi</span></th>
-                <th scope="col"><span>AC Güç</span></th>
-                <th scope="col"><span>DC Güç</span></th>
-                <th scope="col"><span>Birim Maliyet</span></th>
-                <th scope="col"><span>Toplam Maliyet</span></th>
-                <th scope="col"><span>Birim Teklif</span></th>
-                <th scope="col"><span>Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi/Çatı</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
-                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Tarih</span></th>
+                <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Konum<span class="icon-arrow">&UpArrow;</span></th>
+                <th>İlgili Kişi<span class="icon-arrow">&UpArrow;</span></th>
+                <th>AC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>DC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi/Çatı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
@@ -1351,26 +1457,26 @@ td, th {
               </table>
             </div>
         </div>
-        <div style="display: none;" class="won-container container">
+        <div style="display: none;" class="won-container container top-container">
           <div class="lists">
             <table id="table" class="table table-sortable table_row">
                <thead>
                 <th></th>
-                <th scope="col"><span>Müşteri Adı</span></th>
-                <th scope="col"><span>Konum</span></th>
-                <th scope="col"><span>İlgili Kişi</span></th>
-                <th scope="col"><span>AC Güç</span></th>
-                <th scope="col"><span>DC Güç</span></th>
-                <th scope="col"><span>Birim Maliyet</span></th>
-                <th scope="col"><span>Toplam Maliyet</span></th>
-                <th scope="col"><span>Birim Teklif</span></th>
-                <th scope="col"><span>Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi/Çatı</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Arazi Dahil Birim Maliyet</span></th>
-                <th scope="col"><span>Arazi Dahil Toplam Teklif</span></th>
-                <th scope="col"><span>Arazi Maliyeti</span></th>
-                <th scope="col"><span>Tarih</span></th>
+                <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Konum<span class="icon-arrow">&UpArrow;</span></th>
+                <th>İlgili Kişi<span class="icon-arrow">&UpArrow;</span></th>
+                <th>AC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>DC Güç<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Birim Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi/Çatı<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Birim Maliyet<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Dahil Toplam Teklif<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
+                <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
                </thead>
                <tbody>
                 {% for card in sales_offer_card%}
