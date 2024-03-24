@@ -28,12 +28,12 @@ let salesContainer = document.querySelector(".sales-container");
 let wonContainer = document.querySelector(".won-container");
 var tables = document.querySelectorAll(".table");
 
-var listTable = document.querySelector('.list-container table');  
-var lostTable = document.querySelector('.lost-job-container table');  
-var salesTable = document.querySelector('.sales-container table'); 
-var wonTable = document.querySelector('.won-container table');  
-let thRowsList = listTable.querySelectorAll("th"); 
-let trRowsList = listTable.querySelectorAll("tr"); 
+var listTable = document.querySelector('.list-container table');
+var lostTable = document.querySelector('.lost-job-container table');
+var salesTable = document.querySelector('.sales-container table');
+var wonTable = document.querySelector('.won-container table');
+let thRowsList = listTable.querySelectorAll("th");
+let trRowsList = listTable.querySelectorAll("tr");
 let thRowsLost = lostTable.querySelectorAll("th");
 let thRowsSales = salesTable.querySelectorAll("th");
 let thRowsWon = wonTable.querySelectorAll("th");
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //                  LİSTE İŞ RENGİ VERME
 
-  trRowsList.forEach((row) =>{
+  trRowsList.forEach((row) => {
     let span = row.querySelector(".icon-blue")
     switch (row.className) {
       case "gain-job":
@@ -92,13 +92,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         break;
       case "tek-sunuldu":
-          span.style.color = "#e69b00"
-  
-        break;  
+        span.style.color = "#e69b00"
+
+        break;
       case "sun-son-gor":
-          span.style.color = "#e47200"
-  
-        break; 
+        span.style.color = "#e47200"
+
+        break;
       default:
         break;
     }
@@ -130,12 +130,12 @@ document.getElementById("id_file_up").addEventListener("change", function () {
   document.getElementById("details_span").innerText = fileName + " seçildi";
 });
 document.getElementById("submit_btn").addEventListener("click", function (event) {
-    event.preventDefault();
-    uploadFile(cardId, fileType);
-    setTimeout(function () {
-      document.querySelector("#file-form").submit();
-    }, 50);
-  });
+  event.preventDefault();
+  uploadFile(cardId, fileType);
+  setTimeout(function () {
+    document.querySelector("#file-form").submit();
+  }, 50);
+});
 function uploadFile(cardId, fileType) {
   var formData = new FormData();
   formData.append("file", document.getElementById("id_file_up").files[0]);
@@ -223,25 +223,25 @@ mButtons.forEach(function (item) {
 let cardMenu;
 let btn1;
 var boolClick = false;
-cardMenuBtn.forEach((btn) => {   
+cardMenuBtn.forEach((btn) => {
   btn.addEventListener("click", function () {
-      let card = this.closest(".card");
-      cardMenu = card.querySelector(".card_menu");
-      if(cardMenu.style.display == "none"){
-        cardMenu.style.display = "block";
-      }
-      else{
-        cardMenu.style.display = "none";
-      }
+    let card = this.closest(".card");
+    cardMenu = card.querySelector(".card_menu");
+    if (cardMenu.style.display == "none") {
+      cardMenu.style.display = "block";
+    }
+    else {
+      cardMenu.style.display = "none";
+    }
   });
-  document.addEventListener("click", function(event) {                 
-        var isClickInsideDiv = btn.contains(event.target);
-        let card = btn.closest(".card");
-        let cardMenu1 = card.querySelector(".card_menu");
-        if(!isClickInsideDiv){                    
-              cardMenu1.style.display = "none";          
-        }         
-    });
+  document.addEventListener("click", function (event) {
+    var isClickInsideDiv = btn.contains(event.target);
+    let card = btn.closest(".card");
+    let cardMenu1 = card.querySelector(".card_menu");
+    if (!isClickInsideDiv) {
+      cardMenu1.style.display = "none";
+    }
+  });
 });
 
 //                  CARD FORMATLAMA
@@ -277,7 +277,7 @@ function cardFormat() {
 
     totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
     customersCountSpan.textContent = `(${String(cards.length)})`;
-  });  
+  });
 }
 function totalSpanFormatForDrag() {
   rows.forEach(function (row) {
@@ -293,7 +293,7 @@ function totalSpanFormatForDrag() {
     });
     totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
     customersCountSpan.textContent = `(${String(cards.length)})`;
-  });  
+  });
 }
 
 //                  TOP MENU FONKSİYONLARI
@@ -362,27 +362,27 @@ topMenuLi.forEach(function (item) {
 //                  TABLO SIRALAMA
 
 thRowsList.forEach(header => {
-  header.addEventListener("click", function() {        
-      var columnIndex = Array.from(thRowsList).indexOf(header);
-      sortTable(listTable, columnIndex);
+  header.addEventListener("click", function () {
+    var columnIndex = Array.from(thRowsList).indexOf(header);
+    sortTable(listTable, columnIndex);
   });
 });
 thRowsLost.forEach(header => {
-  header.addEventListener("click", function() {        
-      var columnIndex = Array.from(thRowsLost).indexOf(header);
-      sortTable(lostTable, columnIndex);
+  header.addEventListener("click", function () {
+    var columnIndex = Array.from(thRowsLost).indexOf(header);
+    sortTable(lostTable, columnIndex);
   });
 });
 thRowsSales.forEach(header => {
-  header.addEventListener("click", function() {        
-      var columnIndex = Array.from(thRowsSales).indexOf(header);
-      sortTable(salesTable, columnIndex);
+  header.addEventListener("click", function () {
+    var columnIndex = Array.from(thRowsSales).indexOf(header);
+    sortTable(salesTable, columnIndex);
   });
 });
 thRowsWon.forEach(header => {
-  header.addEventListener("click", function() {        
-      var columnIndex = Array.from(thRowsWon).indexOf(header);
-      sortTable(wonTable, columnIndex);
+  header.addEventListener("click", function () {
+    var columnIndex = Array.from(thRowsWon).indexOf(header);
+    sortTable(wonTable, columnIndex);
   });
 });
 
@@ -645,20 +645,20 @@ function openFile(url) {
 
 //                  LİSTEDEN CARDA GİTME
 
-trRowsList.forEach((tr) =>{
-    musteriName = tr.querySelector("td:nth-child(3)");
-    if (musteriName) {
-      musteriName.style.cursor = "pointer";
-        musteriName.addEventListener("click", ()=>{
-            const card = document.getElementById(tr.dataset.id);
-            if(card){
-              topMenuLi[2].classList.add("li-hover");
-              topMenuLi[0].classList.remove("li-hover");            
-              handleMenuItemClick("sale_time");
-              card.scrollIntoView({ behavior: "smooth", block: "center" });
-            }                      
-        });
-    }     
+trRowsList.forEach((tr) => {
+  musteriName = tr.querySelector("td:nth-child(3)");
+  if (musteriName) {
+    musteriName.style.cursor = "pointer";
+    musteriName.addEventListener("click", () => {
+      const card = document.getElementById(tr.dataset.id);
+      if (card) {
+        topMenuLi[2].classList.add("li-hover");
+        topMenuLi[0].classList.remove("li-hover");
+        handleMenuItemClick("sale_time");
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
 });
 
 
@@ -696,10 +696,12 @@ xBtn.forEach((btn) => {
 const addForm = document.getElementById("sales_offer_add_form");
 const formAddBtn = document.querySelector("#sales-offer-create-btn");
 formAddBtn.addEventListener("click", async function (event) {
+
+
   event.preventDefault();
 
 
-  // if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
+//   // if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
 
   //   dateInputs.forEach(input => {
   //     input.value = formatDateForSubmit(input.value)
@@ -710,6 +712,14 @@ formAddBtn.addEventListener("click", async function (event) {
   //   })
 
     const formData = new FormData(addForm);
+    console.log(formData)
+    const jsonObject = {};
+    formData.forEach((value, key) => {
+        jsonObject[key] = value;
+    });
+
+    // JSON verisini konsola yazdırma
+    console.log(JSON.stringify(jsonObject));
     // const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
     // inputs.forEach(input => {
     //   const dataId = input.getAttribute('data-id');
@@ -729,3 +739,22 @@ formAddBtn.addEventListener("click", async function (event) {
 //     jobhistoryDateInput.value = formatDate(userInput);
 //   }
 // });
+
+
+// Form elemanını seçme
+
+
+
+
+
+
+// const addForm = document.getElementById('sales_offer_add_form');
+
+// // FormData nesnesi oluşturma
+// const formData = new FormData(addForm);
+
+// // FormData'daki tüm alanları döngü ile al ve konsola yazdır
+// for (const [key, value] of formData.entries()) {
+//   console.log(key)
+//   console.log(key + ':', value);
+// }
