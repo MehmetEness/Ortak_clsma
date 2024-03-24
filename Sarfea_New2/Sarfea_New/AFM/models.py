@@ -151,7 +151,7 @@ class Incomes(models.Model):
 
 
 class SalesOfferCard(models.Model):
-    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE,related_name="client_salesoffers", blank=True, null=True)
+    Client_Card=  models.ForeignKey(Clients, on_delete=models.CASCADE,related_name="client_salesoffers")
     Offer_Subject_Card= models.CharField(max_length=63, blank=True, null=True)
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
