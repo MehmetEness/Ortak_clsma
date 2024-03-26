@@ -710,16 +710,9 @@ formAddBtn.addEventListener("click", async function (event) {
   //   formatInputss.forEach(input => {
   //     input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
   //   })
-
+   
     const formData = new FormData(addForm);
-    console.log(formData)
-    const jsonObject = {};
-    formData.forEach((value, key) => {
-        jsonObject[key] = value;
-    });
 
-    // JSON verisini konsola yazdırma
-    console.log(JSON.stringify(jsonObject));
     // const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
     // inputs.forEach(input => {
     //   const dataId = input.getAttribute('data-id');
