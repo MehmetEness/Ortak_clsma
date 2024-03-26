@@ -76,11 +76,12 @@ class SupplierDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Supplier.objects.all()
     serializer_class=SupplierSerializer
 
-
+@csrf_exempt
 class SalesOfferListCreateAPIView(generics.ListCreateAPIView):
     queryset= SalesOfferCard.objects.all()
     serializer_class=SalesOfferCardSerializer
-  
+
+@csrf_exempt
 class SalesOfferDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard.objects.all()
     serializer_class=SalesOfferCardSerializer
