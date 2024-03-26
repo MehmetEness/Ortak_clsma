@@ -689,7 +689,9 @@ def sales_offer_add(request):
 @user_passes_test(isAdmin, login_url='/home')
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
-   
+    clients= Clients.objects.all()
+    workers= Worker.objects.all()
+    locations = Locations.objects.all()
 
     potential_customers = sales_offer_card.filter(Situation_Card='Potansiyel Müşteri', Cost_NotIncludingKDV_Card__isnull=False)
     potential_customers_cost = potential_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
@@ -715,7 +717,19 @@ def sales_offer(request):
     done_customers_cost = done_customers.aggregate(total_cost=Sum('Cost_NotIncludingKDV_Card'))['total_cost']
     done_customers_count = done_customers.count()
 
-
+    if request.method == 'POST':
+        sales_form = SalesOfferCardForm(request.POST, request.FILES )
+        client_form = ClientsForm(request.POST or None )
+        if sales_form.is_valid():
+            sales_form.save()
+            return redirect('sales_offer')  
+        elif client_form.is_valid():
+            client_form.save()
+            return redirect('sales_offer_add')
+        
+    else:  
+        sales_form = SalesOfferCardForm()
+        client_form = ClientsForm()
 
 
     context = {
@@ -732,6 +746,11 @@ def sales_offer(request):
         'presentation_customers_count':presentation_customers_count,
         'done_customers_cost':done_customers_cost,
         'done_customers_count':done_customers_count,
+        'sales_form':sales_form,
+        'client_form':client_form,
+        'clients':clients,
+        'workers':workers,
+        'locations':locations
     }
     return render(request, "sales_offer.html", context)
 
