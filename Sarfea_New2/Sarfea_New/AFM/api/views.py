@@ -65,8 +65,6 @@ class ClientDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Clients.objects.all()
     serializer_class=ClientSerializer
 
-
-
 class SuppliersListCreateAPIView(generics.ListCreateAPIView):
     queryset= Supplier.objects.all()
     serializer_class=SupplierSerializer
