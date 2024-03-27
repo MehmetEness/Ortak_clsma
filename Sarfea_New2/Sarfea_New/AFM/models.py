@@ -258,7 +258,7 @@ class SalesOfferCard_Revise(models.Model):
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 class Operation_Care(models.Model):
-    Operation_Care_Company = models.CharField(max_length=63, blank=True, null=True)
+    Operation_Care_Company=  models.ForeignKey(Clients, on_delete=models.CASCADE, related_name="client_operation_care")
     Operation_Care_Location = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Inventor_Brand = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
@@ -282,7 +282,7 @@ class Operation_Care(models.Model):
     Operation_Care_Inventor_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Inventor_Number = models.IntegerField(blank=True, null=True, default="0")
-    Operation_Care_VOC = models.IntegerField(blank=True, null=True, default="0")
+    Operation_Care_VOC = TwoDecimalField(blank=True, null=True, default="0")
     Operation_Care_AC_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_DC_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Panel_Number_Str = models.IntegerField(blank=True, null=True, default="0")
@@ -296,8 +296,7 @@ class Operation_Care(models.Model):
     
     
 class Fail(models.Model):
-    Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
-    Fail_Operation_Care_Copy=  models.CharField(max_length=63, blank=True, null=True)
+    Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_fails")
     Fail_Central_Name = models.CharField(max_length=63, blank=True, null=True)
     Fail_Information_Person = models.CharField(max_length=63, blank=True, null=True)
     Fail_Guaranteed = models.CharField(
@@ -325,7 +324,7 @@ class Fail(models.Model):
     Fail_Detail=models.CharField(max_length=400, blank=True, null=True) 
     
 class Fail_Bill(models.Model):
-    Fail_Bill_Owner=  models.ForeignKey(Fail, on_delete=models.CASCADE, blank=True, null=True)
+    Fail_Bill_Owner=  models.ForeignKey(Fail, on_delete=models.CASCADE, related_name="fail_bills")
     Fail_Bill_Central_Name = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Process = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Date = models.DateField(blank=True, null=True)
@@ -333,25 +332,25 @@ class Fail_Bill(models.Model):
     Fail_Bill_File = models.FileField(upload_to='fail_bills', default="", blank=True, null=True)
 
 class Inventor(models.Model):
-    Inventor_Owner=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
+    Inventor_Owner=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_inventors")
     Inventor_Direction= models.CharField( max_length=63,blank=True, null=True) 
     Inventor_Number = models.IntegerField(blank=True, null=True)
     Inventor_Number_Str = models.IntegerField(blank=True, null=True)
     Inventor_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     Inventor_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
     Inventor_Izolasion = models.CharField(max_length=200, blank=True, null=True)
-    Inventor_VOC = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_VOC =TwoDecimalField(blank=True, null=True, default="0")
     Inventor_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
     Inventor_AC_Power = models.IntegerField(blank=True, null=True, default="0")
     Inventor_DC_Power = models.IntegerField(blank=True, null=True, default="0")
     Inventor_Capacity = models.IntegerField(blank=True, null=True, default="0")
 
 class String(models.Model):
-    String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, blank=True, null=True)
+    String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, related_name="inventor_strings")
     String_Number = models.IntegerField(blank=True, null=True)
     String_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     String_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
-    String_VOC = models.IntegerField(blank=True, null=True, default="0")
+    String_VOC = TwoDecimalField(blank=True, null=True, default="0")
     String_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
     String_Izolasion = models.CharField(max_length=200, blank=True, null=True)
     String_AC_Power = models.IntegerField(blank=True, null=True, default="0")

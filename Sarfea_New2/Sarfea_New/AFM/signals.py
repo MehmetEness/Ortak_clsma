@@ -67,15 +67,6 @@ def update_client_card(sender, instance, **kwargs):
         post_save.connect(update_client_card, sender=SalesOfferCard)
 
 
-@receiver(pre_save, sender=Fail)
-def update_operation_forfail(sender, instance, **kwargs):
-    if instance.Fail_Operation_Care_Copy and instance.Fail_Operation_Care_Copy!=instance.Fail_Operation_Care:
-        try:
-            operation = Operation_Care.objects.get(Operation_Care_Company=instance.Fail_Operation_Care_Copy)
-            instance.Fail_Operation_Care = operation
-        except Operation_Care.DoesNotExist:
-            pass
-
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:

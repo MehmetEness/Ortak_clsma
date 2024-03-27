@@ -8,9 +8,9 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer
-from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory
-from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details 
+from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer
+from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor
+from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Operation_Care
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -86,11 +86,43 @@ class SalesOfferReviseListCreateAPIView(generics.ListCreateAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
 
-    
        
 class SalesOfferReviseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
+
+
+class OperationCareListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
+
+class OperationCareDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
+
+class InventorListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Inventor.objects.all()
+    serializer_class=InventorSerializer
+
+class InventorDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Inventor.objects.all()
+    serializer_class=InventorSerializer
+
+class StringListCreateAPIView(generics.ListCreateAPIView):
+    queryset= String.objects.all()
+    serializer_class=StringSerializer
+
+class StringDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= String.objects.all()
+    serializer_class=StringSerializer
+
+
+
+
+
+
+
+
 
 
     '''

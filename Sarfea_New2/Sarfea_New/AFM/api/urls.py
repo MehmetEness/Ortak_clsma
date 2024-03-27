@@ -27,9 +27,19 @@ urlpatterns = [
     
     path("api_sales_offer_revise/", api_view.SalesOfferReviseListCreateAPIView.as_view(), name='api-sales-offer-revise'),
     path('api_sales_offer_revise/<pk>', api_view.SalesOfferReviseDetailAPIView.as_view(), name='api-sales-offer-revise-detail'),
+ 
+    path("api_operation_care/", api_view.OperationCareListCreateAPIView.as_view(), name='api-operation-care'),
+    path('api_operation_care/<pk>', api_view.OperationCareDetailAPIView.as_view(), name='api-operation-care-detail'),
     
+    path("api_inventor/", api_view.InventorListCreateAPIView.as_view(), name='api-inventor'),
+    path('api_inventor/<pk>', api_view.InventorDetailAPIView.as_view(), name='api-inventor-detail'),
+   
+    path("api_inventor/", api_view.InventorListCreateAPIView.as_view(), name='api-inventor'),
+    path('api_inventor/<pk>', api_view.InventorDetailAPIView.as_view(), name='api-inventor-detail'),
+   
+    path("api_string/", api_view.StringListCreateAPIView.as_view(), name='api-string'),
+    path('api_string/<pk>', api_view.StringDetailAPIView.as_view(), name='api-string-detail'),
+   
     #******************************* ------- ***********************************
-
-
 
 ]

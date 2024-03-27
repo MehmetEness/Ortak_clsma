@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, SalesOfferCard,SalesOfferCard_Revise
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
 
 class ClientSerializer(serializers.ModelSerializer):
+
 
     class Meta:
         model = Clients
@@ -228,3 +229,86 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class OperationCareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Operation_Care
+        fields = '__all__'
+        #exclude = ['Company_id']
+    def create(self, validated_data):
+        return Operation_Care.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Operation_Care_Company = validated_data.get('Operation_Care_Company', instance.Operation_Care_Company)
+        instance.Operation_Care_Location = validated_data.get('Operation_Care_Location', instance.Operation_Care_Location)
+        instance.Operation_Care_Inventor_Brand = validated_data.get('Operation_Care_Inventor_Brand', instance.Operation_Care_Inventor_Brand)
+        instance.Operation_Care_Panel_Brand = validated_data.get('Operation_Care_Panel_Brand', instance.Operation_Care_Panel_Brand)
+        instance.Operation_Care_Address = validated_data.get('Operation_Care_Address', instance.Operation_Care_Address)
+        instance.Operation_Care_Terrain_Roof = validated_data.get('Operation_Care_Terrain_Roof', instance.Operation_Care_Terrain_Roof)
+        instance.Operation_Care_Direction = validated_data.get('Operation_Care_Direction', instance.Operation_Care_Direction)
+        instance.Operation_Care_Inventor_Power = validated_data.get('Operation_Care_Inventor_Power', instance.Operation_Care_Inventor_Power)
+        instance.Operation_Care_Panel_Power = validated_data.get('Operation_Care_Panel_Power', instance.Operation_Care_Panel_Power)
+        instance.Operation_Care_Inventor_Number = validated_data.get('Operation_Care_Inventor_Number', instance.Operation_Care_Inventor_Number)
+        instance.Operation_Care_VOC = validated_data.get('Operation_Care_VOC', instance.Operation_Care_VOC)
+        instance.Operation_Care_AC_Power = validated_data.get('Operation_Care_AC_Power', instance.Operation_Care_AC_Power)
+        instance.Operation_Care_DC_Power = validated_data.get('Operation_Care_DC_Power', instance.Operation_Care_DC_Power)
+        instance.Operation_Care_Panel_Number_Str = validated_data.get('Operation_Care_Panel_Number_Str', instance.Operation_Care_Panel_Number_Str)
+        instance.Operation_Care_Number_Str = validated_data.get('Operation_Care_Number_Str', instance.Operation_Care_Number_Str)
+        instance.Operation_Care_Capacity = validated_data.get('Operation_Care_Capacity', instance.Operation_Care_Capacity)
+        instance.Operation_Care_Start_Date = validated_data.get('Operation_Care_Start_Date', instance.Operation_Care_Start_Date)
+        instance.Operation_Care_Finish_Date = validated_data.get('Operation_Care_Finish_Date', instance.Operation_Care_Finish_Date)
+        instance.Operation_Care_Has_Fail = validated_data.get('Operation_Care_Has_Fail', instance.Operation_Care_Has_Fail)
+        instance.Operation_Care_Fail_Number = validated_data.get('Operation_Care_Fail_Number', instance.Operation_Care_Fail_Number)
+        
+        instance.save()
+        return instance
+
+class InventorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Inventor
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Inventor.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
+        instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
+        instance.Inventor_Number = validated_data.get('Inventor_Number', instance.Inventor_Number)
+        instance.Inventor_Number_Str = validated_data.get('Inventor_Number_Str', instance.Inventor_Number_Str)
+        instance.Inventor_Panel_Power = validated_data.get('Inventor_Panel_Power', instance.Inventor_Panel_Power)
+        instance.Inventor_Panel_Brand = validated_data.get('Inventor_Panel_Brand', instance.Inventor_Panel_Brand)
+        instance.Inventor_Izolasion = validated_data.get('Inventor_Izolasion', instance.Inventor_Izolasion)
+        instance.Inventor_VOC = validated_data.get('Inventor_VOC', instance.Inventor_VOC)
+        instance.Inventor_Panel_SY = validated_data.get('Inventor_Panel_SY', instance.Inventor_Panel_SY)
+        instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
+        instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
+        instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
+        
+        instance.save()
+        return instance
+    
+class StringSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = String
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return String.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.String_Owner = validated_data.get('String_Owner', instance.String_Owner)
+        instance.String_Number = validated_data.get('String_Number', instance.String_Number)
+        instance.String_Panel_Power = validated_data.get('String_Panel_Power', instance.String_Panel_Power)
+        instance.String_Panel_Brand = validated_data.get('String_Panel_Brand', instance.String_Panel_Brand)
+        instance.String_VOC = validated_data.get('String_VOC', instance.String_VOC)
+        instance.String_Panel_SY = validated_data.get('String_Panel_SY', instance.String_Panel_SY)
+        instance.String_Izolasion = validated_data.get('String_Izolasion', instance.String_Izolasion)
+        instance.String_AC_Power = validated_data.get('String_AC_Power', instance.String_AC_Power)
+        instance.String_DC_Power = validated_data.get('String_DC_Power', instance.String_DC_Power)
+        instance.String_Capacity = validated_data.get('String_Capacity', instance.String_Capacity)
+        instance.String_Percent = validated_data.get('String_Percent', instance.String_Percent)
+        
+        instance.save()
+        return instance
