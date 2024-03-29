@@ -8,13 +8,27 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer
+from AFM.api.serializers import ClientSerializer, FailBillSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer, JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer
 from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Operation_Care
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+def pass_test(group_name):
+    """
+    Verilen kullanıcının belirtilen grup adıyla uyuşup uyuşmadığını kontrol eder.
+    
+    :param group_name: Kontrol edilecek grup adı
+    :return: Boolean değer
+    """
+    
+    def inner(user):
+        if user.is_superuser:
+            return True
+        else:
 
+            return user.groups.filter(name=group_name).exists()
+    return inner
 
 
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
@@ -52,7 +66,6 @@ class IncomesListCreateAPIView(generics.ListCreateAPIView):
 class IncomeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Incomes.objects.all()
     serializer_class=IncomesSerializer
-  
 
 
 class ClientsListCreateAPIView(generics.ListCreateAPIView):
@@ -116,6 +129,22 @@ class StringDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= String.objects.all()
     serializer_class=StringSerializer
 
+
+class FailListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Fail.objects.all()
+    serializer_class = FailSerializer
+
+class FailRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Fail.objects.all()
+    serializer_class = FailSerializer
+
+class FailBillListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Fail_Bill.objects.all()
+    serializer_class = FailBillSerializer
+
+class FailBillRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Fail_Bill.objects.all()
+    serializer_class = FailBillSerializer
 
 
 

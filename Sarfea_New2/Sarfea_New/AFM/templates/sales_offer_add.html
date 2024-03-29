@@ -129,7 +129,7 @@
     <div class="center">
       <div class="container projeBaslatContainer">
         <div class="title">Satış Teklifi Ekle</div>
-        <form id="my-form" action="{% url 'sales_offer_add' %}" method="post" enctype="multipart/form-data">
+        <form id="my-form"  method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input type="hidden" name="sales_form" value="sales_form" />
 
@@ -265,7 +265,7 @@
         <div class="container">
           <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
           <div class="title">Firma Ekle</div>
-          <form id="firma_form" action="{% url 'sales_offer_add' %}" method="post">
+          <form id="firma_form"  method="post">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="client_form" />
 

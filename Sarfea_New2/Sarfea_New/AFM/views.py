@@ -11,16 +11,32 @@ from django.views import View
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 import evds as e
+from django.contrib.auth.models import User, Group
 
-#Test
+#Tests
 def isAdmin(user):
     return user.is_superuser
+
+def pass_test(group_name):
+    """
+    Verilen kullanıcının belirtilen grup adıyla uyuşup uyuşmadığını kontrol eder.
+    
+    :param group_name: Kontrol edilecek grup adı
+    :return: Boolean değer
+    """
+    
+    def inner(user):
+        if user.is_superuser:
+            return True
+        else:
+
+            return user.groups.filter(name=group_name).exists()
+    return inner
 
 #Home
 @login_required
 def home(request):
     sales_offer_card = SalesOfferCard.objects.all()   
-
 
     context = {
     'sales_offer_card':sales_offer_card,
@@ -29,164 +45,7 @@ def home(request):
 
 # Proje Modülü.
 
-@login_required
-def expenses_edit(request, expenses_id):
-    expenses_edit = get_object_or_404(Expenses, id=expenses_id)
-    project = get_object_or_404(Project, ProjectName=expenses_edit.ProjectName_Expenses)
-    my_company = MyCompanyNames.objects.all()
-    supplier = Supplier.objects.all()
-    banks = Banks.objects.all()
-    details = Details.objects.all()
-   
-
-    if request.method == 'POST':
-        edit_form = ExpensesForm(request.POST, instance=expenses_edit)
-        
-        if edit_form.is_valid():
-          
-          edit_form.save()
-          return redirect('realized_cost', project_name=expenses_edit.ProjectName_Expenses)
-    else:
-        edit_form = ExpensesForm(instance=expenses_edit)
-
-
-    context = {
-        'edit_form': edit_form,
-        'expenses_edit': expenses_edit,
-        'my_company': my_company,
-        'supplier': supplier,
-        'banks': banks,
-        'details': details,
-        'project':project
-    }
-    return render(request, "expenses_edit.html", context)
-
-@login_required
-def jobhistory_edit(request, jobhistory_id):
-    jobhistory_edit = get_object_or_404(JobHistory, id=jobhistory_id)
-    my_company = MyCompanyNames.objects.all()
-    supplier = Supplier.objects.all()
-    
-
-    if request.method == 'POST':
-        edit_form = JobHistoryForm(request.POST, instance=jobhistory_edit)
-
-        if edit_form.is_valid():
-          
-            edit_form.save()
-            return redirect('realized_cost', project_name=jobhistory_edit.ProjectName_JobHistory)
-    
-
-    else:
-        edit_form = JobHistoryForm(instance=jobhistory_edit)
-
-
-    context = {
-        'edit_form': edit_form,
-        'jobhistory_edit': jobhistory_edit,
-        'my_company': my_company,
-        'supplier': supplier,
-    }
-    return render(request, "jobhistory_edit.html", context)
-
-@login_required
-def income_edit(request, income_id):
-    income_edit = get_object_or_404(Incomes, id=income_id)
-    my_company = MyCompanyNames.objects.all()
-    client = Clients.objects.all()
-    
-
-    if request.method == 'POST':
-        edit_form = IncomesForm(request.POST, instance=income_edit)
-        
-        if edit_form.is_valid():
-          
-          edit_form.save()
-          return redirect('income_details', project_id=income_edit.Project_Incomes)
-    else:
-        edit_form = IncomesForm(instance=income_edit)
-    context = {
-        'edit_form': edit_form,
-        'income_edit': income_edit,
-        'my_company': my_company,
-        'client': client
-
-    }
-    return render(request, "income_edit.html", context)
-
-@login_required
-def supplier_edit(request, supplier_name):
-    supplier_edit = get_object_or_404(Supplier, CompanyName_Supplier=supplier_name)
-    locations = Locations.objects.all()
-
-    if request.method == 'POST':
-        edit_form = SupplierForm(request.POST, instance=supplier_edit)
-        
-        if edit_form.is_valid():
-          
-          edit_form.save()
-          return redirect('supplier')
-    else:
-        edit_form = SupplierForm(instance=supplier_edit)
-    context = {
-        'edit_form': edit_form,
-        'supplier_edit': supplier_edit,
-        'locations': locations
-    
-    }
-    return render(request, "supplier_edit.html", context)
-
-@login_required
-def client_edit(request, client_name):
-    client_edit = get_object_or_404(Clients, CompanyName_Clients=client_name)
-    locations = Locations.objects.all()
-
-    if request.method == 'POST':
-        edit_form = ClientsForm(request.POST, instance=client_edit)
-       
-        if edit_form.is_valid():
-          
-          edit_form.save()
-          return redirect('client')
-    else:
-        edit_form = ClientsForm(instance=client_edit)
-    context = {
-        'edit_form': edit_form,
-        'client_edit': client_edit,
-        'locations': locations
-    }
-    return render(request, "client_edit.html", context)
-
-@login_required
-def project_edit(request, project_name):
-    project_edit = get_object_or_404(Project, ProjectName=project_name)
-    my_company = MyCompanyNames.objects.all()
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    terrain_roof = Terrain_Roof.objects.all()
-    situations = Situations.objects.all()
-   
-
-   
-    if request.method == 'POST':
-        edit_form = ProjectForm(request.POST, instance=project_edit)
-        if edit_form.is_valid():
-          edit_form.save()
-          return redirect('projects')
-    else:
-        edit_form = ProjectForm(instance=project_edit)
-    context = {
-        'edit_form': edit_form,
-        'project_edit': project_edit,
-        'my_company':my_company,
-        'client':client,
-        'locations':locations,
-        'terrain_roof':terrain_roof,
-        'situations':situations,
-    }
-    return render(request, "project_edit.html", context)
-
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def client(request):
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -207,7 +66,7 @@ def client(request):
 
     return render(request, 'client.html', context)
 
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def supplier(request):
     locations = Locations.objects.all()
     if request.method == 'POST':
@@ -227,12 +86,12 @@ def supplier(request):
     }
     return render(request, "supplier.html", context)
 
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def project_details(request, project_id):
     project = Project.objects.filter(id=project_id).first()
     return render(request, 'project_details.html', {'project': project})
 
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def realized_cost(request, project_id):
    
     project = get_object_or_404(Project, id=project_id)
@@ -280,7 +139,7 @@ def realized_cost(request, project_id):
     }
     return render(request, "realized_cost.html", context)
 
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def income_details(request, project_id):
     project = Project.objects.filter(id=project_id).first()
     incomes = Incomes.objects.filter(Project_Incomes=project)
@@ -303,7 +162,7 @@ def income_details(request, project_id):
     }
     return render(request, "income_details.html", context)
 
-@login_required
+@user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def projects(request):
     locations = Locations.objects.all()
     banks= Banks.objects.all()
@@ -329,280 +188,10 @@ def projects(request):
 
     return render(request, "projects.html", context)
 
-@login_required
-def inverter(request, operation_care_id):
-    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        form = ProjectForm(request.POST or None )
-        client_form = ClientsForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('operation_care')  
-          
-        elif client_form.is_valid():
-           
-            client_form.save()
-            return redirect('inverter')
-    else:
-        form = ProjectForm()
-        client_form = ClientsForm()
-        
-    context = {
-        "form": form,
-        'form_errors': form.errors,
-        "client": client,
-        "locations": locations,
-        "client_form":client_form,
-        "operation_care":operation_care,
-    }
-    return render(request, "inverter.html", context)
-
-@login_required
-def project_add(request):
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    if request.method == 'POST':
-        form = ProjectForm(request.POST or None )
-        client_form = ClientsForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('projects')  
-          
-        elif client_form.is_valid():
-           
-            client_form.save()
-            return redirect('project_add')
-    else:
-        form = ProjectForm()
-        client_form = ClientsForm()
-        
-    context = {
-        "form": form,
-        'form_errors': form.errors,
-        "client": client,
-        "locations": locations,
-        "client_form":client_form,
-    }
-    return render(request, "project_add.html", context)
-
-@login_required
-def expenses_add(request):
-    details = Details.objects.all()
-    supplier = Supplier.objects.all()
-    project = Project.objects.all()
-
-    expenses_form = None
-    supplier_form= None
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'supplier_form':
-            supplier_form = SupplierForm(request.POST)
-            if supplier_form.is_valid():
-                supplier_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'expenses_form':
-            expenses_form = ExpensesForm(request.POST)
-            if expenses_form.is_valid():
-                expenses_form.save()
-                return redirect('projects')
-        
-    else:
-        supplier_form = SupplierForm()
-        expenses_form = ExpensesForm()
-        
-    context = {
-        "expenses_form": expenses_form,
-        'supplier_form': supplier_form,
-        "details": details,
-        "supplier": supplier,
-        "project": project,
-    }
-    return render(request, "expenses_add.html", context)
-
-@login_required
-def jobhistory_add(request):
-
-    jobhistory_form = None
-    supplier_form= None
-    project = Project.objects.all()
-    supplier = Supplier.objects.all()
-
-
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'supplier_form':
-            supplier_form = SupplierForm(request.POST)
-            if supplier_form.is_valid():
-                supplier_form.save()
-                return redirect(request.path)
-        
-        elif form_type == 'jobhistory_form':
-            jobhistory_form = JobHistoryForm(request.POST)
-            if jobhistory_form.is_valid():
-                jobhistory_form.save()
-                return redirect('projects')
-        
-    else:
-        supplier_form = SupplierForm()
-        jobhistory_form = JobHistoryForm()
-        
-    context = {
-        "jobhistory_form": jobhistory_form,
-        'supplier_form': supplier_form,
-        "project": project,
-        "supplier": supplier,
-    }
-    return render(request, "jobhistory_add.html", context)
-
-@login_required
-def income_add(request):   
-    income_form = None
-    client_form = None
-
-    client = Clients.objects.all()
-    project = Project.objects.all()
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'client_form':
-            client_form = ClientsForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
-                return redirect(request.path)
-            
-        elif form_type == 'income_form':
-            income_form = IncomesForm(request.POST)
-            if income_form.is_valid():
-                income_form.save()
-                return redirect('projects')
-    else:
-        income_form = IncomesForm()
-        client_form = ClientsForm()
-
-    context = {
-        "incomes_form": income_form,
-        "client": client,
-        "project":project,
-        "client_form":client_form,
-    }
-    return render(request, "income_add.html", context)
-
-@login_required
-def expenses_add_wp(request, project_id):
-    details = Details.objects.all()
-    supplier = Supplier.objects.all()
-    project = get_object_or_404(Project, id=project_id)
-
-    expenses_form = None
-    supplier_form= None
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'supplier_form':
-            supplier_form = SupplierForm(request.POST)
-            if supplier_form.is_valid():
-                supplier_form.save()
-                return redirect('expenses_add_wp',project_id=project.id )
-        
-        elif form_type == 'expenses_form':
-            expenses_form = ExpensesForm(request.POST)
-            if expenses_form.is_valid():
-                expenses_form.save()
-                return redirect('realized_cost', project_name = project.ProjectName)
-        
-    else:
-        supplier_form = SupplierForm()
-        expenses_form = ExpensesForm()
-        
-    context = {
-        "expenses_form": expenses_form,
-        'supplier_form': supplier_form,
-        "details": details,
-        "supplier": supplier,
-        "project": project,
-    }
-    return render(request, "expenses_add_wp.html", context)
-
-@login_required
-def jobhistory_add_wp(request, project_id):
-
-    jobhistory_form = None
-    supplier_form= None
-    project = get_object_or_404(Project, id=project_id)
-    supplier = Supplier.objects.all()
-
-
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'supplier_form':
-            supplier_form = SupplierForm(request.POST)
-            if supplier_form.is_valid():
-                supplier_form.save()
-                return redirect('jobhistory_add_wp',project_id=project.id )
-        
-        elif form_type == 'jobhistory_form':
-            jobhistory_form = JobHistoryForm(request.POST)
-            if jobhistory_form.is_valid():
-                jobhistory_form.save()
-                return redirect('realized_cost', project_name = project.ProjectName)
-        
-    else:
-        supplier_form = SupplierForm()
-        jobhistory_form = JobHistoryForm()
-        
-    context = {
-        "jobhistory_form": jobhistory_form,
-        'supplier_form': supplier_form,
-        "project": project,
-        "supplier": supplier,
-    }
-    return render(request, "jobhistory_add_wp.html", context)
-
-@login_required
-def income_add_wp(request, project_id):
-    income_form = None
-    client_form = None
-
-    client = Clients.objects.all()
-    project = get_object_or_404(Project, id=project_id)
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'income_form':
-            income_form = IncomesForm(request.POST)
-            if income_form.is_valid():
-                income_form.save()
-                return redirect('income_details', project_name = project.ProjectName)
-            
-        elif form_type == 'client_form':
-            client_form = ClientsForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
-                return redirect('income_add_wp',project_id=project.id )
-
-    else:
-        income_form = IncomesForm()
-        client_form = ClientsForm()
-
-    context = {
-        "incomes_form": income_form,
-        "client": client,
-        "project":project,
-        "client_form":client_form,
-    }
-    return render(request, "income_add_wp.html", context)
 
 # Satış Teklif Modülü
 
-@login_required
+@user_passes_test(pass_test('Satış Grubu'), login_url='/home')
 def sales_offer_revises(request, card_id):
     card = get_object_or_404(SalesOfferCard, id=card_id)
     revises = SalesOfferCard_Revise.objects.filter(Revise_Owner=card)
@@ -613,80 +202,8 @@ def sales_offer_revises(request, card_id):
     }
     return render(request, "sales_offer_revises.html", context)
 
-@login_required
-def sales_offer_edit(request, sales_offer_id):
-    client = Clients.objects.all()
-    workers = Worker.objects.all()
-    locations = Locations.objects.all()
-    sales_offer_edit_curr = get_object_or_404(SalesOfferCard, id=sales_offer_id) 
-    
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
 
-        sales_form = SalesOfferCardForm(request.POST, request.FILES,instance=sales_offer_edit_curr)
-        client_form = ClientsForm(request.POST or None )
-        print("form.is_valid")
-
-        if sales_form.is_valid():
-
-            print("sales_form.is_valid")
-            sales_form.save()
-            return redirect('sales_offer')  
-        
-        elif  client_form.is_valid():
-
-            print("client_form.is_valid")
-            client_form.save()
-            return redirect('sales_offer_edit', sales_offer_id=sales_offer_id)
-        
-    else:  
-        print("else.is_valid")
-
-        sales_form = SalesOfferCardForm(instance=sales_offer_edit_curr)
-        client_form = ClientsForm()
-
-    context={
-        'sales_form':sales_form,
-        'client':client,
-        'locations':locations,
-        'client_form':client_form,
-        'sales_offer_edit_curr':sales_offer_edit_curr,
-        'workers':workers
-    }
-    return render(request, "sales_offer_edit.html", context)
-
-@login_required
-def sales_offer_add(request):
-    client = Clients.objects.all()
-    locations = Locations.objects.all()
-    workers = Worker.objects.all()
-
-    if request.method == 'POST':
-        sales_form = SalesOfferCardForm(request.POST, request.FILES )
-        client_form = ClientsForm(request.POST or None )
-        if sales_form.is_valid():
-            sales_form.save()
-            return redirect('sales_offer')  
-        elif client_form.is_valid():
-            client_form.save()
-            return redirect('sales_offer_add')
-        
-    else:  
-        sales_form = SalesOfferCardForm()
-        client_form = ClientsForm()
-
-    context={
-        'sales_form':sales_form,
-        'client':client,
-        'locations':locations,
-        'client_form':client_form,
-        'error': sales_form.errors,
-        'workers':workers
-
-    }
-    return render(request, "sales_offer_add.html", context)
-
-@user_passes_test(isAdmin, login_url='/home')
+@user_passes_test(pass_test('Satış Grubu'), login_url='/home')
 def sales_offer(request):
     sales_offer_card = SalesOfferCard.objects.all()
     clients= Clients.objects.all()
@@ -756,7 +273,7 @@ def sales_offer(request):
 
 #İşletme Bakım Modülü
 
-@login_required
+@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
 def operation_care(request):
     operations = Operation_Care.objects.all()
     fails = Fail.objects.all()
@@ -830,7 +347,7 @@ def operation_care_edit(request, operation_care_id):
     }
     return render(request, "operation_care_edit.html", context)
 
-@login_required
+@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
 def fault_notification(request):
     operation_cares=Operation_Care.objects.all()
 
@@ -896,7 +413,7 @@ def fail_edit(request, fail_id):
     }
     return render(request, "fail_edit.html", context)
 
-@login_required
+@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
 def operation_care_detail(request,operation_care_id):
     operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
@@ -917,6 +434,37 @@ def operation_care_detail(request,operation_care_id):
     }
 
     return render(request, "operation_care_detail.html", context)
+
+@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
+def inverter(request, operation_care_id):
+    operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
+    client = Clients.objects.all()
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST or None )
+        client_form = ClientsForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('operation_care')  
+          
+        elif client_form.is_valid():
+           
+            client_form.save()
+            return redirect('inverter')
+    else:
+        form = ProjectForm()
+        client_form = ClientsForm()
+        
+    context = {
+        "form": form,
+        'form_errors': form.errors,
+        "client": client,
+        "locations": locations,
+        "client_form":client_form,
+        "operation_care":operation_care,
+    }
+    return render(request, "inverter.html", context)
 
 #deneme
 

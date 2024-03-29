@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, Fail_Bill, Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -312,3 +312,22 @@ class StringSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+
+class FailBillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fail_Bill
+        fields = '__all__'
+
+class FailSerializer(serializers.ModelSerializer):
+    fail_bills = FailBillSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Fail
+        fields = '__all__'
+
+    def create(self, validated_data):
+        fail_bills_data = validated_data.pop('fail_bills', [])
+        fail = Fail.objects.create(**validated_data)
+        for fail_bill_data in fail_bills_data:
+            Fail_Bill.objects.create(Fail_Bill_Owner=fail, **fail_bill_data)
+        return fail
