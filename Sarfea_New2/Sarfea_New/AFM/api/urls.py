@@ -43,8 +43,7 @@ urlpatterns = [
     path("api_fail/", api_view.FailListCreateAPIView.as_view(), name='api-fail'),
     path('api_fail/<pk>', api_view.FailRetrieveUpdateDestroyAPIView.as_view(), name='api-fail-detail'),
    
-    path("api_fail_bill/", api_view.FailBillListCreateAPIView.as_view(), name='api-fail-bill'),
-    path('api_fail_bill/<pk>', api_view.FailBillRetrieveUpdateDestroyAPIView.as_view(), name='api-fail-bill-detail'),
+    
     #******************************* ------- ***********************************
 
 ]

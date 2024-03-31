@@ -4,8 +4,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm, Fail_BillForm
-from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Fail_Bill, Inventor, String
+from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm
+from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String
 from django.db.models import Q
 from django.views import View
 from django.views.decorators.http import require_POST
@@ -286,12 +286,10 @@ def operation_care(request):
         op.Operation_Care_Fail_Number = i
         op.save()
 
-    fail_bills = Fail_Bill.objects.all()
 
     context = {
         "operations": operations,
         "fails": fails,
-        "fail_bills": fail_bills,
     }
 
     return render(request, "operation_care.html", context)
@@ -353,7 +351,7 @@ def fault_notification(request):
 
     if request.method == 'POST':
         form = FailForm(request.POST or None )
-        bill_form = Fail_BillForm(request.POST, request.FILES )
+       
 
         if form.is_valid():
             data2 = form.cleaned_data
@@ -365,25 +363,13 @@ def fault_notification(request):
                 Fail_Detection_Date=data2['Fail_Detection_Date'], 
                 Fail_Situation=data2['Fail_Situation']
                 )
-            if bill_form.is_valid():
-                data1 = bill_form.cleaned_data
-                fail_bill_instance = Fail_Bill.objects.create(
-                    Fail_Bill_Owner=fail_instance, 
-                    Fail_Bill_Central_Name=data1['Fail_Bill_Central_Name'],
-                    Fail_Bill_Process=data1['Fail_Bill_Process'], 
-                    Fail_Bill_Date=data1['Fail_Bill_Date'],
-                    Fail_Bill_Detail=data1['Fail_Bill_Detail'], 
-                    Fail_Bill_File=data1['Fail_Bill_File']
-                    )
 
             return redirect('operation_care')  
     else:
         form = FailForm()
-        bill_form = Fail_BillForm()
 
     context = {
         "form": form,
-        "bill_form":bill_form,
         "operation_cares":operation_cares,
     }
     return render(request, "fault_notification.html", context)
@@ -579,9 +565,7 @@ def get_fail(request):
     fail = Fail.objects.all().values()
     return JsonResponse({'fail': list(fail)})
 
-def get_fail_bill(request):
-    fail_bill = Fail_Bill.objects.all().values()
-    return JsonResponse({'fail_bill': list(fail_bill)})
+
 
 @login_required
 def get_inventors(request, operation_care_id):
@@ -790,30 +774,7 @@ def post_card_file(request):
 
     return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
-@csrf_exempt
-def post_fail_bill(request):
-    if request.method == 'POST':
-        
-        Fail_Bill_Owner = request.POST.get('Fail_Bill_Owner')
-        Fail_Bill_Central_Name= request.POST.get('Fail_Bill_Central_Name')
-        Fail_Bill_Process= request.POST.get('Fail_Bill_Process')
-        Fail_Bill_Date= request.POST.get('Fail_Bill_Date')
-        Fail_Bill_Detail= request.POST.get('Fail_Bill_Detail')
-        Fail_Bill_File = request.FILES.get('Fail_Bill_File')
 
-        Fail_Bill.objects.create(
-            Fail_Bill_Owner=Fail_Bill_Owner, 
-            Fail_Bill_Central_Name=Fail_Bill_Central_Name, 
-            Fail_Bill_Date=Fail_Bill_Date, 
-            Fail_Bill_Detail=Fail_Bill_Detail, 
-            Fail_Bill_File=Fail_Bill_File, 
-            Fail_Bill_Process= Fail_Bill_Process
-
-        )
-
-        return JsonResponse({'message': 'Supplier Başarı ile oluşturuldu'})
-
-    return JsonResponse({'error': 'Geçersiz istek'}, status=400)
 
 @csrf_exempt
 def post_update_string(request, string_id):

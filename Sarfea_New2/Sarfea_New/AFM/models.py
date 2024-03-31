@@ -322,15 +322,13 @@ class Fail(models.Model):
     Fail_Team_Info_Date = models.DateField(blank=True, null=True)
     Fail_Repair_Date = models.DateField(blank=True, null=True)
     Fail_Detail=models.CharField(max_length=400, blank=True, null=True) 
-    
-class Fail_Bill(models.Model):
-    Fail_Bill_Owner=  models.ForeignKey(Fail, on_delete=models.CASCADE, related_name="fail_bills", blank=True, null=True)
     Fail_Bill_Central_Name = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Process = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Date = models.DateField(blank=True, null=True)
     Fail_Bill_Detail=models.CharField(max_length=400, blank=True, null=True) 
     Fail_Bill_File = models.FileField(upload_to='fail_bills', default="", blank=True, null=True)
 
+    
 class Inventor(models.Model):
     Inventor_Owner=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_inventors")
     Inventor_Direction= models.CharField( max_length=63,blank=True, null=True) 

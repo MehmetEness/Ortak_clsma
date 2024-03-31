@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes, Fail_Bill, Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -316,21 +316,31 @@ class StringSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class FailBillSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fail_Bill
-        fields = '__all__'
 
 class FailSerializer(serializers.ModelSerializer):
-    fail_bills = FailBillSerializer(many=True, read_only=True)
 
     class Meta:
         model = Fail
         fields = '__all__'
-
+    
     def create(self, validated_data):
-        fail_bill_data = validated_data.pop('fail_bill', None)
-        fail = Fail.objects.create(**validated_data)
-        if fail_bill_data:  # 'fail_bill' verisi varsa
-            Fail_Bill.objects.create(Fail_Bill_Owner=fail, **fail_bill_data)        
-        return fail
+        return Fail.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Fail_Operation_Care = validated_data.get('Fail_Operation_Care', instance.Fail_Operation_Care)
+        instance.Fail_Central_Name = validated_data.get('Fail_Central_Name', instance.Fail_Central_Name)
+        instance.Fail_Information_Person = validated_data.get('Fail_Information_Person', instance.Fail_Information_Person)
+        instance.Fail_Guaranteed = validated_data.get('Fail_Guaranteed', instance.Fail_Guaranteed)
+        instance.Fail_Situation = validated_data.get('Fail_Situation', instance.Fail_Situation)
+        instance.Fail_Detection_Date = validated_data.get('Fail_Detection_Date', instance.Fail_Detection_Date)
+        instance.Fail_Team_Info_Date = validated_data.get('Fail_Team_Info_Date', instance.Fail_Team_Info_Date)
+        instance.Fail_Repair_Date = validated_data.get('Fail_Repair_Date', instance.Fail_Repair_Date)
+        instance.Fail_Detail = validated_data.get('Fail_Detail', instance.Fail_Detail)
+        instance.Fail_Bill_Central_Name = validated_data.get('Fail_Bill_Central_Name', instance.Fail_Bill_Central_Name)
+        instance.Fail_Bill_Process = validated_data.get('Fail_Bill_Process', instance.Fail_Bill_Process)
+        instance.Fail_Bill_Date = validated_data.get('Fail_Bill_Date', instance.Fail_Bill_Date)
+        instance.Fail_Bill_Detail = validated_data.get('Fail_Bill_Detail', instance.Fail_Bill_Detail)
+        instance.Fail_Bill_File = validated_data.get('Fail_Bill_File', instance.Fail_Bill_File)
+        
+        instance.save()
+        return instance

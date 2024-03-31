@@ -47,7 +47,6 @@ urlpatterns = [
 
     path('get_operation_care/', views.get_operation_care, name='get_operation_care'),
     path('get_fail/', views.get_fail, name='get_fail'),
-    path('get_fail_bill/', views.get_fail_bill, name='get_fail_bill'),
     path("get_inventors/<operation_care_id>/", views.get_inventors, name='get_inventors'),
     path("get_strings/<inventor_id>/", views.get_strings, name='get_strings'),
     
@@ -57,7 +56,6 @@ urlpatterns = [
    
     path('post_update_string/<string_id>/', views.post_update_string, name='post_update_string'),
     path('post_card_file/', views.post_card_file, name='post_card_file'),
-    path('post_fail_bill/', views.post_fail_bill, name='post_fail_bill'),
 
     #MODUL-DENEME
     path("deneme/", views.deneme, name='deneme'),
