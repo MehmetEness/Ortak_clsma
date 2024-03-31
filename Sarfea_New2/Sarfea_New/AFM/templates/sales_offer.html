@@ -453,6 +453,10 @@ tbody tr.hide td p {
   font: 0 / 0 sans-serif;
   /* transition: .2s ease-in-out .5s; */
 }
+.card-body{
+  height: 100%;
+  width: 100%;
+}
   
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -461,9 +465,9 @@ tbody tr.hide td p {
     {% block content %}
   <div class="body-div">
   {% include 'partials/_left_nav_bar.html' %}
-      <div style="display: none;" class="file_upload">
+      <div style="display: none;" class="file_upload file_upload_container">
         <div class="container">
-          <h3 id="clientFirmaAdd-modal" class="modal-kapat">X</h3>
+          <h3 id="clientFirmaAdd-modal" class="close-window">X</h3>
           <form id="sales_offer_file_add_form" enctype="multipart/form-data">
             <span class="details"></span>
                   <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up" class="inputfile inputfile-1" />
@@ -472,7 +476,7 @@ tbody tr.hide td p {
                       <span id="details_span"></span></label>
                 
             <div class="button">
-              <input style="cursor: pointer;" id="submit_btn" type="submit" value="Kaydet" />
+              <input style="cursor: pointer;" id="submit_btn" type="button" value="Kaydet" />
             </div>
           </form>
         </div>
@@ -488,8 +492,9 @@ tbody tr.hide td p {
               <div class="user-details">
     
                <div class="input-box" id="Client_Card">
-                  <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
-                      <i class="fa-solid fa-plus"></i></button></span>
+                  <span id="firma_adi_span" class="details">Firma Adı*<button type="button"
+                    id="paying-company-add-btn" class="paying-company-add-btn"><i
+                      class="fa-solid fa-plus"></i></button></span>
                   <div class="dropdown-container">
                     <input autocomplete= 'off' type="text" id="id_Client_Card" name="Client_Card" class="myInput need_id" placeholder="Firma Adını Seçiniz" data-dropdown="sales_offer_dropdown1"/>
                    
@@ -612,6 +617,26 @@ tbody tr.hide td p {
             </form>
         </div>
       </div>
+      <div class="window client-add-window">
+        <div style="width: 400px" id="client_container" class="container">
+          <h3 id="client-X" class="close-window clientx">X</h3>
+          <div class="title">Firma Ekle</div>
+          <form id="firma_add_form" action="#" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="client_form" />
+    
+            <div class="user-details">
+              <div id="firma_input_box" class="input-box" name="CompanyName_Clients">
+                <span id="firma_add_label" class="details">Firma Adı*</span>
+                <input id="id_CompanyName_Clients" name="CompanyName_Clients" type="text" />
+              </div>
+            </div>
+            <div class="button">
+              <input id="firma_submit_btn" type="button" value="Kaydet" />
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="right-menu">         
         <div class="top-menu">  
           <div>     
@@ -666,88 +691,7 @@ tbody tr.hide td p {
                     <div class="card-body">
 
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>                        
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>5000kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %}                     -->
+                   
               </div>
               <div class="rows" data-situation="Maliyet Hesaplama">
                     <div style="background-color: #9DB8FB;" class="total-cash">
@@ -757,88 +701,6 @@ tbody tr.hide td p {
                     <div class="card-body">
                       
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>500kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %} -->
               </div>
               <div class="rows" data-situation="Fiyat Belirleme">
                     <div style="background-color: #ece75f;" class="total-cash">
@@ -848,88 +710,6 @@ tbody tr.hide td p {
                     <div class="card-body">
                       
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>5000kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %} -->
                     
               </div>
               <div class="rows" data-situation="Teklif Hazırlama">
@@ -940,88 +720,6 @@ tbody tr.hide td p {
                     <div class="card-body">
                       
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>500kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %} -->
               </div>
               <div class="rows" data-situation="Teklif Hazır">
                     <div style="background-color: #e6cc00;" class="total-cash">
@@ -1031,89 +729,7 @@ tbody tr.hide td p {
                     <div class="card-body">
                       
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>500kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %} -->
-              </div>
+             </div>
               <div class="rows" data-situation="Teklif Sunuldu">
                 <div style="background-color: #e69b00;" class="total-cash">
                   <span>$ {{done_customers_cost}}</span>
@@ -1122,88 +738,6 @@ tbody tr.hide td p {
                 <div class="card-body">
                       
                 </div>
-                <!-- {% for card in sales_offer_card %}
-                {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>500kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                {% endfor %} -->
               </div>  
               <div class="rows" data-situation="Sunum Sonrası Görüşme">
                     <div style="background-color: #e47200;" class="total-cash">
@@ -1213,88 +747,6 @@ tbody tr.hide td p {
                     <div class="card-body">
                       
                     </div>
-                    <!-- {% for card in sales_offer_card %}
-                    {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
-                    <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
-                      <div class="boxes">
-                        <p class="bold700">{{card.Client_Card}}</p>
-                      </div>
-                      <p>{{card.Date_Card}}</p>
-                      <div class="boxes">
-                        <p>{{card.Offer_Cost_NotIncludingKDV_Card}}</p>
-                        <p>{{card.UnitOffer_NotIncludingKDV}} USD/kWp</p>
-                      </div>   
-                      <div class="boxes">             
-                      <p>{{card.Cost_NotIncludingKDV_Card}}</p>
-                      <p>{{card.UnitCost_NotIncludingKDV}}</p>
-                      </div>
-                      <div class="boxes">             
-                        <p>500kwp</p>
-                        <p>Çatı</p>
-                        </div>
-                      <div class="boxes">
-                        <div class="buttons">
-                          {% if card.M_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card.url }}')">M1</button>
-                          {% else %}
-                          <button class="mb mr-3">M1</button>
-                          {% endif %}                              
-                          {% if card.M_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_2.url }}')">M2</button>
-                          {% else %}
-                          <button class="mb mr-3">M2</button>
-                          {% endif %}                          
-                          {% if card.M_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.M_File_Card_3.url }}')">M3</button>
-                          {% else %}
-                          <button class="mb mr-3">M3</button>
-                          {% endif %}                  
-                            </div>
-                        <div class="buttons">
-                          {% if card.Offer_File_Card %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card.url }}')">T1</button>
-                          {% else %}
-                          <button class="mb mr-3">T1</button>
-                          {% endif %}                            
-                          {% if card.Offer_File_Card_2 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_2.url }}')">T2</button>
-                          {% else %}
-                          <button class="mb mr-3">T2</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_3 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_3.url }}')">T3</button>
-                          {% else %}
-                          <button class="mb mr-3">T3</button>
-                          {% endif %}                          
-                          {% if card.Offer_File_Card_4 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_4.url }}')">T4</button>
-                          {% else %}
-                          <button class="mb mr-3">T4</button>
-                          {% endif %}
-                          {% if card.Offer_File_Card_5 %}
-                          <button class="mr-3 blue" onclick="openFile('{{ card.Offer_File_Card_5.url }}')">T5</button>
-                          {% else %}
-                          <button class="mb mr-3">T5</button>
-                          {% endif %}                        
-                        </div>
-                      </div>
-                      <div class="flex-row">
-                        
-                        <p class="eclipse"><span class="bold500">Yorum: </span>{{card.Offer_Comment_Card}}</p>
-                      </div>
-                      <div class="card-menu">
-                        <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-                        <ul class="card_menu">
-                          <li><a href="#">Düzenle</a></li>
-                          <li onclick="lostCard({{ card.id }})">Kaybedildi</li>
-                          <li onclick="gainCard({{ card.id }})">Kazanıldı</li>
-                          <li onclick="waitCard({{ card.id }})">Bekleyen</li>
-                              <li onclick="reviseCard({{ card.id }})"><a href="#">Revize </a></li>                         
-                        </ul>
-                      </div> 
-                    </div>     
-                    {% endif %}
-                    {% endfor %} -->
               </div>
         
           </div>

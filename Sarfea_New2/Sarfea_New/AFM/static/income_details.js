@@ -136,7 +136,7 @@ companyAddBtns.forEach((btn) => {
             clientAddWindow.style.display = "flex";
         }, 20);
     });
-    document.addEventListener("click", (event) => {
+    document.addEventListener("mousedown", (event) => {
         const clientAddContainer = clientAddWindow.querySelector(".container");
         if (!clientAddContainer.contains(event.target)) {
             setTimeout(() => {
