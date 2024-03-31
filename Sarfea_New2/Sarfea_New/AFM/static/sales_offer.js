@@ -1,5 +1,5 @@
 var rowsElements = document.querySelectorAll(
-  '.rows[data-situation="Potansiyel Müşteri"], .rows[data-situation="Maliyet Hesaplama"],.rows[data-situation="Fiyat Belirleme"],.rows[data-situation="Teklif Hazırlama"],.rows[data-situation="Teklif Hazır"],.rows[data-situation="Teklif Sunuldu"],.rows[data-situation="Sunum Sonrası Görüşme"]'
+  '.rows[data-situation="Potansiyel Müşteri"] .card-body , .rows[data-situation="Maliyet Hesaplama"] .card-body, .rows[data-situation="Fiyat Belirleme"] .card-body, .rows[data-situation="Teklif Hazırlama"] .card-body, .rows[data-situation="Teklif Hazır"] .card-body, .rows[data-situation="Teklif Sunuldu"] .card-body, .rows[data-situation="Sunum Sonrası Görüşme"] .card-body'
 );
 var numericCells = document.querySelectorAll(
   "#table td:nth-child(6), #table td:nth-child(7), #table td:nth-child(8), #table td:nth-child(9), #table td:nth-child(10), #table td:nth-child(11), #table td:nth-child(13), #table td:nth-child(14), #table td:nth-child(15), #table td:nth-child(16)"
@@ -14,10 +14,9 @@ var details = document.querySelector(".details");
 var detailsSpan = document.querySelector("#details_span");
 var rightMenu = document.querySelector(".right-menu");
 var leftMenu = document.querySelector("#nav-bar");
-var hamburgerMenu1 = document.querySelector("#hamburger_btn1");
-var hamburgerMenu2 = document.querySelector("#hamburger_btn2");
-var rowcards = document.querySelectorAll(".card");
-var cardMenuBtn = document.querySelectorAll(".card_menu-btn");
+const reqSalesInputs = document.querySelectorAll("#id_Client_Card, #id_Person_Deal, #id_Location_Card");
+const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_kisi_span, #konum_span");
+
 var cardUlMenus = document.querySelectorAll(".card_menu");
 let rows = document.querySelectorAll(".rows");
 var topMenuLi = document.querySelectorAll(".top-menu-ul li");
@@ -38,20 +37,13 @@ let thRowsLost = lostTable.querySelectorAll("th");
 let thRowsSales = salesTable.querySelectorAll("th");
 let thRowsWon = wonTable.querySelectorAll("th");
 
+
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
 
   topMenuLi[2].classList.add("li-hover");
-  rowcards.forEach(function (item) {
-    let cardTarih = item.querySelector("p:nth-child(2)");
-    let araziCati = item.querySelector(".boxes:nth-of-type(4) p:nth-of-type(2)");
-    if (araziCati.textContent == "None") {
-      araziCati.textContent = "-";
-    }
-    if (cardTarih.textContent == "None") {
-      cardTarih.textContent = "-";
-    }
-  });
+
+
 
   //                  LİSTE İŞ RENGİ VERME
 
@@ -114,6 +106,20 @@ document.addEventListener("DOMContentLoaded", function () {
   tableFormat(textCells, "text");
 });
 
+
+function cardDateFormat() {
+  var rowcards = document.querySelectorAll(".card");
+  rowcards.forEach(function (item) {
+    let cardTarih = item.querySelector("p:nth-child(2)");
+    let araziCati = item.querySelector(".boxes:nth-of-type(4) p:nth-of-type(2)");
+    if (araziCati.textContent == "None") {
+      araziCati.textContent = "-";
+    }
+    if (cardTarih.textContent == "None" || cardTarih.textContent == "null") {
+      cardTarih.textContent = "-";
+    }
+  });
+}
 
 //------------------------------------------------------------------------------------------------------------------
 
@@ -219,34 +225,46 @@ mButtons.forEach(function (item) {
 
 
 //                  CARD MENÜ
+function cardMenuFunctions() {
 
-let cardMenu;
-let btn1;
-var boolClick = false;
-cardMenuBtn.forEach((btn) => {
-  btn.addEventListener("click", function () {
-    let card = this.closest(".card");
-    cardMenu = card.querySelector(".card_menu");
-    if (cardMenu.style.display == "none") {
-      cardMenu.style.display = "block";
-    }
-    else {
-      cardMenu.style.display = "none";
-    }
+  var cardMenuBtn = document.querySelectorAll(".card_menu-btn");
+  let cardMenu;
+  // let btn1;
+  // var boolClick = false;
+  cardMenuBtn.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      let card = this.closest(".card");
+      cardMenu = card.querySelector(".card_menu");
+      if (cardMenu.style.display == "none") {
+        cardMenu.style.display = "block";
+      }
+      else {
+        cardMenu.style.display = "none";
+      }
+    });
+    document.addEventListener("click", function (event) {
+      var isClickInsideDiv = btn.contains(event.target);
+      let card = btn.closest(".card");
+      let cardMenu1 = card.querySelector(".card_menu");
+      if (!isClickInsideDiv) {
+        cardMenu1.style.display = "none";
+      }
+    });
   });
-  document.addEventListener("click", function (event) {
-    var isClickInsideDiv = btn.contains(event.target);
-    let card = btn.closest(".card");
-    let cardMenu1 = card.querySelector(".card_menu");
-    if (!isClickInsideDiv) {
-      cardMenu1.style.display = "none";
-    }
-  });
-});
+
+}
+
+// TARİH İNPUTLARI FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+// INPUT FORMATLAMA
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
 
 //                  CARD FORMATLAMA
 
-cardFormat();
+
 function cardFormat() {
   rows.forEach(function (row) {
     let cards = row.querySelectorAll(".card");
@@ -696,33 +714,29 @@ xBtn.forEach((btn) => {
 const addForm = document.getElementById("sales_offer_add_form");
 const formAddBtn = document.querySelector("#sales-offer-create-btn");
 formAddBtn.addEventListener("click", async function (event) {
-
-
   event.preventDefault();
 
-
-//   // if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
-
-  //   dateInputs.forEach(input => {
-  //     input.value = formatDateForSubmit(input.value)
-  //   })
-  //   var formatInputss = jobhistoryAddWindow.querySelectorAll(".formatInputs")
-  //   formatInputss.forEach(input => {
-  //     input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
-  //   })
-   
+  if (requiredInputs(reqSalesInputs, reqSalesLabels)) {
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = salesOfferAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
     const formData = new FormData(addForm);
 
-    // const inputs = document.querySelectorAll(".jobhistory-add-window input[data-id]");
-    // inputs.forEach(input => {
-    //   const dataId = input.getAttribute('data-id');
-    //   formData.set(input.getAttribute('name'), dataId);
-    // });
-    await apiFunctions("api_sales_offer", "POST", formData);
-    //jobhistoryAddWindow.style.display = "none";
-    //getSuppliers();
-    clearInputAfterSave(addForm);
-  // }
+    const inputs = document.querySelectorAll(".sales-offer-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+
+    await apiFunctions("sales_offer", "POST", formData);
+  }
 });
 
 // TARİH İNPUTLARI FORMATLAMA
@@ -750,4 +764,175 @@ formAddBtn.addEventListener("click", async function (event) {
 // for (const [key, value] of formData.entries()) {
 //   console.log(key)
 //   console.log(key + ':', value);
-// }
+//}
+getSalesCards("edit");
+async function getSalesCards(isEdit) {
+  try {
+    let Rows = document.querySelector(".card-body");
+    const data = await apiFunctions("sales_offer", "GET");
+    console.log(data)
+    let rows = "";
+
+    for (const card of data) {
+      let cardHTML = generateCard(card);
+      cardPlaceRows(cardHTML, card.Situation_Card)
+    }
+    dragCards()
+    totalSpanFormatForDrag()
+    cardFormat();
+    cardMenuFunctions()
+    // if (data.length > currentRows.length || isEdit) {
+    //   supplierTableBody.innerHTML = "";
+    //   supplierTableBody.insertAdjacentHTML("beforeend", rows);
+    //   editBtns();
+    //   sortTableForStart(supplierTable, 1);
+    //   allTableFormat();
+    //   sortingTable(supplierTable);
+    // }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+function cardPlaceRows(card, situation) {
+  var row = document.querySelector(`[data-situation="${situation}"] .card-body `);
+  if (row) {
+    row.insertAdjacentHTML("beforeend", card)
+  }
+
+}
+function generateCard(card) {
+  let formattedDate;
+  if (card.Date_Card) {
+    let date = new Date(card.Date_Card);
+    formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+  } else { formattedDate = "-" }
+  return `
+  <div id="${card.id}" class="card" draggable="true" data-situation="${card.Situation_Card}">
+      <div class="boxes">
+          <p class="bold700">${card.Client_Card}</p>
+      </div>
+      <p>${formattedDate}</p>
+      <div class="boxes">
+          <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
+          <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
+      </div>
+      <div class="boxes">
+          <p>${card.Cost_NotIncludingKDV_Card}</p>
+          <p>${card.UnitCost_NotIncludingKDV}</p>
+      </div>
+      <div class="boxes">
+          <p>5000kwp</p>
+          <p>Çatı</p>
+      </div>
+      <div class="boxes">
+          <div class="buttons">
+              ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
+              ${card.M_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_2}')">M2</button>` : `<button class="mb mr-3">M2</button>`}
+              ${card.M_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_3}')">M3</button>` : `<button class="mb mr-3">M3</button>`}
+          </div>
+          <div class="buttons">
+              ${card.Offer_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card}')">T1</button>` : `<button class="mb mr-3">T1</button>`}
+              ${card.Offer_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_2}')">T2</button>` : `<button class="mb mr-3">T2</button>`}
+              ${card.Offer_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_3}')">T3</button>` : `<button class="mb mr-3">T3</button>`}
+              ${card.Offer_File_Card_4 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_4}')">T4</button>` : `<button class="mb mr-3">T4</button>`}
+              ${card.Offer_File_Card_5 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_5}')">T5</button>` : `<button class="mb mr-3">T5</button>`}
+          </div>
+      </div>
+      <div class="flex-row">
+          <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
+      </div>
+      <div class="card-menu">
+          <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+          <ul class="card_menu">
+              <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+              <li onclick="lostCard(${card.id})">Kaybedildi</li>
+              <li onclick="gainCard(${card.id})">Kazanıldı</li>
+              <li onclick="waitCard(${card.id})">Bekleyen</li>
+              <li onclick="reviseCard(${card.id})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
+          </ul>
+      </div>
+  </div>
+  `;
+}
+
+//                  CARD DRAG İŞLEMLERİ
+function dragCards() {
+
+  var rowcards = document.querySelectorAll(".card");
+
+  var dragItem = null;
+  for (var i of rowcards) {
+    i.addEventListener("dragstart", dragStart);
+    i.addEventListener("dragend", dragEnd);
+  }
+  function dragStart() {
+    dragItem = this;
+    setTimeout(() => (this.style.display = "none"), 0);
+  }
+  function dragEnd() {
+    setTimeout(() => (this.style.display = "flex"), 0);
+  }
+  for (j of rows) {
+    j.addEventListener("dragover", dragOver);
+    j.addEventListener("dragenter", dragEnter);
+    j.addEventListener("dragleave", dragLeave);
+    j.addEventListener("drop", Drop);
+  }
+  function Drop() {
+    this.append(dragItem);
+    cardDateList(rowsElements);
+    totalSpanFormatForDrag();
+    //this.style.border = "none";
+    //this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
+
+    var targetRowSituation = this.dataset.situation;
+    var cardId = dragItem.id;
+    var xhr = new XMLHttpRequest();
+    var updateCardSituationUrl = "/update_card_situation/";
+
+    xhr.open("POST", updateCardSituationUrl, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        dragItem.dataset.situation = targetRowSituation;
+      }
+    };
+    xhr.send(
+      JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
+    );
+  }
+  function dragOver(e) {
+    e.preventDefault();
+    //this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
+  }
+  function dragEnter(e) {
+    e.preventDefault();
+  }
+  function dragLeave() {
+    // this.style.border = "none";
+    // this.style.borderRight = "6px solid rgba(41, 60, 73,0.9)";
+  }
+
+}
+
+
+//                  DROPDOWN MENÜLER
+getClients()
+async function getClients() {
+  try {
+    const data = await apiFunctions("client", "GET")
+    let rows = "";
+    for (const client of data) {
+      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
+      rows += row;
+    }
+    const clientDropdowns = document.querySelectorAll(".client-dropdown");
+    clientDropdowns.forEach(async (clientDropdown) => {
+      clientDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
