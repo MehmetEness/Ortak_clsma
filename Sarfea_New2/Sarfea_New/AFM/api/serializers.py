@@ -316,7 +316,6 @@ class StringSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
 class FailSerializer(serializers.ModelSerializer):
 
     class Meta:

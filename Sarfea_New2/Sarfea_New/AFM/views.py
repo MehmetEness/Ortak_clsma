@@ -273,7 +273,7 @@ def sales_offer(request):
 
 #İşletme Bakım Modülü
 
-@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
 def operation_care(request):
     operations = Operation_Care.objects.all()
     fails = Fail.objects.all()
@@ -345,7 +345,7 @@ def operation_care_edit(request, operation_care_id):
     }
     return render(request, "operation_care_edit.html", context)
 
-@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
 def fault_notification(request):
     operation_cares=Operation_Care.objects.all()
 
@@ -399,7 +399,7 @@ def fail_edit(request, fail_id):
     }
     return render(request, "fail_edit.html", context)
 
-@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
 def operation_care_detail(request,operation_care_id):
     operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
@@ -421,7 +421,7 @@ def operation_care_detail(request,operation_care_id):
 
     return render(request, "operation_care_detail.html", context)
 
-@user_passes_test(pass_test('İşletme-Bakım Grubu'), login_url='/home')
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
 def inverter(request, operation_care_id):
     operation_care=Operation_Care.objects.filter(id=operation_care_id).first()
     client = Clients.objects.all()
