@@ -236,7 +236,6 @@ const dateInputs = document.querySelectorAll(".date-inputs");
 formatDateInputs(dateInputs);
 
 // INPUT FORMATLAMA
-//inputForFormat(incomeAmountInput);
 const formatedInputs = document.querySelectorAll(".formatInputs");
 inputsForFormat(formatedInputs);
 

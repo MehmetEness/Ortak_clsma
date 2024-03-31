@@ -481,7 +481,7 @@ tbody tr.hide td p {
         <div id="sales_offer_container" class="container">
           <h3 id="sales_offer-X" class="close-window sales_offerx">X</h3>
           <div class="title">Firma Ekle</div>
-            <form id="sales_offer_add_form"  action="{% url 'sales_offer' %}" method="post" enctype="multipart/form-data">
+            <form id="sales_offer_add_form"  action="#" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="sales_form" value="sales_form" />
     
@@ -491,22 +491,18 @@ tbody tr.hide td p {
                   <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn">
                       <i class="fa-solid fa-plus"></i></button></span>
                   <div class="dropdown-container">
-                    <input autocomplete= 'off' type="text" id="id_Client_Card" name="Client_Card" class="myInput" placeholder="Firma Adını Seçiniz" data-dropdown="dropdown1"/>
+                    <input autocomplete= 'off' type="text" id="id_Client_Card" name="Client_Card" class="myInput need_id" placeholder="Firma Adını Seçiniz" data-dropdown="sales_offer_dropdown1"/>
                    
-                    <div id="dropdown1" class="dropdown-content">
-                      {% for x in clients %}
-                      <span value="{{x.id}}" class="dropdown-item"
-                        >{{x}}</span
-                      >
-                      {% endfor %}
+                    <div id="sales_offer_dropdown1" class="dropdown-content client-dropdown">
+                     
                     </div>
                   </div>
                 </div>            
                   <div class="input-box">
                     <span id="ilgilenen_kisi_span" class="details">İlgilenen Kişi*</span>
                     <div class="dropdown-container">
-                      <input type="text" id="id_Person_Deal" name="Person_Deal" class="myInput" placeholder="İlgilenen Kişi" data-dropdown="dropdown3" autocomplete="off"/>
-                      <div id="dropdown3" class="dropdown-content">
+                      <input type="text" id="id_Person_Deal" name="Person_Deal" class="myInput" placeholder="İlgilenen Kişi" data-dropdown="sales_offer_dropdown2" autocomplete="off"/>
+                      <div id="sales_offer_dropdown2" class="dropdown-content">
                         {% for x in workers %}
                         <span value="{{x.id}}" class="dropdown-item"
                           >{{x.Worker_Name}}</span
@@ -518,8 +514,8 @@ tbody tr.hide td p {
                 <div class="input-box">
                   <span id="konum_span" class="details">Konum*</span>
                   <div class="dropdown-container">
-                    <input type="text" id="id_Location_Card" name="Location_Card" class="myInput" placeholder="Konum Seçiniz" data-dropdown="dropdown2" autocomplete="off"/>
-                    <div id="dropdown2" class="dropdown-content">
+                    <input type="text" id="id_Location_Card" name="Location_Card" class="myInput need_id" placeholder="Konum Seçiniz" data-dropdown="sales_offer_dropdown3" autocomplete="off"/>
+                    <div id="sales_offer_dropdown3" class="dropdown-content">
                       {% for x in locations %}
                       <span value="{{x.id}}" class="dropdown-item"
                         >{{x.Location}}</span
@@ -530,28 +526,28 @@ tbody tr.hide td p {
                 </div>
                 <div class="input-box">
                   <span class="details">Teklif Bedeli - KDV Hariç ($)<button type="button" id="teklif_bedeli_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
-                  <input class="coc-input" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="Offer_Cost_NotIncludingKDV_Card" id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Birim Teklif<button type="button" id="br_tek_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
-                  <input class="coc-input" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="UnitOffer_NotIncludingKDV" id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
     
                 </div>
                 <div class="input-box">
                   <span class="details">AC Güç (kWe)</span>
-                  <input class="coc-input" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="AC_Power_Card" id="id_AC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Toplam Maliyet<button type="button" id="total_mal_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
-                  <input class="coc-input" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="Cost_NotIncludingKDV_Card" id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Birim Maliyet - KDV Hariç ($)<button type="button" id="br_mal_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
-                  <input class="coc-input" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="UnitCost_NotIncludingKDV" id="id_UnitCost_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00"/>
                 </div>
                 <div class="input-box">
                   <span class="details">DC Güç (kWp)<button type="button" id="dc_guc_btn" class="calc_btns"><i class="fa-solid fa-calculator"></i></button></span>
-                  <input class="coc-input" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
+                  <input class="coc-input formatInputs" type="text" name="DC_Power_Card" id="id_DC_Power_Card" step="1" autocomplete="off" placeholder="0.00"/>
                 </div>
                 <div class="input-box">
                   <span class="details">Durumu</span>
@@ -563,7 +559,7 @@ tbody tr.hide td p {
                 </div>
                 <div class="input-box">
                   <span class="details">Tarih</span>
-                  <input id="tarih" type="text" name="Date_Card" placeholder="01.01.2000" maxlength="10"/>
+                  <input class="date-inputs" id="tarih" type="text" name="Date_Card" placeholder="01.01.2000" maxlength="10"/>
                 </div> 
                 <div class="input-box">
                   <span class="details">ilgili Kişi</span>
@@ -579,7 +575,7 @@ tbody tr.hide td p {
                 
                 <div style="display: block;" class="input-box">
                   <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
-                  <input style="display: none;" class="coc-input" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00"/>
+                  <input style="display: none;" class="coc-input formatInputs" type="text" name="Roof_Cost_Card" id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00"/>
                 </div>    
                    
                 <div class="input-box">
@@ -667,7 +663,10 @@ tbody tr.hide td p {
                       <span>$ span1</span>
                       <span>span2</span>
                     </div>  
-                    {% for card in sales_offer_card %}
+                    <div class="card-body">
+
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Potansiyel Müşteri' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -748,14 +747,17 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}                    
+                    {% endfor %}                     -->
               </div>
               <div class="rows" data-situation="Maliyet Hesaplama">
                     <div style="background-color: #9DB8FB;" class="total-cash">
                       <span>$ </span>
                       <span></span>
                     </div> 
-                    {% for card in sales_offer_card %}
+                    <div class="card-body">
+                      
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Maliyet Hesaplama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -836,14 +838,17 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} -->
               </div>
               <div class="rows" data-situation="Fiyat Belirleme">
                     <div style="background-color: #ece75f;" class="total-cash">
                       <span>$ {{price_customers_cost}}</span>
                       <span>({{price_customers_count}})</span>
                     </div> 
-                    {% for card in sales_offer_card %}
+                    <div class="card-body">
+                      
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Fiyat Belirleme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -924,7 +929,7 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} -->
                     
               </div>
               <div class="rows" data-situation="Teklif Hazırlama">
@@ -932,7 +937,10 @@ tbody tr.hide td p {
                       <span>$ {{offer_customers_cost}}</span>
                       <span>({{offer_customers_count}})</span>
                     </div> 
-                    {% for card in sales_offer_card %}
+                    <div class="card-body">
+                      
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazırlama' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -1013,14 +1021,17 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} -->
               </div>
               <div class="rows" data-situation="Teklif Hazır">
                     <div style="background-color: #e6cc00;" class="total-cash">
                       <span>$ {{done_customers_cost}}</span>
                       <span>({{done_customers_count}})</span>
                     </div> 
-                    {% for card in sales_offer_card %}
+                    <div class="card-body">
+                      
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Teklif Hazır' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -1101,14 +1112,17 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} -->
               </div>
               <div class="rows" data-situation="Teklif Sunuldu">
                 <div style="background-color: #e69b00;" class="total-cash">
                   <span>$ {{done_customers_cost}}</span>
                   <span>({{done_customers_count}})</span>
                 </div> 
-                {% for card in sales_offer_card %}
+                <div class="card-body">
+                      
+                </div>
+                <!-- {% for card in sales_offer_card %}
                 {%if card.Situation_Card == 'Teklif Sunuldu' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -1189,14 +1203,17 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                {% endfor %}
+                {% endfor %} -->
               </div>  
               <div class="rows" data-situation="Sunum Sonrası Görüşme">
                     <div style="background-color: #e47200;" class="total-cash">
                       <span>$ {{presentation_customers_cost}}</span>
                       <span>({{presentation_customers_count}})</span>
-                    </div> 
-                    {% for card in sales_offer_card %}
+                    </div>
+                    <div class="card-body">
+                      
+                    </div>
+                    <!-- {% for card in sales_offer_card %}
                     {%if card.Situation_Card == 'Sunum Sonrası Görüşme' and card.Is_Lost == False and card.Is_Gain == False and card.Is_late == False %}
                     <div id="{{ card.id }}"  class="card" draggable="true"data-situation="{{ card.Situation_Card }}">
                       <div class="boxes">
@@ -1277,7 +1294,7 @@ tbody tr.hide td p {
                       </div> 
                     </div>     
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} -->
               </div>
         
           </div>
@@ -1557,61 +1574,7 @@ tbody tr.hide td p {
         return parts.length === 2 ? parts.pop().split(';').shift() : null;
       }
 
-//                  CARD DRAG İŞLEMLERİ
 
-var dragItem = null;
-for (var i of rowcards) {
-  i.addEventListener("dragstart", dragStart);
-  i.addEventListener("dragend", dragEnd);
-}
-function dragStart() {
-  dragItem = this;
-  setTimeout(() => (this.style.display = "none"), 0);
-}
-function dragEnd() {
-  setTimeout(() => (this.style.display = "flex"), 0);
-}
-for (j of rows) {
-  j.addEventListener("dragover", dragOver);
-  j.addEventListener("dragenter", dragEnter);
-  j.addEventListener("dragleave", dragLeave);
-  j.addEventListener("drop", Drop);
-}
-function Drop() {
-  this.append(dragItem);
-  cardDateList(rowsElements);
-  totalSpanFormatForDrag();
-  //this.style.border = "none";
-  //this.style.borderRight = "1px solid rgba(0, 0, 0, 0.2)";
-
-  var targetRowSituation = this.dataset.situation;
-  var cardId = dragItem.id;
-  var xhr = new XMLHttpRequest();
-
-  xhr.open("POST", "{% url 'update_card_situation' %}", true);
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      dragItem.dataset.situation = targetRowSituation;
-    }
-  };
-  xhr.send(
-    JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
-  );
-}
-function dragOver(e) {
-  e.preventDefault();
-  //this.style.border = "2px solid rgba(0, 0, 0, 0.3)";
-}
-function dragEnter(e) {
-  e.preventDefault();
-}
-function dragLeave() {
- // this.style.border = "none";
- // this.style.borderRight = "6px solid rgba(41, 60, 73,0.9)";
-}
-    
 </script>
 <script>
   'use strict';
@@ -1653,10 +1616,10 @@ function dragLeave() {
                   inputs[index + 1].style.display = 'inline-block';
               } else {
                   var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
-                  console.log(defaultText);
+                  //console.log(defaultText);
                   var fileName = label.querySelector('span').textContent;
-                  console.log(fileName);
-                  console.log(fileName !== defaultText);
+                  //console.log(fileName);
+                  //console.log(fileName !== defaultText);
                   if (fileName !== defaultText) {
                       label.style.display = 'inline-block';
                   }

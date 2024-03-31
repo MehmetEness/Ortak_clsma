@@ -939,6 +939,7 @@ async function apiFunctions(name, type, myForm, id) {
 
     case "POST":
       try {
+        console.log(`/api_${name}/`)
         await fetch(`/api_${name}/`, {
           method: "POST",
           headers: {
