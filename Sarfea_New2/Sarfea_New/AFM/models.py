@@ -324,7 +324,7 @@ class Fail(models.Model):
     Fail_Detail=models.CharField(max_length=400, blank=True, null=True) 
     
 class Fail_Bill(models.Model):
-    Fail_Bill_Owner=  models.ForeignKey(Fail, on_delete=models.CASCADE, related_name="fail_bills")
+    Fail_Bill_Owner=  models.ForeignKey(Fail, on_delete=models.CASCADE, related_name="fail_bills", blank=True, null=True)
     Fail_Bill_Central_Name = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Process = models.CharField(max_length=63, blank=True, null=True)
     Fail_Bill_Date = models.DateField(blank=True, null=True)
