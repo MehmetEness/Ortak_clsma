@@ -326,8 +326,8 @@ class FailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        fail_bills_data = validated_data.pop('fail_bills', [])
+        fail_bill_data = validated_data.pop('fail_bill', None)
         fail = Fail.objects.create(**validated_data)
-        for fail_bill_data in fail_bills_data:
-            Fail_Bill.objects.create(Fail_Bill_Owner=fail, **fail_bill_data)
+        if fail_bill_data:  # 'fail_bill' verisi varsa
+            Fail_Bill.objects.create(Fail_Bill_Owner=fail, **fail_bill_data)        
         return fail
