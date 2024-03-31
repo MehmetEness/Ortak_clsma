@@ -744,6 +744,9 @@ formAddBtn.addEventListener("click", async function (event) {
     }
 
     await apiFunctions("sales_offer", "POST", formData);
+    salesOfferAddWindow.style.display = "none";
+    clearInputAfterSave(addForm);
+    await getSalesCards();
   }
 });
 
@@ -795,56 +798,3 @@ async function getClients() {
 //                  CARD TARİHE GÖRE SIRALAMA
 cardDateList(rowsElements);
   
-//                  LİSTE İŞ RENGİ VERME  
-trRowsList.forEach((row) => {
-  let span = row.querySelector(".icon-blue")
-  switch (row.className) {
-    case "gain-job":
-      span.style.color = "#38b000"
-      break;
-
-    case "lost-job":
-      span.style.color = "#bf0603"
-
-      break;
-
-    case "wait-job":
-      span.style.color = "#00296b"
-
-      break;
-    case "pot-mus":
-      span.style.color = "#D0DDFB"
-
-      break;
-    case "mal-hes":
-      span.style.color = "#9DB8FB"
-
-      break;
-    case "fi-be":
-      span.style.color = "#ece75f"
-
-      break;
-    case "tek-hazırlama":
-      span.style.color = "#e5de00"
-
-      break;
-    case "tek-hazır":
-      span.style.color = "#e6cc00"
-
-      break;
-    case "tek-sunuldu":
-      span.style.color = "#e69b00"
-
-      break;
-    case "sun-son-gor":
-      span.style.color = "#e47200"
-
-      break;
-    default:
-      break;
-  }
-});
-
-//                  TABLO FORMATLAMA
-tableFormat(numericCells, "numeric");
-tableFormat(textCells, "text");
