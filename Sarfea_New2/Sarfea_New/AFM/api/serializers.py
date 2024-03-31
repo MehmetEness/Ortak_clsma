@@ -107,7 +107,9 @@ class IncomesSerializer(serializers.ModelSerializer):
         return instance
 
 class SalesOfferCardReviseSerializer(serializers.ModelSerializer):
-   
+    
+    client = ClientSerializer(source='Client_Card', read_only=True)
+
     class Meta:
         model = SalesOfferCard_Revise
         fields = '__all__'
@@ -154,6 +156,7 @@ class SalesOfferCardReviseSerializer(serializers.ModelSerializer):
 
 class SalesOfferCardSerializer(serializers.ModelSerializer):
     salesoffer_revises= SalesOfferCardReviseSerializer(many=True, read_only=True)
+    client = ClientSerializer(source='Client_Card', read_only=True)
 
     class Meta:
         model = SalesOfferCard
