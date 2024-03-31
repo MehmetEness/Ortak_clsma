@@ -54,7 +54,7 @@
               <span class="link hide-for-menu">Tedarikçi</span>
             </a>
           </li>
-          {% if user.is_superuser %}
+          
           <li class="tooltip-element" data-tooltip="3">
             <a href="{% url 'sales_offer' %}" data-active="4">
               <div class="icon">
@@ -63,7 +63,7 @@
               <span class="link hide-for-menu">Satış Teklif</span>
             </a>
           </li>
-          {% endif %}
+     
           <li class="tooltip-element" data-tooltip="3">
             <a href="#" data-active="5">
               <div class="icon">
@@ -102,10 +102,17 @@
             <i class="fa-regular fa-user"></i>
             <div class="admin-info">
               <h3>{{user}}</h3>
-              <h5>Admin</h5>
+              
+                {% if user_groups %}
+
+                  {% for group in user_groups %}
+                  <h5> {{ group.name }} </h5>{% if not forloop.last %} {% endif %} 
+                  {% endfor %}
+            
+              {% endif %}
             </div>
           </div>
-          <a href="#" class="log-out">
+          <a href="{% url 'logout' %}" class="log-out">
             <i class="fa-solid fa-right-from-bracket"></i>
           </a>
         </div>

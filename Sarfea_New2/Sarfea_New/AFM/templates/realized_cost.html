@@ -102,7 +102,7 @@
     <div class="container">
       <h3 id="jobhistory-X" class="close-window">X</h3>
       <div class="title">Yapılan İş Ekle</div>
-      <form id="jobhistory_add_form" action="{% url 'jobhistory_add_wp' project_id=project.id %}" method="post">
+      <form id="jobhistory_add_form" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="jobhistory_form" />
         <div class="user-details">
