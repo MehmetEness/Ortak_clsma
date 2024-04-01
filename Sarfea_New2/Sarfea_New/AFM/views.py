@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 import json
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
@@ -12,6 +12,21 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 import evds as e
 from django.contrib.auth.models import User, Group
+
+def handler404(request, exception):
+    """
+    404 hatası için özel bir görünüm.
+    Kullanıcı oturum açmışsa "not_found.html" sayfasına,
+    oturum açmamışsa "login.html" sayfasına yönlendirir.
+    """
+    if request.user.is_authenticated:
+        # Kullanıcı oturum açmışsa
+        response = render(request, 'not_found.html', status=404)
+        return response
+    else:
+        # Kullanıcı oturum açmamışsa
+        return HttpResponseRedirect('/account/login/')
+
 
 #Tests
 def isAdmin(user):

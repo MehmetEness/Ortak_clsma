@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d=)wnw@%shmy#b^@v#pun^w7zukbia2xr3g77w&p%&ndjfpkmd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 APPEND_SLASH = True
 
 # Sarfea_New/settings.py
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
-
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -144,7 +144,8 @@ STATICFILES_DIRS = [
 # Media dosyalarının depolanacağı klasör
 
 # Media dosyalarına erişmek için kullanılan URL
-MEDIA_ROOT = BASE_DIR /"uploads"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
 MEDIA_URL = "/media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
