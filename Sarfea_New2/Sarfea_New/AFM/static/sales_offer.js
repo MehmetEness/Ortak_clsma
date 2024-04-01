@@ -21,6 +21,8 @@ const clientAddWindow = document.querySelector(".client-add-window");
 const reqSalesInputs = document.querySelectorAll("#id_Client_Card, #id_Person_Deal, #id_Location_Card");
 const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_kisi_span, #konum_span");
 
+var editMode = false;
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,14 +51,17 @@ async function getSalesCards(isEdit) {
     });
 
     for (const card of data) {
-      let cardHTML = generateCard(card);
-      cardPlaceRows(cardHTML, card.Situation_Card)
+      if (!card.Is_Gain && !card.Is_Lost && !card.Is_late) {
+        let cardHTML = generateCard(card);
+        cardPlaceRows(cardHTML, card.Situation_Card)
+      }
     }
     dragCards()
     totalSpanFormatForDrag()
     cardFormat();
     cardMenuFunctions()
     singleFİleUpload()
+    editBtns()
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }
@@ -77,7 +82,7 @@ function generateCard(card) {
   return `
   <div id="${card.id}" class="card" draggable="true" data-situation="${card.Situation_Card}">
       <div class="boxes">
-          <p class="bold700">${card.Client_Card}</p>
+          <p class="bold700">${card.client.CompanyName_Clients}</p>
       </div>
       <p>${formattedDate}</p>
       <div class="boxes">
@@ -112,7 +117,7 @@ function generateCard(card) {
       <div class="card-menu">
           <i class="fa-solid fa-ellipsis card_menu-btn"></i>
           <ul class="card_menu">
-              <li><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Düzenle</a></li>
+              <li id="${card.id}" class = "card_edit_btn">Düzenle</li>
               <li onclick="lostCard(${card.id})">Kaybedildi</li>
               <li onclick="gainCard(${card.id})">Kazanıldı</li>
               <li onclick="waitCard(${card.id})">Bekleyen</li>
@@ -393,7 +398,7 @@ function lostCard(cardId) {
     })
     .then((data) => {
       console.log("Kaybedildi işlemi başarılı", data);
-      location.reload();
+      //location.reload();
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -422,11 +427,15 @@ function reLostCard(cardId) {
     })
     .then((data) => {
       console.log("00Kaybedildi işlemi başarılı", data);
-      location.reload();
+      //location.reload();
     })
     .catch((error) => {
       console.error("Hata:", error.message);
     });
+} function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  return parts.length === 2 ? parts.pop().split(";").shift() : null;
 }
 
 //                  GAİN İŞLEMLERİ  
@@ -747,8 +756,11 @@ formAddBtn.addEventListener("click", async function (event) {
     for (const pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }
-
-    await apiFunctions("sales_offer", "POST", formData);
+    if (editMode == false) {
+      await apiFunctions("sales_offer", "POST", formData);        
+    }else{
+        await apiFunctions("sales_offer", "PUT", formData, btnID); 
+    }
     salesOfferAddWindow.style.display = "none";
     clearInputAfterSave(addForm);
     await getSalesCards();
@@ -836,21 +848,21 @@ async function getTotalList() {
       row.innerHTML = `
           <td class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
           <td>${card.Is_Gain ? 'Kazanılan İş' : (card.Is_Lost ? 'Kaybedilen İş' : (card.Is_late ? 'Bekleyen İş' : card.Situation_Card))}</td>
-          <td>${card.Client_Card}</td>
-          <td>${card.Location_Card}</td>
-          <td>${card.Person_Deal}</td>
-          <td>${card.AC_Power_Card}</td>
-          <td>${card.DC_Power_Card}</td>
-          <td>${card.UnitCost_NotIncludingKDV}</td>
-          <td>${card.Cost_NotIncludingKDV_Card}</td>
-          <td>${card.UnitOffer_NotIncludingKDV}</td>
-          <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
-          <td>${card.Terrain_Roof_Card}</td>
-          <td>${card.Roof_Cost_Card}</td>
-          <td>${card.Unit_Cost_with_Roof_Cost}</td>
-          <td>${card.Unit_Offer_with_Roof_Cost}</td>
-          <td>${card.Profit_Rate_Card}</td>
-          <td>${card.Date_Card}</td>
+          <td>${card.client.CompanyName_Clients || "-"}</td>
+          <td>${card.Location_Card || "-"}</td>
+          <td>${card.Person_Deal || "-"}</td>
+          <td>${formatNumber(card.AC_Power_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.DC_Power_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${card.Terrain_Roof_Card || "-"}</td>
+          <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatDateForTable(card.Date_Card)}</td>
         `;
 
       listTableBody.appendChild(row);
@@ -881,92 +893,230 @@ function getClassForSituation(situationCard) {
   }
 }
 // LİSTE İŞ RENGİ VERME
-function listTablePaint(){
+function listTablePaint() {
   let trRowsList = listTable.querySelectorAll("tr");
-trRowsList.forEach((row) => {
-  let span = row.querySelector(".icon-blue")
-  switch (row.className) {
-    case "gain-job":
-      span.style.color = "#38b000"
-      break;
+  trRowsList.forEach((row) => {
+    let span = row.querySelector(".icon-blue")
+    switch (row.className) {
+      case "gain-job":
+        span.style.color = "#38b000"
+        break;
 
-    case "lost-job":
-      span.style.color = "#bf0603"
+      case "lost-job":
+        span.style.color = "#bf0603"
 
-      break;
+        break;
 
-    case "wait-job":
-      span.style.color = "#00296b"
+      case "wait-job":
+        span.style.color = "#00296b"
 
-      break;
-    case "pot-mus":
-      span.style.color = "#D0DDFB"
+        break;
+      case "pot-mus":
+        span.style.color = "#D0DDFB"
 
-      break;
-    case "mal-hes":
-      span.style.color = "#9DB8FB"
+        break;
+      case "mal-hes":
+        span.style.color = "#9DB8FB"
 
-      break;
-    case "fi-be":
-      span.style.color = "#ece75f"
+        break;
+      case "fi-be":
+        span.style.color = "#ece75f"
 
-      break;
-    case "tek-hazırlama":
-      span.style.color = "#e5de00"
+        break;
+      case "tek-hazırlama":
+        span.style.color = "#e5de00"
 
-      break;
-    case "tek-hazır":
-      span.style.color = "#e6cc00"
+        break;
+      case "tek-hazır":
+        span.style.color = "#e6cc00"
 
-      break;
-    case "tek-sunuldu":
-      span.style.color = "#e69b00"
+        break;
+      case "tek-sunuldu":
+        span.style.color = "#e69b00"
 
-      break;
-    case "sun-son-gor":
-      span.style.color = "#e47200"
+        break;
+      case "sun-son-gor":
+        span.style.color = "#e47200"
 
-      break;
-    default:
-      break;
-  }
-});
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 // LOST LİST
 getLostList()
 async function getLostList() {
   try {
-    let currentRows = supplierTableBody.querySelectorAll("tr");
+    //let currentRows = supplierTableBody.querySelectorAll("tr");
     const data = await apiFunctions("sales_offer", "GET");
     let rows = "";
+    const lostTableBody = lostTable.querySelector("tbody");
     for (const card of data) {
-      const row = `
-                <tr>
-                    <td>
-                        <button id="${supplier.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
-                            <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                    </td>
-                    <td>${supplier.CompanyName_Supplier}</td>
-                    <td>${supplier.ContactPerson}</td>
-                    <td>${supplier.PhoneNumber}</td>
-                    <td>${supplier.Email}</td>
-                    <td>${supplier.Location}</td>
-                </tr>
-            `;
-      rows += row;
+      if (card.Is_Lost) {
+        const row = `
+                  <tr>
+                      <td>
+                        <a href="#" onclick="reLostCard(${card.id}); return false;">
+                          <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+                      </td>
+                      <td>${card.client.CompanyName_Clients || "-"}</td>
+                      <td>${card.Location_Card || "-"}</td>
+                      <td>${card.Person_Deal || "-"}</td>
+                      <td>${formatNumber(card.AC_Power_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.DC_Power_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${card.Terrain_Roof_Card || "-"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Profit_Rate_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatDateForTable(card.Date_Card)}</td>
+                  </tr>
+              `;
+        rows += row;
+      }
     }
-    if (data.length > currentRows.length) {
-      supplierTableBody.innerHTML = "";
-      supplierTableBody.insertAdjacentHTML("beforeend", rows);
-      editBtns();
-      sortTableForStart(supplierTable, 1);
-      allTableFormat();
-      sortingTable(supplierTable);
-    }
+    lostTableBody.innerHTML = "";
+    lostTableBody.insertAdjacentHTML("beforeend", rows);
+    //editBtns();
+    //sortTableForStart(supplierTable, 1);
+    //allTableFormat();
+    //sortingTable(supplierTable);    
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }
 }
 
+// SALES LİST
+getSalesList()
+async function getSalesList() {
+  try {
+    const data = await apiFunctions("sales_offer", "GET");
+    let rows = "";
+    const salesTableBody = salesTable.querySelector("tbody");
+    for (const card of data) {
+      if (card.Is_late) {
+        const row = `
+                  <tr>
+                      <td>
+                        <a href="#" onclick="reLostCard(${card.id}); return false;">
+                          <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+                      </td>
+                      <td>${card.client.CompanyName_Clients}</td>
+                      <td>${card.Location_Card}</td>
+                      <td>${card.Person_Deal}</td>
+                      <td>${card.AC_Power_Card}</td>
+                      <td>${card.DC_Power_Card}</td>
+                      <td>${card.UnitCost_NotIncludingKDV}</td>
+                      <td>${card.Cost_NotIncludingKDV_Card}</td>
+                      <td>${card.UnitOffer_NotIncludingKDV}</td>
+                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
+                      <td>${card.Terrain_Roof_Card}</td>
+                      <td>${card.Roof_Cost_Card}</td>
+                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
+                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
+                      <td>${card.Profit_Rate_Card}</td>
+                      <td>${card.Date_Card}</td>
+                  </tr>
+              `;
+        rows += row;
+      }
+    }
+    salesTableBody.innerHTML = "";
+    salesTableBody.insertAdjacentHTML("beforeend", rows);
+    //editBtns();
+    //sortTableForStart(supplierTable, 1);
+    //allTableFormat();
+    //sortingTable(supplierTable);    
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+
+// WON LİST
+getWonList()
+async function getWonList() {
+  try {
+    const data = await apiFunctions("sales_offer", "GET");
+    let rows = "";
+    const wonTableBody = wonTable.querySelector("tbody");
+    for (const card of data) {
+      if (card.Is_late) {
+        const row = `
+                  <tr>
+                      <td>
+                        <a href="#" onclick="reLostCard(${card.id}); return false;">
+                          <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+                      </td>
+                      <td>${card.client.CompanyName_Clients}</td>
+                      <td>${card.Location_Card}</td>
+                      <td>${card.Person_Deal}</td>
+                      <td>${card.AC_Power_Card}</td>
+                      <td>${card.DC_Power_Card}</td>
+                      <td>${card.UnitCost_NotIncludingKDV}</td>
+                      <td>${card.Cost_NotIncludingKDV_Card}</td>
+                      <td>${card.UnitOffer_NotIncludingKDV}</td>
+                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
+                      <td>${card.Terrain_Roof_Card}</td>
+                      <td>${card.Roof_Cost_Card}</td>
+                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
+                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
+                      <td>${card.Profit_Rate_Card}</td>
+                      <td>${card.Date_Card}</td>
+                  </tr>
+              `;
+        rows += row;
+      }
+    }
+    wonTableBody.innerHTML = "";
+    wonTableBody.insertAdjacentHTML("beforeend", rows);
+    //editBtns();
+    //sortTableForStart(supplierTable, 1);
+    //allTableFormat();
+    //sortingTable(supplierTable);    
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+
+
+
+
+
+//                CARD EDİT FUNCTİON
+let btnID = -1;
+function editBtns() {
+  let editButtons = document.querySelectorAll(".card_edit_btn");
+  console.log(editButtons)
+  editButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setTimeout(async () => {
+        editMode = true;
+        btnID = button.id;
+        const data = await apiFunctions("sales_offer", "GETID", "x", btnID)
+        console.log(data)
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+
+            var element = document.querySelector('input[name="' + key + '"]');
+            console.log(element)
+            if (element) {
+              if(element.type != "file"){
+                element.value = data[key];
+              }              
+            }
+          }
+        }
+        salesOfferAddWindow.style.display = "flex";
+      }, 10);
+    })
+  });
+}
