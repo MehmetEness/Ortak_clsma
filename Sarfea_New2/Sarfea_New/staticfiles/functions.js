@@ -72,6 +72,17 @@ function format(number) {
     return formattedNumber;
   }
 }
+function formatDateForTable(datex){
+  let formattedDate;
+  if (datex) {
+    let date = new Date(datex);
+    formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+    return formattedDate;
+  } else { 
+    formattedDate = "-";
+    return formattedDate; 
+  }
+}
 
 //                  SPAN FORMATLAMA
 
