@@ -30,14 +30,19 @@
               <span class="link hide-for-menu">Anasayfa</span>
             </a>
           </li>
+          {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
           <li class="tooltip-element" data-tooltip="1">
-            <a href="{% url 'projects' %}" data-active="1">
-              <div class="icon">
-                <i class="fas fa-project-diagram"></i>
-              </div>
-              <span class="link hide-for-menu">Projeler</span>
-            </a>
+              <a href="{% url 'projects' %}" data-active="1">
+                  <div class="icon">
+                      <i class="fas fa-project-diagram"></i>
+                  </div>
+                  <span class="link hide-for-menu">Projeler</span>
+              </a>
           </li>
+          {% endif %}
+
+          {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
+
           <li class="tooltip-element" data-tooltip="2">
             <a href="{% url 'client' %}" data-active="2">
               <div class="icon">
@@ -46,6 +51,10 @@
               <span class="link hide-for-menu">Müşteri</span>
             </a>
           </li>
+          {% endif %}
+          
+          {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
+
           <li class="tooltip-element" data-tooltip="3">
             <a href="{% url 'supplier' %}" data-active="3">
               <div class="icon">
@@ -54,7 +63,10 @@
               <span class="link hide-for-menu">Tedarikçi</span>
             </a>
           </li>
-          
+          {% endif %}
+
+          {% if 'admin' in user_groups|lower or 'satış grubu' in user_groups|lower %}
+
           <li class="tooltip-element" data-tooltip="3">
             <a href="{% url 'sales_offer' %}" data-active="4">
               <div class="icon">
@@ -63,7 +75,10 @@
               <span class="link hide-for-menu">Satış Teklif</span>
             </a>
           </li>
-     
+          {% endif %}
+
+          {% if 'admin' in user_groups|lower or 'stok grubu' in user_groups|lower %}
+
           <li class="tooltip-element" data-tooltip="3">
             <a href="#" data-active="5">
               <div class="icon">
@@ -72,6 +87,10 @@
               <span class="link hide-for-menu">Stok</span>
             </a>
           </li>
+          {% endif %} 
+
+          {% if 'admin' in user_groups|lower or 'bakım grubu' in user_groups|lower %}
+
           <li class="tooltip-element" data-tooltip="3">
             <a href="{% url 'operation_care' %}" data-active="6">
               <div class="icon">
@@ -80,6 +99,9 @@
               <span class="link hide-for-menu">İşletme Bakım</span>
             </a>
           </li>
+          {% endif %}
+
+          {% if 'admin' in user_groups|lower or 'rapor grubu' in user_groups|lower %}
           <li class="tooltip-element" data-tooltip="3">
             <a href="#" data-active="7">
               <div class="icon">
@@ -88,7 +110,7 @@
               <span class="link hide-for-menu">Raporlama</span>
             </a>
           </li>
-          
+          {% endif %}
 
 
       </div>
