@@ -1,6 +1,11 @@
 const rowsElements = document.querySelectorAll(
   '.rows[data-situation="Potansiyel Müşteri"] .card-body , .rows[data-situation="Maliyet Hesaplama"] .card-body, .rows[data-situation="Fiyat Belirleme"] .card-body, .rows[data-situation="Teklif Hazırlama"] .card-body, .rows[data-situation="Teklif Hazır"] .card-body, .rows[data-situation="Teklif Sunuldu"] .card-body, .rows[data-situation="Sunum Sonrası Görüşme"] .card-body'
 );
+const listTable = document.querySelector("#list_table");
+const lostTable = document.querySelector("#lost_table");
+const salesTable = document.querySelector("#sales_table");
+const wonTable = document.querySelector("#won_table");
+
 const topMenuLi = document.querySelectorAll(".top-menu-ul li");
 const rows = document.querySelectorAll(".rows");
 const details = document.querySelector(".details");
@@ -38,7 +43,7 @@ async function getSalesCards(isEdit) {
   try {
     let Rows = document.querySelectorAll(".card-body");
     const data = await apiFunctions("sales_offer", "GET");
-    console.log(data)
+    //console.log(data)
     Rows.forEach(row => {
       row.innerHTML = '';
     });
@@ -662,41 +667,41 @@ document.addEventListener("mousedown", (event) => {
     fileBox.style.display = "none";
   }
 });
-  //                  DOSYA YÜKLEME İŞLEMLERİ
-  var cardId, fileType;
- 
-  document.getElementById("id_file_up").addEventListener("change", function () {
-    var fileName = this.value.split("\\").pop();
-    document.getElementById("details_span").innerText = fileName + " seçildi";
-  });
-  document.getElementById("submit_btn").addEventListener("click", function (event) {
-    event.preventDefault();
-    uploadFile(cardId, fileType);
-    
-    setTimeout(function () {
-      //document.querySelector("#file-form").submit();
-      getSalesCards();
-      fileBox.style.display = "none";
-    }, 50);
-  });
-  function uploadFile(cardId, fileType) {
-    var formData = new FormData();
-    formData.append("file", document.getElementById("id_file_up").files[0]);
-    formData.append("card_id", cardId);
-    formData.append("file_type", fileType);
-  
-    fetch("/post_card_file/", {
-      method: "POST",
-      body: formData,
+//                  DOSYA YÜKLEME İŞLEMLERİ
+var cardId, fileType;
+
+document.getElementById("id_file_up").addEventListener("change", function () {
+  var fileName = this.value.split("\\").pop();
+  document.getElementById("details_span").innerText = fileName + " seçildi";
+});
+document.getElementById("submit_btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  uploadFile(cardId, fileType);
+
+  setTimeout(function () {
+    //document.querySelector("#file-form").submit();
+    getSalesCards();
+    fileBox.style.display = "none";
+  }, 50);
+});
+function uploadFile(cardId, fileType) {
+  var formData = new FormData();
+  formData.append("file", document.getElementById("id_file_up").files[0]);
+  formData.append("card_id", cardId);
+  formData.append("file_type", fileType);
+
+  fetch("/post_card_file/", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 // KAPATMA
 let xBtn = document.querySelectorAll(".close-window");
@@ -767,7 +772,7 @@ clientFormAddBtn.addEventListener("click", async function (event) {
       setTimeout(() => {
         getClients();
       }, 50);
-      
+
       clearInputAfterSave(clientAddForm);
     } catch (error) {
       console.error("There was an error!", error);
@@ -797,4 +802,171 @@ async function getClients() {
 
 //                  CARD TARİHE GÖRE SIRALAMA
 cardDateList(rowsElements);
-  
+
+
+
+/***********************************************************
+  #                       LİSTELERİ YAZDIRMA
+  ***********************************************************/
+
+getTotalList()
+// TOTAL LİSTE
+async function getTotalList() {
+  try {
+    const data = await apiFunctions("sales_offer", "GET");
+    console.log(data)
+    let rows = "";
+    const listTableBody = listTable.querySelector("tbody");
+    listTableBody.innerHTML = "";
+    for (const card of data) {
+      var row = document.createElement("tr");
+      //row.id = card.id;
+      row.setAttribute("data-id", card.id);
+
+      if (card.Is_Gain) {
+        row.classList.add("gain-job");
+      } else if (card.Is_Lost) {
+        row.classList.add("lost-job");
+      } else if (card.Is_late) {
+        row.classList.add("wait-job");
+      } else {
+        row.classList.add(getClassForSituation(card.Situation_Card));
+      }
+
+      row.innerHTML = `
+          <td class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
+          <td>${card.Is_Gain ? 'Kazanılan İş' : (card.Is_Lost ? 'Kaybedilen İş' : (card.Is_late ? 'Bekleyen İş' : card.Situation_Card))}</td>
+          <td>${card.Client_Card}</td>
+          <td>${card.Location_Card}</td>
+          <td>${card.Person_Deal}</td>
+          <td>${card.AC_Power_Card}</td>
+          <td>${card.DC_Power_Card}</td>
+          <td>${card.UnitCost_NotIncludingKDV}</td>
+          <td>${card.Cost_NotIncludingKDV_Card}</td>
+          <td>${card.UnitOffer_NotIncludingKDV}</td>
+          <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
+          <td>${card.Terrain_Roof_Card}</td>
+          <td>${card.Roof_Cost_Card}</td>
+          <td>${card.Unit_Cost_with_Roof_Cost}</td>
+          <td>${card.Unit_Offer_with_Roof_Cost}</td>
+          <td>${card.Profit_Rate_Card}</td>
+          <td>${card.Date_Card}</td>
+        `;
+
+      listTableBody.appendChild(row);
+    }
+    listTablePaint();
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+function getClassForSituation(situationCard) {
+  switch (situationCard) {
+    case 'Potansiyel Müşteri':
+      return 'pot-mus';
+    case 'Maliyet Hesaplama':
+      return 'mal-hes';
+    case 'Fiyat Belirleme':
+      return 'fi-be';
+    case 'Teklif Hazırlama':
+      return 'tek-hazırlama';
+    case 'Teklif Hazır':
+      return 'tek-hazır';
+    case 'Teklif Sunuldu':
+      return 'tek-sunuldu';
+    case 'Sunum Sonrası Görüşme':
+      return 'sun-son-gor';
+    default:
+      return 'x';
+  }
+}
+// LİSTE İŞ RENGİ VERME
+function listTablePaint(){
+  let trRowsList = listTable.querySelectorAll("tr");
+trRowsList.forEach((row) => {
+  let span = row.querySelector(".icon-blue")
+  switch (row.className) {
+    case "gain-job":
+      span.style.color = "#38b000"
+      break;
+
+    case "lost-job":
+      span.style.color = "#bf0603"
+
+      break;
+
+    case "wait-job":
+      span.style.color = "#00296b"
+
+      break;
+    case "pot-mus":
+      span.style.color = "#D0DDFB"
+
+      break;
+    case "mal-hes":
+      span.style.color = "#9DB8FB"
+
+      break;
+    case "fi-be":
+      span.style.color = "#ece75f"
+
+      break;
+    case "tek-hazırlama":
+      span.style.color = "#e5de00"
+
+      break;
+    case "tek-hazır":
+      span.style.color = "#e6cc00"
+
+      break;
+    case "tek-sunuldu":
+      span.style.color = "#e69b00"
+
+      break;
+    case "sun-son-gor":
+      span.style.color = "#e47200"
+
+      break;
+    default:
+      break;
+  }
+});
+}
+
+// LOST LİST
+getLostList()
+async function getLostList() {
+  try {
+    let currentRows = supplierTableBody.querySelectorAll("tr");
+    const data = await apiFunctions("sales_offer", "GET");
+    let rows = "";
+    for (const card of data) {
+      const row = `
+                <tr>
+                    <td>
+                        <button id="${supplier.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
+                            <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                    <td>${supplier.CompanyName_Supplier}</td>
+                    <td>${supplier.ContactPerson}</td>
+                    <td>${supplier.PhoneNumber}</td>
+                    <td>${supplier.Email}</td>
+                    <td>${supplier.Location}</td>
+                </tr>
+            `;
+      rows += row;
+    }
+    if (data.length > currentRows.length) {
+      supplierTableBody.innerHTML = "";
+      supplierTableBody.insertAdjacentHTML("beforeend", rows);
+      editBtns();
+      sortTableForStart(supplierTable, 1);
+      allTableFormat();
+      sortingTable(supplierTable);
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+

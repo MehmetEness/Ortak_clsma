@@ -753,7 +753,7 @@ tbody tr.hide td p {
         </div>   
         <div style="display: none;" class="list-container container top-container">
           <div class="lists">
-            <table id="table" class="table table-sortable">
+            <table id="list_table" class="table table-sortable">
                <thead><th style="width: 100px;"></th>
                   <th style="padding: 0px 80px;">Durum<span class="icon-arrow">&UpArrow;</span></th>
                   <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
@@ -773,7 +773,7 @@ tbody tr.hide td p {
                   <th style="padding: 0px 50px;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
                </thead>
                <tbody>
-                {% for card in sales_offer_card%}
+                <!-- {% for card in sales_offer_card%}
                   <tr data-id="{{ card.id }}"
                     {% if card.Is_Gain == True %} class="gain-job"
                     {% elif card.Is_Lost == True %} class="lost-job"
@@ -820,14 +820,14 @@ tbody tr.hide td p {
 
                     
                   </tr>
-                  {% endfor %}      
+                  {% endfor %}       -->
                </tbody>
               </table>
             </div>
         </div>
         <div style="display: none;" class="lost-job-container container top-container">          
           <div class="lists">
-            <table id="table">
+            <table id="lost_table">
                <thead>
                 <th></th>
                 <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
@@ -880,7 +880,7 @@ tbody tr.hide td p {
         </div>
         <div style="display: none;" class="sales-container container top-container">
           <div class="lists">
-            <table id="table" class="table table-sortable table_row">
+            <table id="sales_table" class="table table-sortable table_row">
                <thead>
                 <th></th>
                 <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
@@ -928,7 +928,7 @@ tbody tr.hide td p {
         </div>
         <div style="display: none;" class="won-container container top-container">
           <div class="lists">
-            <table id="table" class="table table-sortable table_row">
+            <table id="won_table" class="table table-sortable table_row">
                <thead>
                 <th></th>
                 <th>Müşteri Adı<span class="icon-arrow">&UpArrow;</span></th>
