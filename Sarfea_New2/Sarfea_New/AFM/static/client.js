@@ -7,6 +7,9 @@ var reqLabels = document.querySelectorAll("#firma_adi_span");
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const clientAddForm = document.getElementById("client_add_form");
 
+let currentClientName;
+let editMode = false;
+
 document.addEventListener("DOMContentLoaded", async () => {
   await getClient();
   setInterval(async function () {
@@ -50,13 +53,13 @@ async function getClient(isEdit) {
 
 const clientFormAddBtn = document.querySelector("#kaydet_btn");
 const formTitle = document.querySelector(".title");
-var editMode = false;
 let clientId;
 
 const clientAddWindow = document.querySelector(".client-add-window");
 clientAddBtn.addEventListener("click", () => {
   setTimeout(() => {
     editMode = false;
+    currentClientName = "0";
     formTitle.textContent = "Tedarikci Ekle";
     clientAddWindow.style.display = "flex";
   }, 10);
@@ -106,7 +109,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
   var firmaSpan = document.querySelector("#firma_adi_span")
   event.preventDefault();
 
-  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan, currentClientName)) {
     if (editMode == false) {
       const formData = new FormData(clientAddForm);
       await apiFunctions("client", "POST", formData);
@@ -114,7 +117,8 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
       clientAddWindow.style.display = "none";
       clearInputAfterSave(clientAddForm);
     } else {
-      await apiFunctions("client", "PUT", clientAddForm, btnID);
+      const formData = new FormData(clientAddForm);
+      await apiFunctions("client", "PUT", formData, btnID);
       getClient("EDİT");
       clientAddWindow.style.display = "none";
       clearInputAfterSave(clientAddForm);
@@ -133,6 +137,8 @@ function editBtns() {
         btnID = button.id;
         formTitle.textContent = "Düzenle";
         const data = await apiFunctions("client", "GETID", "x", btnID)
+        //console.log(data)
+        currentClientName = data.CompanyName_Clients;
         for (var key in data) {
           if (data.hasOwnProperty(key)) {
             var element = document.querySelector('input[name="' + key + '"]');

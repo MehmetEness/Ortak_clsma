@@ -19,6 +19,7 @@ const incomeP = document.querySelector("#income_p")
 incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2)) + " $";
 
 var editMode = false;
+let btnID;
 let clientId;
 
 //----- İNCOME
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await getIncomes();
     }, 5000);
 });
-async function getIncomes() {
+async function getIncomes(edit) {
     try {
         let currentRows = incomeTable.querySelectorAll("tbody tr");
         let totalTl = 0;
@@ -80,8 +81,8 @@ async function getIncomes() {
                 <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
               </button>
             </td>
-            <td>${income.client_incomes.CompanyName_Clients}</td>
             <td>${income.CompanyName_ReceivePayment_Incomes}</td>
+            <td>${income.client_incomes.CompanyName_Clients}</td>
             <td>${formattedDate}</td>
             <td>${income.PaymentType_Incomes}</td>
             <td>${income.Amount_Incomes}</td>
@@ -95,7 +96,7 @@ async function getIncomes() {
             //console.log(totalUsd)
         }
 
-        if (data.length > currentRows.length || currentRows.length == 1) {
+        if (data.length > currentRows.length || currentRows.length == 1 || edit) {
             document.querySelector("#tl_td").innerHTML = "";
             document.querySelector("#tl_td").insertAdjacentHTML("beforeend", formatNumber(totalTl, 2) + "₺");
             document.querySelector("#usd_td").innerHTML = "";
@@ -206,7 +207,7 @@ const incomeFormAddBtn = document.querySelector("#income-create-btn");
 incomeFormAddBtn.addEventListener("click", async function (event) {
 
     event.preventDefault();
-   
+
     if (requiredInputs(reqIncomeInputs, reqIncomeLabels)) {
         dateInputs.forEach(input => {
             input.value = formatDateForSubmit(input.value)
@@ -229,11 +230,17 @@ incomeFormAddBtn.addEventListener("click", async function (event) {
         }
 
         //console.log(formDataString);
-        await apiFunctions("income", "POST", formData);
+        if (editMode == false) {
+            await apiFunctions("income", "POST", formData);
+        } else {
+            await apiFunctions("income", "PUT", formData, btnID);
+        }
         incomeAddWindow.style.display = "none";
-        getIncomes()
+        getIncomes(true);
         getClients();
         clearInputAfterSave(incomeAddForm);
+
+        
     }
 });
 
@@ -285,16 +292,28 @@ function editBtns() {
                 editMode = true;
                 btnID = button.id;
                 const data = await apiFunctions("income", "GETID", "x", btnID)
-                console.log(data)
+                //console.log(data)
                 for (var key in data) {
                     if (data.hasOwnProperty(key)) {
                         var element = document.querySelector('input[name="' + key + '"]');
+                        var selectElement = document.querySelector('select[name="' + key + '"]');                        
                         if (element) {
-                            element.value = data[key];
+                            //console.log(key)
+                            //console.log(data[key])
+                            if (key == "CompanyName_Pay_Incomes") {
+                                element.value = data["client_incomes"].CompanyName_Clients;
+                                element.setAttribute('data-id', data[key]);
+                            } else {
+                                element.value = data[key];
+                            }
+                        } else if (selectElement) {
+                            selectElement.value = data[key];
                         }
                     }
                 }
-                console.log("dsf")
+                getClients();
+                onPageLoads(formatedInputs)
+                formatDateInputsForLoad(dateInputs)
                 incomeAddWindow.style.display = "flex";
             }, 10);
         })

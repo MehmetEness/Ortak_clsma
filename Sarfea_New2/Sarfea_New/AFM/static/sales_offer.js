@@ -143,20 +143,22 @@ function handleMenuItemClick(clickedItemId) {
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
       wonContainer.style.display = "none";
+      getTotalList()     
       break;
     case "sale_time":
       listContainer.style.display = "none";
       maniContainer.style.display = "flex";
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
-      wonContainer.style.display = "none";
+      wonContainer.style.display = "none";           
       break;
     case "waiting_job":
       listContainer.style.display = "none";
       maniContainer.style.display = "none";
       salesContainer.style.display = "flex";
       lostJobContainer.style.display = "none";
-      wonContainer.style.display = "none";
+      wonContainer.style.display = "none";      
+      getSalesList()
       break;
     case "losing_job":
       listContainer.style.display = "none";
@@ -164,6 +166,7 @@ function handleMenuItemClick(clickedItemId) {
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "flex";
       wonContainer.style.display = "none";
+      getLostList()
       break;
     case "won_job":
       listContainer.style.display = "none";
@@ -171,6 +174,7 @@ function handleMenuItemClick(clickedItemId) {
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
       wonContainer.style.display = "flex";
+      getWonList()
       break;
     default:
       break;
@@ -204,6 +208,7 @@ function dragCards() {
   }
   function dragEnd() {
     setTimeout(() => (this.style.display = "flex"), 0);
+    
   }
   for (j of rowsElements) {
     j.addEventListener("dragover", dragOver);
@@ -242,7 +247,6 @@ function dragCards() {
   }
   function dragLeave() {
   }
-
 }
 
 //              TAŞIMA SONRASI TOTAL SPANLARIN GÜNCELLENMESİ
@@ -757,13 +761,17 @@ formAddBtn.addEventListener("click", async function (event) {
       console.log(pair[0] + ': ' + pair[1]);
     }
     if (editMode == false) {
-      await apiFunctions("sales_offer", "POST", formData);        
-    }else{
-        await apiFunctions("sales_offer", "PUT", formData, btnID); 
+      await apiFunctions("sales_offer", "POST", formData);
+    } else {
+      await apiFunctions("sales_offer", "PUT", formData, btnID);
     }
     salesOfferAddWindow.style.display = "none";
     clearInputAfterSave(addForm);
     await getSalesCards();
+    await getTotalList();
+    await getLostList();
+    await getSalesList();
+    await getWonList();
   }
 });
 
@@ -1109,9 +1117,9 @@ function editBtns() {
             var element = document.querySelector('input[name="' + key + '"]');
             console.log(element)
             if (element) {
-              if(element.type != "file"){
+              if (element.type != "file") {
                 element.value = data[key];
-              }              
+              }
             }
           }
         }
@@ -1120,3 +1128,52 @@ function editBtns() {
     })
   });
 }
+
+
+//                  MALİYET HESAPLAMA İŞLEMLERİ
+var teklifBedeliInput = document.querySelector("#id_Offer_Cost_NotIncludingKDV_Card");
+var dcGucInput = document.querySelector('#id_DC_Power_Card');
+var birimTeklifInput = document.querySelector("#id_UnitOffer_NotIncludingKDV");
+
+var birimBasiMaliyetInput = document.querySelector("#id_UnitCost_NotIncludingKDV");
+var isBedeliInput = document.querySelector("#id_Cost_NotIncludingKDV_Card");
+let teklifBedeliCalc = document.querySelector("#teklif_bedeli_btn");
+let birimTeklifCalc = document.querySelector("#br_tek_btn");
+let toplamMaliyetCalc = document.querySelector("#total_mal_btn");
+let birimMaliyetCalc = document.querySelector("#br_mal_btn");
+let dcGucCalc = document.querySelector("#dc_guc_btn");
+
+teklifBedeliCalc.addEventListener("click", () => {
+  if (!(clear2(birimTeklifInput.value) == "") && !(clear2(dcGucInput.value) == "")) {
+    var value = clear2(birimTeklifInput.value) * clear2(dcGucInput.value);
+    teklifBedeliInput.value = formatNumber(value, 2);
+  }
+});
+birimTeklifCalc.addEventListener("click", () => {
+  if (!(clear2(teklifBedeliInput.value) == "") && !(clear2(dcGucInput.value) == "")) {
+    var value = clear2(teklifBedeliInput.value) / clear2(dcGucInput.value);
+    birimTeklifInput.value = formatNumber(value, 2);
+  }
+});
+toplamMaliyetCalc.addEventListener("click", () => {
+  if (!(clear2(birimBasiMaliyetInput.value) == "") && !(clear2(dcGucInput.value) == "")) {
+    var value = clear2(birimBasiMaliyetInput.value) * clear2(dcGucInput.value);
+    isBedeliInput.value = formatNumber(value, 2);
+  }
+});
+birimMaliyetCalc.addEventListener("click", () => {
+  if (!(clear2(isBedeliInput.value) == "") && !(clear2(dcGucInput.value) == "")) {
+    var value = clear2(isBedeliInput.value) / clear2(dcGucInput.value);
+    birimBasiMaliyetInput.value = formatNumber(value, 2);
+  }
+});
+dcGucCalc.addEventListener("click", () => {
+  if (!(clear2(teklifBedeliInput.value) == "") && !(clear2(birimTeklifInput.value) == "")) {
+    var value = clear2(teklifBedeliInput.value) / clear2(birimTeklifInput.value);
+    dcGucInput.value = formatNumber(value, 2);
+  }
+  if (!(clear2(isBedeliInput.value) == "") && !(clear2(birimBasiMaliyetInput.value) == "")) {
+    var value = clear2(isBedeliInput.value) / clear2(birimBasiMaliyetInput.value);
+    dcGucInput.value = formatNumber(value, 2);
+  }
+});

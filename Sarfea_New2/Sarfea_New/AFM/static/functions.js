@@ -72,15 +72,15 @@ function format(number) {
     return formattedNumber;
   }
 }
-function formatDateForTable(datex){
+function formatDateForTable(datex) {
   let formattedDate;
   if (datex) {
     let date = new Date(datex);
     formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
     return formattedDate;
-  } else { 
+  } else {
     formattedDate = "-";
-    return formattedDate; 
+    return formattedDate;
   }
 }
 
@@ -395,8 +395,6 @@ function compareDates(date1, date2) {
 
 function requiredInputs(inputs, labels) {
   var value = 0;
-  console.log(inputs)
-  console.log(labels)
   inputs.forEach(function (input, index) {
     if (input.value == "") {
       labels[index].style.color = "red";
@@ -413,58 +411,64 @@ function requiredInputs(inputs, labels) {
     return false;
   }
 }
-async function supplierNameControl(input, label) {
+async function supplierNameControl(input, label, currentSupplier) {
   var data = await apiFunctions("supplier", "GET");
   let exClient = input.value.trim().toLowerCase();
   let bool = true;
-
-  for (var supplier of data) {
-    let reClient = supplier.CompanyName_Supplier.trim().toLowerCase();
-    if (reClient == exClient) {
-      label.style.color = "red";
-      label.style.fontWeight = "600";
-      bool = false;
-      break;
-    } else {
-      label.style.color = "black";
-      label.style.fontWeight = "500";
+ 
+    for (var supplier of data) {
+      if (currentSupplier != supplier.CompanyName_Supplier) {
+      let reClient = supplier.CompanyName_Supplier.trim().toLowerCase();
+      if (reClient == exClient) {
+        label.style.color = "red";
+        label.style.fontWeight = "600";
+        bool = false;
+        break;
+      } else {
+        label.style.color = "black";
+        label.style.fontWeight = "500";
+      }
     }
   }
   return bool;
 }
-async function clientNameControl(input, label) {
+async function clientNameControl(input, label, currentClient) {
   var data = await apiFunctions("client", "GET");
   let exClient = input.value.trim().toLowerCase();
   let bool = true;
 
   for (var supplier of data) {
-    let reClient = supplier.CompanyName_Clients.trim().toLowerCase();
-    if (reClient == exClient) {
-      label.style.color = "red";
-      label.style.fontWeight = "600";
-      bool = false;
-      break;
-    } else {
-      label.style.color = "black";
-      label.style.fontWeight = "500";
-    }
+    if (currentClient != supplier.CompanyName_Clients) {
+        let reClient = supplier.CompanyName_Clients.trim().toLowerCase();
+        if (reClient == exClient) {
+          label.style.color = "red";
+          label.style.fontWeight = "600";
+          bool = false;
+          break;
+        } else {
+          label.style.color = "black";
+          label.style.fontWeight = "500";
+        }
+    }    
   }
   return bool;
 }
-async function projectNameControl(input, label) {
+async function projectNameControl(input, label, currentProject) {
   var data = await apiFunctions("project", "GET");
   let exClient = input.value.trim().toLowerCase();
-  let bool = true;
-  for (var supplier of data) {
-    let reClient = supplier.ProjectName.trim().toLowerCase();
-    if (reClient == exClient) {
-      label.style.color = "red";
-      label.style.fontWeight = "600";
-      bool = false;
-      break;
-    } else {
-      label.style.color = "black";
-      label.style.fontWeight = "500";
+  let bool = true;  
+    for (var supplier of data) {
+      if (currentProject != supplier.ProjectName) {
+      let reClient = supplier.ProjectName.trim().toLowerCase();
+      if (reClient == exClient) {
+        label.style.color = "red";
+        label.style.fontWeight = "600";
+        bool = false;
+        break;
+      } else {
+        label.style.color = "black";
+        label.style.fontWeight = "500";
+      }
     }
   }
   return bool;
@@ -783,7 +787,7 @@ function formatDate(date) {
 function formatDateForSubmit(date) {
   if (date.length == 10) {
     var splits = date.split(".");
-    console.log(splits)
+    //console.log(splits)
     var gun = splits[0];
     var ay = splits[1];
     var yil = splits[2];
@@ -940,7 +944,6 @@ async function apiFunctions(name, type, myForm, id) {
     case "GETID":
       try {
         const response = await fetch(`/api_${name}/${id}`);
-        console.log(`/api_${name}/${id}`)
         const data = await response.json();
         return data;
       } catch (error) {
@@ -950,7 +953,6 @@ async function apiFunctions(name, type, myForm, id) {
 
     case "POST":
       try {
-        console.log(`/api_${name}/`)
         await fetch(`/api_${name}/`, {
           method: "POST",
           headers: {
