@@ -1,185 +1,96 @@
+var dateInput = document.querySelector("#id_ChekDate_Incomes");
+var lastDateInput = document.querySelector("#id_LastChekDate_Incomes");
+var firmaAddBtn = document.getElementById("paying-firma-add-btn");
+var clientFirmaAddWindow = document.querySelector(".clientFirmaAddWindow");
+var amountInput = document.querySelector("#id_Amount_Incomes");
+var reqInputs = document.querySelectorAll("#id_CompanyName_Pay_Incomes, #id_ProjectName_Incomes");
+var reqLabels = document.querySelectorAll("#odeme_yapan_firma_span, #proje_adi_span");
+var createBtn = document.querySelector("#project-create-btn");
+const paymentTypeInput = document.getElementById('id_PaymentType_Incomes');
+var chekLastDateBox = document.getElementById("id_boxLastChekDate_Incomes");
+var form = document.querySelector("#my-form");
+
+var firmalar = document.querySelectorAll("#dropdown2 .dropdown-item");
+var firmaAddInput = document.querySelector("#id_CompanyName_Clients");          
+var firmaSubmitBtn = document.querySelector("#firma_add_btn");
+var firmaForm = document.querySelector("#firma_form");
+var firmaAddLabel = document.querySelector("#firma_add_label");
+var clientFirmaAddModal = document.getElementById("clientFirmaAdd-modal");
 
 
-var amountInput = document.querySelector("#id_Amount_Incomes");    // Alınan miktar
-var kurInput = document.querySelector("#id_Dollar_Rate_Incomes");  // Dolar kuru
-var dateForKur = document.querySelector("#id_ChekDate_Incomes");   // Tarih
-var timeForKur = document.querySelector("#kur-time");              // Kur saati
-var buyingValues ; 
-var tarih ;
-
-//**************      KUR HESAPLAMA      ********************
 
 
-// Hedef tarih
-var hedefTarih = '06-01-2015';
 
-// JSON dosyasının URL'si
-var dosyaURL = "{% static 'kur.json' %}";
 
-// JSON dosyasını fetch ile oku
-fetch(dosyaURL)
-  .then(response => response.json())
-  .then(data => {
-    try {
-      // Hedef tarihi kullanarak veriyi filtrele
-      const hedefVeri = data.items.find(item => item.Tarih === hedefTarih);
+//                  TARİH İNPUTLARI FORMATLAMA
 
-      if (hedefVeri) {
-        // TP_DK_USD_S alanını konsola yazdır
-        console.log(hedefVeri.TP_DK_USD_S);
-      } else {
-        console.log('Belirtilen tarihe ait veri bulunamadı.');
-      }
-    } catch (parseHata) {
-      console.error('JSON parse hatası:', parseHata);
+dateInput.addEventListener('input', function(event) {
+    var userInput = dateInput.value;    
+    if (event.inputType !== 'deleteContentBackward') {
+        dateInput.value = formatDate(userInput);
     }
-  })
-  .catch(err => {
-    console.error('Dosya okuma hatası:', err);
-  });
+});
+lastDateInput.addEventListener('input', function(event) {
+    var userInput = lastDateInput.value;    
+    if (event.inputType !== 'deleteContentBackward') {
+        lastDateInput.value = formatDate(userInput);
+    }
+});
 
+//                  INPUT FORMATLAMA
 
+inputForFormat(amountInput);
 
+//                  FORM SUBMİT ETME
 
+createBtn.addEventListener("click", function(event) {
+    event.preventDefault();       
+    if(requiredInputs(reqInputs, reqLabels)){
+        dateInput.value = formatDateForSubmit(dateInput.value);
+        lastDateInput.value = formatDateForSubmit(lastDateInput.value);
+        amountInput.value = clearForSubmit(amountInput.value);
+        form.submit();
+    }  
+});  
 
-//selection seçimine göre yapılacak işlem
+//                  ÇEK SON KULLANIM İNPUT
 
-timeForKur.addEventListener('change', function () {
-    // Seçilen değeri al
-    const secilenDeger = timeForKur.value;
-
-    // Seçilen değere göre işlem yap
-    if (secilenDeger === 'secenek1') {
-        
-    } else if (secilenDeger === 'secenek2') {
-        tarih = birGunOncekiTarih(dateForKur.value).replace(/-/g, '');
-        fetch(dosyaURL)
-        .then(response => response.json())
-        .then(data => {
-          try {
-            // Hedef tarihi kullanarak veriyi filtrele
-            const hedefVeri = data.items.find(item => item.Tarih === tarih);
-      
-            if (hedefVeri) {
-              // TP_DK_USD_S alanını konsola yazdır
-              console.log(hedefVeri.TP_DK_USD_S);
-            } else {
-              console.log('Belirtilen tarihe ait veri bulunamadı.');
-            }
-          } catch (parseHata) {
-            console.error('JSON parse hatası:', parseHata);
-          }
-        })
-        .catch(err => {
-          console.error('Dosya okuma hatası:', err);
-        });
-    ////-----------------------------------------
-            
-    } else if (secilenDeger === 'secenek3') {
-        tarih = tarihFormatiniDegistir(dateForKur.value);    
-        fetch(dosyaURL)
-        .then(response => response.json())
-        .then(data => {
-          try {
-            // Hedef tarihi kullanarak veriyi filtrele
-            const hedefVeri = data.items.find(item => item.Tarih === tarih);
-      
-            if (hedefVeri) {
-              // TP_DK_USD_S alanını konsola yazdır
-              console.log(hedefVeri.TP_DK_USD_S);
-            } else {
-              console.log('Belirtilen tarihe ait veri bulunamadı.');
-            }
-          } catch (parseHata) {
-            console.error('JSON parse hatası:', parseHata);
-          }
-        })
-        .catch(err => {
-          console.error('Dosya okuma hatası:', err);
-        });
+if (paymentTypeInput.value == "Çek") {
+    chekLastDateBox.style.display = "block";
+} else {
+    chekLastDateBox.style.display = "none";
+}
+paymentTypeInput.addEventListener('change', ()=>{
+    const selectedOption = paymentTypeInput.options[paymentTypeInput.selectedIndex].text;
+    if (selectedOption.startsWith('Çek')) {
+        chekLastDateBox.style.display = "block";
+    } else {
+        chekLastDateBox.style.display = "none";
     }
 });
 
 
-/******************************       Tarihi Formatlama          ********************************* */
-function tarihFormatiniDegistir(tarih) {
-    // Giriş tarihini JavaScript Date objesine çevir
-    const dateObj = new Date(tarih);
-    if (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
+//                  FİRMA EKLEME
+
+firmaAddBtn.addEventListener("click", function() {
+    clientFirmaAddWindow.style.display = "flex";
+});
+clientFirmaAddModal.addEventListener("click", function() {
+    clientFirmaAddWindow.style.display = "none";
+});
+
+
+//                  FİRMA SUBMİT KONTROLÜ
+
+firmaSubmitBtn.addEventListener("click", function(event){
+    event.preventDefault();       
+    if(firmaCount(firmalar, firmaAddInput) == 0 && firmaAddInput.value.trim() != ""){
+        firmaAddLabel.style.color = "black";
+        firmaAddLabel.style.fontWeight = "500";
+        firmaForm.submit();
     }
-
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
-    }
-
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ay değeri 0 ile başlar, 1 ekleyip 2 haneli yap
-    const gun = dateObj.getDate().toString().padStart(2, '0'); // Gün değeri 2 haneli yap
-
-    // Yıl, ay ve gün bilgilerini birleştirerek istenilen formatta tarihi oluştur
-    const yeniFormatliTarih = gun + ay + yil;
-
-    return yeniFormatliTarih;
-}
-
-/************************************      Tarihten 1 gün çıkarma         *************************************** */
-
-function birGunOncekiTarih(dateString) {
-    const dateObj = new Date(dateString);
-    dateObj.setDate(dateObj.getDate() - 1);
-
-    if (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
-    }
-
-    // Şimdi haftasonu olmayan bir tarihi bulana kadar bir gün geri al
-    while (isWeekend(dateObj)) {
-        dateObj.setDate(dateObj.getDate() - 1);
-    }
-
-    // Yıl, ay ve gün bilgilerini al
-    const yil = dateObj.getFullYear();
-    const ay = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    const gun = dateObj.getDate().toString().padStart(2, '0');
-
-    // Yıl, ay ve gün bilgilerini birleştirerek yeni formatta tarihi oluştur
-    const yeniFormatliTarih = gun + '-' + ay + '-' + yil;
-
-    return yeniFormatliTarih;
-}
-
-// Haftasonu kontrol fonksiyonu
-function isWeekend(date) {
-    const day = date.getDay();
-    return day === 0 || day === 6;
-}
-
-
-
-
-
-
-//////////---------------------------------------------------
-/* function tarihHesapla() {
-    // Anlık zamanı içeren değişken
-    const anlikZaman = new Date();
-
-    // Saati ve dakikayı al
-    const saat = anlikZaman.getHours();
-    const dakika = anlikZaman.getMinutes();
-
-    // Saat 15:30'u geçmişse bugünün tarihini ver, aksi takdirde dünün tarihini ver
-    const hedefTarih = new Date();
-    if (saat > 15 || (saat === 15 && dakika >= 30)) {
-        // Saat 15:30'u geçmiş
-        return hedefTarih.toLocaleDateString();
-    } else {
-        // Saat 15:30'u geçmemiş veya tam olarak 15:00
-        hedefTarih.setDate(anlikZaman.getDate() - 1);
-        return hedefTarih.toLocaleDateString();
-    }
-}
-*/
+    else{
+        firmaAddLabel.style.color = "red";
+        firmaAddLabel.style.fontWeight = "600";
+    }   
+});

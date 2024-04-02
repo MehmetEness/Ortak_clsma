@@ -42,8 +42,3 @@
     /* white-space: nowrap; */
     font-size: 18px;
 }
-
-
-<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" 
-aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-id_CompanyName-container"><span class="select2-selection__rendered" id="select2-id_CompanyName-container" role="textbox" 
-aria-readonly="true" title="müşteri 1">müşteri 1</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span>

@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
-
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 REST_FRAMEWORK = {
@@ -140,12 +140,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Media dosyalarının depolanacağı klasör
 
 # Media dosyalarına erişmek için kullanılan URL
-MEDIA_ROOT = BASE_DIR /"uploads"
-MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -154,6 +154,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Alan adı tanımlama
 
 
-ALLOWED_HOSTS = ['sovotozoglu.com', '3.90.217.139', 'sovotozoglu.net','3.80.27.91','127.0.0.1','16.170.173.29','16.170.245.131']
+ALLOWED_HOSTS = ['sovotozoglu.com', 'sovotozoglu.net','13.48.105.221']
 
 LOGIN_URL = '/account/login'
