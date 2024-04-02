@@ -356,7 +356,7 @@ expensesFormAddBtn.addEventListener("click", async function (event) {
             const dataId = input.getAttribute('data-id');
             formData.set(input.getAttribute('name'), dataId);
         });
-        if (editMode == false) {
+        if (expensesEditMode == false) {
             await apiFunctions("expense", "POST", formData);        
         }else{
             await apiFunctions("expense", "PUT", formData, expensesBtnID); 
@@ -415,7 +415,7 @@ jobhistoryFormAddBtn.addEventListener("click", async function (event) {
             const dataId = input.getAttribute('data-id');
             formData.set(input.getAttribute('name'), dataId);
         });
-        if (editMode == false) {
+        if (jobHistoryEditMode == false) {
             await apiFunctions("job_history", "POST", formData);        
         }else{
             await apiFunctions("job_history", "PUT", formData, jobHistoryBtnID); 
@@ -615,7 +615,7 @@ function expensesEditButtonsEvents() {
   });
 }
 
-//                  EXPENSES EDİT FUNCTİON
+//                  JOBHİSTORY EDİT FUNCTİON
 
 let jobHistoryBtnID = -1;
 function jobHistoryEditButtonsEvents() {
@@ -623,7 +623,7 @@ function jobHistoryEditButtonsEvents() {
   editButtons.forEach(button => {
     button.addEventListener("click", () => {
       setTimeout(async () => {
-        expensesEditMode = true;
+        jobHistoryEditMode = true;
         jobHistoryBtnID = button.id;
         const data = await apiFunctions("job_history", "GETID", "x", jobHistoryBtnID)        
         for (var key in data) {
