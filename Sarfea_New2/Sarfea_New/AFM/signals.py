@@ -70,8 +70,11 @@ def update_client_card(sender, instance, **kwargs):
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
-
+        
         num= instance.Operation_Care_Inventor_Number
+        if num is None:
+            num = 0
+        
         for x in range(1, num+1):
             inventor=Inventor.objects.create(
                 Inventor_Owner=instance,
@@ -94,6 +97,8 @@ def create_string(sender, instance, created, **kwargs):
     if created:
 
         num= instance.Inventor_Number_Str
+        if num is None:
+            num = 0
         for x in range(1, num+1):
             string=String.objects.create(
                 String_Owner=instance,
