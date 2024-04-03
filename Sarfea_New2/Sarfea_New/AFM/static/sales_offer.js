@@ -992,6 +992,7 @@ async function getLostList() {
     }
     lostTableBody.innerHTML = "";
     lostTableBody.insertAdjacentHTML("beforeend", rows);
+    
     //editBtns();
     //sortTableForStart(supplierTable, 1);
     //allTableFormat();

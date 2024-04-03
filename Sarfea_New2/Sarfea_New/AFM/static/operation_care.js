@@ -1,7 +1,10 @@
 var topMenuLi = document.querySelectorAll(".top-menu-ul li");
-var faturaTable = document.querySelector("#fatura_table");
-var isletmeBakimTable = document.querySelector("#isletme_bakim_table");
-var arizaTakipTable = document.querySelector("#ariza_takip_table");
+const faturaTable = document.querySelector("#fatura_table");
+const faturaTableBody = faturaTable.querySelector("tbody");
+const isletmeBakimTable = document.querySelector("#isletme_bakim_table");
+const isletmeBakimTableBody = isletmeBakimTable.querySelector("tbody");
+const arizaTakipTable = document.querySelector("#ariza_takip_table");
+const arizaTakipTableBody = arizaTakipTable.querySelector("tbody");
 
 
 const reqIncomeInputs = document.querySelectorAll("#id_Operation_Care_Company")
@@ -9,14 +12,54 @@ const reqIncomeLabels = document.querySelectorAll("#firma_adi_span")
 
 
 
- document.addEventListener("DOMContentLoaded", function () {
-    //                  CARD NONE VERİLERİ DÜZELTME
-  
-    topMenuLi[0].classList.add("li-hover");
-    document.querySelector(".first_sorting_element").click();
-    });
 
+document.addEventListener("DOMContentLoaded", function () {
+  //                  CARD NONE VERİLERİ DÜZELTME
 
+  topMenuLi[0].classList.add("li-hover");
+  document.querySelector(".first_sorting_element").click();
+});
+
+getOperationCare(true)
+async function getOperationCare(isEdit) {
+  try {
+    let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
+
+    const data = await apiFunctions("operation_care", "GET");
+    console.log(data);
+    let formattedDate;
+    let rows = "";
+    for (const operationCare of data) {
+      var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
+      const row = `
+        <tr>
+          <td>
+            <button id="${operationCare.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
+              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td><a href="${"operationCareDetailUrl"}">${operationCare.Operation_Care_Company}</a></td>
+          <td>${formatNumber(operationCare.Operation_Care_Inventor_Power)}</td>
+          <td>${operationCare.Operation_Care_Location}</td>
+          <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
+          <td>${operationCare.Operation_Care_Fail_Number}</td>
+          <td> <span class="status ${className}">${formatDateForTable(operationCare.Operation_Care_Finish_Date)}</span></td>
+        </tr>`;
+
+      rows += row;
+    }
+    if (data.length > currentRows.length || isEdit) {
+
+      isletmeBakimTableBody.innerHTML = "";
+      isletmeBakimTableBody.insertAdjacentHTML("beforeend", rows);
+      //sortingTable(projectsTable);
+      // allTableFormat();
+      //editButtonsEvents();
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
 
 
 
@@ -30,7 +73,7 @@ inputsForFormat(formatedInputs);
 
 //                  TABLO FORMATLAMA
 isletmeTableFormat();
-function isletmeTableFormat(){
+function isletmeTableFormat() {
   var numericCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(3)');
   var tlCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(5)');
   var textCells = document.querySelectorAll('#isletme_bakim_table td:nth-child(2), #isletme_bakim_table td:nth-child(4), #isletme_bakim_table td:nth-child(6), #isletme_bakim_table td:nth-child(7)');
@@ -40,12 +83,12 @@ function isletmeTableFormat(){
   tableFormat(textCells, "text")
 }
 arizaTableFormat();
-function arizaTableFormat(){
+function arizaTableFormat() {
   var textCells = document.querySelectorAll('#ariza_takip_table tr td:not(:first-child)');
   tableFormat(textCells, "text")
 }
 faturaTableFormat();
-function faturaTableFormat(){
+function faturaTableFormat() {
   var textCells = document.querySelectorAll('#ariza_takip_table tr td');
   tableFormat(textCells, "text")
 }
@@ -53,50 +96,49 @@ function faturaTableFormat(){
 //                  TOP MENÜ TIKLAMA
 
 topMenuLi.forEach(function (item) {
-    item.addEventListener("click", function () {
-      topMenuLi.forEach(function (item) {
-        item.classList.remove("li-hover");
-      });
-      this.classList.add("li-hover");
+  item.addEventListener("click", function () {
+    topMenuLi.forEach(function (item) {
+      item.classList.remove("li-hover");
     });
+    this.classList.add("li-hover");
   });
+});
 
- //                  TOP MENU FONKSİYONLARI
+//                  TOP MENU FONKSİYONLARI
 
 topMenuLi.forEach(function (item) {
-    item.addEventListener("click", function () {
-      var clickedItemId = this.id;
-      console.log(clickedItemId)
-      handleMenuItemClick(clickedItemId);
-    });
+  item.addEventListener("click", function () {
+    var clickedItemId = this.id;
+    console.log(clickedItemId)
+    handleMenuItemClick(clickedItemId);
   });
-  function handleMenuItemClick(clickedItemId) {
-    switch (clickedItemId) {
-      case "fatura":
-        faturaTable.style.display = "table";
-        isletmeBakimTable.style.display = "none";
-        arizaTakipTable.style.display = "none";
-        break;
-      case "isletme_bakim":
-        faturaTable.style.display = "none";
-        isletmeBakimTable.style.display = "table";
-        arizaTakipTable.style.display = "none";
-        break;
-      case "ariza_takip":
-        faturaTable.style.display = "none";
-        isletmeBakimTable.style.display = "none";
-        arizaTakipTable.style.display = "table";
-        break;        
-      default:
-        break;
-    }
+});
+function handleMenuItemClick(clickedItemId) {
+  switch (clickedItemId) {
+    case "fatura":
+      faturaTable.style.display = "table";
+      isletmeBakimTable.style.display = "none";
+      arizaTakipTable.style.display = "none";
+      break;
+    case "isletme_bakim":
+      faturaTable.style.display = "none";
+      isletmeBakimTable.style.display = "table";
+      arizaTakipTable.style.display = "none";
+      break;
+    case "ariza_takip":
+      faturaTable.style.display = "none";
+      isletmeBakimTable.style.display = "none";
+      arizaTakipTable.style.display = "table";
+      break;
+    default:
+      break;
   }
+}
 
 
 
 var tarihRow = isletmeBakimTable.querySelectorAll("tbody tr")
-
-dateFormatForColor(tarihRow,7);
+dateFormatForColor(tarihRow, 7);
 
 //----------------------------------------------
 
@@ -146,7 +188,7 @@ operationCareAddWindowButton.addEventListener("click", () => {
 });
 document.addEventListener("mousedown", (event) => {
   const operationCareAddContainer = operationCareAddWindow.querySelector(".container");
-  if (!operationCareAddContainer.contains(event.target)  && clientAddWindow.style.display == "none") {
+  if (!operationCareAddContainer.contains(event.target) && clientAddWindow.style.display == "none") {
     operationCareAddWindow.style.display = "none";
   }
 });
@@ -189,18 +231,16 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
     })
 
     const formData = new FormData(operationCareAddForm);
-    const jsonObject = {};
-
-for (const [key, value] of formData.entries()) {
-    jsonObject[key] = value;
-}
-
-console.log(JSON.stringify(jsonObject));
     const inputs = document.querySelectorAll(".operation-care-add-window input[data-id]");
     inputs.forEach(input => {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
+    const jsonObject = {};
+    for (const [key, value] of formData.entries()) {
+      jsonObject[key] = value;
+    }
+    console.log(JSON.stringify(jsonObject));
 
     await apiFunctions("operation_care", "POST", formData);
     operationCareAddWindow.style.display = "none";
