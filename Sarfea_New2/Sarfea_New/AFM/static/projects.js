@@ -176,6 +176,24 @@ document.addEventListener("mousedown", (event) => {
     projectAddWindow.style.display = "none";
   }
 });
+//----- KDV % EKLEME
+const kdvRateInput = document.getElementById("id_KDV_Rate");
+addPercentageSymbol(kdvRateInput);
+kdvRateInput.addEventListener("input", function () {
+  addPercentageSymbol(kdvRateInput);
+});
+function addPercentageSymbol(input) {
+  let enteredValue = input.value;
+  let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
+  if (enteredValue == "") {
+    let formattedValue = "%" + 20;
+    input.value = formattedValue;
+  }else{
+    let formattedValue = "%" + numericValue;
+    input.value = formattedValue;
+  }
+  
+}
 //----- İNCOME
 incomeAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
@@ -491,7 +509,7 @@ projectFormAddBtn.addEventListener("click", async function (event) {
     // for (const pair of formData.entries()) {
     //   console.log(pair[0] + ': ' + pair[1]);
     // }
-    
+
     if (editMode == false) {
       await apiFunctions("project", "POST", formData);
       getProjects()
