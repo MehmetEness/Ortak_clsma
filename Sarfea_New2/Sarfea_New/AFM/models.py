@@ -359,6 +359,7 @@ class String(models.Model):
 class Poll(models.Model):
     Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
     Poll_Time = models.DateField(default=timezone.now,blank=True, null=True)
+    Note = models.CharField(max_length=63, blank=True, null=True)
 
 class Poll_Question(models.Model):
     Question_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE, blank=True, null=True)
