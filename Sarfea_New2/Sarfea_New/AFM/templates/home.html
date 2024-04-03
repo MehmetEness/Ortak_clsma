@@ -1,66 +1,62 @@
 {%extends "base.html" %}
 {% load static %}
 
-{% block css_files %} 
+{% block css_files %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}"> 
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}">  -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet" href="{% static 'home_style.css' %}">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
-      text-align: center;
+  #table thead th:not(:nth-child(2)),
+  #table tbody td:not(:nth-child(2)) {
+    text-align: center;
   }
-  #table thead th:nth-child(2){
-      padding-left: 20px;
+
+  #table thead th:nth-child(2) {
+    padding-left: 20px;
   }
-  .lists{
-      overflow-y: scroll;
+
+  .lists {
+    overflow-y: scroll;
   }
+
   table thead th {
     cursor: pointer;
- }
- table thead th span{
-    position: relative;
- }
- thead th span::after{
- content: '';
-position:absolute;
-left: -18px;
-top: 60%;
-border-style: solid;
-border-top-width: 10px;
-border-right-width: 5px;
-border-left-width: 5px;
-border-color: #000 transparent transparent transparent;
-transform: translateY(-50%);
-transition: transform 0.3s ease;
- }
+  }
 
+  table thead th span {
+    position: relative;
+  }
+
+  thead th span::after {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 60%;
+    border-style: solid;
+    border-top-width: 10px;
+    border-right-width: 5px;
+    border-left-width: 5px;
+    border-color: #000 transparent transparent transparent;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+  }
 </style>
 {% endblock %}
 
 {% block title %} Home Page {% endblock %}
-{% block content %}   
+{% block content %}
 <div class="body-div">
-{% include 'partials/_left_nav_bar.html' %}
+  {% include 'partials/_left_nav_bar.html' %}
 
-<div class="right-menu">
-  <div class="up">
-    <div style="background-image: url('{% static 'images/main1.png' %}');" class="projeler card_div"></div>
-    <div style="background-image: url('{% static 'images/main2.png' %}');" class="sales card_div"></div>
-    <div style="background-image: url('{% static 'images/main3.png' %}');" class="stock card_div"></div>
-  </div>
-  <div class="down">
-    <div class="business-maintenance card_div">
-      <img src="data:image/png;base64,{{ pie_chart_base64 }}" alt="Pie Chart">
-    </div>
-    <div class="reporting card_div">
-       
-      <img src="data:image/png;base64,{{ cash_flow_chart_base64 }}" alt="Cash Flow Chart">
-  
-    </div> 
+  <div class="right-menu">
+    <div style="height: 38%;" class="row"><canvas id="myChart"></canvas></div>
+    <div style="height: 20%;" class="row"></div>
+    <div style="height: 38%;" class="two-chart">
+      <div class="coll"></div>
+      <div class="coll"></div>
     </div>
   </div>
 </div>
@@ -68,12 +64,74 @@ transition: transform 0.3s ease;
 
 
 
-   
-    {% endblock %}
 
-    {% block js_files %} 
-  <script src="{% static 'functions.js' %}"></script> 
-  <script src="{% static 'home.js' %}"></script> 
-  
-  
-  {% endblock %}
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'functions.js' %}"></script>
+<script src="{% static 'home.js' %}"></script>
+<script>
+  const ctx = document.getElementById('myChart');
+  ctx.width = "100%";
+  ctx.height = "100%";
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      datasets: [{
+        label: 'Giriş',
+        borderColor: "#2aa5eb",
+        data: [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 5],
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: "#2aa4eb36"
+      }, {
+        label: 'Çıkış',
+        borderColor: "#808080",
+        data: [8, 11, 6, 11, 7, 1, 16, 17, 2, 2, 13, 15],
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: "#80808048"
+      }
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          top: 5,
+          left: 20 // Grafiğin sol kenarı ile başlık arasında 20 piksel boşluk bırakır
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+        display: true,
+        position: 'bottom',
+      },
+      },
+      
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+
+</script>
+
+{% endblock %}
