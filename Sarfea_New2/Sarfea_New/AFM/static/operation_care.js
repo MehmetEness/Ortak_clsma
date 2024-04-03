@@ -38,7 +38,7 @@ async function getOperationCare(isEdit) {
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
-          <td><a href="${"operationCareDetailUrl"}">${operationCare.Operation_Care_Company}</a></td>
+          <td><a href="${"operationCareDetailUrl"}">${operationCare.client.CompanyName_Clients}</a></td>
           <td>${formatNumber(operationCare.Operation_Care_Inventor_Power)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
