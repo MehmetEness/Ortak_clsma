@@ -240,6 +240,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         return instance
 
 class OperationCareSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(source='Operation_Care_Company', read_only=True)
+
     class Meta:
         model = Operation_Care
         fields = '__all__'
