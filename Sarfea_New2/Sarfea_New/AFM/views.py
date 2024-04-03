@@ -12,7 +12,16 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 import evds as e
 from django.contrib.auth.models import User, Group
+from .utils import convert_image_to_base64
 
+import matplotlib
+matplotlib.use('Agg')  # Backend'i ayarlayın
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.colors as mcolors
+import io
+
+#Handler
 def handler404(request, exception):
     """
     404 hatası için özel bir görünüm.
@@ -27,7 +36,69 @@ def handler404(request, exception):
         # Kullanıcı oturum açmamışsa
         return HttpResponseRedirect('/account/login/')
 
+#Charts
 
+def generate_pie_chart():
+    langs = ["Çalışan Ödemeleri", "Panel Maliyeti", "Araç Kiralama", "Yeme İçme vb.", "Diğer"]
+    votes_str = ["2600", "1300", "800", "620", "324"]
+
+    votes = [int(vote.replace(',', '')) for vote in votes_str]
+    total_votes = sum(votes)
+
+    colors_hex = ['#7f878a', '#B6BFC6', '#e0e1e3', '#A1ABB4', '#CBCFD2']
+    colors_rgba = [mcolors.to_rgba(color) for color in colors_hex]
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.pie(votes, labels=langs, autopct='%1.1f%%', colors=colors_rgba)  # autopct ile yüzdelik değerleri göster
+
+    centre_circle = plt.Circle((0,0),0.70,fc='white')
+    fig.gca().add_artist(centre_circle)
+
+    ax.text(0, 0, f'${total_votes}', ha='center', va='center', fontsize=16, fontweight='bold', color='#52606B')
+    ax.text(0, -0.2, 'Toplam Harcama', ha='center', va='center', fontsize=12, color='#6B6B6B')
+
+    ax.set_title('Harcanan Miktar Dağılımı')
+
+    # Convert plot to PNG image
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close(fig)
+    
+    return buf.getvalue()
+
+def generate_cash_flow_chart():
+    aylar = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+    nakit_girdi = [38000, 15000, 13000, 23000, 15000, 13000, 28000, 20000, 28000, 25000, 25000, 8000]
+    nakit_çıktı = [15000, 8000, 7000, 15000, 25000, 20000, 15000, 8000, 18000, 10000, 10000, 15000]
+    x_konumları = np.arange(len(aylar))
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_konumları, nakit_girdi, linestyle='-', linewidth=2, color='#2E97F3', marker='', alpha=0.7)
+    plt.plot(x_konumları, nakit_çıktı, linestyle='-', linewidth=2, color='#D9DEE2', marker='', alpha=0.7)
+
+    plt.fill_between(x_konumları, nakit_girdi, nakit_çıktı, where=np.array(nakit_girdi) > np.array(nakit_çıktı), color='#2491F0', alpha=0.5)
+    plt.fill_between(x_konumları, nakit_girdi, nakit_çıktı, where=np.array(nakit_girdi) <= np.array(nakit_çıktı), color='#BABFC3', alpha=0.5)
+
+    plt.fill_between(x_konumları, nakit_girdi, nakit_çıktı, color='#EFF8FF')
+    plt.text(-0.5, 42000, "Nakit Akışı", fontsize=16, color='#132B45', fontweight='bold')
+
+    plt.xticks(x_konumları, aylar, color='#83868B', rotation=0, ha='center')
+    plt.yticks(color='#83868B')
+    plt.ylim(0, 40000)
+
+    plt.grid(linewidth=0)
+    plt.plot(4.5, 37000, marker='s', markersize=10, color='#2E97F3')
+    plt.plot(5.5, 37000, marker='s', markersize=10, color='#D9DEE2')
+
+    plt.tight_layout()
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close()
+
+    return buf.getvalue()
 #Tests
 def isAdmin(user):
     return user.is_superuser
@@ -52,12 +123,17 @@ def pass_test(group_name):
 @login_required
 def home(request):
     sales_offer_card = SalesOfferCard.objects.all()   
+    pie_chart = generate_pie_chart()
+    pie_chart_base64 = convert_image_to_base64(pie_chart)
+    cash_flow_chart_bytes = generate_cash_flow_chart()
+    cash_flow_chart_base64 = convert_image_to_base64(cash_flow_chart_bytes)
 
     context = {
-    'sales_offer_card':sales_offer_card,
+    'sales_offer_card': sales_offer_card,
+    'pie_chart_base64': pie_chart_base64,  # Değişiklik burada
+    'cash_flow_chart_base64':cash_flow_chart_base64,
     }
     return render(request, "home.html", context)
-
 # Proje Modülü.
 
 @user_passes_test(pass_test('Proje Grubu'), login_url='/home')
