@@ -672,7 +672,26 @@ function dateFormatForColor(tableRows, colIndex) {
     }
   });
 }
+function dateFormatForColor1(dateForColor) {
+  var today = new Date();  
+    //var tableDate = dateForColor.textContent;
+    var dateParts = dateForColor.split(" ");
+    var day = parseInt(dateParts[0]);
+    var month = dateParts[1];
+    var year = parseInt(dateParts[2]);
+    //console.log(tableDate);
+    var tableDateObj = new Date(year, monthIndex(month), day);
 
+    var diffTime = Math.abs(tableDateObj - today);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (today === tableDateObj || today > tableDateObj) {
+      return "timeIsUp"
+    } else if (diffDays <= 7 && today < tableDateObj) {
+      return "oneWeek"
+    } else if (diffDays <= 15 && today < tableDateObj) {
+      return "twoWeek"
+    }
+}
 function monthIndex(month) {
   var months = {
     Ocak: 0,
