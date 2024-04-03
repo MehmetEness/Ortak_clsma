@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll_Cloumn, Poll
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -350,5 +350,148 @@ class FailSerializer(serializers.ModelSerializer):
         instance.Fail_Bill_Detail = validated_data.get('Fail_Bill_Detail', instance.Fail_Bill_Detail)
         instance.Fail_Bill_File = validated_data.get('Fail_Bill_File', instance.Fail_Bill_File)
         
+        instance.save()
+        return instance
+
+class PollSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Poll
+        fields = '__all__'
+
+    def create(self, validated_data):
+        # Yeni bir Poll nesnesi oluşturun
+        return Poll.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        # Mevcut bir Poll nesnesini güncelleyin
+        instance.Poll_Operation_Care = validated_data.get('Poll_Operation_Care', instance.Poll_Operation_Care)
+        instance.Poll_Date = validated_data.get('Poll_Date', instance.Poll_Date)
+        instance.Note_1_1 = validated_data.get('Note_1_1', instance.Note_1_1)
+        instance.Note_1_2 = validated_data.get('Note_1_2', instance.Note_1_2)
+        instance.Note_1_3 = validated_data.get('Note_1_3', instance.Note_1_3)
+        instance.Note_1_4 = validated_data.get('Note_1_4', instance.Note_1_4)
+        instance.Note_1_5 = validated_data.get('Note_1_5', instance.Note_1_5)
+        instance.Note_1_6 = validated_data.get('Note_1_6', instance.Note_1_6)
+        instance.Note_2_1 = validated_data.get('Note_2_1', instance.Note_2_1)
+        instance.Note_2_2 = validated_data.get('Note_2_2', instance.Note_2_2)
+        instance.Note_2_3 = validated_data.get('Note_2_3', instance.Note_2_3)
+        instance.Note_2_4 = validated_data.get('Note_2_4', instance.Note_2_4)
+        instance.Note_2_5 = validated_data.get('Note_2_5', instance.Note_2_5)
+        instance.Note_2_6 = validated_data.get('Note_2_6', instance.Note_2_6)
+        instance.Note_2_7 = validated_data.get('Note_2_7', instance.Note_2_7)
+        instance.Note_3_1 = validated_data.get('Note_3_1', instance.Note_3_1)
+        instance.Note_3_2 = validated_data.get('Note_3_2', instance.Note_3_2)
+        instance.Note_3_3 = validated_data.get('Note_3_3', instance.Note_3_3)
+        instance.Note_3_4 = validated_data.get('Note_3_4', instance.Note_3_4)
+        instance.Note_4_1 = validated_data.get('Note_4_1', instance.Note_4_1)
+        instance.Note_4_2 = validated_data.get('Note_4_2', instance.Note_4_2)
+        instance.Note_4_3 = validated_data.get('Note_4_3', instance.Note_4_3)
+        instance.Note_4_4 = validated_data.get('Note_4_4', instance.Note_4_4)
+        instance.Note_4_5 = validated_data.get('Note_4_5', instance.Note_4_5)
+        instance.Note_5_1 = validated_data.get('Note_5_1', instance.Note_5_1)
+        instance.Note_5_2 = validated_data.get('Note_5_2', instance.Note_5_2)
+        instance.Note_5_3 = validated_data.get('Note_5_3', instance.Note_5_3)
+        instance.Note_5_4 = validated_data.get('Note_5_4', instance.Note_5_4)
+        instance.Note_6_1 = validated_data.get('Note_6_1', instance.Note_6_1)
+        instance.Note_6_2 = validated_data.get('Note_6_2', instance.Note_6_2)
+        instance.Note_6_3 = validated_data.get('Note_6_3', instance.Note_6_3)
+        instance.Note_6_4 = validated_data.get('Note_6_4', instance.Note_6_4)
+        instance.Note_6_5 = validated_data.get('Note_6_5', instance.Note_6_5)
+        instance.Note_6_6 = validated_data.get('Note_6_6', instance.Note_6_6)
+        instance.Note_7_1 = validated_data.get('Note_7_1', instance.Note_7_1)
+        instance.Note_7_2 = validated_data.get('Note_7_2', instance.Note_7_2)
+        instance.Note_7_3 = validated_data.get('Note_7_3', instance.Note_7_3)
+        instance.Note_7_4 = validated_data.get('Note_7_4', instance.Note_7_4)
+        instance.Note_7_5 = validated_data.get('Note_7_5', instance.Note_7_5)
+        instance.Note_7_6 = validated_data.get('Note_7_6', instance.Note_7_6)
+        instance.Note_7_7 = validated_data.get('Note_7_7', instance.Note_7_7)
+        instance.Note_8_1 = validated_data.get('Note_8_1', instance.Note_8_1)
+        instance.Note_8_2 = validated_data.get('Note_8_2', instance.Note_8_2)
+        instance.Note_8_3 = validated_data.get('Note_8_3', instance.Note_8_3)
+        instance.Note_8_4 = validated_data.get('Note_8_4', instance.Note_8_4)
+        instance.Note_8_5 = validated_data.get('Note_8_5', instance.Note_8_5)
+        instance.Note_8_6 = validated_data.get('Note_8_6', instance.Note_8_6)
+        instance.Note_8_7 = validated_data.get('Note_8_7', instance.Note_8_7)
+        instance.Note_8_8 = validated_data.get('Note_8_8', instance.Note_8_8)
+        instance.Note_9_1 = validated_data.get('Note_9_1', instance.Note_9_1)
+        instance.Note_9_2 = validated_data.get('Note_9_2', instance.Note_9_2)
+        instance.Note_9_3 = validated_data.get('Note_9_3', instance.Note_9_3)
+        instance.Note_9_4 = validated_data.get('Note_9_4', instance.Note_9_4)
+        instance.Note_9_5 = validated_data.get('Note_9_5', instance.Note_9_5)
+
+        instance.save()
+        return instance
+
+class PollCloumnSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Poll_Cloumn
+        fields = '__all__'
+
+    def create(self, validated_data):
+        # Yeni bir Poll_Cloumn nesnesi oluşturun
+        return Poll_Cloumn.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        # Mevcut bir Poll_Cloumn nesnesini güncelleyin
+        instance.Cloumn_Poll = validated_data.get('Cloumn_Poll', instance.Cloumn_Poll)
+        instance.Cloumn_Time = validated_data.get('Cloumn_Time', instance.Cloumn_Time)
+        instance.Cloumn_Note_Text = validated_data.get('Cloumn_Note_Text', instance.Cloumn_Note_Text)
+        instance.Cloumn_Organizer = validated_data.get('Cloumn_Organizer', instance.Cloumn_Organizer)
+        instance.Cloumn_Organize_Date = validated_data.get('Cloumn_Organize_Date', instance.Cloumn_Organize_Date)
+        instance.Cloumn_Looker = validated_data.get('Cloumn_Looker', instance.Cloumn_Looker)
+        instance.Cloumn_Looker_Date = validated_data.get('Cloumn_Looker_Date', instance.Cloumn_Looker_Date)
+        instance.answer_1_1 = validated_data.get('answer_1_1', instance.answer_1_1)
+        instance.answer_1_2 = validated_data.get('answer_1_2', instance.answer_1_2)
+        instance.answer_1_3 = validated_data.get('answer_1_3', instance.answer_1_3)
+        instance.answer_1_4 = validated_data.get('answer_1_4', instance.answer_1_4)
+        instance.answer_1_5 = validated_data.get('answer_1_5', instance.answer_1_5)
+        instance.answer_1_6 = validated_data.get('answer_1_6', instance.answer_1_6)
+        instance.answer_2_1 = validated_data.get('answer_2_1', instance.answer_2_1)
+        instance.answer_2_2 = validated_data.get('answer_2_2', instance.answer_2_2)
+        instance.answer_2_3 = validated_data.get('answer_2_3', instance.answer_2_3)
+        instance.answer_2_4 = validated_data.get('answer_2_4', instance.answer_2_4)
+        instance.answer_2_5 = validated_data.get('answer_2_5', instance.answer_2_5)
+        instance.answer_2_6 = validated_data.get('answer_2_6', instance.answer_2_6)
+        instance.answer_2_7 = validated_data.get('answer_2_7', instance.answer_2_7)
+        instance.answer_3_1 = validated_data.get('answer_3_1', instance.answer_3_1)
+        instance.answer_3_2 = validated_data.get('answer_3_2', instance.answer_3_2)
+        instance.answer_3_3 = validated_data.get('answer_3_3', instance.answer_3_3)
+        instance.answer_3_4 = validated_data.get('answer_3_4', instance.answer_3_4)
+        instance.answer_4_1 = validated_data.get('answer_4_1', instance.answer_4_1)
+        instance.answer_4_2 = validated_data.get('answer_4_2', instance.answer_4_2)
+        instance.answer_4_3 = validated_data.get('answer_4_3', instance.answer_4_3)
+        instance.answer_4_4 = validated_data.get('answer_4_4', instance.answer_4_4)
+        instance.answer_4_5 = validated_data.get('answer_4_5', instance.answer_4_5)
+        instance.answer_5_1 = validated_data.get('answer_5_1', instance.answer_5_1)
+        instance.answer_5_2 = validated_data.get('answer_5_2', instance.answer_5_2)
+        instance.answer_5_3 = validated_data.get('answer_5_3', instance.answer_5_3)
+        instance.answer_5_4 = validated_data.get('answer_5_4', instance.answer_5_4)
+        instance.answer_6_1 = validated_data.get('answer_6_1', instance.answer_6_1)
+        instance.answer_6_2 = validated_data.get('answer_6_2', instance.answer_6_2)
+        instance.answer_6_3 = validated_data.get('answer_6_3', instance.answer_6_3)
+        instance.answer_6_4 = validated_data.get('answer_6_4', instance.answer_6_4)
+        instance.answer_6_5 = validated_data.get('answer_6_5', instance.answer_6_5)
+        instance.answer_6_6 = validated_data.get('answer_6_6', instance.answer_6_6)
+        instance.answer_7_1 = validated_data.get('answer_7_1', instance.answer_7_1)
+        instance.answer_7_2 = validated_data.get('answer_7_2', instance.answer_7_2)
+        instance.answer_7_3 = validated_data.get('answer_7_3', instance.answer_7_3)
+        instance.answer_7_4 = validated_data.get('answer_7_4', instance.answer_7_4)
+        instance.answer_7_5 = validated_data.get('answer_7_5', instance.answer_7_5)
+        instance.answer_7_6 = validated_data.get('answer_7_6', instance.answer_7_6)
+        instance.answer_7_7 = validated_data.get('answer_7_7', instance.answer_7_7)
+        instance.answer_8_1 = validated_data.get('answer_8_1', instance.answer_8_1)
+        instance.answer_8_2 = validated_data.get('answer_8_2', instance.answer_8_2)
+        instance.answer_8_3 = validated_data.get('answer_8_3', instance.answer_8_3)
+        instance.answer_8_4 = validated_data.get('answer_8_4', instance.answer_8_4)
+        instance.answer_8_5 = validated_data.get('answer_8_5', instance.answer_8_5)
+        instance.answer_8_6 = validated_data.get('answer_8_6', instance.answer_8_6)
+        instance.answer_8_7 = validated_data.get('answer_8_7', instance.answer_8_7)
+        instance.answer_8_8 = validated_data.get('answer_8_8', instance.answer_8_8)
+        instance.answer_9_1 = validated_data.get('answer_9_1', instance.answer_9_1)
+        instance.answer_9_2 = validated_data.get('answer_9_2', instance.answer_9_2)
+        instance.answer_9_3 = validated_data.get('answer_9_3', instance.answer_9_3)
+        instance.answer_9_4 = validated_data.get('answer_9_4', instance.answer_9_4)
+        instance.answer_9_5 = validated_data.get('answer_9_5', instance.answer_9_5)
+
         instance.save()
         return instance
