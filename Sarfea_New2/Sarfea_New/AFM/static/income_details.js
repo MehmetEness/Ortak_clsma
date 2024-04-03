@@ -64,10 +64,13 @@ async function getIncomes(edit) {
         let totalTl = 0;
         let totalUsd = 0;
         const data = await apiFunctions("income", "GET");
+        const projectId = document.querySelector(".project_id");
+        console.log(projectId.id)
         console.log(data);
         let rows = "";
         for (const income of data) {
-            let formattedDate;
+            if(income.Project_Incomes == projectId.id){
+                let formattedDate;
             if (income.ChekDate_Incomes) {
                 const date = new Date(income.ChekDate_Incomes);
                 formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
@@ -94,6 +97,8 @@ async function getIncomes(edit) {
             totalUsd += (parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0;
             //console.log(totalTl)
             //console.log(totalUsd)
+            }
+            
         }
 
         if (data.length > currentRows.length || currentRows.length == 1 || edit) {
