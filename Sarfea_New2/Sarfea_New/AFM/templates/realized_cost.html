@@ -75,7 +75,13 @@
           </div>
           <div class="input-box">
             <span class="details">Banka</span>
-            {{ expenses_form.Bank_Expenses }}
+            <select name="Bank_Expenses" id="id_Bank_Expenses">
+              <option value="">Banka Seçiniz</option>
+
+              {% for bank in banks %}
+              <option value="{{bank}}">{{bank}}</option>
+             {% endfor %}
+            </select>
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>

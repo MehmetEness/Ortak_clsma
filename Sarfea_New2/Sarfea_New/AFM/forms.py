@@ -153,9 +153,7 @@ class ExpensesForm(forms.ModelForm):
         decimal_places=4,
         required=False,
     )
-    Bank_Expenses = forms.ModelChoiceField(
-        queryset=Banks.objects.all(),
-        empty_label="Banka Adını Seçiniz",
+    Bank_Expenses = forms.CharField(
         required=False,
     )
     Date_Expenses = forms.DateField(
