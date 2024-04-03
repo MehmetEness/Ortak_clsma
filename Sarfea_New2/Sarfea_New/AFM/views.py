@@ -114,6 +114,7 @@ def realized_cost(request, project_id):
     jobhistory = JobHistory.objects.filter(Project_JobHistory=project)
     supplier = Supplier.objects.all()
     details = Details.objects.all()
+    banks = Banks.objects.all()
 
 
 
@@ -151,6 +152,7 @@ def realized_cost(request, project_id):
         "supplier_form": supplier_form,
         "supplier":supplier,
         "details":details,
+        "banks":banks,
     }
     return render(request, "realized_cost.html", context)
 

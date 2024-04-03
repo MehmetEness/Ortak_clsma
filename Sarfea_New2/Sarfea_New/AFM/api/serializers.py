@@ -220,9 +220,16 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.CompanyUndertakingWork = validated_data.get('CompanyUndertakingWork', instance.CompanyUndertakingWork)
         instance.Location = validated_data.get('Location', instance.Location)
         instance.Cost_NotIncludingKDV = validated_data.get('Cost_NotIncludingKDV', instance.Cost_NotIncludingKDV)
+        instance.AC_Power = validated_data.get('AC_Power', instance.AC_Power)
+        instance.DC_Power = validated_data.get('DC_Power', instance.DC_Power)
+        instance.CalculatedCost_NotIncludingKDV = validated_data.get('CalculatedCost_NotIncludingKDV', instance.CalculatedCost_NotIncludingKDV)
         instance.RealizedCost_NotIncludingKDV = validated_data.get('RealizedCost_NotIncludingKDV', instance.RealizedCost_NotIncludingKDV)
         instance.CalculatedProfit_Loss = validated_data.get('CalculatedProfit_Loss', instance.CalculatedProfit_Loss)
         instance.RealizedProfitRate = validated_data.get('RealizedProfitRate', instance.RealizedProfitRate)
+        
+        instance.CalculatedProfitRate = validated_data.get('CalculatedProfitRate', instance.CalculatedProfitRate)
+        instance.RealizedProfitRate = validated_data.get('RealizedProfitRate', instance.RealizedProfitRate)
+      
         instance.Situation = validated_data.get('Situation', instance.Situation)
         instance.StartDate = validated_data.get('StartDate', instance.StartDate)
         instance.FinishDate = validated_data.get('FinishDate', instance.FinishDate)
