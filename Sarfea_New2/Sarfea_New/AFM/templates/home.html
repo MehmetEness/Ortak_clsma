@@ -52,11 +52,17 @@
   {% include 'partials/_left_nav_bar.html' %}
 
   <div class="right-menu">
-    <div style="height: 38%;" class="row"><canvas id="myChart"></canvas></div>
+    <div style="height: 38%;" class="row"><canvas style="width: 100%; height: 100%;" id="nakit_akis_grafik"></canvas>
+    </div>
     <div style="height: 20%;" class="row"></div>
     <div style="height: 38%;" class="two-chart">
-      <div class="coll"></div>
-      <div class="coll"></div>
+      <div class="coll"><canvas style="width: 100%; height: 100%;" id="kar_zarar_grafik"></canvas></div>
+      <div class="coll pie-div">
+        <div style="width: 50%; height: 100%;" class="data_div"></div>
+        <div style="width: 50%; height: 100%;" class="chart_div">
+          <canvas style="width: 100%; height: 100%;" id="harcama_grafik"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -69,12 +75,12 @@
 
 {% block js_files %}
 <script src="{% static 'functions.js' %}"></script>
-<script src="{% static 'home.js' %}"></script>
+<!-- <script src="{% static 'home.js' %}"></script> -->
 <script>
-  const ctx = document.getElementById('myChart');
-  ctx.width = "100%";
-  ctx.height = "100%";
-  new Chart(ctx, {
+  const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
+  // ctxNakitAkis.width = "100%";
+  // ctxNakitAkis.height = "100%";
+  new Chart(ctxNakitAkis, {
     type: 'line',
     data: {
       labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
@@ -102,6 +108,19 @@
           left: 20 // Grafiğin sol kenarı ile başlık arasında 20 piksel boşluk bırakır
         }
       },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
       plugins: {
         title: {
           display: true,
@@ -117,11 +136,137 @@
           }
         },
         legend: {
-        display: true,
-        position: 'bottom',
+          display: true,
+          position: 'bottom',
+        },
       },
+
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+
+
+  var gelir = [1000, 1200, 1100, 1300, 1500, 1200, 1100, 1300, 1500, 1200, 1100, 1300];
+  var gider = [800, 1500, 900, 1100, 2000, 900, 1000, 2000, 900, 1100, 1000, 800];
+  var karZarar = gelir.map((item, index) => item - gider[index]);
+  var ctx = document.getElementById('kar_zarar_grafik').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+
+      labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      datasets: [{
+        label: 'Kar-Zarar',
+        data: karZarar, // Kar-Zarar verileri
+        backgroundColor: karZarar.map(value => value >= 0 ? '#005eff' : '#808080'),
+        //borderColor: karZarar.map(value => value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'),
+        borderWidth: 1,
+        barThickness: 20,
+        borderRadius: 10
+      }]
+    },
+    options: {
+      layout: {
+        padding: 20
       },
-      
+      plugins: {
+        title: {
+          display: true,
+          text: 'Kar & Zarar',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+      scales: {
+
+      }
+    }
+  });
+
+
+
+  const ctxHarcama = document.getElementById('harcama_grafik');
+  // ctxHarcama.width = "100%";
+  // ctxHarcama.height = "100%";
+  new Chart(ctxHarcama, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Red',
+        'Blue',
+        'Yellow'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50, 100, 70, 150],
+        backgroundColor: [
+          '#686868',
+          '#989898',
+          '#949494',
+          '#a9a9a9',
+          '#d3d3d3'
+        ],
+        hoverOffset: 4,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+          top: 5,
+          left: 20
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
       scales: {
         y: {
           beginAtZero: true

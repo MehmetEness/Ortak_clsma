@@ -39,12 +39,12 @@
 .row{
   border-radius: 0.8rem;
   width: 98%;  
-  background-color: #fff5;
+  background-color: #ffffffb6;
   /* border: 1px solid #000; */
 }
 .coll{
   border-radius: 0.8rem;
-  background-color: #fff5;
+  background-color: #ffffffb6;
   height: 100%;  
   width: 49%;
   /* border: 1px solid #000; */
@@ -53,6 +53,9 @@
   width: 99%;  
   display: flex;
   justify-content: space-evenly;
+}
+.pie-div{
+  display: flex;
 }
 #nav-bar {
   height: 100%;
