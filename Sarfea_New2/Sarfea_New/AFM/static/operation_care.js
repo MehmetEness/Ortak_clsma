@@ -251,9 +251,10 @@ xBtn.forEach((btn) => {
 
 
 /***********************************************************
-#                       SALES OFFER ADD 
+#                       ADD SAYFALARI
 ***********************************************************/
 
+//                  SALES OFFER ADD 
 const operationCareAddForm = document.getElementById("operation_care_add_form");
 const operationCareFormAddBtn = document.querySelector("#operation-care-create-btn");
 operationCareFormAddBtn.addEventListener("click", async function (event) {
@@ -289,6 +290,32 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
   }
 });
 
+//                  CLİENT ADD 
+const clientAddForm = document.getElementById("firma_add_form");
+const clientFormAddBtn = document.querySelector("#firma_submit_btn");
+clientFormAddBtn.addEventListener("click", async function (event) {
+  var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
+  var reqLabels = document.querySelectorAll("#firma_add_label")
+  var firmaInput = document.querySelector("#id_CompanyName_Clients");
+  var firmaSpan = document.querySelector("#firma_add_label")
+  event.preventDefault();
+
+  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+    try {
+      const formData = new FormData(firma_add_form);
+      apiFunctions("client", "POST", formData)
+      clientAddWindow.style.display = "none";
+      setTimeout(() => {
+        getClients();
+      }, 10);
+      clearInputAfterSave(clientAddForm);
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+  }
+});
+
+
 //                  DROPDOWN MENÜLER
 getClients()
 async function getClients() {
@@ -302,6 +329,25 @@ async function getClients() {
     const clientDropdowns = document.querySelectorAll(".client-dropdown");
     clientDropdowns.forEach(async (clientDropdown) => {
       clientDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
+
+getOperation()
+async function getOperation() {
+  try {
+    const data = await apiFunctions("operation_care", "GET")
+    let rows = "";
+    for (const operation of data) {
+      const row = `<span value="${operation.id}" class="dropdown-item">${operation.client.CompanyName_Clients}</span>`;
+      rows += row;
+    }
+    const operationDropdowns = document.querySelectorAll(".operation-dropdown");
+    operationDropdowns.forEach(async (operationDropdown) => {
+      operationDropdown.innerHTML = rows;
     })
     dropdownActive();
   } catch (error) {

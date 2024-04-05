@@ -289,21 +289,12 @@ function xxxx() {
 var formData = new FormData();
 
 function kontrolEt(name) {
-  // Get all radio buttons with the specified name
   var radioButtons = document.getElementsByName(name);
-
-  // Loop through radio buttons to find the checked one
   for (var i = 0; i < radioButtons.length; i++) {
     if (radioButtons[i].checked) {
-      // If checked, get the value (true/false) and store it in an object
       var value = radioButtons[i].value;
       var data = {};
       data[name] = value;
-
-      // Create formData object if not already created
-
-
-      // Append data to formData object
       for (var key in data) {
         formData.append(key, data[key]);
       }

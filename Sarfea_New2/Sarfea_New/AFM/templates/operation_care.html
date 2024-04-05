@@ -203,9 +203,9 @@
             <span class="details">İşletme Bakım *</span>
             <div class="dropdown-container">
               <input autocomplete='off' type="text" id="id_Fail_Operation_Care_Copy" name="Fail_Operation_Care_Copy"
-                class="myInput" placeholder="İşletme Bakım Seçiniz" data-dropdown="dropdown1">
+                class="myInput" placeholder="İşletme Bakım Seçiniz" data-dropdown="ariza-add-dropdown1">
 
-              <div id="dropdown1" class="dropdown-content">
+              <div id="ariza-add-dropdown1" class="dropdown-content operation-dropdown">
                 {% for x in operation_cares %}
                 <span value="{{x.id}}" class="dropdown-item">{{x.Operation_Care_Company}}</span>
                 {% endfor %}
