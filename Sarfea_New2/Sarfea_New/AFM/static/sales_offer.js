@@ -143,21 +143,21 @@ function handleMenuItemClick(clickedItemId) {
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
       wonContainer.style.display = "none";
-      getTotalList()     
+      getTotalList()
       break;
     case "sale_time":
       listContainer.style.display = "none";
       maniContainer.style.display = "flex";
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
-      wonContainer.style.display = "none";           
+      wonContainer.style.display = "none";
       break;
     case "waiting_job":
       listContainer.style.display = "none";
       maniContainer.style.display = "none";
       salesContainer.style.display = "flex";
       lostJobContainer.style.display = "none";
-      wonContainer.style.display = "none";      
+      wonContainer.style.display = "none";
       getSalesList()
       break;
     case "losing_job":
@@ -208,7 +208,7 @@ function dragCards() {
   }
   function dragEnd() {
     setTimeout(() => (this.style.display = "flex"), 0);
-    
+
   }
   for (j of rowsElements) {
     j.addEventListener("dragover", dragOver);
@@ -992,7 +992,7 @@ async function getLostList() {
     }
     lostTableBody.innerHTML = "";
     lostTableBody.insertAdjacentHTML("beforeend", rows);
-    
+
     //editBtns();
     //sortTableForStart(supplierTable, 1);
     //allTableFormat();
@@ -1116,11 +1116,16 @@ function editBtns() {
           if (data.hasOwnProperty(key)) {
 
             var element = document.querySelector('input[name="' + key + '"]');
-            console.log(element)
+            var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              if (element.type != "file") {
+              if (key == "Client_Card") {
+                element.value = data["client"].CompanyName_Clients;
+                element.setAttribute('data-id', data[key]);
+              } else if (element.type != "file") {
                 element.value = data[key];
               }
+            } else if (selectElement) {
+              selectElement.value = data[key];
             }
           }
         }

@@ -273,7 +273,7 @@ function editButtonsEvents() {
         const data = await apiFunctions("project", "GETID", "x", btnID)
         currentProjectName = data.ProjectName;
         for (var key in data) {
-          if (data.hasOwnProperty(key)) {
+          if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {

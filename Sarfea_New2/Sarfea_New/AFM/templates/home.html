@@ -1,66 +1,230 @@
 {%extends "base.html" %}
 {% load static %}
 
-{% block css_files %} 
+{% block css_files %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}"> 
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}">  -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet" href="{% static 'home_style.css' %}">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
-      text-align: center;
+  #table thead th:not(:nth-child(2)),
+  #table tbody td:not(:nth-child(2)) {
+    text-align: center;
   }
-  #table thead th:nth-child(2){
-      padding-left: 20px;
+
+  #table thead th:nth-child(2) {
+    padding-left: 20px;
   }
-  .lists{
-      overflow-y: scroll;
+
+  .lists {
+    overflow-y: scroll;
   }
+
   table thead th {
     cursor: pointer;
- }
- table thead th span{
-    position: relative;
- }
- thead th span::after{
- content: '';
-position:absolute;
-left: -18px;
-top: 60%;
-border-style: solid;
-border-top-width: 10px;
-border-right-width: 5px;
-border-left-width: 5px;
-border-color: #000 transparent transparent transparent;
-transform: translateY(-50%);
-transition: transform 0.3s ease;
- }
+  }
 
+  table thead th span {
+    position: relative;
+  }
+
+  thead th span::after {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 60%;
+    border-style: solid;
+    border-top-width: 10px;
+    border-right-width: 5px;
+    border-left-width: 5px;
+    border-color: #000 transparent transparent transparent;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+  }
+</style>
+<style>
+  .progress {
+    background: #ddd;
+    height: 20px;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .progress-done {
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: #fff;
+    height: 100%;
+    background: rgb(0, 119, 255);
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    width: 0;
+    transition: width .5s ease;
+  }
+
+  .progress-done2 {
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: #fff;
+    height: 100%;
+    background: rgb(0, 119, 255);
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    width: 0;
+    transition: width .5s ease;
+  }
+
+  .row.bill {
+    display: flex;
+  }
+
+  .sell-bill {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buy-bill {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bill-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bill-title span {
+    color: #505050;
+    font-size: 13px;
+  }
+
+  .bill-comment {
+    margin-right: auto;
+
+  }
+
+  .bill-comment p {
+    color: #505050;
+    font-size: 14px;
+  }
+
+  .bill-bars {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bar-cash-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bar-cash-info span {
+    color: #505050;
+    font-size: 13px;
+  }
 </style>
 {% endblock %}
 
 {% block title %} Home Page {% endblock %}
-{% block content %}   
+{% block content %}
 <div class="body-div">
-{% include 'partials/_left_nav_bar.html' %}
+  {% include 'partials/_left_nav_bar.html' %}
 
-<div class="right-menu">
-  <div class="up">
-    <div style="background-image: url('{% static 'images/main1.png' %}');" class="projeler card_div"></div>
-    <div style="background-image: url('{% static 'images/main2.png' %}');" class="sales card_div"></div>
-    <div style="background-image: url('{% static 'images/main3.png' %}');" class="stock card_div"></div>
-  </div>
-  <div class="down">
-    <div class="business-maintenance card_div">
-      <img src="data:image/png;base64,{{ pie_chart_base64 }}" alt="Pie Chart">
+  <div class="right-menu">
+    <div style="height: 38%;" class="row"><canvas style="width: 100%; height: 100%;" id="nakit_akis_grafik"></canvas>
     </div>
-    <div class="reporting card_div">
-       
-      <img src="data:image/png;base64,{{ cash_flow_chart_base64 }}" alt="Cash Flow Chart">
-  
-    </div> 
+    <div style="height: 20%;" class="row bill">
+      <div style="width: 50%;" class="sell-bill">
+        <div class="bill-title">
+          <h3>Satış Faturaları</h3>
+          <span>Son 30 Gün</span>
+        </div>
+        <div class="bill-bars">
+          <div class="bar-cash-info">
+            <p><b>$2100</b> <span>Ödenen</span></p>
+            <p><b>$7200</b> <span>Kalan</span></p>
+          </div>
+          <div class="progress">
+            <div class="progress-done">
+            </div>
+          </div>
+        </div>
+        <div class="bill-comment">
+          <p>$53.000 Son 365 günde alınan ödeme</p>
+        </div>
+      </div>
+      <div style="width: 50%;" class="buy-bill">
+        <div class="bill-title">
+          <h3>Alış Faturaları</h3>
+          <span>Son 30 Gün</span>
+        </div>
+        <div class="bill-bars">
+          <div class="bar-cash-info">
+            <p>$4650 <span>Ödenen</span></p>
+            <p>$15200 <span>Kalan</span></p>
+          </div>
+          <div class="progress">
+            <div class="progress-done2">
+            </div>
+          </div>
+        </div>
+        <div class="bill-comment">
+          <p>$53.000 Son 365 günde alınan ödeme</p>
+        </div>
+      </div>
+    </div>
+    <div style="height: 38%;" class="two-chart">
+      <div class="coll"><canvas style="width: 100%; height: 100%;" id="kar_zarar_grafik"></canvas></div>
+      <div class="coll pie-div">
+        <div style="width: 50%; height: 100%;" class="data_div">
+          <h3>Toplam Harcamalar</h3>
+          <div class="data_div_items">
+            <p>Çalışna ödemeleri</p>
+            <p>2600$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Panel Maliyeti</p>
+            <p>1300$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Araç Kiralama</p>
+            <p>800$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Yeme İçme vb.</p>
+            <p>620$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Diğerleri</p>
+            <p>324$</p>
+          </div>
+
+
+
+
+
+        </div>
+        <div style="width: 50%; height: 100%;" class="chart_div">
+          <canvas style="width: 100%; height: 100%;" id="harcama_grafik"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -68,12 +232,244 @@ transition: transform 0.3s ease;
 
 
 
-   
-    {% endblock %}
 
-    {% block js_files %} 
-  <script src="{% static 'functions.js' %}"></script> 
-  <script src="{% static 'home.js' %}"></script> 
-  
-  
-  {% endblock %}
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'functions.js' %}"></script>
+<!-- <script src="{% static 'home.js' %}"></script> -->
+<script>
+  const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
+  // ctxNakitAkis.width = "100%";
+  // ctxNakitAkis.height = "100%";
+  new Chart(ctxNakitAkis, {
+    type: 'line',
+    data: {
+      labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      datasets: [{
+        label: 'Giriş',
+        borderColor: "#2aa5eb",
+        data: [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 5],
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: "#2aa4eb36"
+      }, {
+        label: 'Çıkış',
+        borderColor: "#808080",
+        data: [8, 11, 6, 11, 7, 1, 16, 17, 2, 2, 13, 15],
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: "#80808048"
+      }
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          top: 5,
+          left: 20 // Grafiğin sol kenarı ile başlık arasında 20 piksel boşluk bırakır
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+        x: {
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
+
+
+
+
+  var gelir = [1000, 1200, 1100, 1300, 1500, 1200, 1100, 1300, 1500, 1200, 1100, 1300];
+  var gider = [800, 1500, 900, 1100, 2000, 900, 1000, 2000, 900, 1100, 1000, 800];
+  var karZarar = gelir.map((item, index) => item - gider[index]);
+  var ctx = document.getElementById('kar_zarar_grafik').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+
+      labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      datasets: [{
+        label: 'Kar-Zarar',
+        data: karZarar, // Kar-Zarar verileri
+        backgroundColor: karZarar.map(value => value >= 0 ? '#005eff' : '#808080'),
+        //borderColor: karZarar.map(value => value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'),
+        borderWidth: 1,
+        barThickness: 20,
+        borderRadius: 10
+      }]
+    },
+    options: {
+      layout: {
+        padding: 20
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Kar & Zarar',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+      scales: {
+
+      }
+    }
+  });
+
+
+
+  const ctxHarcama = document.getElementById('harcama_grafik');
+  // ctxHarcama.width = "100%";
+  // ctxHarcama.height = "100%";
+  new Chart(ctxHarcama, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Red',
+        'Blue',
+        'Yellow'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50, 100, 70, 150],
+        backgroundColor: [
+          '#686868',
+          '#989898',
+          '#949494',
+          '#a9a9a9',
+          '#d3d3d3'
+        ],
+        hoverOffset: 4,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+          top: 5,
+          left: 20
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
+      scales: {
+        y: {
+          display: false,
+        },
+        x: {
+          display: false,
+        }
+      }
+    }
+  });
+
+
+
+</script>
+<script>
+  var counter = 0;
+  window.addEventListener("DOMContentLoaded", move = () => {
+    if (counter == 0) {
+      j = 1;
+      var elem = document.querySelector(".progress-done");
+      var elem2 = document.querySelector(".progress-done2");
+      var width = 0;
+      var main = setInterval(frame, 1);
+      function frame() {
+        if (width >= 60) {
+          clearInterval(main);
+        } else {
+          width++;
+          elem.style.width = width + "%";
+          elem.innerHTML = width + "%";
+          elem2.style.width = width + "%";
+          elem2.innerHTML = width + "%";
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock %}

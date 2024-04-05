@@ -9,6 +9,8 @@ const arizaTakipTableBody = arizaTakipTable.querySelector("tbody");
 
 const reqIncomeInputs = document.querySelectorAll("#id_Operation_Care_Company")
 const reqIncomeLabels = document.querySelectorAll("#firma_adi_span")
+const reqFailInputs = document.querySelectorAll("#id_Fail_Operation_Care")
+const reqFailLabels = document.querySelectorAll("#Fail_Operation_Span")
 
 
 
@@ -26,10 +28,11 @@ async function getOperationCare(isEdit) {
     let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
 
     const data = await apiFunctions("operation_care", "GET");
-    console.log(data);
+    //console.log(data);
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
+      var operationCareDetailUrl = `http://127.0.0.1:8000/operation_care_detail/${operationCare.id}/`;
       var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
       const row = `
         <tr>
@@ -38,7 +41,7 @@ async function getOperationCare(isEdit) {
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
-          <td><a href="${"operationCareDetailUrl"}">${operationCare.client.CompanyName_Clients}</a></td>
+          <td><a href="${operationCareDetailUrl}">${operationCare.client.CompanyName_Clients}</a></td>
           <td>${formatNumber(operationCare.Operation_Care_Inventor_Power)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
@@ -52,6 +55,46 @@ async function getOperationCare(isEdit) {
 
       isletmeBakimTableBody.innerHTML = "";
       isletmeBakimTableBody.insertAdjacentHTML("beforeend", rows);
+      //sortingTable(projectsTable);
+      // allTableFormat();
+      //editButtonsEvents();
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+getOperationFail(true)
+async function getOperationFail(isEdit) {
+  try {
+    let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
+
+    const data = await apiFunctions("fail", "GET");
+    //console.log(data);
+    let rows = "";
+    for (const operationCareFail of data) {
+      const row = `
+        <tr>
+          <td>
+            <button id="${operationCareFail.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
+              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td>${operationCareFail.Fail_Central_Name}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Detection_Date)}</td>
+          <td>${operationCareFail.Fail_Detail}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Team_Info_Date)}</td>
+          <td>${operationCareFail.Fail_Information_Person}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Repair_Date)}</td>
+          <td>${operationCareFail.Fail_Guaranteed}</td>
+          <td>${operationCareFail.Fail_Situation}</td>
+        </tr>`;
+
+      rows += row;
+    }
+    if (data.length > currentRows.length || isEdit) {
+
+      arizaTakipTableBody.innerHTML = "";
+      arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
       //sortingTable(projectsTable);
       // allTableFormat();
       //editButtonsEvents();
@@ -158,6 +201,12 @@ console.log(apiFunctions("sales_offer", "GET"))
 const operationCareAddWindowButton = document.querySelector("#operation_care_add_btn")
 const operationCareAddWindow = document.querySelector(".operation-care-add-window")
 
+const arizaAddWindowButton = document.querySelector("#ariza_add_btn")
+const arizaAddWindow = document.querySelector(".ariza-add-window")
+
+const arizaFaturaAddSelect = document.querySelector("#id_Fail_Guaranteed")
+const arizaFaturaAddWindow = document.querySelector(".ariza-fatura-add-window")
+
 //        FİRMA EKLEME
 const clientAddWindow = document.querySelector(".client-add-window");
 const companyAddBtns = document.querySelectorAll(".paying-company-add-btn");
@@ -192,7 +241,40 @@ document.addEventListener("mousedown", (event) => {
     operationCareAddWindow.style.display = "none";
   }
 });
-
+//        ARIZA EKLEME
+arizaAddWindowButton.addEventListener("click", () => {
+  setTimeout(() => {
+    arizaAddWindow.style.display = "flex";
+    //getSuppliers()
+    //getprojectName()
+  }, 10);
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaAddContainer = arizaAddWindow.querySelector(".container");
+  if (!arizaAddContainer.contains(event.target) && arizaFaturaAddWindow.style.display == "none") {
+    arizaAddWindow.style.display = "none";
+  }
+});
+//        ARIZA FATURA EKLEME
+arizaFaturaAddSelect.addEventListener("change", () => {
+  const selectedOption = arizaFaturaAddSelect.options[arizaFaturaAddSelect.selectedIndex].text;
+  if (selectedOption.startsWith("Evet")) {
+    arizaFaturaAddWindow.style.display = "flex";
+  } else {
+    arizaFaturaAddWindow.style.display = "none";
+  }
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaFaturaAddContainer = arizaFaturaAddWindow.querySelector(".container");
+  if (!arizaFaturaAddContainer.contains(event.target)) {
+    if (arizaFaturaAddSelect.value == "Evet" && arizaFaturaAddWindow.style.display == "flex") {
+      setTimeout(() => {
+        arizaFaturaAddSelect.value = "Belirsiz"
+      }, 10);
+    }
+    arizaFaturaAddWindow.style.display = "none";
+  }
+});
 // KAPATMA
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn) => {
@@ -211,9 +293,10 @@ xBtn.forEach((btn) => {
 
 
 /***********************************************************
-#                       SALES OFFER ADD 
+#                       ADD SAYFALARI
 ***********************************************************/
 
+//                  SALES OFFER ADD 
 const operationCareAddForm = document.getElementById("operation_care_add_form");
 const operationCareFormAddBtn = document.querySelector("#operation-care-create-btn");
 operationCareFormAddBtn.addEventListener("click", async function (event) {
@@ -249,6 +332,66 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
   }
 });
 
+//                  ARIZA ADD 
+const arizaAddForm = document.getElementById("ariza-add-form");
+const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
+arizaFormAddBtn.addEventListener("click", async function (event) {
+
+  event.preventDefault();
+
+  if (requiredInputs(reqFailInputs, reqFailLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = arizaAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+
+    const formData = new FormData(arizaAddForm);
+    const inputs = document.querySelectorAll(".ariza-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    // const jsonObject = {};
+    // for (const [key, value] of formData.entries()) {
+    //   jsonObject[key] = value;
+    // }
+    // console.log(JSON.stringify(jsonObject));
+    await apiFunctions("fail", "POST", formData);
+    arizaAddWindow.style.display = "none";
+    clearInputAfterSave(arizaAddForm);
+  }
+});
+
+//                  CLİENT ADD 
+const clientAddForm = document.getElementById("firma_add_form");
+const clientFormAddBtn = document.querySelector("#firma_submit_btn");
+clientFormAddBtn.addEventListener("click", async function (event) {
+  var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
+  var reqLabels = document.querySelectorAll("#firma_add_label")
+  var firmaInput = document.querySelector("#id_CompanyName_Clients");
+  var firmaSpan = document.querySelector("#firma_add_label")
+  event.preventDefault();
+
+  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+    try {
+      const formData = new FormData(firma_add_form);
+      apiFunctions("client", "POST", formData)
+      clientAddWindow.style.display = "none";
+      setTimeout(() => {
+        getClients();
+      }, 10);
+      clearInputAfterSave(clientAddForm);
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+  }
+});
+
+
 //                  DROPDOWN MENÜLER
 getClients()
 async function getClients() {
@@ -262,6 +405,25 @@ async function getClients() {
     const clientDropdowns = document.querySelectorAll(".client-dropdown");
     clientDropdowns.forEach(async (clientDropdown) => {
       clientDropdown.innerHTML = rows;
+    })
+    dropdownActive();
+  } catch (error) {
+    console.error("Error fetching and rendering projects:", error);
+  }
+}
+
+getOperation()
+async function getOperation() {
+  try {
+    const data = await apiFunctions("operation_care", "GET")
+    let rows = "";
+    for (const operation of data) {
+      const row = `<span value="${operation.id}" class="dropdown-item">${operation.client.CompanyName_Clients}</span>`;
+      rows += row;
+    }
+    const operationDropdowns = document.querySelectorAll(".operation-dropdown");
+    operationDropdowns.forEach(async (operationDropdown) => {
+      operationDropdown.innerHTML = rows;
     })
     dropdownActive();
   } catch (error) {

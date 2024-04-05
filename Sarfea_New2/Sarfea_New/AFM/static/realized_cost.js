@@ -211,8 +211,8 @@ async function getTotalTable() {
         totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2) + " $";
         totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2) + " ₺";
         totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2) + " $";
-        document.querySelector("#genel_tl").textContent = formatNumber(parseFloat((totalTlLeft - totalTlRight).toString()), 2) + " ₺";
-        document.querySelector("#genel_usd").textContent = formatNumber(parseFloat((totalUSDLeft - totalUSDRight).toString()), 2) + " $";
+        document.querySelector("#genel_tl").textContent = formatNumber(parseFloat((totalTlRight - totalTlLeft).toString()), 2) + " ₺";
+        document.querySelector("#genel_usd").textContent = formatNumber(parseFloat((totalUSDRight - totalUSDLeft).toString()), 2) + " $";
         if (true) {
 
             totalTableBody.innerHTML = '';
@@ -531,8 +531,8 @@ async function genelToplam() {
     var expTlForCal = document.querySelector("#expenses_tl_td")
     var expUsdForCal = document.querySelector("#expenses_usd_td")
     await bekleme(50)
-    genelTl.textContent = formatNumber((clearForCalc(jobTlForCal.textContent) - clearForCalc(expTlForCal.textContent)), 2) + " ₺";
-    genelUsd.textContent = formatNumber((clearForCalc(jobUsdForCal.textContent) - clearForCalc(expUsdForCal.textContent)), 2) + " $";
+    genelTl.textContent = formatNumber((clearForCalc(expTlForCal.textContent) - clearForCalc(jobTlForCal.textContent)), 2) + " ₺";
+    genelUsd.textContent = formatNumber((clearForCalc(expUsdForCal.textContent) - clearForCalc(jobUsdForCal.textContent)), 2) + " $";
 }
 
 
