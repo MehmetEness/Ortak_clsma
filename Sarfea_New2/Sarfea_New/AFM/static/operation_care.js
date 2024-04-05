@@ -30,7 +30,7 @@ async function getOperationCare(isEdit) {
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
-      var operationCareDetailUrl = `http://127.0.0.1:8000/operation_care_detail/${operationCare.id}/`; 
+      var operationCareDetailUrl = `http://127.0.0.1:8000/operation_care_detail/${operationCare.id}/`;
       var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
       const row = `
         <tr>
@@ -159,6 +159,12 @@ console.log(apiFunctions("sales_offer", "GET"))
 const operationCareAddWindowButton = document.querySelector("#operation_care_add_btn")
 const operationCareAddWindow = document.querySelector(".operation-care-add-window")
 
+const arizaAddWindowButton = document.querySelector("#ariza_add_btn")
+const arizaAddWindow = document.querySelector(".ariza-add-window")
+
+const arizaFaturaAddSelect = document.querySelector("#id_Fail_Guaranteed")
+const arizaFaturaAddWindow = document.querySelector(".ariza-fatura-add-window")
+
 //        FİRMA EKLEME
 const clientAddWindow = document.querySelector(".client-add-window");
 const companyAddBtns = document.querySelectorAll(".paying-company-add-btn");
@@ -193,7 +199,40 @@ document.addEventListener("mousedown", (event) => {
     operationCareAddWindow.style.display = "none";
   }
 });
-
+//        ARIZA EKLEME
+arizaAddWindowButton.addEventListener("click", () => {
+  setTimeout(() => {
+    arizaAddWindow.style.display = "flex";
+    //getSuppliers()
+    //getprojectName()
+  }, 10);
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaAddContainer = arizaAddWindow.querySelector(".container");
+  if (!arizaAddContainer.contains(event.target) && arizaFaturaAddWindow.style.display == "none") {
+    arizaAddWindow.style.display = "none";
+  }
+});
+//        ARIZA FATURA EKLEME
+arizaFaturaAddSelect.addEventListener("change", () => {
+  const selectedOption = arizaFaturaAddSelect.options[arizaFaturaAddSelect.selectedIndex].text;
+  if (selectedOption.startsWith("Evet")) {
+    arizaFaturaAddWindow.style.display = "flex";
+  } else {
+    arizaFaturaAddWindow.style.display = "none";
+  }
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaFaturaAddContainer = arizaFaturaAddWindow.querySelector(".container");
+  if (!arizaFaturaAddContainer.contains(event.target)) {
+    if (arizaFaturaAddSelect.value == "Evet" && arizaFaturaAddWindow.style.display == "flex") {
+      setTimeout(() => {
+        arizaFaturaAddSelect.value = "Belirsiz"
+      }, 10);
+    }
+    arizaFaturaAddWindow.style.display = "none";
+  }
+});
 // KAPATMA
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn) => {
