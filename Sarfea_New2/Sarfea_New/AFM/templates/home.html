@@ -44,6 +44,102 @@
     transition: transform 0.3s ease;
   }
 </style>
+<style>
+  .progress {
+    background: #ddd;
+    height: 20px;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .progress-done {
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: #fff;
+    height: 100%;
+    background: rgb(0, 119, 255);
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    width: 0;
+    transition: width .5s ease;
+  }
+
+  .progress-done2 {
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: #fff;
+    height: 100%;
+    background: rgb(0, 119, 255);
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    width: 0;
+    transition: width .5s ease;
+  }
+
+  .row.bill {
+    display: flex;
+  }
+
+  .sell-bill {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buy-bill {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bill-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bill-title span {
+    color: #505050;
+    font-size: 13px;
+  }
+
+  .bill-comment {
+    margin-right: auto;
+
+  }
+
+  .bill-comment p {
+    color: #505050;
+    font-size: 14px;
+  }
+
+  .bill-bars {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bar-cash-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bar-cash-info span {
+    color: #505050;
+    font-size: 13px;
+  }
+</style>
 {% endblock %}
 
 {% block title %} Home Page {% endblock %}
@@ -54,11 +150,77 @@
   <div class="right-menu">
     <div style="height: 38%;" class="row"><canvas style="width: 100%; height: 100%;" id="nakit_akis_grafik"></canvas>
     </div>
-    <div style="height: 20%;" class="row"></div>
+    <div style="height: 20%;" class="row bill">
+      <div style="width: 50%;" class="sell-bill">
+        <div class="bill-title">
+          <h3>Satış Faturaları</h3>
+          <span>Son 30 Gün</span>
+        </div>
+        <div class="bill-bars">
+          <div class="bar-cash-info">
+            <p><b>$2100</b> <span>Ödenen</span></p>
+            <p><b>$7200</b> <span>Kalan</span></p>
+          </div>
+          <div class="progress">
+            <div class="progress-done">
+            </div>
+          </div>
+        </div>
+        <div class="bill-comment">
+          <p>$53.000 Son 365 günde alınan ödeme</p>
+        </div>
+      </div>
+      <div style="width: 50%;" class="buy-bill">
+        <div class="bill-title">
+          <h3>Alış Faturaları</h3>
+          <span>Son 30 Gün</span>
+        </div>
+        <div class="bill-bars">
+          <div class="bar-cash-info">
+            <p>$4650 <span>Ödenen</span></p>
+            <p>$15200 <span>Kalan</span></p>
+          </div>
+          <div class="progress">
+            <div class="progress-done2">
+            </div>
+          </div>
+        </div>
+        <div class="bill-comment">
+          <p>$53.000 Son 365 günde alınan ödeme</p>
+        </div>
+      </div>
+    </div>
     <div style="height: 38%;" class="two-chart">
       <div class="coll"><canvas style="width: 100%; height: 100%;" id="kar_zarar_grafik"></canvas></div>
       <div class="coll pie-div">
-        <div style="width: 50%; height: 100%;" class="data_div"></div>
+        <div style="width: 50%; height: 100%;" class="data_div">
+          <h3>Toplam Harcamalar</h3>
+          <div class="data_div_items">
+            <p>Çalışna ödemeleri</p>
+            <p>2600$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Panel Maliyeti</p>
+            <p>1300$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Araç Kiralama</p>
+            <p>800$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Yeme İçme vb.</p>
+            <p>620$</p>
+          </div>
+          <div class="data_div_items">
+            <p>Diğerleri</p>
+            <p>324$</p>
+          </div>
+
+
+
+
+
+        </div>
         <div style="width: 50%; height: 100%;" class="chart_div">
           <canvas style="width: 100%; height: 100%;" id="harcama_grafik"></canvas>
         </div>
@@ -143,7 +305,12 @@
 
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+        },
+        x: {
+          grid: {
+            display: false
+          }
         }
       }
     }
@@ -269,7 +436,10 @@
 
       scales: {
         y: {
-          beginAtZero: true
+          display: false,
+        },
+        x: {
+          display: false,
         }
       }
     }
@@ -277,6 +447,29 @@
 
 
 
+</script>
+<script>
+  var counter = 0;
+  window.addEventListener("DOMContentLoaded", move = () => {
+    if (counter == 0) {
+      j = 1;
+      var elem = document.querySelector(".progress-done");
+      var elem2 = document.querySelector(".progress-done2");
+      var width = 0;
+      var main = setInterval(frame, 1);
+      function frame() {
+        if (width >= 60) {
+          clearInterval(main);
+        } else {
+          width++;
+          elem.style.width = width + "%";
+          elem.innerHTML = width + "%";
+          elem2.style.width = width + "%";
+          elem2.innerHTML = width + "%";
+        }
+      }
+    }
+  });
 </script>
 
 {% endblock %}

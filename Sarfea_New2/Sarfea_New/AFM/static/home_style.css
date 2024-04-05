@@ -117,7 +117,19 @@ label[for=nav-toggle] {
   justify-content: center;
   cursor: pointer;
 }
-
+.data_div{
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.data_div_items{
+  display: flex;
+  justify-content: space-between;
+}
+.data_div_items p:nth-child(2){
+  font-weight: 600;
+}
 #nav-content {
   margin: -16px 0;
   padding: 16px 0;
