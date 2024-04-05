@@ -9,6 +9,8 @@ const arizaTakipTableBody = arizaTakipTable.querySelector("tbody");
 
 const reqIncomeInputs = document.querySelectorAll("#id_Operation_Care_Company")
 const reqIncomeLabels = document.querySelectorAll("#firma_adi_span")
+const reqFailInputs = document.querySelectorAll("#id_Fail_Operation_Care")
+const reqFailLabels = document.querySelectorAll("#Fail_Operation_Span")
 
 
 
@@ -26,7 +28,7 @@ async function getOperationCare(isEdit) {
     let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
 
     const data = await apiFunctions("operation_care", "GET");
-    console.log(data);
+    //console.log(data);
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
@@ -53,6 +55,46 @@ async function getOperationCare(isEdit) {
 
       isletmeBakimTableBody.innerHTML = "";
       isletmeBakimTableBody.insertAdjacentHTML("beforeend", rows);
+      //sortingTable(projectsTable);
+      // allTableFormat();
+      //editButtonsEvents();
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
+getOperationFail(true)
+async function getOperationFail(isEdit) {
+  try {
+    let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
+
+    const data = await apiFunctions("fail", "GET");
+    //console.log(data);
+    let rows = "";
+    for (const operationCareFail of data) {
+      const row = `
+        <tr>
+          <td>
+            <button id="${operationCareFail.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
+              <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td>${operationCareFail.Fail_Central_Name}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Detection_Date)}</td>
+          <td>${operationCareFail.Fail_Detail}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Team_Info_Date)}</td>
+          <td>${operationCareFail.Fail_Information_Person}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Repair_Date)}</td>
+          <td>${operationCareFail.Fail_Guaranteed}</td>
+          <td>${operationCareFail.Fail_Situation}</td>
+        </tr>`;
+
+      rows += row;
+    }
+    if (data.length > currentRows.length || isEdit) {
+
+      arizaTakipTableBody.innerHTML = "";
+      arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
       //sortingTable(projectsTable);
       // allTableFormat();
       //editButtonsEvents();
@@ -287,6 +329,40 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
     operationCareAddWindow.style.display = "none";
     getClients();
     clearInputAfterSave(operationCareAddForm);
+  }
+});
+
+//                  ARIZA ADD 
+const arizaAddForm = document.getElementById("ariza-add-form");
+const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
+arizaFormAddBtn.addEventListener("click", async function (event) {
+
+  event.preventDefault();
+
+  if (requiredInputs(reqFailInputs, reqFailLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = arizaAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+
+    const formData = new FormData(arizaAddForm);
+    const inputs = document.querySelectorAll(".ariza-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    // const jsonObject = {};
+    // for (const [key, value] of formData.entries()) {
+    //   jsonObject[key] = value;
+    // }
+    // console.log(JSON.stringify(jsonObject));
+    await apiFunctions("fail", "POST", formData);
+    arizaAddWindow.style.display = "none";
+    clearInputAfterSave(arizaAddForm);
   }
 });
 
