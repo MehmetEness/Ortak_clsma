@@ -88,9 +88,9 @@ async function getIncomes(edit) {
             <td>${income.client_incomes.CompanyName_Clients}</td>
             <td>${formattedDate}</td>
             <td>${income.PaymentType_Incomes}</td>
-            <td>${income.Amount_Incomes}</td>
-            <td>${income.Dollar_Rate_Incomes}</td>            
-            <td>${parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)}</td>
+            <td>${formatNumber(income.Amount_Incomes) + "₺"}</td>
+            <td>${formatNumber(income.Dollar_Rate_Incomes) + "₺"}</td>            
+            <td>${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0) + "$"}</td>
           </tr>`;
             rows += row;
             totalTl += parseFloat(income.Amount_Incomes || 0);
@@ -110,7 +110,7 @@ async function getIncomes(edit) {
             incomeTableBody.insertAdjacentHTML("beforeend", rows);
             document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) - parseFloat(totalUsd), 2) + "$";
             sortingTable(incomeTable);
-            allTableFormat();
+            //allTableFormat();
             editBtns()
             //editButtonsEvents();
         }

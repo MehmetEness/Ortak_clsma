@@ -102,7 +102,7 @@ async function getExpenses(id) {
                         <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                         </button>
                     </td>
-                    <td>${formattedDate}</td>
+                    <td style="text-align:center">${formattedDate}</td>
                     <td>${expenses.ExpensDetails_Expenses}</td>
                     <td>${expenses.Bank_Expenses}</td>
                     <td>${expenses.Amount_Expenses}</td>

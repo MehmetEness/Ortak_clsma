@@ -1130,11 +1130,13 @@ function editBtns() {
           }
         }
         salesOfferAddWindow.style.display = "flex";
+        onPageLoads(formatedInputs)
       }, 10);
     })
   });
 }
-
+formatDateInputs(dateInputs);
+formatDateInputsForLoad(dateInputs);
 
 //                  MALİYET HESAPLAMA İŞLEMLERİ
 var teklifBedeliInput = document.querySelector("#id_Offer_Cost_NotIncludingKDV_Card");
