@@ -334,7 +334,13 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
 
 //                  ARIZA ADD 
 const arizaAddForm = document.getElementById("ariza-add-form");
+const arizaFaturaAddForm = document.getElementById("fatura_form");
 const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
+const arizaFaturaFormAddBtn = document.querySelector("#fatura-create-btn");
+arizaFaturaFormAddBtn.addEventListener("click", async function (event) {
+  arizaFaturaAddWindow.style.display = "none";
+})
+
 arizaFormAddBtn.addEventListener("click", async function (event) {
 
   event.preventDefault();
@@ -355,6 +361,14 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
+    const billSelect = document.querySelector("#id_Fail_Guaranteed");
+    if(billSelect.value == "Evet"){
+      console.log("fsdf")
+      const billFormData = new FormData(arizaFaturaAddForm);
+      for (const [key, value] of billFormData.entries()) {
+        formData.append(key, value); 
+      }
+    }    
     // const jsonObject = {};
     // for (const [key, value] of formData.entries()) {
     //   jsonObject[key] = value;
