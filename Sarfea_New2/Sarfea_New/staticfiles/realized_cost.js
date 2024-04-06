@@ -211,7 +211,10 @@ async function getTotalTable() {
         totalUSDSpanLeft.textContent = formatNumber(parseFloat(totalUSDLeft.toString()), 2) + " $";
         totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2) + " ₺";
         totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2) + " $";
+        document.querySelector("#genel_tl").textContent = formatNumber(parseFloat((totalTlRight - totalTlLeft).toString()), 2) + " ₺";
+        document.querySelector("#genel_usd").textContent = formatNumber(parseFloat((totalUSDRight - totalUSDLeft).toString()), 2) + " $";
         if (true) {
+
             totalTableBody.innerHTML = '';
             totalTableBody.insertAdjacentHTML('beforeend', rows);
             sortTableForStart(totalTable, 1);
@@ -356,10 +359,10 @@ expensesFormAddBtn.addEventListener("click", async function (event) {
             const dataId = input.getAttribute('data-id');
             formData.set(input.getAttribute('name'), dataId);
         });
-        if (editMode == false) {
-            await apiFunctions("expense", "POST", formData);        
-        }else{
-            await apiFunctions("expense", "PUT", formData, expensesBtnID); 
+        if (expensesEditMode == false) {
+            await apiFunctions("expense", "POST", formData);
+        } else {
+            await apiFunctions("expense", "PUT", formData, expensesBtnID);
         }
         expensesAddWindow.style.display = "none";
         getCompany()
@@ -415,10 +418,10 @@ jobhistoryFormAddBtn.addEventListener("click", async function (event) {
             const dataId = input.getAttribute('data-id');
             formData.set(input.getAttribute('name'), dataId);
         });
-        if (editMode == false) {
-            await apiFunctions("job_history", "POST", formData);        
-        }else{
-            await apiFunctions("job_history", "PUT", formData, jobHistoryBtnID); 
+        if (jobHistoryEditMode == false) {
+            await apiFunctions("job_history", "POST", formData);
+        } else {
+            await apiFunctions("job_history", "PUT", formData, jobHistoryBtnID);
         }
         jobhistoryAddWindow.style.display = "none";
         getCompany()
@@ -505,7 +508,7 @@ totalTableBtn.addEventListener("click", () => {
         twoTableSection.style.display = "none";
         getTotalTable();
         totalTableSection.style.display = "flex";
-    } else {        
+    } else {
         twoTableSection.style.display = "flex";
         totalTableSection.style.display = "none";
     }
@@ -527,9 +530,9 @@ async function genelToplam() {
     var jobUsdForCal = document.querySelector("#jobhistory_usd_td")
     var expTlForCal = document.querySelector("#expenses_tl_td")
     var expUsdForCal = document.querySelector("#expenses_usd_td")
-    await bekleme(300)
-    genelTl.textContent = formatNumber((clearForCalc(jobTlForCal.textContent) - clearForCalc(expTlForCal.textContent)), 2) + " ₺";
-    genelUsd.textContent = formatNumber((clearForCalc(jobUsdForCal.textContent) - clearForCalc(expUsdForCal.textContent)), 2) + " $";
+    await bekleme(50)
+    genelTl.textContent = formatNumber((clearForCalc(expTlForCal.textContent) - clearForCalc(jobTlForCal.textContent)), 2) + " ₺";
+    genelUsd.textContent = formatNumber((clearForCalc(expUsdForCal.textContent) - clearForCalc(jobUsdForCal.textContent)), 2) + " $";
 }
 
 
@@ -578,79 +581,79 @@ async function getCompany() {
 
 let expensesBtnID = -1;
 function expensesEditButtonsEvents() {
-  let editButtons = document.querySelectorAll(".edit-expenses-btn");
-  editButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      setTimeout(async () => {
-        expensesEditMode = true;
-        expensesBtnID = button.id;
-        const data = await apiFunctions("expense", "GETID", "x", expensesBtnID)
-        console.log(data)
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            var element = document.querySelector('input[name="' + key + '"]');
-            var selectElement = document.querySelector('select[name="' + key + '"]');
-            if (element) {
-              console.log(key)
-              console.log(data[key])
-              //let projectNameForEdit = document.querySelector("#id_ProjectName");
-              //projectNameForEdit.setAttribute('data-id', btnID);
-              if (key == "CompanyName_Paying_Expenses") {
-                element.value = data["supplier_expenses"].CompanyName_Supplier;
-                element.setAttribute('data-id', data[key]);
-              } else {
-                element.value = data[key];
-              }
-            } else if (selectElement) {
-              selectElement.value = data[key];
-            }
-          }
-        }
-        //getClients();
-        //onPageLoads(formatedInputs)
-        //formatDateInputsForLoad(dateInputs)
-        expensesAddWindow.style.display = "flex";
-      }, 10);
-    })
-  });
+    let editButtons = document.querySelectorAll(".edit-expenses-btn");
+    editButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            setTimeout(async () => {
+                expensesEditMode = true;
+                expensesBtnID = button.id;
+                const data = await apiFunctions("expense", "GETID", "x", expensesBtnID)
+                console.log(data)
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var element = document.querySelector('input[name="' + key + '"]');
+                        var selectElement = document.querySelector('select[name="' + key + '"]');
+                        if (element) {
+                            console.log(key)
+                            console.log(data[key])
+                            //let projectNameForEdit = document.querySelector("#id_ProjectName");
+                            //projectNameForEdit.setAttribute('data-id', btnID);
+                            if (key == "CompanyName_Paying_Expenses") {
+                                element.value = data["supplier_expenses"].CompanyName_Supplier;
+                                element.setAttribute('data-id', data[key]);
+                            } else {
+                                element.value = data[key];
+                            }
+                        } else if (selectElement) {
+                            selectElement.value = data[key];
+                        }
+                    }
+                }
+                getSuppliers();
+                onPageLoads(formatedInputs);
+                formatDateInputsForLoad(dateInputs);
+                expensesAddWindow.style.display = "flex";
+            }, 10);
+        })
+    });
 }
 
-//                  EXPENSES EDİT FUNCTİON
+//                  JOBHİSTORY EDİT FUNCTİON
 
 let jobHistoryBtnID = -1;
 function jobHistoryEditButtonsEvents() {
-  let editButtons = document.querySelectorAll(".edit-jobhistory-btn");
-  editButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      setTimeout(async () => {
-        expensesEditMode = true;
-        jobHistoryBtnID = button.id;
-        const data = await apiFunctions("job_history", "GETID", "x", jobHistoryBtnID)        
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            var element = document.querySelector('input[name="' + key + '"]');
-            var selectElement = document.querySelector('select[name="' + key + '"]');
-            if (element) {
-              console.log(key)
-              console.log(data[key])
-              //let projectNameForEdit = document.querySelector("#id_ProjectName");
-              //projectNameForEdit.setAttribute('data-id', btnID);
-              if (key == "CompanyName_Job_JobHistory") {
-                element.value = data["supplier_jobhistories"].CompanyName_Supplier;
-                element.setAttribute('data-id', data[key]);
-              } else {
-                element.value = data[key];
-              }
-            } else if (selectElement) {
-              selectElement.value = data[key];
-            }
-          }
-        }
-        getSuppliers()
-        onPageLoads(formatedInputs)
-        formatDateInputsForLoad(dateInputs)
-        jobhistoryAddWindow.style.display = "flex";
-      }, 10);
-    })
-  });
+    let editButtons = document.querySelectorAll(".edit-jobhistory-btn");
+    editButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            setTimeout(async () => {
+                jobHistoryEditMode = true;
+                jobHistoryBtnID = button.id;
+                const data = await apiFunctions("job_history", "GETID", "x", jobHistoryBtnID)
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var element = document.querySelector('input[name="' + key + '"]');
+                        var selectElement = document.querySelector('select[name="' + key + '"]');
+                        if (element) {
+                            console.log(key)
+                            console.log(data[key])
+                            //let projectNameForEdit = document.querySelector("#id_ProjectName");
+                            //projectNameForEdit.setAttribute('data-id', btnID);
+                            if (key == "CompanyName_Job_JobHistory") {
+                                element.value = data["supplier_jobhistories"].CompanyName_Supplier;
+                                element.setAttribute('data-id', data[key]);
+                            } else {
+                                element.value = data[key];
+                            }
+                        } else if (selectElement) {
+                            selectElement.value = data[key];
+                        }
+                    }
+                }
+                getSuppliers()
+                onPageLoads(formatedInputs)
+                formatDateInputsForLoad(dateInputs)
+                jobhistoryAddWindow.style.display = "flex";
+            }, 10);
+        })
+    });
 }

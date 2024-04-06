@@ -1,8 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 
+.body-div {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background: url(/static/images/html_table.jpg) center / cover;
+    justify-content: center;
+    align-items: center;
+    /* gap: 20px; */
+}
 #table thead th:not(:nth-child(2)), #table tbody td:not(:nth-child(2)){
     text-align: center;
 }
-
+.left-menu {
+    width: 16rem;
+    height: 97vh;
+    background-color: var(--main-color);
+    backdrop-filter: blur(7px);
+    box-shadow: 0 0.4rem 0.8rem #0005;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    transition: 0.2s;
+}
+.right-menu {
+    height: 100vh;
+    width: calc(100% - 18rem);
+    margin-left: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bakim_kontrol_list{
+    width: 100%;
+    height: 97vh;
+    overflow: hidden;
+}
 .lists{
     overflow-y: scroll;
 }
@@ -45,11 +82,28 @@ width: 100%;
       margin: 0; 
   }*/
   
-  
-  
+  .submit_area{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#anket_submit_btn{
+    width: 80%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #00000099;
+    background-color: #fff9;;
+    font-size: 16px;
+    font-weight: 600;
+}
+#anket_submit_btn:hover{
+    background-color: rgba(255, 255, 255, 0.884);;
+}
   main.table {    
-      width: 82vw;
-      height: 97vh;
+      width: 100%;
+      height: 100%;
       background-color: #fff5;
   
       backdrop-filter: blur(7px);

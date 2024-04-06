@@ -32,6 +32,8 @@ const expensesAmountInput = document.querySelector("#id_Amount_Expenses");
 const jobhistoryDateInput = document.querySelector("#id_Date_JobHistory");
 const jobhistoryAmountInput = document.querySelector("#id_Amount_JobHistory");
 
+let currentProjectName;
+
 document.addEventListener("DOMContentLoaded", async () => {
   await getProjects();
   setInterval(async function () {
@@ -163,6 +165,7 @@ projectAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
     if (editMode == true) { clearInputAfterSave(projectAddForm) }
     editMode = false;
+    currentProjectName = "0";
     projectAddWindow.style.display = "flex";
     getClients();
   }, 10);
@@ -173,6 +176,24 @@ document.addEventListener("mousedown", (event) => {
     projectAddWindow.style.display = "none";
   }
 });
+//----- KDV % EKLEME
+const kdvRateInput = document.getElementById("id_KDV_Rate");
+addPercentageSymbol(kdvRateInput);
+kdvRateInput.addEventListener("input", function () {
+  addPercentageSymbol(kdvRateInput);
+});
+function addPercentageSymbol(input) {
+  let enteredValue = input.value;
+  let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
+  if (enteredValue == "") {
+    let formattedValue = "%" + 20;
+    input.value = formattedValue;
+  }else{
+    let formattedValue = "%" + numericValue;
+    input.value = formattedValue;
+  }
+  
+}
 //----- İNCOME
 incomeAddWindowButton.addEventListener("click", () => {
   setTimeout(() => {
@@ -250,13 +271,14 @@ function editButtonsEvents() {
         editMode = true;
         btnID = button.id;
         const data = await apiFunctions("project", "GETID", "x", btnID)
+        currentProjectName = data.ProjectName;
         for (var key in data) {
-          if (data.hasOwnProperty(key)) {
+          if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              console.log(key)
-              console.log(data[key])
+              //console.log(key)
+              //console.log(data[key])
               //let projectNameForEdit = document.querySelector("#id_ProjectName");
               //projectNameForEdit.setAttribute('data-id', btnID);
               if (key == "Company_id") {
@@ -341,9 +363,7 @@ incomeTimeForKur.addEventListener("change", async function () {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(incomeDateInput.value);
     incomeKurInput.value = await getUSDKur(tarih);
-    console.log(await getUSDKur(tarih));
   } else if (secilenDeger === "secenek3") {
-    console.log("fds");
     tarih = tarihFormatiniDegistir(incomeDateInput.value);
     incomeKurInput.value = await getUSDKur(tarih);
   }
@@ -471,8 +491,8 @@ projectFormAddBtn.addEventListener("click", async function (event) {
   var projecInput = document.querySelector("#id_ProjectName")
   var projectISpan = document.querySelector("#proje_span")
   event.preventDefault();
-
-  if (requiredInputs(reqProjectInputs, reqProjectLabels) && await projectNameControl(projecInput, projectISpan)) {
+  //console.log(currentProjectName)
+  if (requiredInputs(reqProjectInputs, reqProjectLabels) && await projectNameControl(projecInput, projectISpan, currentProjectName)) {
     dateInputs.forEach(input => {
       input.value = formatDateForSubmit(input.value)
     })
@@ -486,15 +506,17 @@ projectFormAddBtn.addEventListener("click", async function (event) {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(pair[0] + ': ' + pair[1]);
+    // }
+
     if (editMode == false) {
       await apiFunctions("project", "POST", formData);
       getProjects()
       projectAddWindow.style.display = "none";
       clearInputAfterSave(projectAddForm);
     } else {
+      console.log("dfsdf")
       await apiFunctions("project", "PUT", formData, btnID);
       getProjects("EDİT")
       projectAddWindow.style.display = "none";

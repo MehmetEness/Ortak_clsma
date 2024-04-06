@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+  
 ]
 
 REST_FRAMEWORK = {
@@ -154,6 +155,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Alan adı tanımlama
 
 
-ALLOWED_HOSTS = ['sovotozoglu.com', 'sovotozoglu.net','54.156.65.170', '127.0.0.1']
+ALLOWED_HOSTS = ['sovotozoglu.com', 'sovotozoglu.net','3.90.145.158', '127.0.0.1']
 
 LOGIN_URL = '/account/login'
