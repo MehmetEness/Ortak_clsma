@@ -74,6 +74,13 @@
   margin-bottom: 15px;
   width: calc(100% / 3 - 20px) !important;
 }
+.operation-care-add-window .input-box {
+  margin-bottom: 15px;
+  width: calc(100% / 3 - 20px) !important;
+}
+.operation-care-add-window .container {
+  max-width: 1000px;
+}
 .center2 .input-box {
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
@@ -84,6 +91,7 @@
 .medium {
   width: calc(((100% / 3) * 2) - 10px) !important;
 }
+
 .paying-company-add-btn {
   margin-left: 5px;
   padding: 0 5px;

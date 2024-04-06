@@ -9,7 +9,7 @@ var textCells = document.querySelectorAll(
 var phoneInput = document.querySelector("#id_PhoneNumber");
 const supplierAddForm = document.getElementById("supplier_add_form");
 let editMode = false;
-
+let currentSupplierName;
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -61,6 +61,7 @@ const supplierAddWindow = document.querySelector(".supplier-add-window");
 supplierAddBtn.addEventListener("click", () => {
   setTimeout(() => {
     editMode = false;
+    currentSupplierName = "0";
     supplierAddWindow.style.display = "flex";
   }, 10);
 });
@@ -108,7 +109,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
   var firmaSpan = document.querySelector("#firma_adi_span")
 
 
-  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan)) {
+  if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan, currentSupplierName)) {
     if (editMode == false) {
       const formData = new FormData(supplierAddForm);
       await apiFunctions("supplier", "POST", formData);
@@ -116,7 +117,8 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
       supplierAddWindow.style.display = "none";
       clearInputAfterSave(supplierAddForm);
     } else {
-      await apiFunctions("supplier", "PUT", supplierAddForm, btnID);
+      const formData = new FormData(supplierAddForm);
+      await apiFunctions("supplier", "PUT", formData, btnID);
       getSupplier("EDİT");
       supplierAddWindow.style.display = "none";
       clearInputAfterSave(supplierAddForm);
@@ -136,6 +138,8 @@ function editBtns() {
         editMode = true;
         btnID = button.id;
         const data = await apiFunctions("supplier", "GETID", "x", btnID)
+       // console.log(data)
+        currentSupplierName = data.CompanyName_Supplier;
         for (var key in data) {
           if (data.hasOwnProperty(key)) {
             var element = document.querySelector('input[name="' + key + '"]');
