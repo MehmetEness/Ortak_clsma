@@ -370,7 +370,7 @@ def sales_offer(request):
 def operation_care(request):
     operations = Operation_Care.objects.all()
     fails = Fail.objects.all()
-
+    locations=Locations.objects.all()
     for op in operations:
         i = 0  # Her döngü başında i'yi sıfırla
         for fa in fails:
@@ -383,6 +383,7 @@ def operation_care(request):
     context = {
         "operations": operations,
         "fails": fails,
+        "locations":locations
     }
 
     return render(request, "operation_care.html", context)
