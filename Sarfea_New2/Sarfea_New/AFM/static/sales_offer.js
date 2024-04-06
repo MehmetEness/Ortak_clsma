@@ -1014,7 +1014,7 @@ async function getSalesList() {
         const row = `
                   <tr>
                       <td>
-                        <a href="#" onclick="reLostCard(${card.id}); return false;">
+                        <a href="#" onclick="reWaitCard(${card.id}); return false;">
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
@@ -1057,11 +1057,11 @@ async function getWonList() {
     let rows = "";
     const wonTableBody = wonTable.querySelector("tbody");
     for (const card of data) {
-      if (card.Is_late) {
+      if (card.Is_Gain) {
         const row = `
                   <tr>
                       <td>
-                        <a href="#" onclick="reLostCard(${card.id}); return false;">
+                        <a href="#" onclick="reGainCard(${card.id}); return false;">
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
