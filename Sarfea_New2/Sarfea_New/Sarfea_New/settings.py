@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d=)wnw@%shmy#b^@v#pun^w7zukbia2xr3g77w&p%&ndjfpkmd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 APPEND_SLASH = True
 
 # Sarfea_New/settings.py
