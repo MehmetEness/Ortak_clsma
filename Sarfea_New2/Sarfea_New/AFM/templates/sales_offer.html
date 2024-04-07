@@ -491,6 +491,13 @@
     height: 100%;
     width: 100%;
   }
+
+  .item.dragging {
+  opacity: 0.6;
+}
+.item.dragging :where(.details, i) {
+  opacity: 0;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js"
   integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw=="
@@ -783,9 +790,9 @@
             <span>$ span1</span>
             <span>span2</span>
           </div>
-          <div class="card-body">
-
-          </div>
+          <ul class="card-body">
+            
+          </ul>
 
         </div>
         <div class="rows" data-situation="Maliyet Hesaplama">
@@ -793,18 +800,18 @@
             <span>$ </span>
             <span></span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Fiyat Belirleme">
           <div style="background-color: #ece75f;" class="total-cash">
             <span>$ {{price_customers_cost}}</span>
             <span>({{price_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
 
         </div>
         <div class="rows" data-situation="Teklif Hazırlama">
@@ -812,36 +819,36 @@
             <span>$ {{offer_customers_cost}}</span>
             <span>({{offer_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Teklif Hazır">
           <div style="background-color: #e6cc00;" class="total-cash">
             <span>$ {{done_customers_cost}}</span>
             <span>({{done_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Teklif Sunuldu">
           <div style="background-color: #e69b00;" class="total-cash">
             <span>$ {{done_customers_cost}}</span>
             <span>({{done_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Sunum Sonrası Görüşme">
           <div style="background-color: #e47200;" class="total-cash">
             <span>$ {{presentation_customers_cost}}</span>
             <span>({{presentation_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
 
       </div>

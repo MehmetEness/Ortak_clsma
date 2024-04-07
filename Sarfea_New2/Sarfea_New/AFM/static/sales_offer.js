@@ -56,12 +56,13 @@ async function getSalesCards(isEdit) {
         cardPlaceRows(cardHTML, card.Situation_Card)
       }
     }
-    dragCards()
+    //dragCards()
     totalSpanFormatForDrag()
     cardFormat();
     cardMenuFunctions()
     singleFİleUpload()
     editBtns()
+    dragTest()
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }
@@ -80,53 +81,117 @@ function generateCard(card) {
     formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
   } else { formattedDate = "-" }
   return `
-  <div id="${card.id}" class="card" draggable="true" data-situation="${card.Situation_Card}">
-      <div class="boxes">
-          <p class="bold700">${card.client.CompanyName_Clients}</p>
-      </div>
-      <p>${formattedDate}</p>
-      <div class="boxes">
-          <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
-          <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
-      </div>
-      <div class="boxes">
-          <p>${card.Cost_NotIncludingKDV_Card}</p>
-          <p>${card.UnitCost_NotIncludingKDV}</p>
-      </div>
-      <div class="boxes">
-          <p>5000kwp</p>
-          <p>Çatı</p>
-      </div>
-      <div class="boxes">
-          <div class="buttons">
-              ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
-              ${card.M_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_2}')">M2</button>` : `<button class="mb mr-3">M2</button>`}
-              ${card.M_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_3}')">M3</button>` : `<button class="mb mr-3">M3</button>`}
+    <li id="${card.id}" data-situation="${card.Situation_Card}" class="item card" draggable="true">
+      <div >
+          <div class="boxes">
+              <p class="bold700">${card.client.CompanyName_Clients}</p>
           </div>
-          <div class="buttons">
-              ${card.Offer_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card}')">T1</button>` : `<button class="mb mr-3">T1</button>`}
-              ${card.Offer_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_2}')">T2</button>` : `<button class="mb mr-3">T2</button>`}
-              ${card.Offer_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_3}')">T3</button>` : `<button class="mb mr-3">T3</button>`}
-              ${card.Offer_File_Card_4 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_4}')">T4</button>` : `<button class="mb mr-3">T4</button>`}
-              ${card.Offer_File_Card_5 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_5}')">T5</button>` : `<button class="mb mr-3">T5</button>`}
+          <p>${formattedDate}</p>
+          <div class="boxes">
+              <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
+              <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
+          </div>
+          <div class="boxes">
+              <p>${card.Cost_NotIncludingKDV_Card}</p>
+              <p>${card.UnitCost_NotIncludingKDV}</p>
+          </div>
+          <div class="boxes">
+              <p>5000kwp</p>
+              <p>Çatı</p>
+          </div>
+          <div class="boxes">
+              <div class="buttons">
+                  ${card.M_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card}')">M1</button>` : `<button class="mb mr-3">M1</button>`}
+                  ${card.M_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_2}')">M2</button>` : `<button class="mb mr-3">M2</button>`}
+                  ${card.M_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.M_File_Card_3}')">M3</button>` : `<button class="mb mr-3">M3</button>`}
+              </div>
+              <div class="buttons">
+                  ${card.Offer_File_Card ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card}')">T1</button>` : `<button class="mb mr-3">T1</button>`}
+                  ${card.Offer_File_Card_2 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_2}')">T2</button>` : `<button class="mb mr-3">T2</button>`}
+                  ${card.Offer_File_Card_3 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_3}')">T3</button>` : `<button class="mb mr-3">T3</button>`}
+                  ${card.Offer_File_Card_4 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_4}')">T4</button>` : `<button class="mb mr-3">T4</button>`}
+                  ${card.Offer_File_Card_5 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_5}')">T5</button>` : `<button class="mb mr-3">T5</button>`}
+              </div>
+          </div>
+          <div class="flex-row">
+              <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
+          </div>
+          <div class="card-menu">
+              <i class="fa-solid fa-ellipsis card_menu-btn"></i>
+              <ul class="card_menu">
+                  <li id="${card.id}" class = "card_edit_btn">Düzenle</li>
+                  <li onclick="lostCard(${card.id})">Kaybedildi</li>
+                  <li onclick="gainCard(${card.id})">Kazanıldı</li>
+                  <li onclick="waitCard(${card.id})">Bekleyen</li>
+                  <li onclick="reviseCard(${card.id})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
+              </ul>
           </div>
       </div>
-      <div class="flex-row">
-          <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
-      </div>
-      <div class="card-menu">
-          <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-          <ul class="card_menu">
-              <li id="${card.id}" class = "card_edit_btn">Düzenle</li>
-              <li onclick="lostCard(${card.id})">Kaybedildi</li>
-              <li onclick="gainCard(${card.id})">Kazanıldı</li>
-              <li onclick="waitCard(${card.id})">Bekleyen</li>
-              <li onclick="reviseCard(${card.id})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
-          </ul>
-      </div>
-  </div>
+    </li>
   `;
 }
+
+function dragTest() {
+  const sortableLists = document.querySelectorAll(".card-body");
+  sortableLists.forEach((sortableList) => {
+
+      const items = sortableList.querySelectorAll(".item");
+
+      items.forEach(item => {
+        item.addEventListener("dragstart", (event) => {
+          // Sürüklenen öğeyi al
+          const draggingItem = event.target;
+          // dragItem öğesini burada tanımlayabilirsiniz
+          dragItem = draggingItem;
+          // Sürüklenen öğeye "dragging" sınıfını ekle
+          setTimeout(() => draggingItem.classList.add("dragging"), 0);
+      });
+          item.addEventListener("dragend", (event) => {
+              item.classList.remove("dragging");              
+              updateCardSituation(item, event.target.parentElement);
+          });
+      });
+
+      const initSortableList = (e) => {
+          e.preventDefault();
+          const draggingItem = document.querySelector(".dragging");
+          let siblings = [...sortableList.querySelectorAll(".item:not(.dragging)")];
+
+          let nextSibling = siblings.find(sibling => {
+              return e.clientY <= sibling.offsetTop + sibling.offsetHeight;
+          });
+
+          sortableList.insertBefore(draggingItem, nextSibling);
+      }
+
+      sortableList.addEventListener("dragover", initSortableList);
+      sortableList.addEventListener("dragenter", e => e.preventDefault());
+  })
+}
+
+function updateCardSituation(draggingItem, ul) {
+  var targetRowSituation = ul.parentElement.dataset.situation;
+  
+  var cardId = draggingItem.id;
+  var xhr = new XMLHttpRequest();
+  var updateCardSituationUrl = "/update_card_situation/";
+
+  xhr.open("POST", updateCardSituationUrl, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {       
+        dragItem.dataset.situation = targetRowSituation;
+        //dragItem.dataset.situation = response.new_situation;
+    }
+};
+  xhr.send(      
+      JSON.stringify({ card_id: cardId, new_situation: targetRowSituation })
+  );
+}
+
+
+
 
 //                  TOP MENU FONKSİYONLARI
 topMenuLi.forEach(function (item) {
