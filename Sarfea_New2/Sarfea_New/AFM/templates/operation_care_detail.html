@@ -11,6 +11,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'ocd.css' %}">
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'operation_care_details.css' %}"> -->
 
+<style>
+    .table__header button.back-button {
+    cursor: pointer;
+    font-size: 42px;
+    background-color: #fff5;
+    border: none;
+    padding: 0 13px;
+    border-radius: 50%;
+    transition: .2s;
+}
+</style>
 
 {% endblock %}
 {% block title %} Operation and Care Details {% endblock %}
@@ -23,10 +34,11 @@
         <div class="bakim_kontrol_list">
             <main class="table" id="customers_table">
                 <section class="table__header">
-                    <div class="input-group">
-                        <input type="search" placeholder="Search Data...">
-                        <img src="{% static 'images/search.png' %}" alt="">
-                    </div>
+                    <a href="{% url 'operation_care' %}">
+                        <button style="color: rgb(47, 65, 79);" class="back-button">
+                          <i class="fa-solid fa-angles-left"></i>
+                        </button>
+                      </a>
                     <ul class="top-menu-ul">
                         <li id="bakim_kontrol_listesi">Bakım Kontrol Listesi</li>
                         <li id="ariza_takip">Arıza Takip</li>

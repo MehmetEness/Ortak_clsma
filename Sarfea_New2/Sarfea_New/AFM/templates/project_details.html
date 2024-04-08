@@ -133,13 +133,12 @@
 
 
 
-
+        typeImgChange(typeSpan)
     function typeImgChange(typeSpan) {
         var typeText = typeSpan.textContent.toLowerCase();
         if (typeText == "çatı") {
             typeText = typeText.replace("çatı", "cati");
         }
-        console.log(typeText)
         var newImageUrl = `{% static 'images/' %}${typeText}.png`;
         typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
     };

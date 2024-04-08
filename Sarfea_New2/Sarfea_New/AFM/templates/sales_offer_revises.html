@@ -19,6 +19,18 @@ td, th {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.table__header button {
+    cursor: pointer;
+    font-size: 42px;
+    background-color: #fff5;
+    border: none;
+    padding: 0 13px;
+    border-radius: 50%;
+    transition: .2s;
+}
+.table__header p{
+  margin-right: 51%;
+}
   </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js" integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
@@ -45,6 +57,11 @@ td, th {
       <div class="right-menu">         
         <main class="table" id="customers_table">
           <section class="table__header">
+            <a href="{% url 'sales_offer' %}">
+              <button style="color: rgb(47, 65, 79);" class="back-button">
+                <i class="fa-solid fa-angles-left"></i>
+              </button>
+            </a>
             <p>{{card.Client_Card}}</p>            
           </section>
           <section class="table__body">

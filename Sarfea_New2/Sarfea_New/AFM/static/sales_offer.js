@@ -1247,3 +1247,21 @@ dcGucCalc.addEventListener("click", () => {
     dcGucInput.value = formatNumber(value, 2);
   }
 });
+
+// ARAZİ BEDELİ
+var terrainSelect = document.querySelector("#id_Terrain_Roof_Card");
+var terrainCost = document.querySelector("#id_Roof_Cost_Card");
+// const secilenDeger = terrainSelect.value;
+// if (secilenDeger === "Arazi") {
+//   terrainCost.disabled = false;
+// } else {
+//   terrainCost.disabled = true;
+// }
+terrainSelect.addEventListener("change", async function () {
+  const secilenDeger = terrainSelect.value;
+  if (secilenDeger === "Arazi") {
+    terrainCost.disabled = false;
+  } else {
+    terrainCost.disabled = true;
+  }
+});

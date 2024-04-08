@@ -513,7 +513,7 @@
       <form id="sales_offer_file_add_form" enctype="multipart/form-data">
         <span class="details"></span>
         <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up"
-          class="inputfile inputfile-1" />
+          class="inputfile inputfile-3" />
         <label id="file_label" for="id_file_up">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
             <path
@@ -642,15 +642,15 @@
           </div>
           <div class="input-box">
             <span class="details">Arazi/Çatı</span>
-            <select name="Terrain_Roof_Card" id="">
+            <select name="Terrain_Roof_Card" id="id_Terrain_Roof_Card">
               <option value="Arazi">Arazi</option>
               <option value="Çatı">Çatı</option>
             </select>
           </div>
 
-          <div style="display: block;" class="input-box">
-            <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
-            <input style="display: none;" class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
+          <div class="input-box">
+            <span class="details arazi-span">Arazi Bedeli(MW)</span>
+            <input class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
               id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00" />
           </div>
 
@@ -1140,6 +1140,7 @@
     Array.prototype.forEach.call(inputs, function (input, index) {
       var label = input.nextElementSibling;
       var nextLabel = inputs[index + 1] ? inputs[index + 1].nextElementSibling : null;
+      console.log(label)
 
       input.addEventListener('change', function () {
         if (index < inputs.length - 1 && nextLabel) {
@@ -1149,9 +1150,9 @@
       });
 
       input.addEventListener('change', function (e) {
-        var label = input.nextElementSibling,
+        var label = input.nextElementSibling,        
           labelVal = label.innerHTML;
-
+         
         var fileName = '';
         if (input.files && input.files.length > 1)
           fileName = (input.getAttribute('data-multiple-caption') || '').replace('{count}', input.files.length);
@@ -1171,10 +1172,7 @@
         inputs[index + 1].style.display = 'inline-block';
       } else {
         var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
-        //console.log(defaultText);
         var fileName = label.querySelector('span').textContent;
-        //console.log(fileName);
-        //console.log(fileName !== defaultText);
         if (fileName !== defaultText) {
           label.style.display = 'inline-block';
         }
