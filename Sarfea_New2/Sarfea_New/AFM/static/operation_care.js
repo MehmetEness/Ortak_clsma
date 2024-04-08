@@ -27,7 +27,8 @@ async function getOperationCare(isEdit) {
   try {
     let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
 
-    const data = await apiFunctions("operation_care", "GET");
+    var data = await apiFunctions("operation_care", "GET");
+    data = data.results;
     //console.log(data);
     let formattedDate;
     let rows = "";
@@ -68,7 +69,8 @@ async function getOperationFail(isEdit) {
   try {
     let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
 
-    const data = await apiFunctions("fail", "GET");
+    var data = await apiFunctions("fail", "GET");
+    data = data.results;
     //console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
@@ -410,7 +412,8 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 getClients()
 async function getClients() {
   try {
-    const data = await apiFunctions("client", "GET")
+    var data = await apiFunctions("client", "GET")
+    data = data.results;
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
@@ -429,7 +432,8 @@ async function getClients() {
 getOperation()
 async function getOperation() {
   try {
-    const data = await apiFunctions("operation_care", "GET")
+    var data = await apiFunctions("operation_care", "GET"),
+    data = data.results;
     let rows = "";
     for (const operation of data) {
       const row = `<span value="${operation.id}" class="dropdown-item">${operation.client.CompanyName_Clients}</span>`;

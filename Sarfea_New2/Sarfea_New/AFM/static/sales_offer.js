@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function getSalesCards(isEdit) {
   try {
     let Rows = document.querySelectorAll(".card-body");
-    const data = await apiFunctions("sales_offer", "GET");
+    var data = await apiFunctions("sales_offer", "GET");
+    data = data.results;
     //console.log(data)
     Rows.forEach(row => {
       row.innerHTML = '';
@@ -866,7 +867,8 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 getClients()
 async function getClients() {
   try {
-    const data = await apiFunctions("client", "GET")
+    var data = await apiFunctions("client", "GET")
+    data = data.results;
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
@@ -895,7 +897,8 @@ getTotalList()
 // TOTAL LİSTE
 async function getTotalList() {
   try {
-    const data = await apiFunctions("sales_offer", "GET");
+    var data = await apiFunctions("sales_offer", "GET");
+    data = data.results;
     console.log(data)
     let rows = "";
     const listTableBody = listTable.querySelector("tbody");
@@ -1020,7 +1023,8 @@ getLostList()
 async function getLostList() {
   try {
     //let currentRows = supplierTableBody.querySelectorAll("tr");
-    const data = await apiFunctions("sales_offer", "GET");
+    var data = await apiFunctions("sales_offer", "GET");
+    data = data.results;
     let rows = "";
     const lostTableBody = lostTable.querySelector("tbody");
     for (const card of data) {
@@ -1068,7 +1072,8 @@ async function getLostList() {
 getSalesList()
 async function getSalesList() {
   try {
-    const data = await apiFunctions("sales_offer", "GET");
+    var data = await apiFunctions("sales_offer", "GET");
+    data = data.results;
     let rows = "";
     const salesTableBody = salesTable.querySelector("tbody");
     for (const card of data) {
@@ -1115,7 +1120,8 @@ async function getSalesList() {
 getWonList()
 async function getWonList() {
   try {
-    const data = await apiFunctions("sales_offer", "GET");
+    var data = await apiFunctions("sales_offer", "GET");
+    data = data.results;
     let rows = "";
     const wonTableBody = wonTable.querySelector("tbody");
     for (const card of data) {

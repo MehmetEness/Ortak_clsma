@@ -63,7 +63,8 @@ async function getIncomes(edit) {
         let currentRows = incomeTable.querySelectorAll("tbody tr");
         let totalTl = 0;
         let totalUsd = 0;
-        const data = await apiFunctions("income", "GET");
+        var data = await apiFunctions("income", "GET");
+        data = data.results;
         const projectId = document.querySelector(".project_id");
         console.log(data);
         let rows = "";

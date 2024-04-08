@@ -29,7 +29,7 @@ async function getJobhistory(id) {
         let currentRows = jobHistoryTable.querySelectorAll("tr");
         //const data = await apiFunctions("job_history", "GET")
         //console.log(data)
-        const data = await apiFunctions("project", "GETID", "x", projectId)
+        const data = await apiFunctions("project", "GETID", "x", projectId)        
         let rows = '';
         let totalTlSpan = document.querySelector("#jobhistory_tl_td");
         let totalUSDSpan = document.querySelector("#jobhistory_usd_td");
@@ -218,7 +218,7 @@ async function getTotalTable() {
             totalTableBody.innerHTML = '';
             totalTableBody.insertAdjacentHTML('beforeend', rows);
             sortTableForStart(totalTable, 1);
-            totalTableFormat()
+            //totalTableFormat()
             sortingTable(totalTable)
         }
 

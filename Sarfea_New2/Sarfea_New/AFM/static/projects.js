@@ -46,10 +46,10 @@ async function getProjects(isEdit) {
     let currentRows = projectsTable.querySelectorAll("tbody tr");
 
     const data = await apiFunctions("project", "GET");
-    console.log(data);
+    //console.log(data);
     //let formattedDate;
     let rows = "";
-    for (const project of data) {
+    for (const project of data.results) {
       // if (project.StartDate) {
       //   let date = new Date(project.StartDate);
       //   formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
@@ -76,7 +76,7 @@ async function getProjects(isEdit) {
 
       rows += row;
     }
-    if (data.length > currentRows.length || isEdit) {
+    if (data.results.length > currentRows.length || isEdit) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);
@@ -271,6 +271,7 @@ function editButtonsEvents() {
         editMode = true;
         btnID = button.id;
         const data = await apiFunctions("project", "GETID", "x", btnID)
+        //console.log(data);
         currentProjectName = data.ProjectName;
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
@@ -566,10 +567,11 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
 });
 
 //                  DROPDOWN MENÜLER
-
 async function getClients() {
   try {
-    const data = await apiFunctions("client", "GET")
+    var data = await apiFunctions("client", "GET")
+    data = data.results;
+    console.log(data);
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
@@ -586,7 +588,8 @@ async function getClients() {
 }
 async function getSuppliers() {
   try {
-    const data = await apiFunctions("supplier", "GET")
+    var data = await apiFunctions("supplier", "GET")
+    data = data.results;
     let rows = "";
     for (const supplier of data) {
       const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
@@ -603,7 +606,8 @@ async function getSuppliers() {
 }
 async function getprojectName() {
   try {
-    const data = await apiFunctions("project", "GET")
+    var data = await apiFunctions("project", "GET")
+    data = data.results;
     let rows = "";
     for (const project of data) {
       const row = `<span value="${project.id}" class="dropdown-item">${project.ProjectName}</span>`;
