@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await getSupplier();
   setInterval(async function () {
     await getSupplier();
-  }, 5000);
+  }, 60000);
 });
 
 async function getSupplier(isEdit) {
@@ -32,11 +32,11 @@ async function getSupplier(isEdit) {
                             <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                         </button>
                     </td>
-                    <td>${supplier.CompanyName_Supplier}</td>
-                    <td>${supplier.ContactPerson}</td>
-                    <td>${supplier.PhoneNumber}</td>
-                    <td>${supplier.Email}</td>
-                    <td>${supplier.Location}</td>
+                    <td>${supplier.CompanyName_Supplier || "-"}</td>
+                    <td>${supplier.ContactPerson || "-"}</td>
+                    <td>${supplier.PhoneNumber || "-"}</td>
+                    <td>${supplier.Email || "-"}</td>
+                    <td>${supplier.Location || "-"}</td>
                 </tr>
             `;
       rows += row;
@@ -46,7 +46,7 @@ async function getSupplier(isEdit) {
       supplierTableBody.insertAdjacentHTML("beforeend", rows);
       editBtns();
       sortTableForStart(supplierTable, 1);
-      allTableFormat();
+      //allTableFormat();
       sortingTable(supplierTable);
     }
   } catch (error) {
@@ -55,7 +55,6 @@ async function getSupplier(isEdit) {
 }
 
 //                  OPEN ADD WİNDOW
-
 const supplierAddWindow = document.querySelector(".supplier-add-window");
 
 supplierAddBtn.addEventListener("click", () => {
@@ -81,7 +80,6 @@ xBtn.forEach((btn) => {
 });
 
 //                  TELEFON NUMARASI FORMATLAMA
-
 phoneInput.addEventListener("input", function (event) {
   var contryNumber = "+90";
   var inputValue = phoneInput.value;
@@ -91,16 +89,14 @@ phoneInput.addEventListener("input", function (event) {
 });
 
 //                  TABLO FORMATLAMA
-
-function allTableFormat() {
-  var textCells = supplierTable.querySelectorAll(
-    "td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)"
-  );
-  tableFormat(textCells, "text");
-}
+// function allTableFormat() {
+//   var textCells = supplierTable.querySelectorAll(
+//     "td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)"
+//   );
+//   tableFormat(textCells, "text");
+// }
 
 //                  SUPPLİER ADD FUNCTİON
-
 let btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
@@ -129,7 +125,6 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
 });
 
 //                  SUPPLİER EDİT FUNCTİON
-
 function editBtns() {
   let editButtons = document.querySelectorAll(".edit-supplier-btn");
   editButtons.forEach(button => {

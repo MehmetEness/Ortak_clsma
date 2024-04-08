@@ -139,11 +139,8 @@ function dragTest() {
 
       items.forEach(item => {
         item.addEventListener("dragstart", (event) => {
-          // Sürüklenen öğeyi al
           const draggingItem = event.target;
-          // dragItem öğesini burada tanımlayabilirsiniz
           dragItem = draggingItem;
-          // Sürüklenen öğeye "dragging" sınıfını ekle
           setTimeout(() => draggingItem.classList.add("dragging"), 0);
       });
           item.addEventListener("dragend", (event) => {

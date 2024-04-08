@@ -53,11 +53,16 @@ function clearForCalc(value) {
 //                  FORMAT NUMBERS
 
 function formatNumber(number, fract) {
-  var value = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: fract,
-    maximumFractionDigits: fract,
-  }).format(number);
-  return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
+  if(number){
+    var value = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: fract,
+      maximumFractionDigits: fract,
+    }).format(number);
+    return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
+  }else{
+    return "0"
+  }
+  
 }
 function format(number) {
   var indexOfDot = number.indexOf(",");
@@ -134,6 +139,16 @@ function formatSpans(span, type) {
     default:
   }
 }
+
+//                  ELLİPSİS FUNCTİON
+function ellipsisForTable(str, charSize){
+  if (str.length > 10) {
+    return str.slice(0, charSize) + '...';
+  } else {
+      return str;
+  }
+}
+
 
 //                  TABLE FORMAT
 

@@ -221,7 +221,7 @@ thead th {
 tbody tr:nth-child(even) {
   background-color: #0000000b;
 }
-thead th:nth-child(2) {
+#jobhistory_table thead th:nth-child(2) {
   text-align: left;
 }
 tbody tr td:first-child {
@@ -741,6 +741,9 @@ body.shrink .tooltip {
 }
 #two_table_section tbody td{
   font-size: 13px;
+  overflow: hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #two_table_section th{
   font-size: 14px;

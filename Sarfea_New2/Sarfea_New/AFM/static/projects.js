@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await getProjects();
   setInterval(async function () {
     await getProjects();
-  }, 5000);
+  }, 60000);
 });
 
 async function getProjects(isEdit) {
@@ -47,13 +47,13 @@ async function getProjects(isEdit) {
 
     const data = await apiFunctions("project", "GET");
     console.log(data);
-    let formattedDate;
+    //let formattedDate;
     let rows = "";
     for (const project of data) {
-      if (project.StartDate) {
-        let date = new Date(project.StartDate);
-        formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
-      } else { formattedDate = "-" }
+      // if (project.StartDate) {
+      //   let date = new Date(project.StartDate);
+      //   formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+      // } else { formattedDate = "-" }
 
       const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
 
@@ -65,12 +65,12 @@ async function getProjects(isEdit) {
             </button>
           </td>
           <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
-          <td>${project.Location}</td>
-          <td>${project.AC_Power}</td>
-          <td>${project.DC_Power}</td>
-          <td>${project.Cost_NotIncludingKDV}</td>
-          <td>${project.Terrain_Roof}</td>
-          <td>${formattedDate}</td>
+          <td>${project.Location || "-"}</td>
+          <td>${formatNumber(project.AC_Power)}</td>
+          <td>${formatNumber(project.DC_Power)}</td>
+          <td>${formatNumber(project.Cost_NotIncludingKDV)}</td>
+          <td>${project.Terrain_Roof || "-"}</td>
+          <td>${formatDateForTable(project.StartDate)}</td>
           <td>${project.Situation}</td>
         </tr>`;
 
@@ -80,7 +80,7 @@ async function getProjects(isEdit) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);
-      allTableFormat();
+      //allTableFormat();
       editButtonsEvents();
     }
   } catch (error) {
@@ -91,18 +91,18 @@ async function getProjects(isEdit) {
 
 //                  TABLO FORMATLAMA
 
-function allTableFormat() {
-  var usdCells = projectsTable.querySelectorAll("td:nth-child(6)");
-  var numericCells = projectsTable.querySelectorAll(
-    "td:nth-child(4), td:nth-child(5)"
-  );
-  var textCells = projectsTable.querySelectorAll(
-    "td:nth-child(2), td:nth-child(3), td:nth-child(7), td:nth-child(8), td:nth-child(9)"
-  );
-  tableFormat(usdCells, "usd");
-  tableFormat(numericCells, "numeric");
-  tableFormat(textCells, "text");
-}
+// function allTableFormat() {
+//   var usdCells = projectsTable.querySelectorAll("td:nth-child(6)");
+//   var numericCells = projectsTable.querySelectorAll(
+//     "td:nth-child(4), td:nth-child(5)"
+//   );
+//   var textCells = projectsTable.querySelectorAll(
+//     "td:nth-child(2), td:nth-child(3), td:nth-child(7), td:nth-child(8), td:nth-child(9)"
+//   );
+//   tableFormat(usdCells, "usd");
+//   tableFormat(numericCells, "numeric");
+//   tableFormat(textCells, "text");
+// }
 
 //                  FİRMA EKLEME
 
@@ -516,7 +516,6 @@ projectFormAddBtn.addEventListener("click", async function (event) {
       projectAddWindow.style.display = "none";
       clearInputAfterSave(projectAddForm);
     } else {
-      console.log("dfsdf")
       await apiFunctions("project", "PUT", formData, btnID);
       getProjects("EDİT")
       projectAddWindow.style.display = "none";
@@ -565,15 +564,6 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
     clearInputAfterSave(supplierAddForm);
   }
 });
-
-
-
-
-
-
-
-
-
 
 //                  DROPDOWN MENÜLER
 
