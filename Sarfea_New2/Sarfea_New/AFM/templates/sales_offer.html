@@ -491,6 +491,13 @@
     height: 100%;
     width: 100%;
   }
+
+  .item.dragging {
+  opacity: 0.6;
+}
+.item.dragging :where(.details, i) {
+  opacity: 0;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js"
   integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw=="
@@ -506,7 +513,7 @@
       <form id="sales_offer_file_add_form" enctype="multipart/form-data">
         <span class="details"></span>
         <input style="display: none;" type="file" name="inputfile file_input" id="id_file_up"
-          class="inputfile inputfile-1" />
+          class="inputfile inputfile-3" />
         <label id="file_label" for="id_file_up">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
             <path
@@ -635,15 +642,15 @@
           </div>
           <div class="input-box">
             <span class="details">Arazi/Çatı</span>
-            <select name="Terrain_Roof_Card" id="">
+            <select name="Terrain_Roof_Card" id="id_Terrain_Roof_Card">
               <option value="Arazi">Arazi</option>
               <option value="Çatı">Çatı</option>
             </select>
           </div>
 
-          <div style="display: block;" class="input-box">
-            <span style="display: none;" class="details arazi-span">Arazi Bedeli(MW)</span>
-            <input style="display: none;" class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
+          <div class="input-box">
+            <span class="details arazi-span">Arazi Bedeli(MW)</span>
+            <input class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
               id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00" />
           </div>
 
@@ -772,7 +779,7 @@
           <p>Teklif Sunuldu</p>
         </div>
         <div class="title">
-          <p>Sunum Sonrası Görüşme</p>
+          <p style="font-size: 0.78vw;">Sunum Sonrası Görüşme</p>
         </div>
 
 
@@ -783,9 +790,9 @@
             <span>$ span1</span>
             <span>span2</span>
           </div>
-          <div class="card-body">
-
-          </div>
+          <ul class="card-body">
+            
+          </ul>
 
         </div>
         <div class="rows" data-situation="Maliyet Hesaplama">
@@ -793,18 +800,18 @@
             <span>$ </span>
             <span></span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Fiyat Belirleme">
           <div style="background-color: #ece75f;" class="total-cash">
             <span>$ {{price_customers_cost}}</span>
             <span>({{price_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
 
         </div>
         <div class="rows" data-situation="Teklif Hazırlama">
@@ -812,36 +819,36 @@
             <span>$ {{offer_customers_cost}}</span>
             <span>({{offer_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Teklif Hazır">
           <div style="background-color: #e6cc00;" class="total-cash">
             <span>$ {{done_customers_cost}}</span>
             <span>({{done_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Teklif Sunuldu">
           <div style="background-color: #e69b00;" class="total-cash">
             <span>$ {{done_customers_cost}}</span>
             <span>({{done_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
         <div class="rows" data-situation="Sunum Sonrası Görüşme">
           <div style="background-color: #e47200;" class="total-cash">
             <span>$ {{presentation_customers_cost}}</span>
             <span>({{presentation_customers_count}})</span>
           </div>
-          <div class="card-body">
+          <ul class="card-body">
 
-          </div>
+          </ul>
         </div>
 
       </div>
@@ -1133,6 +1140,7 @@
     Array.prototype.forEach.call(inputs, function (input, index) {
       var label = input.nextElementSibling;
       var nextLabel = inputs[index + 1] ? inputs[index + 1].nextElementSibling : null;
+      console.log(label)
 
       input.addEventListener('change', function () {
         if (index < inputs.length - 1 && nextLabel) {
@@ -1142,9 +1150,9 @@
       });
 
       input.addEventListener('change', function (e) {
-        var label = input.nextElementSibling,
+        var label = input.nextElementSibling,        
           labelVal = label.innerHTML;
-
+         
         var fileName = '';
         if (input.files && input.files.length > 1)
           fileName = (input.getAttribute('data-multiple-caption') || '').replace('{count}', input.files.length);
@@ -1164,10 +1172,7 @@
         inputs[index + 1].style.display = 'inline-block';
       } else {
         var defaultText = 'Teklif ' + (index + 1) + ' Dosyası seçin';
-        //console.log(defaultText);
         var fileName = label.querySelector('span').textContent;
-        //console.log(fileName);
-        //console.log(fileName !== defaultText);
         if (fileName !== defaultText) {
           label.style.display = 'inline-block';
         }

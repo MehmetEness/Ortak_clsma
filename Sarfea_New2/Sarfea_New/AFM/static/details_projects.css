@@ -18,11 +18,13 @@
 }
 .right-menu{
     width: calc(100% - 18rem);
-    height: 100vh;
+    height: 97vh;
     margin-left: 0.8rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
+
 
 
 /*  Right Menu  */
@@ -30,11 +32,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 15px;    
-    margin-right: 5px;
+    border-radius: 15px;        
     border: 1px solid #000;
     background-position: center;
     background-size:cover;
+}
+.row .card:not(:last-child){    
+    margin-right: 10px;
 }
 
 .nav-bar{
@@ -42,17 +46,19 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* background: #fff4; */
-    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.63);
+    padding: 0 15px;
+    margin-bottom: 5px;
     height: 87px;
+    border-radius: 15px;
 }
 .nav-bar span{
     cursor: pointer;
     background-color: transparent;
-    color: #fff;
+    color: #000;
     font-weight: 600;
     font-size: 20px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #000;
     padding-bottom: 3px;
 }
 .span-box{
@@ -64,15 +70,14 @@
 a{
     color: #000;
 }
-.nav-bar button {
+.nav-bar button {    
     cursor: pointer;
-    background-color: #fff;
-    padding: 10px 25px;
+    font-size: 42px;
+    background-color: #fff5;
     border: none;
-    margin-left: 10px;
-    font-size: 16px;    
-    border: solid 1px rgba(0, 0, 0, .3);   
-    border-radius: 40px; 
+    padding: 0 13px;
+    border-radius: 50%;
+    transition: .2s;    
 }
 button{
     cursor: pointer;
@@ -85,14 +90,15 @@ button{
 .nav-span{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding-right: 420px;
 }
 .nav-span span{
-    color: #fff;
+    color: #000;
     font-weight: 600;
     font-size: 20px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #000;
     padding-bottom: 3px;
 }
 .main{
@@ -105,6 +111,8 @@ button{
 .row{
     display: flex;
     flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
     height: 33.3333%;
     width: 100%;
     margin: auto;
@@ -127,8 +135,9 @@ button{
     width: 20%;
     background-color: #ffffffb4;  
     backdrop-filter: blur(7px);  
-
+    overflow: hidden;
 }
+
 .row a{
     padding: 0px 10px;
     position: absolute;
@@ -148,7 +157,7 @@ button{
     align-items: center;
     flex-shrink:1;
     flex-shrink:1;
-    /* background: #fff; */
+    /* background: #fff; 
     border-radius: 15px;
     border:2px solid rgba(23, 38, 59,0.4);
 } */

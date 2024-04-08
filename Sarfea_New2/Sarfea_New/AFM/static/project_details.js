@@ -11,7 +11,7 @@ var realizedCostSpan2 = document.querySelector("#realized_cost_span2");
 var dateSpans = document.querySelectorAll(".date-span")
 
 dateSpans.forEach(span =>{
-    span.textContent = formatDate(span.textContent);
+  span.textContent = formatDate(span.textContent);
 })
 
 

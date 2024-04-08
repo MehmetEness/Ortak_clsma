@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await getClient();
   setInterval(async function () {
     await getClient();
-  }, 5000);
+  }, 60000);
 });
 
 async function getClient(isEdit) {
@@ -31,10 +31,10 @@ async function getClient(isEdit) {
                   </button>
               </td>
               <td>${client.CompanyName_Clients}</td>
-              <td>${client.ContactPerson}</td>
-              <td>${client.PhoneNumber}</td>
-              <td>${client.Email}</td>
-              <td>${client.Location}</td>
+              <td>${client.ContactPerson || "-"}</td>
+              <td>${client.PhoneNumber || "-"}</td>
+              <td>${client.Email || "-"}</td>
+              <td>${client.Location || "-"}</td>
           </tr>
       `;
     rows += row;
@@ -44,7 +44,7 @@ async function getClient(isEdit) {
     clientTableBody.insertAdjacentHTML("beforeend", rows);
     sortTableForStart(clientTable, 1);
     sortingTable(clientTable);
-    allTableFormat();
+    //allTableFormat();
     editBtns()
   }
 }
@@ -92,16 +92,16 @@ phoneInput.addEventListener("input", function (event) {
     phoneInput.value = formatPhoneNumberByCountryCode(inputValue, contryNumber);
   }
 });
+
 //                  TABLO FORMATLAMA
+// function allTableFormat() {
+//   var textCells = clientTable.querySelectorAll(
+//     "td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)"
+//   );
+//   tableFormat(textCells, "text");
+// }
 
-function allTableFormat() {
-  var textCells = clientTable.querySelectorAll(
-    "td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6)"
-  );
-  tableFormat(textCells, "text");
-}
 //                  CLİENT ADD FUNCTİON
-
 let = btnID = -1;
 const supplierFormAddBtn = document.querySelector("#kaydet_btn");
 supplierFormAddBtn.addEventListener("click", async function (event) {
@@ -126,8 +126,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
   }
 });
 
-//                  SUPPLİER EDİT FUNCTİON
-
+//                  CLİENT EDİT FUNCTİON
 function editBtns() {
   let editButtons = document.querySelectorAll(".edit-client-btn");
   editButtons.forEach(button => {

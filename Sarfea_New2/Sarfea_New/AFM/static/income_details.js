@@ -16,7 +16,7 @@ const incomeAmountInput = document.querySelector("#id_Amount_Incomes");
 const incomePaymentTypeInput = document.getElementById("id_PaymentType_Incomes");
 
 const incomeP = document.querySelector("#income_p")
-incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2)) + " $";
+incomeP.textContent = formatNumber(parseFloat(incomeP.textContent.replace(",", "."), 2) || 0) + "$";
 
 var editMode = false;
 let btnID;
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await getIncomes();
     setInterval(async function () {
         await getIncomes();
-    }, 5000);
+    }, 60000);
 });
 async function getIncomes(edit) {
     try {
@@ -65,18 +65,17 @@ async function getIncomes(edit) {
         let totalUsd = 0;
         const data = await apiFunctions("income", "GET");
         const projectId = document.querySelector(".project_id");
-        console.log(projectId.id)
         console.log(data);
         let rows = "";
         for (const income of data) {
             if(income.Project_Incomes == projectId.id){
-                let formattedDate;
-            if (income.ChekDate_Incomes) {
-                const date = new Date(income.ChekDate_Incomes);
-                formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
-            } else {
-                formattedDate = "-";
-            }
+            //     let formattedDate;
+            // if (income.ChekDate_Incomes) {
+            //     const date = new Date(income.ChekDate_Incomes);
+            //     formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+            // } else {
+            //     formattedDate = "-";
+            // }
             const row = `
           <tr>
             <td>
@@ -84,19 +83,17 @@ async function getIncomes(edit) {
                 <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
               </button>
             </td>
-            <td>${income.CompanyName_ReceivePayment_Incomes}</td>
-            <td>${income.client_incomes.CompanyName_Clients}</td>
-            <td>${formattedDate}</td>
-            <td>${income.PaymentType_Incomes}</td>
-            <td>${income.Amount_Incomes}</td>
-            <td>${income.Dollar_Rate_Incomes}</td>            
-            <td>${parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)}</td>
+            <td>${income.CompanyName_ReceivePayment_Incomes || "-"}</td>
+            <td>${income.client_incomes.CompanyName_Clients || "-"}</td>
+            <td>${formatDateForTable(income.ChekDate_Incomes)}</td>
+            <td>${income.PaymentType_Incomes || "-"}</td>
+            <td>${formatNumber(income.Amount_Incomes) + "₺"}</td>
+            <td>${formatNumber(income.Dollar_Rate_Incomes) + "₺"}</td>            
+            <td>${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0) + "$"}</td>
           </tr>`;
             rows += row;
             totalTl += parseFloat(income.Amount_Incomes || 0);
             totalUsd += (parseFloat(income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0;
-            //console.log(totalTl)
-            //console.log(totalUsd)
             }
             
         }
@@ -108,9 +105,9 @@ async function getIncomes(edit) {
             document.querySelector("#usd_td").insertAdjacentHTML("beforeend", formatNumber(totalUsd, 2) + "$");
             incomeTableBody.innerHTML = "";
             incomeTableBody.insertAdjacentHTML("beforeend", rows);
-            document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) - parseFloat(totalUsd), 2) + "$";
+            document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) || 0 - parseFloat(totalUsd) || 0, 2) + "$";
             sortingTable(incomeTable);
-            allTableFormat();
+            //allTableFormat();
             editBtns()
             //editButtonsEvents();
         }
@@ -119,14 +116,14 @@ async function getIncomes(edit) {
     }
 }
 
-function allTableFormat() {
-    var usdCells = incomeTable.querySelectorAll("td:nth-child(8)");
-    var tlCells = incomeTable.querySelectorAll("td:nth-child(6), td:nth-child(7)");
-    var textCells = incomeTable.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5)");
-    tableFormat(usdCells, "usd");
-    tableFormat(tlCells, "tl");
-    tableFormat(textCells, "text");
-}
+// function allTableFormat() {
+//     var usdCells = incomeTable.querySelectorAll("td:nth-child(8)");
+//     var tlCells = incomeTable.querySelectorAll("td:nth-child(6), td:nth-child(7)");
+//     var textCells = incomeTable.querySelectorAll("td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5)");
+//     tableFormat(usdCells, "usd");
+//     tableFormat(tlCells, "tl");
+//     tableFormat(textCells, "text");
+// }
 
 /***********************************************************
 #                       CLİENT SUPPLİER ADD 
@@ -174,7 +171,6 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 });
 
 //                  DROPDOWN MENÜLER
-
 async function getClients() {
     try {
         const data = await apiFunctions("client", "GET")
@@ -201,7 +197,6 @@ formatDateInputs(dateInputs);
 //inputForFormat(incomeAmountInput);
 const formatedInputs = document.querySelectorAll(".formatInputs");
 inputsForFormat(formatedInputs);
-
 
 /***********************************************************
 #                       İNCOME ADD 
@@ -285,10 +280,7 @@ incomeTimeForKur.addEventListener("change", async function () {
     }
 });
 
-
-
 //                  INCOME EDİT FUNCTİON
-
 function editBtns() {
     let editButtons = document.querySelectorAll(".edit-income-btn");
     editButtons.forEach(button => {

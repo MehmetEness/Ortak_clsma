@@ -187,6 +187,21 @@ form .button input:hover{
    width: 300px;
    
 }
+.tfoots{
+    background-color: #fff;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+.tfoots tr{
+    display: flex;
+}
+.tfoots tr .margin_td{
+    margin-left: 50px;
+}
 .optionsArazi,
 .optionsTesvik{
    color: #808080;

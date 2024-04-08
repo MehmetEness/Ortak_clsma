@@ -18,8 +18,8 @@
             <div class="nav-span">
                 <div class="backBtn">
                     <a href="{% url 'projects' %}">
-                        <button id="backBtn" class="button-project">
-                            <i class="fa-solid fa-arrow-left"></i>
+                        <button style="color: rgb(47, 65, 79);" class="back-button">
+                            <i class="fa-solid fa-angles-left"></i>
                         </button>
                     </a>
                 </div>
@@ -31,14 +31,14 @@
 
         <div class="main">
             <div class="row">
-                <div id="konum_div" style="background-image: url('{% static 'images/konum.png' %}');"
+                <div id="konum_div" 
                     class="column-2 card">
-                    <div style="display: none;" class="span">
+                    <iframe id="haritaFrame" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div style="display: none;" class="span">                        
                         <span>Konum</span>
                         {% if project.Location %}
                         <span id="Konum_span">{{project.Location}}</span>
                         {% endif %}
-
                     </div>
                 </div>
                 <div id="flex" class="column-2 card flex">
@@ -123,23 +123,32 @@
     formatSpans(realizedCostSpan2, "usd");
 
     //                  KONUM VE ARAZİ/ÇATI RESİM YERLEŞTİRME
+   
+        var secilenIl = document.getElementById("Konum_span").textContent;
+        var haritaSrc = "https://www.google.com/maps/embed/v1/place?q=" + secilenIl + ",Türkiye&key=AIzaSyDwNQi_yJog73xZMeolxgWjtUYIpIqutPg";
+        console.log(haritaSrc)
+        document.getElementById("haritaFrame").src = haritaSrc;
+   
 
-    konumImgChange(konumSpan);
-    typeImgChange(typeSpan);
-    function konumImgChange(konumSpan) {
-        var KonumText = konumSpan.textContent.toLowerCase();
-        var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
-        konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
-    };
+
+
+
+        typeImgChange(typeSpan)
     function typeImgChange(typeSpan) {
         var typeText = typeSpan.textContent.toLowerCase();
         if (typeText == "çatı") {
             typeText = typeText.replace("çatı", "cati");
         }
-        console.log(typeText)
         var newImageUrl = `{% static 'images/' %}${typeText}.png`;
         typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
     };
+
+    // typeImgChange(typeSpan);
+    // function konumImgChange(konumSpan) {
+    //     var KonumText = konumSpan.textContent.toLowerCase();
+    //     var newImageUrl = `{% static 'images/sehirler/' %}${KonumText}.png`;
+    //     konumDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+    // };
 
 </script>
 {% endblock %}
