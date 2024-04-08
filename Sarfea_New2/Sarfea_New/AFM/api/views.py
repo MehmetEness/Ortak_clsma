@@ -14,31 +14,19 @@ from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, Pay
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-def pass_test(group_name):
-    """
-    Verilen kullanıcının belirtilen grup adıyla uyuşup uyuşmadığını kontrol eder.
-    
-    :param group_name: Kontrol edilecek grup adı
-    :return: Boolean değer
-    """
-    
-    def inner(user):
-        if user.is_superuser:
-            return True
-        else:
-
-            return user.groups.filter(name=group_name).exists()
-    return inner
+from AFM.api.permissions import CustomPermission
 
 
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset= Project.objects.all()
     serializer_class=ProjectSerializer
+    permission_classes = [CustomPermission]
 
     
 class ProjectDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Project.objects.all()
     serializer_class=ProjectSerializer
+    permission_classes = [CustomPermission]
 
 
 class ExpensesListCreateAPIView(generics.ListCreateAPIView):
