@@ -546,6 +546,29 @@ def inverter(request, operation_care_id):
     }
     return render(request, "inverter.html", context)
 
+#report
+
+
+def report(request):
+    locations = Locations.objects.all()
+    if request.method == 'POST':
+        client_form = ClientsForm(request.POST)
+        if client_form.is_valid():
+            client_form.save()
+            return redirect('report')
+    else:
+        client_form = ClientsForm()
+
+    clients = Clients.objects.all()
+
+    context = {
+        'clients': clients,
+        'client_form': client_form,
+        "locations": locations
+    }
+
+    return render(request, 'report.html', context)
+
 #deneme
 
 @login_required

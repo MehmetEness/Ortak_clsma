@@ -38,7 +38,9 @@ urlpatterns = [
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
     
-   
+    path("report/", views.report, name='report'),
+
+
     path('get_lost_cards/', views.get_lost_cards, name='get_lost_cards'),
     path('get_gain_cards/', views.get_gain_cards, name='get_gain_cards'),
     path('get_late_cards/', views.get_late_cards, name='get_late_cards'),
