@@ -39,6 +39,85 @@ function inventorLiClick() {
   });
 }
 
+//                  ANKET YAZDIRMA
+
+
+const anketDateSelect = document.querySelector(".date_select");
+anketDateSelect.addEventListener("change", async ()=>{
+  var data = await apiFunctions("poll", "GET");
+  data = data.results;
+  console.log(data)
+  processData(data[0]);
+});
+
+function processData(data) {
+  for (const key in data) {
+    console.log("---")
+    console.log(key)
+      if (data.hasOwnProperty(key)) {
+          const value = data[key];
+          
+          if(key.startsWith("Note") && value != null){
+            const [note, index1, index2] = key.split('_');
+            console.log(`checkbox_${index1}_${index2}`)
+            
+            if (value == "true") {
+              const element = document.getElementById(`checkbox_${index1}_${index2}_1`);
+              console.log(`checkbox_${index1}_${index2}_1`)
+              element.checked = true;              
+            }else if(value == "false"){
+              const element = document.getElementById(`checkbox_${index1}_${index2}_2`);
+              element.checked = true;  
+            }
+          }
+         
+      }
+  }
+}
+
+//                    ANKET TARİH İNPUTU FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //                  TOP MENU FONKSİYONLARI
 
@@ -303,11 +382,14 @@ function kontrolEt(name) {
   }
 }
 const anketAddButton = document.querySelector("#anket_submit_btn");
-anketAddButton.addEventListener('click', () => {
+anketAddButton.addEventListener('click', async () => {
   console.log("formData")
   var jsonObject = {};
   formData.forEach(function (value, key) {
     jsonObject[key] = value;
   });
   console.log(JSON.stringify(jsonObject))
+
+  await apiFunctions("poll", "POST", formData);
 });
+

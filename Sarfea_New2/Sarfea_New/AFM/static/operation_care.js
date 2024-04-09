@@ -70,6 +70,7 @@ async function getOperationFail(isEdit) {
     let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
+    console.log(data)
     data = data.results;
     //console.log(data);
     let rows = "";
@@ -496,12 +497,12 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
         formData.append(key, value); 
       }
     }    
-    // const jsonObject = {};
-    // for (const [key, value] of formData.entries()) {
-    //   jsonObject[key] = value;
-    // }
-    // console.log(JSON.stringify(jsonObject));
-    console.log()
+    const jsonObject = {};
+    for (const [key, value] of formData.entries()) {
+      jsonObject[key] = value;
+    }
+    console.log(JSON.stringify(jsonObject));
+    console.log(failEditMode)
     if (failEditMode == false) {
       await apiFunctions("fail", "POST", formData);
       arizaAddWindow.style.display = "none";
