@@ -84,6 +84,16 @@
     margin-top: -0.25em;
     margin-right: 0.25em;
 }
+#fatura_table tbody tr td:first-child, #fatura_table thead tr th:first-child{
+  text-align: left;
+  padding-left: 45px;
+}
+#fatura_table tr td:nth-child(2), #fatura_table tr th:nth-child(2) {
+    text-align: center;
+}
+#ariza_takip_table{
+  width: 2000px;
+}
 </style>
 
 {% endblock %}
@@ -397,11 +407,11 @@
         </table>
         <table id="fatura_table" style="display: none;">
           <thead>
-            <th><span>Santral İsmi</span></th>
-            <th><span>Yapılan İşlem</span></th>
-            <th><span>Açıklama</span></th>
-            <th><span>Tarih</span></th>
-            <th><span>Dosya</span></th>
+            <th style="width: 20%;"><span>Santral İsmi</span></th>
+            <th style="width: 20%;"><span>Yapılan İşlem</span></th>
+            <th style="width: 20%;"><span>Açıklama</span></th>
+            <th style="width: 20%;"><span>Tarih</span></th>
+            <th style="width: 20%;"><span>Dosya</span></th>
           </thead>
           <tbody>
             {% for bill in fail_bills %}

@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function getClient(isEdit) {
 
   let currentRows = clientTableBody.querySelectorAll("tr");
-  const data = await apiFunctions("client", "GET");
+  var data = await apiFunctions("client", "GET");
+  data = data.results;
   let rows = "";
   for (const client of data) {
     const row = `
