@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll_Cloumn, Poll
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -418,23 +418,6 @@ class PollSerializer(serializers.ModelSerializer):
         instance.Note_9_3 = validated_data.get('Note_9_3', instance.Note_9_3)
         instance.Note_9_4 = validated_data.get('Note_9_4', instance.Note_9_4)
         instance.Note_9_5 = validated_data.get('Note_9_5', instance.Note_9_5)
-
-        instance.save()
-        return instance
-
-class PollCloumnSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Poll_Cloumn
-        fields = '__all__'
-
-    def create(self, validated_data):
-        # Yeni bir Poll_Cloumn nesnesi oluşturun
-        return Poll_Cloumn.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        # Mevcut bir Poll_Cloumn nesnesini güncelleyin
-        instance.Cloumn_Poll = validated_data.get('Cloumn_Poll', instance.Cloumn_Poll)
-        instance.Cloumn_Time = validated_data.get('Cloumn_Time', instance.Cloumn_Time)
         instance.Cloumn_Note_Text = validated_data.get('Cloumn_Note_Text', instance.Cloumn_Note_Text)
         instance.Cloumn_Organizer = validated_data.get('Cloumn_Organizer', instance.Cloumn_Organizer)
         instance.Cloumn_Organize_Date = validated_data.get('Cloumn_Organize_Date', instance.Cloumn_Organize_Date)
@@ -495,3 +478,4 @@ class PollCloumnSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+

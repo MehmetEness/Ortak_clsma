@@ -412,10 +412,6 @@ class Poll(models.Model):
     Note_9_3 = models.CharField(max_length=127, blank=True, null=True)
     Note_9_4 = models.CharField(max_length=127, blank=True, null=True)
     Note_9_5 = models.CharField(max_length=127, blank=True, null=True)
-
-class Poll_Cloumn(models.Model):
-    Cloumn_Poll=  models.ForeignKey(Poll, on_delete=models.CASCADE, blank=True, null=True)
-    Cloumn_Time = models.DateField(blank=True, null=True)
     Cloumn_Note_Text= models.TextField(max_length=1000, blank=True, null=True)
     Cloumn_Organizer= models.CharField(max_length=100, blank=True, null=True)
     Cloumn_Organize_Date= models.DateField(blank=True, null=True)
@@ -473,5 +469,7 @@ class Poll_Cloumn(models.Model):
     answer_9_3 = models.BooleanField(default=False)
     answer_9_4 = models.BooleanField(default=False)
     answer_9_5 = models.BooleanField(default=False)
+
+    
 
  

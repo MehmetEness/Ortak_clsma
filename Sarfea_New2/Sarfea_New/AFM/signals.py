@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Project, CompanyNames, PaymentFirms, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard, Operation_Care, Fail, Inventor, String, Poll, Poll_Cloumn
+from .models import Project, CompanyNames, PaymentFirms, Expenses, JobHistory, Incomes, Supplier, Clients, SalesOfferCard, Operation_Care, Fail, Inventor, String, Poll
 from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
@@ -70,7 +70,6 @@ def update_client_card(sender, instance, **kwargs):
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
-        poll=Poll.objects.create(Poll_Operation_Care=instance)
         num= instance.Operation_Care_Inventor_Number
         if num is None:
             num = 0
@@ -113,8 +112,3 @@ def create_string(sender, instance, created, **kwargs):
                 String_Izolasion=instance.Inventor_Izolasion,
             )
 
-@receiver(post_save, sender=Poll)
-def create_string(sender, instance, created, **kwargs):
-    if created:
-
-        poll_cloumn=Poll_Cloumn.objects.create(Cloumn_Poll=instance)
