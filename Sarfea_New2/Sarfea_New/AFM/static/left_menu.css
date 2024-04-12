@@ -169,6 +169,7 @@ nav:hover .shrink-btn,
   padding: 2.5px 0;
   transition: 0.4s;
   border-radius: 10px;
+  margin-bottom: 4px;
 }
 
 .sidebar-links a {
@@ -181,7 +182,6 @@ nav:hover .shrink-btn,
 }
 .sidebar-links li:hover {
   background: var(--main-color-dark);
-  border-radius: 10px;
 }
 
 .icon {
@@ -223,7 +223,7 @@ nav:hover .shrink-btn,
 .active-tab {
   width: 100%;
   height: 53px;
-  background-color: var(--main-color-dark);
+  background-color: transparent;
   border-radius: 10px;
   position: absolute;
   top: 2.5px;
@@ -368,7 +368,10 @@ nav:hover .shrink-btn,
 .hide-for-menu {
   transition: opacity 0.3s 0.2s;
 }
-
+.hide-for-menu a{
+  text-decoration: none;
+  color: #000;
+}
 body.shrink nav {
   width: 5.4rem;
 }

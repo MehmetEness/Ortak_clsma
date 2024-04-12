@@ -11,7 +11,7 @@
           <i class="bx bx-chevron-left"></i>
         </span>
         <img src="{% static 'images/sovo_logo.png' %}" class="logo" alt="" />
-        <h3 class="hide-for-menu">Sovo-Tozoglu</h3>
+        <h3 class="hide-for-menu"><a href="{% url 'home' %}">Sovo-Tozoglu</a></h3>
       </div>
 
       <div class="searchForNav">
@@ -22,7 +22,7 @@
       <div class="sidebar-links">
         <ul>
           <div class="active-tab"></div>
-          <li class="tooltip-element" data-tooltip="0">
+          <li class="tooltip-element anasayfa_li" data-tooltip="0">
             <a href="{% url 'home' %}" class="active" data-active="0">
               <div class="icon">
                 <i class="fas fa-home"></i>
@@ -31,7 +31,7 @@
             </a>
           </li>
           {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
-          <li class="tooltip-element" data-tooltip="1">
+          <li class="tooltip-element projeler_li" data-tooltip="1">
               <a href="{% url 'projects' %}" data-active="1">
                   <div class="icon">
                       <i class="fas fa-project-diagram"></i>
@@ -43,7 +43,7 @@
 
           {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
 
-          <li class="tooltip-element" data-tooltip="2">
+          <li class="tooltip-element musteriler_li" data-tooltip="2">
             <a href="{% url 'client' %}" data-active="2">
               <div class="icon">
                 <i class="fas fa-users"></i>
@@ -55,7 +55,7 @@
           
           {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
 
-          <li class="tooltip-element" data-tooltip="3">
+          <li class="tooltip-element tedarikciler_li" data-tooltip="3">
             <a href="{% url 'supplier' %}" data-active="3">
               <div class="icon">
                 <i class="fas fa-truck"></i>
@@ -67,7 +67,7 @@
 
           {% if 'admin' in user_groups|lower or 'satış grubu' in user_groups|lower %}
 
-          <li class="tooltip-element" data-tooltip="3">
+          <li class="tooltip-element satis_teklif_li" data-tooltip="3">
             <a href="{% url 'sales_offer' %}" data-active="4">
               <div class="icon">
                 <i class="fas fa-wallet"></i>
@@ -79,7 +79,7 @@
 
           {% if 'admin' in user_groups|lower or 'stok grubu' in user_groups|lower %}
 
-          <li class="tooltip-element" data-tooltip="3">
+          <li class="tooltip-element stok_li" data-tooltip="3">
             <a href="#" data-active="5">
               <div class="icon">
                 <i class="fas fa-box"></i>
@@ -91,7 +91,7 @@
 
           {% if 'admin' in user_groups|lower or 'bakım grubu' in user_groups|lower %}
 
-          <li class="tooltip-element" data-tooltip="3">
+          <li class="tooltip-element isletme_bakim_li" data-tooltip="3">
             <a href="{% url 'operation_care' %}" data-active="6">
               <div class="icon">
                 <i class="fas fa-wrench"></i>
@@ -102,7 +102,7 @@
           {% endif %}
 
           {% if 'admin' in user_groups|lower or 'rapor grubu' in user_groups|lower %}
-          <li class="tooltip-element" data-tooltip="3">
+          <li class="tooltip-element raporlama_li" data-tooltip="3">
             <a href="{% url 'report' %}" data-active="7">
               <div class="icon">
                 <i class="fas fa-chart-line"></i>

@@ -11,6 +11,10 @@
 
 /*  Body  */
 
+  .sidebar-links li.tedarikciler_li {
+  background: var(--main-color-dark);
+}
+
 .body-div {
   display: flex;
   height: 100vh;

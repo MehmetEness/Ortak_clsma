@@ -8,9 +8,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
 <link rel="stylesheet" href="{% static 'client.css' %}" />
 
+<style>
+  .sidebar-links li.raporlama_li {
+  background: var(--main-color-dark);
+}
+</style>
+
 {% endblock %} {% block title %} Report {% endblock %} {% block content %}
 <div class="body-div">
-  <div class="window client-add-window">
+  <!-- <div class="window client-add-window">
     <div class="container">
       <h3 id="client-X" class="close-window">X</h3>
       <div class="title">Tedarikci Ekle</div>
@@ -77,16 +83,16 @@
       <p style="color: red">hata{{ error }}</p>
       {% endfor %}
     </div>
-  </div>
+  </div> -->
 
   {% include 'partials/_left_nav_bar.html' %}
 
   <div class="right-menu">
     <main class="table" id="customers_table">
       <section class="table__header">
-        <p>MÜŞTERİLER</p>
+        <p>RAPORLAMA</p>
         <div class="export__file">
-          <button class="client-add-btn">Müşteri Ekle</button>
+          <!-- <button class="client-add-btn">Müşteri Ekle</button> -->
         </div>
       </section>
       <section class="table__body">
