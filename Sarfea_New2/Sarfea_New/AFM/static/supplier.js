@@ -23,7 +23,9 @@ async function getSupplier(isEdit) {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
     var data = await apiFunctions("supplier", "GET");
+    console.log(data)
     data = data.results;
+    console.log(data)
     let rows = "";
     for (const supplier of data) {
       const row = `
@@ -108,6 +110,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
 
   if (requiredInputs(reqInputs, reqLabels) && await supplierNameControl(firmaInput, firmaSpan, currentSupplierName)) {
     if (editMode == false) {
+      
       const formData = new FormData(supplierAddForm);
       await apiFunctions("supplier", "POST", formData);
       getSupplier();
