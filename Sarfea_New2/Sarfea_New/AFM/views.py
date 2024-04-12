@@ -180,7 +180,15 @@ def supplier(request):
 @user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def project_details(request, project_id):
     project = Project.objects.filter(id=project_id).first()
-    return render(request, 'project_details.html', {'project': project})
+    profit=0
+    if project.Cost_NotIncludingKDV is not None and project.CalculatedCost_NotIncludingKDV is not None:
+        x = project.Cost_NotIncludingKDV - project.CalculatedCost_NotIncludingKDV
+        x= project.Cost_NotIncludingKDV-project.CalculatedCost_NotIncludingKDV
+        y=x/project.CalculatedCost_NotIncludingKDV
+        profit=y*100
+    return render(request, 'project_details.html', {'project': project,'profit':profit})
+
+
 
 @user_passes_test(pass_test('Proje Grubu'), login_url='/home')
 def realized_cost(request, project_id):

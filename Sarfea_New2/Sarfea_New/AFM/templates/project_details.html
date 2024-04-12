@@ -108,7 +108,7 @@
                 </div>                
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">0 $</span>
+                    <span id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan Maliyet</span>
                 </div> 
                 <div class="column-2 card flex">
@@ -118,7 +118,8 @@
                 </div>
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">0 $</span>
+                    <span id="realized_cost_span">{{ profit|floatformat:2 }}%
+                    </span>
                     <span>Hesaplanan Kar Oranı</span>
                 </div>
                 <div class="column-2 card flex">
