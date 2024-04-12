@@ -20,13 +20,11 @@ from AFM.api.permissions import CustomPermission
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset= Project.objects.all()
     serializer_class=ProjectSerializer
-    permission_classes = [CustomPermission]
 
     
 class ProjectDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Project.objects.all()
     serializer_class=ProjectSerializer
-    permission_classes = [CustomPermission]
 
 
 class ExpensesListCreateAPIView(generics.ListCreateAPIView):
