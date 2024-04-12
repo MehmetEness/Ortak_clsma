@@ -46,8 +46,7 @@ urlpatterns = [
     path("api_poll/", api_view.PollListCreateAPIView.as_view(), name='api-poll'),
     path('api_poll/<pk>', api_view.PollRetrieveUpdateDestroyAPIView.as_view(), name='api-poll-detail'),
 
-    path("api_poll_cloumn/", api_view.Poll_CloumnListCreateAPIView.as_view(), name='api-poll-cloumn'),
-    path('api_poll_cloumn/<pk>', api_view.Poll_CloumnRetrieveUpdateDestroyAPIView.as_view(), name='api-poll-cloumn-detail'),
+
    
     
     #******************************* ------- ***********************************
