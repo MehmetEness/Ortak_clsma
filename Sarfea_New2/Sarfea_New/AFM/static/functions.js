@@ -60,7 +60,11 @@ function formatNumber(number, fract) {
     }).format(number);
     return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
   }else{
-    return "0"
+    var value = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: fract,
+      maximumFractionDigits: fract,
+    }).format(0);
+    return value.replace(/\./g, "a").replace(/,/g, ".").replace(/a/g, ",");
   }
   
 }

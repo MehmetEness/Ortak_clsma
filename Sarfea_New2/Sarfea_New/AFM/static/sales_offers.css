@@ -175,7 +175,7 @@ nav{
   border-radius: 10px;
   margin: 5px;
   padding: 10px;
-  font-size: 0.7vw;
+  font-size: 0.6vw;
   /* white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; */
@@ -281,7 +281,9 @@ nav{
   justify-content: space-between;
   align-items: center;
 }
-
+#list_table tbody tr{
+  cursor: pointer;
+}
 .buttons button {
   color: #000;
   padding: 1px 5px;
@@ -421,4 +423,9 @@ tbody td.active a {
   text-decoration: none;
   color: #000;
   
+}
+td a{
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
 }

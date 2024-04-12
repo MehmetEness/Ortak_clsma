@@ -88,9 +88,9 @@ async function getIncomes(edit) {
             <td>${income.client_incomes.CompanyName_Clients || "-"}</td>
             <td>${formatDateForTable(income.ChekDate_Incomes)}</td>
             <td>${income.PaymentType_Incomes || "-"}</td>
-            <td>${formatNumber(income.Amount_Incomes) + "₺"}</td>
-            <td>${formatNumber(income.Dollar_Rate_Incomes) + "₺"}</td>            
-            <td>${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0) + "$"}</td>
+            <td>${formatNumber(income.Amount_Incomes, 2) + "₺"}</td>
+            <td>${formatNumber(income.Dollar_Rate_Incomes, 4) + "₺"}</td>            
+            <td>${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0, 2) + "$"}</td>
           </tr>`;
             rows += row;
             totalTl += parseFloat(income.Amount_Incomes || 0);
@@ -106,7 +106,7 @@ async function getIncomes(edit) {
             document.querySelector("#usd_td").insertAdjacentHTML("beforeend", formatNumber(totalUsd, 2) + "$");
             incomeTableBody.innerHTML = "";
             incomeTableBody.insertAdjacentHTML("beforeend", rows);
-            document.querySelector("#result_td").textContent = formatNumber(parseFloat(clearForSubmit(incomeP.textContent)) || 0 - parseFloat(totalUsd) || 0, 2) + "$";
+            document.querySelector("#result_td").textContent = formatNumber(parseFloat((parseFloat(clearForSubmit(incomeP.textContent)) || 0) - (parseFloat(totalUsd) || 0)), 2) + "$";
             sortingTable(incomeTable);
             //allTableFormat();
             editBtns()

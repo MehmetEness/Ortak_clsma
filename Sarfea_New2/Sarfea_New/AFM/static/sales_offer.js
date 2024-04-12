@@ -907,6 +907,7 @@ async function getTotalList() {
       var row = document.createElement("tr");
       //row.id = card.id;
       row.setAttribute("data-id", card.id);
+      row.addEventListener("click", goToCard);
 
       if (card.Is_Gain) {
         row.classList.add("gain-job");
@@ -924,8 +925,8 @@ async function getTotalList() {
           <td>${card.client.CompanyName_Clients || "-"}</td>
           <td>${card.Location_Card || "-"}</td>
           <td>${card.Person_Deal || "-"}</td>
-          <td>${formatNumber(card.AC_Power_Card, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.DC_Power_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.AC_Power_Card, 0) || 0 }</td>
+          <td>${formatNumber(card.DC_Power_Card, 0) || 0}</td>
           <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
           <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺" || 0 + "₺"}</td>
           <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
@@ -1039,8 +1040,8 @@ async function getLostList() {
                       <td>${card.client.CompanyName_Clients || "-"}</td>
                       <td>${card.Location_Card || "-"}</td>
                       <td>${card.Person_Deal || "-"}</td>
-                      <td>${formatNumber(card.AC_Power_Card) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.DC_Power_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.AC_Power_Card) || 0 }</td>
+                      <td>${formatNumber(card.DC_Power_Card) || 0 }</td>
                       <td>${formatNumber(card.UnitCost_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
                       <td>${formatNumber(card.Cost_NotIncludingKDV_Card) + "₺" || 0 + "₺"}</td>
                       <td>${formatNumber(card.UnitOffer_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
@@ -1164,7 +1165,26 @@ async function getWonList() {
   }
 }
 
+//                  LİSTEDEN CARDA GİTME
+const goToCard = (event)=>{ 
+  var cardId = event.currentTarget.getAttribute("data-id");
+    console.log(cardId)
+    const card = document.getElementById(cardId);
+    if (card) {
+      topMenuLi[2].classList.add("li-hover");
+      topMenuLi[0].classList.remove("li-hover");
+      handleMenuItemClick("sale_time");
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      console.log(card)
+      card.style.background = "#fff";
+      card.style.boxShadow = "1px 1px 4px #000000";
+      setTimeout(function() {
+        card.style.background = "#ffffff80"
+        card.style.boxShadow = "1px 1px 1px #888888";
+      }, 2500);      
 
+    } 
+}
 
 
 
