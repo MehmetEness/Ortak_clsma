@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
 
+
 @receiver(pre_save, sender=Expenses)
 def update_expenses_company_name(sender, instance, **kwargs):
     
