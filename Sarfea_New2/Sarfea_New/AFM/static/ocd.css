@@ -41,7 +41,8 @@
     overflow: hidden;
 }
 .lists{
-    overflow-y: scroll;
+    overflow-y: hidden;
+    height: 90%;
 }
 table thead th {
   text-align: center;      
@@ -50,6 +51,8 @@ table thead th {
 .top-menu-ul {
 display: flex;
 list-style-type: none;
+margin-left: 20px;
+margin-right: auto;
 }
 .top-menu-ul li {
 position: relative;
@@ -171,19 +174,17 @@ width: 100%;
   
   .table__body {
       width: 100%;
-      max-height: 100%;
+      height: 98%;
       background-color: #fffb;
-      margin: 0.8rem auto;
+      margin: 1.25rem auto;
       border-radius: .6rem;
-  
-      overflow: auto;
-      overflow: overlay;
+      overflow: scroll;
   }
+
   
-  
-  .table__body::-webkit-scrollbar{
-      width: 0.5rem;
-      height: 0.5rem;
+  ::-webkit-scrollbar{
+      width: 0rem;
+      height: 0rem;
   }
   
   .table__body::-webkit-scrollbar-thumb{
@@ -387,8 +388,8 @@ width: 100%;
 
 /* ANKET CSS */
 .anket-container{
-    padding: 10px;
-   height: 100%;
+    /* padding: 10px; */
+   height: 90%;
    overflow: scroll;
 }
 .anket-title{
@@ -415,6 +416,10 @@ width: 100%;
 .anket-body{
     display: flex;
     flex-direction: row;
+    position: sticky;
+    top: 0;
+    background: #e5e1e1;
+    width: 100%;
 }
 .anket-body .row{
     display: flex;
@@ -488,6 +493,8 @@ width: 100%;
     height: 30px;
     background-color: rgb(247, 164, 10);
     border-bottom: 1px solid #000;
+    position: sticky;
+    top: 90px;
 }
 .row-block span{
     margin-left: 20px;
@@ -614,7 +621,7 @@ width: 100%;
     border-radius: 5px;
 }
 .com-row input{
-    width: 90%;
+    width: 70%;
     border: none;
     outline: none;
 }
