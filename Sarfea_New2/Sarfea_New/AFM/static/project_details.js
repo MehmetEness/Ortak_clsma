@@ -13,6 +13,15 @@ var dateSpans = document.querySelectorAll(".date-span")
 dateSpans.forEach(span =>{
   span.textContent = formatDate(span.textContent);
 })
-
+getProjects(true)
+async function getProjects(isEdit) {
+  try {
+    const data = await apiFunctions("project", "GET");
+    console.log(data)    
+      
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
 
 
