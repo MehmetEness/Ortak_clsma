@@ -1,54 +1,81 @@
+document.addEventListener("DOMContentLoaded", async function () {
 
-getAndRenderList();
 
+await getIncome();
+await getExpenses();
+ akisChart()
+
+});
+ 
 //                  LİSTE ÇEKME
 
-async function getAndRenderList(){
+let incomeArray = [];
+let expensesArray = [];
+
+async function getIncome(){
     try{
-        let data = await apiFunctions('project', "GET");
+        let data = await apiFunctions('income', "GET");
+        let bugununTarihi = new Date();
+         let results = {};
+        data.forEach((income) => {
+           
+            if(income.ChekDate_Incomes){
+                const parcalar = income.ChekDate_Incomes.split("-");
+                const ay = parseInt(parcalar[1]);
+                if(parcalar[0] ==  bugununTarihi.getFullYear()){
+                    const gelirMiktari = parseFloat(income.Amount_Incomes);
+                    if (!results[ay]) {
+                        results[ay] = gelirMiktari;
+                    } else {
+                        results[ay] += gelirMiktari;
+                    }
+                }
+            }            
+        });
+        for (let i = 1; i <= 12; i++) {
+            incomeArray.push(results[i] || 0);
+        }
+       
+    }catch(error) {
+        console.log(error);
+    }
+}
+async function getExpenses(){
+    try{
+        let data = await apiFunctions('expense', "GET");
         console.log(data)
+        let bugununTarihi = new Date();
+         let results = {};
+        data.forEach((expense) => {
+           
+            if(expense.Date_Expenses){
+                const parcalar = expense.Date_Expenses.split("-");
+                const ay = parseInt(parcalar[1]);
+                if(parcalar[0] ==  bugununTarihi.getFullYear()){
+                    const gelirMiktari = parseFloat(expense.Amount_Expenses);
+                    if (!results[ay]) {
+                        results[ay] = gelirMiktari;
+                    } else {
+                        results[ay] += gelirMiktari;
+                    }
+                }
+            }            
+        });
+        for (let i = 1; i <= 12; i++) {
+            expensesArray.push(results[i] || 0);
+        }
+       
+        console.log(expensesArray)
     }catch(error) {
         console.log(error);
     }
 }
 
 
-function cardFormat() {
-    let rows = document.querySelectorAll(".rows");
-    rows.forEach(function (row) {
-    let cards = row.querySelectorAll(".card");
-    let totalCashSpan = row.querySelector(".total-cash span:nth-child(1)");
-    let customersCountSpan = row.querySelector(".total-cash span:nth-child(2)");
-    let totalCash = 0;
-    console.log(cards)
-    cards.forEach(function (card) {
-        
-      let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
-      let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
-      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
-      let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
-      let powerSpan = card.querySelector(".boxes:nth-of-type(4) p:nth-of-type(1)");
-      let totalTeklifCount = parseFloat(totalTeklif.textContent.replace(/,/g, ".")) || 0;
-      let unitTeklifCount = parseFloat(unitTeklif.textContent.replace(/,/g, ".")) || 0;
-      let totalMaliyetCount = parseFloat(totalMaliyet.textContent.replace(/,/g, ".")) || 0;
-      let unitMaliyetCount = parseFloat(unitMaliyet.textContent.replace(/,/g, ".")) || 0;
-      let powerCount = parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
 
-      totalTeklif.textContent = "$ " + formatNumber(totalTeklifCount, 2);
-      unitTeklif.textContent = formatNumber(unitTeklifCount, 0) + " USD/kWp";
-      totalMaliyet.textContent = "$ " + formatNumber(totalMaliyetCount, 2);
-      unitMaliyet.textContent = formatNumber(unitMaliyetCount, 0) + " USD/kWp";
-      powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
 
-      totalCash += totalMaliyetCount;
-    });
-
-    totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
-    customersCountSpan.textContent = `(${String(cards.length)})`;
-  });  
-}
-
-const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
+const akisChart = () =>{
+    const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
 // ctxNakitAkis.width = "100%";
 // ctxNakitAkis.height = "100%";
 new Chart(ctxNakitAkis, {
@@ -58,14 +85,14 @@ new Chart(ctxNakitAkis, {
     datasets: [{
       label: 'Giriş',
       borderColor: "#2aa5eb",
-      data: [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 5],
+      data: incomeArray,
       borderWidth: 2,
       fill: true,
       backgroundColor: "#2aa4eb36"
     }, {
       label: 'Çıkış',
       borderColor: "#808080",
-      data: [8, 11, 6, 11, 7, 1, 16, 17, 2, 2, 13, 15],
+      data: expensesArray,
       borderWidth: 2,
       fill: true,
       backgroundColor: "#80808048"
@@ -124,3 +151,4 @@ new Chart(ctxNakitAkis, {
     }
   }
 });
+}

@@ -49,7 +49,7 @@ async function getProjects(isEdit) {
     //console.log(data);
     //let formattedDate;
     let rows = "";
-    for (const project of data.results) {
+    for (const project of data) {
       // if (project.StartDate) {
       //   let date = new Date(project.StartDate);
       //   formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
@@ -76,7 +76,7 @@ async function getProjects(isEdit) {
 
       rows += row;
     }
-    if (data.results.length > currentRows.length || isEdit) {
+    if (data.length > currentRows.length || isEdit) {
       projectsTableBody.innerHTML = "";
       projectsTableBody.insertAdjacentHTML("beforeend", rows);
       sortingTable(projectsTable);

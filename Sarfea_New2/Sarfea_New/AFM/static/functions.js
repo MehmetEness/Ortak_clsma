@@ -432,7 +432,6 @@ function requiredInputs(inputs, labels) {
 }
 async function supplierNameControl(input, label, currentSupplier) {
   var data = await apiFunctions("supplier", "GET");
-  data = data.results;
   let exClient = input.value.trim().toLowerCase();
   let bool = true;
  
@@ -454,7 +453,6 @@ async function supplierNameControl(input, label, currentSupplier) {
 }
 async function clientNameControl(input, label, currentClient) {
   var data = await apiFunctions("client", "GET");
-  data = data.results;
   let exClient = input.value.trim().toLowerCase();
   let bool = true;
 
@@ -476,7 +474,6 @@ async function clientNameControl(input, label, currentClient) {
 }
 async function projectNameControl(input, label, currentProject) {
   var data = await apiFunctions("project", "GET");
-  data = data.results;
   let exClient = input.value.trim().toLowerCase();
   let bool = true;  
     for (var supplier of data) {
@@ -906,6 +903,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 });
+dropdownActive();
 //                  DROPDOWN İNPUTS
 function dropdownActive() {
   var dropdownInputs = document.querySelectorAll(".myInput");
