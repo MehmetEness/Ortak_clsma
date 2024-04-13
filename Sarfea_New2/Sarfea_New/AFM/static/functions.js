@@ -975,7 +975,7 @@ async function apiFunctions(name, type, myForm, id) {
     case "GET":
       try {
         const response = await fetch(`/api_${name}/`);
-        const data = await response.json();
+        const data = await response.json();        
         return data;
       } catch (error) {
         console.error("There was an error!", error);
