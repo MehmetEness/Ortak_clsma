@@ -6,7 +6,7 @@ var typeSpan = document.querySelector("#type_span");
 
 var acPowerSpan = document.querySelector("#ac-power-span");
 var dcPowerSpan = document.querySelector("#dc-power-span");
-var realizedCostSpan = document.querySelector("#realized_cost_span");
+var realizedIncomeSpan = document.querySelector("#realized_income_span");
 var realizedCostSpan2 = document.querySelector("#realized_cost_span2");
 var dateSpans = document.querySelectorAll(".date-span")
 
@@ -17,11 +17,33 @@ getProjects(true)
 async function getProjects(isEdit) {
   try {
     const data = await apiFunctions("project", "GET");
-    console.log(data)    
+    //console.log(data)    
       
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }
 }
 
+const getMaliyet = async ()=>{
+  let totalMaliyet = 0;
+  const respons = await apiFunctions("project", "GETID","ds","47");
+  console.log(respons);
+  respons.project_expenses.forEach((expense) =>{
+    let expenseAmount = parseFloat(expense.Amount_USD_Expenses) || 0;
+    totalMaliyet += expenseAmount;
+  });
+  realizedCostSpan2.textContent = formatNumber(totalMaliyet,2) + "$";
+}
+const getGelir = async ()=>{
+  let totalGelir = 0;
+  const respons = await apiFunctions("project", "GETID","ds","47");
+  console.log(respons);
+  respons.project_incomes.forEach((income) =>{
+    let incomeAmount = parseFloat(income.Amount_Usd_Incomes) || 0;
+    totalGelir += incomeAmount;
+  });
+  realizedIncomeSpan.textContent = formatNumber(totalGelir,2) + "$";
+}
+getGelir();
+getMaliyet();
 

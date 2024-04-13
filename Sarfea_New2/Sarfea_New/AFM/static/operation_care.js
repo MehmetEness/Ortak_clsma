@@ -28,7 +28,7 @@ async function getOperationCare(isEdit) {
     let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("operation_care", "GET");
-    //console.log(data);
+    console.log(data);
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
@@ -568,7 +568,7 @@ async function getClients() {
 getOperation()
 async function getOperation() {
   try {
-    var data = await apiFunctions("operation_care", "GET"),
+    var data = await apiFunctions("operation_care", "GET");
     let rows = "";
     for (const operation of data) {
       const row = `<span value="${operation.id}" class="dropdown-item">${operation.client.CompanyName_Clients}</span>`;

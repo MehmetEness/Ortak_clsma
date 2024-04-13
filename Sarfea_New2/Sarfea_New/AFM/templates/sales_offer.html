@@ -1089,7 +1089,7 @@
 
 <script>
   // Revize  işlemleri 
-  function reviseCard(cardId) {
+  function reviseCard(cardId) {  
     const csrftoken = getCookie('csrftoken');
 
     if (!csrftoken) {
@@ -1112,9 +1112,9 @@
       })
       .then(data => {
         console.log('Kaybedildi işlemi başarılı', data);
-        location.reload();
-        var newUrl = "".replace("0", cardId);
-        window.location.href = newUrl;
+        //location.reload();
+        //var newUrl = "".replace("0", cardId);
+        //window.location.href = newUrl;
       })
       .catch(error => {
         console.error('Hata:', error.message);

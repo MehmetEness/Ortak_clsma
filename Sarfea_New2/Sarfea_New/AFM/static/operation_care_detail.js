@@ -367,14 +367,21 @@ function kontrolEt(name) {
     }
   }
 }
+function kontrolEtNots(name) {
+  var input = document.getElementsByName(name)[0];
+  var value = input.value;  
+  formData.append(name, value);
+}
+
 const anketAddButton = document.querySelector("#anket_submit_btn");
 anketAddButton.addEventListener("click", async () => {
   console.log("formData");
+  formData.append("Poll_Operation_Care", document.querySelector("#bakim_takip").textContent);
   var jsonObject = {};
   formData.forEach(function (value, key) {
     jsonObject[key] = value;
   });
   console.log(JSON.stringify(jsonObject));
 
-  await apiFunctions("poll", "POST", formData);
+  //await apiFunctions("poll", "POST", formData);
 });

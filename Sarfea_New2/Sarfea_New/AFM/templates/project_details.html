@@ -72,13 +72,13 @@
             <div class="row">
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                    <span id="realized_income_span"></span>
                     <span>Gerçekleşen İş Bedeli</span>
                     <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
                 </div>
                 <div id="gerceklesenMaliyet" class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span2">{{project.RealizedCost_NotIncludingKDV}} $</span>
+                    <span id="realized_cost_span2"></span>
                     <span>Gerçekleşen Maliyet</span>
                     <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
                 </div>               
@@ -104,7 +104,6 @@
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
                     <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan İş Bedeli</span>
-                    <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
                 </div>                
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
@@ -141,8 +140,8 @@
 
     formatSpans(acPowerSpan, "kWe");
     formatSpans(dcPowerSpan, "kWp");
-    formatSpans(realizedCostSpan, "usd");
-    formatSpans(realizedCostSpan2, "usd");
+    //formatSpans(realizedCostSpan, "usd");
+    //formatSpans(realizedCostSpan2, "usd");
 
     //                  KONUM VE ARAZİ/ÇATI RESİM YERLEŞTİRME
    

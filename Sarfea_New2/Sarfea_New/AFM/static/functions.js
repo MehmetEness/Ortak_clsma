@@ -1034,12 +1034,8 @@ async function apiFunctions(name, type, myForm, id) {
       }
       break;
     default:
-
-
   }
-
 }
-
 //  DOLAR KURU
 async function getUSDKur(date) {
   try {
@@ -1050,7 +1046,6 @@ async function getUSDKur(date) {
     return "0";
   }
 }
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {

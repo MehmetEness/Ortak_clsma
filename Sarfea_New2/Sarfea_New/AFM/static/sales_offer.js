@@ -123,7 +123,7 @@ function generateCard(card) {
                   <li onclick="lostCard(${card.id})">Kaybedildi</li>
                   <li onclick="gainCard(${card.id})">Kazanıldı</li>
                   <li onclick="waitCard(${card.id})">Bekleyen</li>
-                  <li onclick="reviseCard(${card.id})"><a href="{% url 'sales_offer_edit' sales_offer_id=card.id %}">Revize </a></li>
+                  <li id="${card.id}" class = "card_edit_btn" onclick="reviseCard(${card.id})">Revize </li>
               </ul>
           </div>
       </div>
@@ -392,6 +392,8 @@ function cardMenuFunctions() {
   });
 
 }
+
+
 
 //              TARİH İNPUTLARI FORMATLAMA
 const dateInputs = document.querySelectorAll(".date-inputs");
