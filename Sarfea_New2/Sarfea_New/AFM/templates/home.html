@@ -240,84 +240,8 @@
 
 {% block js_files %}
 <script src="{% static 'functions.js' %}"></script>
-<!-- <script src="{% static 'home.js' %}"></script> -->
+<script src="{% static 'home.js' %}"></script>
 <script>
-  const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
-  // ctxNakitAkis.width = "100%";
-  // ctxNakitAkis.height = "100%";
-  new Chart(ctxNakitAkis, {
-    type: 'line',
-    data: {
-      labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Hazira', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-      datasets: [{
-        label: 'Giriş',
-        borderColor: "#2aa5eb",
-        data: [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 5],
-        borderWidth: 2,
-        fill: true,
-        backgroundColor: "#2aa4eb36"
-      }, {
-        label: 'Çıkış',
-        borderColor: "#808080",
-        data: [8, 11, 6, 11, 7, 1, 16, 17, 2, 2, 13, 15],
-        borderWidth: 2,
-        fill: true,
-        backgroundColor: "#80808048"
-      }
-      ],
-    },
-    options: {
-      layout: {
-        padding: {
-          top: 5,
-          left: 20 // Grafiğin sol kenarı ile başlık arasında 20 piksel boşluk bırakır
-        }
-      },
-      elements: {
-        point: {
-          pointStyle: 'circle',
-          radius: 1,
-          borderWidth: 1,
-          borderColor: 'red',
-          backgroundColor: 'yellow'
-        },
-        line: {
-          borderWidth: 5,
-          borderColor: 'blue',
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Nakit Akışı',
-          position: 'top',
-          color: 'black',
-          align: 'start',
-          font: {
-            family: 'Arial',
-            size: 18,
-            style: 'normal',
-            lineHeight: 1.2
-          }
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-      },
-
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-        x: {
-          grid: {
-            display: false
-          }
-        }
-      }
-    }
-  });
 
 
 

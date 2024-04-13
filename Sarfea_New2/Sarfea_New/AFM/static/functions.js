@@ -973,10 +973,23 @@ async function apiFunctions(name, type, myForm, id) {
 
   switch (type) {
     case "GET":
+      let allData = [];
       try {
-        const response = await fetch(`/api_${name}/`);
-        const data = await response.json();        
-        return data;
+        let hasNextPage = true; 
+        let nextPageUrl = `/api_${name}/`; 
+
+        while (hasNextPage) {
+            const response = await fetch(nextPageUrl);
+            const data = await response.json();
+            allData = allData.concat(data.results);
+            if (data.next) {
+                nextPageUrl = data.next;
+            } else {
+                hasNextPage = false;
+            }
+        }
+        
+        return allData;
       } catch (error) {
         console.error("There was an error!", error);
       }

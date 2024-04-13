@@ -45,7 +45,6 @@ async function getSalesCards(isEdit) {
   try {
     let Rows = document.querySelectorAll(".card-body");
     var data = await apiFunctions("sales_offer", "GET");
-    data = data.results;
     //console.log(data)
     Rows.forEach(row => {
       row.innerHTML = '';
@@ -868,7 +867,6 @@ getClients()
 async function getClients() {
   try {
     var data = await apiFunctions("client", "GET")
-    data = data.results;
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
@@ -898,7 +896,6 @@ getTotalList()
 async function getTotalList() {
   try {
     var data = await apiFunctions("sales_offer", "GET");
-    data = data.results;
     console.log(data)
     let rows = "";
     const listTableBody = listTable.querySelector("tbody");
@@ -1025,7 +1022,6 @@ async function getLostList() {
   try {
     //let currentRows = supplierTableBody.querySelectorAll("tr");
     var data = await apiFunctions("sales_offer", "GET");
-    data = data.results;
     let rows = "";
     const lostTableBody = lostTable.querySelector("tbody");
     for (const card of data) {
@@ -1074,7 +1070,6 @@ getSalesList()
 async function getSalesList() {
   try {
     var data = await apiFunctions("sales_offer", "GET");
-    data = data.results;
     let rows = "";
     const salesTableBody = salesTable.querySelector("tbody");
     for (const card of data) {
@@ -1122,7 +1117,6 @@ getWonList()
 async function getWonList() {
   try {
     var data = await apiFunctions("sales_offer", "GET");
-    data = data.results;
     let rows = "";
     const wonTableBody = wonTable.querySelector("tbody");
     for (const card of data) {

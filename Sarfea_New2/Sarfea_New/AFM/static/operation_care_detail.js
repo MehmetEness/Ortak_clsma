@@ -37,7 +37,6 @@ function inventorLiClick() {
 const anketDateSelect = document.querySelector(".date_select");
 anketDateSelect.addEventListener("change", async () => {
   var data = await apiFunctions("poll", "GET");
-  data = data.results;
   console.log(data);
   processData(data[0]);
 });

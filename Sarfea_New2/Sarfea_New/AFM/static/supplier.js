@@ -23,7 +23,6 @@ async function getSupplier(isEdit) {
   try {
     let currentRows = supplierTableBody.querySelectorAll("tr");
     var data = await apiFunctions("supplier", "GET");
-    data = data.results;
     let rows = "";
     for (const supplier of data) {
       const row = `

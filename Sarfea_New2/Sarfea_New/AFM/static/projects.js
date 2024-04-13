@@ -570,7 +570,6 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
 async function getClients() {
   try {
     var data = await apiFunctions("client", "GET")
-    data = data.results;
     console.log(data);
     let rows = "";
     for (const client of data) {
@@ -589,7 +588,6 @@ async function getClients() {
 async function getSuppliers() {
   try {
     var data = await apiFunctions("supplier", "GET")
-    data = data.results;
     let rows = "";
     for (const supplier of data) {
       const row = `<span value="${supplier.id}" class="dropdown-item">${supplier.CompanyName_Supplier}</span>`;
@@ -607,7 +605,6 @@ async function getSuppliers() {
 async function getprojectName() {
   try {
     var data = await apiFunctions("project", "GET")
-    data = data.results;
     let rows = "";
     for (const project of data) {
       const row = `<span value="${project.id}" class="dropdown-item">${project.ProjectName}</span>`;
