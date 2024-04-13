@@ -64,7 +64,6 @@ async function getIncomes(edit) {
         let totalTl = 0;
         let totalUsd = 0;
         var data = await apiFunctions("income", "GET");
-        data = data.results;
         const projectId = document.querySelector(".project_id");
         console.log(data);
         let rows = "";

@@ -28,7 +28,6 @@ async function getOperationCare(isEdit) {
     let currentRows = isletmeBakimTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("operation_care", "GET");
-    data = data.results;
     //console.log(data);
     let formattedDate;
     let rows = "";
@@ -71,7 +70,6 @@ async function getOperationFail(isEdit) {
 
     var data = await apiFunctions("fail", "GET");
     console.log(data)
-    data = data.results;
     //console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
@@ -114,7 +112,6 @@ async function getOperationBill(isEdit) {
     let currentRows = faturaTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
-    data = data.results;
     console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
@@ -553,7 +550,6 @@ getClients()
 async function getClients() {
   try {
     var data = await apiFunctions("client", "GET")
-    data = data.results;
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
@@ -573,7 +569,6 @@ getOperation()
 async function getOperation() {
   try {
     var data = await apiFunctions("operation_care", "GET"),
-    data = data.results;
     let rows = "";
     for (const operation of data) {
       const row = `<span value="${operation.id}" class="dropdown-item">${operation.client.CompanyName_Clients}</span>`;
