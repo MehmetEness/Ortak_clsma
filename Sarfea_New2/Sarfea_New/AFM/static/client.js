@@ -11,7 +11,7 @@ let currentClientName;
 let editMode = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getClient();
+  await getClient("edit");
   setInterval(async function () {
     await getClient();
   }, 60000);
@@ -113,7 +113,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
     if (editMode == false) {
       const formData = new FormData(clientAddForm);
       await apiFunctions("client", "POST", formData);
-      getClient();
+      getClient("edit");
       clientAddWindow.style.display = "none";
       clearInputAfterSave(clientAddForm);
     } else {

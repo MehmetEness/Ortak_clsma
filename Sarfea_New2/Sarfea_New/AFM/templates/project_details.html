@@ -30,7 +30,7 @@
                     </a>
                 </div>
                 <span>{{project.Company_id}}</span>
-                <span id="{{project.id}}">{{project.ProjectName}}</span>
+                <span id="{{project.id}}" class="project_id">{{project.ProjectName}}</span>
                 <span id="last-span">{{project.CompanyUndertakingWork}}</span>
             </div>
         </div>
@@ -103,12 +103,12 @@
             <div class="row">
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan İş Bedeli</span>
                 </div>                
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan Maliyet</span>
                 </div> 
                 <div class="column-2 card flex">
@@ -283,6 +283,12 @@
 
     formatSpans(acPowerSpan, "kWe");
     formatSpans(dcPowerSpan, "kWp");
+    const formatSpanss = document.querySelectorAll(".need_format");
+    formatSpanss.forEach((span)=>{
+      formatSpans(span, "usd");
+      //span.textContent = formatNumber(span.textContent, 2)
+    })
+
     //formatSpans(realizedCostSpan, "usd");
     //formatSpans(realizedCostSpan2, "usd");
 
