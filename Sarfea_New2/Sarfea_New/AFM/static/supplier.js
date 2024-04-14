@@ -13,7 +13,7 @@ let currentSupplierName;
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getSupplier();
+  await getSupplier("edit");
   setInterval(async function () {
     await getSupplier();
   }, 60000);
@@ -110,7 +110,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
       
       const formData = new FormData(supplierAddForm);
       await apiFunctions("supplier", "POST", formData);
-      getSupplier();
+      getSupplier("edit");
       supplierAddWindow.style.display = "none";
       clearInputAfterSave(supplierAddForm);
     } else {

@@ -35,7 +35,7 @@ const jobhistoryAmountInput = document.querySelector("#id_Amount_JobHistory");
 let currentProjectName;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getProjects();
+  await getProjects("edit");
   setInterval(async function () {
     await getProjects();
   }, 60000);
@@ -66,12 +66,12 @@ async function getProjects(isEdit) {
           </td>
           <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
           <td>${project.Location || "-"}</td>
-          <td>${formatNumber(project.AC_Power)}</td>
-          <td>${formatNumber(project.DC_Power)}</td>
-          <td>${formatNumber(project.Cost_NotIncludingKDV)}</td>
+          <td>${formatNumber(project.AC_Power, 0)}</td>
+          <td>${formatNumber(project.DC_Power, 0)}</td>
+          <td>${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
           <td>${project.Terrain_Roof || "-"}</td>
           <td>${formatDateForTable(project.StartDate)}</td>
-          <td>${project.Situation}</td>
+          <td>${project.Situation || "-"}</td>
         </tr>`;
 
       rows += row;
@@ -167,6 +167,7 @@ projectAddWindowButton.addEventListener("click", () => {
     editMode = false;
     currentProjectName = "0";
     projectAddWindow.style.display = "flex";
+    kdvRateFunction()
     getClients();
   }, 10);
 });
@@ -177,11 +178,14 @@ document.addEventListener("mousedown", (event) => {
   }
 });
 //----- KDV % EKLEME
-const kdvRateInput = document.getElementById("id_KDV_Rate");
-addPercentageSymbol(kdvRateInput);
-kdvRateInput.addEventListener("input", function () {
+function kdvRateFunction(){
+  const kdvRateInput = document.getElementById("id_KDV_Rate");
   addPercentageSymbol(kdvRateInput);
-});
+  kdvRateInput.addEventListener("input", function () {
+    addPercentageSymbol(kdvRateInput);
+  });
+}
+
 function addPercentageSymbol(input) {
   let enteredValue = input.value;
   let numericValue = enteredValue.replace(/[^0-9,.]/g, "");
@@ -293,6 +297,7 @@ function editButtonsEvents() {
             }
           }
         }
+        kdvRateFunction()
         getClients();
         onPageLoads(formatedInputs)
         formatDateInputsForLoad(dateInputs)
@@ -513,7 +518,7 @@ projectFormAddBtn.addEventListener("click", async function (event) {
 
     if (editMode == false) {
       await apiFunctions("project", "POST", formData);
-      getProjects()
+      getProjects("EDİT")
       projectAddWindow.style.display = "none";
       clearInputAfterSave(projectAddForm);
     } else {
@@ -570,7 +575,6 @@ supplerFormAddBtn.addEventListener("click", async function (event) {
 async function getClients() {
   try {
     var data = await apiFunctions("client", "GET")
-    console.log(data);
     let rows = "";
     for (const client of data) {
       const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;

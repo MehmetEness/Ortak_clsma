@@ -59,7 +59,7 @@
                             <div class="row">
                                 <span class="r1">NO</span>
                                 <span class="r2">SÖZLEŞME KAPSAMI OLAN HİZMETİN ADI</span>
-                                <span id="{{operation_care.id}}" class="r3">KONTROL METODU</span>
+                                <span id="{{operation_care.id}}" class="r3 operation_id">KONTROL METODU</span>
                             </div>
                         </div>
                         <div class="anket_right">
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="t-right">
                                         <div class="top">
-                                            <input name="Poll_Date" id="anket_date_input" class="date-inputs" type="text" placeholder="01.01.2000" maxlength="10" onchange="kontrolEtNots('Poll_Date')">
+                                            <input name="Poll_Date" id="anket_date_input" class="date-inputs" type="text" placeholder="01.01.2000" maxlength="10" onchange="kontrolEtDates('Poll_Date')">
                                         </div>
                                         <div class="bottom">
                                             <div>
@@ -415,55 +415,55 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_1_1">
                                         <input type="checkbox" id="checkbox_1_1_2">
-                                        <input name="Note_1_1" type="radio" value="true" onclick="kontrolEt('Note_1_1')">
-                                        <input name="Note_1_1" type="radio" value="false" onclick="kontrolEt('Note_1_1')">
+                                        <input name="answer_1_1" type="radio" value="true" onclick="kontrolEt('answer_1_1')">
+                                        <input name="answer_1_1" type="radio" value="false" onclick="kontrolEt('answer_1_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_1')"></div>
+                                    <div class="r5"><input name="Note_1_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_2_1">
                                         <input type="checkbox" id="checkbox_1_2_2">
-                                        <input name="Note_1_2" type="radio" value="true" onclick="kontrolEt('Note_1_2')">
-                                        <input name="Note_1_2" type="radio" value="false" onclick="kontrolEt('Note_1_2')">
+                                        <input name="answer_1_2" type="radio" value="true" onclick="kontrolEt('answer_1_2')">
+                                        <input name="answer_1_2" type="radio" value="false" onclick="kontrolEt('answer_1_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_2')"></div>
+                                    <div class="r5"><input name="Note_1_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_3_1">
                                         <input type="checkbox" id="checkbox_1_3_2">
-                                        <input name="Note_1_3" type="radio" value="true" onclick="kontrolEt('Note_1_3')">
-                                        <input name="Note_1_3" type="radio" value="false" onclick="kontrolEt('Note_1_3')">
+                                        <input name="answer_1_3" type="radio" value="true" onclick="kontrolEt('answer_1_3')">
+                                        <input name="answer_1_3" type="radio" value="false" onclick="kontrolEt('answer_1_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_3')"></div>
+                                    <div class="r5"><input name="Note_1_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_4_1">
                                         <input type="checkbox" id="checkbox_1_4_2">
-                                        <input name="Note_1_4" type="radio" value="true" onclick="kontrolEt('Note_1_4')">
-                                        <input name="Note_1_4" type="radio" value="false" onclick="kontrolEt('Note_1_4')">
+                                        <input name="answer_1_4" type="radio" value="true" onclick="kontrolEt('answer_1_4')">
+                                        <input name="answer_1_4" type="radio" value="false" onclick="kontrolEt('answer_1_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_4')"></div>
+                                    <div class="r5"><input name="Note_1_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_5_1">
                                         <input type="checkbox" id="checkbox_1_5_2">
-                                        <input name="Note_1_5" type="radio" value="true" onclick="kontrolEt('Note_1_5')">
-                                        <input name="Note_1_5" type="radio" value="false" onclick="kontrolEt('Note_1_5')">
+                                        <input name="answer_1_5" type="radio" value="true" onclick="kontrolEt('answer_1_5')">
+                                        <input name="answer_1_5" type="radio" value="false" onclick="kontrolEt('answer_1_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_5')"></div>
+                                    <div class="r5"><input name="Note_1_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_5')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_1_6_1">
                                         <input type="checkbox" id="checkbox_1_6_2">
-                                        <input name="Note_1_6" type="radio" value="true" onclick="kontrolEt('Note_1_6')">
-                                        <input name="Note_1_6" type="radio" value="false" onclick="kontrolEt('Note_1_6')">
+                                        <input name="answer_1_6" type="radio" value="true" onclick="kontrolEt('answer_1_6')">
+                                        <input name="answer_1_6" type="radio" value="false" onclick="kontrolEt('answer_1_6')">
                                     </div>
-                                    <div class="r5"><input name="answer_1_6" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_1_6')"></div>
+                                    <div class="r5"><input name="Note_1_6" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_1_6')"></div>
                                 </div>
                                 <!-- 2. İnverter -->
                                 <div class="row-block"></div>
@@ -471,64 +471,64 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_1_1">
                                         <input type="checkbox" id="checkbox_2_1_2">
-                                        <input name="Note_2_1" type="radio" value="true" onclick="kontrolEt('Note_2_1')">
-                                        <input name="Note_2_1" type="radio" value="false" onclick="kontrolEt('Note_2_1')">
+                                        <input name="answer_2_1" type="radio" value="true" onclick="kontrolEt('answer_2_1')">
+                                        <input name="answer_2_1" type="radio" value="false" onclick="kontrolEt('answer_2_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_1')"></div>
+                                    <div class="r5"><input name="Note_2_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_2_1">
                                         <input type="checkbox" id="checkbox_2_2_2">
-                                        <input name="Note_2_2" type="radio" value="true" onclick="kontrolEt('Note_2_2')">
-                                        <input name="Note_2_2" type="radio" value="false" onclick="kontrolEt('Note_2_2')">
+                                        <input name="answer_2_2" type="radio" value="true" onclick="kontrolEt('answer_2_2')">
+                                        <input name="answer_2_2" type="radio" value="false" onclick="kontrolEt('answer_2_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_2')"></div>
+                                    <div class="r5"><input name="Note_2_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_3_1">
                                         <input type="checkbox" id="checkbox_2_3_2">
-                                        <input name="Note_2_3" type="radio" value="true" onclick="kontrolEt('Note_2_3')">
-                                        <input name="Note_2_3" type="radio" value="false" onclick="kontrolEt('Note_2_3')">
+                                        <input name="answer_2_3" type="radio" value="true" onclick="kontrolEt('answer_2_3')">
+                                        <input name="answer_2_3" type="radio" value="false" onclick="kontrolEt('answer_2_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_3')"></div>
+                                    <div class="r5"><input name="Note_2_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_4_1">
                                         <input type="checkbox" id="checkbox_2_4_2">
-                                        <input name="Note_2_4" type="radio" value="true" onclick="kontrolEt('Note_2_4')">
-                                        <input name="Note_2_4" type="radio" value="false" onclick="kontrolEt('Note_2_4')">
+                                        <input name="answer_2_4" type="radio" value="true" onclick="kontrolEt('answer_2_4')">
+                                        <input name="answer_2_4" type="radio" value="false" onclick="kontrolEt('answer_2_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_4')"></div>
+                                    <div class="r5"><input name="Note_2_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_5_1">
                                         <input type="checkbox" id="checkbox_2_5_2">
-                                        <input name="Note_2_5" type="radio" value="true" onclick="kontrolEt('Note_2_5')">
-                                        <input name="Note_2_5" type="radio" value="false" onclick="kontrolEt('Note_2_5')">
+                                        <input name="answer_2_5" type="radio" value="true" onclick="kontrolEt('answer_2_5')">
+                                        <input name="answer_2_5" type="radio" value="false" onclick="kontrolEt('answer_2_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_5')"></div>
+                                    <div class="r5"><input name="Note_2_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_5')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_6_1">
                                         <input type="checkbox" id="checkbox_2_6_2">
-                                        <input name="Note_2_6" type="radio" value="true" onclick="kontrolEt('Note_2_6')">
-                                        <input name="Note_2_6" type="radio" value="false" onclick="kontrolEt('Note_2_6')">
+                                        <input name="answer_2_6" type="radio" value="true" onclick="kontrolEt('answer_2_6')">
+                                        <input name="answer_2_6" type="radio" value="false" onclick="kontrolEt('answer_2_6')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_6" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_6')"></div>
+                                    <div class="r5"><input name="Note_2_6" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_6')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_2_7_1">
                                         <input type="checkbox" id="checkbox_2_7_2">
-                                        <input name="Note_2_7" type="radio" value="true" onclick="kontrolEt('Note_2_7')">
-                                        <input name="Note_2_7" type="radio" value="false" onclick="kontrolEt('Note_2_7')">
+                                        <input name="answer_2_7" type="radio" value="true" onclick="kontrolEt('answer_2_7')">
+                                        <input name="answer_2_7" type="radio" value="false" onclick="kontrolEt('answer_2_7')">
                                     </div>
-                                    <div class="r5"><input name="answer_2_7" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_2_7')"></div>
+                                    <div class="r5"><input name="Note_2_7" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_2_7')"></div>
                                 </div>
                                 <!-- 3. DC Kablo -->
                                 <div class="row-block"></div>
@@ -536,37 +536,37 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_3_1_1">
                                         <input type="checkbox" id="checkbox_3_1_2">
-                                        <input name="Note_3_1" type="radio" value="true" onclick="kontrolEt('Note_3_1')">
-                                        <input name="Note_3_1" type="radio" value="false" onclick="kontrolEt('Note_3_1')">
+                                        <input name="answer_3_1" type="radio" value="true" onclick="kontrolEt('answer_3_1')">
+                                        <input name="answer_3_1" type="radio" value="false" onclick="kontrolEt('answer_3_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_3_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_3_1')"></div>
+                                    <div class="r5"><input name="Note_3_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_3_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_3_2_1">
                                         <input type="checkbox" id="checkbox_3_2_2">
-                                        <input name="Note_3_2" type="radio" value="true" onclick="kontrolEt('Note_3_2')">
-                                        <input name="Note_3_2" type="radio" value="false" onclick="kontrolEt('Note_3_2')">
+                                        <input name="answer_3_2" type="radio" value="true" onclick="kontrolEt('answer_3_2')">
+                                        <input name="answer_3_2" type="radio" value="false" onclick="kontrolEt('answer_3_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_3_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_3_2')"></div>
+                                    <div class="r5"><input name="Note_3_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_3_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_3_3_1">
                                         <input type="checkbox" id="checkbox_3_3_2">
-                                        <input name="Note_3_3" type="radio" value="true" onclick="kontrolEt('Note_3_3')">
-                                        <input name="Note_3_3" type="radio" value="false" onclick="kontrolEt('Note_3_3')">
+                                        <input name="answer_3_3" type="radio" value="true" onclick="kontrolEt('answer_3_3')">
+                                        <input name="answer_3_3" type="radio" value="false" onclick="kontrolEt('answer_3_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_3_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_3_3')"></div>
+                                    <div class="r5"><input name="Note_3_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_3_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_3_4_1">
                                         <input type="checkbox" id="checkbox_3_4_2">
-                                        <input name="Note_3_4" type="radio" value="true" onclick="kontrolEt('Note_3_4')">
-                                        <input name="Note_3_4" type="radio" value="false" onclick="kontrolEt('Note_3_4')">
+                                        <input name="answer_3_4" type="radio" value="true" onclick="kontrolEt('answer_3_4')">
+                                        <input name="answer_3_4" type="radio" value="false" onclick="kontrolEt('answer_3_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_3_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_3_4')"></div>
+                                    <div class="r5"><input name="Note_3_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_3_4')"></div>
                                 </div>
                                 <!-- 4. AC Panolar -->
                                 <div class="row-block"></div>
@@ -574,46 +574,46 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_4_1_1">
                                         <input type="checkbox" id="checkbox_4_1_2">
-                                        <input name="Note_4_1" type="radio" value="true" onclick="kontrolEt('Note_4_1')">
-                                        <input name="Note_4_1" type="radio" value="false" onclick="kontrolEt('Note_4_1')">
+                                        <input name="answer_4_1" type="radio" value="true" onclick="kontrolEt('answer_4_1')">
+                                        <input name="answer_4_1" type="radio" value="false" onclick="kontrolEt('answer_4_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_4_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_4_1')"></div>
+                                    <div class="r5"><input name="Note_4_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_4_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_4_2_1">
                                         <input type="checkbox" id="checkbox_4_2_2">
-                                        <input name="Note_4_2" type="radio" value="true" onclick="kontrolEt('Note_4_2')">
-                                        <input name="Note_4_2" type="radio" value="false" onclick="kontrolEt('Note_4_2')">
+                                        <input name="answer_4_2" type="radio" value="true" onclick="kontrolEt('answer_4_2')">
+                                        <input name="answer_4_2" type="radio" value="false" onclick="kontrolEt('answer_4_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_4_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_4_2')"></div>
+                                    <div class="r5"><input name="Note_4_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_4_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_4_3_1">
                                         <input type="checkbox" id="checkbox_4_3_2">
-                                        <input name="Note_4_3" type="radio" value="true" onclick="kontrolEt('Note_4_3')">
-                                        <input name="Note_4_3" type="radio" value="false" onclick="kontrolEt('Note_4_3')">
+                                        <input name="answer_4_3" type="radio" value="true" onclick="kontrolEt('answer_4_3')">
+                                        <input name="answer_4_3" type="radio" value="false" onclick="kontrolEt('answer_4_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_4_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_4_3')"></div>
+                                    <div class="r5"><input name="Note_4_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_4_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_4_4_1">
                                         <input type="checkbox" id="checkbox_4_4_2">
-                                        <input name="Note_4_4" type="radio" value="true" onclick="kontrolEt('Note_4_4')">
-                                        <input name="Note_4_4" type="radio" value="false" onclick="kontrolEt('Note_4_4')">
+                                        <input name="answer_4_4" type="radio" value="true" onclick="kontrolEt('answer_4_4')">
+                                        <input name="answer_4_4" type="radio" value="false" onclick="kontrolEt('answer_4_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_4_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_4_4')"></div>
+                                    <div class="r5"><input name="Note_4_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_4_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_4_5_1">
                                         <input type="checkbox" id="checkbox_4_5_2">
-                                        <input name="Note_4_5" type="radio" value="true" onclick="kontrolEt('Note_4_5')">
-                                        <input name="Note_4_5" type="radio" value="false" onclick="kontrolEt('Note_4_5')">
+                                        <input name="answer_4_5" type="radio" value="true" onclick="kontrolEt('answer_4_5')">
+                                        <input name="answer_4_5" type="radio" value="false" onclick="kontrolEt('answer_4_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_4_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_4_5')"></div>
+                                    <div class="r5"><input name="Note_4_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_4_5')"></div>
                                 </div>
                                 <!-- 5. Topraklama -->
                                 <div class="row-block"></div>
@@ -621,37 +621,37 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_5_1_1">
                                         <input type="checkbox" id="checkbox_5_1_2">
-                                        <input name="Note_5_1" type="radio" value="true" onclick="kontrolEt('Note_5_1')">
-                                        <input name="Note_5_1" type="radio" value="false" onclick="kontrolEt('Note_5_1')">
+                                        <input name="answer_5_1" type="radio" value="true" onclick="kontrolEt('answer_5_1')">
+                                        <input name="answer_5_1" type="radio" value="false" onclick="kontrolEt('answer_5_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_5_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_5_1')"></div>
+                                    <div class="r5"><input name="Note_5_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_5_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_5_2_1">
                                         <input type="checkbox" id="checkbox_5_2_2">
-                                        <input name="Note_5_2" type="radio" value="true" onclick="kontrolEt('Note_5_2')">
-                                        <input name="Note_5_2" type="radio" value="false" onclick="kontrolEt('Note_5_2')">
+                                        <input name="answer_5_2" type="radio" value="true" onclick="kontrolEt('answer_5_2')">
+                                        <input name="answer_5_2" type="radio" value="false" onclick="kontrolEt('answer_5_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_5_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_5_2')"></div>
+                                    <div class="r5"><input name="Note_5_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_5_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_5_3_1">
                                         <input type="checkbox" id="checkbox_5_3_2">
-                                        <input name="Note_5_3" type="radio" value="true" onclick="kontrolEt('Note_5_3')">
-                                        <input name="Note_5_3" type="radio" value="false" onclick="kontrolEt('Note_5_3')">
+                                        <input name="answer_5_3" type="radio" value="true" onclick="kontrolEt('answer_5_3')">
+                                        <input name="answer_5_3" type="radio" value="false" onclick="kontrolEt('answer_5_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_5_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_5_3')"></div>
+                                    <div class="r5"><input name="Note_5_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_5_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_5_4_1">
                                         <input type="checkbox" id="checkbox_5_4_2">
-                                        <input name="Note_5_4" type="radio" value="true" onclick="kontrolEt('Note_5_4')">
-                                        <input name="Note_5_4" type="radio" value="false" onclick="kontrolEt('Note_5_4')">
+                                        <input name="answer_5_4" type="radio" value="true" onclick="kontrolEt('answer_5_4')">
+                                        <input name="answer_5_4" type="radio" value="false" onclick="kontrolEt('answer_5_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_5_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_5_4')"></div>
+                                    <div class="r5"><input name="Note_5_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_5_4')"></div>
                                 </div>
                                 <!-- 6. Konstrüksiyon -->
                                 <div class="row-block"></div>
@@ -659,55 +659,55 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_1_1">
                                         <input type="checkbox" id="checkbox_6_1_2">
-                                        <input name="Note_6_1" type="radio" value="true" onclick="kontrolEt('Note_6_1')">
-                                        <input name="Note_6_1" type="radio" value="false" onclick="kontrolEt('Note_6_1')">
+                                        <input name="answer_6_1" type="radio" value="true" onclick="kontrolEt('answer_6_1')">
+                                        <input name="answer_6_1" type="radio" value="false" onclick="kontrolEt('answer_6_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_1')"></div>
+                                    <div class="r5"><input name="Note_6_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_2_1">
                                         <input type="checkbox" id="checkbox_6_2_2">
-                                        <input name="Note_6_2" type="radio" value="true" onclick="kontrolEt('Note_6_2')">
-                                        <input name="Note_6_2" type="radio" value="false" onclick="kontrolEt('Note_6_2')">
+                                        <input name="answer_6_2" type="radio" value="true" onclick="kontrolEt('answer_6_2')">
+                                        <input name="answer_6_2" type="radio" value="false" onclick="kontrolEt('answer_6_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_2')"></div>
+                                    <div class="r5"><input name="Note_6_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_3_1">
                                         <input type="checkbox" id="checkbox_6_3_2">
-                                        <input name="Note_6_3" type="radio" value="true" onclick="kontrolEt('Note_6_3')">
-                                        <input name="Note_6_3" type="radio" value="false" onclick="kontrolEt('Note_6_3')">
+                                        <input name="answer_6_3" type="radio" value="true" onclick="kontrolEt('answer_6_3')">
+                                        <input name="answer_6_3" type="radio" value="false" onclick="kontrolEt('answer_6_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_3')"></div>
+                                    <div class="r5"><input name="Note_6_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_4_1">
                                         <input type="checkbox" id="checkbox_6_4_2">
-                                        <input name="Note_6_4" type="radio" value="true" onclick="kontrolEt('Note_6_4')">
-                                        <input name="Note_6_4" type="radio" value="false" onclick="kontrolEt('Note_6_4')">
+                                        <input name="answer_6_4" type="radio" value="true" onclick="kontrolEt('answer_6_4')">
+                                        <input name="answer_6_4" type="radio" value="false" onclick="kontrolEt('answer_6_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_4')"></div>
+                                    <div class="r5"><input name="Note_6_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_5_1">
                                         <input type="checkbox" id="checkbox_6_5_2">
-                                        <input name="Note_6_5" type="radio" value="true" onclick="kontrolEt('Note_6_5')">
-                                        <input name="Note_6_5" type="radio" value="false" onclick="kontrolEt('Note_6_5')">
+                                        <input name="answer_6_5" type="radio" value="true" onclick="kontrolEt('answer_6_5')">
+                                        <input name="answer_6_5" type="radio" value="false" onclick="kontrolEt('answer_6_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_5')"></div>
+                                    <div class="r5"><input name="Note_6_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_5')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_6_6_1">
                                         <input type="checkbox" id="checkbox_6_6_2">
-                                        <input name="Note_6_6" type="radio" value="true" onclick="kontrolEt('Note_6_6')">
-                                        <input name="Note_6_6" type="radio" value="false" onclick="kontrolEt('Note_6_6')">
+                                        <input name="answer_6_6" type="radio" value="true" onclick="kontrolEt('answer_6_6')">
+                                        <input name="answer_6_6" type="radio" value="false" onclick="kontrolEt('answer_6_6')">
                                     </div>
-                                    <div class="r5"><input name="answer_6_6" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_6_6')"></div>
+                                    <div class="r5"><input name="Note_6_6" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_6_6')"></div>
                                 </div>
                                 <!-- 7. Aydınlatma ve Kamera -->
                                 <div class="row-block"></div>
@@ -715,64 +715,64 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_1_1">
                                         <input type="checkbox" id="checkbox_7_1_2">
-                                        <input name="Note_7_1" type="radio" value="true" onclick="kontrolEt('Note_7_1')">
-                                        <input name="Note_7_1" type="radio" value="false" onclick="kontrolEt('Note_7_1')">
+                                        <input name="answer_7_1" type="radio" value="true" onclick="kontrolEt('answer_7_1')">
+                                        <input name="answer_7_1" type="radio" value="false" onclick="kontrolEt('answer_7_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_1')"></div>
+                                    <div class="r5"><input name="Note_7_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_2_1">
                                         <input type="checkbox" id="checkbox_7_2_2">
-                                        <input name="Note_7_2" type="radio" value="true" onclick="kontrolEt('Note_7_2')">
-                                        <input name="Note_7_2" type="radio" value="false" onclick="kontrolEt('Note_7_2')">
+                                        <input name="answer_7_2" type="radio" value="true" onclick="kontrolEt('answer_7_2')">
+                                        <input name="answer_7_2" type="radio" value="false" onclick="kontrolEt('answer_7_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_2')"></div>
+                                    <div class="r5"><input name="Note_7_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_3_1">
                                         <input type="checkbox" id="checkbox_7_3_2">
-                                        <input name="Note_7_3" type="radio" value="true" onclick="kontrolEt('Note_7_3')">
-                                        <input name="Note_7_3" type="radio" value="false" onclick="kontrolEt('Note_7_3')">
+                                        <input name="answer_7_3" type="radio" value="true" onclick="kontrolEt('answer_7_3')">
+                                        <input name="answer_7_3" type="radio" value="false" onclick="kontrolEt('answer_7_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_3')"></div>
+                                    <div class="r5"><input name="Note_7_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_4_1">
                                         <input type="checkbox" id="checkbox_7_4_2">
-                                        <input name="Note_7_4" type="radio" value="true" onclick="kontrolEt('Note_7_4')">
-                                        <input name="Note_7_4" type="radio" value="false" onclick="kontrolEt('Note_7_4')">
+                                        <input name="answer_7_4" type="radio" value="true" onclick="kontrolEt('answer_7_4')">
+                                        <input name="answer_7_4" type="radio" value="false" onclick="kontrolEt('answer_7_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_4')"></div>
+                                    <div class="r5"><input name="Note_7_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_5_1">
                                         <input type="checkbox" id="checkbox_7_5_2">
-                                        <input name="Note_7_5" type="radio" value="true" onclick="kontrolEt('Note_7_5')">
-                                        <input name="Note_7_5" type="radio" value="false" onclick="kontrolEt('Note_7_5')">
+                                        <input name="answer_7_5" type="radio" value="true" onclick="kontrolEt('answer_7_5')">
+                                        <input name="answer_7_5" type="radio" value="false" onclick="kontrolEt('answer_7_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_5')"></div>
+                                    <div class="r5"><input name="Note_7_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_5')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_6_1">
                                         <input type="checkbox" id="checkbox_7_6_2">
-                                        <input name="Note_7_6" type="radio" value="true" onclick="kontrolEt('Note_7_6')">
-                                        <input name="Note_7_6" type="radio" value="false" onclick="kontrolEt('Note_7_6')">
+                                        <input name="answer_7_6" type="radio" value="true" onclick="kontrolEt('answer_7_6')">
+                                        <input name="answer_7_6" type="radio" value="false" onclick="kontrolEt('answer_7_6')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_6" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_6')"></div>
+                                    <div class="r5"><input name="Note_7_6" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_6')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_7_7_1">
                                         <input type="checkbox" id="checkbox_7_7_2">
-                                        <input name="Note_7_7" type="radio" value="true" onclick="kontrolEt('Note_7_7')">
-                                        <input name="Note_7_7" type="radio" value="false" onclick="kontrolEt('Note_7_7')">
+                                        <input name="answer_7_7" type="radio" value="true" onclick="kontrolEt('answer_7_7')">
+                                        <input name="answer_7_7" type="radio" value="false" onclick="kontrolEt('answer_7_7')">
                                     </div>
-                                    <div class="r5"><input name="answer_7_7" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_7_7')"></div>
+                                    <div class="r5"><input name="Note_7_7" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_7_7')"></div>
                                 </div>
                                 <!-- 8. GES TR -->
                                 <div class="row-block"></div>
@@ -780,73 +780,73 @@
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_8_1_1">
                                         <input type="checkbox" id="checkbox_8_1_2">
-                                        <input name="Note_8_1" type="radio" value="true" onclick="kontrolEt('Note_8_1')">
-                                        <input name="Note_8_1" type="radio" value="false" onclick="kontrolEt('Note_8_1')">
+                                        <input name="answer_8_1" type="radio" value="true" onclick="kontrolEt('answer_8_1')">
+                                        <input name="answer_8_1" type="radio" value="false" onclick="kontrolEt('answer_8_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_1')"></div>
+                                    <div class="r5"><input name="Note_8_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_8_2_1">
                                         <input type="checkbox" id="checkbox_8_2_2">
-                                        <input name="Note_8_2" type="radio" value="true" onclick="kontrolEt('Note_8_2')">
-                                        <input name="Note_8_2" type="radio" value="false" onclick="kontrolEt('Note_8_2')">
+                                        <input name="answer_8_2" type="radio" value="true" onclick="kontrolEt('answer_8_2')">
+                                        <input name="answer_8_2" type="radio" value="false" onclick="kontrolEt('answer_8_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_2')"></div>
+                                    <div class="r5"><input name="Note_8_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_8_3_1">
                                         <input type="checkbox" id="checkbox_8_3_2">
-                                        <input name="Note_8_3" type="radio" value="true" onclick="kontrolEt('Note_8_3')">
-                                        <input name="Note_8_3" type="radio" value="false" onclick="kontrolEt('Note_8_3')">
+                                        <input name="answer_8_3" type="radio" value="true" onclick="kontrolEt('answer_8_3')">
+                                        <input name="answer_8_3" type="radio" value="false" onclick="kontrolEt('answer_8_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_3')"></div>
+                                    <div class="r5"><input name="Note_8_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_8_4_1">
                                         <input type="checkbox" id="checkbox_8_4_2">
-                                        <input name="Note_8_4" type="radio" value="true" onclick="kontrolEt('Note_8_4')">
-                                        <input name="Note_8_4" type="radio" value="false" onclick="kontrolEt('Note_8_4')">
+                                        <input name="answer_8_4" type="radio" value="true" onclick="kontrolEt('answer_8_4')">
+                                        <input name="answer_8_4" type="radio" value="false" onclick="kontrolEt('answer_8_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_4')"></div>
+                                    <div class="r5"><input name="Note_8_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_8_5_1">
                                         <input type="checkbox"  id="checkbox_8_5_2">
-                                        <input name="Note_8_5" type="radio" value="true" onclick="kontrolEt('Note_8_5')">
-                                        <input name="Note_8_5" type="radio" value="false" onclick="kontrolEt('Note_8_5')">
+                                        <input name="answer_8_5" type="radio" value="true" onclick="kontrolEt('answer_8_5')">
+                                        <input name="answer_8_5" type="radio" value="false" onclick="kontrolEt('answer_8_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_5')"></div>
+                                    <div class="r5"><input name="Note_8_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_5')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_8_6_1">
                                         <input type="checkbox"  id="checkbox_8_6_2">
-                                        <input name="Note_8_6" type="radio" value="true" onclick="kontrolEt('Note_8_6')">
-                                        <input name="Note_8_6" type="radio" value="false" onclick="kontrolEt('Note_8_6')">
+                                        <input name="answer_8_6" type="radio" value="true" onclick="kontrolEt('answer_8_6')">
+                                        <input name="answer_8_6" type="radio" value="false" onclick="kontrolEt('answer_8_6')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_6" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_6')"></div>
+                                    <div class="r5"><input name="Note_8_6" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_6')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_8_7_1">
                                         <input type="checkbox"  id="checkbox_8_7_2">
-                                        <input name="Note_8_7" type="radio" value="true" onclick="kontrolEt('Note_8_7')">
-                                        <input name="Note_8_7" type="radio" value="false" onclick="kontrolEt('Note_8_7')">
+                                        <input name="answer_8_7" type="radio" value="true" onclick="kontrolEt('answer_8_7')">
+                                        <input name="answer_8_7" type="radio" value="false" onclick="kontrolEt('answer_8_7')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_7" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_7')"></div>
+                                    <div class="r5"><input name="Note_8_7" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_7')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_8_8_1">
                                         <input type="checkbox"  id="checkbox_8_8_2">
-                                        <input name="Note_8_8" type="radio" value="true" onclick="kontrolEt('Note_8_8')">
-                                        <input name="Note_8_8" type="radio" value="false" onclick="kontrolEt('Note_8_8')">
+                                        <input name="answer_8_8" type="radio" value="true" onclick="kontrolEt('answer_8_8')">
+                                        <input name="answer_8_8" type="radio" value="false" onclick="kontrolEt('answer_8_8')">
                                     </div>
-                                    <div class="r5"><input name="answer_8_8" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_8_8')"></div>
+                                    <div class="r5"><input name="Note_8_8" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_8_8')"></div>
                                 </div>
                                 <!-- 9. Saha Bak. -->
                                 <div class="row-block"></div>
@@ -854,46 +854,46 @@
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_9_1_1">
                                         <input type="checkbox"  id="checkbox_9_1_2">
-                                        <input name="Note_9_1" type="radio" value="true" onclick="kontrolEt('Note_9_1')">
-                                        <input name="Note_9_1" type="radio" value="false" onclick="kontrolEt('Note_9_1')">
+                                        <input name="answer_9_1" type="radio" value="true" onclick="kontrolEt('answer_9_1')">
+                                        <input name="answer_9_1" type="radio" value="false" onclick="kontrolEt('answer_9_1')">
                                     </div>
-                                    <div class="r5"><input name="answer_9_1" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_9_1')"></div>
+                                    <div class="r5"><input name="Note_9_1" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_9_1')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox" id="checkbox_9_2_1">
                                         <input type="checkbox" id="checkbox_9_2_2">
-                                        <input name="Note_9_2" type="radio" value="true" onclick="kontrolEt('Note_9_2')">
-                                        <input name="Note_9_2" type="radio" value="false" onclick="kontrolEt('Note_9_2')">
+                                        <input name="answer_9_2" type="radio" value="true" onclick="kontrolEt('answer_9_2')">
+                                        <input name="answer_9_2" type="radio" value="false" onclick="kontrolEt('answer_9_2')">
                                     </div>
-                                    <div class="r5"><input name="answer_9_2" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_9_2')"></div>
+                                    <div class="r5"><input name="Note_9_2" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_9_2')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"  id="checkbox_9_3_1">
                                         <input type="checkbox"  id="checkbox_9_3_2">
-                                        <input name="Note_9_3" type="radio" value="true" onclick="kontrolEt('Note_9_3')">
-                                        <input name="Note_9_3" type="radio" value="false" onclick="kontrolEt('Note_9_3')">
+                                        <input name="answer_9_3" type="radio" value="true" onclick="kontrolEt('answer_9_3')">
+                                        <input name="answer_9_3" type="radio" value="false" onclick="kontrolEt('answer_9_3')">
                                     </div>
-                                    <div class="r5"><input name="answer_9_3" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_9_3')"></div>
+                                    <div class="r5"><input name="Note_9_3" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_9_3')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"   id="checkbox_9_4_1">
                                         <input type="checkbox"   id="checkbox_9_4_2">
-                                        <input name="Note_9_4" type="radio" value="true" onclick="kontrolEt('Note_9_4')">
-                                        <input name="Note_9_4" type="radio" value="false" onclick="kontrolEt('Note_9_4')">
+                                        <input name="answer_9_4" type="radio" value="true" onclick="kontrolEt('answer_9_4')">
+                                        <input name="answer_9_4" type="radio" value="false" onclick="kontrolEt('answer_9_4')">
                                     </div>
-                                    <div class="r5"><input name="answer_9_4" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_9_4')"></div>
+                                    <div class="r5"><input name="Note_9_4" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_9_4')"></div>
                                 </div>
                                 <div class="row">
                                     <div class="check-box r4">
                                         <input type="checkbox"   id="checkbox_9_5_1">
                                         <input type="checkbox"   id="checkbox_9_5_2">
-                                        <input name="Note_9_5" type="radio" value="true" onclick="kontrolEt('Note_9_5')">
-                                        <input name="Note_9_5" type="radio" value="false" onclick="kontrolEt('Note_9_5')">
+                                        <input name="answer_9_5" type="radio" value="true" onclick="kontrolEt('answer_9_5')">
+                                        <input name="answer_9_5" type="radio" value="false" onclick="kontrolEt('answer_9_5')">
                                     </div>
-                                    <div class="r5"><input name="answer_9_5" type="text" placeholder="Not..." onchange="kontrolEtNots('answer_9_5')"></div>
+                                    <div class="r5"><input name="Note_9_5" type="text" placeholder="Not..." onchange="kontrolEtNots('Note_9_5')"></div>
                                 </div>
                             </div>
                         </div>
@@ -906,7 +906,7 @@
                             <div class="comment-inputs">
                                 <div class="left">
                                     <label style="font-weight: 600;" for="6AY"></label>
-                                    <textarea name="Cloumn_Note_Text_Left" id="" cols="30" rows="10"></textarea>
+                                    <textarea style="pointer-events: none;" name="Cloumn_Note_Text_Left" id="" cols="30" rows="10"></textarea>
                                 </div>
                                 <div class="right">
                                     <label style="font-weight: 600;" for="6AY"></label>
@@ -919,18 +919,18 @@
                                     <label style="font-weight: 600;  margin-top: 10px;" for="6AY">DÜZENLEYEN/İNCELEYEN</label>
                                     <div class="com-row">
                                         <label style="margin-bottom: 8px;" for="">DÜZENLEYEN:</label>
-                                        <input style="margin-bottom: 8px;" type="text">
+                                        <input style="pointer-events: none;" name="Cloumn_Organizer_left" style="margin-bottom: 8px;" type="text">
                                         <br>
                                         <label for="">TARİH:</label>
-                                        <input type="text">
+                                        <input style="pointer-events: none;" name="Cloumn_Organize_Date_left" type="text">
                                     </div>
 
                                     <div class="com-row">
                                         <label for="">İNCELEYEN:</label>
-                                        <input type="text">
+                                        <input style="pointer-events: none;" name="Cloumn_Looker_left" type="text">
                                         <br>
                                         <label for="">TARİH:</label>
-                                        <input type="text">
+                                        <input style="pointer-events: none;" name="Cloumn_Looker_Date_left" type="text">
                                     </div>
                                 </div>
                                 <div class="right">
@@ -941,14 +941,14 @@
                                         <input name="Cloumn_Organizer" style="margin-bottom: 8px;" type="text" onchange="kontrolEtNots('Cloumn_Organizer')">
                                         <br>
                                         <label for="">TARİH:</label>
-                                        <input name="Cloumn_Organize_Date" type="text" onchange="kontrolEtNots('Cloumn_Organize_Date')">
+                                        <input class="date-inputs" name="Cloumn_Organize_Date" type="text" onchange="kontrolEtDates('Cloumn_Organize_Date')" maxlength="10">
                                     </div>
                                     <div class="com-row">
                                         <label for="">İNCELEYEN:</label>
                                         <input name="Cloumn_Looker" type="text" onchange="kontrolEtNots('Cloumn_Looker')">
                                         <br>
                                         <label for="">TARİH:</label>
-                                        <input name="Cloumn_Looker_Date" type="text" onchange="kontrolEtNots('Cloumn_Looker_Date')">
+                                        <input class="date-inputs" name="Cloumn_Looker_Date" type="text" onchange="kontrolEtDates('Cloumn_Looker_Date')" maxlength="10">
                                     </div>
                                 </div>
                             </div>
@@ -1019,7 +1019,7 @@
                                     <th>PANEL V</th>
                                 </tr>
                             </thead>
-                            <tbody class="inventor_table_body">
+                            <tbody class="inventor_table_body">                                
                             </tbody>
                         </table>
                     </section>

@@ -11,7 +11,7 @@ let currentClientName;
 let editMode = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getClient();
+  await getClient("edit");
   setInterval(async function () {
     await getClient();
   }, 60000);
@@ -30,7 +30,7 @@ async function getClient(isEdit) {
                       <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
                   </button>
               </td>
-              <td>${client.CompanyName_Clients}</td>
+              <td>${client.CompanyName_Clients || "-"}</td>
               <td>${client.ContactPerson || "-"}</td>
               <td>${client.PhoneNumber || "-"}</td>
               <td>${client.Email || "-"}</td>
@@ -113,7 +113,7 @@ supplierFormAddBtn.addEventListener("click", async function (event) {
     if (editMode == false) {
       const formData = new FormData(clientAddForm);
       await apiFunctions("client", "POST", formData);
-      getClient();
+      getClient("edit");
       clientAddWindow.style.display = "none";
       clearInputAfterSave(clientAddForm);
     } else {

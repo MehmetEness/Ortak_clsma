@@ -35,35 +35,65 @@ function inventorLiClick() {
 //                  ANKET YAZDIRMA
 
 const anketDateSelect = document.querySelector(".date_select");
+const operationCareId = document.querySelector(".operation_id").id;
 anketDateSelect.addEventListener("change", async () => {
+  console.log(anketDateSelect.value);
   var data = await apiFunctions("poll", "GET");
   console.log(data);
-  processData(data[0]);
+  data.forEach((poll)=>{
+    if(poll.Poll_Operation_Care == operationCareId && poll.Poll_Date == anketDateSelect.value){      
+      processData(poll);
+    }
+  })
+  
+  
 });
 
 function processData(data) {
   for (const key in data) {
-    console.log("---");
-    console.log(key);
     if (data.hasOwnProperty(key)) {
       const value = data[key];
 
-      if (key.startsWith("Note") && value != null) {
+      if (key.startsWith("answer") && value != null) {
         const [note, index1, index2] = key.split("_");
-        console.log(`checkbox_${index1}_${index2}`);
 
-        if (value == "true") {
+        if (value == true) {
           const element = document.getElementById(
             `checkbox_${index1}_${index2}_1`
           );
-          console.log(`checkbox_${index1}_${index2}_1`);
           element.checked = true;
-        } else if (value == "false") {
+        } else if (value == false) {
           const element = document.getElementById(
             `checkbox_${index1}_${index2}_2`
           );
           element.checked = true;
         }
+      }
+      if (key.startsWith("Note") && value != null) {
+        const [note, index1, index2] = key.split("_");     
+          const element = document.getElementsByName(`Note_${index1}_${index2}`);
+          element[0].placeholder = value;
+        
+      }
+      if (key == "Cloumn_Note_Text" && value != null) {          
+          const element = document.getElementsByName("Cloumn_Note_Text_Left");
+          element[0].value = value;        
+      }
+      if (key == "Cloumn_Organizer" && value != null) {          
+        const element = document.getElementsByName("Cloumn_Organizer_left");
+        element[0].value = value;        
+      }
+      if (key == "Cloumn_Organize_Date" && value != null) {          
+        const element = document.getElementsByName("Cloumn_Organize_Date_left");
+        element[0].value = value;        
+      }
+      if (key == "Cloumn_Looker" && value != null) {          
+        const element = document.getElementsByName("Cloumn_Looker_left");
+        element[0].value = value;        
+      }
+      if (key == "Cloumn_Looker_Date" && value != null) {          
+        const element = document.getElementsByName("Cloumn_Looker_Date_left");
+        element[0].value = value;        
       }
     }
   }
@@ -161,18 +191,17 @@ async function getAndaRenderList() {
 }
 
 //------------------------------------------
-getAndRenderStrings(1);
-async function getAndRenderStrings(inventorNumber) {
+getAndRenderStrings();
+async function getAndRenderStrings() {
   try {
-    const response = await fetch(`/get_inventors/10/`);
-    const data = await response.json();
-    const inventors = data.inventors;
-
+    const data = await apiFunctions("inventor", "GET")
+    console.log(data);
+    const operation_id = document.querySelector(".operation_id").id;
     const tbody = document.querySelector(".inventor_table_body");
     tbody.innerHTML = "";
     let i = 1;
-    for (const inventor of inventors) {
-      if (inventor.Inventor_Number == inventorNumber) {
+    for (const inventor of data) {
+      if (inventor.Inventor_Owner == operation_id) {
         const response2 = await fetch(`/get_strings/${inventor.id}/`);
         const data2 = await response2.json();
         const strings = data2.strings;
@@ -181,7 +210,7 @@ async function getAndRenderStrings(inventorNumber) {
           const row =
             `<tr id="${string.id}">` +
             (bool
-              ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${inventorNumber}">İnventör ${inventorNumber}</span></td>`
+              ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${i}">İnventör ${i}</span></td>`
               : "") +
             '<td style="width: 100px;">' +
             '<select class="directionSelect">' +
@@ -249,6 +278,7 @@ async function getAndRenderStrings(inventorNumber) {
           currentDirection(inventor);
           bool = false;
         }
+        i++;
       }
     }
     xxxx();
@@ -349,7 +379,7 @@ function xxxx() {
     data.push(rowData);
   });
 
-  console.log(data);
+  //console.log(data);
 }
 var formData = new FormData();
 
@@ -372,16 +402,32 @@ function kontrolEtNots(name) {
   var value = input.value;  
   formData.append(name, value);
 }
-
+function kontrolEtDates(date) {
+  var input = document.getElementsByName(date)[0];
+  var value = input.value;  
+  console.log(input);
+  console.log(value.length);
+  if(value.length == 10){
+    value = formatDateForSubmit(value)
+    formData.append(date, value);
+  }  
+}
 const anketAddButton = document.querySelector("#anket_submit_btn");
 anketAddButton.addEventListener("click", async () => {
   console.log("formData");
-  formData.append("Poll_Operation_Care", document.querySelector("#bakim_takip").textContent);
+  formData.append("Poll_Operation_Care", document.querySelector(".operation_id").id);
   var jsonObject = {};
   formData.forEach(function (value, key) {
     jsonObject[key] = value;
   });
   console.log(JSON.stringify(jsonObject));
 
-  //await apiFunctions("poll", "POST", formData);
+  await apiFunctions("poll", "POST", formData);
 });
+/******************************************************* */
+
+const getInventor = async () =>{
+  const response = await apiFunctions("operation_care", "GETID","x", "1")
+  console.log(response)
+}
+getInventor();

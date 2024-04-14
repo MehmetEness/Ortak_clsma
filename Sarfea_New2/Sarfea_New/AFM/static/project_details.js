@@ -25,8 +25,9 @@ async function getProjects(isEdit) {
 }
 
 const getMaliyet = async ()=>{
+  const projectId = document.querySelector(".project_id").id;
   let totalMaliyet = 0;
-  const respons = await apiFunctions("project", "GETID","ds","47");
+  const respons = await apiFunctions("project", "GETID","ds",projectId);
   console.log(respons);
   respons.project_expenses.forEach((expense) =>{
     let expenseAmount = parseFloat(expense.Amount_USD_Expenses) || 0;
@@ -35,8 +36,9 @@ const getMaliyet = async ()=>{
   realizedCostSpan2.textContent = formatNumber(totalMaliyet,2) + "$";
 }
 const getGelir = async ()=>{
+  const projectId = document.querySelector(".project_id").id;
   let totalGelir = 0;
-  const respons = await apiFunctions("project", "GETID","ds","47");
+  const respons = await apiFunctions("project", "GETID","ds",projectId);
   console.log(respons);
   respons.project_incomes.forEach((income) =>{
     let incomeAmount = parseFloat(income.Amount_Usd_Incomes) || 0;
@@ -46,4 +48,5 @@ const getGelir = async ()=>{
 }
 getGelir();
 getMaliyet();
+
 

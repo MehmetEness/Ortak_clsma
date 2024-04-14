@@ -5,7 +5,8 @@ await getIncome();
 await getExpenses();
  akisChart()
  karZararChart()
- gelirAylikChart(totalIncome)
+ gelirAylikChart(totalIncome, fullIncome)
+ giderAylikChart(totalExpenses, fullExpenses)
 
 });
  
@@ -15,6 +16,8 @@ let incomeArray = [];
 let expensesArray = [];
 let totalIncome = 0;
 let totalExpenses = 0;
+let fullIncome = 0;
+let fullExpenses = 0;
 let totalProjectExpenses = 0;
 
 async function getIncome(){
@@ -23,11 +26,15 @@ async function getIncome(){
         let bugununTarihi = new Date();
          let results = {};
         data.forEach((income) => {
-           
+          const gelirler = parseFloat(income.Amount_Usd_Incomes) || 0;
+          fullIncome += gelirler;
             if(income.ChekDate_Incomes){
                 const parcalar = income.ChekDate_Incomes.split("-");
-                
+                const hedefTarih = new Date(income.ChekDate_Incomes);
+                const zamanFarki = bugununTarihi - hedefTarih;
+                const gunFarki = zamanFarki / (1000 * 60 * 60 * 24);
                 const ay = parseInt(parcalar[1]);
+
                 //console.log(bugununTarihi.getMonth())
                 if(parcalar[0] ==  bugununTarihi.getFullYear()){
                     const gelirMiktari = parseFloat(income.Amount_Usd_Incomes) || 0;
@@ -36,13 +43,12 @@ async function getIncome(){
                         results[ay] = gelirMiktari;
                     } else {
                         results[ay] += gelirMiktari;
-                    }
-                    if(ay - 1 == bugununTarihi.getMonth()){                        
-                        totalIncome += gelirMiktari;
-                    }
-                }
-                
-            }            
+                    }                    
+                }      
+                if(gunFarki <= 30){                        
+                  totalIncome += gelirler;
+                }          
+            }         
         });
         for (let i = 1; i <= 12; i++) {
             incomeArray.push(results[i] || 0);
@@ -54,24 +60,29 @@ async function getIncome(){
 async function getExpenses(){
     try{
         let data = await apiFunctions('expense', "GET");
+        console.log(data)
         let bugununTarihi = new Date();
          let results = {};
         data.forEach((expense) => {
-           
+          const giderler = parseFloat(expense.Amount_USD_Expenses) || 0;
+          fullExpenses += giderler;
             if(expense.Date_Expenses){
                 const parcalar = expense.Date_Expenses.split("-");
+                const hedefTarih = new Date(expense.Date_Expenses);
+                const zamanFarki = bugununTarihi - hedefTarih;
+                const gunFarki = zamanFarki / (1000 * 60 * 60 * 24);
                 const ay = parseInt(parcalar[1]);
                 if(parcalar[0] ==  bugununTarihi.getFullYear()){
-                    const gelirMiktari = parseFloat(expense.Amount_USD_Expenses) || 0;
+                    const giderMiktari = parseFloat(expense.Amount_USD_Expenses) || 0;
                     if (!results[ay]) {
-                        results[ay] = gelirMiktari;
+                        results[ay] = giderMiktari;
                     } else {
-                        results[ay] += gelirMiktari;
-                    }
-                    if(ay - 1 == bugununTarihi.getMonth()){                        
-                        totalExpenses += gelirMiktari;
+                        results[ay] += giderMiktari;
                     }
                 }
+                if(gunFarki <= 30){                        
+                  totalExpenses += giderler;
+                }  
             }            
         });
         for (let i = 1; i <= 12; i++) {
@@ -211,31 +222,64 @@ const karZararChart = () =>{
     }
     });
 }
-const gelirAylikChart = async (incomeWidth) =>{
+const gelirAylikChart = async (incomeWidth, fullIncomes) =>{
     const response = await apiFunctions("project" , "GET");
+    console.log(response)
     let totalWidth = 0;
     response.forEach((project) => {
         let projeGelir = project.Cost_NotIncludingKDV || 0;
         totalWidth += projeGelir;
     })
-
+    const alisOdenenSpan = document.querySelector("#alis_odenen");
+    alisOdenenSpan.textContent = formatNumber(incomeWidth,2);
+    const alisKalanSpan = document.querySelector("#alis_kalan");
+    console.log(fullIncomes)
+    console.log(incomeWidth)
+    console.log(fullIncomes - incomeWidth)
+    alisKalanSpan.textContent = formatNumber((fullIncomes - totalIncome),2);
     var counter = 0;
     if (counter == 0) {
       j = 1;
-      var elem = document.querySelector(".progress-done");
-      var elem2 = document.querySelector(".progress-done2");
+      var elem = document.querySelector(".progress-done2");
       var width = 0;
       var main = setInterval(frame, 1);
       function frame() {
-        if (width >= (incomeWidth / totalWidth)) {
+        if (width >= ((incomeWidth / totalWidth) * 100)) {
           clearInterval(main);
         } else {
           width++;
           elem.style.width = width + "%";
           elem.innerHTML = width + "%";
-          elem2.style.width = width + "%";
-          elem2.innerHTML = width + "%";
         }
       }
     }  
+}
+const giderAylikChart = async (expensesWidth, fullExpens) =>{
+  const response = await apiFunctions("project" , "GET");
+  console.log(response)
+  let totalWidth = 0;
+  response.forEach((project) => {
+      let projeGelir = project.Cost_NotIncludingKDV || 0;
+      totalWidth += projeGelir;
+  })
+  const alisOdenenSpan = document.querySelector("#veris_odenen");
+  alisOdenenSpan.textContent = formatNumber(expensesWidth,2);
+  const alisKalanSpan = document.querySelector("#veris_kalan");
+  alisKalanSpan.textContent = formatNumber((fullExpens - totalIncome),2);
+  var counter = 0;
+  if (counter == 0) {
+    j = 1;
+    var elem = document.querySelector(".progress-done");
+    var width = 0;
+    var main = setInterval(frame, 1);
+    function frame() {
+      if (width >= ((expensesWidth / totalWidth) * 100)) {
+        clearInterval(main);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = width + "%";
+      }
+    }
+  }  
 }

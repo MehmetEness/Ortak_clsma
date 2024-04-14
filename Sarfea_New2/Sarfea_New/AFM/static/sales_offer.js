@@ -34,14 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getSalesCards();
-  setInterval(async function () {
-    //await getSalesCards();
-  }, 5000);
+  uploadPage();
+  //await getSalesCards();
+  // setInterval(async function () {
+  //   await getSalesCards();
+  // }, 5000);
 });
 
 //                 KARTLARI EKRANA YAZDIRMA
-async function getSalesCards(isEdit) {
+async function getSalesCards() {
   try {
     let Rows = document.querySelectorAll(".card-body");
     var data = await apiFunctions("sales_offer", "GET");
@@ -58,7 +59,7 @@ async function getSalesCards(isEdit) {
     }
     //dragCards()
     totalSpanFormatForDrag()
-    cardFormat();
+    //cardFormat();
     cardMenuFunctions()
     singleFİleUpload()
     editBtns()
@@ -84,16 +85,16 @@ function generateCard(card) {
     <li id="${card.id}" data-situation="${card.Situation_Card}" class="item card" draggable="true">
       <div >
           <div class="boxes">
-              <p class="bold700">${card.client.CompanyName_Clients}</p>
+              <p class="bold700">${card.client.CompanyName_Clients || "-"}</p>
           </div>
           <p>${formattedDate}</p>
           <div class="boxes">
-              <p>${card.Offer_Cost_NotIncludingKDV_Card}</p>
-              <p>${card.UnitOffer_NotIncludingKDV} USD/kWp</p>
+              <p>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2)}</p>
+              <p>${formatNumber(card.UnitOffer_NotIncludingKDV, 2)} USD/kWp</p>
           </div>
           <div class="boxes">
-              <p>${card.Cost_NotIncludingKDV_Card}</p>
-              <p>${card.UnitCost_NotIncludingKDV}</p>
+              <p>${formatNumber(card.Cost_NotIncludingKDV_Card, 2)}</p>
+              <p>${formatNumber(card.UnitCost_NotIncludingKDV, 2)}</p>
           </div>
           <div class="boxes">
               <p>5000kwp</p>
@@ -114,7 +115,7 @@ function generateCard(card) {
               </div>
           </div>
           <div class="flex-row">
-              <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card}</p>
+              <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card || ""}</p>
           </div>
           <div class="card-menu">
               <i class="fa-solid fa-ellipsis card_menu-btn"></i>
@@ -330,38 +331,38 @@ function totalSpanFormatForDrag() {
 }
 
 //                  CARD FORMATLAMA
-function cardFormat() {
-  rows.forEach(function (row) {
-    let cards = row.querySelectorAll(".card");
-    let totalCashSpan = row.querySelector(".total-cash span:nth-child(1)");
-    let customersCountSpan = row.querySelector(".total-cash span:nth-child(2)");
-    let totalCash = 0;
+// function cardFormat() {
+//   rows.forEach(function (row) {
+//     let cards = row.querySelectorAll(".card");
+//     let totalCashSpan = row.querySelector(".total-cash span:nth-child(1)");
+//     let customersCountSpan = row.querySelector(".total-cash span:nth-child(2)");
+//     let totalCash = 0;
 
-    cards.forEach(function (card) {
-      let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
-      let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
-      let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
-      let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
-      let powerSpan = card.querySelector(".boxes:nth-of-type(4) p:nth-of-type(1)");
-      let totalTeklifCount = parseFloat(totalTeklif.textContent.replace(/,/g, ".")) || 0;
-      let unitTeklifCount = parseFloat(unitTeklif.textContent.replace(/,/g, ".")) || 0;
-      let totalMaliyetCount = parseFloat(totalMaliyet.textContent.replace(/,/g, ".")) || 0;
-      let unitMaliyetCount = parseFloat(unitMaliyet.textContent.replace(/,/g, ".")) || 0;
-      let powerCount = parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
+//     cards.forEach(function (card) {
+//       let totalTeklif = card.querySelector(".boxes:nth-of-type(2) p:first-of-type");
+//       let unitTeklif = card.querySelector(".boxes:nth-of-type(2) p:nth-of-type(2)");
+//       let totalMaliyet = card.querySelector(".boxes:nth-of-type(3) p:first-of-type");
+//       let unitMaliyet = card.querySelector(".boxes:nth-of-type(3) p:nth-of-type(2)");
+//       let powerSpan = card.querySelector(".boxes:nth-of-type(4) p:nth-of-type(1)");
+//       let totalTeklifCount = parseFloat(totalTeklif.textContent.replace(/,/g, ".")) || 0;
+//       let unitTeklifCount = parseFloat(unitTeklif.textContent.replace(/,/g, ".")) || 0;
+//       let totalMaliyetCount = parseFloat(totalMaliyet.textContent.replace(/,/g, ".")) || 0;
+//       let unitMaliyetCount = parseFloat(unitMaliyet.textContent.replace(/,/g, ".")) || 0;
+//       let powerCount = parseFloat(powerSpan.textContent.replace(/,/g, ".")) || 0;
 
-      totalTeklif.textContent = "$ " + formatNumber(totalTeklifCount, 2);
-      unitTeklif.textContent = formatNumber(unitTeklifCount, 0) + " USD/kWp";
-      totalMaliyet.textContent = "$ " + formatNumber(totalMaliyetCount, 2);
-      unitMaliyet.textContent = formatNumber(unitMaliyetCount, 0) + " USD/kWp";
-      powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
+//       totalTeklif.textContent = "$ " + formatNumber(totalTeklifCount, 2);
+//       unitTeklif.textContent = formatNumber(unitTeklifCount, 0) + " USD/kWp";
+//       totalMaliyet.textContent = "$ " + formatNumber(totalMaliyetCount, 2);
+//       unitMaliyet.textContent = formatNumber(unitMaliyetCount, 0) + " USD/kWp";
+//       powerSpan.textContent = formatNumber(powerCount, 0) + " kWp";
 
-      totalCash += totalMaliyetCount;
-    });
+//       totalCash += totalMaliyetCount;
+//     });
 
-    totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
-    customersCountSpan.textContent = `(${String(cards.length)})`;
-  });
-}
+//     totalCashSpan.textContent = "$" + formatNumber(totalCash, 2);
+//     customersCountSpan.textContent = `(${String(cards.length)})`;
+//   });
+// }
 
 //                  CARD MENÜ
 function cardMenuFunctions() {
@@ -435,7 +436,8 @@ function deleteCard(cardId) {
     })
     .then((data) => {
       console.log("Silme başarılı", data);
-      location.reload();
+      //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -467,6 +469,7 @@ function lostCard(cardId) {
     .then((data) => {
       console.log("Kaybedildi işlemi başarılı", data);
       //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -496,6 +499,7 @@ function reLostCard(cardId) {
     .then((data) => {
       console.log("00Kaybedildi işlemi başarılı", data);
       //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -530,7 +534,8 @@ function gainCard(cardId) {
     })
     .then((data) => {
       console.log("Kaybedildi işlemi başarılı", data);
-      location.reload();
+      uploadPage()
+      //location.reload();
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -559,7 +564,8 @@ function reGainCard(cardId) {
     })
     .then((data) => {
       console.log("00Kaybedildi işlemi başarılı", data);
-      location.reload();
+      //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -590,7 +596,8 @@ function waitCard(cardId) {
     })
     .then((data) => {
       console.log("Kaybedildi işlemi başarılı", data);
-      location.reload();
+      //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -619,7 +626,8 @@ function reWaitCard(cardId) {
     })
     .then((data) => {
       console.log("00Kaybedildi işlemi başarılı", data);
-      location.reload();
+      //location.reload();
+      uploadPage()
     })
     .catch((error) => {
       console.error("Hata:", error.message);
@@ -831,11 +839,7 @@ formAddBtn.addEventListener("click", async function (event) {
     }
     salesOfferAddWindow.style.display = "none";
     clearInputAfterSave(addForm);
-    await getSalesCards();
-    await getTotalList();
-    await getLostList();
-    await getSalesList();
-    await getWonList();
+    uploadPage();
   }
 });
 
@@ -924,17 +928,17 @@ async function getTotalList() {
           <td>${card.client.CompanyName_Clients || "-"}</td>
           <td>${card.Location_Card || "-"}</td>
           <td>${card.Person_Deal || "-"}</td>
-          <td>${formatNumber(card.AC_Power_Card, 0) || 0 }</td>
-          <td>${formatNumber(card.DC_Power_Card, 0) || 0}</td>
-          <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.AC_Power_Card, 0)}</td>
+          <td>${formatNumber(card.DC_Power_Card, 0)}</td>
+          <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺"}</td>
+          <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
+          <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺"}</td>
+          <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
           <td>${card.Terrain_Roof_Card || "-"}</td>
-          <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺" || 0 + "₺"}</td>
-          <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺" || 0 + "₺"}</td>
+          <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺"}</td>
+          <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺"}</td>
+          <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺"}</td>
+          <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺"}</td>
           <td>${formatDateForTable(card.Date_Card)}</td>
         `;
 
@@ -1038,17 +1042,17 @@ async function getLostList() {
                       <td>${card.client.CompanyName_Clients || "-"}</td>
                       <td>${card.Location_Card || "-"}</td>
                       <td>${card.Person_Deal || "-"}</td>
-                      <td>${formatNumber(card.AC_Power_Card) || 0 }</td>
-                      <td>${formatNumber(card.DC_Power_Card) || 0 }</td>
-                      <td>${formatNumber(card.UnitCost_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.AC_Power_Card, 0) || 0 }</td>
+                      <td>${formatNumber(card.DC_Power_Card , 0) || 0 }</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV , 2) + "₺" }</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺" }</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺" }</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺" }</td>
                       <td>${card.Terrain_Roof_Card || "-"}</td>
-                      <td>${formatNumber(card.Roof_Cost_Card) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost) + "₺" || 0 + "₺"}</td>
-                      <td>${formatNumber(card.Profit_Rate_Card) + "₺" || 0 + "₺"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺" }</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺" }</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺" }</td>
+                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺" }</td>
                       <td>${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
@@ -1083,21 +1087,21 @@ async function getSalesList() {
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients}</td>
-                      <td>${card.Location_Card}</td>
-                      <td>${card.Person_Deal}</td>
-                      <td>${card.AC_Power_Card}</td>
-                      <td>${card.DC_Power_Card}</td>
-                      <td>${card.UnitCost_NotIncludingKDV}</td>
-                      <td>${card.Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.UnitOffer_NotIncludingKDV}</td>
-                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.Terrain_Roof_Card}</td>
-                      <td>${card.Roof_Cost_Card}</td>
-                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
-                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
-                      <td>${card.Profit_Rate_Card}</td>
-                      <td>${card.Date_Card}</td>
+                      <td>${card.client.CompanyName_Clients || "-"}</td>
+                      <td>${card.Location_Card || "-"}</td>
+                      <td>${card.Person_Deal || "-"}</td>
+                      <td>${formatNumber(card.AC_Power_Card, 0)}</td>
+                      <td>${formatNumber(card.DC_Power_Card, 0)}</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
+                      <td>${card.Terrain_Roof_Card || "-"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺"}</td>
+                      <td>${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1130,21 +1134,21 @@ async function getWonList() {
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients}</td>
-                      <td>${card.Location_Card}</td>
-                      <td>${card.Person_Deal}</td>
-                      <td>${card.AC_Power_Card}</td>
-                      <td>${card.DC_Power_Card}</td>
-                      <td>${card.UnitCost_NotIncludingKDV}</td>
-                      <td>${card.Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.UnitOffer_NotIncludingKDV}</td>
-                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.Terrain_Roof_Card}</td>
-                      <td>${card.Roof_Cost_Card}</td>
-                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
-                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
-                      <td>${card.Profit_Rate_Card}</td>
-                      <td>${card.Date_Card}</td>
+                      <td>${card.client.CompanyName_Clients || "-"}</td>
+                      <td>${card.Location_Card || "-"}</td>
+                      <td>${card.Person_Deal || "-"}</td>
+                      <td>${formatNumber(card.AC_Power_Card, 0)}</td>
+                      <td>${formatNumber(card.DC_Power_Card, 0)}</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "₺"}</td>
+                      <td>${card.Terrain_Roof_Card || "-"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺"}</td>
+                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺"}</td>
+                      <td>${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1160,7 +1164,13 @@ async function getWonList() {
     console.error("Error fetching and rendering clients:", error);
   }
 }
-
+function uploadPage(){
+  getSalesCards()
+  getWonList()
+  getSalesList()
+  getLostList()
+  getTotalList()
+}
 //                  LİSTEDEN CARDA GİTME
 const goToCard = (event)=>{ 
   var cardId = event.currentTarget.getAttribute("data-id");

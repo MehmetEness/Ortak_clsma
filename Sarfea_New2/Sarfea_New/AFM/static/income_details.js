@@ -53,7 +53,7 @@ xBtn.forEach((btn) => {
 //                  TABLO EKLEME
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await getIncomes();
+    await getIncomes("edit");
     setInterval(async function () {
         await getIncomes();
     }, 60000);

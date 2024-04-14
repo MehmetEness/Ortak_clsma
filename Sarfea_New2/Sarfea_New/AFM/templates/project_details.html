@@ -7,6 +7,7 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
 <link rel="stylesheet" href="{% static 'details_projects.css' %}">
 <link rel="stylesheet" href="{% static 'all_style.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     .sidebar-links li.projeler_li {
     background: var(--main-color-dark);
@@ -29,7 +30,7 @@
                     </a>
                 </div>
                 <span>{{project.Company_id}}</span>
-                <span id="{{project.id}}">{{project.ProjectName}}</span>
+                <span id="{{project.id}}" class="project_id">{{project.ProjectName}}</span>
                 <span id="last-span">{{project.CompanyUndertakingWork}}</span>
             </div>
         </div>
@@ -83,8 +84,8 @@
                     <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
                 </div>               
                 <div class="column-2 card flex">
-                    <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">0 $</span>
+                    <span style="display: none;"><i class="fa-solid fa-dollar-sign"></i></span>
+                    <div class="chart_divs"><canvas style="width: 100%; height: 100%;" id="gerceklesen_grafik"></canvas></div>                    
                     <span>Gerçekleşen Kar/Zarar</span>
                 </div>
                 <div  class="column-2 card flex">
@@ -102,17 +103,17 @@
             <div class="row">
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan İş Bedeli</span>
                 </div>                
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan Maliyet</span>
                 </div> 
                 <div class="column-2 card flex">
-                    <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">0 $</span>
+                    <span style="display: none;"><i class="fa-solid fa-dollar-sign"></i></span>
+                    <div class="chart_divs"><canvas style="width: 100%; height: 100%;" id="hesaplanan_grafik"></canvas></div> 
                     <span>Hesaplanan Kar/Zarar</span>
                 </div>
                 <div class="column-2 card flex">
@@ -134,12 +135,160 @@
 {% block js_files %}
 <script src="{% static 'functions.js' %}"></script>
 <script src="{% static 'project_details.js' %}"></script>
+<script>
+    const ctxgeceklesen = document.getElementById('gerceklesen_grafik');
+  // ctxHarcama.width = "100%";
+  // ctxHarcama.height = "100%";
+  new Chart(ctxgeceklesen, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Kar',
+        'Zarar',
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50],
+        backgroundColor: [
+          '#3a4a71',
+          '#c2c2c2',
+        ],
+        hoverOffset: 4,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: false,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
+      scales: {
+        y: {
+          display: false,
+        },
+        x: {
+          display: false,
+        }
+      }
+    }
+  });
+
+  const ctxHesaplanan = document.getElementById('hesaplanan_grafik');
+  // ctxHarcama.width = "100%";
+  // ctxHarcama.height = "100%";
+  new Chart(ctxHesaplanan, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Kar',
+        'Zarar',
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50],
+        backgroundColor: [
+          '#3a4a71',
+          '#c2c2c2',
+        ],
+        hoverOffset: 4,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: false,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
+      scales: {
+        y: {
+          display: false,
+        },
+        x: {
+          display: false,
+        }
+      }
+    }
+  });
+
+</script>
 
 <script>
     //                  BÖLÜMLERİ FORMATLAMA
 
     formatSpans(acPowerSpan, "kWe");
     formatSpans(dcPowerSpan, "kWp");
+    const formatSpanss = document.querySelectorAll(".need_format");
+    formatSpanss.forEach((span)=>{
+      formatSpans(span, "usd");
+      //span.textContent = formatNumber(span.textContent, 2)
+    })
+
     //formatSpans(realizedCostSpan, "usd");
     //formatSpans(realizedCostSpan2, "usd");
 

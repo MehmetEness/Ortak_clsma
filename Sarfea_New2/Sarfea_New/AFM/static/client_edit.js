@@ -25,7 +25,6 @@ phoneNumberInput.addEventListener("input", function (event) {
 
 amountInputReformatBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  console.log();
   if (companyNameInput.value != "") {
     form.submit();
   }else{
