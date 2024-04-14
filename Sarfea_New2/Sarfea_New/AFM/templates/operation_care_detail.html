@@ -70,7 +70,7 @@
                                             <select class="date_select" name="" id="id_date_select">
                                                 
                                                 {% for poll in polls %}
-                                                <option value="{{poll.Poll_Date | date:'d-m-y'}}">{{poll.Poll_Date | date:"d.m.y"}}</option>
+                                                <option value="{{poll.Poll_Date | date:'Y-m-d'}}">{{poll.Poll_Date | date:"d.m.Y"}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
