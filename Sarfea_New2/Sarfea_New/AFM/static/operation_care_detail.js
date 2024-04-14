@@ -191,18 +191,17 @@ async function getAndaRenderList() {
 }
 
 //------------------------------------------
-getAndRenderStrings(1);
-async function getAndRenderStrings(inventorNumber) {
+getAndRenderStrings();
+async function getAndRenderStrings() {
   try {
-    const response = await fetch(`/get_inventors/10/`);
-    const data = await response.json();
-    const inventors = data.inventors;
-
+    const data = await apiFunctions("inventor", "GET")
+    console.log(data);
+    const operation_id = document.querySelector(".operation_id").id;
     const tbody = document.querySelector(".inventor_table_body");
     tbody.innerHTML = "";
     let i = 1;
-    for (const inventor of inventors) {
-      if (inventor.Inventor_Number == inventorNumber) {
+    for (const inventor of data) {
+      if (inventor.Inventor_Owner == operation_id) {
         const response2 = await fetch(`/get_strings/${inventor.id}/`);
         const data2 = await response2.json();
         const strings = data2.strings;
@@ -211,7 +210,7 @@ async function getAndRenderStrings(inventorNumber) {
           const row =
             `<tr id="${string.id}">` +
             (bool
-              ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${inventorNumber}">İnventör ${inventorNumber}</span></td>`
+              ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${i}">İnventör ${i}</span></td>`
               : "") +
             '<td style="width: 100px;">' +
             '<select class="directionSelect">' +
@@ -279,6 +278,7 @@ async function getAndRenderStrings(inventorNumber) {
           currentDirection(inventor);
           bool = false;
         }
+        i++;
       }
     }
     xxxx();
@@ -379,7 +379,7 @@ function xxxx() {
     data.push(rowData);
   });
 
-  console.log(data);
+  //console.log(data);
 }
 var formData = new FormData();
 
@@ -412,8 +412,6 @@ function kontrolEtDates(date) {
     formData.append(date, value);
   }  
 }
-
-
 const anketAddButton = document.querySelector("#anket_submit_btn");
 anketAddButton.addEventListener("click", async () => {
   console.log("formData");
@@ -426,5 +424,10 @@ anketAddButton.addEventListener("click", async () => {
 
   await apiFunctions("poll", "POST", formData);
 });
+/******************************************************* */
 
-
+const getInventor = async () =>{
+  const response = await apiFunctions("operation_care", "GETID","x", "1")
+  console.log(response)
+}
+getInventor();
