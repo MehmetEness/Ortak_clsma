@@ -621,9 +621,12 @@ width: 100%;
     border-radius: 5px;
 }
 .com-row input{
+    margin-left: 6px;
     width: 70%;
     border: none;
     outline: none;
+    font-size: 16px;
+    font-weight: 600;
 }
 .com-row label{
     width: 10%;
