@@ -358,8 +358,8 @@ class String(models.Model):
 
 
 class Poll(models.Model):
-    Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, blank=True, null=True)
-    Poll_Date = models.DateField(blank=True, null=True)
+    Poll_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="op_poll")
+    Poll_Date = models.DateField()
     Note_1_1 = models.CharField(max_length=127, blank=True, null=True)
     Note_1_2 = models.CharField(max_length=127, blank=True, null=True)
     Note_1_3 = models.CharField(max_length=127, blank=True, null=True)

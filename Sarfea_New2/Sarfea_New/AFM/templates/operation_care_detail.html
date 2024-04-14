@@ -68,8 +68,10 @@
                                     <div class="t-left">
                                         <div class="top">
                                             <select class="date_select" name="" id="id_date_select">
-                                                <option value="12.12.2022">12.12.2022</option>
-                                                <option value="2024-04-12">12.10.2022</option>
+                                                
+                                                {% for poll in polls %}
+                                                <option value="{{poll.Poll_Date | date:'Y-m-d'}}">{{poll.Poll_Date | date:"d.m.Y"}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="bottom">
