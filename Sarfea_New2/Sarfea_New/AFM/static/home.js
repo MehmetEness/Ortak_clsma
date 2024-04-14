@@ -244,7 +244,7 @@ const gelirAylikChart = async (incomeWidth, fullIncomes) =>{
       var width = 0;
       var main = setInterval(frame, 1);
       function frame() {
-        if (width >= (incomeWidth / totalWidth)) {
+        if (width >= ((incomeWidth / totalWidth) * 100)) {
           clearInterval(main);
         } else {
           width++;
@@ -273,7 +273,7 @@ const giderAylikChart = async (expensesWidth, fullExpens) =>{
     var width = 0;
     var main = setInterval(frame, 1);
     function frame() {
-      if (width >= (expensesWidth / totalWidth)) {
+      if (width >= ((expensesWidth / totalWidth) * 100)) {
         clearInterval(main);
       } else {
         width++;
