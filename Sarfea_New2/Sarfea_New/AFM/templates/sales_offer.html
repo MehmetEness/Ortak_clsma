@@ -486,10 +486,13 @@
     font: 0 / 0 sans-serif;
     /* transition: .2s ease-in-out .5s; */
   }
-
+ 
   .card-body {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .item.dragging {
@@ -758,6 +761,7 @@
 
 
     </div>
+    
     <div class="main-container">
       <div class="titles">
         <div class="title">
@@ -790,10 +794,13 @@
             <span>$ span1</span>
             <span>span2</span>
           </div>
+          
+            
+        
           <ul class="card-body">
             
           </ul>
-
+          
         </div>
         <div class="rows" data-situation="Maliyet Hesaplama">
           <div style="background-color: #9DB8FB;" class="total-cash">
@@ -828,6 +835,7 @@
             <span>$ {{done_customers_cost}}</span>
             <span>({{done_customers_count}})</span>
           </div>
+          
           <ul class="card-body">
 
           </ul>

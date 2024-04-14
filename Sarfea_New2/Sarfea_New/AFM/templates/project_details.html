@@ -90,7 +90,7 @@
                 </div>
                 <div  class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span id="realized_cost_span">0 $</span>
+                    <span id="gerceklesen_kar_orani">0 $</span>
                     <span>Gerçekleşen Kar Oranı</span>
                 </div>
                 
@@ -103,12 +103,12 @@
             <div class="row">
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span class="need_format" id="realized_cost_span">{{project.Cost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="hesaplanan_is_bedeli_span">{{project.Cost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan İş Bedeli</span>
                 </div>                
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
-                    <span class="need_format" id="realized_cost_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
+                    <span class="need_format" id="hesaplanan_maliyet_span">{{project.CalculatedCost_NotIncludingKDV}} $</span>
                     <span>Hesaplanan Maliyet</span>
                 </div> 
                 <div class="column-2 card flex">
@@ -136,146 +136,9 @@
 <script src="{% static 'functions.js' %}"></script>
 <script src="{% static 'project_details.js' %}"></script>
 <script>
-    const ctxgeceklesen = document.getElementById('gerceklesen_grafik');
-  // ctxHarcama.width = "100%";
-  // ctxHarcama.height = "100%";
-  new Chart(ctxgeceklesen, {
-    type: 'doughnut',
-    data: {
-      labels: [
-        'Kar',
-        'Zarar',
-      ],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50],
-        backgroundColor: [
-          '#3a4a71',
-          '#c2c2c2',
-        ],
-        hoverOffset: 4,
-        borderColor: 'transparent'
-      }]
-    },
-    options: {
-      layout: {
-        padding: {
-        }
-      },
-      elements: {
-        point: {
-          pointStyle: 'circle',
-          radius: 1,
-          borderWidth: 1,
-          borderColor: 'red',
-          backgroundColor: 'yellow'
-        },
-        line: {
-          borderWidth: 5,
-          borderColor: 'blue',
-        }
-      },
-      plugins: {
-        title: {
-          display: false,
-          text: 'Nakit Akışı',
-          position: 'top',
-          color: 'black',
-          align: 'start',
-          font: {
-            family: 'Arial',
-            size: 18,
-            style: 'normal',
-            lineHeight: 1.2
-          }
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-      },
+  
 
-      scales: {
-        y: {
-          display: false,
-        },
-        x: {
-          display: false,
-        }
-      }
-    }
-  });
-
-  const ctxHesaplanan = document.getElementById('hesaplanan_grafik');
-  // ctxHarcama.width = "100%";
-  // ctxHarcama.height = "100%";
-  new Chart(ctxHesaplanan, {
-    type: 'doughnut',
-    data: {
-      labels: [
-        'Kar',
-        'Zarar',
-      ],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50],
-        backgroundColor: [
-          '#3a4a71',
-          '#c2c2c2',
-        ],
-        hoverOffset: 4,
-        borderColor: 'transparent'
-      }]
-    },
-    options: {
-      layout: {
-        padding: {
-        }
-      },
-      elements: {
-        point: {
-          pointStyle: 'circle',
-          radius: 1,
-          borderWidth: 1,
-          borderColor: 'red',
-          backgroundColor: 'yellow'
-        },
-        line: {
-          borderWidth: 5,
-          borderColor: 'blue',
-        }
-      },
-      plugins: {
-        title: {
-          display: false,
-          text: 'Nakit Akışı',
-          position: 'top',
-          color: 'black',
-          align: 'start',
-          font: {
-            family: 'Arial',
-            size: 18,
-            style: 'normal',
-            lineHeight: 1.2
-          }
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-      },
-
-      scales: {
-        y: {
-          display: false,
-        },
-        x: {
-          display: false,
-        }
-      }
-    }
-  });
-
+ 
 </script>
 
 <script>
@@ -294,10 +157,14 @@
 
     //                  KONUM VE ARAZİ/ÇATI RESİM YERLEŞTİRME
    
-        var secilenIl = document.getElementById("Konum_span").textContent;
-        var haritaSrc = "https://www.google.com/maps/embed/v1/place?q=" + secilenIl + ",Türkiye&key=AIzaSyDwNQi_yJog73xZMeolxgWjtUYIpIqutPg";
-        console.log(haritaSrc)
-        document.getElementById("haritaFrame").src = haritaSrc;
+       
+        if(document.getElementById("Konum_span")){
+          var secilenIl = document.getElementById("Konum_span").textContent;
+          var haritaSrc = "https://www.google.com/maps/embed/v1/place?q=" + secilenIl + ",Türkiye&key=AIzaSyDwNQi_yJog73xZMeolxgWjtUYIpIqutPg";
+          console.log(haritaSrc)
+          document.getElementById("haritaFrame").src = haritaSrc;
+        }
+      
    
 
 

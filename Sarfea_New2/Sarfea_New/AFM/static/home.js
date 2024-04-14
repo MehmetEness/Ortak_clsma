@@ -7,8 +7,94 @@ await getExpenses();
  karZararChart()
  gelirAylikChart(totalIncome, fullIncome)
  giderAylikChart(totalExpenses, fullExpenses)
-
+ giderDetayFunction()
 });
+
+const giderDetayArray = [
+"Diğer",
+"AC Kablo",
+"Aydınlatma",
+"Beton",
+"Bobcat",
+"Danışman",
+"Data Kablosu",
+"Data Logger",
+"DC Kablo",
+"Direkler",
+"EKK",
+"GES Panosu",
+"Güvenlik",
+"Hafriyatçı",
+"Harçlar (Belediye vs.)",
+"Haritacı",
+"Hücre",
+"Inverter",
+"İmarcı",
+"İnşaat Malzemesi",
+"İzole Halı",
+"Kablo Bağı",
+"Kamera",
+"Kepçe",
+"Klemens",
+"Komisyon",
+"Konaklama",
+"Konnektör",
+"Konteyner",
+"Kök",
+"Kum, Çakıl Taş Vb.",
+"Manitou",
+"Mod Binası",
+"Montaj Ayağı",
+"Montajcı",
+"Nakliye",
+"Panel",
+"Paratoner",
+"Rok Makinesi",
+"Scada Panosu",
+"Sigorta",
+"Spiral Hortum",
+"Su Deposu",
+"Şalt Malzeme",
+"Tava",
+"Tel Çit",
+"Teras Montaj Taşı",
+"Topraklama Şeridi",
+"Trafo",
+"UPS",
+"Vinç",
+"Yakıt (İş Makineleri İçin)",
+"Yol Masrafı (Personel)",
+"Muhtelif Elektrik Malzemesi",
+"Muhtelif Hırdavat"
+]
+
+var giderDetayArrayForChart = [];
+async function giderDetayFunction(){
+  const response = await apiFunctions("expense", "GET");
+  
+  const giderDetayları = {};
+
+  response.forEach((expense) => {
+    const expenseDetail = expense.ExpensDetails_Expenses;
+    const amount = parseFloat(expense.Amount_USD_Expenses);
+
+    if (!giderDetayları[expenseDetail]) {
+      giderDetayları[expenseDetail] = amount;
+    } else {
+      giderDetayları[expenseDetail] += amount;
+    }
+  });
+
+  const sortedGiderDetayları = Object.entries(giderDetayları).sort((a, b) => b[1] - a[1]);
+  const enYuksek4 = sortedGiderDetayları.slice(0, 4);
+  const digerToplam = sortedGiderDetayları.slice(4).reduce((acc, [key, value]) => acc + value, 0);
+  console.log(enYuksek4)
+  console.log(digerToplam)
+  return {
+    enYuksek4,
+    digerToplam
+  };
+}
  
 //                  LİSTE ÇEKME
 

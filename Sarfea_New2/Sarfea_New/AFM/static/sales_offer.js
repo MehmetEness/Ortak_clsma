@@ -23,7 +23,8 @@ const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_ki
 
 var editMode = false;
 
-
+var container = document.querySelector('.rows');
+container.scrollTop = container.scrollHeight - container.clientHeight - 50;
 
 document.addEventListener("DOMContentLoaded", function () {
   //                  CARD NONE VERİLERİ DÜZELTME
@@ -31,6 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
   topMenuLi[2].classList.add("li-hover");
 
 });
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -54,14 +58,14 @@ async function getSalesCards() {
     for (const card of data) {
       if (!card.Is_Gain && !card.Is_Lost && !card.Is_late) {
         let cardHTML = generateCard(card);
-        cardPlaceRows(cardHTML, card.Situation_Card)
+       cardPlaceRows(cardHTML, card.Situation_Card)
       }
     }
     //dragCards()
     totalSpanFormatForDrag()
     //cardFormat();
     cardMenuFunctions()
-    singleFİleUpload()
+    singleFileUpload()
     editBtns()
     dragTest()
   } catch (error) {
@@ -89,12 +93,14 @@ function generateCard(card) {
           </div>
           <p>${formattedDate}</p>
           <div class="boxes">
-              <p>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2)}</p>
-              <p>${formatNumber(card.UnitOffer_NotIncludingKDV, 2)} USD/kWp</p>
+              <p>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 0) + "$"}</p>
           </div>
           <div class="boxes">
-              <p>${formatNumber(card.Cost_NotIncludingKDV_Card, 2)}</p>
-              <p>${formatNumber(card.UnitCost_NotIncludingKDV, 2)}</p>
+              <p>${formatNumber(card.UnitOffer_NotIncludingKDV, 2)  + "$"} USD/kWp</p>
+          </div>
+          <div class="boxes">
+              <p>${formatNumber(card.Cost_NotIncludingKDV_Card, 2)  + "$"}</p>
+              <p>${formatNumber(card.UnitCost_NotIncludingKDV, 2)  + "$"}</p>
           </div>
           <div class="boxes">
               <p>5000kwp</p>
@@ -119,7 +125,7 @@ function generateCard(card) {
           </div>
           <div class="card-menu">
               <i class="fa-solid fa-ellipsis card_menu-btn"></i>
-              <ul class="card_menu">
+              <ul style="display: none;" class="card_menu">
                   <li id="${card.id}" class = "card_edit_btn">Düzenle</li>
                   <li onclick="lostCard(${card.id})">Kaybedildi</li>
                   <li onclick="gainCard(${card.id})">Kazanıldı</li>
@@ -145,8 +151,10 @@ function dragTest() {
           setTimeout(() => draggingItem.classList.add("dragging"), 0);
       });
           item.addEventListener("dragend", (event) => {
-              item.classList.remove("dragging");              
+              item.classList.remove("dragging"); 
+                           
               updateCardSituation(item, event.target.parentElement);
+              totalSpanFormatForDrag()
           });
       });
 
@@ -165,6 +173,7 @@ function dragTest() {
       sortableList.addEventListener("dragover", initSortableList);
       sortableList.addEventListener("dragenter", e => e.preventDefault());
   })
+  
 }
 
 function updateCardSituation(draggingItem, ul) {
@@ -282,7 +291,7 @@ function dragCards() {
   function Drop() {
     this.append(dragItem);
     cardDateList(rowsElements);
-    totalSpanFormatForDrag();
+    
     //getSalesCards()
 
     var targetRowSituation = this.parentElement.dataset.situation;
@@ -682,7 +691,7 @@ companyAddBtns.forEach((btn) => {
 });
 
 // DOSYA YÜKLEME
-function singleFİleUpload() {
+function singleFileUpload() {
   var mButtons = document.querySelectorAll(".mb");
   mButtons.forEach(function (item) {
     item.addEventListener("click", function () {
@@ -774,7 +783,7 @@ function uploadFile(cardId, fileType) {
   formData.append("file", document.getElementById("id_file_up").files[0]);
   formData.append("card_id", cardId);
   formData.append("file_type", fileType);
-
+ 
   fetch("/post_card_file/", {
     method: "POST",
     body: formData,
@@ -829,9 +838,11 @@ formAddBtn.addEventListener("click", async function (event) {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
+    var jsonObject = {};
+  formData.forEach(function (value, key) {
+    jsonObject[key] = value;
+  });
+  console.log(JSON.stringify(jsonObject));
     if (editMode == false) {
       await apiFunctions("sales_offer", "POST", formData);
     } else {
@@ -1182,11 +1193,11 @@ const goToCard = (event)=>{
       handleMenuItemClick("sale_time");
       card.scrollIntoView({ behavior: "smooth", block: "center" });
       console.log(card)
-      card.style.background = "#fff";
-      card.style.boxShadow = "1px 1px 4px #000000";
+      //card.style.background = "#fff";
+      card.style.boxShadow = "0px 0px 8px 2px red";
       setTimeout(function() {
         card.style.background = "#ffffff80"
-        card.style.boxShadow = "1px 1px 1px #888888";
+        card.style.boxShadow = "1px 1px 5px #2c2c2c";
       }, 2500);      
 
     } 
@@ -1225,6 +1236,8 @@ function editBtns() {
         }
         salesOfferAddWindow.style.display = "flex";
         onPageLoads(formatedInputs)
+        formatDateInputsForLoad(dateInputs)
+
       }, 10);
     })
   });
