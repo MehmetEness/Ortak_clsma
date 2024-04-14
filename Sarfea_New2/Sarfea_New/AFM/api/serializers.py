@@ -237,6 +237,31 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class StringSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = String
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return String.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.String_Owner = validated_data.get('String_Owner', instance.String_Owner)
+        instance.String_Number = validated_data.get('String_Number', instance.String_Number)
+        instance.String_Panel_Power = validated_data.get('String_Panel_Power', instance.String_Panel_Power)
+        instance.String_Panel_Brand = validated_data.get('String_Panel_Brand', instance.String_Panel_Brand)
+        instance.String_VOC = validated_data.get('String_VOC', instance.String_VOC)
+        instance.String_Panel_SY = validated_data.get('String_Panel_SY', instance.String_Panel_SY)
+        instance.String_Izolasion = validated_data.get('String_Izolasion', instance.String_Izolasion)
+        instance.String_AC_Power = validated_data.get('String_AC_Power', instance.String_AC_Power)
+        instance.String_DC_Power = validated_data.get('String_DC_Power', instance.String_DC_Power)
+        instance.String_Capacity = validated_data.get('String_Capacity', instance.String_Capacity)
+        instance.String_Percent = validated_data.get('String_Percent', instance.String_Percent)
+        
+        instance.save()
+        return instance
+
 class OperationCareSerializer(serializers.ModelSerializer):
     client = ClientSerializer(source='Operation_Care_Company', read_only=True)
 
@@ -273,6 +298,7 @@ class OperationCareSerializer(serializers.ModelSerializer):
         return instance
 
 class InventorSerializer(serializers.ModelSerializer):
+    inventor_strings= StringSerializer(many=True, read_only=True)
 
     class Meta:
         model = Inventor
@@ -298,31 +324,6 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-class StringSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = String
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return String.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.String_Owner = validated_data.get('String_Owner', instance.String_Owner)
-        instance.String_Number = validated_data.get('String_Number', instance.String_Number)
-        instance.String_Panel_Power = validated_data.get('String_Panel_Power', instance.String_Panel_Power)
-        instance.String_Panel_Brand = validated_data.get('String_Panel_Brand', instance.String_Panel_Brand)
-        instance.String_VOC = validated_data.get('String_VOC', instance.String_VOC)
-        instance.String_Panel_SY = validated_data.get('String_Panel_SY', instance.String_Panel_SY)
-        instance.String_Izolasion = validated_data.get('String_Izolasion', instance.String_Izolasion)
-        instance.String_AC_Power = validated_data.get('String_AC_Power', instance.String_AC_Power)
-        instance.String_DC_Power = validated_data.get('String_DC_Power', instance.String_DC_Power)
-        instance.String_Capacity = validated_data.get('String_Capacity', instance.String_Capacity)
-        instance.String_Percent = validated_data.get('String_Percent', instance.String_Percent)
-        
-        instance.save()
-        return instance
-
 class FailSerializer(serializers.ModelSerializer):
 
     class Meta:
