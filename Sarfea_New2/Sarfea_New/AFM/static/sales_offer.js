@@ -1083,21 +1083,21 @@ async function getSalesList() {
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients}</td>
-                      <td>${card.Location_Card}</td>
-                      <td>${card.Person_Deal}</td>
-                      <td>${card.AC_Power_Card}</td>
-                      <td>${card.DC_Power_Card}</td>
-                      <td>${card.UnitCost_NotIncludingKDV}</td>
-                      <td>${card.Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.UnitOffer_NotIncludingKDV}</td>
-                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.Terrain_Roof_Card}</td>
-                      <td>${card.Roof_Cost_Card}</td>
-                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
-                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
-                      <td>${card.Profit_Rate_Card}</td>
-                      <td>${card.Date_Card}</td>
+                      <td>${card.client.CompanyName_Clients || "-"}</td>
+                      <td>${card.Location_Card || "-"}</td>
+                      <td>${card.Person_Deal || "-"}</td>
+                      <td>${formatNumber(card.AC_Power_Card)}</td>
+                      <td>${formatNumber(card.DC_Power_Card)}</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV) + "₺"}</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card) + "₺"}</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV) + "₺"}</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card) + "₺"}</td>
+                      <td>${card.Terrain_Roof_Card || "-"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost) + "₺"}</td>
+                      <td>${formatNumber(card.Profit_Rate_Card) + "₺"}</td>
+                      <td>${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1130,21 +1130,21 @@ async function getWonList() {
                           <i class="fa-solid fa-rotate-left"></i>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients}</td>
-                      <td>${card.Location_Card}</td>
-                      <td>${card.Person_Deal}</td>
-                      <td>${card.AC_Power_Card}</td>
-                      <td>${card.DC_Power_Card}</td>
-                      <td>${card.UnitCost_NotIncludingKDV}</td>
-                      <td>${card.Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.UnitOffer_NotIncludingKDV}</td>
-                      <td>${card.Offer_Cost_NotIncludingKDV_Card}</td>
-                      <td>${card.Terrain_Roof_Card}</td>
-                      <td>${card.Roof_Cost_Card}</td>
-                      <td>${card.Unit_Cost_with_Roof_Cost}</td>
-                      <td>${card.Unit_Offer_with_Roof_Cost}</td>
-                      <td>${card.Profit_Rate_Card}</td>
-                      <td>${card.Date_Card}</td>
+                      <td>${card.client.CompanyName_Clients || "-"}</td>
+                      <td>${card.Location_Card || "-"}</td>
+                      <td>${card.Person_Deal || "-"}</td>
+                      <td>${formatNumber(card.AC_Power_Card)}</td>
+                      <td>${formatNumber(card.DC_Power_Card)}</td>
+                      <td>${formatNumber(card.UnitCost_NotIncludingKDV) + "₺"}</td>
+                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card) + "₺"}</td>
+                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV) + "₺"}</td>
+                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card) + "₺"}</td>
+                      <td>${card.Terrain_Roof_Card || "-"}</td>
+                      <td>${formatNumber(card.Roof_Cost_Card) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost) + "₺"}</td>
+                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost) + "₺"}</td>
+                      <td>${formatNumber(card.Profit_Rate_Card) + "₺"}</td>
+                      <td>${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
