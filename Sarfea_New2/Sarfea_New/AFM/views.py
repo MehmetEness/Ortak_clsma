@@ -181,7 +181,7 @@ def supplier(request):
 def project_details(request, project_id):
     project = Project.objects.filter(id=project_id).first()
     profit=0
-    if project.Cost_NotIncludingKDV is not None and project.CalculatedCost_NotIncludingKDV is not None:
+    if project.Cost_NotIncludingKDV is not None and project.CalculatedCost_NotIncludingKDV is not None and project.Cost_NotIncludingKDV != 0 and project.CalculatedCost_NotIncludingKDV != 0:
         x = project.Cost_NotIncludingKDV - project.CalculatedCost_NotIncludingKDV
         x= project.Cost_NotIncludingKDV-project.CalculatedCost_NotIncludingKDV
         y=x/project.CalculatedCost_NotIncludingKDV
