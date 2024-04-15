@@ -137,7 +137,16 @@
 
           <div class="input-box" name="ExpensDetails_JobHistory">
             <span class="details">Cinsi</span>
-            <input type="text" name="ExpensDetails_JobHistory" id="ExpensDetails_JobHistory">
+            <div class="dropdown-container">
+              <input autocomplete="off" type="text" id="id_ExpensDetails_JobHistory" name="ExpensDetails_JobHistory"
+                class="myInput" placeholder="Proje Adını Seçiniz" data-dropdown="jobhistory_dropdown3" />
+
+              <div id="jobhistory_dropdown3" class="dropdown-content">
+                {% for detail in details %}
+                 <span value="{{detail.id}}" class="dropdown-item gender_dropdown">{{detail}}</span> 
+                {% endfor %}
+              </div>
+            </div>
           </div>
           <div class="input-box" name="Amount_JobHistory">
             <span class="details">Tutar (₺)</span>

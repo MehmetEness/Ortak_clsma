@@ -34,10 +34,22 @@
           <div class="input-box" name="Location">
             <span class="details">Bölge</span>
             <div class="dropdown-container">
-              <input autocomplete="off" type="text" id="id_Location" name="Location" class="myInput"
-                placeholder="Bölge Seçiniz" data-dropdown="dropdown1" />
+              <input
+                autocomplete="off"
+                value="{{supplier_edit.Location}}"
+                type="text"
+                id="id_Location"
+                name="Location"
+                class="myInput"
+                placeholder="Bölge Seçiniz"
+                data-dropdown="dropdown1"
+              />
               <div id="dropdown1" class="dropdown-content">
-                <span value="Trabzon" class="dropdown-item">Trabzon</span>
+                {% for x in locations %}
+                <span value="{{x.Location}}" class="dropdown-item"
+                  >{{x.Location}}</span
+                >
+                {% endfor %}
               </div>
             </div>
           </div>
