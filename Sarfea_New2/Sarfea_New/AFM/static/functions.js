@@ -120,11 +120,11 @@ function formatSpans(span, type) {
     case "usd":
       var value = parseFloat(clear2(span.textContent));
       if (!isNaN(parseFloat(value))) {
-        span.textContent = formatNumber(value, 2) + " $";
-        span.title = formatNumber(value, 2) + " $";
+        span.textContent = formatNumber(value, 2) + "$";
+        span.title = formatNumber(value, 2) + "$";
       } else {
-        span.textContent = "0 $";
-        span.title = "0 $";
+        span.textContent = "0$";
+        span.title = "0$";
       }
       break;
     case "text":

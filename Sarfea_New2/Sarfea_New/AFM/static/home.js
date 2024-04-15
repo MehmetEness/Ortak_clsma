@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 await getIncome();
 await getExpenses();
- akisChart()
- karZararChart()
- gelirAylikChart(totalIncome, fullIncome)
- giderAylikChart(totalExpenses, fullExpenses)
- giderDetayFunction()
+await akisChart()
+await karZararChart()
+await gelirAylikChart(totalIncome, fullIncome)
+await giderAylikChart(totalExpenses, fullExpenses)
+await giderDetayFunction()
+await giderDetayChart()
 });
 
 const giderDetayArray = [
@@ -67,6 +68,7 @@ const giderDetayArray = [
 "Muhtelif Elektrik Malzemesi",
 "Muhtelif Hırdavat"
 ]
+let enYuksek4, digerToplam; 
 
 var giderDetayArrayForChart = [];
 async function giderDetayFunction(){
@@ -84,20 +86,20 @@ async function giderDetayFunction(){
       giderDetayları[expenseDetail] += amount;
     }
   });
-
   const sortedGiderDetayları = Object.entries(giderDetayları).sort((a, b) => b[1] - a[1]);
-  const enYuksek4 = sortedGiderDetayları.slice(0, 4);
-  const digerToplam = sortedGiderDetayları.slice(4).reduce((acc, [key, value]) => acc + value, 0);
-  console.log(enYuksek4)
-  console.log(digerToplam)
-  return {
-    enYuksek4,
-    digerToplam
-  };
+  enYuksek4 = sortedGiderDetayları.slice(0, 4);
+  digerToplam = sortedGiderDetayları.slice(4).reduce((acc, [key, value]) => acc + value, 0);
+
+  enYuksek4.forEach((item, index) => {
+    const className1 = `.gider_detay${index + 1}-1`;
+    const className2 = `.gider_detay${index + 1}-2`;
+    document.querySelector(className1).textContent = item[0];
+    document.querySelector(className2).textContent = item[1];
+});
+document.querySelector(".gider_detay5-2").textContent = digerToplam; 
 }
  
 //                  LİSTE ÇEKME
-
 let incomeArray = [];
 let expensesArray = [];
 let totalIncome = 0;
@@ -109,6 +111,7 @@ let totalProjectExpenses = 0;
 async function getIncome(){
     try{
         let data = await apiFunctions('income', "GET");
+        console.log(data)
         let bugununTarihi = new Date();
          let results = {};
         data.forEach((income) => {
@@ -146,7 +149,7 @@ async function getIncome(){
 async function getExpenses(){
     try{
         let data = await apiFunctions('expense', "GET");
-        console.log(data)
+        //console.log(data)
         let bugununTarihi = new Date();
          let results = {};
         data.forEach((expense) => {
@@ -183,7 +186,7 @@ async function getExpenses(){
 
 
 
-const akisChart = () =>{
+const akisChart = async () =>{
     const ctxNakitAkis = document.getElementById('nakit_akis_grafik');
 // ctxNakitAkis.width = "100%";
 // ctxNakitAkis.height = "100%";
@@ -261,7 +264,7 @@ new Chart(ctxNakitAkis, {
   }
 });
 }
-const karZararChart = () =>{
+const karZararChart = async () =>{
     var karZarar = incomeArray.map((item, index) => item - expensesArray[index]);
     var ctx = document.getElementById('kar_zarar_grafik').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -319,18 +322,21 @@ const gelirAylikChart = async (incomeWidth, fullIncomes) =>{
     const alisOdenenSpan = document.querySelector("#alis_odenen");
     alisOdenenSpan.textContent = formatNumber(incomeWidth,2);
     const alisKalanSpan = document.querySelector("#alis_kalan");
-    console.log(fullIncomes)
-    console.log(incomeWidth)
-    console.log(fullIncomes - incomeWidth)
-    alisKalanSpan.textContent = formatNumber((fullIncomes - totalIncome),2);
+    alisKalanSpan.textContent = formatNumber((totalWidth - fullIncome),2);
     var counter = 0;
     if (counter == 0) {
       j = 1;
       var elem = document.querySelector(".progress-done2");
       var width = 0;
+      let percent ;
+      if(((incomeWidth / totalWidth) * 100)){
+        percent = (incomeWidth / totalWidth) * 100;       
+      }else{
+        percent = 0;
+      }
       var main = setInterval(frame, 1);
       function frame() {
-        if (width >= ((incomeWidth / totalWidth) * 100)) {
+        if (width >= percent) {
           clearInterval(main);
         } else {
           width++;
@@ -342,24 +348,30 @@ const gelirAylikChart = async (incomeWidth, fullIncomes) =>{
 }
 const giderAylikChart = async (expensesWidth, fullExpens) =>{
   const response = await apiFunctions("project" , "GET");
-  console.log(response)
+  //console.log(response)
   let totalWidth = 0;
   response.forEach((project) => {
-      let projeGelir = project.Cost_NotIncludingKDV || 0;
+      let projeGelir = project.CalculatedCost_NotIncludingKDV || 0;
       totalWidth += projeGelir;
   })
   const alisOdenenSpan = document.querySelector("#veris_odenen");
   alisOdenenSpan.textContent = formatNumber(expensesWidth,2);
   const alisKalanSpan = document.querySelector("#veris_kalan");
-  alisKalanSpan.textContent = formatNumber((fullExpens - totalIncome),2);
+  alisKalanSpan.textContent = formatNumber((totalWidth - fullExpenses),2);
   var counter = 0;
   if (counter == 0) {
     j = 1;
     var elem = document.querySelector(".progress-done");
     var width = 0;
+    let percent ;
+      if(((expensesWidth / totalWidth) * 100)){
+        percent = (expensesWidth / totalWidth) * 100;       
+      }else{
+        percent = 0;
+      }
     var main = setInterval(frame, 1);
     function frame() {
-      if (width >= ((expensesWidth / totalWidth) * 100)) {
+      if (width >= percent) {
         clearInterval(main);
       } else {
         width++;
@@ -368,4 +380,75 @@ const giderAylikChart = async (expensesWidth, fullExpens) =>{
       }
     }
   }  
+}
+const giderDetayChart = async ()=>{
+  
+  const ctxHarcama = document.getElementById('harcama_grafik');
+  new Chart(ctxHarcama, {
+    type: 'doughnut',
+    data: {     
+      datasets: [{
+        label: 'My First Dataset',
+        data: [enYuksek4[0][1], enYuksek4[1][1], enYuksek4[2][1], enYuksek4[3][1], digerToplam],
+        backgroundColor: [
+          '#696969',
+          '#808080',
+          '#A9A9A9',
+          '#C0C0C0',
+          '#D3D3D3'
+        ],
+        hoverOffset: 4,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+          top: 5,
+          left: 20
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: 'circle',
+          radius: 1,
+          borderWidth: 1,
+          borderColor: 'red',
+          backgroundColor: 'yellow'
+        },
+        line: {
+          borderWidth: 5,
+          borderColor: 'blue',
+        }
+      },
+      plugins: {
+        title: {
+          display: false,
+          text: 'Nakit Akışı',
+          position: 'top',
+          color: 'black',
+          align: 'start',
+          font: {
+            family: 'Arial',
+            size: 18,
+            style: 'normal',
+            lineHeight: 1.2
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+        },
+      },
+
+      scales: {
+        y: {
+          display: false,
+        },
+        x: {
+          display: false,
+        }
+      }
+    }
+  });
 }

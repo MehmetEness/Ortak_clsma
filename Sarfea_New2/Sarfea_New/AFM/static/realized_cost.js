@@ -53,9 +53,9 @@ async function getJobhistory(id) {
                     <td title="${jobHistory.Invoice_No_JobHistory || "-"}">${jobHistory.Invoice_No_JobHistory || "-"}</td>
                     <td title="${formatDateForTable(jobHistory.Date_JobHistory)}">${formatDateForTable(jobHistory.Date_JobHistory)}</td>
                     <td title="${jobHistory.ExpensDetails_JobHistory || "-"}">${jobHistory.ExpensDetails_JobHistory || "-"}</td>
-                    <td title="${formatNumber(jobHistory.Amount_JobHistory) + "₺"}">${formatNumber(jobHistory.Amount_JobHistory) + "₺"}</td>
-                    <td title="${formatNumber(jobHistory.Dollar_Rate_JobHistory) + "₺"}">${formatNumber(jobHistory.Dollar_Rate_JobHistory) + "₺"}</td>
-                    <td title="${formatNumber(parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory))}">${formatNumber(parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)) + "$"}</td>
+                    <td title="${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}">${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}</td>
+                    <td title="${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}">${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}</td>
+                    <td title="${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2)}">${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2) + "$"}</td>
                 </tr>`;
                 rows += row;
                 totalTl += parseFloat(jobHistory.Amount_JobHistory) || 0;
@@ -105,9 +105,9 @@ async function getExpenses(id) {
                     <td title="${formatDateForTable(expenses.Date_Expenses)}" style="text-align:center">${formatDateForTable(expenses.Date_Expenses)}</td>
                     <td title="${expenses.ExpensDetails_Expenses || "-"}">${expenses.ExpensDetails_Expenses || "-"}</td>
                     <td title="${expenses.Bank_Expenses || "-"}">${expenses.Bank_Expenses || "-"}</td>
-                    <td title="${formatNumber(expenses.Amount_Expenses) + "₺"}">${formatNumber(expenses.Amount_Expenses) + "₺"}</td>
-                    <td title="${formatNumber(expenses.Dollar_Rate_Expenses) + "₺"}">${formatNumber(expenses.Dollar_Rate_Expenses) + "₺"}</td>
-                    <td title="${formatNumber(parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)) + "$"}">${formatNumber(parseFloat(expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)) + "$"}</td>
+                    <td title="${formatNumber(expenses.Amount_Expenses, 2) + "₺"}">${formatNumber(expenses.Amount_Expenses, 2) + "₺"}</td>
+                    <td title="${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}">${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}</td>
+                    <td title="${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}">${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}</td>
                 </tr>`;
                 rows += row;
                 totalTl += parseFloat(expenses.Amount_Expenses) || 0;

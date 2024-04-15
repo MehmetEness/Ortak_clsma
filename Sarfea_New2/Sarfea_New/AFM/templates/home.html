@@ -142,6 +142,35 @@
 .sidebar-links li.anasayfa_li {
   background: var(--main-color-dark);
 }
+.p-content{
+  position: relative;
+  padding-left: 30px;
+}
+.p-content::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.bg-1::before {
+  background-color: #696969;
+}
+.bg-2::before {
+  background-color: #808080;
+}
+.bg-3::before {
+  background-color: #A9A9A9;
+}
+.bg-4::before {
+  background-color: #C0C0C0;
+}
+.bg-5::before {
+  background-color: #D3D3D3;
+}
+
 </style>
 {% endblock %}
 
@@ -198,25 +227,26 @@
       <div class="coll pie-div">
         <div style="width: 50%; height: 100%;" class="data_div">
           <h3>Toplam Harcamalar</h3>
+          
           <div class="data_div_items">
-            <p>Çalışma ödemeleri</p>
-            <p>2600$</p>
+            <p class="bg-1 p-content gider_detay1-1"></p>
+            <p class="gider_detay1-2"></p>
           </div>
           <div class="data_div_items">
-            <p>Panel Maliyeti</p>
-            <p>1300$</p>
+            <p class="bg-2 p-content gider_detay2-1"></p>
+            <p class="gider_detay2-2"></p>
           </div>
           <div class="data_div_items">
-            <p>Araç Kiralama</p>
-            <p>800$</p>
+            <p class="bg-3 p-content gider_detay3-1"></p>
+            <p class="gider_detay3-2"></p>
           </div>
           <div class="data_div_items">
-            <p>Yeme İçme vb.</p>
-            <p>620$</p>
+            <p class="bg-4 p-content gider_detay4-1"></p>
+            <p class="gider_detay4-2"></p>
           </div>
           <div class="data_div_items">
-            <p>Diğerleri</p>
-            <p>324$</p>
+            <p class="bg-5 p-content gider_detay5-1">Diğer</p>
+            <p class="gider_detay5-2"></p>
           </div>
 
 
@@ -249,82 +279,6 @@
 
 
 
-
-  const ctxHarcama = document.getElementById('harcama_grafik');
-  // ctxHarcama.width = "100%";
-  // ctxHarcama.height = "100%";
-  new Chart(ctxHarcama, {
-    type: 'doughnut',
-    data: {
-      labels: [
-        'Red',
-        'Blue',
-        'Yellow'
-      ],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50, 100, 70, 150],
-        backgroundColor: [
-          '#686868',
-          '#989898',
-          '#949494',
-          '#a9a9a9',
-          '#d3d3d3'
-        ],
-        hoverOffset: 4,
-        borderColor: 'transparent'
-      }]
-    },
-    options: {
-      layout: {
-        padding: {
-          top: 5,
-          left: 20
-        }
-      },
-      elements: {
-        point: {
-          pointStyle: 'circle',
-          radius: 1,
-          borderWidth: 1,
-          borderColor: 'red',
-          backgroundColor: 'yellow'
-        },
-        line: {
-          borderWidth: 5,
-          borderColor: 'blue',
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Nakit Akışı',
-          position: 'top',
-          color: 'black',
-          align: 'start',
-          font: {
-            family: 'Arial',
-            size: 18,
-            style: 'normal',
-            lineHeight: 1.2
-          }
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-      },
-
-      scales: {
-        y: {
-          display: false,
-        },
-        x: {
-          display: false,
-        }
-      }
-    }
-  });
 
 
 
