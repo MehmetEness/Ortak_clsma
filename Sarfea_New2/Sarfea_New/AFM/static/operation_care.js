@@ -55,7 +55,7 @@ async function getOperationCare(isEdit) {
 
       isletmeBakimTableBody.innerHTML = "";
       isletmeBakimTableBody.insertAdjacentHTML("beforeend", rows);
-      //sortingTable(projectsTable);
+      sortingTable(isletmeBakimTable);
       // allTableFormat();
       operationEditButtonsEvents();
     }
@@ -97,7 +97,7 @@ async function getOperationFail(isEdit) {
       arizaTakipTableBody.innerHTML = "";
       arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
       failEditButtonsEvents() ;
-      //sortingTable(projectsTable);
+      sortingTable(arizaTakipTable);
       // allTableFormat();
       //editButtonsEvents();
     }
@@ -130,7 +130,8 @@ async function getOperationBill(isEdit) {
 
       faturaTableBody.innerHTML = "";
       faturaTableBody.insertAdjacentHTML("beforeend", rows);
-      //sortingTable(projectsTable);
+
+      sortingTable(faturaTable);
       // allTableFormat();
       //editButtonsEvents();
     }
@@ -220,9 +221,7 @@ dateFormatForColor(tarihRow, 7);
 
 
 
-sortingTable(document.querySelector("#isletme_bakim_table"))
-sortingTable(document.querySelector("#fatura_table"))
-sortingTable(document.querySelector("#ariza_takip_table"))
+
 
 
 console.log(apiFunctions("sales_offer", "GET"))
@@ -298,7 +297,7 @@ document.addEventListener("mousedown", (event) => {
 //        ARIZA FATURA EKLEME
 arizaFaturaAddSelect.addEventListener("change", () => {
   const selectedOption = arizaFaturaAddSelect.options[arizaFaturaAddSelect.selectedIndex].text;
-  if (selectedOption.startsWith("Evet")) {
+  if (selectedOption.startsWith("Hayır")) {
     arizaFaturaAddWindow.style.display = "flex";
   } else {
     arizaFaturaAddWindow.style.display = "none";

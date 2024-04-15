@@ -68,7 +68,7 @@
                                     <div class="t-left">
                                         <div class="top">
                                             <select class="date_select" name="" id="id_date_select">
-                                                
+                                                <option value="">Tarih Seçin</option>
                                                 {% for poll in polls %}
                                                 <option value="{{poll.Poll_Date | date:'Y-m-d'}}">{{poll.Poll_Date | date:"d.m.Y"}}</option>
                                                 {% endfor %}
