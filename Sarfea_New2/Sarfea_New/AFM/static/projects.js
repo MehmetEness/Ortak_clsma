@@ -12,8 +12,8 @@ var textCells = document.querySelectorAll(
 const reqIncomeInputs = document.querySelectorAll("#id_CompanyName_Pay_Incomes, #id_ProjectName_Incomes")
 const reqIncomeLabels = document.querySelectorAll("#income_firma_span, #income_proje_span")
 
-const reqExpensesInputs = document.querySelectorAll("#id_CompanyName_Paying_Expenses, #id_ProjectName_Expenses")
-const reqExpensesLabels = document.querySelectorAll("#expenses_firma_span, #expenses_proje_span")
+const reqExpensesInputs = document.querySelectorAll("#id_CompanyName_Paying_Expenses, #id_ProjectName_Expenses, #id_ExpensDetails_Expenses")
+const reqExpensesLabels = document.querySelectorAll("#expenses_firma_span, #expenses_proje_span, #gider_detay_span")
 
 const reqJobhistoryInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory, #id_ProjectName_JobHistory")
 const reqJobhistoryLabels = document.querySelectorAll("#jobhistory_firma_span, #jobhistory_proje_span")

@@ -8,8 +8,8 @@ const totalTableBody = totalTable.querySelector('tbody');
 const expensesDateInput = document.querySelector("#id_Date_Expenses");
 const expensesAmountInput = document.querySelector("#id_Amount_Expenses");
 
-const reqExpensesInput = document.querySelectorAll("#id_CompanyName_Paying_Expenses");
-const reqExpensesLabels = document.querySelectorAll("#odeme_yapilan_firma_span");
+const reqExpensesInput = document.querySelectorAll("#id_CompanyName_Paying_Expenses, #id_ExpensDetails_Expenses");
+const reqExpensesLabels = document.querySelectorAll("#odeme_yapilan_firma_span, #gider_detay_span");
 
 const reqJobhistoryInputs = document.querySelectorAll("#id_CompanyName_Job_JobHistory");
 const reqJobhistoryLabels = document.querySelectorAll("#is_yapilan_firma_span");

@@ -18,8 +18,8 @@ const salesContainer = document.querySelector(".sales-container");
 const wonContainer = document.querySelector(".won-container");
 const clientAddWindow = document.querySelector(".client-add-window");
 
-const reqSalesInputs = document.querySelectorAll("#id_Client_Card, #id_Person_Deal, #id_Location_Card");
-const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_kisi_span, #konum_span");
+const reqSalesInputs = document.querySelectorAll("#id_Client_Card, #id_Person_Deal, #id_Location_Card, #id_Situation_Card");
+const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_kisi_span, #konum_span, #drum_span");
 
 var editMode = false;
 
