@@ -180,8 +180,12 @@
   {% include 'partials/_left_nav_bar.html' %}
 
   <div class="right-menu">
-    <div style="height: 38%;" class="row"><canvas style="width: 100%; height: 100%;" id="nakit_akis_grafik"></canvas>
+    {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
+
+    <div style="height: 38%;" class="row">
+      <canvas style="width: 100%; height: 100%;" id="nakit_akis_grafik"></canvas>
     </div>
+
     <div style="height: 20%;" class="row bill">
       <div style="width: 50%;" class="sell-bill">
         <div class="bill-title">
@@ -222,8 +226,11 @@
         </div>
       </div>
     </div>
+
     <div style="height: 38%;" class="two-chart">
-      <div class="coll"><canvas style="width: 100%; height: 100%;" id="kar_zarar_grafik"></canvas></div>
+      <div class="coll">
+        <canvas style="width: 100%; height: 100%;" id="kar_zarar_grafik"></canvas>
+    </div>
       <div class="coll pie-div">
         <div style="width: 50%; height: 100%;" class="data_div">
           <h3>Toplam Harcamalar</h3>
@@ -259,6 +266,29 @@
         </div>
       </div>
     </div>
+    {% endif %}
+
+    {% if 'rapor grubu' in user_groups|lower %}
+
+    <div style="height: 38%;" class="rapor_table">
+      <table>
+        <thead>
+          <tr>
+            
+            <th>Proje Adı<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Konum<span class="icon-arrow">&UpArrow;</span></th>
+            <th>AC Güç<span class="icon-arrow">&UpArrow;</span></th>
+            <th>DC Güç<span class="icon-arrow">&UpArrow;</span></th>
+            <th>İş Bedeli<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Arazi/Çatı<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Tarih<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Durum<span class="icon-arrow">&UpArrow;</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    {% endif %}
   </div>
 </div>
 
