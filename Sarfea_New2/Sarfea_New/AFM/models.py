@@ -345,6 +345,7 @@ class Inventor(models.Model):
 
 class String(models.Model):
     String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, related_name="inventor_strings")
+    String_Direction= models.CharField( max_length=63,blank=True, null=True) 
     String_Number = models.IntegerField(blank=True, null=True)
     String_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     String_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)

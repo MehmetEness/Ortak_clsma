@@ -102,6 +102,7 @@ def create_string(sender, instance, created, **kwargs):
         for x in range(1, num+1):
             string=String.objects.create(
                 String_Owner=instance,
+                String_Direction=instance.Inventor_Direction,
                 String_Number=x,
                 String_Panel_Power=instance.Inventor_Panel_Power,
                 String_Panel_Brand=instance.Inventor_Panel_Brand,

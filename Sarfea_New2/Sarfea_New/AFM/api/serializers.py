@@ -248,6 +248,7 @@ class StringSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.String_Owner = validated_data.get('String_Owner', instance.String_Owner)
+        instance.String_Direction = validated_data.get('String_Direction', instance.String_Direction)
         instance.String_Number = validated_data.get('String_Number', instance.String_Number)
         instance.String_Panel_Power = validated_data.get('String_Panel_Power', instance.String_Panel_Power)
         instance.String_Panel_Brand = validated_data.get('String_Panel_Brand', instance.String_Panel_Brand)
