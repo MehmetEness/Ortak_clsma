@@ -114,3 +114,23 @@ def create_string(sender, instance, created, **kwargs):
                 String_Izolasion=instance.Inventor_Izolasion,
             )
 
+@receiver(post_save, sender=Inventor)
+def update_strings(sender, instance, **kwargs):
+    
+    strings = instance.inventor_strings.all()
+
+    for string in strings:
+        string.String_Direction = instance.Inventor_Direction
+        string.String_Panel_Power = instance.Inventor_Panel_Power
+        string.String_Panel_Brand = instance.Inventor_Panel_Brand
+        string.String_VOC = instance.Inventor_VOC
+        string.String_Panel_SY = instance.Inventor_Panel_SY
+        string.String_Izolasion = instance.Inventor_Izolasion
+        string.String_AC_Power = instance.Inventor_AC_Power
+        string.String_DC_Power = instance.Inventor_DC_Power
+        string.String_Capacity = instance.Inventor_Capacity
+        
+        # 'String' örneğini kaydederiz
+        string.save()
+    
+

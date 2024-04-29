@@ -309,6 +309,10 @@ class InventorSerializer(serializers.ModelSerializer):
         return Inventor.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+
+        son_string_number = instance.Inventor_Number_Str
+        strings = instance.inventor_strings.all()
+
         instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
         instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
         instance.Inventor_Number = validated_data.get('Inventor_Number', instance.Inventor_Number)
@@ -321,8 +325,35 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
         instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
         instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
-        
         instance.save()
+
+        yeni_string_number= instance.Inventor_Number_Str
+
+        if son_string_number > yeni_string_number:
+            fark=son_string_number-yeni_string_number
+            for string in strings.order_by('-id'):
+                if fark > 0:
+                    string.delete()
+                    fark -= 1
+                else:
+                    break
+        elif son_string_number < yeni_string_number:
+            fark=yeni_string_number-son_string_number
+            for x in range(son_string_number+1, son_string_number+fark+1):
+                string=String.objects.create(
+                    String_Owner=instance,
+                    String_Direction=instance.Inventor_Direction,
+                    String_Number=x,
+                    String_Panel_Power=instance.Inventor_Panel_Power,
+                    String_Panel_Brand=instance.Inventor_Panel_Brand,
+                    String_VOC=instance.Inventor_VOC,
+                    String_Panel_SY=instance.Inventor_Panel_SY,
+                    String_AC_Power=instance.Inventor_AC_Power,
+                    String_DC_Power=instance.Inventor_DC_Power,
+                    String_Capacity=instance.Inventor_Capacity,
+                    String_Izolasion=instance.Inventor_Izolasion,
+                )
+                
         return instance
     
 class FailSerializer(serializers.ModelSerializer):
