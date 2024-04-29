@@ -62,7 +62,16 @@ function processData(data) {
             `checkbox_${index1}_${index2}_1`
           );
           element.checked = true;
+          const element2 = document.getElementById(
+            `checkbox_${index1}_${index2}_2`
+          );
+          element2.checked = false;
+
         } else if (value == false) {
+          const element2 = document.getElementById(
+            `checkbox_${index1}_${index2}_1`
+          );
+          element2.checked = false;
           const element = document.getElementById(
             `checkbox_${index1}_${index2}_2`
           );
@@ -191,6 +200,12 @@ async function getAndaRenderList() {
 }
 
 //------------------------------------------
+
+// INPUT FORMATLAMA
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
+
+//-----------------
 getAndRenderStrings();
 async function getAndRenderStrings() {
   try {
@@ -207,73 +222,56 @@ async function getAndRenderStrings() {
         const strings = data2.strings;
         let bool = true;
         for (const string of strings) {
-          const row =
-            `<tr id="${string.id}">` +
-            (bool
-              ? `<td class = "rotate" rowspan="${strings.length}"><span class="inventör${i}">İnventör ${i}</span></td>`
-              : "") +
-            '<td style="width: 100px;">' +
-            '<select class="directionSelect">' +
-            '<option value="north">Kuzey</option>' +
-            '<option value="south">Güney</option>' +
-            '<option value="east">Doğu</option>' +
-            '<option value="west">Batı</option>' +
-            "</select>" +
-            "</td>" +
-            '<td style="width: 90px;" >' +
-            '<input class="strNum" type="text" value="' +
-            string.String_Number +
-            '">' +
-            "</td>" +
-            '<td style="width: 100px;">' +
-            '<input class="strPnlPwr" type="text" value="' +
-            string.String_Panel_Power +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strVOC" type="text" value="' +
-            string.String_VOC +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strPnlBrnd" type="text" value="' +
-            string.String_Panel_Brand +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strPnlSy" type="text" value="' +
-            string.String_Panel_SY +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<select class="izlsyn" class="directionSelect">' +
-            '<option value="ok">OK</option>' +
-            '<option value="fault">Fault</option>' +
-            "</select>" +
-            "</td>" +
-            "<td>" +
-            '<input class=""strCpt type="text" value="' +
-            string.String_Capacity +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strACPwr" type="text" value="' +
-            string.String_AC_Power +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strDCPwr" type="text" value="' +
-            string.String_DC_Power +
-            '">' +
-            "</td>" +
-            "<td>" +
-            '<input class="strPrcnt" type="text" value="' +
-            string.String_Percent +
-            '">' +
-            "<td>" +
-            '<input class="pnlV" type="text" value="">' +
-            "</td>" +
-            "</tr>";
+        //console.log(string);
+          const row = `
+              <tr id="${string.id}">
+                ${bool ? `<td class="rotate" rowspan="${strings.length}" onclick="editInventor(${inventor.id})"><span class="inventör${i}">İnventör ${i}</span></td>` : ""}
+                <td style="width: 100px;">
+                  <select class="directionSelect">
+                    <option value="north">Kuzey</option>
+                    <option value="south">Güney</option>
+                    <option value="east">Doğu</option>
+                    <option value="west">Batı</option>
+                  </select>
+                </td>
+                <td style="width: 90px;">
+                  <input name="String_Number" data-owner="${string.String_Owner_id}" class="strNum" type="text" onblur="xfunction(${string.id}, this)"  value="${string.String_Number}">
+                </td>
+                <td style="width: 100px;">
+                  <input name="String_Panel_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlPwr" type="text" value="${string.String_Panel_Power}">
+                </td>
+                <td>
+                  <input name="String_VOC" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strVOC" type="text" value="${string.String_VOC}">
+                </td>
+                <td>
+                  <input name="String_Panel_Brand" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlBrnd" type="text" value="${string.String_Panel_Brand}">
+                </td>
+                <td>
+                  <input name="String_Panel_SY" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlSy" type="text" value="${string.String_Panel_SY}">
+                </td>
+                <td>
+                  <select class="izlsyn" class="directionSelect">
+                    <option value="ok">OK</option>
+                    <option value="fault">Fault</option>
+                  </select>
+                </td>
+                <td>
+                  <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt" type="text" value="${string.String_Capacity}">
+                </td>
+                <td>
+                  <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr" type="text" value="${string.String_AC_Power}">
+                </td>
+                <td>
+                  <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr" type="text" value="${string.String_DC_Power}">
+                </td>
+                <td>
+                  <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
+                </td>
+                <td>
+                  <input class="pnlV" type="text" value="0">
+                </td>
+              </tr>`;
+
           tbody.insertAdjacentHTML("beforeend", row);
           currentDirection(inventor);
           bool = false;
@@ -287,6 +285,23 @@ async function getAndRenderStrings() {
   }
 }
 
+async function xfunction(x, y){
+  let formDatax = new FormData();
+ //console.log(dataOwnerValue);
+ formDatax.append(y.name, y.value);
+ formDatax.append("String_Owner", y.getAttribute("data-owner"));
+ const formDataObject = {};
+    formDatax.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+    
+    // JavaScript nesnesini JSON formatına dönüştürün
+    const formDataJson = JSON.stringify(formDataObject);
+    
+    // JSON formatındaki formData'yı konsola yazdırın
+    console.log(formDataJson);
+  await apiFunctions("string", "PUT", formDatax, x);
+}
 //getAndRenderInventors();
 async function getAndRenderInventors() {
   try {
@@ -323,6 +338,93 @@ function currentDirection(inventor) {
     }
   }
 }
+
+//                  INVENTOR EDİT
+let editMode = false;
+let invID = -1;
+var inventorEditWindow = document.querySelector(".inventor-edit-window");
+async function editInventor(inventorId){
+  editMode = true;
+  invID = inventorId;
+  const data = await apiFunctions("inventor", "GETID", "x", inventorId)
+  console.log(data);
+  for (var key in data) {
+    console.log(key)
+    if (data.hasOwnProperty(key)) {            
+      var element = document.querySelector('input[name="' + key + '"]');
+      var selectElement = document.querySelector('select[name="' + key + '"]');
+      if (element) {        
+        element.value = data[key];
+      } else if (selectElement) {
+        selectElement.value = data[key];
+      }
+    }
+  }
+  setTimeout(() => {
+    onPageLoads(formatedInputs)
+    inventorEditWindow.style.display = "flex";
+  }, 10);
+}
+/***********************************************************
+#                       İNVENTÖR ADD - EDİT
+***********************************************************/
+const inventorAddForm = document.getElementById("inventor_add_form");
+const inventorFormAddBtn = document.getElementById("inventor-edit-btn");
+inventorFormAddBtn.addEventListener("click", async function (event) {
+  event.preventDefault();
+  //if (requiredInputs(reqProjectInputs, reqProjectLabels) && await projectNameControl(projecInput, projectISpan, currentProjectName)) {
+   
+    var formatInputss = inventorEditWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+    const formData = new FormData(inventorAddForm);
+    
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+    
+    // JavaScript nesnesini JSON formatına dönüştürün
+    const formDataJson = JSON.stringify(formDataObject);
+    
+    // JSON formatındaki formData'yı konsola yazdırın
+    console.log(formDataJson);
+
+    if (editMode == false) {
+      await apiFunctions("project", "POST", formData);
+      inventorEditWindow.style.display = "none";
+      clearInputAfterSave(inventorAddForm);
+    } else {
+      await apiFunctions("inventor", "PUT", formData, invID);
+      inventorEditWindow.style.display = "none";
+      clearInputAfterSave(inventorAddForm);
+    }
+  //}
+});
+
+
+
+
+document.addEventListener("mousedown", (event) => {
+  const inventorEditContainer = inventorEditWindow.querySelector(".container");
+  if (!inventorEditContainer.contains(event.target)) {
+    inventorEditWindow.style.display = "none";
+  }
+});
+// KAPATMA
+let xBtn = document.querySelectorAll(".close-window");
+xBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const btnParentDiv = btn.parentElement;
+    if (btnParentDiv && btnParentDiv.parentElement) {
+      setTimeout(() => {      
+        btnParentDiv.parentElement.style.display = "none";
+        clearInputAfterSave(btn.nextElementSibling.nextElementSibling);
+      }, 10);
+    }
+  });
+});
 
 //                  ANKET VERİLERİNİ AL
 
@@ -423,6 +525,7 @@ anketAddButton.addEventListener("click", async () => {
   console.log(JSON.stringify(jsonObject));
 
   await apiFunctions("poll", "POST", formData);
+  location.reload();
 });
 /******************************************************* */
 

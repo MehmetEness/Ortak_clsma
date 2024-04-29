@@ -42,7 +42,7 @@ async function getOperationCare(isEdit) {
             </button>
           </td>
           <td><a href="${operationCareDetailUrl}">${operationCare.client.CompanyName_Clients}</a></td>
-          <td>${formatNumber(operationCare.Operation_Care_Inventor_Power)}</td>
+          <td>${formatNumber(operationCare.Operation_Care_Capacity)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
           <td>${operationCare.Operation_Care_Fail_Number}</td>
@@ -69,6 +69,7 @@ async function getOperationFail(isEdit) {
     let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
+    console.log("-fails-");
     console.log(data)
     //console.log(data);
     let rows = "";
@@ -112,6 +113,7 @@ async function getOperationBill(isEdit) {
     let currentRows = faturaTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
+    console.log("-Bill-");
     console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
@@ -300,13 +302,13 @@ arizaFaturaAddSelect.addEventListener("change", () => {
   if (selectedOption.startsWith("Hayır")) {
     arizaFaturaAddWindow.style.display = "flex";
   } else {
-    arizaFaturaAddWindow.style.display = "none";
+    arizaFaturaAddWindow.style.display = "none";    
   }
 });
 document.addEventListener("mousedown", (event) => {
   const arizaFaturaAddContainer = arizaFaturaAddWindow.querySelector(".container");
   if (!arizaFaturaAddContainer.contains(event.target)) {
-    if (arizaFaturaAddSelect.value == "Evet" && arizaFaturaAddWindow.style.display == "flex") {
+    if (arizaFaturaAddSelect.value == "Hayır" && arizaFaturaAddWindow.style.display == "flex") {
       setTimeout(() => {
         arizaFaturaAddSelect.value = "Belirsiz"
       }, 10);
@@ -314,6 +316,9 @@ document.addEventListener("mousedown", (event) => {
     arizaFaturaAddWindow.style.display = "none";
   }
 });
+document.querySelector("#ariza-fatura-X").addEventListener("click", ()=>{
+  arizaFaturaAddSelect.value = "Belirsiz"
+})
 // KAPATMA
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn) => {
@@ -327,6 +332,7 @@ xBtn.forEach((btn) => {
     }
   });
 });
+
 
 
 /***********************************************************
@@ -487,7 +493,7 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       formData.set(input.getAttribute('name'), dataId);
     });
     const billSelect = document.querySelector("#id_Fail_Guaranteed");
-    if(billSelect.value == "Evet"){
+    if(billSelect.value == "Hayır"){
       const billFormData = new FormData(arizaFaturaAddForm);
       for (const [key, value] of billFormData.entries()) {
         formData.append(key, value); 

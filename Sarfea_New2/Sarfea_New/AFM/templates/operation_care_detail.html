@@ -30,7 +30,79 @@
 {% block title %} Operation and Care Details {% endblock %}
 {% block content %}
 <div class="body-div">
+    <div class="window inventor-edit-window">
+        <div class="container">
+          <h3 id="operation-care-X" class="close-window">X</h3>
+          <div class="title">İnventör Düzenle</div>
+          <form id="inventor_add_form" action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="form" />
+    
+            <div class="user-details">    
 
+              <div class="input-box" style="display: none;">                  
+                  <input type="text" name="Inventor_Owner" id="id_Inventor_Owner">
+              </div>   
+
+              <div class="input-box">
+                <span id="proje_kodu_span" class="details">Panel Markası</span>
+                <input type="text" name="Inventor_Panel_Brand" id="id_Inventor_Panel_Brand">
+              </div>         
+              
+              <div class="input-box">
+                <span class="details">Panel Gücü</span>
+                <input class="coc-input formatInputs" type="text" name="Inventor_Capacity"
+                  id="id_Inventor_Capacity" step="1" autocomplete="off" />
+              </div>
+              <div class="input-box">
+                <span class="details">İzolasyon</span>
+                <select name="Inventor_Izolasion" id="id_Inventor_Izolasion">
+                    <option value="OK">OK</option>
+                    <option value="FAULT">FAULT</option>
+                </select>
+              </div>
+              
+              <div class="input-box">
+                <span class="details">Panel VOC</span>
+                <input class="coc-input formatInputs" type="text" name="Inventor_VOC" id="id_Inventor_VOC"
+                  step="0.1" autocomplete="off" />
+              </div>
+    
+              
+              <div class="input-box">
+                <span class="details">AC Güç(kWe)</span>
+                <input class="formatInputs" id="id_Inventor_AC_Power" type="text" name="Inventor_AC_Power" />
+              </div>
+              <div class="input-box">
+                <span class="details">String Sayısı</span>
+                <input id="id_Inventor_Number_Str" type="text" name="Inventor_Number_Str" />
+              </div>
+              
+              <div class="input-box">
+                <span class="details">DC Güç(kWp)</span>
+                <input class="formatInputs" id="id_Inventor_DC_Power" type="text" name="Inventor_DC_Power" />
+              </div>
+              <div class="input-box">
+                <span class="details">1 stringteki Panel Sayısı</span>
+                <input id="id_Inventor_Panel_SY" type="text" name="Inventor_Panel_SY" />
+              </div>
+              
+              <div class="input-box">
+                <span class="details">Yön</span>
+                <select name="Inventor_Direction" id="id_Inventor_Direction">
+                  <option value="Kuzey">Kuzey</option>
+                  <option value="Güney">Güney</option>
+                  <option value="Doğu">Doğu</option>
+                  <option value="Batı">Batı</option>
+                </select>    
+              </div>
+            </div>
+            <div class="button">
+              <input id="inventor-edit-btn" type="button" value="İnventörü Kaydet" />
+            </div>
+          </form>
+        </div>
+    </div>
 
     {% include 'partials/_left_nav_bar.html' %}
     <div class="right-menu">
@@ -1011,7 +1083,7 @@
                                     <th>VOC</th>
                                     <th>PNL MRK</th>
                                     <th>PNL SY</th>
-                                    <th>İZALASYON</th>
+                                    <th>İZOLASYON</th>
                                     <th>TOPLAM V</th>
                                     <th>+</th>
                                     <th>-</th>

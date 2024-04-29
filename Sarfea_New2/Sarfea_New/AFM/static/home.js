@@ -94,9 +94,9 @@ async function giderDetayFunction(){
     const className1 = `.gider_detay${index + 1}-1`;
     const className2 = `.gider_detay${index + 1}-2`;
     document.querySelector(className1).textContent = item[0];
-    document.querySelector(className2).textContent = item[1];
+    document.querySelector(className2).textContent = formatNumber(item[1],2);
 });
-document.querySelector(".gider_detay5-2").textContent = digerToplam; 
+document.querySelector(".gider_detay5-2").textContent = formatNumber(digerToplam,2); 
 }
  
 //                  LİSTE ÇEKME
