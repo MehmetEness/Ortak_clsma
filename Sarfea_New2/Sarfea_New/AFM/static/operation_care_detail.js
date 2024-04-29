@@ -221,13 +221,19 @@ async function getAndRenderStrings() {
         const data2 = await response2.json();
         const strings = data2.strings;
         let bool = true;
+        console.log(strings);
         for (const string of strings) {
-        //console.log(string);
+          let izalasyonValue = string.String_Izolasion || "OK";
+          let izalasyonValue2 = "FAULT";
+          if(izalasyonValue == "FAULT"){
+            izalasyonValue2 = "OK";
+          }
           const row = `
               <tr id="${string.id}">
                 ${bool ? `<td class="rotate" rowspan="${strings.length}" onclick="editInventor(${inventor.id})"><span class="inventör${i}">İnventör ${i}</span></td>` : ""}
                 <td style="width: 100px;">
                   <select class="directionSelect">
+                    
                     <option value="north">Kuzey</option>
                     <option value="south">Güney</option>
                     <option value="east">Doğu</option>
@@ -250,9 +256,9 @@ async function getAndRenderStrings() {
                   <input name="String_Panel_SY" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlSy" type="text" value="${string.String_Panel_SY}">
                 </td>
                 <td>
-                  <select class="izlsyn" class="directionSelect">
-                    <option value="ok">OK</option>
-                    <option value="fault">Fault</option>
+                  <select name="String_Izolasion" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="izlsyn directionSelect">
+                    <option value="${izalasyonValue}">${izalasyonValue}</option>
+                    <option value="${izalasyonValue2}">${izalasyonValue2}</option>
                   </select>
                 </td>
                 <td>
