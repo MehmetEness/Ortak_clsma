@@ -40,13 +40,13 @@ anketDateSelect.addEventListener("change", async () => {
   console.log(anketDateSelect.value);
   var data = await apiFunctions("poll", "GET");
   console.log(data);
-  data.forEach((poll)=>{
-    if(poll.Poll_Operation_Care == operationCareId && poll.Poll_Date == anketDateSelect.value){      
-      processData(poll);
-    }
-  })
-  
-  
+  if(data){
+    data.forEach((poll)=>{
+      if(poll.Poll_Operation_Care == operationCareId && poll.Poll_Date == anketDateSelect.value){      
+        processData(poll);
+      }
+    })
+  } 
 });
 
 function processData(data) {
@@ -207,15 +207,18 @@ inputsForFormat(formatedInputs);
 
 //-----------------
 getAndRenderStrings();
+var inventorOwner = "-1";
 async function getAndRenderStrings() {
   try {
     const data = await apiFunctions("inventor", "GET")
-    console.log(data);
+    console.log("inventor");
+    console.log(data);    
     const operation_id = document.querySelector(".operation_id").id;
     const tbody = document.querySelector(".inventor_table_body");
     tbody.innerHTML = "";
     let i = 1;
     for (const inventor of data) {
+      inventorOwner = inventor.Inventor_Owner;
       if (inventor.Inventor_Owner == operation_id) {
         const response2 = await fetch(`/get_strings/${inventor.id}/`);
         const data2 = await response2.json();
@@ -349,6 +352,7 @@ function currentDirection(inventor) {
 let editMode = false;
 let invID = -1;
 var inventorEditWindow = document.querySelector(".inventor-edit-window");
+
 async function editInventor(inventorId){
   editMode = true;
   invID = inventorId;
@@ -371,12 +375,20 @@ async function editInventor(inventorId){
     inventorEditWindow.style.display = "flex";
   }, 10);
 }
+var inventorAddBtn = document.querySelector(".inventor_add_btn");
+inventorAddBtn.addEventListener("click", ()=>{
+  editMode = false;
+  setTimeout(() => {    
+    inventorEditWindow.style.display = "flex";
+  }, 10);
+})
+
 /***********************************************************
 #                       İNVENTÖR ADD - EDİT
 ***********************************************************/
-const inventorAddForm = document.getElementById("inventor_add_form");
-const inventorFormAddBtn = document.getElementById("inventor-edit-btn");
-inventorFormAddBtn.addEventListener("click", async function (event) {
+const inventorEditForm = document.getElementById("inventor_add_form");
+const inventorFormEditBtn = document.getElementById("inventor-edit-btn");
+inventorFormEditBtn.addEventListener("click", async function (event) {
   event.preventDefault();
   //if (requiredInputs(reqProjectInputs, reqProjectLabels) && await projectNameControl(projecInput, projectISpan, currentProjectName)) {
    
@@ -384,8 +396,8 @@ inventorFormAddBtn.addEventListener("click", async function (event) {
     formatInputss.forEach(input => {
       input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
     })
-    const formData = new FormData(inventorAddForm);
-    
+    const formData = new FormData(inventorEditForm);
+    formData.append("Inventor_Owner",inventorOwner)
     const formDataObject = {};
     formData.forEach((value, key) => {
       formDataObject[key] = value;
@@ -398,19 +410,18 @@ inventorFormAddBtn.addEventListener("click", async function (event) {
     console.log(formDataJson);
 
     if (editMode == false) {
-      await apiFunctions("project", "POST", formData);
+      await apiFunctions("inventor", "POST", formData);
       inventorEditWindow.style.display = "none";
-      clearInputAfterSave(inventorAddForm);
+      clearInputAfterSave(inventorEditForm);
+      getAndRenderStrings();
     } else {
       await apiFunctions("inventor", "PUT", formData, invID);
       inventorEditWindow.style.display = "none";
-      clearInputAfterSave(inventorAddForm);
+      clearInputAfterSave(inventorEditForm);
+      getAndRenderStrings();
     }
   //}
 });
-
-
-
 
 document.addEventListener("mousedown", (event) => {
   const inventorEditContainer = inventorEditWindow.querySelector(".container");
@@ -418,6 +429,7 @@ document.addEventListener("mousedown", (event) => {
     inventorEditWindow.style.display = "none";
   }
 });
+
 // KAPATMA
 let xBtn = document.querySelectorAll(".close-window");
 xBtn.forEach((btn) => {
@@ -539,4 +551,9 @@ const getInventor = async () =>{
   const response = await apiFunctions("operation_care", "GETID","x", "1")
   console.log(response)
 }
-getInventor();
+//getInventor();
+
+
+
+
+
