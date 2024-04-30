@@ -24,6 +24,28 @@
 .sidebar-links li.isletme_bakim_li {
   background: var(--main-color-dark);
 }
+.y{
+    position: sticky;
+      top: 0px;
+      left: 0;
+}
+.y th:hover{
+    color: black !important;
+}
+.x{
+      position: sticky;
+      top: 71px;
+      left: 0;
+}
+.date_th{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.date_th select{
+    font-weight: 700;
+    cursor: pointer;
+}
 
 </style>
 
@@ -1075,7 +1097,14 @@
                                 <tr class="y">
                                     <th colspan="2"></th>
                                     <th colspan="6">{{operation_care.Operation_Care_Company}}</th>
-                                    <th colspan="6">BAKIM TARİHİ 09.01.2024</th>
+                                    <th colspan="6">
+                                        <div  class="date_th">
+                                            <span style="width: 25%;">BAKIM TARİHİ </span>
+                                            <select style="width: 130px;" name="" id="bakim_date">
+                                                
+                                            </select>
+                                        </div>
+                                    </th>
                                 </tr>
                                 <tr class="x">
                                     <th>İNV NO</th>
