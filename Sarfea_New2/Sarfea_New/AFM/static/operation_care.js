@@ -514,7 +514,6 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
     } else {
-      console.log(document.querySelector("#id_Fail_Bill_File").value);
       if(document.querySelector("#id_Fail_Bill_File").value == ""){
         formData.delete("Fail_Bill_File")
       }

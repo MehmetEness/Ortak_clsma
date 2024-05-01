@@ -846,6 +846,20 @@ formAddBtn.addEventListener("click", async function (event) {
     if (editMode == false) {
       await apiFunctions("sales_offer", "POST", formData);
     } else {
+      const fileInpust1 = document.querySelectorAll(".inputfile-1");
+      fileInpust1.forEach((input)=>{
+        if(input.value == ""){
+          let inputName = input.getAttribute("name")
+          formData.delete(inputName)
+        }
+      })
+      const fileInpust2 = document.querySelectorAll(".inputfile-2");
+      fileInpust2.forEach((input)=>{
+        if(input.value == ""){
+          let inputName = input.getAttribute("name")
+          formData.delete(inputName)
+        }
+      })      
       await apiFunctions("sales_offer", "PUT", formData, btnID);
     }
     salesOfferAddWindow.style.display = "none";
