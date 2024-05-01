@@ -377,6 +377,7 @@ async function editInventor(inventorId){
     }
   }
   setTimeout(() => {
+    const formatedInputs = document.querySelectorAll(".formatInputs");
     onPageLoads(formatedInputs)
     inventorEditWindow.style.display = "flex";
   }, 10);

@@ -386,8 +386,6 @@ function failEditButtonsEvents() {
         failEditMode = true;
         failBtnID = button.id;
         const data = await apiFunctions("fail", "GETID", "x", failBtnID)
-        console.log("billlldsf");
-        console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
@@ -402,8 +400,6 @@ function failEditButtonsEvents() {
                 } else {
                   element.value = data[key];
                 }
-              }if(){
-                
               }
               //let projectNameForEdit = document.querySelector("#id_ProjectName");
               //projectNameForEdit.setAttribute('data-id', btnID);
@@ -505,18 +501,23 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
         formData.append(key, value); 
       }
     }    
-    const jsonObject = {};
-    for (const [key, value] of formData.entries()) {
-      jsonObject[key] = value;
-    }
-    console.log(JSON.stringify(jsonObject));
-    console.log(failEditMode)
+    // const jsonObject = {};
+    // for (const [key, value] of formData.entries()) {
+    //   jsonObject[key] = value;
+    // }
+    // console.log(JSON.stringify(jsonObject));
+    // console.log(failEditMode)
+
     if (failEditMode == false) {
       await apiFunctions("fail", "POST", formData);
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
     } else {
+      console.log(document.querySelector("#id_Fail_Bill_File").value);
+      if(document.querySelector("#id_Fail_Bill_File").value == ""){
+        formData.delete("Fail_Bill_File")
+      }
       await apiFunctions("fail", "PUT", formData, failBtnID);
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
@@ -596,7 +597,6 @@ async function getOperation() {
 }
 
 document.getElementById("id_Fail_Bill_File").addEventListener("change", function () {
-  console.log(document.getElementById("id_Fail_Bill_File").value);
   var fileName = this.value.split("\\").pop();
   document.getElementById("fatura_file_span").innerText = fileName + " seçildi";
 });
