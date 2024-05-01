@@ -474,10 +474,11 @@ async function clientNameControl(input, label, currentClient) {
 }
 async function projectNameControl(input, label, currentProject) {
   var data = await apiFunctions("project", "GET");
+  
   let exClient = input.value.trim().toLowerCase();
   let bool = true;  
     for (var supplier of data) {
-      if (currentProject != supplier.ProjectName) {
+      if (currentProject != supplier.ProjectName) {        
       let reClient = supplier.ProjectName.trim().toLowerCase();
       if (reClient == exClient) {
         label.style.color = "red";
