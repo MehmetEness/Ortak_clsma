@@ -402,6 +402,8 @@ function failEditButtonsEvents() {
                 } else {
                   element.value = data[key];
                 }
+              }if(){
+                
               }
               //let projectNameForEdit = document.querySelector("#id_ProjectName");
               //projectNameForEdit.setAttribute('data-id', btnID);
@@ -594,6 +596,7 @@ async function getOperation() {
 }
 
 document.getElementById("id_Fail_Bill_File").addEventListener("change", function () {
+  console.log(document.getElementById("id_Fail_Bill_File").value);
   var fileName = this.value.split("\\").pop();
   document.getElementById("fatura_file_span").innerText = fileName + " seçildi";
 });

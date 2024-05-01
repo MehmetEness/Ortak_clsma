@@ -32,6 +32,7 @@ function inventorLiClick() {
   });
 }
 
+
 //                  ANKET YAZDIRMA
 
 const anketDateSelect = document.querySelector(".date_select");
@@ -201,9 +202,7 @@ async function getAndaRenderList() {
 
 //------------------------------------------
 
-// INPUT FORMATLAMA
-const formatedInputs = document.querySelectorAll(".formatInputs");
-inputsForFormat(formatedInputs);
+
 
 //-----------------
 getAndRenderStrings();
@@ -231,26 +230,27 @@ async function getAndRenderStrings() {
           if(izalasyonValue == "FAULT"){
             izalasyonValue2 = "OK";
           }
+
           const row = `
               <tr id="${string.id}">
                 ${bool ? `<td class="rotate" rowspan="${strings.length}" onclick="editInventor(${inventor.id})"><span class="inventör${i}">İnventör ${i}</span></td>` : ""}
                 <td style="width: 100px;">
-                  <select class="directionSelect">
-                    
-                    <option value="north">Kuzey</option>
-                    <option value="south">Güney</option>
-                    <option value="east">Doğu</option>
-                    <option value="west">Batı</option>
+                  <select name="String_Direction" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="directionSelect">
+                    <option disabled selected value="${string.String_Direction}" >${string.String_Direction}</option>
+                    <option value="Kuzey">Kuzey</option>
+                    <option value="Güney">Güney</option>
+                    <option value="Doğu">Doğu</option>
+                    <option value="Batı">Batı</option>
                   </select>
                 </td>
                 <td style="width: 90px;">
                   <input name="String_Number" data-owner="${string.String_Owner_id}" class="strNum" type="text" onblur="xfunction(${string.id}, this)"  value="${string.String_Number}">
                 </td>
                 <td style="width: 100px;">
-                  <input name="String_Panel_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlPwr" type="text" value="${string.String_Panel_Power}">
+                  <input name="String_Panel_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlPwr formatInputs" type="text" value="${string.String_Panel_Power}">
                 </td>
                 <td>
-                  <input name="String_VOC" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strVOC" type="text" value="${string.String_VOC}">
+                  <input name="String_VOC" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strVOC formatInputs" type="text" value="${string.String_VOC}">
                 </td>
                 <td>
                   <input name="String_Panel_Brand" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlBrnd" type="text" value="${string.String_Panel_Brand}">
@@ -260,18 +260,19 @@ async function getAndRenderStrings() {
                 </td>
                 <td>
                   <select name="String_Izolasion" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="izlsyn directionSelect">
-                    <option value="${izalasyonValue}">${izalasyonValue}</option>
-                    <option value="${izalasyonValue2}">${izalasyonValue2}</option>
+                    <option disabled selected value="${string.String_Izolasion}" >${string.String_Izolasion}</option>
+                    <option value="OK">OK</option>
+                    <option value="FAULT">FAULT</option>
                   </select>
                 </td>
                 <td>
-                  <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt" type="text" value="${string.String_Capacity}">
+                  <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
                 </td>
                 <td>
-                  <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr" type="text" value="${string.String_AC_Power}">
+                  <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_AC_Power}">
                 </td>
                 <td>
-                  <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr" type="text" value="${string.String_DC_Power}">
+                  <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_DC_Power}">
                 </td>
                 <td>
                   <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
@@ -287,7 +288,12 @@ async function getAndRenderStrings() {
         }
         i++;
       }
+     
     }
+     // INPUT FORMATLAMA
+     const formatedInputs = document.querySelectorAll(".formatInputs");
+     inputsForFormat(formatedInputs);
+     onPageLoads(formatedInputs)
     xxxx();
   } catch (error) {
     console.error("Error", error);
