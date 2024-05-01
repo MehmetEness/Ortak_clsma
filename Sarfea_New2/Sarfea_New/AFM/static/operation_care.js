@@ -125,11 +125,11 @@ async function getOperationBill(isEdit) {
           <td>${formatDateForTable(operationCareFail.Fail_Bill_Date)}</td>
           <td>${operationCareFail.Fail_Bill_File ? `<button class="mr-3 blue" onclick="openFile('${operationCareFail.Fail_Bill_File}')">Dosyayı Aç</button>` : `-`}</td>             
         </tr>`;
-
-      rows += row;
+      if(operationCareFail.Fail_Guaranteed == "Hayır"){
+        rows += row;
+      }
     }
     if (data.length > currentRows.length || isEdit) {
-
       faturaTableBody.innerHTML = "";
       faturaTableBody.insertAdjacentHTML("beforeend", rows);
 
