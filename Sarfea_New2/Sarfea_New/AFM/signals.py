@@ -34,7 +34,6 @@ def update_Incomes_Tl(sender, instance, **kwargs):
         # Update the instance with the new value
         instance.Amount_Usd_Incomes = amount_usd_Incomes
 
-
 @receiver(post_save, sender=SalesOfferCard)
 def update_client_card(sender, instance, **kwargs):
     need_save = False
@@ -67,7 +66,6 @@ def update_client_card(sender, instance, **kwargs):
         # Reconnect the signal
         post_save.connect(update_client_card, sender=SalesOfferCard)
 
-
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
@@ -89,8 +87,25 @@ def create_inventor(sender, instance, created, **kwargs):
                 Inventor_DC_Power=instance.Operation_Care_DC_Power,
                 Inventor_Capacity=instance.Operation_Care_Capacity,
                 Inventor_Izolasion="OK",
-
             )
+
+@receiver(post_save, sender=Operation_Care)
+def update_invantor(sender, instance, **kwargs):
+    
+    inventors = instance.operation_inventors.all()
+    
+    for inventor in inventors:
+        inventor.Inventor_Direction = instance.Operation_Care_Direction
+        inventor.Inventor_Number_Str = instance.Operation_Care_Number_Str
+        inventor.Inventor_Panel_Power = instance.Operation_Care_Panel_Power
+        inventor.Inventor_Panel_Brand = instance.Operation_Care_Panel_Brand
+        inventor.Inventor_VOC = instance.Operation_Care_VOC
+        inventor.Inventor_Panel_SY = instance.Operation_Care_Panel_Number_Str
+        inventor.Inventor_AC_Power = instance.Operation_Care_AC_Power
+        inventor.Inventor_DC_Power = instance.Operation_Care_DC_Power
+        inventor.Inventor_Capacity = instance.Operation_Care_Capacity
+
+        inventor.save()
 
 @receiver(post_save, sender=Inventor)
 def create_string(sender, instance, created, **kwargs):
