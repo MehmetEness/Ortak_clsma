@@ -274,6 +274,13 @@ class OperationCareSerializer(serializers.ModelSerializer):
         return Operation_Care.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+
+        son_inventor_number = instance.Operation_Care_Inventor_Number
+        inventors = instance.operation_inventors.all()
+
+        son_string_number = instance.Inventor_Number_Str
+        strings = instance.inventor_strings.all()
+        
         instance.Operation_Care_Company = validated_data.get('Operation_Care_Company', instance.Operation_Care_Company)
         instance.Operation_Care_Location = validated_data.get('Operation_Care_Location', instance.Operation_Care_Location)
         instance.Operation_Care_Inventor_Brand = validated_data.get('Operation_Care_Inventor_Brand', instance.Operation_Care_Inventor_Brand)
@@ -294,8 +301,36 @@ class OperationCareSerializer(serializers.ModelSerializer):
         instance.Operation_Care_Finish_Date = validated_data.get('Operation_Care_Finish_Date', instance.Operation_Care_Finish_Date)
         instance.Operation_Care_Has_Fail = validated_data.get('Operation_Care_Has_Fail', instance.Operation_Care_Has_Fail)
         instance.Operation_Care_Fail_Number = validated_data.get('Operation_Care_Fail_Number', instance.Operation_Care_Fail_Number)
-        
         instance.save()
+
+        yeni_inventor_number= instance.Operation_Care_Inventor_Number
+
+        if son_inventor_number > yeni_inventor_number:
+            fark=son_inventor_number-yeni_inventor_number
+            for inventor in inventors.order_by('-id'):
+                if fark > 0:
+                    inventor.delete()
+                    fark -= 1
+                else:
+                    break
+        elif son_inventor_number < yeni_inventor_number:
+            fark=yeni_inventor_number-son_inventor_number
+            for x in range(son_inventor_number+1, son_inventor_number+fark+1):
+                inventor=Inventor.objects.create(
+                Inventor_Owner=instance,
+                Inventor_Direction=instance.Operation_Care_Direction,
+                Inventor_Number=x,
+                Inventor_Number_Str=instance.Operation_Care_Number_Str,
+                Inventor_Panel_Power=instance.Operation_Care_Panel_Power,
+                Inventor_Panel_Brand=instance.Operation_Care_Panel_Brand,
+                Inventor_VOC=instance.Operation_Care_VOC,
+                Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str,
+                Inventor_AC_Power=instance.Operation_Care_AC_Power,
+                Inventor_DC_Power=instance.Operation_Care_DC_Power,
+                Inventor_Capacity=instance.Operation_Care_Capacity,
+                Inventor_Izolasion="OK",
+            )
+        
         return instance
 
 class InventorSerializer(serializers.ModelSerializer):
