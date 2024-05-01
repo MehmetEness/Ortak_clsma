@@ -386,22 +386,26 @@ function failEditButtonsEvents() {
         failEditMode = true;
         failBtnID = button.id;
         const data = await apiFunctions("fail", "GETID", "x", failBtnID)
+        console.log("billlldsf");
         console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              //console.log(key)
-              //console.log(data[key])
+              console.log(key)
+              console.log(data[key])
+              if(key != "Fail_Bill_File"){
+                if (key == "Operation_Care_Company") {
+                  element.value = data["client"].CompanyName_Clients;
+                  element.setAttribute('data-id', data[key]);
+                } else {
+                  element.value = data[key];
+                }
+              }
               //let projectNameForEdit = document.querySelector("#id_ProjectName");
               //projectNameForEdit.setAttribute('data-id', btnID);
-              if (key == "Operation_Care_Company") {
-                element.value = data["client"].CompanyName_Clients;
-                element.setAttribute('data-id', data[key]);
-              } else {
-                element.value = data[key];
-              }
+             
             } else if (selectElement) {
               selectElement.value = data[key];
             }

@@ -12,79 +12,13 @@
   .sidebar-links li.raporlama_li {
   background: var(--main-color-dark);
 }
+#report_table{
+  width: 2200px;
+}
 </style>
 
 {% endblock %} {% block title %} Report {% endblock %} {% block content %}
 <div class="body-div">
-  <!-- <div class="window client-add-window">
-    <div class="container">
-      <h3 id="client-X" class="close-window">X</h3>
-      <div class="title">Tedarikci Ekle</div>
-      <form id="client_add_form" action="{% url 'supplier' %}" method="post">
-        {% csrf_token %}
-        <div class="user-details">
-          <div class="input-box" name="CompanyName_Supplier">
-            <span id="firma_adi_span" class="details">Firma Adı*</span>
-            <input
-              name="CompanyName_Clients"
-              id="id_CompanyName_Supplier"
-              type="text"
-            />
-          </div>
-          <div class="input-box" name="ContactPerson">
-            <span class="details">Muhatap</span>
-            <input
-              name="ContactPerson"
-              id="id_ContactPerson_Supplier"
-              type="text"
-            />
-          </div>
-          <div class="input-box" name="PhoneNumber">
-            <span class="details">Telefon</span>
-            <input
-              name="PhoneNumber"
-              id="id_PhoneNumber"
-              type="text"
-              maxlength="15"
-            />
-          </div>
-          <div class="input-box" name="Email">
-            <span class="details">E-posta</span>
-            <input name="Email" id="id_E-mail" type="email" />
-          </div>
-          <div class="input-box" name="Location">
-            <span class="details">Bölge</span>
-            <div class="dropdown-container">
-              <input
-                autocomplete="off"
-                value="{{supplier_edit.Location}}"
-                type="text"
-                id="id_Location"
-                name="Location"
-                class="myInput"
-                placeholder="Bölge Seçiniz"
-                data-dropdown="dropdown1"
-              />
-              <div id="dropdown1" class="dropdown-content">
-                {% for x in locations %}
-                <span value="{{x.id}}" class="dropdown-item"
-                  >{{x.Location}}</span
-                >
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="button">
-          <input id="kaydet_btn" type="button" value="Kaydet" />
-        </div>
-      </form>
-      {% for error in supplier_form.non_field_errors %}
-      <p style="color: red">hata{{ error }}</p>
-      {% endfor %}
-    </div>
-  </div> -->
-
   {% include 'partials/_left_nav_bar.html' %}
 
   <div class="right-menu">
@@ -92,20 +26,23 @@
       <section class="table__header">
         <p>RAPORLAMA</p>
         <div class="export__file">
-          <!-- <button class="client-add-btn">Müşteri Ekle</button> -->
+         
         </div>
       </section>
       <section class="table__body">
-        <table id="client_table">
+        <table id="report_table">
           <thead>
             <tr>
-              <th><span></span></th>
+              <th>Projeler<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Anlaşılan<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Alınan<span class="icon-arrow">&UpArrow;</span></th>
+              <th>Ödenen<span class="icon-arrow">&UpArrow;</span></th>       
               <th>Ödenmesi Gereken Borç<span class="icon-arrow">&UpArrow;</span></th>
               <th>Genel Kalan<span class="icon-arrow">&UpArrow;</span></th>
               <th>Harcama Cari Durum<span class="icon-arrow">&UpArrow;</span></th>
               <th>KDV İadesi<span class="icon-arrow">&UpArrow;</span></th>
-              <th>KDV İadesi hariç  Kar<span class="icon-arrow">&UpArrow;</span></th>
-              <th>KDV İadesi Dahil  Kar<span class="icon-arrow">&UpArrow;</span></th>
+              <th>KDV İadesi Hariç Kar<span class="icon-arrow">&UpArrow;</span></th>
+              <th>KDV İadesi Dahil Kar<span class="icon-arrow">&UpArrow;</span></th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -115,7 +52,7 @@
   </div>
 </div>
 {% endblock %} {% block js_files %}
-<script src="{% static 'client.js' %}"></script>
 <script src="{% static 'functions.js' %}"></script>
+<script src="{% static 'report.js' %}"></script>
 
 {% endblock %}
