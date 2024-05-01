@@ -302,7 +302,7 @@ class Fail(models.Model):
     Fail_Guaranteed = models.CharField(
         max_length=63, null=True,
         choices=(
-            ('Belirlenmedi', 'Belirlenmedi'),
+            ('Belirsiz', 'Belirsiz'),
             ('Evet', 'Evet'),
             ('Hayır', 'Hayır'),
         ),
