@@ -32,7 +32,7 @@ async function getOperationCare(isEdit) {
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
-      var operationCareDetailUrl = `http://127.0.0.1:8000/operation_care_detail/${operationCare.id}/`;
+      var operationCareDetailUrl = `/operation_care_detail/${operationCare.id}/`;
       var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
       const row = `
         <tr>

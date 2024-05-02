@@ -55,7 +55,7 @@ async function getProjects(isEdit) {
       //   formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
       // } else { formattedDate = "-" }
 
-      const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
+      const projectDetailsUrl = `/project_details/${project.id}/`;
 
       const row = `
         <tr>
