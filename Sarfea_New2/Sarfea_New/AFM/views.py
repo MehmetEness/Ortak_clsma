@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
+import requests
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String, Poll
 from django.db.models import Q
@@ -708,14 +709,25 @@ def get_strings(request, inventor_id):
 
 @login_required
 def get_dollar_rate(request, date):
-    api='qYyWXNCbA0'
-    evds = e.evdsAPI(api)
-    dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)
-    print(date)
-    rate=dollar.TP_DK_USD_S_YTL.values[0]
-    rate = round(rate, 4)  # 4 ondalık basamak
-    return JsonResponse({'rate': rate})
+    headers={'key':'qYyWXNCbA0'}
+    response = requests.get(f"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.S&startDate={date}&endDate={date}&type=json", headers=headers)
+    #api='qYyWXNCbA0'
+    #evds = e.evdsAPI(api)
+    #dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)    
+    
+    data = json.loads(response.content)
 
+    # JSON verilerini işleyin
+    items = data.get('items', [])
+    if items:
+        tarih = items[0]['Tarih']
+        usd_degeri = items[0]['TP_DK_USD_S']
+        print(f"Tarih: {tarih}, USD Değeri: {usd_degeri}")
+    else:
+        print("Belirtilen tarih için veri bulunamadı.")
+    #rate=dollar.TP_DK_USD_S_YTL.values[0]
+    #rate = round(rate, 4)  # 4 ondalık basamak
+    return JsonResponse({'rate': usd_degeri})
 #***********************************************************
 #                       SET METHODLARI
 #***********************************************************
