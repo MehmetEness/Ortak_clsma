@@ -50,7 +50,7 @@ anketDateSelect.addEventListener("change", async () => {
   document.querySelectorAll('[name="Cloumn_Organize_Date_left"]')[0].value = "";
   document.querySelectorAll('[name="Cloumn_Looker_left"]')[0].value = "";
   document.querySelectorAll('[name="Cloumn_Looker_Date_left"]')[0].value = "";
-  document.querySelectorAll('[name="Cloumn_Note_Text"]')[0].value = "";
+  document.querySelectorAll('[name="Cloumn_Note_Text_Left"]')[0].value = "";
   console.log("poll");
   console.log(data);
   if(data){
