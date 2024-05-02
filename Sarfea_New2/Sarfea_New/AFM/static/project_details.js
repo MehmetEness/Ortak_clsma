@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function gerceklesenGrafikFunction(){
   const ctxgeceklesen = document.getElementById('gerceklesen_grafik');
-// ctxHarcama.width = "100%";
-// ctxHarcama.height = "100%";
+  // ctxgeceklesen.width = "100px";
+  // ctxgeceklesen.height = "100px";
 new Chart(ctxgeceklesen, {
   type: 'doughnut',
   data: {
@@ -48,6 +48,8 @@ new Chart(ctxgeceklesen, {
     }]
   },
   options: {
+    responsive: false, 
+    maintainAspectRatio: false,
     layout: {
       padding: {
       }
@@ -124,6 +126,8 @@ function hesaplananGrafikFunction(){
       }]
     },
     options: {
+      responsive: false, 
+      maintainAspectRatio: false,
       layout: {
         padding: {
         }

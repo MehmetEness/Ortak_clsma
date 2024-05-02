@@ -40,6 +40,18 @@ const operationCareId = document.querySelector(".operation_id").id;
 anketDateSelect.addEventListener("change", async () => {
   console.log(anketDateSelect.value);
   var data = await apiFunctions("poll", "GET");
+  document.querySelectorAll(".row .checkbox").forEach((item)=>{
+    item.checked = false;
+  })
+  document.querySelectorAll('[name^="Note"]').forEach((item)=>{
+    item.placeholder = "Not...";
+  })
+  document.querySelectorAll('[name="Cloumn_Organizer_left"]')[0].value = "";
+  document.querySelectorAll('[name="Cloumn_Organize_Date_left"]')[0].value = "";
+  document.querySelectorAll('[name="Cloumn_Looker_left"]')[0].value = "";
+  document.querySelectorAll('[name="Cloumn_Looker_Date_left"]')[0].value = "";
+  document.querySelectorAll('[name="Cloumn_Note_Text_Left"]')[0].value = "";
+  console.log("poll");
   console.log(data);
   if(data){
     data.forEach((poll)=>{
@@ -63,20 +75,20 @@ function processData(data) {
             `checkbox_${index1}_${index2}_1`
           );
           element.checked = true;
-          const element2 = document.getElementById(
-            `checkbox_${index1}_${index2}_2`
-          );
-          element2.checked = false;
+          // const element2 = document.getElementById(
+          //   `checkbox_${index1}_${index2}_2`
+          // );
+          // element2.checked = false;
 
         } else if (value == false) {
           const element2 = document.getElementById(
             `checkbox_${index1}_${index2}_1`
           );
           element2.checked = false;
-          const element = document.getElementById(
-            `checkbox_${index1}_${index2}_2`
-          );
-          element.checked = true;
+          // const element = document.getElementById(
+          //   `checkbox_${index1}_${index2}_2`
+          // );
+          // element.checked = true;
         }
       }
       if (key.startsWith("Note") && value != null) {
@@ -85,7 +97,7 @@ function processData(data) {
           element[0].placeholder = value;
         
       }
-      if (key == "Cloumn_Note_Text" && value != null) {          
+      if (key == "Cloumn_Note_Text" && value != null) {      
           const element = document.getElementsByName("Cloumn_Note_Text_Left");
           element[0].value = value;        
       }

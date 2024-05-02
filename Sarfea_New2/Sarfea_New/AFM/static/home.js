@@ -212,6 +212,8 @@ new Chart(ctxNakitAkis, {
     ],
   },
   options: {
+    responsive: false, 
+    maintainAspectRatio: false,
     layout: {
       padding: {
         top: 5,
@@ -283,6 +285,8 @@ const karZararChart = async () =>{
         }]
     },
     options: {
+      responsive: false, 
+      maintainAspectRatio: false,
         layout: {
         padding: 20
         },
@@ -402,6 +406,8 @@ const giderDetayChart = async ()=>{
       }]
     },
     options: {
+      responsive: false, 
+      maintainAspectRatio: false,
       layout: {
         padding: {
           top: 5,
