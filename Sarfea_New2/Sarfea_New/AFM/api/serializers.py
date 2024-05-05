@@ -150,6 +150,43 @@ class SalesOfferCardReviseSerializer(serializers.ModelSerializer):
         instance.Unit_Cost_with_Roof_Cost = validated_data.get('Unit_Cost_with_Roof_Cost', instance.Unit_Cost_with_Roof_Cost)
         instance.Unit_Offer_with_Roof_Cost = validated_data.get('Unit_Offer_with_Roof_Cost', instance.Unit_Offer_with_Roof_Cost)
         instance.Profit_Rate_Card = validated_data.get('Profit_Rate_Card', instance.Profit_Rate_Card)
+        
+        instance.Comment_Date_Card_1 = validated_data.get('Comment_Date_Card_1', instance.Comment_Date_Card_1)
+        instance.Comment_Card_1 = validated_data.get('Comment_Card_1', instance.Comment_Card_1)
+        instance.Comment_Telno_Card_1 = validated_data.get('Comment_Telno_Card_1', instance.Comment_Telno_Card_1)
+        instance.Comment_Person_Card_1 = validated_data.get('Comment_Person_Card_1', instance.Comment_Person_Card_1)
+
+        instance.Comment_Date_Card_2 = validated_data.get('Comment_Date_Card_2', instance.Comment_Date_Card_2)
+        instance.Comment_Card_2 = validated_data.get('Comment_Card_2', instance.Comment_Card_2)
+        instance.Comment_Telno_Card_2 = validated_data.get('Comment_Telno_Card_2', instance.Comment_Telno_Card_2)
+        instance.Comment_Person_Card_2 = validated_data.get('Comment_Person_Card_2', instance.Comment_Person_Card_2)
+
+        instance.Comment_Date_Card_3 = validated_data.get('Comment_Date_Card_3', instance.Comment_Date_Card_3)
+        instance.Comment_Card_3 = validated_data.get('Comment_Card_3', instance.Comment_Card_3)
+        instance.Comment_Telno_Card_3 = validated_data.get('Comment_Telno_Card_3', instance.Comment_Telno_Card_3)
+        instance.Comment_Person_Card_3 = validated_data.get('Comment_Person_Card_3', instance.Comment_Person_Card_3)
+
+        instance.Comment_Date_Card_4 = validated_data.get('Comment_Date_Card_4', instance.Comment_Date_Card_4)
+        instance.Comment_Card_4 = validated_data.get('Comment_Card_4', instance.Comment_Card_4)
+        instance.Comment_Telno_Card_4 = validated_data.get('Comment_Telno_Card_4', instance.Comment_Telno_Card_4)
+        instance.Comment_Person_Card_4 = validated_data.get('Comment_Person_Card_4', instance.Comment_Person_Card_4)
+
+        instance.Comment_Date_Card_5 = validated_data.get('Comment_Date_Card_5', instance.Comment_Date_Card_5)
+        instance.Comment_Card_5 = validated_data.get('Comment_Card_5', instance.Comment_Card_5)
+        instance.Comment_Telno_Card_5 = validated_data.get('Comment_Telno_Card_5', instance.Comment_Telno_Card_5)
+        instance.Comment_Person_Card_5 = validated_data.get('Comment_Person_Card_5', instance.Comment_Person_Card_5)
+
+        instance.Comment_Date_Card_6 = validated_data.get('Comment_Date_Card_6', instance.Comment_Date_Card_6)
+        instance.Comment_Card_6 = validated_data.get('Comment_Card_6', instance.Comment_Card_6)
+        instance.Comment_Telno_Card_6 = validated_data.get('Comment_Telno_Card_6', instance.Comment_Telno_Card_6)
+        instance.Comment_Person_Card_6 = validated_data.get('Comment_Person_Card_6', instance.Comment_Person_Card_6)
+
+        instance.Comment_Date_Card_7 = validated_data.get('Comment_Date_Card_7', instance.Comment_Date_Card_7)
+        instance.Comment_Card_7 = validated_data.get('Comment_Card_7', instance.Comment_Card_7)
+        instance.Comment_Telno_Card_7 = validated_data.get('Comment_Telno_Card_7', instance.Comment_Telno_Card_7)
+        instance.Comment_Person_Card_7 = validated_data.get('Comment_Person_Card_7', instance.Comment_Person_Card_7)
+
+        
         instance.Revize_created_at = validated_data.get('Revize_created_at', instance.Revize_created_at)
         instance.save()
         return instance
@@ -311,7 +348,9 @@ class OperationCareSerializer(serializers.ModelSerializer):
 
         son_inventor_number = instance.Operation_Care_Inventor_Number
         inventors = instance.operation_inventors.all()
+        inventorsa = Inventor.objects.filter(Inventor_Owner=instance)
 
+        
         son_string_number = instance.Operation_Care_Number_Str
         
         instance.Operation_Care_Company = validated_data.get('Operation_Care_Company', instance.Operation_Care_Company)
@@ -338,6 +377,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
 
         yeni_inventor_number= instance.Operation_Care_Inventor_Number
         yeni_string_number = instance.Operation_Care_Number_Str
+       
+       
 
         if son_inventor_number > yeni_inventor_number:
             fark=son_inventor_number-yeni_inventor_number
@@ -364,22 +405,33 @@ class OperationCareSerializer(serializers.ModelSerializer):
                 Inventor_Capacity=instance.Operation_Care_Capacity,
                 Inventor_Izolasion="OK",
             )
+        inventors_s = instance.operation_inventors.all()
         
         if son_string_number>yeni_string_number:
-            fark=son_string_number-yeni_string_number
-            for inventor in inventors:
+            
+            for inventor in inventors_s:
                 strings = inventor.inventor_strings.all()
+                string_count = len(strings)
+
+                fark=string_count-yeni_string_number
+
+
                 for string in strings.order_by('-id'):
+                   
                     if fark > 0:
                         string.delete()
                         fark -= 1
                     else:
                         break
         elif son_string_number<yeni_string_number:
-            fark=yeni_string_number-son_string_number
+            
             for inventor in inventors:
+                strings = inventor.inventor_strings.all()
+                string_count = len(strings)
+
+                fark=yeni_string_number-string_count
                 for x in range(son_string_number+1, son_string_number+fark+1):
-                    string_new=String.objects.create(
+                    string=String.objects.create(
                         String_Owner=inventor,
                         String_Direction=instance.Operation_Care_Direction,
                         String_Number=x,
@@ -390,7 +442,6 @@ class OperationCareSerializer(serializers.ModelSerializer):
                         String_AC_Power=instance.Operation_Care_AC_Power,
                         String_DC_Power=instance.Operation_Care_DC_Power,
                         String_Capacity=instance.Operation_Care_Capacity,
-                        String_Izolasion=instance.Inventor_Izolasion,
                     )
         return instance
 
