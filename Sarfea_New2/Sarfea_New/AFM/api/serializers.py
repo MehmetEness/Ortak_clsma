@@ -331,33 +331,32 @@ class OperationCareSerializer(serializers.ModelSerializer):
                 Inventor_Izolasion="OK",
             )
         
-        if son_string_number!=yeni_string_number:
-            if son_string_number>yeni_string_number:
-                fark=son_string_number-yeni_string_number
-                for inventor in inventors:
-                    strings = inventor.inventor_strings.all()
-                    for string in strings.order_by('-id'):
-                        if fark > 0:
-                            string.delete()
-                            fark -= 1
-                        else:
-                            break
-            elif son_string_number<yeni_string_number:
-                fark=yeni_string_number-son_string_number
-                for inventor in inventors:
-                    for x in range(son_string_number+1, son_string_number+fark+1):
-                        string_new=String.objects.create(
-                            String_Owner=inventor,
-                            String_Direction=instance.Operation_Care_Direction,
-                            String_Number=x,
-                            String_Panel_Power=instance.Operation_Care_Panel_Power,
-                            String_Panel_Brand=instance.Operation_Care_Panel_Brand,
-                            String_VOC=instance.Operation_Care_VOC,
-                            String_Panel_SY=instance.Operation_Care_Panel_Number_Str,
-                            String_AC_Power=instance.Operation_Care_AC_Power,
-                            String_DC_Power=instance.Operation_Care_DC_Power,
-                            String_Capacity=instance.Operation_Care_Capacity,
-                            String_Izolasion=instance.Inventor_Izolasion,
+        if son_string_number>yeni_string_number:
+            fark=son_string_number-yeni_string_number
+            for inventor in inventors:
+                strings = inventor.inventor_strings.all()
+                for string in strings.order_by('-id'):
+                    if fark > 0:
+                        string.delete()
+                        fark -= 1
+                    else:
+                        break
+        elif son_string_number<yeni_string_number:
+            fark=yeni_string_number-son_string_number
+            for inventor in inventors:
+                for x in range(son_string_number+1, son_string_number+fark+1):
+                    string_new=String.objects.create(
+                        String_Owner=inventor,
+                        String_Direction=instance.Operation_Care_Direction,
+                        String_Number=x,
+                        String_Panel_Power=instance.Operation_Care_Panel_Power,
+                        String_Panel_Brand=instance.Operation_Care_Panel_Brand,
+                        String_VOC=instance.Operation_Care_VOC,
+                        String_Panel_SY=instance.Operation_Care_Panel_Number_Str,
+                        String_AC_Power=instance.Operation_Care_AC_Power,
+                        String_DC_Power=instance.Operation_Care_DC_Power,
+                        String_Capacity=instance.Operation_Care_Capacity,
+                        String_Izolasion=instance.Inventor_Izolasion,
                     )
         return instance
 
