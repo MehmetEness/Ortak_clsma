@@ -1031,6 +1031,13 @@ async function getTotalList() {
           <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "₺"}</td>
           <td>${formatNumber(card.Profit_Rate_Card, 2) + "₺"}</td>
           <td>${formatDateForTable(card.Date_Card)}</td>
+          ${card.Comment_Card_1 ? `<td title="${card.Comment_Card_1}">${card.Comment_Card_1.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_2 ? `<td title="${card.Comment_Card_2}">${card.Comment_Card_2.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_3 ? `<td title="${card.Comment_Card_3}">${card.Comment_Card_3.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_4 ? `<td title="${card.Comment_Card_4}">${card.Comment_Card_4.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_5 ? `<td title="${card.Comment_Card_5}">${card.Comment_Card_5.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_6 ? `<td title="${card.Comment_Card_6}">${card.Comment_Card_6.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_7 ? `<td title="${card.Comment_Card_7}">${card.Comment_Card_7.slice(0, 10)}</td>` : `<td>-</td>`}
         `;
 
       listTableBody.appendChild(row);
