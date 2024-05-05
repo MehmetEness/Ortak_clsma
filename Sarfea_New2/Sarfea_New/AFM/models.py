@@ -361,7 +361,8 @@ class Operation_Care(models.Model):
     Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
     Operation_Care_Has_Fail = models.BooleanField(default=False, blank=True, null=True)
     Operation_Care_Fail_Number = models.IntegerField(blank=True, null=True, default="0")
-      
+    Operation_Care_Switchgear_Material= models.CharField(max_length=200, blank=True, null=True)
+    
 class Fail(models.Model):
     Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_fails")
     Fail_Central_Name = models.CharField(max_length=63, blank=True, null=True)
