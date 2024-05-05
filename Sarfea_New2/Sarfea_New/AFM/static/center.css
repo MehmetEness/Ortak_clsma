@@ -119,7 +119,7 @@
   font-weight: 500;
   margin-bottom: 5px;
 }
-.user-details .input-box input,
+.user-details .input-box input, .user-details .input-box textarea,
 select {
   background: #ffffff5d;
   height: 45px;
@@ -133,6 +133,7 @@ select {
   transition: all 0.3s ease;
 }
 .user-details .input-box input,
+.user-details .input-box textarea,
 .user-details .input-box input,
 .user-details .input-box select,
 .user-details

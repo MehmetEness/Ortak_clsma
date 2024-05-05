@@ -120,8 +120,14 @@ function generateCard(card) {
                   ${card.Offer_File_Card_5 ? `<button class="mr-3 blue" onclick="openFile('${card.Offer_File_Card_5}')">T5</button>` : `<button class="mb mr-3">T5</button>`}
               </div>
           </div>
-          <div class="flex-row">
-              <p class="eclipse"><span class="bold500">Yorum: </span>${card.Offer_Comment_Card || ""}</p>
+          <div style="margin-top: 10px; display: flex; justify-content: space-between;" class="buttons">
+          ${card.Offer_File_Card ? `<button class="" onclick="openFile('${card.Offer_File_Card}')">Y1</button>` : `<button onclick="commendAddFunction()">Y1</button>`}
+          ${card.Offer_File_Card_2 ? `<button class="" onclick="openFile('${card.Offer_File_Card_2}')">Y2</button>` : `<button onclick="commendAddFunction()">Y2</button>`}
+          ${card.Offer_File_Card_3 ? `<button class="" onclick="openFile('${card.Offer_File_Card_3}')">Y3</button>` : `<button onclick="commendAddFunction()">Y3</button>`}
+          ${card.Offer_File_Card_4 ? `<button class="" onclick="openFile('${card.Offer_File_Card_4}')">Y4</button>` : `<button onclick="commendAddFunction()">Y4</button>`}
+          ${card.Offer_File_Card_5 ? `<button class="" onclick="openFile('${card.Offer_File_Card_5}')">Y5</button>` : `<button onclick="commendAddFunction()">Y5</button>`}
+          ${card.Offer_File_Card_4 ? `<button class="" onclick="openFile('${card.Offer_File_Card_4}')">Y4</button>` : `<button onclick="commendAddFunction()">Y4</button>`}
+          ${card.Offer_File_Card_5 ? `<button class="" onclick="openFile('${card.Offer_File_Card_5}')">Y5</button>` : `<button onclick="commendAddFunction()">Y5</button>`}
           </div>
           <div class="card-menu">
               <i class="fa-solid fa-ellipsis card_menu-btn"></i>
@@ -136,6 +142,10 @@ function generateCard(card) {
       </div>
     </li>
   `;
+}
+var commendAddWindow = document.querySelector(".commend-add-window");
+function commendAddFunction(){
+  commendAddWindow.style.display = "flex";
 }
 
 function dragTest() {
