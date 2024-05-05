@@ -270,8 +270,6 @@ class SalesOfferCard_Revise(models.Model):
         ),
     )    
     Roof_Cost_Card = models.IntegerField(blank=True, null=True, default="0")
-    Comment_Date_Card = models.DateField(blank=True, null=True)
-    Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
     Person_Related= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -288,6 +286,42 @@ class SalesOfferCard_Revise(models.Model):
     Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
+
+    Comment_Date_Card_1 = models.DateField(blank=True, null=True)
+    Comment_Card_1= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_1= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_1= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_2 = models.DateField(blank=True, null=True)
+    Comment_Card_2= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_2= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_2= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_3 = models.DateField(blank=True, null=True)
+    Comment_Card_3= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_3= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_3= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_4 = models.DateField(blank=True, null=True)
+    Comment_Card_4= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_4= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_4= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_5 = models.DateField(blank=True, null=True)
+    Comment_Card_5= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_5= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_5= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_6 = models.DateField(blank=True, null=True)
+    Comment_Card_6= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_6= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_6= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_7 = models.DateField(blank=True, null=True)
+    Comment_Card_7= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_7= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_7= models.CharField(max_length=63, blank=True, null=True)
+    
     Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
