@@ -179,10 +179,8 @@ class SalesOfferCardSerializer(serializers.ModelSerializer):
         instance.Date_Card = validated_data.get('Date_Card', instance.Date_Card)
         instance.Terrain_Roof_Card = validated_data.get('Terrain_Roof_Card', instance.Terrain_Roof_Card)
         instance.Roof_Cost_Card = validated_data.get('Roof_Cost_Card', instance.Roof_Cost_Card)
-        instance.Comment_Date_Card = validated_data.get('Comment_Date_Card', instance.Comment_Date_Card)
         instance.Person_Deal = validated_data.get('Person_Deal', instance.Person_Deal)
         instance.Person_Related = validated_data.get('Person_Related', instance.Person_Related)
-        instance.Offer_Comment_Card = validated_data.get('Offer_Comment_Card', instance.Offer_Comment_Card)
         instance.Offer_File_Card = validated_data.get('Offer_File_Card', instance.Offer_File_Card)
         instance.Offer_File_Card_2 = validated_data.get('Offer_File_Card_2', instance.Offer_File_Card_2)
         instance.Offer_File_Card_3 = validated_data.get('Offer_File_Card_3', instance.Offer_File_Card_3)
@@ -197,6 +195,42 @@ class SalesOfferCardSerializer(serializers.ModelSerializer):
         instance.Unit_Cost_with_Roof_Cost = validated_data.get('Unit_Cost_with_Roof_Cost', instance.Unit_Cost_with_Roof_Cost)
         instance.Unit_Offer_with_Roof_Cost = validated_data.get('Unit_Offer_with_Roof_Cost', instance.Unit_Offer_with_Roof_Cost)
         instance.Profit_Rate_Card = validated_data.get('Profit_Rate_Card', instance.Profit_Rate_Card)
+
+        instance.Comment_Date_Card_1 = validated_data.get('Comment_Date_Card_1', instance.Comment_Date_Card_1)
+        instance.Comment_Card_1 = validated_data.get('Comment_Card_1', instance.Comment_Card_1)
+        instance.Comment_Telno_Card_1 = validated_data.get('Comment_Telno_Card_1', instance.Comment_Telno_Card_1)
+        instance.Comment_Person_Card_1 = validated_data.get('Comment_Person_Card_1', instance.Comment_Person_Card_1)
+
+        instance.Comment_Date_Card_2 = validated_data.get('Comment_Date_Card_2', instance.Comment_Date_Card_2)
+        instance.Comment_Card_2 = validated_data.get('Comment_Card_2', instance.Comment_Card_2)
+        instance.Comment_Telno_Card_2 = validated_data.get('Comment_Telno_Card_2', instance.Comment_Telno_Card_2)
+        instance.Comment_Person_Card_2 = validated_data.get('Comment_Person_Card_2', instance.Comment_Person_Card_2)
+
+        instance.Comment_Date_Card_3 = validated_data.get('Comment_Date_Card_3', instance.Comment_Date_Card_3)
+        instance.Comment_Card_3 = validated_data.get('Comment_Card_3', instance.Comment_Card_3)
+        instance.Comment_Telno_Card_3 = validated_data.get('Comment_Telno_Card_3', instance.Comment_Telno_Card_3)
+        instance.Comment_Person_Card_3 = validated_data.get('Comment_Person_Card_3', instance.Comment_Person_Card_3)
+
+        instance.Comment_Date_Card_4 = validated_data.get('Comment_Date_Card_4', instance.Comment_Date_Card_4)
+        instance.Comment_Card_4 = validated_data.get('Comment_Card_4', instance.Comment_Card_4)
+        instance.Comment_Telno_Card_4 = validated_data.get('Comment_Telno_Card_4', instance.Comment_Telno_Card_4)
+        instance.Comment_Person_Card_4 = validated_data.get('Comment_Person_Card_4', instance.Comment_Person_Card_4)
+
+        instance.Comment_Date_Card_5 = validated_data.get('Comment_Date_Card_5', instance.Comment_Date_Card_5)
+        instance.Comment_Card_5 = validated_data.get('Comment_Card_5', instance.Comment_Card_5)
+        instance.Comment_Telno_Card_5 = validated_data.get('Comment_Telno_Card_5', instance.Comment_Telno_Card_5)
+        instance.Comment_Person_Card_5 = validated_data.get('Comment_Person_Card_5', instance.Comment_Person_Card_5)
+
+        instance.Comment_Date_Card_6 = validated_data.get('Comment_Date_Card_6', instance.Comment_Date_Card_6)
+        instance.Comment_Card_6 = validated_data.get('Comment_Card_6', instance.Comment_Card_6)
+        instance.Comment_Telno_Card_6 = validated_data.get('Comment_Telno_Card_6', instance.Comment_Telno_Card_6)
+        instance.Comment_Person_Card_6 = validated_data.get('Comment_Person_Card_6', instance.Comment_Person_Card_6)
+
+        instance.Comment_Date_Card_7 = validated_data.get('Comment_Date_Card_7', instance.Comment_Date_Card_7)
+        instance.Comment_Card_7 = validated_data.get('Comment_Card_7', instance.Comment_Card_7)
+        instance.Comment_Telno_Card_7 = validated_data.get('Comment_Telno_Card_7', instance.Comment_Telno_Card_7)
+        instance.Comment_Person_Card_7 = validated_data.get('Comment_Person_Card_7', instance.Comment_Person_Card_7)
+
         instance.save()
         return instance
 
