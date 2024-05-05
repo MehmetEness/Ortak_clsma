@@ -1034,6 +1034,22 @@ async function apiFunctions(name, type, myForm, id) {
         console.error("There was an error!", error);
       }
       break;
+      case "PATCH":
+      try {
+        //const formData = new FormData(myForm);
+        //console.log(`/api_${name}/${id}`)
+        await fetch(`/api_${name}/${id}`, {
+          method: "PATCH",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: myForm,
+        });
+
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
     default:
   }
 }

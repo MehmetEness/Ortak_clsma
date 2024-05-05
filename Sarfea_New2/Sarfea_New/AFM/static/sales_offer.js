@@ -21,6 +21,14 @@ const clientAddWindow = document.querySelector(".client-add-window");
 const reqSalesInputs = document.querySelectorAll("#id_Client_Card, #id_Person_Deal, #id_Location_Card, #id_Situation_Card");
 const reqSalesLabels = document.querySelectorAll("#firma_adi_span, #ilgilenen_kisi_span, #konum_span, #drum_span");
 
+//              TARİH İNPUTLARI FORMATLAMA
+const dateInputs = document.querySelectorAll(".date-inputs");
+formatDateInputs(dateInputs);
+
+//              INPUT FORMATLAMA
+const formatedInputs = document.querySelectorAll(".formatInputs");
+inputsForFormat(formatedInputs);
+
 var editMode = false;
 
 var container = document.querySelector('.rows');
@@ -121,13 +129,13 @@ function generateCard(card) {
               </div>
           </div>
           <div style="margin-top: 10px; display: flex; justify-content: space-between;" class="buttons">
-          ${card.Offer_File_Card ? `<button class="" onclick="openFile('${card.Offer_File_Card}')">Y1</button>` : `<button onclick="commendAddFunction()">Y1</button>`}
-          ${card.Offer_File_Card_2 ? `<button class="" onclick="openFile('${card.Offer_File_Card_2}')">Y2</button>` : `<button onclick="commendAddFunction()">Y2</button>`}
-          ${card.Offer_File_Card_3 ? `<button class="" onclick="openFile('${card.Offer_File_Card_3}')">Y3</button>` : `<button onclick="commendAddFunction()">Y3</button>`}
-          ${card.Offer_File_Card_4 ? `<button class="" onclick="openFile('${card.Offer_File_Card_4}')">Y4</button>` : `<button onclick="commendAddFunction()">Y4</button>`}
-          ${card.Offer_File_Card_5 ? `<button class="" onclick="openFile('${card.Offer_File_Card_5}')">Y5</button>` : `<button onclick="commendAddFunction()">Y5</button>`}
-          ${card.Offer_File_Card_4 ? `<button class="" onclick="openFile('${card.Offer_File_Card_4}')">Y4</button>` : `<button onclick="commendAddFunction()">Y4</button>`}
-          ${card.Offer_File_Card_5 ? `<button class="" onclick="openFile('${card.Offer_File_Card_5}')">Y5</button>` : `<button onclick="commendAddFunction()">Y5</button>`}
+          ${card.Comment_Card_1 ? `<button class="blue" onclick="commendAddFunction(1, ${card.id})">Y1</button>` : `<button onclick="commendAddFunction(1, ${card.id})">Y1</button>`}
+          ${card.Comment_Card_2 ? `<button class="blue" onclick="commendAddFunction(2, ${card.id})">Y2</button>` : `<button onclick="commendAddFunction(2, ${card.id})">Y2</button>`}
+          ${card.Comment_Card_3 ? `<button class="blue" onclick="commendAddFunction(3, ${card.id})">Y3</button>` : `<button onclick="commendAddFunction(3, ${card.id})">Y3</button>`}
+          ${card.Comment_Card_4 ? `<button class="blue" onclick="commendAddFunction(4, ${card.id})">Y4</button>` : `<button onclick="commendAddFunction(4, ${card.id})">Y4</button>`}
+          ${card.Comment_Card_5 ? `<button class="blue" onclick="commendAddFunction(5, ${card.id})">Y5</button>` : `<button onclick="commendAddFunction(5, ${card.id})">Y5</button>`}
+          ${card.Comment_Card_6 ? `<button class="blue" onclick="commendAddFunction(6, ${card.id})">Y4</button>` : `<button onclick="commendAddFunction(6, ${card.id})">Y4</button>`}
+          ${card.Comment_Card_7 ? `<button class="blue" onclick="commendAddFunction(7, ${card.id})">Y5</button>` : `<button onclick="commendAddFunction(7, ${card.id})">Y5</button>`}
           </div>
           <div class="card-menu">
               <i class="fa-solid fa-ellipsis card_menu-btn"></i>
@@ -144,8 +152,63 @@ function generateCard(card) {
   `;
 }
 var commendAddWindow = document.querySelector(".commend-add-window");
-function commendAddFunction(){
-  commendAddWindow.style.display = "flex";
+const commendContainer = document.querySelector("#commend_container");
+
+const commendCard = document.querySelector(`#Comment_Card`);
+const commendTel = document.querySelector(`#Comment_Telno_Card`);
+const commendPerson = document.querySelector(`#Comment_Person_Card`);
+const commendCDate = document.querySelector(`#Comment_Date_Card`);
+
+var commendValue = -1;
+var commendId = -1;
+
+async function commendAddFunction(x, y){
+  setTimeout(async () => {
+    commendValue = x;
+    commendId = y;
+    commendAddWindow.style.display = "flex";
+    const result = await apiFunctions("sales_offer", "GETID", "x", y)
+    let key1 = `Comment_Card_${x}`;
+    commendCard.value = result[key1] || "";
+    let key2 = `Comment_Telno_Card_${x}`;
+    commendTel.value = result[key2] || "";
+    let key3 = `Comment_Person_Card_${x}`;
+    commendPerson.value = result[key3] || "";
+    let key4 = `Comment_Date_Card_${x}`;
+    commendCDate.value = result[key4] || "";
+    formatDateInputsForLoad(dateInputs)
+  }, 10);
+}
+document.addEventListener("mousedown", (event) => {
+  const commendAddContainer = document.querySelector(".commend-add-window .container");
+  if (!commendAddContainer.contains(event.target)) {
+    commendAddWindow.style.display = "none";
+  }
+});
+
+
+
+async function commendSubmitFunction(event){
+ // event.preventDefault();
+  var formData = new FormData();
+  
+  formData.append(`Comment_Card_${commendValue}`, commendCard.value);
+  formData.append(`Comment_Telno_Card_${commendValue}`, commendTel.value);
+  formData.append(`Comment_Person_Card_${commendValue}`, commendPerson.value);
+  formData.append(`Comment_Date_Card_${commendValue}`, formatDateForSubmit(commendCDate.value));
+  const formDataObject = {};
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
+  });
+  
+  // JavaScript nesnesini JSON formatına dönüştürün
+  const formDataJson = JSON.stringify(formDataObject);
+  
+  // JSON formatındaki formData'yı konsola yazdırın
+  console.log(formDataJson);
+  await apiFunctions("sales_offer", "PATCH", formData, commendId);
+  getSalesCards();
+  commendAddWindow.style.display = "none";
 }
 
 function dragTest() {
@@ -415,13 +478,6 @@ function cardMenuFunctions() {
 
 
 
-//              TARİH İNPUTLARI FORMATLAMA
-const dateInputs = document.querySelectorAll(".date-inputs");
-formatDateInputs(dateInputs);
-
-//              INPUT FORMATLAMA
-const formatedInputs = document.querySelectorAll(".formatInputs");
-inputsForFormat(formatedInputs);
 
 
 
