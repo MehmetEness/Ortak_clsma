@@ -55,7 +55,6 @@ class IncomeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ClientsListCreateAPIView(generics.ListCreateAPIView):
-
     queryset= Clients.objects.all()
     serializer_class=ClientSerializer
 
@@ -80,11 +79,15 @@ class SalesOfferListCreateAPIView(generics.ListCreateAPIView):
 class SalesOfferDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard.objects.all()
     serializer_class=SalesOfferCardSerializer
+    
   
 class SalesOfferReviseListCreateAPIView(generics.ListCreateAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
-
+    
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
        
 class SalesOfferReviseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
