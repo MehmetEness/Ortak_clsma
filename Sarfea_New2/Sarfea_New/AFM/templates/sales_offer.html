@@ -756,23 +756,23 @@
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="">
             <span id="" class="details">Muhatap</span>
-            <input id="" name="" type="text" />
+            <input id="Comment_Person_Card" name="" type="text" />
           </div>
           <div id="firma_input_box" class="input-box" name="">
             <span id="" class="details">Telefon Numarası</span>
-            <input id="" name="" type="text" />
+            <input id="Comment_Telno_Card" name="" type="text" />
           </div>
           <div id="firma_input_box" class="input-box" name="">
             <span id="" class="details">Tarih</span>
-            <input id="" name="" type="text" />
+            <input id="Comment_Date_Card" class="date-inputs" name="" type="text" maxlength="10" />
           </div>
           <div id="firma_input_box" class="input-box" name="">
             <span id="" class="details">Yorum</span>
-            <textarea style="height: 83px; padding: 3px 15px;" name="" id=""></textarea>
+            <textarea style="height: 83px; padding: 3px 15px;" name="" id="Comment_Card"></textarea>
           </div>
         </div>
         <div class="button">
-          <input id="firma_submit_btn" type="button" value="Kaydet" />
+          <input onclick="commendSubmitFunction()" id="firma_submit_btn" type="button" value="Kaydet" />
         </div>
       </form>
     </div>
@@ -917,6 +917,13 @@
             <th>Arazi Dahil T.T.<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
             <th style="padding: 0px 50px;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 1<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 2<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 3<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 4<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 5<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 6<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 7<span class="icon-arrow">&UpArrow;</span></th>
           </thead>
           <tbody>
             <!-- {% for card in sales_offer_card%}
