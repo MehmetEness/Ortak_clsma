@@ -246,13 +246,11 @@
                 class="myInput need_id" placeholder="İşletme Bakım Seçiniz" data-dropdown="ariza-add-dropdown1">
 
               <div id="ariza-add-dropdown1" class="dropdown-content operation-dropdown">
-                {% for x in operation_cares %}
-                <span value="{{x.id}}" class="dropdown-item">{{x.Operation_Care_Company}}</span> 
-                {% endfor %}
+                
               </div>
             </div>
           </div>
-
+          
           <div class="input-box" id="ProjectNameInput">
             <span id="proje_adi_span" class="details">Santral İsmi</span>
             <input autocomplete='off' type="text" name="Fail_Central_Name" maxlength="63"

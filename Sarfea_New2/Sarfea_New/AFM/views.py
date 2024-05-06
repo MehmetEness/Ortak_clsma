@@ -508,6 +508,7 @@ def operation_care_detail(request,operation_care_id):
     fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
     inventors =Inventor.objects.filter(Inventor_Owner=operation_care)
     polls =Poll.objects.filter(Poll_Operation_Care=operation_care)
+    operation_cares = Operation_Care.objects.all()
 
     inventor_strings = {}
 
@@ -522,6 +523,7 @@ def operation_care_detail(request,operation_care_id):
         "inventors":inventors,
         "inventor_strings": inventor_strings,
         "polls":polls,
+        "operation_cares":operation_cares
     }
 
     return render(request, "operation_care_detail.html", context)
