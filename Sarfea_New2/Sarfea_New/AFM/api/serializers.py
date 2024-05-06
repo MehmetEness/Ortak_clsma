@@ -444,6 +444,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
                         String_AC_Power=instance.Operation_Care_AC_Power,
                         String_DC_Power=instance.Operation_Care_DC_Power,
                         String_Capacity=instance.Operation_Care_Capacity,
+                        String_Izolasion=string.String_Izolasion,
+
                     )
         return instance
 

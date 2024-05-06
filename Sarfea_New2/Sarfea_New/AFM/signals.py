@@ -69,6 +69,10 @@ def update_client_card(sender, instance, **kwargs):
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
+        poll= Poll.objects.create(
+            Poll_Operation_Care=instance,
+            Poll_Date=instance.Operation_Care_Start_Date
+        )
         num= instance.Operation_Care_Inventor_Number
         if num is None:
             num = 0
@@ -110,7 +114,7 @@ def update_invantor(sender, instance, **kwargs):
 @receiver(post_save, sender=Inventor)
 def create_string(sender, instance, created, **kwargs):
     if created:
-
+        oc=instance.Inventor_Owner
         num= instance.Inventor_Number_Str
         if num is None:
             num = 0
@@ -127,6 +131,8 @@ def create_string(sender, instance, created, **kwargs):
                 String_DC_Power=instance.Inventor_DC_Power,
                 String_Capacity=instance.Inventor_Capacity,
                 String_Izolasion=instance.Inventor_Izolasion,
+                String_Date=oc.Operation_Care_Start_Date,
+
             )
 
 @receiver(post_save, sender=Inventor)
@@ -148,4 +154,28 @@ def update_strings(sender, instance, **kwargs):
         # 'String' örneğini kaydederiz
         string.save()
     
+@receiver(post_save, sender=Poll)
+def create_inventor(sender, instance, created, **kwargs):
+    if created:
+        oc=Poll.Poll_Operation_Care
+        if instance.Poll_Date is not None:
+            inventors = Inventor.objects.filter()
+            for inventor in inventors:
+                strings = inventor.inventor_strings.all()
 
+                for string in strings:
+                    if string.String_Date!=instance.Poll_Date:
+                        new_strings=String.objects.create(
+                            String_Owner=string.String_Owner,
+                            String_Direction=string.String_Direction,
+                            String_Number=string.String_Number,
+                            String_Panel_Power=string.String_Panel_Power,
+                            String_Panel_Brand=string.String_Panel_Brand,
+                            String_VOC=string.String_VOC,
+                            String_Panel_SY=string.String_Panel_SY,
+                            String_AC_Power=string.String_AC_Power,
+                            String_DC_Power=string.String_DC_Power,
+                            String_Capacity=string.String_Capacity,
+                            String_Izolasion=inventor.Inventor_Izolasion,
+                            String_Date=instance.Poll_Date,
+                        )
