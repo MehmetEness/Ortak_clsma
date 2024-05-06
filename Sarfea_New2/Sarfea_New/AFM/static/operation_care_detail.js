@@ -573,6 +573,53 @@ const getInventor = async () =>{
 //getInventor();
 
 
+//-----               EKLEME SAYFALARI
+const arizaAddWindowButton = document.querySelector("#ariza_add_btn")
+const arizaAddWindow = document.querySelector(".ariza-add-window")
+
+const arizaFaturaAddSelect = document.querySelector("#id_Fail_Guaranteed")
+const arizaFaturaAddWindow = document.querySelector(".ariza-fatura-add-window")
+let operationEditMode = false;
+let failEditMode = false;
 
 
+//        ARIZA EKLEME
+arizaAddWindowButton.addEventListener("click", () => {
+  setTimeout(() => {
+    if (failEditMode == true) { clearInputAfterSave(arizaAddForm) }
+    failEditMode = false;
+    arizaAddWindow.style.display = "flex";
+   
+    //getprojectName()
+  }, 10);
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaAddContainer = arizaAddWindow.querySelector(".container");
+  if (!arizaAddContainer.contains(event.target) && arizaFaturaAddWindow.style.display == "none") {
+    arizaAddWindow.style.display = "none";
+  }
+});
+//        ARIZA FATURA EKLEME
+arizaFaturaAddSelect.addEventListener("change", () => {
+  const selectedOption = arizaFaturaAddSelect.options[arizaFaturaAddSelect.selectedIndex].text;
+  if (selectedOption.startsWith("Hayır")) {
+    arizaFaturaAddWindow.style.display = "flex";
+  } else {
+    arizaFaturaAddWindow.style.display = "none";    
+  }
+});
+document.addEventListener("mousedown", (event) => {
+  const arizaFaturaAddContainer = arizaFaturaAddWindow.querySelector(".container");
+  if (!arizaFaturaAddContainer.contains(event.target)) {
+    if (arizaFaturaAddSelect.value == "Hayır" && arizaFaturaAddWindow.style.display == "flex") {
+      setTimeout(() => {
+        arizaFaturaAddSelect.value = "Belirsiz"
+      }, 10);
+    }
+    arizaFaturaAddWindow.style.display = "none";
+  }
+});
+document.querySelector("#ariza-fatura-X").addEventListener("click", ()=>{
+  arizaFaturaAddSelect.value = "Belirsiz"
+})
 

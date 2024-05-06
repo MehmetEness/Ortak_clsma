@@ -536,7 +536,7 @@
   <div class="window sales-offer-add-window">
     <div id="sales_offer_container" class="container">
       <h3 id="sales_offer-X" class="close-window sales_offerx">X</h3>
-      <div class="title">Firma Ekle</div>
+      <div class="title">Yeni Satış Ekle</div>
       <form id="sales_offer_add_form" action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="sales_form" value="sales_form" />
@@ -586,7 +586,7 @@
               id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00" />
           </div>
           <div class="input-box">
-            <span class="details">Birim Teklif<button type="button" id="br_tek_btn" class="calc_btns"><i
+            <span class="details">Birim Teklif ($)<button type="button" id="br_tek_btn" class="calc_btns"><i
                   class="fa-solid fa-calculator"></i></button></span>
             <input class="coc-input formatInputs" type="text" name="UnitOffer_NotIncludingKDV"
               id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00" />
@@ -598,7 +598,7 @@
               autocomplete="off" placeholder="0.00" />
           </div>
           <div class="input-box">
-            <span class="details">Toplam Maliyet<button type="button" id="total_mal_btn" class="calc_btns"><i
+            <span class="details">Toplam Maliyet ($)<button type="button" id="total_mal_btn" class="calc_btns"><i
                   class="fa-solid fa-calculator"></i></button></span>
             <input class="coc-input formatInputs" type="text" name="Cost_NotIncludingKDV_Card"
               id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00" />
@@ -655,7 +655,7 @@
           </div>
 
           <div class="input-box">
-            <span class="details arazi-span">Arazi Bedeli(MW)</span>
+            <span class="details arazi-span">Arazi Bedeli($/MW)</span>
             <input class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
               id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00" />
           </div>
