@@ -373,6 +373,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
         instance.Operation_Care_Finish_Date = validated_data.get('Operation_Care_Finish_Date', instance.Operation_Care_Finish_Date)
         instance.Operation_Care_Has_Fail = validated_data.get('Operation_Care_Has_Fail', instance.Operation_Care_Has_Fail)
         instance.Operation_Care_Fail_Number = validated_data.get('Operation_Care_Fail_Number', instance.Operation_Care_Fail_Number)
+        instance.Operation_Care_Switchgear_Material = validated_data.get('Operation_Care_Switchgear_Material', instance.Operation_Care_Switchgear_Material)
+        
         instance.save()
 
         yeni_inventor_number= instance.Operation_Care_Inventor_Number
