@@ -6,7 +6,6 @@ from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
 
-
 @receiver(pre_save, sender=Expenses)
 def update_expenses_company_name(sender, instance, **kwargs):
     
@@ -155,14 +154,15 @@ def update_strings(sender, instance, **kwargs):
         string.save()
     
 @receiver(post_save, sender=Poll)
-def create_inventor(sender, instance, created, **kwargs):
+def create_poll_str(sender, instance, created, **kwargs):
     if created:
-        oc=Poll.Poll_Operation_Care
+        oc=instance.Poll_Operation_Care
         if instance.Poll_Date is not None:
-            inventors = Inventor.objects.filter()
+            inventors = Inventor.objects.filter(Inventor_Owner=oc)
             for inventor in inventors:
-                strings = inventor.inventor_strings.all()
-
+                strings_all_for_inventor = inventor.inventor_strings.all()
+                string_date=strings_all_for_inventor.last().String_Date
+                strings=String.objects.filter(String_Date=string_date, String_Owner=inventor)
                 for string in strings:
                     if string.String_Date!=instance.Poll_Date:
                         new_strings=String.objects.create(
