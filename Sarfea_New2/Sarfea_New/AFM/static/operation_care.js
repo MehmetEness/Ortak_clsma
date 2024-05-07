@@ -226,7 +226,7 @@ dateFormatForColor(tarihRow, 7);
 
 
 
-console.log(apiFunctions("sales_offer", "GET"))
+
 
 
 
