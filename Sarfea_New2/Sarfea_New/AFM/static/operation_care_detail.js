@@ -555,8 +555,12 @@ anketAddButton.addEventListener("click", async () => {
   for (let i = 1; i < 10; i++) {
     const asdf = document.querySelectorAll(`[name^="answer_${i}"]`)
     for (let j = 0; j < asdf.length / 2; j++) {
+      let checkBox1 = document.querySelector(`[id^="checkbox_${i}_${j+1}_1"]`)
+      let checkBox2 = document.querySelector(`[id^="checkbox_${i}_${j+1}_2"]`)
       let key = `answer_${i}_${j+1}`;
-      if(formData.get(key) == null){        
+      console.log(checkBox1);
+      console.log(checkBox1.checked);
+      if(formData.get(key) == null && !checkBox1.checked && !checkBox2.checked){        
       formData.append(key , null)  
       }
       
