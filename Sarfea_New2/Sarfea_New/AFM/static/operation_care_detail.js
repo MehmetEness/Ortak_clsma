@@ -427,12 +427,16 @@ inventorFormEditBtn.addEventListener("click", async function (event) {
       await apiFunctions("inventor", "POST", formData);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
-      getAndRenderStrings();
+      const stringDate = document.getElementById("bakim_date");
+      getAndRenderStrings(stringDate.value);
     } else {
       await apiFunctions("inventor", "PUT", formData, invID);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
-      getAndRenderStrings();
+      const stringDate = document.getElementById("bakim_date");
+      getAndRenderStrings(stringDate.value);
+      
+      
     }
   //}
 });
