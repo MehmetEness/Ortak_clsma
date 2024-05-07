@@ -1210,7 +1210,7 @@
                                             <span style="width: 25%;">BAKIM TARİHİ </span>
                                             <select style="width: 130px;" name="" id="bakim_date">
                                                
-                                                <option value="">Tarih Seçin</option>
+                                                <!-- <option value="">Tarih Seçin</option> -->
                                                 {% for poll in polls %}
                                                 <option value="{{poll.Poll_Date | date:'Y-m-d'}}">{{poll.Poll_Date | date:"d.m.Y"}}</option>
                                                 {% endfor %}

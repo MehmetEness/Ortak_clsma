@@ -82,9 +82,9 @@ function processData(data) {
 
         } else if (value == false) {
           const element2 = document.getElementById(
-            `checkbox_${index1}_${index2}_1`
+            `checkbox_${index1}_${index2}_2`
           );
-          element2.checked = false;
+          element2.checked = true;
           // const element = document.getElementById(
           //   `checkbox_${index1}_${index2}_2`
           // );
@@ -167,42 +167,21 @@ async function getAndaRenderList() {
         tbody.innerHTML = "";
         for (let i = 0; i < inventor.Operation_Care_Number_Str; i++) {
           const row =
-            "<tr>" +
-            `<td><span>İnventör 1</span></td>` +
-            "<td>" +
-            inventor.Operation_Care_Direction +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_Number_Str +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_Panel_Power +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_VOC +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_Panel_Brand +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_Panel_Number_Str +
-            "</td>" +
-            "<td>OK</td>" +
-            "<td>" +
-            inventor.Operation_Care_Capacity +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_AC_Power +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_DC_Power +
-            "</td>" +
-            "<td>" +
-            inventor.Operation_Care_DC_Power +
-            "</td>" +
-            "<td>0.01</td>" +
-            "<td>500</td>" +
-            "</tr>";
+          `<tr>
+              <td><span>${inventor.Operation_Care_Direction}</span></td>
+              <td>${inventor.Operation_Care_Number_Str}</td>
+              <td>${inventor.Operation_Care_Panel_Power}</td>
+              <td>${inventor.Operation_Care_VOC}</td>
+              <td>${inventor.Operation_Care_Panel_Brand}</td>
+              <td>${inventor.Operation_Care_Panel_Number_Str}</td>
+              <td>OK</td>
+              <td>${inventor.Operation_Care_Capacity}</td>
+              <td>${inventor.Operation_Care_AC_Power}</td>
+              <td>${inventor.Operation_Care_DC_Power}</td>
+              <td>${inventor.Operation_Care_DC_Power}</td>
+              <td>0.01</td>
+              <td>500</td>
+          </tr>`;
           tbody.insertAdjacentHTML("beforeend", row);
         }
       }
@@ -214,12 +193,17 @@ async function getAndaRenderList() {
 
 //------------------------------------------
 
-
-
+const stringDate = document.getElementById("bakim_date");
+getAndRenderStrings(stringDate.value);
+stringDate.addEventListener("change", ()=>{
+  const selectedValue = stringDate.value;
+  getAndRenderStrings(selectedValue);
+    console.log(selectedValue);
+})
 //-----------------
-getAndRenderStrings();
+
 var inventorOwner = "-1";
-async function getAndRenderStrings() {
+async function getAndRenderStrings(date) {
   try {
     const data = await apiFunctions("inventor", "GET")
     console.log("inventor");
@@ -229,75 +213,83 @@ async function getAndRenderStrings() {
     tbody.innerHTML = "";
     let i = 1;
     for (const inventor of data) {
+      console.log(inventor.id);
       inventorOwner = inventor.Inventor_Owner;
       if (inventor.Inventor_Owner == operation_id) {
         const response2 = await fetch(`/get_strings/${inventor.id}/`);
         const data2 = await response2.json();
         const strings = data2.strings;
-        let bool = true;
-        console.log(strings);
-        for (const string of strings) {
-          let izalasyonValue = string.String_Izolasion || "OK";
-          let izalasyonValue2 = "FAULT";
-          if(izalasyonValue == "FAULT"){
-            izalasyonValue2 = "OK";
+        let stringsFilter = [];
+        strings.forEach((string)=>{
+          if(string.String_Date == date){
+            stringsFilter.push(string)
           }
-
-          const row = `
-              <tr id="${string.id}">
-                ${bool ? `<td class="rotate" rowspan="${strings.length}" onclick="editInventor(${inventor.id})"><span class="inventör${i}">İnventör ${i}</span></td>` : ""}
-                <td style="width: 100px;">
-                  <select name="String_Direction" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="directionSelect">
-                    <option disabled selected value="${string.String_Direction}" >${string.String_Direction}</option>
-                    <option value="Kuzey">Kuzey</option>
-                    <option value="Güney">Güney</option>
-                    <option value="Doğu">Doğu</option>
-                    <option value="Batı">Batı</option>
-                  </select>
-                </td>
-                <td style="width: 90px;">
-                  <input name="String_Number" data-owner="${string.String_Owner_id}" class="strNum" type="text" onblur="xfunction(${string.id}, this)"  value="${string.String_Number}">
-                </td>
-                <td style="width: 100px;">
-                  <input name="String_Panel_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlPwr formatInputs" type="text" value="${string.String_Panel_Power}">
-                </td>
-                <td>
-                  <input name="String_VOC" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strVOC formatInputs" type="text" value="${string.String_VOC}">
-                </td>
-                <td>
-                  <input name="String_Panel_Brand" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlBrnd" type="text" value="${string.String_Panel_Brand}">
-                </td>
-                <td>
-                  <input name="String_Panel_SY" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlSy" type="text" value="${string.String_Panel_SY}">
-                </td>
-                <td>
-                  <select name="String_Izolasion" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="izlsyn directionSelect">
-                    <option disabled selected value="${string.String_Izolasion}" >${string.String_Izolasion}</option>
-                    <option value="OK">OK</option>
-                    <option value="FAULT">FAULT</option>
-                  </select>
-                </td>
-                <td>
-                  <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
-                </td>
-                <td>
-                  <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_AC_Power}">
-                </td>
-                <td>
-                  <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_DC_Power}">
-                </td>
-                <td>
-                  <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
-                </td>
-                <td>
-                  <input class="pnlV" type="text" value="0">
-                </td>
-              </tr>`;
-
-          tbody.insertAdjacentHTML("beforeend", row);
-          currentDirection(inventor);
-          bool = false;
+        })
+        let bool = true;
+        
+        for (const string of stringsFilter) {          
+            let izalasyonValue = string.String_Izolasion || "OK";
+            let izalasyonValue2 = "FAULT";
+            if(izalasyonValue == "FAULT"){
+              izalasyonValue2 = "OK";
+            }
+  
+            const row = `
+                <tr id="${string.id}">
+                  ${bool ? `<td class="rotate" rowspan="${stringsFilter.length}" onclick="editInventor(${inventor.id})"><span class="inventör${i}">İnventör ${i}</span></td>` : ""}
+                  <td style="width: 100px;">
+                    <select name="String_Direction" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="directionSelect">
+                      <option disabled selected value="${string.String_Direction}" >${string.String_Direction}</option>
+                      <option value="Kuzey">Kuzey</option>
+                      <option value="Güney">Güney</option>
+                      <option value="Doğu">Doğu</option>
+                      <option value="Batı">Batı</option>
+                    </select>
+                  </td>
+                  <td style="width: 90px;">
+                    <input name="String_Number" data-owner="${string.String_Owner_id}" class="strNum" type="text" onblur="xfunction(${string.id}, this)"  value="${string.String_Number}">
+                  </td>
+                  <td style="width: 100px;">
+                    <input name="String_Panel_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlPwr formatInputs" type="text" value="${string.String_Panel_Power}">
+                  </td>
+                  <td>
+                    <input name="String_VOC" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strVOC formatInputs" type="text" value="${string.String_VOC}">
+                  </td>
+                  <td>
+                    <input name="String_Panel_Brand" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlBrnd" type="text" value="${string.String_Panel_Brand}">
+                  </td>
+                  <td>
+                    <input name="String_Panel_SY" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPnlSy" type="text" value="${string.String_Panel_SY}">
+                  </td>
+                  <td>
+                    <select name="String_Izolasion" data-owner="${string.String_Owner_id}" onchange="xfunction(${string.id}, this)" class="izlsyn directionSelect">
+                      <option disabled selected value="${string.String_Izolasion}" >${string.String_Izolasion}</option>
+                      <option value="OK">OK</option>
+                      <option value="FAULT">FAULT</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
+                  </td>
+                  <td>
+                    <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_AC_Power}">
+                  </td>
+                  <td>
+                    <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_DC_Power}">
+                  </td>
+                  <td>
+                    <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
+                  </td>
+                  <td>
+                    <input class="pnlV" type="text" value="0">
+                  </td>
+                </tr>`;
+  
+            tbody.insertAdjacentHTML("beforeend", row);
+            currentDirection(inventor);
+            bool = false;                 
         }
+        console.log(i);
         i++;
       }
      
@@ -314,8 +306,11 @@ async function getAndRenderStrings() {
 
 async function xfunction(x, y){
   let formDatax = new FormData();
+  console.log(x);
  //console.log(dataOwnerValue);
- formDatax.append(y.name, y.value);
+ let yValue = y.value.replace(/\./g, "").replace(/,/g, ".")
+ console.log(yValue);
+ formDatax.append(y.name, yValue);
  formDatax.append("String_Owner", y.getAttribute("data-owner"));
  const formDataObject = {};
     formDatax.forEach((value, key) => {
