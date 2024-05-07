@@ -1004,7 +1004,7 @@ async function apiFunctions(name, type, myForm, id) {
       }
       break;
 
-    case "POST":
+    case "POST":    
       try {
         await fetch(`/api_${name}/`, {
           method: "POST",

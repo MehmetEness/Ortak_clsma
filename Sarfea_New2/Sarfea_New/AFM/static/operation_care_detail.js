@@ -546,18 +546,51 @@ function kontrolEtDates(date) {
     formData.append(date, value);
   }  
 }
+
 const anketAddButton = document.querySelector("#anket_submit_btn");
 anketAddButton.addEventListener("click", async () => {
   console.log("formData");
   formData.append("Poll_Operation_Care", document.querySelector(".operation_id").id);
-  var jsonObject = {};
-  formData.forEach(function (value, key) {
-    jsonObject[key] = value;
-  });
-  console.log(JSON.stringify(jsonObject));
+  
+  for (let i = 1; i < 10; i++) {
+    const asdf = document.querySelectorAll(`[name^="answer_${i}"]`)
+    for (let j = 0; j < asdf.length / 2; j++) {
+      let key = `answer_${i}_${j+1}`;
+      if(formData.get(key) == null){        
+      formData.append(key , null)  
+      }
+      
+    }
+  }
+ //console.log(asdf);
 
-  await apiFunctions("poll", "POST", formData);
-  location.reload();
+
+  // var jsonObject = {};
+  // formData.forEach(function (value, key) {
+  //   jsonObject[key] = value;
+  // });
+  // console.log(JSON.stringify(jsonObject));
+  console.log(formData.get("Poll_Date"));
+  const xxxx = document.getElementById("id_date_select")
+  console.log(xxxx);
+  const options = xxxx.options;
+  let patchMode = false;
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i];
+    if(formData.get("Poll_Date") == option.value){
+      patchMode= true;
+    }
+}
+ 
+  if(patchMode){
+    console.log("path");
+    await apiFunctions("poll", "PATCH", formData, "16");
+  } else{
+    console.log("post");
+    await apiFunctions("poll", "POST", formData);
+  } 
+  
+  //location.reload();
 });
 /******************************************************* */
 
@@ -618,3 +651,111 @@ document.querySelector("#ariza-fatura-X").addEventListener("click", ()=>{
   arizaFaturaAddSelect.value = "Belirsiz"
 })
 
+const reqFailInputs = document.querySelectorAll("#id_Fail_Operation_Care")
+const reqFailLabels = document.querySelectorAll("#Fail_Operation_Span")
+//                  ARIZA ADD 
+const arizaAddForm = document.getElementById("ariza-add-form");
+const arizaFaturaAddForm = document.getElementById("fatura_form");
+const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
+const arizaFaturaFormAddBtn = document.querySelector("#fatura-create-btn");
+arizaFaturaFormAddBtn.addEventListener("click", async function (event) {
+  arizaFaturaAddWindow.style.display = "none";
+})
+
+arizaFormAddBtn.addEventListener("click", async function (event) {
+
+  event.preventDefault();
+
+  if (requiredInputs(reqFailInputs, reqFailLabels)) {
+
+    dateInputs.forEach(input => {
+      input.value = formatDateForSubmit(input.value)
+    })
+    var formatInputss = arizaAddWindow.querySelectorAll(".formatInputs")
+    formatInputss.forEach(input => {
+      input.value = input.value.replace(/\./g, "").replace(/,/g, ".");
+    })
+
+    const formData = new FormData(arizaAddForm);
+    const inputs = document.querySelectorAll(".ariza-add-window input[data-id]");
+    inputs.forEach(input => {
+      const dataId = input.getAttribute('data-id');
+      formData.set(input.getAttribute('name'), dataId);
+    });
+    const billSelect = document.querySelector("#id_Fail_Guaranteed");
+    if(billSelect.value == "Hayır"){
+      const billFormData = new FormData(arizaFaturaAddForm);
+      for (const [key, value] of billFormData.entries()) {
+        formData.append(key, value); 
+      }
+    }    
+    // const jsonObject = {};
+    // for (const [key, value] of formData.entries()) {
+    //   jsonObject[key] = value;
+    // }
+    // console.log(JSON.stringify(jsonObject));
+    // console.log(failEditMode)
+
+    if (failEditMode == false) {
+      await apiFunctions("fail", "POST", formData);
+      arizaAddWindow.style.display = "none";
+      clearInputAfterSave(arizaAddForm);
+      getOperationFail(true);
+    } else {
+      if(document.querySelector("#id_Fail_Bill_File").value == ""){
+        formData.delete("Fail_Bill_File")
+      }
+      await apiFunctions("fail", "PUT", formData, failBtnID);
+      arizaAddWindow.style.display = "none";
+      clearInputAfterSave(arizaAddForm);
+      getOperationFail(true);
+    }
+  }
+});
+
+
+getOperationFail(true)
+async function getOperationFail(isEdit) {
+  const arizaTakipTable = document.querySelector("#ariza_takip_table2");
+  const arizaTakipTableBody = arizaTakipTable.querySelector("tbody");
+  try {
+    let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
+
+    var data = await apiFunctions("fail", "GET");
+    console.log("-fails-");
+    console.log(data)
+    //console.log(data);
+    let rows = "";
+    for (const operationCareFail of data) {
+      // <td>
+      //   <button id="${operationCareFail.id}" type="button" class="edit-fail-btn" style="background: none; border:none;">
+      //     <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+      //   </button>
+      // </td>
+      const row = `
+        <tr>          
+          <td>${operationCareFail.Fail_Central_Name}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Detection_Date)}</td>
+          <td>${operationCareFail.Fail_Detail}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Team_Info_Date)}</td>
+          <td>${operationCareFail.Fail_Information_Person}</td>
+          <td>${formatDateForTable(operationCareFail.Fail_Repair_Date)}</td>
+          <td>${operationCareFail.Fail_Guaranteed}</td>
+          <td>${operationCareFail.Fail_Situation}</td>
+        </tr>`;
+
+      rows += row;
+    }
+    if (data.length > currentRows.length || isEdit) {
+
+      arizaTakipTableBody.innerHTML = "";
+      arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
+      //failEditButtonsEvents() ;
+      sortingTable(arizaTakipTable);
+      // allTableFormat();
+      //editButtonsEvents();
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering clients:", error);
+  }
+}
