@@ -570,6 +570,7 @@ anketAddButton.addEventListener("click", async () => {
   //   jsonObject[key] = value;
   // });
   // console.log(JSON.stringify(jsonObject));
+  let iddd;
   console.log(formData.get("Poll_Date"));
   const xxxx = document.getElementById("id_date_select")
   console.log(xxxx);
@@ -578,19 +579,20 @@ anketAddButton.addEventListener("click", async () => {
   for (let i = 0; i < options.length; i++) {
     const option = options[i];
     if(formData.get("Poll_Date") == option.value){
+      iddd = option.getAttribute("data-id");
       patchMode= true;
     }
 }
  
   if(patchMode){
     console.log("path");
-    await apiFunctions("poll", "PATCH", formData, "16");
+    await apiFunctions("poll", "PATCH", formData, iddd);
   } else{
     console.log("post");
     await apiFunctions("poll", "POST", formData);
   } 
   
-  //location.reload();
+  location.reload();
 });
 /******************************************************* */
 
