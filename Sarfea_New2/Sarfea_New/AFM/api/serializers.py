@@ -430,6 +430,7 @@ class OperationCareSerializer(serializers.ModelSerializer):
             for inventor in inventors:
                 strings = inventor.inventor_strings.all()
                 string_count = len(strings)
+                string_last=String.objects.filter(String_Owner=inventor).last()
 
                 fark=yeni_string_number-string_count
                 for x in range(son_string_number+1, son_string_number+fark+1):
@@ -444,6 +445,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
                         String_AC_Power=instance.Operation_Care_AC_Power,
                         String_DC_Power=instance.Operation_Care_DC_Power,
                         String_Capacity=instance.Operation_Care_Capacity,
+                        String_Izolasion=inventor.Inventor_Izolasion,
+                        String_Date=string_last.String_Date
                     )
         return instance
 
@@ -477,7 +480,7 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.save()
 
         yeni_string_number= instance.Inventor_Number_Str
-
+        string_last=String.objects.filter(String_Owner=instance).last()
         if son_string_number > yeni_string_number:
             fark=son_string_number-yeni_string_number
             for string in strings.order_by('-id'):
@@ -501,6 +504,8 @@ class InventorSerializer(serializers.ModelSerializer):
                     String_DC_Power=instance.Inventor_DC_Power,
                     String_Capacity=instance.Inventor_Capacity,
                     String_Izolasion=instance.Inventor_Izolasion,
+                    String_Date=string_last.String_Date,
+
                 )
                 
         return instance
