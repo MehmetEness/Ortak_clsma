@@ -93,15 +93,6 @@ class SalesOfferReviseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
 
-
-class OperationCareListCreateAPIView(generics.ListCreateAPIView):
-    queryset= Operation_Care.objects.all()
-    serializer_class=OperationCareSerializer
-
-class OperationCareDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset= Operation_Care.objects.all()
-    serializer_class=OperationCareSerializer
-
 class InventorListCreateAPIView(generics.ListCreateAPIView):
     queryset= Inventor.objects.all()
     serializer_class=InventorSerializer
@@ -118,6 +109,13 @@ class StringDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= String.objects.all()
     serializer_class=StringSerializer
 
+class OperationCareListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
+
+class OperationCareDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
 
 class FailListCreateAPIView(generics.ListCreateAPIView):
     queryset = Fail.objects.all()

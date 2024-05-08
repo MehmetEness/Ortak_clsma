@@ -380,15 +380,6 @@ def operation_care(request):
     operations = Operation_Care.objects.all()
     fails = Fail.objects.all()
     locations=Locations.objects.all()
-    for op in operations:
-        i = 0  # Her döngü başında i'yi sıfırla
-        for fa in fails:
-            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
-                i += 1
-        op.Operation_Care_Fail_Number = i
-        op.save()
-
-
     context = {
         "operations": operations,
         "fails": fails,

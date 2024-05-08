@@ -334,18 +334,82 @@ class StringSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class InventorSerializer(serializers.ModelSerializer):
+    inventor_strings= StringSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Inventor
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Inventor.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+
+        son_string_number = instance.Inventor_Number_Str
+        strings = instance.inventor_strings.all()
+
+        instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
+        instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
+        instance.Inventor_Number = validated_data.get('Inventor_Number', instance.Inventor_Number)
+        instance.Inventor_Number_Str = validated_data.get('Inventor_Number_Str', instance.Inventor_Number_Str)
+        instance.Inventor_Panel_Power = validated_data.get('Inventor_Panel_Power', instance.Inventor_Panel_Power)
+        instance.Inventor_Panel_Brand = validated_data.get('Inventor_Panel_Brand', instance.Inventor_Panel_Brand)
+        instance.Inventor_Izolasion = validated_data.get('Inventor_Izolasion', instance.Inventor_Izolasion)
+        instance.Inventor_VOC = validated_data.get('Inventor_VOC', instance.Inventor_VOC)
+        instance.Inventor_Panel_SY = validated_data.get('Inventor_Panel_SY', instance.Inventor_Panel_SY)
+        instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
+        instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
+        instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
+        instance.save()
+
+        yeni_string_number= instance.Inventor_Number_Str
+        string_last=String.objects.filter(String_Owner=instance).last()
+        if son_string_number > yeni_string_number:
+            fark=son_string_number-yeni_string_number
+            for string in strings.order_by('-id'):
+                if fark > 0:
+                    string.delete()
+                    fark -= 1
+                else:
+                    break
+        elif son_string_number < yeni_string_number:
+            fark=yeni_string_number-son_string_number
+            for x in range(son_string_number+1, son_string_number+fark+1):
+                string=String.objects.create(
+                    String_Owner=instance,
+                    String_Direction=instance.Inventor_Direction,
+                    String_Number=x,
+                    String_Panel_Power=instance.Inventor_Panel_Power,
+                    String_Panel_Brand=instance.Inventor_Panel_Brand,
+                    String_VOC=instance.Inventor_VOC,
+                    String_Panel_SY=instance.Inventor_Panel_SY,
+                    String_AC_Power=instance.Inventor_AC_Power,
+                    String_DC_Power=instance.Inventor_DC_Power,
+                    String_Capacity=instance.Inventor_Capacity,
+                    String_Izolasion=instance.Inventor_Izolasion,
+                    String_Date=string_last.String_Date,
+
+                )
+                
+        return instance
+
 class OperationCareSerializer(serializers.ModelSerializer):
     client = ClientSerializer(source='Operation_Care_Company', read_only=True)
+    operation_inventors= InventorSerializer(many=True, read_only=True)
+    print("oc")
 
     class Meta:
         model = Operation_Care
         fields = '__all__'
         #exclude = ['Company_id']
     def create(self, validated_data):
+        print("oc_create")
+
         return Operation_Care.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-
+        print("oc_update")
         son_inventor_number = instance.Operation_Care_Inventor_Number
         inventors = instance.operation_inventors.all()
         inventorsa = Inventor.objects.filter(Inventor_Owner=instance)
@@ -449,67 +513,7 @@ class OperationCareSerializer(serializers.ModelSerializer):
                         String_Date=string_last.String_Date
                     )
         return instance
-
-class InventorSerializer(serializers.ModelSerializer):
-    inventor_strings= StringSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Inventor
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Inventor.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-
-        son_string_number = instance.Inventor_Number_Str
-        strings = instance.inventor_strings.all()
-
-        instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
-        instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
-        instance.Inventor_Number = validated_data.get('Inventor_Number', instance.Inventor_Number)
-        instance.Inventor_Number_Str = validated_data.get('Inventor_Number_Str', instance.Inventor_Number_Str)
-        instance.Inventor_Panel_Power = validated_data.get('Inventor_Panel_Power', instance.Inventor_Panel_Power)
-        instance.Inventor_Panel_Brand = validated_data.get('Inventor_Panel_Brand', instance.Inventor_Panel_Brand)
-        instance.Inventor_Izolasion = validated_data.get('Inventor_Izolasion', instance.Inventor_Izolasion)
-        instance.Inventor_VOC = validated_data.get('Inventor_VOC', instance.Inventor_VOC)
-        instance.Inventor_Panel_SY = validated_data.get('Inventor_Panel_SY', instance.Inventor_Panel_SY)
-        instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
-        instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
-        instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
-        instance.save()
-
-        yeni_string_number= instance.Inventor_Number_Str
-        string_last=String.objects.filter(String_Owner=instance).last()
-        if son_string_number > yeni_string_number:
-            fark=son_string_number-yeni_string_number
-            for string in strings.order_by('-id'):
-                if fark > 0:
-                    string.delete()
-                    fark -= 1
-                else:
-                    break
-        elif son_string_number < yeni_string_number:
-            fark=yeni_string_number-son_string_number
-            for x in range(son_string_number+1, son_string_number+fark+1):
-                string=String.objects.create(
-                    String_Owner=instance,
-                    String_Direction=instance.Inventor_Direction,
-                    String_Number=x,
-                    String_Panel_Power=instance.Inventor_Panel_Power,
-                    String_Panel_Brand=instance.Inventor_Panel_Brand,
-                    String_VOC=instance.Inventor_VOC,
-                    String_Panel_SY=instance.Inventor_Panel_SY,
-                    String_AC_Power=instance.Inventor_AC_Power,
-                    String_DC_Power=instance.Inventor_DC_Power,
-                    String_Capacity=instance.Inventor_Capacity,
-                    String_Izolasion=instance.Inventor_Izolasion,
-                    String_Date=string_last.String_Date,
-
-                )
-                
-        return instance
-    
+  
 class FailSerializer(serializers.ModelSerializer):
 
     class Meta:
