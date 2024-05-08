@@ -72,17 +72,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="column-2 card flex">
-                    <span><i class="fa-solid fa-dollar-sign"></i></span>
+                <div style="background: #fff;" class="column-2 card flex">                    
+                    <span><i class="fa-solid fa-dollar-sign"></i></span>                    
                     <span id="realized_income_span"></span>
                     <span>Gerçekleşen İş Bedeli</span>
-                    <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a>
+                    <!-- <a style="width: 100%; height: 100%;" href="{% url 'income_details' project_id=project.id %}">a</a> -->
+                    <a href="{% url 'income_details' project_id=project.id %}" style="position: fixed; top: 5px; right: 5px; font-size: 27px;"><i class="fa-regular fa-hand-pointer"></i></a>
                 </div>
-                <div id="gerceklesenMaliyet" class="column-2 card flex">
+                <div id="gerceklesenMaliyet" style="background: #fff;" class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>
                     <span id="realized_cost_span2"></span>
                     <span>Gerçekleşen Maliyet</span>
-                    <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a>
+                    <!-- <a style="width: 100%; height: 100%;" href="{% url 'realized_cost' project_id=project.id %}"></a> -->
+                    <a href="{% url 'realized_cost' project_id=project.id %}" style="position: fixed; top: 5px; right: 5px; font-size: 27px;"><i class="fa-regular fa-hand-pointer"></i></a>
                 </div>               
                 <div class="column-2 card flex">
                     <span><i class="fa-solid fa-dollar-sign"></i></span>

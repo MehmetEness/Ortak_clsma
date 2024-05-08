@@ -427,12 +427,16 @@ inventorFormEditBtn.addEventListener("click", async function (event) {
       await apiFunctions("inventor", "POST", formData);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
-      getAndRenderStrings();
+      const stringDate = document.getElementById("bakim_date");
+      getAndRenderStrings(stringDate.value);
     } else {
       await apiFunctions("inventor", "PUT", formData, invID);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
-      getAndRenderStrings();
+      const stringDate = document.getElementById("bakim_date");
+      getAndRenderStrings(stringDate.value);
+      
+      
     }
   //}
 });
@@ -555,8 +559,12 @@ anketAddButton.addEventListener("click", async () => {
   for (let i = 1; i < 10; i++) {
     const asdf = document.querySelectorAll(`[name^="answer_${i}"]`)
     for (let j = 0; j < asdf.length / 2; j++) {
+      let checkBox1 = document.querySelector(`[id^="checkbox_${i}_${j+1}_1"]`)
+      let checkBox2 = document.querySelector(`[id^="checkbox_${i}_${j+1}_2"]`)
       let key = `answer_${i}_${j+1}`;
-      if(formData.get(key) == null){        
+      console.log(checkBox1);
+      console.log(checkBox1.checked);
+      if(formData.get(key) == null && !checkBox1.checked && !checkBox2.checked){        
       formData.append(key , null)  
       }
       
@@ -570,6 +578,7 @@ anketAddButton.addEventListener("click", async () => {
   //   jsonObject[key] = value;
   // });
   // console.log(JSON.stringify(jsonObject));
+  let iddd;
   console.log(formData.get("Poll_Date"));
   const xxxx = document.getElementById("id_date_select")
   console.log(xxxx);
@@ -578,19 +587,20 @@ anketAddButton.addEventListener("click", async () => {
   for (let i = 0; i < options.length; i++) {
     const option = options[i];
     if(formData.get("Poll_Date") == option.value){
+      iddd = option.getAttribute("data-id");
       patchMode= true;
     }
 }
  
   if(patchMode){
     console.log("path");
-    await apiFunctions("poll", "PATCH", formData, "16");
+    await apiFunctions("poll", "PATCH", formData, iddd);
   } else{
     console.log("post");
     await apiFunctions("poll", "POST", formData);
   } 
   
-  //location.reload();
+  location.reload();
 });
 /******************************************************* */
 
