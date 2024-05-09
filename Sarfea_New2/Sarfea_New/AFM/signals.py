@@ -68,6 +68,8 @@ def update_client_card(sender, instance, **kwargs):
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
+        print("create_inventor")
+
         poll= Poll.objects.create(
             Poll_Operation_Care=instance,
             Poll_Date=instance.Operation_Care_Start_Date
@@ -94,7 +96,7 @@ def create_inventor(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Operation_Care)
 def update_invantor(sender, instance, **kwargs):
-    
+    print("update_invantor")
     inventors = instance.operation_inventors.all()
     
     for inventor in inventors:
@@ -113,6 +115,7 @@ def update_invantor(sender, instance, **kwargs):
 @receiver(post_save, sender=Inventor)
 def create_string(sender, instance, created, **kwargs):
     if created:
+        print("create_string")
         oc=instance.Inventor_Owner
         num= instance.Inventor_Number_Str
         if num is None:
@@ -136,7 +139,8 @@ def create_string(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Inventor)
 def update_strings(sender, instance, **kwargs):
-    
+    print("update_strings")
+
     strings = instance.inventor_strings.all()
 
     for string in strings:
@@ -156,6 +160,8 @@ def update_strings(sender, instance, **kwargs):
 @receiver(post_save, sender=Poll)
 def create_poll_str(sender, instance, created, **kwargs):
     if created:
+        print("create_poll_str")
+
         oc=instance.Poll_Operation_Care
         if instance.Poll_Date is not None:
             inventors = Inventor.objects.filter(Inventor_Owner=oc)
@@ -179,3 +185,4 @@ def create_poll_str(sender, instance, created, **kwargs):
                             String_Izolasion=inventor.Inventor_Izolasion,
                             String_Date=instance.Poll_Date,
                         )
+
