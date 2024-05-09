@@ -11,6 +11,7 @@ const reqIncomeInputs = document.querySelectorAll("#id_Operation_Care_Company")
 const reqIncomeLabels = document.querySelectorAll("#firma_adi_span")
 const reqFailInputs = document.querySelectorAll("#id_Fail_Operation_Care")
 const reqFailLabels = document.querySelectorAll("#Fail_Operation_Span")
+const arizaFaturaAddForm = document.getElementById("fatura_form");
 
 
 
@@ -29,9 +30,19 @@ async function getOperationCare(isEdit) {
 
     var data = await apiFunctions("operation_care", "GET");
     console.log(data);
+    
+    const failData = await apiFunctions("fail", "GET");
+    console.log(failData);
+    
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
+      let failCount = 0;
+      failData.forEach((fail)=>{
+        if(fail.Fail_Operation_Care == operationCare.id){
+          failCount++;
+        }
+      })
       var operationCareDetailUrl = `/operation_care_detail/${operationCare.id}/`;
       var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
       const row = `
@@ -45,7 +56,7 @@ async function getOperationCare(isEdit) {
           <td>${formatNumber(operationCare.Operation_Care_Capacity)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
-          <td>${operationCare.Operation_Care_Fail_Number}</td>
+          <td>${failCount}</td>
           <td> <span class="status ${className}">${formatDateForTable(operationCare.Operation_Care_Finish_Date)}</span></td>
         </tr>`;
 
@@ -69,9 +80,6 @@ async function getOperationFail(isEdit) {
     let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
-    console.log("-fails-");
-    console.log(data)
-    //console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
       const row = `
@@ -113,8 +121,6 @@ async function getOperationBill(isEdit) {
     let currentRows = faturaTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
-    console.log("-Bill-");
-    console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
       const row = `
@@ -188,7 +194,6 @@ topMenuLi.forEach(function (item) {
 topMenuLi.forEach(function (item) {
   item.addEventListener("click", function () {
     var clickedItemId = this.id;
-    console.log(clickedItemId)
     handleMenuItemClick(clickedItemId);
   });
 });
@@ -303,6 +308,7 @@ arizaFaturaAddSelect.addEventListener("change", () => {
     arizaFaturaAddWindow.style.display = "flex";
   } else {
     arizaFaturaAddWindow.style.display = "none";    
+    clearInputAfterSave(arizaFaturaAddForm)
   }
 });
 document.addEventListener("mousedown", (event) => {
@@ -311,6 +317,7 @@ document.addEventListener("mousedown", (event) => {
     if (arizaFaturaAddSelect.value == "Hayır" && arizaFaturaAddWindow.style.display == "flex") {
       setTimeout(() => {
         arizaFaturaAddSelect.value = "Belirsiz"
+        clearInputAfterSave(arizaFaturaAddForm)
       }, 10);
     }
     arizaFaturaAddWindow.style.display = "none";
@@ -347,7 +354,6 @@ function operationEditButtonsEvents() {
         operationEditMode = true;
         operationBtnID = button.id;
         const data = await apiFunctions("operation_care", "GETID", "x", operationBtnID)
-        console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
@@ -391,8 +397,6 @@ function failEditButtonsEvents() {
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              console.log(key)
-              console.log(data[key])
               if(key != "Fail_Bill_File"){
                 if (key == "Operation_Care_Company") {
                   element.value = data["client"].CompanyName_Clients;
@@ -467,7 +471,7 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
 
 //                  ARIZA ADD 
 const arizaAddForm = document.getElementById("ariza-add-form");
-const arizaFaturaAddForm = document.getElementById("fatura_form");
+
 const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
 const arizaFaturaFormAddBtn = document.querySelector("#fatura-create-btn");
 arizaFaturaFormAddBtn.addEventListener("click", async function (event) {
@@ -513,6 +517,7 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
+      getOperationCare(true)
     } else {
       if(document.querySelector("#id_Fail_Bill_File").value == ""){
         formData.delete("Fail_Bill_File")
@@ -521,6 +526,7 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
+      getOperationCare(true)
     }
   }
 });
