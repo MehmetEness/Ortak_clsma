@@ -233,7 +233,7 @@
     <div class="container">
       <h3 id="ariza-X" class="close-window">X</h3>
       <div class="title">Arıza Bildir</div>
-      <form id="ariza-add-form" action="#" method="post">
+      <form id="ariza-add-form" action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
@@ -289,7 +289,7 @@
     <div class="container">
       <h3 id="ariza-fatura-X" class="close-window">X</h3>
       <div class="title">Arıza Bakım Faturası</div>
-      <form id="fatura_form" action="#" method="post" enctype="multipart/form-data">
+      <form id="fatura_form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
@@ -339,7 +339,7 @@
     <div style="width: 400px" id="client_container" class="container">
       <h3 id="client-X" class="close-window clientx">X</h3>
       <div class="title">Firma Ekle</div>
-      <form id="firma_add_form" action="#" method="post">
+      <form id="firma_add_form" action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="client_form" />
 

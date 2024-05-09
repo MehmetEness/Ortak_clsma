@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
 
 
+
+
 await getIncome();
 await getExpenses();
 await akisChart()
