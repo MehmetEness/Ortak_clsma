@@ -1363,5 +1363,6 @@ terrainSelect.addEventListener("change", async function () {
     terrainCost.disabled = false;
   } else {
     terrainCost.disabled = true;
+    terrainCost.value = "";
   }
 });

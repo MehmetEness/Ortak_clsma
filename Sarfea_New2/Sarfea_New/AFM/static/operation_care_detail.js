@@ -644,6 +644,7 @@ arizaFaturaAddSelect.addEventListener("change", () => {
     arizaFaturaAddWindow.style.display = "flex";
   } else {
     arizaFaturaAddWindow.style.display = "none";    
+    clearInputAfterSave(arizaFaturaAddForm)
   }
 });
 document.addEventListener("mousedown", (event) => {
@@ -652,6 +653,7 @@ document.addEventListener("mousedown", (event) => {
     if (arizaFaturaAddSelect.value == "Hayır" && arizaFaturaAddWindow.style.display == "flex") {
       setTimeout(() => {
         arizaFaturaAddSelect.value = "Belirsiz"
+        clearInputAfterSave(arizaFaturaAddForm)
       }, 10);
     }
     arizaFaturaAddWindow.style.display = "none";
