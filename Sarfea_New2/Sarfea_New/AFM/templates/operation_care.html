@@ -97,6 +97,9 @@
 .sidebar-links li.isletme_bakim_li {
   background: var(--main-color-dark);
 }
+.status.green {
+    background-color: #55c53ec5;
+}
 </style>
 
 {% endblock %}
@@ -284,10 +287,10 @@
           </div>
           <div class="input-box">
             <span class="details">Arıza Durumu</span>
-            <select name="" id="">
-              <option value="Belirsiz">Belirsiz</option>
-              <option value="Arızalı">Arızalı</option>
-              <option value="onarıldı">Onarıldı</option>
+            <select name="Fail_Situation" id="id_Fail_Situation">
+              <option value="Belirlendi">Belirlendi</option>
+              <option value="Onarımda">Onarımda</option>
+              <option value="Onarıldı">Onarıldı</option>
             </select>
           </div>
           <div class="input-box medium">
@@ -455,14 +458,14 @@
         <table id="ariza_takip_table" style="display: none;">
           <thead>
             <th><span></span></th>
+            <th>Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
             <th>Santral İsmi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza Tespit Tarihi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza<span class="icon-arrow">&UpArrow;</span></th>
             <th>Ekip Bilgilendirme Tarihi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Bilgi Verilen Kişi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza Onarım Tarihi<span class="icon-arrow">&UpArrow;</span></th>
-            <th>Garanti Kapsam Durumu<span class="icon-arrow">&UpArrow;</span></th>
-            <th>Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Garanti Kapsam Durumu<span class="icon-arrow">&UpArrow;</span></th>            
           </thead>
           <tbody>
             {% for fail in fails %}

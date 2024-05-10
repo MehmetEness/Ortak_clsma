@@ -316,6 +316,9 @@ width: 100%;
   .status.oneWeek {
       background-color: #6fcaea;
   }
+  .status.green {
+    background-color: #55c53ec5;
+}
   .status.timeIsUp {
       background-color: #d893a3;
       color: #b30021;

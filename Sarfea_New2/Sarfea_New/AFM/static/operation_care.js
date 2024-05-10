@@ -81,31 +81,51 @@ async function getOperationFail(isEdit) {
 
     var data = await apiFunctions("fail", "GET");
     let rows = "";
+    const failPriorities = {
+      "Belirlendi": 1,
+      "Onarımda": 2,
+      "Onarıldı": 3
+    };
+    data.sort((a, b) => failPriorities[a.Fail_Situation] - failPriorities[b.Fail_Situation]);
+    
     for (const operationCareFail of data) {
+      let arizaDurumu;
+      switch (operationCareFail.Fail_Situation) {
+        case "Belirlendi":
+          arizaDurumu = "timeIsUp";
+          break;
+        case "Onarımda":
+          arizaDurumu = "twoWeek";
+          break;
+        case "Onarıldı":
+          arizaDurumu = "green";
+          break;
+        default:
+          arizaDurumu = "";
+      }
       const row = `
         <tr>
           <td>
             <button id="${operationCareFail.id}" type="button" class="edit-fail-btn" style="background: none; border:none;">
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
-          </td>
+          </td>          
+          <td><span class="status ${arizaDurumu}">${operationCareFail.Fail_Situation}</span></td>
           <td>${operationCareFail.Fail_Central_Name}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Detection_Date)}</td>
           <td>${operationCareFail.Fail_Detail}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Team_Info_Date)}</td>
           <td>${operationCareFail.Fail_Information_Person}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Repair_Date)}</td>
-          <td>${operationCareFail.Fail_Guaranteed}</td>
-          <td>${operationCareFail.Fail_Situation}</td>
+          <td>${operationCareFail.Fail_Guaranteed}</td>          
         </tr>`;
 
       rows += row;
     }
     if (data.length > currentRows.length || isEdit) {
-
       arizaTakipTableBody.innerHTML = "";
       arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
-      failEditButtonsEvents() ;
+      failEditButtonsEvents();
       sortingTable(arizaTakipTable);
       // allTableFormat();
       //editButtonsEvents();
@@ -114,6 +134,7 @@ async function getOperationFail(isEdit) {
     console.error("Error fetching and rendering clients:", error);
   }
 }
+
 
 getOperationBill(true)
 async function getOperationBill(isEdit) {
