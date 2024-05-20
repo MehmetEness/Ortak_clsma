@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll
+from django.db.models import Max, Count
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -346,8 +347,16 @@ class InventorSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        son_string_number = instance.Inventor_Number_Str
-        strings = instance.inventor_strings.all()
+        first_Inventor_Direction= instance.Inventor_Direction 
+        first_Inventor_Panel_Power=instance.Inventor_Panel_Power
+        first_Inventor_Panel_Brand=instance.Inventor_Panel_Brand
+        first_Inventor_Izolasion=instance.Inventor_Izolasion 
+        first_Inventor_VOC=instance.Inventor_VOC 
+        first_Inventor_Panel_SY=instance.Inventor_Panel_SY
+        first_Inventor_AC_Power=instance.Inventor_AC_Power
+        first_Inventor_DC_Power=instance.Inventor_DC_Power
+        first_Inventor_Capacity=instance.Inventor_Capacity
+
 
         instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
         instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
@@ -363,59 +372,107 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
         instance.save()
 
+        strings = instance.inventor_strings.all()
         yeni_string_number= instance.Inventor_Number_Str
-        string_last=String.objects.filter(String_Owner=instance).last()
-        if son_string_number > yeni_string_number:
-            fark=son_string_number-yeni_string_number
-            for string in strings.order_by('-id'):
-                if fark > 0:
-                    string.delete()
-                    fark -= 1
-                else:
-                    break
-        elif son_string_number < yeni_string_number:
-            fark=yeni_string_number-son_string_number
-            for x in range(son_string_number+1, son_string_number+fark+1):
-                string=String.objects.create(
-                    String_Owner=instance,
-                    String_Direction=instance.Inventor_Direction,
-                    String_Number=x,
-                    String_Panel_Power=instance.Inventor_Panel_Power,
-                    String_Panel_Brand=instance.Inventor_Panel_Brand,
-                    String_VOC=instance.Inventor_VOC,
-                    String_Panel_SY=instance.Inventor_Panel_SY,
-                    String_AC_Power=instance.Inventor_AC_Power,
-                    String_DC_Power=instance.Inventor_DC_Power,
-                    String_Capacity=instance.Inventor_Capacity,
-                    String_Izolasion=instance.Inventor_Izolasion,
-                    String_Date=string_last.String_Date,
+        # 1. En büyük String_Date değerini bul
+        max_date = instance.inventor_strings.aggregate(Max('String_Date'))['String_Date__max']
+        # 2. Bu en büyük String_Date değerine sahip string'lerin sayısını bul
+        max_date_count = instance.inventor_strings.filter(String_Date=max_date).count()
 
-                )
+        if max_date_count!=yeni_string_number:
+            if max_date_count > yeni_string_number:
+                fark=max_date_count-yeni_string_number
+                for string in strings.order_by('-id'):
+                    if string.String_Date == max_date:
+                        if fark > 0:
+                            string.delete()
+                            fark -= 1
+                        else:
+                            break
+            elif max_date_count < yeni_string_number:
+                fark=yeni_string_number-max_date_count
+                for x in range(max_date_count+1, max_date_count+fark+1):
+                    string=String.objects.create(
+                        String_Owner=instance,
+                        String_Direction=instance.Inventor_Direction,
+                        String_Number=x,
+                        String_Panel_Power=instance.Inventor_Panel_Power,
+                        String_Panel_Brand=instance.Inventor_Panel_Brand,
+                        String_VOC=instance.Inventor_VOC,
+                        String_Panel_SY=instance.Inventor_Panel_SY,
+                        String_AC_Power=instance.Inventor_AC_Power,
+                        String_DC_Power=instance.Inventor_DC_Power,
+                        String_Capacity=instance.Inventor_Capacity,
+                        String_Izolasion=instance.Inventor_Izolasion,
+                        String_Date=max_date,
+
+                    )
                 
+        strings_last_date = instance.inventor_strings.filter(String_Date=max_date)
+
+        if first_Inventor_Direction != instance.Inventor_Direction:
+            for str in strings_last_date:
+                str.String_Direction=instance.Inventor_Direction
+                str.save()
+        if first_Inventor_Panel_Power != instance.Inventor_Panel_Power:
+            for str in strings_last_date:
+                str.String_Panel_Power=instance.Inventor_Panel_Power
+                str.save()
+        if first_Inventor_Panel_Brand != instance.Inventor_Panel_Brand:
+            for str in strings_last_date:
+                str.String_Panel_Brand=instance.Inventor_Panel_Brand
+                str.save()
+        if first_Inventor_Izolasion != instance.Inventor_Izolasion:
+            for str in strings_last_date:
+                str.String_Izolasion=instance.Inventor_Izolasion
+                str.save()
+        if first_Inventor_VOC != instance.Inventor_VOC:
+            for str in strings_last_date:
+                str.String_VOC=instance.Inventor_VOC
+                str.save()
+        if first_Inventor_Panel_SY != instance.Inventor_Panel_SY:
+            for str in strings_last_date:
+                str.String_Panel_SY=instance.Inventor_Panel_SY
+                str.save()
+        if first_Inventor_AC_Power != instance.Inventor_AC_Power:
+            for str in strings_last_date:
+                str.String_AC_Power=instance.Inventor_AC_Power
+                str.save()
+        if first_Inventor_DC_Power != instance.Inventor_DC_Power:
+            for str in strings_last_date:
+                str.String_DC_Power=instance.Inventor_DC_Power
+                str.save()
+        if first_Inventor_Capacity!= instance.Inventor_Capacity:
+            for str in strings_last_date:
+                str.String_Capacity=instance.Inventor_Capacity
+                str.save()
+
         return instance
 
 class OperationCareSerializer(serializers.ModelSerializer):
     client = ClientSerializer(source='Operation_Care_Company', read_only=True)
     operation_inventors= InventorSerializer(many=True, read_only=True)
-    print("oc")
 
     class Meta:
         model = Operation_Care
         fields = '__all__'
         #exclude = ['Company_id']
     def create(self, validated_data):
-        print("oc_create")
-
         return Operation_Care.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        print("oc_update")
-        son_inventor_number = instance.Operation_Care_Inventor_Number
-        inventors = instance.operation_inventors.all()
-        inventorsa = Inventor.objects.filter(Inventor_Owner=instance)
 
-        
-        son_string_number = instance.Operation_Care_Number_Str
+        first_Operation_Care_Panel_Brand=instance.Operation_Care_Panel_Brand 
+        first_Operation_Care_Direction=instance.Operation_Care_Direction 
+        first_Operation_Care_Inventor_Power=instance.Operation_Care_Inventor_Power
+        first_Operation_Care_Panel_Power=instance.Operation_Care_Panel_Power 
+        first_Operation_Care_Inventor_Number=instance.Operation_Care_Inventor_Number
+        first_Operation_Care_VOC=instance.Operation_Care_VOC 
+        first_Operation_Care_AC_Power=instance.Operation_Care_AC_Power
+        first_Operation_Care_DC_Power=instance.Operation_Care_DC_Power
+        first_Operation_Care_Panel_Number_Str=instance.Operation_Care_Panel_Number_Str
+        first_Operation_Care_Number_Str=instance.Operation_Care_Number_Str 
+        first_Operation_Care_Capacity=instance.Operation_Care_Capacity 
         
         instance.Operation_Care_Company = validated_data.get('Operation_Care_Company', instance.Operation_Care_Company)
         instance.Operation_Care_Location = validated_data.get('Operation_Care_Location', instance.Operation_Care_Location)
@@ -438,25 +495,24 @@ class OperationCareSerializer(serializers.ModelSerializer):
         instance.Operation_Care_Has_Fail = validated_data.get('Operation_Care_Has_Fail', instance.Operation_Care_Has_Fail)
         instance.Operation_Care_Fail_Number = validated_data.get('Operation_Care_Fail_Number', instance.Operation_Care_Fail_Number)
         instance.Operation_Care_Switchgear_Material = validated_data.get('Operation_Care_Switchgear_Material', instance.Operation_Care_Switchgear_Material)
-        
         instance.save()
 
-        yeni_inventor_number= instance.Operation_Care_Inventor_Number
-        yeni_string_number = instance.Operation_Care_Number_Str
-       
-       
+        inventors = instance.operation_inventors.all()
 
-        if son_inventor_number > yeni_inventor_number:
-            fark=son_inventor_number-yeni_inventor_number
+        yeni_string_number = instance.Operation_Care_Number_Str
+        yeni_inventor_number= instance.Operation_Care_Inventor_Number
+      
+        if first_Operation_Care_Inventor_Number > yeni_inventor_number:
+            fark=first_Operation_Care_Inventor_Number-yeni_inventor_number
             for inventor in inventors.order_by('-id'):
                 if fark > 0:
                     inventor.delete()
                     fark -= 1
                 else:
                     break
-        elif son_inventor_number < yeni_inventor_number:
-            fark=yeni_inventor_number-son_inventor_number
-            for x in range(son_inventor_number+1, son_inventor_number+fark+1):
+        elif first_Operation_Care_Inventor_Number < yeni_inventor_number:
+            fark=yeni_inventor_number-first_Operation_Care_Inventor_Number
+            for x in range(first_Operation_Care_Inventor_Number+1, first_Operation_Care_Inventor_Number+fark+1):
                 inventor=Inventor.objects.create(
                 Inventor_Owner=instance,
                 Inventor_Direction=instance.Operation_Care_Direction,
@@ -472,32 +528,25 @@ class OperationCareSerializer(serializers.ModelSerializer):
                 Inventor_Izolasion="OK",
             )
         inventors_s = instance.operation_inventors.all()
-        
-        if son_string_number>yeni_string_number:
-            
-            for inventor in inventors_s:
-                strings = inventor.inventor_strings.all()
-                string_count = len(strings)
-
-                fark=string_count-yeni_string_number
-
-
-                for string in strings.order_by('-id'):
-                   
-                    if fark > 0:
-                        string.delete()
-                        fark -= 1
-                    else:
-                        break
-        elif son_string_number<yeni_string_number:
-            
-            for inventor in inventors:
-                strings = inventor.inventor_strings.all()
-                string_count = len(strings)
-                string_last=String.objects.filter(String_Owner=inventor).last()
-
+        first_inventor = instance.operation_inventors.first()
+         # 1. En büyük String_Date değerini bul
+        max_date = first_inventor.inventor_strings.aggregate(Max('String_Date'))['String_Date__max']
+        # 2. Bu en büyük String_Date değerine sahip string'lerin sayısını bul
+        for inventor in inventors_s:
+            strings = inventor.inventor_strings.filter(String_Date=max_date)
+            string_count=len(strings)
+            if string_count>yeni_string_number:
+                    fark=string_count-yeni_string_number
+                    for string in strings.order_by('-id'):
+                        if fark > 0:
+                            string.delete()
+                            fark -= 1
+                        else:
+                            break
+            elif string_count<yeni_string_number:
+                
                 fark=yeni_string_number-string_count
-                for x in range(son_string_number+1, son_string_number+fark+1):
+                for x in range(string_count+1, string_count+fark+1):
                     string=String.objects.create(
                         String_Owner=inventor,
                         String_Direction=instance.Operation_Care_Direction,
@@ -510,8 +559,81 @@ class OperationCareSerializer(serializers.ModelSerializer):
                         String_DC_Power=instance.Operation_Care_DC_Power,
                         String_Capacity=instance.Operation_Care_Capacity,
                         String_Izolasion=inventor.Inventor_Izolasion,
-                        String_Date=string_last.String_Date
+                        String_Date=max_date
                     )
+        
+        inventors_ss = instance.operation_inventors.all()
+        if first_Operation_Care_Panel_Brand!=instance.Operation_Care_Panel_Brand:
+            for invntr in inventors_ss:
+                invntr.Inventor_Panel_Brand=instance.Operation_Care_Panel_Brand
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_Panel_Brand=invntr.Inventor_Panel_Brand
+                    str.save()
+        if first_Operation_Care_Direction!=instance.Operation_Care_Direction:
+            for invntr in inventors_ss:
+                invntr.Inventor_Direction=instance.Operation_Care_Direction
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_Direction=invntr.Inventor_Direction
+                    str.save()
+        if first_Operation_Care_Panel_Number_Str!=instance.Operation_Care_Panel_Number_Str:
+            for invntr in inventors_ss:
+                invntr.Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_Panel_SY=invntr.Inventor_Panel_SY
+                    str.save()
+
+        if first_Operation_Care_Number_Str!=instance.Operation_Care_Number_Str:
+            for invntr in inventors_ss:
+                invntr.Inventor_Number_Str=instance.Operation_Care_Number_Str
+                invntr.save()
+                
+        if first_Operation_Care_Panel_Power!=instance.Operation_Care_Panel_Power:
+            for invntr in inventors_ss:
+                invntr.Inventor_Panel_Power=instance.Operation_Care_Panel_Power
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_Panel_Power=invntr.Inventor_Panel_Power
+                    str.save()
+        if first_Operation_Care_VOC!=instance.Operation_Care_VOC:
+            for invntr in inventors_ss:
+                invntr.Inventor_Voc=instance.Operation_Care_VOC
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_VOC=invntr.Inventor_Voc
+                    str.save()
+        if first_Operation_Care_AC_Power!=instance.Operation_Care_AC_Power:
+            for invntr in inventors_ss:
+                invntr.Inventor_AC_Power=instance.Operation_Care_AC_Power
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_AC_Power=invntr.Inventor_AC_Power
+                    str.save()
+        if first_Operation_Care_DC_Power!=instance.Operation_Care_DC_Power:
+            for invntr in inventors_ss:
+                invntr.Inventor_DC_Power=instance.Operation_Care_DC_Power
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_DC_Power=invntr.Inventor_DC_Power
+                    str.save()
+        if first_Operation_Care_Capacity!=instance.Operation_Care_Capacity:
+            for invntr in inventors_ss:
+                invntr.Inventor_Capacity=instance.Operation_Care_Capacity
+                invntr.save()
+                strings_inventor = invntr.inventor_strings.filter(String_Date=max_date)
+                for str in strings_inventor:
+                    str.String_Capacity=invntr.Inventor_Capacity
+                    str.save()
+    
         return instance
   
 class FailSerializer(serializers.ModelSerializer):

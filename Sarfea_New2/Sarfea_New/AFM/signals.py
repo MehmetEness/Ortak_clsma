@@ -94,9 +94,9 @@ def create_inventor(sender, instance, created, **kwargs):
                 Inventor_Izolasion="OK",
             )
 
+'''
 @receiver(post_save, sender=Operation_Care)
 def update_invantor(sender, instance, **kwargs):
-    print("update_invantor")
     inventors = instance.operation_inventors.all()
     
     for inventor in inventors:
@@ -111,6 +111,7 @@ def update_invantor(sender, instance, **kwargs):
         inventor.Inventor_Capacity = instance.Operation_Care_Capacity
 
         inventor.save()
+'''
 
 @receiver(post_save, sender=Inventor)
 def create_string(sender, instance, created, **kwargs):
@@ -137,6 +138,7 @@ def create_string(sender, instance, created, **kwargs):
 
             )
 
+'''
 @receiver(post_save, sender=Inventor)
 def update_strings(sender, instance, **kwargs):
     print("update_strings")
@@ -156,7 +158,8 @@ def update_strings(sender, instance, **kwargs):
         
         # 'String' örneğini kaydederiz
         string.save()
-    
+'''
+
 @receiver(post_save, sender=Poll)
 def create_poll_str(sender, instance, created, **kwargs):
     if created:

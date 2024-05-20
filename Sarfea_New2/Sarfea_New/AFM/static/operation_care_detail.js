@@ -383,9 +383,10 @@ async function editInventor(inventorId){
       }
     }
   }
+
   setTimeout(() => {
     const formatedInputs = document.querySelectorAll(".formatInputs");
-    onPageLoads(formatedInputs)
+    onPageLoads (document.querySelectorAll("#inventor_add_form .formatInputs"))
     inventorEditWindow.style.display = "flex";
   }, 10);
 }
