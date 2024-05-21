@@ -442,17 +442,51 @@
     text-align: center;
   }
 
-  thead th {
+  #list_table thead th:nth-child(3){
     position: sticky;
     top: 0;
-    left: 0;
+    left: -1px;
+  }
+  #list_table tbody td:nth-child(3){
+    position: sticky;
+    left: -1px;
+    z-index: 1000000;
+  } 
+  #sales_table thead th:nth-child(2), #lost_table thead th:nth-child(2), #won_table thead th:nth-child(2){
+    position: sticky;
+    top: 0;
+    left: -1px;
+  }
+  #sales_table tbody td:nth-child(2), #lost_table tbody td:nth-child(2), #won_table tbody td:nth-child(2){
+    position: sticky;
+    left: -1px;
+    z-index: 1000000;
+  } 
+
+
+
+
+
+
+
+
+  thead th {    
     background-color: #d5d1defe;
     cursor: pointer;
     text-transform: capitalize;
   }
+  tbody tr:nth-child(odd) td:nth-child(3), tbody tr:nth-child(odd) td:nth-child(2){
+    background-color: #efefef;
+  }
+  tbody tr:nth-child(even) td:nth-child(3), tbody tr:nth-child(even) td:nth-child(2){
+    background-color: #d8d8d8;
+  }
 
+  tbody tr:nth-child(odd) {
+    background-color: #efefef;
+  }
   tbody tr:nth-child(even) {
-    background-color: #0000000b;
+    background-color: #d8d8d8;
   }
 
   thead th:nth-child(2) {
@@ -472,14 +506,17 @@
     opacity: 0;
   }
 
+  tbody tr:hover td:nth-child(3), tbody tr:hover td:nth-child(2) {
+    background-color: rgb(255, 255, 255) !important;
+  }
   tbody tr:hover {
-    background-color: #fff6 !important;
+    background-color: rgb(255, 255, 255) !important;
   }
 
   tbody tr td,
   tbody tr td p,
   tbody tr td img {
-    transition: 0.2s ease-in-out;
+    /* transition: 0.2s ease-in-out; */
   }
 
   tbody tr.hide td,

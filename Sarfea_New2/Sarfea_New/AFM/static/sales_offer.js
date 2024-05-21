@@ -101,7 +101,7 @@ function generateCard(card) {
           </div>
           <p>${formattedDate}</p>
           <div class="boxes">
-              <p>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 0) + "$"}</p>
+              <p>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</p>
           </div>
           <div class="boxes">
               <p>${formatNumber(card.UnitOffer_NotIncludingKDV, 2)  + "$"} USD/kWp</p>
@@ -1011,6 +1011,7 @@ async function getTotalList() {
       listTableBody.appendChild(row);
     }
     listTablePaint();
+    sortingTable(listTable);
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }
@@ -1127,7 +1128,7 @@ async function getLostList() {
     }
     lostTableBody.innerHTML = "";
     lostTableBody.insertAdjacentHTML("beforeend", rows);
-
+    sortingTable(lostTable);
     //editBtns();
     //sortTableForStart(supplierTable, 1);
     //allTableFormat();
@@ -1175,6 +1176,7 @@ async function getSalesList() {
     }
     salesTableBody.innerHTML = "";
     salesTableBody.insertAdjacentHTML("beforeend", rows);
+    sortingTable(salesTable);
     //editBtns();
     //sortTableForStart(supplierTable, 1);
     //allTableFormat();
@@ -1222,6 +1224,7 @@ async function getWonList() {
     }
     wonTableBody.innerHTML = "";
     wonTableBody.insertAdjacentHTML("beforeend", rows);
+    sortingTable(wonTable);
     //editBtns();
     //sortTableForStart(supplierTable, 1);
     //allTableFormat();
