@@ -368,10 +368,12 @@ incomeTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(incomeDateInput.value);
-    incomeKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    incomeKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(incomeDateInput.value);
-    incomeKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    incomeKurInput.value = kurValue.replace('.', ',');
   }
 });
 
@@ -425,10 +427,12 @@ expensesTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(expensesDateInput.value);
-    expensesKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    expensesKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(expensesDateInput.value);
-    expensesKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    expensesKurInput.value = kurValue.replace('.', ',');
   }
 });
 
@@ -481,10 +485,12 @@ jobhistoryTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(jobhistoryDateInput.value);
-    jobhistoryKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    jobhistoryKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(jobhistoryDateInput.value);
-    jobhistoryKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    jobhistoryKurInput.value = kurValue.replace('.', ',');
   }
 });
 
