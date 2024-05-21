@@ -851,6 +851,7 @@ xBtn.forEach((btn) => {
   #                       FORM EKLEME İŞLEMLERİ
   ***********************************************************/
 
+
 // SALES OFFER ADD
 const addForm = document.getElementById("sales_offer_add_form");
 const formAddBtn = document.querySelector("#sales-offer-create-btn");
@@ -901,6 +902,8 @@ formAddBtn.addEventListener("click", async function (event) {
     uploadPage();
   }
 });
+
+
 
 // FİRMA EKLEME
 const clientAddForm = document.getElementById("firma_add_form");
@@ -1265,7 +1268,8 @@ const goToCard = (event)=>{
 
 //                CARD EDİT FUNCTİON
 let btnID = -1;
-function editBtns() {
+
+async function editBtns() {
   let editButtons = document.querySelectorAll(".card_edit_btn");
   console.log(editButtons)
   editButtons.forEach(button => {
@@ -1292,6 +1296,7 @@ function editBtns() {
             }
           }
         }
+       
         salesOfferAddWindow.style.display = "flex";
         onPageLoads(formatedInputs)
         formatDateInputsForLoad(dateInputs)

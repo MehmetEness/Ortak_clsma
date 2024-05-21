@@ -1176,36 +1176,63 @@
 
 <script>
   // Revize  işlemleri 
-  function reviseCard(cardId) {  
-    const csrftoken = getCookie('csrftoken');
+  async function reviseCard(cardId) {  
+    const today = new Date();
+    const isoDate = today.toISOString();
+    const data = await apiFunctions("sales_offer", "GETID", "x", cardId)
+    console.log(data);
+    const formData = new FormData();
+    formData.append("Revise_Owner", cardId);
+    formData.append("Revize_created_at", isoDate);
+    formData.append("Location_Card", data.Location_Card);
+    formData.append("Cost_NotIncludingKDV_Card", data.Cost_NotIncludingKDV_Card);
+    formData.append("Offer_Cost_NotIncludingKDV_Card", data.Offer_Cost_NotIncludingKDV_Card);
+    formData.append("AC_Power_Card", data.AC_Power_Card);
+    formData.append("DC_Power_Card", data.DC_Power_Card);
+    formData.append("UnitCost_NotIncludingKDV", data.UnitCost_NotIncludingKDV);
+    formData.append("UnitOffer_NotIncludingKDV", data.UnitOffer_NotIncludingKDV);
+    formData.append("Situation_Card", data.Situation_Card);
+    formData.append("Date_Card", data.Date_Card);
+    formData.append("Terrain_Roof_Card", data.Terrain_Roof_Card);
+    formData.append("Roof_Cost_Card", data.Roof_Cost_Card);
+    formData.append("Person_Deal", data.Person_Deal);
+    formData.append("Person_Related", data.Person_Related);
+    formData.append("Unit_Cost_with_Roof_Cost", data.Unit_Cost_with_Roof_Cost);
+    formData.append("Unit_Offer_with_Roof_Cost", data.Unit_Offer_with_Roof_Cost);
+    formData.append("Profit_Rate_Card", data.Profit_Rate_Card);
+    formData.append("Client_Card", data.Client_Card);
+    const formDataObj = Object.fromEntries(formData.entries());
+    console.log(JSON.stringify(formDataObj));
+    await apiFunctions("sales_offer_revise", "POST", formData, cardId);
+    // const csrftoken = getCookie('csrftoken');
 
-    if (!csrftoken) {
-      console.error('CSRF token bulunamadı.');
-      return;
-    }
+    // if (!csrftoken) {
+    //   console.error('CSRF token bulunamadı.');
+    //   return;
+    // }
 
-    fetch(`AFM/create_revise/${cardId}/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken,
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Kaybedildi işlemi başarısızz');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Kaybedildi işlemi başarılı', data);
-        //location.reload();
-        //var newUrl = "".replace("0", cardId);
-        //window.location.href = newUrl;
-      })
-      .catch(error => {
-        console.error('Hata:', error.message);
-      });
+    // fetch(`AFM/create_revise/${cardId}/`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRFToken': csrftoken,
+    //   },
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('Kaybedildi işlemi başarısızz');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log('Kaybedildi işlemi başarılı', data);
+    //     //location.reload();
+    //     //var newUrl = "".replace("0", cardId);
+    //     //window.location.href = newUrl;
+    //   })
+    //   .catch(error => {
+    //     console.error('Hata:', error.message);
+    //   });
 
 
   }
