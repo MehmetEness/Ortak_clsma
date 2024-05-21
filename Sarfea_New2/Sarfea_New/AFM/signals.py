@@ -5,6 +5,8 @@ from .models import Project, CompanyNames, PaymentFirms, Expenses, JobHistory, I
 from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 @receiver(pre_save, sender=Expenses)
 def update_expenses_company_name(sender, instance, **kwargs):
@@ -167,6 +169,10 @@ def create_poll_str(sender, instance, created, **kwargs):
 
         oc=instance.Poll_Operation_Care
         if instance.Poll_Date is not None:
+            current_date = instance.Poll_Date
+            new_date = current_date + relativedelta(months=6)
+            oc.Operation_Care_Finish_Date=new_date
+            oc.save()
             inventors = Inventor.objects.filter(Inventor_Owner=oc)
             for inventor in inventors:
                 strings_all_for_inventor = inventor.inventor_strings.all()

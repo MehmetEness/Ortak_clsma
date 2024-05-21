@@ -746,8 +746,6 @@ def create_revise(request, card_id):
         Date_Card=card.Date_Card,
         Terrain_Roof_Card=card.Terrain_Roof_Card,
         Roof_Cost_Card=card.Roof_Cost_Card,
-        Comment_Date_Card=card.Comment_Date_Card,
-        Offer_Comment_Card=card.Offer_Comment_Card,
         Person_Deal=card.Person_Deal,
         Person_Related=card.Person_Related,
         Offer_File_Card=card.Offer_File_Card,
