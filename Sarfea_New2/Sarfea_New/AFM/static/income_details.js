@@ -271,12 +271,14 @@ incomeTimeForKur.addEventListener("change", async function () {
     if (secilenDeger === "secenek1") {
     } else if (secilenDeger === "secenek2") {
         tarih = birGunOncekiTarih(incomeDateInput.value);
-        incomeKurInput.value = await getUSDKur(tarih);
-        console.log(await getUSDKur(tarih));
+        let kurValue = await getUSDKur(tarih);
+        incomeKurInput.value = kurValue.replace('.', ',');
+        //console.log(await getUSDKur(tarih));
     } else if (secilenDeger === "secenek3") {
-        console.log("fds");
+        //console.log("fds");
         tarih = tarihFormatiniDegistir(incomeDateInput.value);
-        incomeKurInput.value = await getUSDKur(tarih);
+        let kurValue = await getUSDKur(tarih);
+        incomeKurInput.value = kurValue.replace('.', ',')
     }
 });
 

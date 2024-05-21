@@ -13,8 +13,7 @@ const gerceklesenKarOraniSpan = document.querySelector("#gerceklesen_kar_orani")
 
 const hesaplananIsBedeliSpan = document.querySelector("#hesaplanan_is_bedeli_span").textContent;
 const hesaplananMaliyetSpan = document.querySelector("#hesaplanan_maliyet_span").textContent;
-console.log(hesaplananIsBedeliSpan);
-console.log(hesaplananMaliyetSpan);
+
 
 const gerceklesenKarZararSpan = document.querySelector("#gerceklesen_kar_zarar");
 const hesaplananKarZararSpan = document.querySelector("#hesaplanan_kar_zarar");
@@ -27,7 +26,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   gerceklesenKarOraniSpan.textContent = formatNumber(gerceklesenKarOrani, 2) + "%";
   gerceklesenKarZararSpan.textContent = formatNumber(totalGelir - totalMaliyet);
   hesaplananKarZararSpan.textContent = formatNumber(hesaplananIsBedeli - hesaplananMaliyet, 0)
-  
+  document.querySelector("#hesaplanan_is_bedeli_span").textContent = formatNumber(hesaplananIsBedeli, 0)
+  document.querySelector("#hesaplanan_maliyet_span").textContent = formatNumber(hesaplananMaliyet, 0)
 });
 
 // function gerceklesenGrafikFunction(){
