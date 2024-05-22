@@ -359,6 +359,8 @@ class Operation_Care(models.Model):
     Operation_Care_Cost = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Start_Date = models.DateField(blank=True, null=True)
     Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
+    Operation_Care_endContract_Date = models.DateField(blank=True, null=True)
+
     Operation_Care_Has_Fail = models.BooleanField(default=False, blank=True, null=True)
     Operation_Care_Fail_Number = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Switchgear_Material= models.CharField(max_length=200, blank=True, null=True)
