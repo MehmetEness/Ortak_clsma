@@ -785,8 +785,9 @@ async function getOperationFail(isEdit) {
           <td>${operationCareFail.Fail_Guaranteed}</td>
           <td>${operationCareFail.Fail_Situation}</td>
         </tr>`;
-
-      rows += row;
+      if(operationCareFail.Fail_Operation_Care == operationCareId){
+        rows += row;
+      }      
     }
     if (data.length > currentRows.length || isEdit) {
 

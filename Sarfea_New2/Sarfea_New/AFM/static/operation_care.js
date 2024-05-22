@@ -413,15 +413,19 @@ function failEditButtonsEvents() {
         failEditMode = true;
         failBtnID = button.id;
         const data = await apiFunctions("fail", "GETID", "x", failBtnID)
+        console.log("logggggg");
+        console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
               if(key != "Fail_Bill_File"){
-                if (key == "Operation_Care_Company") {
-                  element.value = data["client"].CompanyName_Clients;
-                  element.setAttribute('data-id', data[key]);
+                if (key == "Fail_Operation_Care") {
+                  console.log(data.Fail_Operation_Care);
+                  let failIdd = data.Fail_Operation_Care;
+                  const dataFail = await apiFunctions("operation_care", "GETID", "x", failIdd)
+                  element.value = dataFail.client.CompanyName_Clients;
                 } else {
                   element.value = data[key];
                 }

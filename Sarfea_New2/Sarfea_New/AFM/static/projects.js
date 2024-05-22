@@ -275,7 +275,8 @@ function editButtonsEvents() {
         editMode = true;
         btnID = button.id;
         const data = await apiFunctions("project", "GETID", "x", btnID)
-        //console.log(data);
+        console.log("sdfasdffd");
+        console.log(data);
         currentProjectName = data.ProjectName;
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
