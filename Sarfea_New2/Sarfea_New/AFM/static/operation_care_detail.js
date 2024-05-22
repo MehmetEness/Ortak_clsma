@@ -4,11 +4,38 @@ var arizaTakipContainer = document.querySelector(".ariza_takip_container");
 var bakimTakipContainer = document.querySelector(".bakim_takip_container");
 
 document.addEventListener("DOMContentLoaded", function () {
+  nextCareDateFunctiob()
+  
+
   //                  CARD NONE VERİLERİ DÜZELTME
 
   topMenuLi[0].classList.add("li-hover");
 });
 
+function nextCareDateFunctiob(){
+  var selectElement = document.getElementById("id_date_select");
+  const nextCareDateInput = document.getElementById("anket_date_input")
+  var options = selectElement.options;
+  var lastIndex = options.length - 1;
+  var lastOptionValue = options[lastIndex].value;
+  var lastOptionText = options[lastIndex].textContent;
+
+  var currentCareDay = new Date(lastOptionValue);
+  currentCareDay.setMonth(currentCareDay.getMonth() + 6);
+  var gun = currentCareDay.getDate().toString().padStart(2, '0');
+  var ay = (currentCareDay.getMonth() + 1).toString().padStart(2, '0');
+  var yil = currentCareDay.getFullYear();
+  var altiAySonrasiFormatli = gun + '.' + ay + '.' + yil;
+  nextCareDateInput.value = altiAySonrasiFormatli;
+  // if(options.length === 2){
+  //   nextCareDateInput.value = lastOptionText;
+  // }else if(options.length > 2){
+  //   nextCareDateInput.value = altiAySonrasiFormatli;
+  // }
+  
+
+  kontrolEtDates('Poll_Date');
+}
 //                  TOP MENÜ TIKLAMA
 
 topMenuLi.forEach(function (item) {
@@ -213,7 +240,7 @@ async function getAndRenderStrings(date) {
     tbody.innerHTML = "";
     let i = 1;
     for (const inventor of data) {
-      console.log(inventor.id);
+     // console.log(inventor.id);
       inventorOwner = inventor.Inventor_Owner;
       if (inventor.Inventor_Owner == operation_id) {
         const response2 = await fetch(`/get_strings/${inventor.id}/`);
@@ -303,6 +330,8 @@ async function getAndRenderStrings(date) {
     console.error("Error", error);
   }
 }
+
+
 
 async function xfunction(x, y){
   let formDatax = new FormData();

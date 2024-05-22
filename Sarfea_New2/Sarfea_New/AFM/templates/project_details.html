@@ -67,8 +67,11 @@
                     {% endif %}
                     <span>Teşvik Durumu</span>
                 </div>
-                <div id="type_div" class="column-2 card">
-                    <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div>
+                <div id="type_div" class="column-2 card flex">
+                    <span><i class="fa-solid fa-location-dot"></i></span>
+                    <!-- <div style="display: none;" class="span"><span id="type_span">{{project.Terrain_Roof}}</span></div> -->
+                    <span>{{project.Terrain_Roof}}</span>
+                    <span>Arazi/Çatı</span>
                 </div>
             </div>
             <div class="row">
@@ -175,15 +178,15 @@
 
 
 
-        typeImgChange(typeSpan)
-    function typeImgChange(typeSpan) {
-        var typeText = typeSpan.textContent.toLowerCase();
-        if (typeText == "çatı") {
-            typeText = typeText.replace("çatı", "cati");
-        }
-        var newImageUrl = `{% static 'images/' %}${typeText}.png`;
-        typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
-    };
+    //     typeImgChange(typeSpan)
+    // function typeImgChange(typeSpan) {
+    //     var typeText = typeSpan.textContent.toLowerCase();
+    //     if (typeText == "çatı") {
+    //         typeText = typeText.replace("çatı", "cati");
+    //     }
+    //     var newImageUrl = `{% static 'images/' %}${typeText}.png`;
+    //     typeDiv.style.backgroundImage = "url('" + newImageUrl + "')";
+    // };
 
     // typeImgChange(typeSpan);
     // function konumImgChange(konumSpan) {
