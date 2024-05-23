@@ -460,7 +460,6 @@
   #sales_table tbody td:nth-child(2), #lost_table tbody td:nth-child(2), #won_table tbody td:nth-child(2){
     position: sticky;
     left: -1px;
-    z-index: 1000000;
   } 
 
 
@@ -475,10 +474,10 @@
     cursor: pointer;
     text-transform: capitalize;
   }
-  tbody tr:nth-child(odd) td:nth-child(3), tbody tr:nth-child(odd) td:nth-child(2){
+  tbody tr:nth-child(odd) td{
     background-color: #efefef;
   }
-  tbody tr:nth-child(even) td:nth-child(3), tbody tr:nth-child(even) td:nth-child(2){
+  tbody tr:nth-child(even) td{
     background-color: #d8d8d8;
   }
 
@@ -506,7 +505,7 @@
     opacity: 0;
   }
 
-  tbody tr:hover td:nth-child(3), tbody tr:hover td:nth-child(2) {
+  tbody tr:hover td {
     background-color: rgb(255, 255, 255) !important;
   }
   tbody tr:hover {
