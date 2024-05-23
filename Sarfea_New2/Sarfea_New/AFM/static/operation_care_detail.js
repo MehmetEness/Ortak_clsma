@@ -460,12 +460,12 @@ inventorFormEditBtn.addEventListener("click", async function (event) {
       const stringDate = document.getElementById("bakim_date");
       getAndRenderStrings(stringDate.value);
     } else {
+      console.log(invID);
       await apiFunctions("inventor", "PUT", formData, invID);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
       const stringDate = document.getElementById("bakim_date");
-      getAndRenderStrings(stringDate.value);
-      
+      getAndRenderStrings(stringDate.value);     
       
     }
   //}

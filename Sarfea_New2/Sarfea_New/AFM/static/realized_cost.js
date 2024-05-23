@@ -346,6 +346,7 @@ expensesFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
 
     if (requiredInputs(reqExpensesInput, reqExpensesLabels)) {
+        const compId = document.getElementById("id_CompanyName_Paying_Expenses").value;
         dateInputs.forEach(input => {
             input.value = formatDateForSubmit(input.value)
         })
@@ -365,11 +366,12 @@ expensesFormAddBtn.addEventListener("click", async function (event) {
             await apiFunctions("expense", "PUT", formData, expensesBtnID);
         }
         expensesAddWindow.style.display = "none";
-        getCompany()
+        await getCompany()
         getExpenses(supplierId)
         getSuppliers();
         clearInputAfterSave(expensesAddForm);
         getTotalTable();
+        firstClickToCompany(compId)
     }
 });
 // TARİH İNPUT FORMATLAMA
@@ -407,6 +409,7 @@ jobhistoryFormAddBtn.addEventListener("click", async function (event) {
     event.preventDefault();
 
     if (requiredInputs(reqJobhistoryInputs, reqJobhistoryLabels)) {
+        const compId = document.getElementById("id_CompanyName_Job_JobHistory").value;
         dateInputs.forEach(input => {
             input.value = formatDateForSubmit(input.value)
         })
@@ -426,11 +429,12 @@ jobhistoryFormAddBtn.addEventListener("click", async function (event) {
             await apiFunctions("job_history", "PUT", formData, jobHistoryBtnID);
         }
         jobhistoryAddWindow.style.display = "none";
-        getCompany()
+        await getCompany()
         getSuppliers();
         getJobhistory(supplierId)
         clearInputAfterSave(jobhistoryAddForm);
         getTotalTable();
+        firstClickToCompany(compId)
     }
 });
 
@@ -518,7 +522,30 @@ totalTableBtn.addEventListener("click", () => {
     }
 })
 
+function firstClickToCompany(elemet){
+    const comps = document.querySelectorAll(".sidebar-links ul li")
+    const linksArray = Array.from(comps);
+    const lastElement = linksArray[0];
+   
+    if(elemet){        
+        comps.forEach(item => {           
+            if(item.textContent.trim() == elemet.trim()){
+                getSupplierInfo(item.id)
+            }
+        });
+    } else{
+        getSupplierInfo(lastElement.id)
+    }
+} 
 function getSupplierInfo(id) {
+    var comps2 = document.querySelectorAll(".sidebar-links ul li")
+    console.log(comps2);
+    comps2.forEach(item => {
+        item.classList.remove("activeComp");
+        if(item.id == id){
+            item.classList.add("activeComp");
+        }
+    });    
     twoTableSection.style.display = "flex";
     totalTableSection.style.display = "none";
     supplierId = id;
@@ -541,9 +568,11 @@ async function genelToplam() {
 
 
 
+
+
 const realizedCostCompnay = document.querySelector(".sidebar-links ul")
-getCompany();
-async function getCompany() {
+getCompany("asd");
+async function getCompany(x) {
     try {
         //const response = await apiFunctions("supplier", "GET")
 
@@ -571,9 +600,10 @@ async function getCompany() {
             </a>
         </li>`;
             realizedCostCompnay.insertAdjacentHTML("beforeend", li);
-        }
-
-
+        }       
+        if(x){
+            firstClickToCompany();
+        } 
     } catch (error) {
         console.error("Error fetching and rendering projects:", error);
     }

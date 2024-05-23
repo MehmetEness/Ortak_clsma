@@ -474,11 +474,12 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
-    // const jsonObject = {};
-    // for (const [key, value] of formData.entries()) {
-    //   jsonObject[key] = value;
-    // }
-    // console.log(JSON.stringify(jsonObject));
+    console.log(operationBtnID);
+    const jsonObject = {};
+    for (const [key, value] of formData.entries()) {
+      jsonObject[key] = value;
+    }
+    console.log(JSON.stringify(jsonObject));
 
     if (operationEditMode == false) {
       await apiFunctions("operation_care", "POST", formData);

@@ -29,6 +29,10 @@ body {
   height: 100vh;
 }
 
+
+.activeComp{
+  background-color: #fff7;
+}
 /*  LOGO  */
 
 #title-div {
