@@ -10,6 +10,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
 <style>
+  :root {
+      --background-image-url: url("https://sovotozogluerp-01.s3.amazonaws.com/your-image.jpg");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+
+
+
   #table thead th:not(:nth-child(2)),
   #table tbody td:not(:nth-child(2)) {
     text-align: center;

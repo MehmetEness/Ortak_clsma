@@ -7,8 +7,14 @@
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
 <link rel="stylesheet" href="{% static 'client.css' %}" />
-<style>
-    .sidebar-links li.musteriler_li {
+<style>   
+  :root {
+      --background-image-url: url("https://sovotozogluerp-01.s3.amazonaws.com/your-image.jpg");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+  .sidebar-links li.musteriler_li {
   background: var(--main-color-dark);
 }
 </style>

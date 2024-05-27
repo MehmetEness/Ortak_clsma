@@ -6,6 +6,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'sec-inputs.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'realized_cost.css' %}" />
+<style>
+   :root {
+      --background-image-url: url("https://sovotozogluerp-01.s3.amazonaws.com/your-image.jpg");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+</style>
 
 {% endblock %} {% block title %} Sovo-Tozoglu {% endblock %} {% block content %}
 

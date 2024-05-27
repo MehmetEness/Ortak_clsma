@@ -21,7 +21,7 @@ body {
 }
 .body-div {
   width: 100vw;
-  background: url("/static/images/html_table.jpg") center / cover;
+  /* background: url("/static/images/html_table.jpg") center / cover; */
   display: flex;
   flex-direction: row;
   align-items: center;

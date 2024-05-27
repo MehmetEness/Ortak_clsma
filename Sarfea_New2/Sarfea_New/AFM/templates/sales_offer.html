@@ -9,6 +9,14 @@
 <link rel="stylesheet" href="{% static 'sales_offers.css' %}">
 <link rel="stylesheet" href="{% static 'style.css' %}">
 <style>
+  :root {
+      --background-image-url: url("https://sovotozogluerp-01.s3.amazonaws.com/your-image.jpg");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+</style>
+<style>
   input[type="file"] {
     cursor: pointer !important;
     font: 300 14px sans-serif;
