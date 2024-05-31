@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
 from django.db.models import Max, Count
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -18,6 +18,22 @@ class ClientSerializer(serializers.ModelSerializer):
         instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
         instance.Email = validated_data.get('Email', instance.Email)
         instance.Location = validated_data.get('Location', instance.Location)
+
+        instance.save()
+        return instance
+
+class PowerPlantSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PowerPlant
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return PowerPlant.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.PowerPlantName = validated_data.get('PowerPlantName', instance.PowerPlantName)
+        
 
         instance.save()
         return instance
@@ -332,6 +348,9 @@ class StringSerializer(serializers.ModelSerializer):
         instance.String_Capacity = validated_data.get('String_Capacity', instance.String_Capacity)
         instance.String_Percent = validated_data.get('String_Percent', instance.String_Percent)
         
+        instance.String_Pluse = validated_data.get('String_Pluse', instance.String_Pluse)
+        instance.String_Minus = validated_data.get('String_Minus', instance.String_Minus)
+
         instance.save()
         return instance
 
@@ -357,6 +376,8 @@ class InventorSerializer(serializers.ModelSerializer):
         first_Inventor_DC_Power=instance.Inventor_DC_Power
         first_Inventor_Capacity=instance.Inventor_Capacity
 
+        first_Inventor_Pluse=instance.Inventor_Pluse
+        first_Inventor_Minus=instance.Inventor_Minus
 
         instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
         instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
@@ -370,6 +391,10 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
         instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
         instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
+        
+        instance.Inventor_Pluse = validated_data.get('Inventor_Pluse', instance.Inventor_Pluse)
+        instance.Inventor_Minus = validated_data.get('Inventor_Minus', instance.Inventor_Minus)
+       
         instance.save()
 
         strings = instance.inventor_strings.all()
@@ -404,6 +429,9 @@ class InventorSerializer(serializers.ModelSerializer):
                         String_DC_Power=instance.Inventor_DC_Power,
                         String_Capacity=instance.Inventor_Capacity,
                         String_Izolasion=instance.Inventor_Izolasion,
+                        String_Pluse=instance.Inventor_Pluse,
+                        String_Minus=instance.Inventor_Minus,
+
                         String_Date=max_date,
 
                     )
@@ -446,11 +474,20 @@ class InventorSerializer(serializers.ModelSerializer):
             for str in strings_last_date:
                 str.String_Capacity=instance.Inventor_Capacity
                 str.save()
+        
+        if first_Inventor_Pluse!= instance.Inventor_Pluse:
+            for str in strings_last_date:
+                str.String_Pluse=instance.Inventor_Pluse
+                str.save()
+        if first_Inventor_Minus!= instance.Inventor_Minus:
+            for str in strings_last_date:
+                str.String_Minus=instance.Inventor_Minus
+                str.save()
 
         return instance
 
 class OperationCareSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(source='Operation_Care_Company', read_only=True)
+    client = PowerPlantSerializer(source='Operation_Care_Company', read_only=True)
     operation_inventors= InventorSerializer(many=True, read_only=True)
 
     class Meta:

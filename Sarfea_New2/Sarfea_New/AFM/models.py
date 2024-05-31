@@ -32,6 +32,11 @@ class CompanyNames(models.Model):
     def __str__(self):
         return self.CompanyName
 
+class PowerPlant(models.Model):
+    PowerPlantName = models.CharField(max_length=63) 
+    def __str__(self):
+        return self.PowerPlantName
+
 class MyCompanyNames(models.Model):
     MyCompanyName = models.CharField(max_length=63) 
     def __str__(self):
@@ -326,7 +331,7 @@ class SalesOfferCard_Revise(models.Model):
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 class Operation_Care(models.Model):
-    Operation_Care_Company=  models.ForeignKey(Clients, on_delete=models.CASCADE, related_name="client_operation_care")
+    Operation_Care_Company=  models.ForeignKey(PowerPlant, on_delete=models.CASCADE, related_name="client_operation_care")
     Operation_Care_Location = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Inventor_Brand = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
@@ -351,8 +356,8 @@ class Operation_Care(models.Model):
     Operation_Care_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Inventor_Number = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_VOC = TwoDecimalField(blank=True, null=True, default="0")
-    Operation_Care_AC_Power = TwoDecimalField(blank=True, null=True, default="0")
-    Operation_Care_DC_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Operation_Care_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    Operation_Care_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     Operation_Care_Panel_Number_Str = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Number_Str = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Capacity = models.IntegerField(blank=True, null=True, default="0")
@@ -360,12 +365,11 @@ class Operation_Care(models.Model):
     Operation_Care_Start_Date = models.DateField(blank=True, null=True)
     Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
     Operation_Care_endContract_Date = models.DateField(blank=True, null=True)
-
     Operation_Care_Has_Fail = models.BooleanField(default=False, blank=True, null=True)
     Operation_Care_Fail_Number = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Switchgear_Material= models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Price = TwoDecimalField(blank=True, null=True, default="0")
-
+    
 class Fail(models.Model):
     Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_fails")
     Fail_Central_Name = models.CharField(max_length=63, blank=True, null=True)
@@ -409,9 +413,11 @@ class Inventor(models.Model):
     Inventor_Izolasion = models.CharField(max_length=200, blank=True, null=True)
     Inventor_VOC =TwoDecimalField(blank=True, null=True, default="0")
     Inventor_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
-    Inventor_AC_Power = TwoDecimalField(blank=True, null=True, default="0")
-    Inventor_DC_Power = TwoDecimalField(blank=True, null=True, default="0")
+    Inventor_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    Inventor_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     Inventor_Capacity = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_Pluse = FourDecimalField(blank=True, null=True, default="0")
+    Inventor_Minus = FourDecimalField(blank=True, null=True, default="0")
 
 class String(models.Model):
     String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, related_name="inventor_strings")
@@ -422,11 +428,13 @@ class String(models.Model):
     String_VOC = TwoDecimalField(blank=True, null=True, default="0")
     String_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
     String_Izolasion = models.CharField(max_length=200, blank=True, null=True)
-    String_AC_Power = TwoDecimalField(blank=True, null=True, default="0")
-    String_DC_Power = TwoDecimalField(blank=True, null=True, default="0")
+    String_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    String_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     String_Capacity = models.IntegerField(blank=True, null=True, default="0")
     String_Percent = TwoDecimalField(blank=True, null=True, default="0")
     String_Date = models.DateField(blank=True, null=True)
+    String_Pluse = FourDecimalField(blank=True, null=True, default="0")
+    String_Minus = FourDecimalField(blank=True, null=True, default="0")
 
 
 class Poll(models.Model):
@@ -541,7 +549,3 @@ class Poll(models.Model):
     answer_9_3 = models.BooleanField(blank=True, null=True)
     answer_9_4 = models.BooleanField(blank=True, null=True)
     answer_9_5 = models.BooleanField(blank=True, null=True)
-
-    
-
- 
