@@ -71,7 +71,7 @@ def update_client_card(sender, instance, **kwargs):
 def create_inventor(sender, instance, created, **kwargs):
     if created:
         print("create_inventor")
-
+        instance.Operation_Care_Capacity = instance.Operation_Care_AC_Power +instance.Operation_Care_DC_Power
         poll= Poll.objects.create(
             Poll_Operation_Care=instance,
             Poll_Date=instance.Operation_Care_Start_Date
@@ -92,7 +92,6 @@ def create_inventor(sender, instance, created, **kwargs):
                 Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str,
                 Inventor_AC_Power=instance.Operation_Care_AC_Power,
                 Inventor_DC_Power=instance.Operation_Care_DC_Power,
-                Inventor_Capacity=instance.Operation_Care_Capacity,
                 Inventor_Izolasion="OK",
             )
 
@@ -134,7 +133,6 @@ def create_string(sender, instance, created, **kwargs):
                 String_Panel_SY=instance.Inventor_Panel_SY,
                 String_AC_Power=instance.Inventor_AC_Power,
                 String_DC_Power=instance.Inventor_DC_Power,
-                String_Capacity=instance.Inventor_Capacity,
                 String_Izolasion=instance.Inventor_Izolasion,
                 String_Date=oc.Operation_Care_Start_Date,
 
@@ -199,3 +197,6 @@ def create_poll_str(sender, instance, created, **kwargs):
 def update_capasity(sender, instance, **kwargs):
     instance.String_Capacity = instance.String_Pluse + instance.String_Minus
     
+@receiver(pre_save, sender=Operation_Care)
+def update_capasity_OC(sender, instance, **kwargs):
+        instance.Operation_Care_Capacity = instance.Operation_Care_AC_Power + instance.Operation_Care_DC_Power
