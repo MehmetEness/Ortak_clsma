@@ -195,3 +195,7 @@ def create_poll_str(sender, instance, created, **kwargs):
                             String_Date=instance.Poll_Date,
                         )
 
+@receiver(pre_save, sender=String)
+def update_capasity(sender, instance, **kwargs):
+    instance.String_Capacity = instance.String_Pluse + instance.String_Minus
+    

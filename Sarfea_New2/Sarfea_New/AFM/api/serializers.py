@@ -332,6 +332,9 @@ class StringSerializer(serializers.ModelSerializer):
         instance.String_Capacity = validated_data.get('String_Capacity', instance.String_Capacity)
         instance.String_Percent = validated_data.get('String_Percent', instance.String_Percent)
         
+        instance.String_Pluse = validated_data.get('String_Pluse', instance.String_Pluse)
+        instance.String_Minus = validated_data.get('String_Minus', instance.String_Minus)
+
         instance.save()
         return instance
 
@@ -357,6 +360,8 @@ class InventorSerializer(serializers.ModelSerializer):
         first_Inventor_DC_Power=instance.Inventor_DC_Power
         first_Inventor_Capacity=instance.Inventor_Capacity
 
+        first_Inventor_Pluse=instance.Inventor_Pluse
+        first_Inventor_Minus=instance.Inventor_Minus
 
         instance.Inventor_Owner = validated_data.get('Inventor_Owner', instance.Inventor_Owner)
         instance.Inventor_Direction = validated_data.get('Inventor_Direction', instance.Inventor_Direction)
@@ -370,6 +375,10 @@ class InventorSerializer(serializers.ModelSerializer):
         instance.Inventor_AC_Power = validated_data.get('Inventor_AC_Power', instance.Inventor_AC_Power)
         instance.Inventor_DC_Power = validated_data.get('Inventor_DC_Power', instance.Inventor_DC_Power)
         instance.Inventor_Capacity = validated_data.get('Inventor_Capacity', instance.Inventor_Capacity)
+        
+        instance.Inventor_Pluse = validated_data.get('Inventor_Pluse', instance.Inventor_Pluse)
+        instance.Inventor_Minus = validated_data.get('Inventor_Minus', instance.Inventor_Minus)
+       
         instance.save()
 
         strings = instance.inventor_strings.all()
@@ -404,6 +413,9 @@ class InventorSerializer(serializers.ModelSerializer):
                         String_DC_Power=instance.Inventor_DC_Power,
                         String_Capacity=instance.Inventor_Capacity,
                         String_Izolasion=instance.Inventor_Izolasion,
+                        String_Pluse=instance.Inventor_Pluse,
+                        String_Minus=instance.Inventor_Minus,
+
                         String_Date=max_date,
 
                     )
@@ -445,6 +457,15 @@ class InventorSerializer(serializers.ModelSerializer):
         if first_Inventor_Capacity!= instance.Inventor_Capacity:
             for str in strings_last_date:
                 str.String_Capacity=instance.Inventor_Capacity
+                str.save()
+        
+        if first_Inventor_Pluse!= instance.Inventor_Pluse:
+            for str in strings_last_date:
+                str.String_Pluse=instance.Inventor_Pluse
+                str.save()
+        if first_Inventor_Minus!= instance.Inventor_Minus:
+            for str in strings_last_date:
+                str.String_Minus=instance.Inventor_Minus
                 str.save()
 
         return instance
