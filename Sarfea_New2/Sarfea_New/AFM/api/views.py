@@ -8,8 +8,8 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer
-from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor, Poll
+from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer, PowerPlantSerializer
+from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor, Poll, PowerPlant
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Operation_Care
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -62,6 +62,15 @@ class ClientsListCreateAPIView(generics.ListCreateAPIView):
 class ClientDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Clients.objects.all()
     serializer_class=ClientSerializer
+
+class PowerPlantsListCreateAPIView(generics.ListCreateAPIView):
+    queryset= PowerPlant.objects.all()
+    serializer_class=PowerPlantSerializer
+
+    
+class PowerPlantDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= PowerPlant.objects.all()
+    serializer_class=PowerPlantSerializer
 
 class SuppliersListCreateAPIView(generics.ListCreateAPIView):
     queryset= Supplier.objects.all()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll
+from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
 from django.db.models import Max, Count
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -18,6 +18,22 @@ class ClientSerializer(serializers.ModelSerializer):
         instance.PhoneNumber = validated_data.get('PhoneNumber', instance.PhoneNumber)
         instance.Email = validated_data.get('Email', instance.Email)
         instance.Location = validated_data.get('Location', instance.Location)
+
+        instance.save()
+        return instance
+
+class PowerPlantSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PowerPlant
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return PowerPlant.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.PowerPlantName = validated_data.get('PowerPlantName', instance.PowerPlantName)
+        
 
         instance.save()
         return instance
@@ -471,7 +487,7 @@ class InventorSerializer(serializers.ModelSerializer):
         return instance
 
 class OperationCareSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(source='Operation_Care_Company', read_only=True)
+    client = PowerPlantSerializer(source='Operation_Care_Company', read_only=True)
     operation_inventors= InventorSerializer(many=True, read_only=True)
 
     class Meta:

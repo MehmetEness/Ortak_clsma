@@ -10,6 +10,10 @@ urlpatterns = [
     path('api_client/', api_view.ClientsListCreateAPIView.as_view(), name='api-clients'),
     path('api_client/<pk>', api_view.ClientDetailAPIView.as_view(), name='api-client-detail'),
 
+    path('api_powerpoint/', api_view.PowerPlantsListCreateAPIView.as_view(), name='api-powerpoint'),
+    path('api_powerpoint/<pk>', api_view.PowerPlantDetailAPIView.as_view(), name='api-powerpoint-detail'),
+
+
     path('api_supplier/', api_view.SuppliersListCreateAPIView.as_view(), name='api-suppliers'),
     path('api_supplier/<pk>', api_view.SupplierDetailAPIView.as_view(), name='api-supplier-detail'),
 

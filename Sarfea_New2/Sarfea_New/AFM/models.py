@@ -32,6 +32,11 @@ class CompanyNames(models.Model):
     def __str__(self):
         return self.CompanyName
 
+class PowerPlant(models.Model):
+    PowerPlantName = models.CharField(max_length=63) 
+    def __str__(self):
+        return self.PowerPlantName
+
 class MyCompanyNames(models.Model):
     MyCompanyName = models.CharField(max_length=63) 
     def __str__(self):
@@ -326,7 +331,7 @@ class SalesOfferCard_Revise(models.Model):
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 class Operation_Care(models.Model):
-    Operation_Care_Company=  models.ForeignKey(Clients, on_delete=models.CASCADE, related_name="client_operation_care")
+    Operation_Care_Company=  models.ForeignKey(PowerPlant, on_delete=models.CASCADE, related_name="client_operation_care")
     Operation_Care_Location = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Inventor_Brand = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
