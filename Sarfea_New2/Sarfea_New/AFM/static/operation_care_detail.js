@@ -253,7 +253,7 @@ async function getAndRenderStrings(date) {
           }
         })
         let bool = true;
-        
+        console.log(stringsFilter);
         for (const string of stringsFilter) {          
             let izalasyonValue = string.String_Izolasion || "OK";
             let izalasyonValue2 = "FAULT";
@@ -297,10 +297,10 @@ async function getAndRenderStrings(date) {
                   </td>
                   
                   <td>
-                    <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_AC_Power}">
+                    <input name="String_Pluse" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_Pluse}">
                   </td>
                   <td>
-                    <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_DC_Power}">
+                    <input name="String_Minus" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_Minus}">
                   </td>
                   <td>
                     <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
@@ -337,8 +337,6 @@ async function getAndRenderStrings(date) {
 
 async function xfunction(x, y){
   let formDatax = new FormData();
-  console.log(x);
- //console.log(dataOwnerValue);
  let yValue = y.value.replace(/\./g, "").replace(/,/g, ".")
  console.log(yValue);
  formDatax.append(y.name, yValue);
@@ -348,12 +346,11 @@ async function xfunction(x, y){
       formDataObject[key] = value;
     });
     
-    // JavaScript nesnesini JSON formatına dönüştürün
     const formDataJson = JSON.stringify(formDataObject);
     
-    // JSON formatındaki formData'yı konsola yazdırın
     console.log(formDataJson);
-  await apiFunctions("string", "PUT", formDatax, x);
+  await apiFunctions("string", "PUT", formDatax, x);  
+  getAndRenderStrings(stringDate.value);
 }
 //getAndRenderInventors();
 async function getAndRenderInventors() {

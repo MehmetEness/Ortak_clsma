@@ -52,7 +52,7 @@ async function getOperationCare(isEdit) {
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
-          <td><a href="${operationCareDetailUrl}">${operationCare.client.CompanyName_Clients}</a></td>
+          <td><a href="${operationCareDetailUrl}">${operationCare.client.PowerPlantName}</a></td>
           <td>${formatNumber(operationCare.Operation_Care_Capacity)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
@@ -568,14 +568,14 @@ const clientFormAddBtn = document.querySelector("#firma_submit_btn");
 clientFormAddBtn.addEventListener("click", async function (event) {
   var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
   var reqLabels = document.querySelectorAll("#firma_add_label")
-  var firmaInput = document.querySelector("#id_CompanyName_Clients");
+  var firmaInput = document.querySelector("#id_PowerPlantName");
   var firmaSpan = document.querySelector("#firma_add_label")
   event.preventDefault();
 
-  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+  if (requiredInputs(reqInputs, reqLabels) && await powerpointNameControl(firmaInput, firmaSpan) ) {    
     try {
       const formData = new FormData(firma_add_form);
-      apiFunctions("client", "POST", formData)
+      apiFunctions("powerpoint", "POST", formData)
       clientAddWindow.style.display = "none";
       setTimeout(() => {
         getClients();
@@ -592,10 +592,11 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 getClients()
 async function getClients() {
   try {
-    var data = await apiFunctions("client", "GET")
+    var data = await apiFunctions("powerpoint", "GET")
+    console.log(data);
     let rows = "";
     for (const client of data) {
-      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
+      const row = `<span value="${client.id}" class="dropdown-item">${client.PowerPlantName}</span>`;
       rows += row;
     }
     const clientDropdowns = document.querySelectorAll(".client-dropdown");
