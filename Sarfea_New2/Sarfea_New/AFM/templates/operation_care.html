@@ -123,7 +123,7 @@
         <div class="user-details">
 
           <div class="input-box" id="CompanyNameInput">
-            <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-company-add-btn"
+            <span id="firma_adi_span" class="details">Santral İsmi*<button type="button" id="paying-company-add-btn"
                 class="paying-company-add-btn">
                 <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
@@ -156,12 +156,12 @@
             </div>
           </div>
           <div class="input-box">
-            <span class="details">inventör Güç</span>
+            <span class="details">İnventör Güç(kW)</span>
             <input class="coc-input formatInputs" type="text" name="Operation_Care_Inventor_Power"
               id="id_Operation_Care_Inventor_Power" step="1" autocomplete="off" />
           </div>
           <div class="input-box">
-            <span class="details">Panel Gücü</span>
+            <span class="details">Panel Gücü(W)</span>
             <input class="coc-input formatInputs" type="text" name="Operation_Care_Panel_Power"
               id="id_Operation_Care_Panel_Power" step="1" autocomplete="off" />
           </div>
@@ -180,11 +180,18 @@
             <input class="coc-input formatInputs" type="text" name="Operation_Care_VOC" id="id_Operation_Care_VOC"
               step="0.1" autocomplete="off" />
           </div>
-
           <div class="input-box">
+            <span class="details">Arazi/Çatı</span>
+            <select name="Operation_Care_Terrain_Roof" id="id_Operation_Care_Terrain_Roof">
+              <option value="Arazi">Arazi</option>
+              <option value="Çatı">Çatı</option>
+            </select>
+          </div>
+          
+          <!-- <div class="input-box">
             <span class="details">Tesis Kurulu Gücü</span>
             <input class="formatInputs" id="id_Operation_Care_Capacity" type="text" name="Operation_Care_Capacity" />
-          </div>
+          </div> -->
           <div class="input-box">
             <span class="details">AC Güç(kWe)</span>
             <input class="formatInputs" id="id_Operation_Care_AC_Power" type="text" name="Operation_Care_AC_Power" />
@@ -194,12 +201,10 @@
             <input id="id_Operation_Care_Number_Str" type="text" name="Operation_Care_Number_Str" />
           </div>
           <div class="input-box">
-            <span class="details">Arazi/Çatı</span>
-            <select name="Operation_Care_Terrain_Roof" id="id_Operation_Care_Terrain_Roof">
-              <option value="Arazi">Arazi</option>
-              <option value="Çatı">Çatı</option>
-            </select>
+            <span class="details">Şalt Malzemesi</span>
+            <input class="" id="id_Operation_Care_Switchgear_Material" type="text" name="Operation_Care_Switchgear_Material"/>
           </div>
+
           <div class="input-box">
             <span class="details">DC Güç(kWp)</span>
             <input class="formatInputs" id="id_Operation_Care_DC_Power" type="text" name="Operation_Care_DC_Power" />
@@ -227,10 +232,7 @@
               <option value="Batı">Batı</option>
             </select>
           </div>
-          <div class="input-box">
-            <span class="details">Şalt Malzemesi</span>
-            <input class="" id="id_Operation_Care_Switchgear_Material" type="text" name="Operation_Care_Switchgear_Material"/>
-          </div>
+          
         </div>
         <div class="button">
           <input id="operation-care-create-btn" type="button" value="İşletme Bakım Ekle" />
@@ -362,14 +364,14 @@
   <div class="window client-add-window">
     <div style="width: 400px" id="client_container" class="container">
       <h3 id="client-X" class="close-window clientx">X</h3>
-      <div class="title">Firma Ekle</div>
+      <div class="title">Santral Ekle</div>
       <form id="firma_add_form" action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="client_form" />
 
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="CompanyName_Clients">
-            <span id="firma_add_label" class="details">Firma Adı*</span>
+            <span id="firma_add_label" class="details">Santral İsmi*</span>
             <input id="id_CompanyName_Clients" name="CompanyName_Clients" type="text" />
           </div>
         </div>

@@ -295,9 +295,7 @@ async function getAndRenderStrings(date) {
                       <option value="FAULT">FAULT</option>
                     </select>
                   </td>
-                  <td>
-                    <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
-                  </td>
+                  
                   <td>
                     <input name="String_AC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strACPwr formatInputs" type="text" value="${string.String_AC_Power}">
                   </td>
@@ -305,16 +303,20 @@ async function getAndRenderStrings(date) {
                     <input name="String_DC_Power" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strDCPwr formatInputs" type="text" value="${string.String_DC_Power}">
                   </td>
                   <td>
-                    <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
+                    <input name="String_Capacity" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strCpt formatInputs" type="text" value="${string.String_Capacity}">
                   </td>
                   <td>
-                    <input class="pnlV" type="text" value="0">
+                    <input name="String_Percent" data-owner="${string.String_Owner_id}" onblur="xfunction(${string.id}, this)" class="strPrcnt" type="text" value="${string.String_Percent}">
                   </td>
+                  
                 </tr>`;
-  
+            // <td>
+            //     <input class="pnlV" type="text" value="0">
+            // </td>  
             tbody.insertAdjacentHTML("beforeend", row);
             currentDirection(inventor);
-            bool = false;                 
+            bool = false;        
+                   
         }
         console.log(i);
         i++;
@@ -460,7 +462,7 @@ inventorFormEditBtn.addEventListener("click", async function (event) {
       const stringDate = document.getElementById("bakim_date");
       getAndRenderStrings(stringDate.value);
     } else {
-      console.log(invID);
+       console.log(invID);
       await apiFunctions("inventor", "PUT", formData, invID);
       inventorEditWindow.style.display = "none";
       clearInputAfterSave(inventorEditForm);
@@ -537,12 +539,12 @@ function xxxx() {
       VOC: cells[3].querySelector("input").value,
       PNL_MRK: cells[4].querySelector("input").value,
       PNL_SY: cells[5].querySelector("input").value,
-      IZALASYON: cells[6].querySelector("select").value,
-      TOPLAM_V: cells[7].querySelector("input").value,
-      AC: cells[8].querySelector("input").value,
-      DC: cells[9].querySelector("input").value,
+      IZALASYON: cells[6].querySelector("select").value,      
+      AC: cells[7].querySelector("input").value,
+      DC: cells[8].querySelector("input").value,
+      TOPLAM_V: cells[9].querySelector("input").value,
       PERCENT: cells[10].querySelector("input").value,
-      PANEL_V: cells[11].querySelector("input").value,
+      // PANEL_V: cells[11].querySelector("input").value,
     };
     data.push(rowData);
   });
