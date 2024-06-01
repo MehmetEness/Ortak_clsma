@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="{% static 'client.css' %}" />
     
   <style>
-  
+  :root {
+    --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
 .right-menu{
    width:calc(100% - 256px);
 }

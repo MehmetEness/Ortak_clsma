@@ -738,7 +738,7 @@ body.shrink .tooltip {
   width: 100%;
   gap: 10px;
   height: 60px;
-  background: #fff;
+  background: #d5d1defe;
   display: flex;
   justify-content: center;
   align-items: center;
