@@ -350,7 +350,7 @@ async function xfunction(x, y){
     
     console.log(formDataJson);
   await apiFunctions("string", "PUT", formDatax, x);  
-  getAndRenderStrings(stringDate.value);
+ // getAndRenderStrings(stringDate.value);
 }
 //getAndRenderInventors();
 async function getAndRenderInventors() {
