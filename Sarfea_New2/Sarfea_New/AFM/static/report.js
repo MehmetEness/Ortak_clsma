@@ -24,16 +24,16 @@ async function getReports() {
         console.log("----");
         const row = `
                   <tr>                      
-                      <td>${project.ProjectName}</td>
-                      <td>${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
-                      <td>${formatNumber(totalIncome, 2)}</td>
-                      <td>${formatNumber(totalExpense, 2)}</td>
-                      <td>${formatNumber(project.CalculatedCost_NotIncludingKDV - totalExpense, 2)}</td>
-                      <td>${formatNumber(project.Cost_NotIncludingKDV - totalIncome, 2)}</td>
-                      <td>${formatNumber(totalIncome - totalExpense)}</td>
-                      <td>${formatNumber(project.Cost_NotIncludingKDV * 0.2 * 0.75 , 2)}</td>
-                      <td>${formatNumber(project.Cost_NotIncludingKDV - totalExpense)}</td>
-                      <td>${formatNumber((project.Cost_NotIncludingKDV - totalExpense) + (project.Cost_NotIncludingKDV * 0.2 * 0.75))}</td>
+                      <td data-label="Projeler">${project.ProjectName}</td>
+                      <td data-label="Anlaşılan">${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
+                      <td data-label="Alınan">${formatNumber(totalIncome, 2)}</td>
+                      <td data-label="Ödenen">${formatNumber(totalExpense, 2)}</td>
+                      <td data-label="Ödenmesi Gerekn Borç">${formatNumber(project.CalculatedCost_NotIncludingKDV - totalExpense, 2)}</td>
+                      <td data-label="Genel Kalan">${formatNumber(project.Cost_NotIncludingKDV - totalIncome, 2)}</td>
+                      <td data-label="Harcama Cari Durum">${formatNumber(totalIncome - totalExpense)}</td>
+                      <td data-label="KDV İadesi">${formatNumber(project.Cost_NotIncludingKDV * 0.2 * 0.75 , 2)}</td>
+                      <td data-label="KDV İadesi Hariç Kar">${formatNumber(project.Cost_NotIncludingKDV - totalExpense)}</td>
+                      <td data-label="KDV İadesi Dahil Kar">${formatNumber((project.Cost_NotIncludingKDV - totalExpense) + (project.Cost_NotIncludingKDV * 0.2 * 0.75))}</td>
                   </tr>
               `;
         rows += row;
@@ -52,3 +52,33 @@ async function getReports() {
 
 
   
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});

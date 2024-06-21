@@ -28,13 +28,14 @@ async function getClient(isEdit) {
               <td>
                   <button id="${client.id}" type="button" class="edit-client-btn" style="background: none; border:none;">
                       <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                      <span style="display: none;">Düzenle</spam>
                   </button>
               </td>
-              <td>${client.CompanyName_Clients || "-"}</td>
-              <td>${client.ContactPerson || "-"}</td>
-              <td>${client.PhoneNumber || "-"}</td>
-              <td>${client.Email || "-"}</td>
-              <td>${client.Location || "-"}</td>
+              <td data-label="Firma Adı">${client.CompanyName_Clients || "-"}</td>
+              <td data-label="Muhatap">${client.ContactPerson || "-"}</td>
+              <td data-label="Telefon">${client.PhoneNumber || "-"}</td>
+              <td data-label="E-Posta">${client.Email || "-"}</td>
+              <td data-label="Bölge">${client.Location || "-"}</td>
           </tr>
       `;
     rows += row;
@@ -151,3 +152,34 @@ function editBtns() {
     })
   });
 }
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});

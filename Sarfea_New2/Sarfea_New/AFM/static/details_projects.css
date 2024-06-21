@@ -202,3 +202,61 @@ button{
 }
 /*---------------------*/
 
+
+@media (max-width: 767px) {
+
+    .body-div{
+        overflow: scroll;
+
+    }
+
+   
+    .backBtn button{
+        padding: 5px 12px;
+        font-size: 24px;
+    }
+    .row{
+        flex-direction: column !important;
+    }
+    .column-2{
+        width: 100% !important;
+        height:400px !important;
+        margin: 5px auto;
+    }
+    .nav-bar{
+        margin-top: 5px;
+    }
+    .nav-span{
+        padding: 10px 0;
+        height: 60px;
+    }
+    .nav-span span{
+        display: none !important;
+    }
+    .nav-span span.project_id{
+        display: block !important;
+        margin: auto;
+    }
+    .main{
+        height: auto;
+    }
+    .left-menu{
+      display: none;
+      background-color: #00000077 !important;
+      position: absolute;
+      z-index: 10000;
+      width: 100% !important;
+      height: 100% !important;
+  
+    }
+    .left-menu nav{
+      min-height: 97vh;
+      background-color: rgba(255, 255, 255, 0.678);   
+    }
+  
+    .right-menu{
+      width: 97% !important;
+      height: 100% !important;
+      margin: auto !important;
+    }
+}

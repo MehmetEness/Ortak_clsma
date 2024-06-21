@@ -135,14 +135,15 @@
         </a>
         <p id="{{project.id}}" class="project_id">{{project.ProjectName}}</p>
         <p id="income_p">{{project.Cost_NotIncludingKDV}}</p>
-        <div class="input-group searchForNav">
-          <input type="search" placeholder="Gelir Ara...">
-          <img src="{% static 'images/search.png' %}" alt="">
-        </div>
-
-        <div class="export__file">
-
+        
+        <button style="display: none;"  class="add-hamburger-button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+        <div class="export__file">          
+          <div class="input-group searchForNav">
+            <input type="search" placeholder="Gelir Ara...">
+            <img src="{% static 'images/search.png' %}" alt="">
+          </div>
           <button class="income-add-btn">Gelir Ekle</button>
+          
         </div>
       </section>
       <section class="table__body">
@@ -164,10 +165,10 @@
           <tfoot class="tfoots">
             <tr>
               <td colspan="4"></td>
-
               <td><b>Toplam :</b></td>
               <td style="font-weight: 600;"><span id="tl_td">0.00₺</span></td>              
-              <td style="font-weight: 600;"><span id="usd_td">0.00$</span></td>              
+              <td style="font-weight: 600;"><span id="usd_td">0.00$</span></td>   
+                       
               <td class="margin_td"><b>Kalan :</b></td>
               <td style="font-weight: 600;"><span id="result_td">0.00₺</span></td>
             </tr>

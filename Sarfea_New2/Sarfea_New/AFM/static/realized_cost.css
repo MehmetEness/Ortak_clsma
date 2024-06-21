@@ -786,3 +786,266 @@ body.shrink .tooltip {
   bottom: 0;
   background-color: #fff;
 }
+#expenses-table-btn, #jobhistory-table-btn{
+ width: 50%;
+ border: none;
+ font-weight: 600;
+}
+#expenses-table-btn{
+  border-left: 1px solid gray;
+}
+.left-menu-project-name{
+  margin-top: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  td:not(:first-of-type) {
+    min-width: auto;
+}
+.left-menu-project-name{
+  display: block !important;
+}
+.searchForNav {
+  margin: 1rem 0.5rem 0.8rem !important;
+}
+
+  .sidebar-footer{
+    display: flex;
+    flex-direction: column;    
+  }
+  .sidebar-footer{
+    height: 13% !important;
+  }
+  .table__header .hamburger-button{
+    display: block !important;
+    font-weight: 700;
+    font-size: 20px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 1.2rem;
+    border-radius: 2rem;
+    border: none;
+    transition: 0.2s;
+  }
+  .table__header .back-button {
+    display: block !important;
+    font-weight: 700;
+    font-size: 30px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 5px 15px;
+    border-radius: 2rem;
+    border: none;
+    transition: 0.2s;
+}
+.table__header p{
+  display: none;
+}
+.jobhistory-add-btn{
+  display: none;
+}
+  
+  .left-menu{
+    display: none;
+    background-color: #00000077 !important;
+    position: absolute;
+    top: 0;
+    left: 0 ;
+    z-index: 10000;
+    width: 50% !important;
+    height: 100% !important;
+
+  }
+  .left-menu nav{
+    min-height: 97vh;
+    background-color: rgba(255, 255, 255, 0.678);   
+  }
+
+  .right-menu{
+    width: 97% !important;
+    height: 98% !important;
+    margin: auto !important;
+  }
+  section.table__header p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .export__file button {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0 0.5rem;
+  }
+  .top-table{
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: none;
+  }
+  .bot-table{
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+  }
+  .overflow tfoot tr{
+    width: 97vw !important;
+    display: flex;
+  }
+  .overflow tfoot td:first-child{
+    display: none;
+  }
+  .overflow tfoot {
+    width: auto !important; /* Mobil cihazlarda önceki genişlik ayarını geçersiz kıl */
+    display: block !important; /* Gerekirse blok düzenine geçiş yapabilir */
+}
+.expenses-add-btn{
+  margin: 0px !important;
+}
+.total_div{
+  font-size: 12px !important;
+}
+.table-btns{
+  display: flex !important;
+}
+
+.overflow tfoot tr {
+    text-align: center;
+    display: block !important; /* Her bir satırı blok düzenine geçir */
+    width: 100% !important; /* Tam genişlik */
+}
+.overflow tfoot tr td {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 50px;
+  width: 32%; /* Örneğin her bir td elemanı için yüzde bazında genişlik belirleyebilirsiniz */
+  box-sizing: border-box; /* Padding ve border'ın elemanın genişliğini etkilememesi için */
+  padding: 10px; /* İç boşluk (padding) ayarı */
+  font-size: 14px; 
+}
+  .overflow tfoot td:nth-child(4){
+    display: none !important;
+  }
+  .overflow tfoot td:first-child{
+    display: none !important;
+  }
+  .overflow tfoot td{
+    font-size: 11px;
+    padding: 0 !important;
+  }
+  
+  table p {
+    margin-left: 0; /* Önceki margin'ı sıfırla */
+    margin-bottom: 10px; /* Yeni bir margin-bottom ekle */
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Başlık satırlarındaki ok simgelerini gizle */
+  table th span.icon-arrow {
+    display: none;
+  }
+  
+  /* Tablo başlıklarını genişlet */
+  table thead {
+    display: none !important;
+  }
+
+  /* Tablo başlıklarındaki metin boyutunu küçült */
+  table th:nth-child(n+2) {
+    font-size: 14px;
+  }
+
+  /* Tablo içeriğini küçült */
+  table tbody td {
+    font-size: 14px;
+    width: 97% !important;
+  }  
+  table tbody td:first-child {
+    padding: 10px 5px !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  table tbody td:first-child::before{
+    display: none;
+  }
+  table tbody td:first-child button i{
+    display: none;
+  }
+  table tbody td:first-child button{
+    border: none !important;
+    border-radius: none !important;
+    background-color: #00000015 !important;
+    width: 100%;
+    height: 100%;
+  }
+  table tbody td:first-child button span{
+    display: block !important;
+  }
+
+  /* Dikey tablo satırları için */
+  table tbody tr {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  table tbody tr td {
+    display: flex;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #ccc; /* Satır aralarına sınır ekle */
+  }
+  
+  table tbody tr td:before {
+    content: attr(data-label);
+    color: #0b0b49;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  table tbody td:before {
+    text-align: left !important;
+  }
+  .tfoots td:nth-child(4),
+      .tfoots td:nth-child(6) {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start; 
+        width: 30%; 
+        height: 20px;
+      }
+      .tfoots td:nth-child(2),
+      .tfoots td:nth-child(5) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 10px;
+        width: 16%; 
+        height: 20px;
+      }
+      
+      .tfoots tr {
+        height: 71px; /* Sabit yükseklik */
+        display: flex;
+        flex-wrap: nowrap; /* Wrap yerine nowrap kullanarak td elemanlarının yan yana sıralanmasını sağlıyoruz */
+        justify-content: space-around; /* Eğer gerekiyorsa, td elemanları arasında boşluk bırakabilirsiniz */
+        align-items: center;
+      }
+       /* ekleme sayfası */
+
+ .container{
+  width: 90% !important;
+  max-height: 70%;
+  overflow-y: scroll;
+ }
+ .window .container .input-box {
+  width: 90% !important;
+}
+}

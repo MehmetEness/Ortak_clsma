@@ -30,13 +30,14 @@ async function getSupplier(isEdit) {
                     <td>
                         <button id="${supplier.id}" type="button" class="edit-supplier-btn" style="background: none; border:none;">
                             <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                            <span style="display: none;">Düzenle</spam>
                         </button>
                     </td>
-                    <td>${supplier.CompanyName_Supplier || "-"}</td>
-                    <td>${supplier.ContactPerson || "-"}</td>
-                    <td>${supplier.PhoneNumber || "-"}</td>
-                    <td>${supplier.Email || "-"}</td>
-                    <td>${supplier.Location || "-"}</td>
+                    <td data-label="Firma Adı">${supplier.CompanyName_Supplier || "-"}</td>
+                    <td data-label="Muhatap">${supplier.ContactPerson || "-"}</td>
+                    <td data-label="Telefon">${supplier.PhoneNumber || "-"}</td>
+                    <td data-label="E-Posta">${supplier.Email || "-"}</td>
+                    <td data-label="Bölge">${supplier.Location || "-"}</td>
                 </tr>
             `;
       rows += row;
@@ -149,3 +150,35 @@ function editBtns() {
     })
   });
 }
+
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});

@@ -212,12 +212,13 @@
   <div class="left-menu">
     <nav>
       <div class="sidebar-top">
+       
         <span class="shrink-btn">
           <i class="bx bx-chevron-left"></i>
         </span>
         <a style="text-align: center;" href="{% url 'home' %}"><img src="{% static 'images/newLogo.png' %}" class="logo" alt="" /></a>
       </div>
-
+      <p style="display: none;" class="left-menu-project-name">{{project.ProjectName}}</p>
       <div class="searchForNav">
         <i class="bx bx-search"></i>
         <input type="text" class="hide-for-menu" placeholder="Ara..." />
@@ -240,6 +241,10 @@
       </div>
 
       <div class="sidebar-footer">
+        <div style="display: none;  border-bottom: 1px solid gray; height: 90px;" class="table-btns">
+          <button type="button" id="jobhistory-table-btn">Yapılan İş</button>
+          <button type="button" id="expenses-table-btn">Yapılan Ödeme</button>
+        </div>
         <button type="button" id="toplam-maliyet">Toplam Maliyet</button>
       </div>
     </nav>
@@ -247,19 +252,22 @@
   <div class="right-menu">
     <main class="table" id="customers_table">
       <section class="table__header">
+       
         <a href="{% url 'project_details' project_id=project.id %}">
           <button style="color: rgb(47, 65, 79);" class="back-button">
             <i class="fa-solid fa-angles-left"></i>
           </button>
         </a>
+        
         <button style="width: 137px" class="button jobhistory-add-btn">
           Yapılan İş
         </button>
         <p id="{{project.id}}">{{project.ProjectName}}</p>
         <button style="margin-right: 330px;" class="button expenses-add-btn">Yapılan Ödeme</button>
+        <button style="display: none;" class="hamburger-button"><i class="fa-solid fa-bars"></i></button>
       </section>
       <section id="two_table_section" class="table__body">
-        <div class="overflow">
+        <div class="overflow top-table">
           <table id="jobhistory_table">
             <thead>
               <tr>
@@ -285,7 +293,7 @@
             </tfoot>
           </table>
         </div>
-        <div class="overflow">
+        <div class="overflow bot-table">
           <table id="expenses_table">
             <thead>
               <tr>

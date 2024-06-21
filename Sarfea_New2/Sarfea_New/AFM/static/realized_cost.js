@@ -48,14 +48,15 @@ async function getJobhistory(id) {
                     <td>
                         <button id="${jobHistory.id}" type="button" class="edit-jobhistory-btn" style="background: none; border:none;">
                         <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                        <span style="display: none;">Düzenle</spam>
                         </button>
                     </td>
-                    <td title="${jobHistory.Invoice_No_JobHistory || "-"}">${jobHistory.Invoice_No_JobHistory || "-"}</td>
-                    <td title="${formatDateForTable(jobHistory.Date_JobHistory)}">${formatDateForTable(jobHistory.Date_JobHistory)}</td>
-                    <td title="${jobHistory.ExpensDetails_JobHistory || "-"}">${jobHistory.ExpensDetails_JobHistory || "-"}</td>
-                    <td title="${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}">${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}</td>
-                    <td title="${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}">${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}</td>
-                    <td title="${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2)}">${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2) + "$"}</td>
+                    <td data-label="Fatura No" title="${jobHistory.Invoice_No_JobHistory || "-"}">${jobHistory.Invoice_No_JobHistory || "-"}</td>
+                    <td data-label="Tarih" title="${formatDateForTable(jobHistory.Date_JobHistory)}">${formatDateForTable(jobHistory.Date_JobHistory)}</td>
+                    <td data-label="Cinsi" title="${jobHistory.ExpensDetails_JobHistory || "-"}">${jobHistory.ExpensDetails_JobHistory || "-"}</td>
+                    <td data-label="Tutar(TL)" title="${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}">${formatNumber(jobHistory.Amount_JobHistory, 2) + "₺"}</td>
+                    <td data-label="Kur" title="${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}">${formatNumber(jobHistory.Dollar_Rate_JobHistory, 4) + "₺"}</td>
+                    <td data-label="Tutar(USD)" title="${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2)}">${formatNumber((parseFloat(jobHistory.Amount_JobHistory) / parseFloat(jobHistory.Dollar_Rate_JobHistory)), 2) + "$"}</td>
                 </tr>`;
                 rows += row;
                 totalTl += parseFloat(jobHistory.Amount_JobHistory) || 0;
@@ -100,14 +101,15 @@ async function getExpenses(id) {
                     <td>
                         <button id="${expenses.id}" type="button" class="edit-expenses-btn" style="background: none; border:none;">
                         <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                        <span style="display: none;">Düzenle</spam>
                         </button>
                     </td>
-                    <td title="${formatDateForTable(expenses.Date_Expenses)}" style="text-align:center">${formatDateForTable(expenses.Date_Expenses)}</td>
-                    <td title="${expenses.ExpensDetails_Expenses || "-"}">${expenses.ExpensDetails_Expenses || "-"}</td>
-                    <td title="${expenses.Bank_Expenses || "-"}">${expenses.Bank_Expenses || "-"}</td>
-                    <td title="${formatNumber(expenses.Amount_Expenses, 2) + "₺"}">${formatNumber(expenses.Amount_Expenses, 2) + "₺"}</td>
-                    <td title="${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}">${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}</td>
-                    <td title="${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}">${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}</td>
+                    <td data-label="Tarih" title="${formatDateForTable(expenses.Date_Expenses)}" style="text-align:center">${formatDateForTable(expenses.Date_Expenses)}</td>
+                    <td data-label="Açıklama" title="${expenses.ExpensDetails_Expenses || "-"}">${expenses.ExpensDetails_Expenses || "-"}</td>
+                    <td data-label="Banka" title="${expenses.Bank_Expenses || "-"}">${expenses.Bank_Expenses || "-"}</td>
+                    <td data-label="Tutar(TL)" title="${formatNumber(expenses.Amount_Expenses, 2) + "₺"}">${formatNumber(expenses.Amount_Expenses, 2) + "₺"}</td>
+                    <td data-label="Kur" title="${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}">${formatNumber(expenses.Dollar_Rate_Expenses, 4) + "₺"}</td>
+                    <td data-label="Tutar(USD)" title="${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}">${formatNumber(parseFloat((expenses.Amount_Expenses) / parseFloat(expenses.Dollar_Rate_Expenses)), 2) + "$"}</td>
                 </tr>`;
                 rows += row;
                 totalTl += parseFloat(expenses.Amount_Expenses) || 0;
@@ -194,11 +196,11 @@ async function getTotalTable() {
             const row = `
                 <tr>              
                     <td></td>      
-                    <td>${supplierList[key].name}</td>
-                    <td>${formatNumber(supplierList[key].jobHistoryTl) + "₺"}</td>
-                    <td>${formatNumber(supplierList[key].jobhistoryUsd) + "$"}</td>
-                    <td>${formatNumber(supplierList[key].expensesTl) + "₺"}</td>
-                    <td>${formatNumber(supplierList[key].expensesUsd) + "$"}</td>
+                    <td data-label="Firma Adı">${supplierList[key].name}</td>
+                    <td data-label="Toplam İş Miktarı(TL)">${formatNumber(supplierList[key].jobHistoryTl) + "₺"}</td>
+                    <td data-label="Toplam İş Miktarı(USD)">${formatNumber(supplierList[key].jobhistoryUsd) + "$"}</td>
+                    <td data-label="Toplam Gider(TL)">${formatNumber(supplierList[key].expensesTl) + "₺"}</td>
+                    <td data-label="Toplam Gider(USD)">${formatNumber(supplierList[key].expensesUsd) + "$"}</td>
                 </tr>`;
             rows += row;
             totalTlLeft += !isNaN(parseFloat(supplierList[key].jobHistoryTl)) ? parseFloat(supplierList[key].jobHistoryTl) : 0;
@@ -212,7 +214,7 @@ async function getTotalTable() {
         totalTlSpanRight.textContent = formatNumber(parseFloat(totalTlRight.toString()), 2) + " ₺";
         totalUSDSpanRight.textContent = formatNumber(parseFloat(totalUSDRight.toString()), 2) + " $";
         document.querySelector("#genel_tl").textContent = formatNumber(parseFloat((totalTlRight - totalTlLeft).toString()), 2) + " ₺";
-        document.querySelector("#genel_usd").textContent = formatNumber(parseFloat((totalUSDRight - totalUSDLeft).toString()), 2) + " $";
+        document.querySelector("#genel_usd").textContent = formatNumber(parseFloat((totalUSDRight - totalUSDLeft).toString()), 2) + " $";        
         if (true) {
 
             totalTableBody.innerHTML = '';
@@ -691,3 +693,59 @@ function jobHistoryEditButtonsEvents() {
         })
     });
 }
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    ".left-menu"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});
+
+// responsive tablolar arası geçiş
+
+
+const botTable = document.querySelector(".bot-table")
+const topTable = document.querySelector(".top-table")
+const botTablebtn = document.querySelector(".expenses-add-btn")
+const topTablebtn = document.querySelector(".jobhistory-add-btn")
+const expensesTableBtn = document.getElementById("expenses-table-btn")
+
+expensesTableBtn.addEventListener("click", ()=>{
+    botTable.style.display = "flex";
+    topTable.style.display = "none";
+    botTablebtn.style.display = "block";
+    topTablebtn.style.display = "none";
+})
+
+const jobhistoryTableBtn = document.getElementById("jobhistory-table-btn")
+
+jobhistoryTableBtn.addEventListener("click", ()=>{
+    botTable.style.display = "none";
+    topTable.style.display = "flex";
+    botTablebtn.style.display = "none";
+    topTablebtn.style.display = "block";
+})
+

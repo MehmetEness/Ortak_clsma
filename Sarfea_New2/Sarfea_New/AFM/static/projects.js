@@ -62,16 +62,17 @@ async function getProjects(isEdit) {
           <td>
             <button id="${project.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+              <span style="display: none;">Düzenle</spam>
             </button>
           </td>
-          <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
-          <td>${project.Location || "-"}</td>
-          <td>${formatNumber(project.AC_Power, 0)}</td>
-          <td>${formatNumber(project.DC_Power, 0)}</td>
-          <td>${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
-          <td>${project.Terrain_Roof || "-"}</td>
-          <td>${formatDateForTable(project.StartDate)}</td>
-          <td>${project.Situation || "-"}</td>
+          <td data-label="Proje Adı"><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
+          <td data-label="Konum">${project.Location || "-"}</td>
+          <td data-label="AC Güç">${formatNumber(project.AC_Power, 0)}</td>
+          <td data-label="DC Güç">${formatNumber(project.DC_Power, 0)}</td>
+          <td data-label="İş Bedeli">${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
+          <td data-label="Arazi/Çatı">${project.Terrain_Roof || "-"}</td>
+          <td data-label="Tarih">${formatDateForTable(project.StartDate)}</td>
+          <td data-label="Durum">${project.Situation || "-"}</td>
         </tr>`;
 
       rows += row;
@@ -630,3 +631,52 @@ async function getprojectName() {
     console.error("Error fetching and rendering projects:", error);
   }
 }
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});
+
+
+//left menü acma kapatma
+const addMenu = document.querySelector(".export__file");
+
+const addHamburgerBtn = document.querySelector(".add-hamburger-button");
+addHamburgerBtn.addEventListener("click", () => {
+  if(addMenu.style.display !== "flex"){
+    setTimeout(async () => { addMenu.style.display = "flex";}, 20)
+  }
+ 
+});
+
+document.addEventListener("click", (event) => { 
+  if (window.innerWidth <= 767 && !addMenu.contains(event.target)) {
+    addMenu.style.display = "none";
+  }
+});

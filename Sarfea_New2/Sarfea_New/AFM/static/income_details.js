@@ -81,15 +81,16 @@ async function getIncomes(edit) {
             <td>
               <button id="${income.id}" type="button" class="edit-income-btn" style="background: none; border:none;">
                 <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+                <span style="display: none;">Düzenle</spam>
               </button>
             </td>
-            <td>${income.CompanyName_ReceivePayment_Incomes || "-"}</td>
-            <td>${income.client_incomes.CompanyName_Clients || "-"}</td>
-            <td>${formatDateForTable(income.ChekDate_Incomes)}</td>
-            <td>${income.PaymentType_Incomes || "-"}</td>
-            <td>${formatNumber(income.Amount_Incomes, 2) + "₺"}</td>
-            <td>${formatNumber(income.Dollar_Rate_Incomes, 4) + "₺"}</td>            
-            <td>${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0, 2) + "$"}</td>
+            <td data-label="Alıcı Firma">${income.CompanyName_ReceivePayment_Incomes || "-"}</td>
+            <td data-label="Ödeme Yapan Firma">${income.client_incomes.CompanyName_Clients || "-"}</td>
+            <td data-label="Tarih">${formatDateForTable(income.ChekDate_Incomes)}</td>
+            <td data-label="Ödeme Türü">${income.PaymentType_Incomes || "-"}</td>
+            <td data-label="Tutar(TL)">${formatNumber(income.Amount_Incomes, 2) + "₺"}</td>
+            <td data-label="Kur">${formatNumber(income.Dollar_Rate_Incomes, 4) + "₺"}</td>            
+            <td data-label="Tutar(USD)">${formatNumber(parseFloat((income.Amount_Incomes) / parseFloat(income.Dollar_Rate_Incomes)) || 0, 2) + "$"}</td>
           </tr>`;
             rows += row;
             totalTl += parseFloat(income.Amount_Incomes || 0);
@@ -318,3 +319,20 @@ function editBtns() {
         })
     });
 }
+
+//left menü acma kapatma
+const addMenu = document.querySelector(".export__file");
+
+const addHamburgerBtn = document.querySelector(".add-hamburger-button");
+addHamburgerBtn.addEventListener("click", () => {
+  if(addMenu.style.display !== "flex"){
+    setTimeout(async () => { addMenu.style.display = "flex";}, 20)
+  }
+ 
+});
+
+document.addEventListener("click", (event) => { 
+  if (window.innerWidth <= 767 && !addMenu.contains(event.target)) {
+    addMenu.style.display = "none";
+  }
+});
