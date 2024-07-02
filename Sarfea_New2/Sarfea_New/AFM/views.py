@@ -388,6 +388,20 @@ def operation_care(request):
 
     return render(request, "operation_care.html", context)
 
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
+def calendar(request):
+    operations = Operation_Care.objects.all()
+    fails = Fail.objects.all()
+    locations=Locations.objects.all()
+    context = {
+        "operations": operations,
+        "fails": fails,
+        "locations":locations
+    }
+
+    return render(request, "calendar.html", context)
+
+
 @login_required
 def operation_care_add(request):
     client = Clients.objects.all()
