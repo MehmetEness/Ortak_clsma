@@ -35,7 +35,8 @@ urlpatterns = [
     path('fault_notification/', views.fault_notification, name='fault_notification'),
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
-    
+    path("calendar", views.calendar, name='calendar'),
+
     path("report/", views.report, name='report'),
 
 
