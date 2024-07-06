@@ -28,7 +28,7 @@ async function getClient(isEdit) {
               <td>
                   <button id="${client.id}" type="button" class="edit-client-btn" style="background: none; border:none;">
                       <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
-                      <span style="display: none;">Düzenle</spam>
+                      <span style="display: none;">Düzenle</span>
                   </button>
               </td>
               <td data-label="Firma Adı">${client.CompanyName_Clients || "-"}</td>

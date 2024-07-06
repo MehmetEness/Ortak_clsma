@@ -985,30 +985,30 @@ async function getTotalList() {
       }
 
       row.innerHTML = `
-          <td class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i></a><span class="icon-blue"></span></td>
-          <td>${card.Is_Gain ? 'Kazanılan İş' : (card.Is_Lost ? 'Kaybedilen İş' : (card.Is_late ? 'Bekleyen İş' : card.Situation_Card))}</td>
-          <td>${card.client.CompanyName_Clients || "-"}</td>
-          <td>${card.Location_Card || "-"}</td>
-          <td>${card.Person_Deal || "-"}</td>
-          <td>${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
-          <td>${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
-          <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
-          <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-          <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
-          <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-          <td>${card.Terrain_Roof_Card || "-"}</td>
-          <td>${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
-          <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
-          <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
-          <td>${formatNumber(card.Profit_Rate_Card, 2) + " $/MW"}</td>
-          <td>${formatDateForTable(card.Date_Card)}</td>
-          ${card.Comment_Card_1 ? `<td title="${card.Comment_Card_1}">${card.Comment_Card_1.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_2 ? `<td title="${card.Comment_Card_2}">${card.Comment_Card_2.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_3 ? `<td title="${card.Comment_Card_3}">${card.Comment_Card_3.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_4 ? `<td title="${card.Comment_Card_4}">${card.Comment_Card_4.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_5 ? `<td title="${card.Comment_Card_5}">${card.Comment_Card_5.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_6 ? `<td title="${card.Comment_Card_6}">${card.Comment_Card_6.slice(0, 10)}</td>` : `<td>-</td>`}
-          ${card.Comment_Card_7 ? `<td title="${card.Comment_Card_7}">${card.Comment_Card_7.slice(0, 10)}</td>` : `<td>-</td>`}
+          <td data-label="Durum" class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i><span style="display: none;">Revize</span></a><span class="icon-blue"></span></td>
+          <td data-label="Durum">${card.Is_Gain ? 'Kazanılan İş' : (card.Is_Lost ? 'Kaybedilen İş' : (card.Is_late ? 'Bekleyen İş' : card.Situation_Card))}</td>
+          <td data-label="Müşteri Adı">${card.client.CompanyName_Clients || "-"}</td>
+          <td data-label="Konum">${card.Location_Card || "-"}</td>
+          <td data-label="İlgili Kişi">${card.Person_Deal || "-"}</td>
+          <td data-label="AC Güç">${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
+          <td data-label="DC Güç">${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
+          <td data-label="Birim Maliyet">${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
+          <td data-label="Toplam Maliyet">${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+          <td data-label="Birim Teklif">${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
+          <td data-label="Toplam Teklif">${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+          <td data-label="Arazi/Çatı">${card.Terrain_Roof_Card || "-"}</td>
+          <td data-label="Arazi Maliyeti">${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
+          <td data-label="Arazi Dahil B.M.">${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
+          <td data-label="Arazi Dahil T.T.">${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
+          <td data-label="Arazi Maliyeti">${formatNumber(card.Profit_Rate_Card, 2) + " $/MW"}</td>
+          <td data-label="Tarih">${formatDateForTable(card.Date_Card)}</td>
+          ${card.Comment_Card_1 ? `<td data-label="Yorum 1" title="${card.Comment_Card_1}">${card.Comment_Card_1.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_2 ? `<td data-label="Yorum 2" title="${card.Comment_Card_2}">${card.Comment_Card_2.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_3 ? `<td data-label="Yorum 3" title="${card.Comment_Card_3}">${card.Comment_Card_3.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_4 ? `<td data-label="Yorum 4" title="${card.Comment_Card_4}">${card.Comment_Card_4.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_5 ? `<td data-label="Yorum 5" title="${card.Comment_Card_5}">${card.Comment_Card_5.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_6 ? `<td data-label="Yorum 6" title="${card.Comment_Card_6}">${card.Comment_Card_6.slice(0, 10)}</td>` : `<td>-</td>`}
+          ${card.Comment_Card_7 ? `<td data-label="Yorum 7" title="${card.Comment_Card_7}">${card.Comment_Card_7.slice(0, 10)}</td>` : `<td>-</td>`}
         `;
 
       listTableBody.appendChild(row);
@@ -1107,23 +1107,24 @@ async function getLostList() {
                       <td>
                         <a href="#" onclick="reLostCard(${card.id}); return false;">
                           <i class="fa-solid fa-rotate-left"></i>
+                          <span style="display: none;">Geri Al</span>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients || "-"}</td>
-                      <td>${card.Location_Card || "-"}</td>
-                      <td>${card.Person_Deal || "-"}</td>
-                      <td>${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
-                      <td>${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
-                      <td>${formatNumber(card.UnitCost_NotIncludingKDV , 2) + "$" }</td>
-                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$" }</td>
-                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$" }</td>
-                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$" }</td>
-                      <td>${card.Terrain_Roof_Card || "-"}</td>
-                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "$" }</td>
-                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$" }</td>
-                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$" }</td>
-                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "$/MW" }</td>
-                      <td>${formatDateForTable(card.Date_Card)}</td>
+                      <td data-label="Müşteri Adı">${card.client.CompanyName_Clients || "-"}</td>
+                      <td data-label="Konum">${card.Location_Card || "-"}</td>
+                      <td data-label="İlgili Kişi">${card.Person_Deal || "-"}</td>
+                      <td data-label="AC Güç">${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
+                      <td data-label="DC Güç">${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
+                      <td data-label="Birim Maliyet">${formatNumber(card.UnitCost_NotIncludingKDV , 2) + "$" }</td>
+                      <td data-label="Toplam Maliyet">${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$" }</td>
+                      <td data-label="Birim Teklif">${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$" }</td>
+                      <td data-label="Toplam Teklif">${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$" }</td>
+                      <td data-label="Arazi/Çatı">${card.Terrain_Roof_Card || "-"}</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Roof_Cost_Card, 2) + "$" }</td>
+                      <td data-label="Arazi Dahil Birim Maliyet">${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$" }</td>
+                      <td data-label="Arazi Dahil Toplam Teklif">${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$" }</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Profit_Rate_Card, 2) + "$/MW" }</td>
+                      <td data-label="Tarih">${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1155,23 +1156,24 @@ async function getSalesList() {
                       <td>
                         <a href="#" onclick="reWaitCard(${card.id}); return false;">
                           <i class="fa-solid fa-rotate-left"></i>
+                          <span style="display: none;">Geri Al</span>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients || "-"}</td>
-                      <td>${card.Location_Card || "-"}</td>
-                      <td>${card.Person_Deal || "-"}</td>
-                      <td>${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
-                      <td>${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
-                      <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
-                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
-                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-                      <td>${card.Terrain_Roof_Card || "-"}</td>
-                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
-                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
-                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
-                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "$/MW"}</td>
-                      <td>${formatDateForTable(card.Date_Card)}</td>
+                      <td data-label="Müşteri Adı">${card.client.CompanyName_Clients || "-"}</td>
+                      <td data-label="Konum">${card.Location_Card || "-"}</td>
+                      <td data-label="İlgili Kişi">${card.Person_Deal || "-"}</td>
+                      <td data-label="AC Güç">${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
+                      <td data-label="DC Güç">${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
+                      <td data-label="Birim Maliyet">${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
+                      <td data-label="Toplam Maliyet">${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+                      <td data-label="Birim Teklif">${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
+                      <td data-label="Toplam Teklif">${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+                      <td data-label="Arazi/Çatı">${card.Terrain_Roof_Card || "-"}</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
+                      <td data-label="Arazi Dahil Birim Maliyet">${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
+                      <td data-label="Arazi Dahil Toplam Teklif">${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Profit_Rate_Card, 2) + "$/MW"}</td>
+                      <td data-label="Tarih">${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1203,23 +1205,24 @@ async function getWonList() {
                       <td>
                         <a href="#" onclick="reGainCard(${card.id}); return false;">
                           <i class="fa-solid fa-rotate-left"></i>
+                          <span style="display: none;">Geri Al</span>
                         </a>
                       </td>
-                      <td>${card.client.CompanyName_Clients || "-"}</td>
-                      <td>${card.Location_Card || "-"}</td>
-                      <td>${card.Person_Deal || "-"}</td>
-                      <td>${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
-                      <td>${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
-                      <td>${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
-                      <td>${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-                      <td>${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
-                      <td>${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
-                      <td>${card.Terrain_Roof_Card || "-"}</td>
-                      <td>${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
-                      <td>${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
-                      <td>${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
-                      <td>${formatNumber(card.Profit_Rate_Card, 2) + "$/MW"}</td>
-                      <td>${formatDateForTable(card.Date_Card)}</td>
+                      <td data-label="Müşteri Adı">${card.client.CompanyName_Clients || "-"}</td>
+                      <td data-label="Konum">${card.Location_Card || "-"}</td>
+                      <td data-label="İlgili Kişi">${card.Person_Deal || "-"}</td>
+                      <td data-label="AC Güç">${formatNumber(card.AC_Power_Card, 0) + "kWe"}</td>
+                      <td data-label="DC Güç">${formatNumber(card.DC_Power_Card, 0) + "kWp"}</td>
+                      <td data-label="Birim Maliyet">${formatNumber(card.UnitCost_NotIncludingKDV, 2) + "$"}</td>
+                      <td data-label="Toplam Maliyet">${formatNumber(card.Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+                      <td data-label="Birim Teklif">${formatNumber(card.UnitOffer_NotIncludingKDV, 2) + "$"}</td>
+                      <td data-label="Toplam Teklif">${formatNumber(card.Offer_Cost_NotIncludingKDV_Card, 2) + "$"}</td>
+                      <td data-label="Arazi/Çatı">${card.Terrain_Roof_Card || "-"}</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Roof_Cost_Card, 2) + "$"}</td>
+                      <td data-label="Arazi Dahil Birim Maliyet">${formatNumber(card.Unit_Cost_with_Roof_Cost, 2) + "$"}</td>
+                      <td data-label="Arazi Dahil Toplam Teklif">${formatNumber(card.Unit_Offer_with_Roof_Cost, 2) + "$"}</td>
+                      <td data-label="Arazi Maliyeti">${formatNumber(card.Profit_Rate_Card, 2) + "$/MW"}</td>
+                      <td data-label="Tarih">${formatDateForTable(card.Date_Card)}</td>
                   </tr>
               `;
         rows += row;
@@ -1372,5 +1375,50 @@ terrainSelect.addEventListener("change", async function () {
   } else {
     terrainCost.disabled = true;
     terrainCost.value = "";
+  }
+});
+
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20) 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});
+
+
+const listMenu = document.querySelector(".top-menu-ul");
+const hamburgerBtn2 = document.querySelector(".hamburger-button2");
+hamburgerBtn2.addEventListener("click", () => {
+  setTimeout(async () => { listMenu.style.display = "flex";}, 20) 
+});
+
+document.addEventListener("click", (event) => {
+
+  if (window.innerWidth <= 767 && !listMenu.contains(event.target)) {
+    listMenu.style.display = "none";
   }
 });

@@ -136,9 +136,9 @@
 }
 /****************************************************************************************/
 
-nav{
+/* nav{
   width: 100% !important;
-}
+} */
 .card * {
   user-select: none;
 }
@@ -438,4 +438,252 @@ td a{
   text-decoration: none;
   color: #000;
   font-size: 18px;
+}
+
+@media (max-width: 767px) {
+
+  .top-menu .hamburger-button, .top-menu .hamburger-button2{
+    display: block !important;
+    margin-left: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 1rem 1rem;
+    border-radius: 2rem;
+    border: none;
+    transition: 0.2s;
+
+    
+  }
+  
+  .left-menu{
+    display: none;
+    background-color: #00000077 !important;
+    position: absolute;
+    z-index: 10000;
+    width: 100% !important;
+    height: 100% !important;
+
+  }
+  .left-menu nav{
+    min-height: 97vh;
+    background-color: rgba(255, 255, 255, 0.678);   
+  }
+
+  .right-menu{
+    width: 97% !important;
+    height: 100% !important;
+    margin: auto !important;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  section.table__header p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .export__file button {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0 0.5rem;
+  }
+  .xspan{
+    display: none;
+  }
+  .top-menu{
+    backdrop-filter: none !important;
+  }
+  .top-menu-ul{
+    display: none;
+    font-size: 12px !important;
+    /* padding: 10px 0; */
+    position: absolute;
+    flex-direction: column;
+    width: 150px;
+    background: #fff;
+    z-index: 999 !important;
+    right: 10px;
+    top: 70px;
+    border-radius: 20px;
+
+  }
+  .top-menu-ul li{
+    padding: 10px;
+  }
+  .top-menu-ul li:first-child{
+    padding: 10px;
+    padding-top: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+  .top-menu-ul li:last-child{
+    padding: 10px;
+    padding-bottom: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  .main-container{
+    overflow-x: scroll;
+  }
+  .titles{
+    width: 1632px !important;
+    
+  }
+  .title{
+    font-size: 16px !important;
+  }
+  .title p{
+    font-size: 16px !important;
+  }
+  .card{
+    font-size: 12px !important;
+  }
+  .bold700{
+    font-size: 12px !important;
+  }
+
+  .sales_container{
+    width: 1652px !important;
+  }
+  .sales_container .buttons button{
+    font-size: 12px !important;
+  }
+  .total-cash span:nth-child(1){
+    font-size: 12px !important;
+  }
+  .li-hover {
+    border-bottom: none !important;
+    background: #dfdfdf;
+  }
+
+  #list_table td:first-child a i{
+    display: none;
+  }
+  #list_table td:first-child a span{
+    display: block !important;
+  }
+  #list_table td:first-child a{  
+    border: none !important;
+    border-radius: 20px !important;
+    background-color: #00000015 !important;
+    width: 88%;
+    height: 80%;
+    padding: 10px;
+  }
+  .top-container table {
+    width: 97vw;
+  }
+
+  #lost_table td:first-child a i, #won_table td:first-child a i, #sales_table td:first-child a i{
+    display: none;
+  }
+  #lost_table td:first-child a span, #won_table td:first-child a span, #sales_table td:first-child a span{
+    display: block !important;
+  }
+  #lost_table td:first-child a, #won_table td:first-child a, #sales_table td:first-child a{  
+    border: none !important;
+    border-radius: 20px !important;
+    background-color: #00000015 !important;
+    width: 97%;
+    height: 85%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #lost_table td:first-child, #won_table td:first-child, #sales_table td:first-child{
+    padding: 0 !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+  .container table p {
+    margin-left: 0; /* Önceki margin'ı sıfırla */
+    margin-bottom: 10px; /* Yeni bir margin-bottom ekle */
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Başlık satırlarındaki ok simgelerini gizle */
+  .container table th span.icon-arrow {
+    display: none;
+  }
+
+  /* Tablo başlıklarını genişlet */
+  .container table thead {
+    display: none !important;
+  }
+
+  /* Tablo başlıklarındaki metin boyutunu küçült */
+  .container table th:nth-child(n+2) {
+    font-size: 14px;
+  }
+
+  /* Tablo içeriğini küçült */
+  .container table td {
+    font-size: 14px;
+  }  
+  .container table td:first-child {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+  }
+
+  .container table td:first-child::before{
+    display: none;
+  }
+  .container table td:first-child button i{
+    display: none;
+  }
+  .container table td:first-child button{
+    border: none !important;
+    border-radius: none !important;
+    background-color: #00000015 !important;
+    width: 100%;
+    height: 100%;
+  }
+  .container table td:first-child button span{
+    display: block !important;
+  }
+
+  /* Dikey tablo satırları için */
+  .container table tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .container table tr td {
+    display: flex;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #ccc; /* Satır aralarına sınır ekle */
+  }
+
+  .container table tr td:before {
+    content: attr(data-label);
+    color: #0b0b49;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  .container table td:before {
+    text-align: left !important;
+  }
+
+  /* ekleme sayfası */
+
+ .window .container{
+  width: 90% !important;
+  max-height: 70%;
+  overflow-y: scroll;
+ }
+ .window .container .input-box {
+  width: 90% !important;
+}
 }

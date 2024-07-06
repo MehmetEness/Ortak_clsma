@@ -14,7 +14,9 @@
   --main-color-light: #fff6;
   --text-color: #000;
 }
-
+::-webkit-scrollbar {
+  width: 0 ;
+}
 body {
   min-height: 100vh;
   display: flex;
