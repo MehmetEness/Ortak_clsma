@@ -111,6 +111,17 @@
           </li>
           {% endif %}
 
+          {% if 'admin' in user_groups|lower or 'rapor grubu' in user_groups|lower %}
+          <li class="tooltip-element calendar_li" data-tooltip="3">
+            <a href="{% url 'calendar' %}" data-active="7">
+              <div class="icon">
+                <i class="fa-solid fa-calendar-days"></i>
+              </div>
+              <span class="link hide-for-menu">Takvim</span>
+            </a>
+          </li>
+          {% endif %}
+
 
       </div>
 
