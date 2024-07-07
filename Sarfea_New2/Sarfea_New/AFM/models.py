@@ -551,27 +551,21 @@ class Poll(models.Model):
     answer_9_5 = models.BooleanField(blank=True, null=True)
 
 
-class Note(models.Model):
-    note = models.CharField(max_length=255, verbose_name="Note")
-    date = models.DateField(verbose_name="Date")
-    start_clock = models.TimeField(verbose_name="Start Time")
-    finish_clock = models.TimeField(verbose_name="Finish Time")
-    
-    def __str__(self):
-            return f"{self.note} on {self.date}"
-    
+class Date(models.Model):
+    Date_Year = models.IntegerField(blank=True, null=True, verbose_name="Year")
+    Date_Month = models.IntegerField(blank=True, null=True, verbose_name="Month")
+    Date_Day = models.IntegerField(blank=True, null=True, verbose_name="Day")
+
     class Meta:
-        ordering = ['date', 'start_clock']
-        verbose_name = "Not"
-        verbose_name_plural = "Notlar"
-        indexes = [
-            models.Index(fields=['date']),
-        ]
+        verbose_name = "Date"
+        verbose_name_plural = "Dates"
 
-    def clean(self):
-        if self.finish_clock <= self.start_clock:
-            raise ValidationError("Bitiş saati, başlangıç saatinden sonra olmalıdır.")
+    def __str__(self):
+        return f"{self.Date_Year or '----'}-{self.Date_Month or '--'}-{self.Date_Day or '--'}"
 
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
+class Events(models.Model):
+    Event_Date=  models.ForeignKey(Date, on_delete=models.CASCADE, related_name="date_events")
+    Event_Title= models.CharField( max_length=63,blank=True, null=True) 
+    Event_Time= models.CharField( max_length=63,blank=True, null=True) 
+
+    
