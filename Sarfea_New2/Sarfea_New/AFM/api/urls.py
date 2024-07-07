@@ -50,7 +50,8 @@ urlpatterns = [
     path("api_poll/", api_view.PollListCreateAPIView.as_view(), name='api-poll'),
     path('api_poll/<pk>', api_view.PollRetrieveUpdateDestroyAPIView.as_view(), name='api-poll-detail'),
 
-
+    path('api_notes/', api_view.NoteListCreateAPIView.as_view(), name='api-notes-list'),
+    path('api_notes/<int:pk>/', api_view.NoteDetailAPIView.as_view(), name='api-note-detail'),
    
     
     #******************************* ------- ***********************************
