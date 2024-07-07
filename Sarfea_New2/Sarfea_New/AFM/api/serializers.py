@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Note, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
+from AFM.models import Clients, Date, Events, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
 from django.db.models import Max, Count
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -827,19 +827,36 @@ class PollSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class NoteSerializer(serializers.ModelSerializer):
+class EventsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
+        model = Events
         fields = '__all__'
 
     def create(self, validated_data):
-        return Note.objects.create(**validated_data)
+        return Events.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.note = validated_data.get('note', instance.note)
-        instance.date = validated_data.get('date', instance.date)
-        instance.start_clock = validated_data.get('start_clock', instance.start_clock)
-        instance.finish_clock = validated_data.get('finish_clock', instance.finish_clock)
-
+        instance.Event_Date = validated_data.get('Event_Date', instance.Event_Date)
+        instance.Event_Title = validated_data.get('Event_Title', instance.Event_Title)
+        instance.Event_Time = validated_data.get('Event_Time', instance.Event_Time)
         instance.save()
         return instance
+
+class DateSerializer(serializers.ModelSerializer):
+
+    date_events= EventsSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Date
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Date.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.Date_Year = validated_data.get('Date_Year', instance.Date_Year)
+        instance.Date_Month = validated_data.get('Date_Month', instance.Date_Month)
+        instance.Date_Day = validated_data.get('Date_Day', instance.Date_Day)
+        instance.save()
+        return instance
+
