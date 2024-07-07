@@ -48,6 +48,7 @@ const daysOfWeek = [
 ];
 
 const eventsArr = [];
+
 getEvents();
 console.log(eventsArr);
 
