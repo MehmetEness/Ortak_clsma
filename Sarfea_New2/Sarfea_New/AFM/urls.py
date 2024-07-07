@@ -61,6 +61,4 @@ urlpatterns = [
     #MODUL-DENEME
     path("deneme/", views.deneme, name='deneme'),
     path("deneme2/", views.deneme2, name='deneme2'),
-    
-
    ]   

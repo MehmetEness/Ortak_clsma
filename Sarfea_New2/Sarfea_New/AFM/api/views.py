@@ -8,10 +8,10 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer, PowerPlantSerializer
+from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer, PowerPlantSerializer, NoteSerializer
 from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor, Poll, PowerPlant
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Operation_Care
-from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String
+from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String, Note
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from AFM.api.permissions import CustomPermission
@@ -142,7 +142,13 @@ class PollRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
 
+class NoteListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Note.objects.all()
+    serializer_class=NoteSerializer
 
+class NoteDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Note.objects.all()
+    serializer_class=NoteSerializer
 
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from AFM.models import Clients, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
+from AFM.models import Clients, Note, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
 from django.db.models import Max, Count
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -827,3 +827,19 @@ class PollSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Note.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.note = validated_data.get('note', instance.note)
+        instance.date = validated_data.get('date', instance.date)
+        instance.start_clock = validated_data.get('start_clock', instance.start_clock)
+        instance.finish_clock = validated_data.get('finish_clock', instance.finish_clock)
+
+        instance.save()
+        return instance
