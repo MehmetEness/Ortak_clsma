@@ -5,7 +5,8 @@ from .models import Project, CompanyNames, PaymentFirms, Expenses, JobHistory, I
 from django.db import models
 from django.utils.text import slugify
 from decimal import Decimal
-
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 @receiver(pre_save, sender=Expenses)
 def update_expenses_company_name(sender, instance, **kwargs):
@@ -69,6 +70,12 @@ def update_client_card(sender, instance, **kwargs):
 @receiver(post_save, sender=Operation_Care)
 def create_inventor(sender, instance, created, **kwargs):
     if created:
+        print("create_inventor")
+        instance.Operation_Care_Capacity = instance.Operation_Care_AC_Power +instance.Operation_Care_DC_Power
+        poll= Poll.objects.create(
+            Poll_Operation_Care=instance,
+            Poll_Date=instance.Operation_Care_Start_Date
+        )
         num= instance.Operation_Care_Inventor_Number
         if num is None:
             num = 0
@@ -85,13 +92,12 @@ def create_inventor(sender, instance, created, **kwargs):
                 Inventor_Panel_SY=instance.Operation_Care_Panel_Number_Str,
                 Inventor_AC_Power=instance.Operation_Care_AC_Power,
                 Inventor_DC_Power=instance.Operation_Care_DC_Power,
-                Inventor_Capacity=instance.Operation_Care_Capacity,
                 Inventor_Izolasion="OK",
             )
 
+'''
 @receiver(post_save, sender=Operation_Care)
 def update_invantor(sender, instance, **kwargs):
-    
     inventors = instance.operation_inventors.all()
     
     for inventor in inventors:
@@ -106,11 +112,13 @@ def update_invantor(sender, instance, **kwargs):
         inventor.Inventor_Capacity = instance.Operation_Care_Capacity
 
         inventor.save()
+'''
 
 @receiver(post_save, sender=Inventor)
 def create_string(sender, instance, created, **kwargs):
     if created:
-
+        print("create_string")
+        oc=instance.Inventor_Owner
         num= instance.Inventor_Number_Str
         if num is None:
             num = 0
@@ -125,13 +133,16 @@ def create_string(sender, instance, created, **kwargs):
                 String_Panel_SY=instance.Inventor_Panel_SY,
                 String_AC_Power=instance.Inventor_AC_Power,
                 String_DC_Power=instance.Inventor_DC_Power,
-                String_Capacity=instance.Inventor_Capacity,
                 String_Izolasion=instance.Inventor_Izolasion,
+                String_Date=oc.Operation_Care_Start_Date,
+
             )
 
+'''
 @receiver(post_save, sender=Inventor)
 def update_strings(sender, instance, **kwargs):
-    
+    print("update_strings")
+
     strings = instance.inventor_strings.all()
 
     for string in strings:
@@ -147,5 +158,45 @@ def update_strings(sender, instance, **kwargs):
         
         # 'String' örneğini kaydederiz
         string.save()
-    
+'''
 
+@receiver(post_save, sender=Poll)
+def create_poll_str(sender, instance, created, **kwargs):
+    if created:
+        print("create_poll_str")
+
+        oc=instance.Poll_Operation_Care
+        if instance.Poll_Date is not None:
+            current_date = instance.Poll_Date
+            new_date = current_date + relativedelta(months=6)
+            oc.Operation_Care_Finish_Date=new_date
+            oc.save()
+            inventors = Inventor.objects.filter(Inventor_Owner=oc)
+            for inventor in inventors:
+                strings_all_for_inventor = inventor.inventor_strings.all()
+                string_date=strings_all_for_inventor.last().String_Date
+                strings=String.objects.filter(String_Date=string_date, String_Owner=inventor)
+                for string in strings:
+                    if string.String_Date!=instance.Poll_Date:
+                        new_strings=String.objects.create(
+                            String_Owner=string.String_Owner,
+                            String_Direction=string.String_Direction,
+                            String_Number=string.String_Number,
+                            String_Panel_Power=string.String_Panel_Power,
+                            String_Panel_Brand=string.String_Panel_Brand,
+                            String_VOC=string.String_VOC,
+                            String_Panel_SY=string.String_Panel_SY,
+                            String_AC_Power=string.String_AC_Power,
+                            String_DC_Power=string.String_DC_Power,
+                            String_Capacity=string.String_Capacity,
+                            String_Izolasion=inventor.Inventor_Izolasion,
+                            String_Date=instance.Poll_Date,
+                        )
+
+@receiver(pre_save, sender=String)
+def update_capasity(sender, instance, **kwargs):
+    instance.String_Capacity = instance.String_Pluse + instance.String_Minus
+    
+@receiver(pre_save, sender=Operation_Care)
+def update_capasity_OC(sender, instance, **kwargs):
+        instance.Operation_Care_Capacity = instance.Operation_Care_AC_Power + instance.Operation_Care_DC_Power

@@ -4,6 +4,14 @@
 <link rel="stylesheet" href="{% static 'sec-inputs.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
 <link rel="stylesheet" href="{% static 'supplier.css' %}" />
+<style>
+  :root {
+    --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+</style>
 
 
 {% endblock %} {% block title %} Suppliers {% endblock %} {% block content %}
@@ -69,6 +77,7 @@
   <div class="right-menu">
     <main class="table" id="customers_table">
       <section class="table__header">
+        <button style="display: none;" class="hamburger-button"><i class="fa-solid fa-bars"></i></button>
         <p>TEDARİKÇİLER</p>
 
         <div class="export__file">

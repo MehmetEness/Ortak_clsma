@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Case, When, Value, IntegerField, F, Count, Sum
 from django.shortcuts import render, redirect, get_object_or_404
+import requests
 from .forms import ProjectForm, ExpensesForm, IncomesForm, JobHistoryForm, ClientsForm, SupplierForm, SalesOfferCardForm, Operation_CareForm, FailForm
 from .models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String, Poll
 from django.db.models import Q
@@ -379,15 +380,6 @@ def operation_care(request):
     operations = Operation_Care.objects.all()
     fails = Fail.objects.all()
     locations=Locations.objects.all()
-    for op in operations:
-        i = 0  # Her döngü başında i'yi sıfırla
-        for fa in fails:
-            if fa.Fail_Operation_Care == op:  # Değişiklik yapıldı
-                i += 1
-        op.Operation_Care_Fail_Number = i
-        op.save()
-
-
     context = {
         "operations": operations,
         "fails": fails,
@@ -395,6 +387,20 @@ def operation_care(request):
     }
 
     return render(request, "operation_care.html", context)
+
+@user_passes_test(pass_test('Bakım Grubu'), login_url='/home')
+def calendar(request):
+    operations = Operation_Care.objects.all()
+    fails = Fail.objects.all()
+    locations=Locations.objects.all()
+    context = {
+        "operations": operations,
+        "fails": fails,
+        "locations":locations
+    }
+
+    return render(request, "calendar.html", context)
+
 
 @login_required
 def operation_care_add(request):
@@ -507,6 +513,7 @@ def operation_care_detail(request,operation_care_id):
     fails= Fail.objects.filter(Fail_Operation_Care=operation_care)
     inventors =Inventor.objects.filter(Inventor_Owner=operation_care)
     polls =Poll.objects.filter(Poll_Operation_Care=operation_care)
+    operation_cares = Operation_Care.objects.all()
 
     inventor_strings = {}
 
@@ -521,6 +528,7 @@ def operation_care_detail(request,operation_care_id):
         "inventors":inventors,
         "inventor_strings": inventor_strings,
         "polls":polls,
+        "operation_cares":operation_cares
     }
 
     return render(request, "operation_care_detail.html", context)
@@ -708,14 +716,25 @@ def get_strings(request, inventor_id):
 
 @login_required
 def get_dollar_rate(request, date):
-    api='qYyWXNCbA0'
-    evds = e.evdsAPI(api)
-    dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)
-    print(date)
-    rate=dollar.TP_DK_USD_S_YTL.values[0]
-    rate = round(rate, 4)  # 4 ondalık basamak
-    return JsonResponse({'rate': rate})
+    headers={'key':'qYyWXNCbA0'}
+    response = requests.get(f"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.S&startDate={date}&endDate={date}&type=json", headers=headers)
+    #api='qYyWXNCbA0'
+    #evds = e.evdsAPI(api)
+    #dollar =  evds.get_data(['TP.DK.USD.S.YTL'], startdate=date, enddate=date)    
+    
+    data = json.loads(response.content)
 
+    # JSON verilerini işleyin
+    items = data.get('items', [])
+    if items:
+        tarih = items[0]['Tarih']
+        usd_degeri = items[0]['TP_DK_USD_S']
+        print(f"Tarih: {tarih}, USD Değeri: {usd_degeri}")
+    else:
+        print("Belirtilen tarih için veri bulunamadı.")
+    #rate=dollar.TP_DK_USD_S_YTL.values[0]
+    #rate = round(rate, 4)  # 4 ondalık basamak
+    return JsonResponse({'rate': usd_degeri})
 #***********************************************************
 #                       SET METHODLARI
 #***********************************************************
@@ -741,8 +760,6 @@ def create_revise(request, card_id):
         Date_Card=card.Date_Card,
         Terrain_Roof_Card=card.Terrain_Roof_Card,
         Roof_Cost_Card=card.Roof_Cost_Card,
-        Comment_Date_Card=card.Comment_Date_Card,
-        Offer_Comment_Card=card.Offer_Comment_Card,
         Person_Deal=card.Person_Deal,
         Person_Related=card.Person_Related,
         Offer_File_Card=card.Offer_File_Card,

@@ -55,15 +55,17 @@ async function getProjects(isEdit) {
       //   formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
       // } else { formattedDate = "-" }
 
-      const projectDetailsUrl = `http://127.0.0.1:8000/project_details/${project.id}/`;
+      const projectDetailsUrl = `/project_details/${project.id}/`;
 
       const row = `
         <tr>
           <td>
             <button id="${project.id}" type="button" class="edit-project-btn" style="background: none; border:none;">
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
+              <span style="display: none;">Düzenle</spam>
             </button>
           </td>
+<<<<<<< HEAD
           <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
           <td>${project.Location || "-"}</td>
           <td>${formatNumber(project.AC_Power, 0)}</td>
@@ -72,6 +74,16 @@ async function getProjects(isEdit) {
           <td>${project.Terrain_Roof || "-"}</td>
           <td>${formatDateForTable(project.StartDate)}</td>
           <td>${project.Situation || "-"}</td>
+=======
+          <td data-label="Proje Adı"><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
+          <td data-label="Konum">${project.Location || "-"}</td>
+          <td data-label="AC Güç">${formatNumber(project.AC_Power, 0)}</td>
+          <td data-label="DC Güç">${formatNumber(project.DC_Power, 0)}</td>
+          <td data-label="İş Bedeli">${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
+          <td data-label="Arazi/Çatı">${project.Terrain_Roof || "-"}</td>
+          <td data-label="Tarih">${formatDateForTable(project.StartDate)}</td>
+          <td data-label="Durum">${project.Situation || "-"}</td>
+>>>>>>> 61efba4af35970f272f99d4242c2f654519b71ad
         </tr>`;
 
       rows += row;
@@ -275,7 +287,8 @@ function editButtonsEvents() {
         editMode = true;
         btnID = button.id;
         const data = await apiFunctions("project", "GETID", "x", btnID)
-        //console.log(data);
+        console.log("sdfasdffd");
+        console.log(data);
         currentProjectName = data.ProjectName;
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
@@ -368,10 +381,12 @@ incomeTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(incomeDateInput.value);
-    incomeKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    incomeKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(incomeDateInput.value);
-    incomeKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    incomeKurInput.value = kurValue.replace('.', ',');
   }
 });
 
@@ -425,10 +440,12 @@ expensesTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(expensesDateInput.value);
-    expensesKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    expensesKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(expensesDateInput.value);
-    expensesKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    expensesKurInput.value = kurValue.replace('.', ',');
   }
 });
 
@@ -481,10 +498,12 @@ jobhistoryTimeForKur.addEventListener("change", async function () {
   if (secilenDeger === "secenek1") {
   } else if (secilenDeger === "secenek2") {
     tarih = birGunOncekiTarih(jobhistoryDateInput.value);
-    jobhistoryKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    jobhistoryKurInput.value = kurValue.replace('.', ',');
   } else if (secilenDeger === "secenek3") {
     tarih = tarihFormatiniDegistir(jobhistoryDateInput.value);
-    jobhistoryKurInput.value = await getUSDKur(tarih);
+    let kurValue = await getUSDKur(tarih);
+    jobhistoryKurInput.value = kurValue.replace('.', ',');
   }
 });
 
@@ -623,3 +642,52 @@ async function getprojectName() {
     console.error("Error fetching and rendering projects:", error);
   }
 }
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});
+
+
+//left menü acma kapatma
+const addMenu = document.querySelector(".export__file");
+
+const addHamburgerBtn = document.querySelector(".add-hamburger-button");
+addHamburgerBtn.addEventListener("click", () => {
+  if(addMenu.style.display !== "flex"){
+    setTimeout(async () => { addMenu.style.display = "flex";}, 20)
+  }
+ 
+});
+
+document.addEventListener("click", (event) => { 
+  if (window.innerWidth <= 767 && !addMenu.contains(event.target)) {
+    addMenu.style.display = "none";
+  }
+});

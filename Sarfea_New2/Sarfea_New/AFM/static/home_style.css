@@ -18,10 +18,11 @@
   display: flex;
   height: 100vh;
   width: 100vw;
-  background: url("/static/images/html_table.jpg") center / cover;
+  /* background: url("/static/images/html_table.jpg") center / cover; */
   justify-content: center;
   align-items: center;
 }
+
 .right-menu {
   height: 97vh;
   width: calc(100% - 18rem);
@@ -338,3 +339,89 @@ label[for=nav-footer-toggle] {
   background-color: #D62929;
 }
 
+@media (max-width: 767px) {
+
+  .top-menu{
+    flex-shrink: 0;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 10px;  
+    width: 100%;
+    height: 60px;
+  }
+
+  .top-menu .hamburger-button{
+    display: block !important;
+    font-weight: 700;
+    font-size: 20px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 1.2rem;
+    border-radius: 2rem;
+    border: none;
+    transition: 0.2s;
+  }
+
+  .left-menu{
+    display: none;
+    background-color: #00000077 !important;
+    position: absolute;
+    z-index: 10000;
+    width: 100% !important;
+    height: 100% !important;
+
+  }
+  .left-menu nav{
+    min-height: 97vh;
+    background-color: rgba(255, 255, 255, 0.678);   
+  }
+
+  .right-menu{
+    width: 97% !important;
+    /* max-height: 97vh !important; */
+    margin: auto !important;
+    overflow: scroll;
+    gap: 10px;
+  }
+  .row, .two-chart{
+    
+    flex-direction: column;    
+    width: 100% !important;
+  }
+  .right-menu .row:first-child{
+    height: 300px !important;
+    flex-shrink: 0;
+  }
+  
+  .row.bill{
+    flex-shrink: 0;
+    font-size: 11px !important;
+    height: 300px !important;
+  }
+  .two-chart{
+    flex-shrink: 0;
+    height: 600px !important;
+    gap: 10px;
+    font-size: 12px !important;
+  }
+  
+  .row.bill h3{
+    font-size: 14px !important;
+  }
+  
+  .two-chart .coll:first-child{
+    height: 400px !important;
+  }
+  .pie-div{
+    height: 300px;
+    font-size: 10px;
+    padding-right: 10px;
+  }
+  .pie-div h3{
+    font-size: 13px;
+  }
+  .sell-bill, .buy-bill, .coll{
+    width: 100% !important;
+  }
+}

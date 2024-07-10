@@ -7,8 +7,18 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet" href="{% static 'home_style.css' %}">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
 <style>
+  :root {
+      --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+
+
+
   #table thead th:not(:nth-child(2)),
   #table tbody td:not(:nth-child(2)) {
     text-align: center;
@@ -171,6 +181,19 @@
   background-color: #D3D3D3;
 }
 
+
+
+/* .top-menu button {
+    margin-right: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 1rem;
+    border-radius: 2rem;
+    border: none;
+    transition: 0.2s;
+} */
 </style>
 {% endblock %}
 
@@ -178,8 +201,12 @@
 {% block content %}
 <div class="body-div">
   {% include 'partials/_left_nav_bar.html' %}
-
+  
   <div class="right-menu">
+    <div style="display: none;" class="top-menu">
+      <button style="display: none;" class="hamburger-button"><i class="fa-solid fa-bars"></i></button>
+      <h3 style="margin: auto;">Anasayfa</h3>
+    </div>
     {% if 'admin' in user_groups|lower or 'proje grubu' in user_groups|lower %}
 
     <div style="height: 38%;" class="row">

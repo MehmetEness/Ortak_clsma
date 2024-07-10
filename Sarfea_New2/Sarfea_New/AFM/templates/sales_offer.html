@@ -9,6 +9,14 @@
 <link rel="stylesheet" href="{% static 'sales_offers.css' %}">
 <link rel="stylesheet" href="{% static 'style.css' %}">
 <style>
+  :root {
+    --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
+</style>
+<style>
   input[type="file"] {
     cursor: pointer !important;
     font: 300 14px sans-serif;
@@ -114,6 +122,8 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 5px;
+    background: linear-gradient(135deg, #71b7e6, #191970);
+    color: #fff;
   }
 
 
@@ -440,17 +450,50 @@
     text-align: center;
   }
 
-  thead th {
+  #list_table thead th:nth-child(3){
     position: sticky;
     top: 0;
-    left: 0;
+    left: -1px;
+  }
+  #list_table tbody td:nth-child(3){
+    position: sticky;
+    left: -1px;
+    z-index: 1000000;
+  } 
+  #sales_table thead th:nth-child(2), #lost_table thead th:nth-child(2), #won_table thead th:nth-child(2){
+    position: sticky;
+    top: 0;
+    left: -1px;
+  }
+  #sales_table tbody td:nth-child(2), #lost_table tbody td:nth-child(2), #won_table tbody td:nth-child(2){
+    position: sticky;
+    left: -1px;
+  } 
+
+
+
+
+
+
+
+
+  thead th {    
     background-color: #d5d1defe;
     cursor: pointer;
     text-transform: capitalize;
   }
+  tbody tr:nth-child(odd) td{
+    background-color: #efefef;
+  }
+  tbody tr:nth-child(even) td{
+    background-color: #d8d8d8;
+  }
 
+  tbody tr:nth-child(odd) {
+    background-color: #efefef;
+  }
   tbody tr:nth-child(even) {
-    background-color: #0000000b;
+    background-color: #d8d8d8;
   }
 
   thead th:nth-child(2) {
@@ -470,14 +513,17 @@
     opacity: 0;
   }
 
+  tbody tr:hover td {
+    background-color: rgb(255, 255, 255) !important;
+  }
   tbody tr:hover {
-    background-color: #fff6 !important;
+    background-color: rgb(255, 255, 255) !important;
   }
 
   tbody tr td,
   tbody tr td p,
   tbody tr td img {
-    transition: 0.2s ease-in-out;
+    /* transition: 0.2s ease-in-out; */
   }
 
   tbody tr.hide td,
@@ -493,6 +539,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
   }
 
   .item.dragging {
@@ -533,7 +580,7 @@
   <div class="window sales-offer-add-window">
     <div id="sales_offer_container" class="container">
       <h3 id="sales_offer-X" class="close-window sales_offerx">X</h3>
-      <div class="title">Firma Ekle</div>
+      <div class="title">Yeni Satış Ekle</div>
       <form id="sales_offer_add_form" action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="sales_form" value="sales_form" />
@@ -583,7 +630,7 @@
               id="id_Offer_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00" />
           </div>
           <div class="input-box">
-            <span class="details">Birim Teklif<button type="button" id="br_tek_btn" class="calc_btns"><i
+            <span class="details">Birim Teklif ($)<button type="button" id="br_tek_btn" class="calc_btns"><i
                   class="fa-solid fa-calculator"></i></button></span>
             <input class="coc-input formatInputs" type="text" name="UnitOffer_NotIncludingKDV"
               id="id_UnitOffer_NotIncludingKDV" step="0.01" autocomplete="off" placeholder="0.00" />
@@ -595,7 +642,7 @@
               autocomplete="off" placeholder="0.00" />
           </div>
           <div class="input-box">
-            <span class="details">Toplam Maliyet<button type="button" id="total_mal_btn" class="calc_btns"><i
+            <span class="details">Toplam Maliyet ($)<button type="button" id="total_mal_btn" class="calc_btns"><i
                   class="fa-solid fa-calculator"></i></button></span>
             <input class="coc-input formatInputs" type="text" name="Cost_NotIncludingKDV_Card"
               id="id_Cost_NotIncludingKDV_Card" step="0.01" autocomplete="off" placeholder="0.00" />
@@ -631,7 +678,7 @@
           </div>
           <div class="input-box">
             <span class="details">Yorum</span>
-            <input type="text" name="Offer_Comment_Card">
+            <input type="text" name="Comment_Card_1">
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
@@ -652,7 +699,7 @@
           </div>
 
           <div class="input-box">
-            <span class="details arazi-span">Arazi Bedeli(MW)</span>
+            <span class="details arazi-span">Arazi Bedeli($/MW)</span>
             <input class="coc-input formatInputs" type="text" name="Roof_Cost_Card"
               id="id_Roof_Cost_Card" step="1" autocomplete="off" placeholder="0.00" />
           </div>
@@ -742,9 +789,42 @@
       </form>
     </div>
   </div>
+  <div class="window commend-add-window">
+    <div style="width: 400px" id="commend_container" class="container">
+      <h3 id="client-X" class="close-window clientx">X</h3>
+      <div class="title">Yorum Ekle</div>
+      <form id="commend_add_form" action="#" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="" />
+
+        <div class="user-details">
+          <div id="firma_input_box" class="input-box" name="">
+            <span id="" class="details">Muhatap</span>
+            <input id="Comment_Person_Card" name="" type="text" />
+          </div>
+          <div id="firma_input_box" class="input-box" name="">
+            <span id="" class="details">Telefon Numarası</span>
+            <input id="Comment_Telno_Card" name="" type="text" />
+          </div>
+          <div id="firma_input_box" class="input-box" name="">
+            <span id="" class="details">Tarih</span>
+            <input id="Comment_Date_Card" class="date-inputs" name="" type="text" maxlength="10" />
+          </div>
+          <div id="firma_input_box" class="input-box" name="">
+            <span id="" class="details">Yorum</span>
+            <textarea style="height: 83px; padding: 3px 15px;" name="" id="Comment_Card"></textarea>
+          </div>
+        </div>
+        <div class="button">
+          <input onclick="commendSubmitFunction()" id="firma_submit_btn" type="button" value="Kaydet" />
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="right-menu">
     <div class="top-menu">
       <div>
+        <button style="display: none;" class="hamburger-button"><i class="fa-solid fa-bars"></i></button>
         <span class="xspan">Satış Teklif</span>
       </div>
       <ul class="top-menu-ul">
@@ -757,6 +837,7 @@
 
       <div class="top_right_box">
         <button class="project-add-btn">Yeni Satış</button>
+        <button style="display: none;" class="hamburger-button2"><i class="fa-solid fa-bars"></i></button>
       </div>
 
 
@@ -791,8 +872,8 @@
       <div class="sales_container container">
         <div class="rows" data-situation="Potansiyel Müşteri">
           <div style="background-color: #D0DDFB;" class="total-cash">
-            <span>$ span1</span>
-            <span>span2</span>
+            <span></span>
+            <span></span>
           </div>
           
             
@@ -804,7 +885,7 @@
         </div>
         <div class="rows" data-situation="Maliyet Hesaplama">
           <div style="background-color: #9DB8FB;" class="total-cash">
-            <span>$ </span>
+            <span></span>
             <span></span>
           </div>
           <ul class="card-body">
@@ -813,8 +894,8 @@
         </div>
         <div class="rows" data-situation="Fiyat Belirleme">
           <div style="background-color: #ece75f;" class="total-cash">
-            <span>$ {{price_customers_cost}}</span>
-            <span>({{price_customers_count}})</span>
+            <span></span>
+            <span></span>
           </div>
           <ul class="card-body">
 
@@ -823,8 +904,8 @@
         </div>
         <div class="rows" data-situation="Teklif Hazırlama">
           <div style="background-color: #e5de00;" class="total-cash">
-            <span>$ {{offer_customers_cost}}</span>
-            <span>({{offer_customers_count}})</span>
+            <span></span>
+            <span></span>
           </div>
           <ul class="card-body">
 
@@ -832,8 +913,8 @@
         </div>
         <div class="rows" data-situation="Teklif Hazır">
           <div style="background-color: #e6cc00;" class="total-cash">
-            <span>$ {{done_customers_cost}}</span>
-            <span>({{done_customers_count}})</span>
+            <span></span>
+            <span></span>
           </div>
           
           <ul class="card-body">
@@ -842,8 +923,8 @@
         </div>
         <div class="rows" data-situation="Teklif Sunuldu">
           <div style="background-color: #e69b00;" class="total-cash">
-            <span>$ {{done_customers_cost}}</span>
-            <span>({{done_customers_count}})</span>
+            <span></span>
+            <span></span>
           </div>
           <ul class="card-body">
 
@@ -851,8 +932,8 @@
         </div>
         <div class="rows" data-situation="Sunum Sonrası Görüşme">
           <div style="background-color: #e47200;" class="total-cash">
-            <span>$ {{presentation_customers_cost}}</span>
-            <span>({{presentation_customers_count}})</span>
+            <span></span>
+            <span></span>
           </div>
           <ul class="card-body">
 
@@ -882,6 +963,13 @@
             <th>Arazi Dahil T.T.<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arazi Maliyeti<span class="icon-arrow">&UpArrow;</span></th>
             <th style="padding: 0px 50px;">Tarih<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 1<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 2<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 3<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 4<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 5<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 6<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Yorum 7<span class="icon-arrow">&UpArrow;</span></th>
           </thead>
           <tbody>
             <!-- {% for card in sales_offer_card%}
@@ -1097,36 +1185,63 @@
 
 <script>
   // Revize  işlemleri 
-  function reviseCard(cardId) {  
-    const csrftoken = getCookie('csrftoken');
+  async function reviseCard(cardId) {  
+    const today = new Date();
+    const isoDate = today.toISOString();
+    const data = await apiFunctions("sales_offer", "GETID", "x", cardId)
+    console.log(data);
+    const formData = new FormData();
+    formData.append("Revise_Owner", cardId);
+    formData.append("Revize_created_at", isoDate);
+    formData.append("Location_Card", data.Location_Card);
+    formData.append("Cost_NotIncludingKDV_Card", data.Cost_NotIncludingKDV_Card);
+    formData.append("Offer_Cost_NotIncludingKDV_Card", data.Offer_Cost_NotIncludingKDV_Card);
+    formData.append("AC_Power_Card", data.AC_Power_Card);
+    formData.append("DC_Power_Card", data.DC_Power_Card);
+    formData.append("UnitCost_NotIncludingKDV", data.UnitCost_NotIncludingKDV);
+    formData.append("UnitOffer_NotIncludingKDV", data.UnitOffer_NotIncludingKDV);
+    formData.append("Situation_Card", data.Situation_Card);
+    formData.append("Date_Card", data.Date_Card);
+    formData.append("Terrain_Roof_Card", data.Terrain_Roof_Card);
+    formData.append("Roof_Cost_Card", data.Roof_Cost_Card);
+    formData.append("Person_Deal", data.Person_Deal);
+    formData.append("Person_Related", data.Person_Related);
+    formData.append("Unit_Cost_with_Roof_Cost", data.Unit_Cost_with_Roof_Cost);
+    formData.append("Unit_Offer_with_Roof_Cost", data.Unit_Offer_with_Roof_Cost);
+    formData.append("Profit_Rate_Card", data.Profit_Rate_Card);
+    formData.append("Client_Card", data.Client_Card);
+    const formDataObj = Object.fromEntries(formData.entries());
+    console.log(JSON.stringify(formDataObj));
+    await apiFunctions("sales_offer_revise", "POST", formData, cardId);
+    // const csrftoken = getCookie('csrftoken');
 
-    if (!csrftoken) {
-      console.error('CSRF token bulunamadı.');
-      return;
-    }
+    // if (!csrftoken) {
+    //   console.error('CSRF token bulunamadı.');
+    //   return;
+    // }
 
-    fetch(`AFM/create_revise/${cardId}/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken,
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Kaybedildi işlemi başarısızz');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Kaybedildi işlemi başarılı', data);
-        //location.reload();
-        //var newUrl = "".replace("0", cardId);
-        //window.location.href = newUrl;
-      })
-      .catch(error => {
-        console.error('Hata:', error.message);
-      });
+    // fetch(`AFM/create_revise/${cardId}/`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRFToken': csrftoken,
+    //   },
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('Kaybedildi işlemi başarısızz');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log('Kaybedildi işlemi başarılı', data);
+    //     //location.reload();
+    //     //var newUrl = "".replace("0", cardId);
+    //     //window.location.href = newUrl;
+    //   })
+    //   .catch(error => {
+    //     console.error('Hata:', error.message);
+    //   });
 
 
   }

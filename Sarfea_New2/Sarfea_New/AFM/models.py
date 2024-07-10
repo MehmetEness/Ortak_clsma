@@ -32,6 +32,11 @@ class CompanyNames(models.Model):
     def __str__(self):
         return self.CompanyName
 
+class PowerPlant(models.Model):
+    PowerPlantName = models.CharField(max_length=63) 
+    def __str__(self):
+        return self.PowerPlantName
+
 class MyCompanyNames(models.Model):
     MyCompanyName = models.CharField(max_length=63) 
     def __str__(self):
@@ -99,8 +104,8 @@ class Project(models.Model):
     CompanyUndertakingWork = models.CharField(max_length=63, blank=True, null=True)
     Location = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV = models.FloatField( blank=True, null=True, default=0)
-    AC_Power = models.IntegerField(blank=True, null=True,default=0)
-    DC_Power = models.IntegerField(blank=True, null=True,default=0)
+    AC_Power = TwoDecimalField(blank=True, null=True,default=0)
+    DC_Power = TwoDecimalField(blank=True, null=True,default=0)
     CalculatedCost_NotIncludingKDV = models.FloatField(blank=True, null=True)
     RealizedCost_NotIncludingKDV = models.FloatField(blank=True, null=True)
     CalculatedProfit_Loss = models.FloatField(blank=True, null=True)
@@ -156,8 +161,8 @@ class SalesOfferCard(models.Model):
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
     Offer_Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
-    AC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
-    DC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
+    AC_Power_Card = TwoDecimalField(blank=True, null=True,default="0")
+    DC_Power_Card = TwoDecimalField(blank=True, null=True,default="0")
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
     UnitOffer_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
     Situation_Card = models.CharField(
@@ -182,10 +187,8 @@ class SalesOfferCard(models.Model):
         ),
     )    
     Roof_Cost_Card = TwoDecimalField(blank=True, null=True)
-    Comment_Date_Card = models.DateField(blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
     Person_Related= models.CharField(max_length=63, blank=True, null=True)
-    Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_2 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
     Offer_File_Card_3 = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -200,6 +203,42 @@ class SalesOfferCard(models.Model):
     Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)
+
+    Comment_Date_Card_1 = models.DateField(blank=True, null=True)
+    Comment_Card_1= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_1= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_1= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_2 = models.DateField(blank=True, null=True)
+    Comment_Card_2= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_2= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_2= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_3 = models.DateField(blank=True, null=True)
+    Comment_Card_3= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_3= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_3= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_4 = models.DateField(blank=True, null=True)
+    Comment_Card_4= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_4= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_4= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_5 = models.DateField(blank=True, null=True)
+    Comment_Card_5= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_5= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_5= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_6 = models.DateField(blank=True, null=True)
+    Comment_Card_6= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_6= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_6= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_7 = models.DateField(blank=True, null=True)
+    Comment_Card_7= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_7= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_7= models.CharField(max_length=63, blank=True, null=True)
+    
     def __str__(self):
             return self.Client_Card.CompanyName_Clients
     
@@ -210,8 +249,8 @@ class SalesOfferCard_Revise(models.Model):
     Location_Card = models.CharField(max_length=200, blank=True, null=True)
     Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
     Offer_Cost_NotIncludingKDV_Card = TwoDecimalField(blank=True, null=True, default="0")
-    AC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
-    DC_Power_Card = models.IntegerField(blank=True, null=True,default="0")
+    AC_Power_Card = TwoDecimalField(blank=True, null=True,default="0")
+    DC_Power_Card = TwoDecimalField(blank=True, null=True,default="0")
     UnitCost_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
     UnitOffer_NotIncludingKDV = TwoDecimalField(blank=True, null=True, default="0")
     Situation_Card = models.CharField(
@@ -236,8 +275,6 @@ class SalesOfferCard_Revise(models.Model):
         ),
     )    
     Roof_Cost_Card = models.IntegerField(blank=True, null=True, default="0")
-    Comment_Date_Card = models.DateField(blank=True, null=True)
-    Offer_Comment_Card= models.CharField(max_length=63, blank=True, null=True)
     Person_Deal= models.CharField(max_length=63, blank=True, null=True)
     Person_Related= models.CharField(max_length=63, blank=True, null=True)
     Offer_File_Card = models.FileField(upload_to='offer_files', default="", blank=True, null=True)
@@ -254,11 +291,47 @@ class SalesOfferCard_Revise(models.Model):
     Unit_Cost_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Unit_Offer_with_Roof_Cost= TwoDecimalField(blank=True, null=True)
     Profit_Rate_Card= TwoDecimalField(blank=True, null=True)    
+
+    Comment_Date_Card_1 = models.DateField(blank=True, null=True)
+    Comment_Card_1= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_1= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_1= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_2 = models.DateField(blank=True, null=True)
+    Comment_Card_2= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_2= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_2= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_3 = models.DateField(blank=True, null=True)
+    Comment_Card_3= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_3= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_3= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_4 = models.DateField(blank=True, null=True)
+    Comment_Card_4= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_4= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_4= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_5 = models.DateField(blank=True, null=True)
+    Comment_Card_5= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_5= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_5= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_6 = models.DateField(blank=True, null=True)
+    Comment_Card_6= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_6= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_6= models.CharField(max_length=63, blank=True, null=True)
+
+    Comment_Date_Card_7 = models.DateField(blank=True, null=True)
+    Comment_Card_7= models.CharField(max_length=1000, blank=True, null=True)
+    Comment_Telno_Card_7= models.CharField(max_length=15, blank=True, null=True)
+    Comment_Person_Card_7= models.CharField(max_length=63, blank=True, null=True)
+    
     Revize_created_at = models.DateTimeField(default=timezone.now,blank=True, null=True)
 
 #bakım modeli anket: anket, soru , cevap, sorunun not, zamanın notu,  
 class Operation_Care(models.Model):
-    Operation_Care_Company=  models.ForeignKey(Clients, on_delete=models.CASCADE, related_name="client_operation_care")
+    Operation_Care_Company=  models.ForeignKey(PowerPlant, on_delete=models.CASCADE, related_name="client_operation_care")
     Operation_Care_Location = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Inventor_Brand = models.CharField(max_length=200, blank=True, null=True)
     Operation_Care_Panel_Brand = models.CharField(max_length=200, blank=True, null=True)
@@ -283,17 +356,19 @@ class Operation_Care(models.Model):
     Operation_Care_Panel_Power = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Inventor_Number = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_VOC = TwoDecimalField(blank=True, null=True, default="0")
-    Operation_Care_AC_Power = models.IntegerField(blank=True, null=True, default="0")
-    Operation_Care_DC_Power = models.IntegerField(blank=True, null=True, default="0")
+    Operation_Care_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    Operation_Care_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     Operation_Care_Panel_Number_Str = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Number_Str = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Capacity = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Cost = models.IntegerField(blank=True, null=True, default="0")
     Operation_Care_Start_Date = models.DateField(blank=True, null=True)
     Operation_Care_Finish_Date = models.DateField(blank=True, null=True)
+    Operation_Care_endContract_Date = models.DateField(blank=True, null=True)
     Operation_Care_Has_Fail = models.BooleanField(default=False, blank=True, null=True)
     Operation_Care_Fail_Number = models.IntegerField(blank=True, null=True, default="0")
-    
+    Operation_Care_Switchgear_Material= models.CharField(max_length=200, blank=True, null=True)
+    Operation_Care_Price = TwoDecimalField(blank=True, null=True, default="0")
     
 class Fail(models.Model):
     Fail_Operation_Care=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_fails")
@@ -327,8 +402,7 @@ class Fail(models.Model):
     Fail_Bill_Date = models.DateField(blank=True, null=True)
     Fail_Bill_Detail=models.CharField(max_length=400, blank=True, null=True) 
     Fail_Bill_File = models.FileField(upload_to='fail_bills', default="", blank=True, null=True)
-
-    
+  
 class Inventor(models.Model):
     Inventor_Owner=  models.ForeignKey(Operation_Care, on_delete=models.CASCADE, related_name="operation_inventors")
     Inventor_Direction= models.CharField( max_length=63,blank=True, null=True) 
@@ -339,9 +413,11 @@ class Inventor(models.Model):
     Inventor_Izolasion = models.CharField(max_length=200, blank=True, null=True)
     Inventor_VOC =TwoDecimalField(blank=True, null=True, default="0")
     Inventor_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
-    Inventor_AC_Power = models.IntegerField(blank=True, null=True, default="0")
-    Inventor_DC_Power = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    Inventor_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     Inventor_Capacity = models.IntegerField(blank=True, null=True, default="0")
+    Inventor_Pluse = FourDecimalField(blank=True, null=True, default="0")
+    Inventor_Minus = FourDecimalField(blank=True, null=True, default="0")
 
 class String(models.Model):
     String_Owner=  models.ForeignKey(Inventor, on_delete=models.CASCADE, related_name="inventor_strings")
@@ -352,10 +428,13 @@ class String(models.Model):
     String_VOC = TwoDecimalField(blank=True, null=True, default="0")
     String_Panel_SY = models.IntegerField(blank=True, null=True, default="0")
     String_Izolasion = models.CharField(max_length=200, blank=True, null=True)
-    String_AC_Power = models.IntegerField(blank=True, null=True, default="0")
-    String_DC_Power = models.IntegerField(blank=True, null=True, default="0")
+    String_AC_Power = FourDecimalField(blank=True, null=True, default="0")
+    String_DC_Power = FourDecimalField(blank=True, null=True, default="0")
     String_Capacity = models.IntegerField(blank=True, null=True, default="0")
     String_Percent = TwoDecimalField(blank=True, null=True, default="0")
+    String_Date = models.DateField(blank=True, null=True)
+    String_Pluse = FourDecimalField(blank=True, null=True, default="0")
+    String_Minus = FourDecimalField(blank=True, null=True, default="0")
 
 
 class Poll(models.Model):
@@ -418,59 +497,75 @@ class Poll(models.Model):
     Cloumn_Organize_Date= models.DateField(blank=True, null=True)
     Cloumn_Looker= models.CharField(max_length=100, blank=True, null=True)
     Cloumn_Looker_Date= models.DateField(blank=True, null=True)
-    answer_1_1 = models.BooleanField(default=False)
-    answer_1_2 = models.BooleanField(default=False)
-    answer_1_3 = models.BooleanField(default=False)
-    answer_1_4 = models.BooleanField(default=False)
-    answer_1_5 = models.BooleanField(default=False)
-    answer_1_6 = models.BooleanField(default=False)
-    answer_2_1 = models.BooleanField(default=False)
-    answer_2_2 = models.BooleanField(default=False)
-    answer_2_3 = models.BooleanField(default=False)
-    answer_2_4 = models.BooleanField(default=False)
-    answer_2_5 = models.BooleanField(default=False)
-    answer_2_6 = models.BooleanField(default=False)
-    answer_2_7 = models.BooleanField(default=False)
-    answer_3_1 = models.BooleanField(default=False)
-    answer_3_2 = models.BooleanField(default=False)
-    answer_3_3 = models.BooleanField(default=False)
-    answer_3_4 = models.BooleanField(default=False)
-    answer_4_1 = models.BooleanField(default=False)
-    answer_4_2 = models.BooleanField(default=False)
-    answer_4_3 = models.BooleanField(default=False)
-    answer_4_4 = models.BooleanField(default=False)
-    answer_4_5 = models.BooleanField(default=False)
-    answer_5_1 = models.BooleanField(default=False)
-    answer_5_2 = models.BooleanField(default=False)
-    answer_5_3 = models.BooleanField(default=False)
-    answer_5_4 = models.BooleanField(default=False)
-    answer_6_1 = models.BooleanField(default=False)
-    answer_6_2 = models.BooleanField(default=False)
-    answer_6_3 = models.BooleanField(default=False)
-    answer_6_4 = models.BooleanField(default=False)
-    answer_6_5 = models.BooleanField(default=False)
-    answer_6_6 = models.BooleanField(default=False)
-    answer_7_1 = models.BooleanField(default=False)
-    answer_7_2 = models.BooleanField(default=False)
-    answer_7_3 = models.BooleanField(default=False)
-    answer_7_4 = models.BooleanField(default=False)
-    answer_7_5 = models.BooleanField(default=False)
-    answer_7_6 = models.BooleanField(default=False)
-    answer_7_7 = models.BooleanField(default=False)
-    answer_8_1 = models.BooleanField(default=False)
-    answer_8_2 = models.BooleanField(default=False)
-    answer_8_3 = models.BooleanField(default=False)
-    answer_8_4 = models.BooleanField(default=False)
-    answer_8_5 = models.BooleanField(default=False)
-    answer_8_6 = models.BooleanField(default=False)
-    answer_8_7 = models.BooleanField(default=False)
-    answer_8_8 = models.BooleanField(default=False)
-    answer_9_1 = models.BooleanField(default=False)
-    answer_9_2 = models.BooleanField(default=False)
-    answer_9_3 = models.BooleanField(default=False)
-    answer_9_4 = models.BooleanField(default=False)
-    answer_9_5 = models.BooleanField(default=False)
+    answer_1_1 = models.BooleanField(blank=True, null=True)
+    answer_1_2 = models.BooleanField(blank=True, null=True)
+    answer_1_3 = models.BooleanField(blank=True, null=True)
+    answer_1_4 = models.BooleanField(blank=True, null=True)
+    answer_1_5 = models.BooleanField(blank=True, null=True)
+    answer_1_6 = models.BooleanField(blank=True, null=True)
+    answer_2_1 = models.BooleanField(blank=True, null=True)
+    answer_2_2 = models.BooleanField(blank=True, null=True)
+    answer_2_3 = models.BooleanField(blank=True, null=True)
+    answer_2_4 = models.BooleanField(blank=True, null=True)
+    answer_2_5 = models.BooleanField(blank=True, null=True)
+    answer_2_6 = models.BooleanField(blank=True, null=True)
+    answer_2_7 = models.BooleanField(blank=True, null=True)
+    answer_3_1 = models.BooleanField(blank=True, null=True)
+    answer_3_2 = models.BooleanField(blank=True, null=True)
+    answer_3_3 = models.BooleanField(blank=True, null=True)
+    answer_3_4 = models.BooleanField(blank=True, null=True)
+    answer_4_1 = models.BooleanField(blank=True, null=True)
+    answer_4_2 = models.BooleanField(blank=True, null=True)
+    answer_4_3 = models.BooleanField(blank=True, null=True)
+    answer_4_4 = models.BooleanField(blank=True, null=True)
+    answer_4_5 = models.BooleanField(blank=True, null=True)
+    answer_5_1 = models.BooleanField(blank=True, null=True)
+    answer_5_2 = models.BooleanField(blank=True, null=True)
+    answer_5_3 = models.BooleanField(blank=True, null=True)
+    answer_5_4 = models.BooleanField(blank=True, null=True)
+    answer_6_1 = models.BooleanField(blank=True, null=True)
+    answer_6_2 = models.BooleanField(blank=True, null=True)
+    answer_6_3 = models.BooleanField(blank=True, null=True)
+    answer_6_4 = models.BooleanField(blank=True, null=True)
+    answer_6_5 = models.BooleanField(blank=True, null=True)
+    answer_6_6 = models.BooleanField(blank=True, null=True)
+    answer_7_1 = models.BooleanField(blank=True, null=True)
+    answer_7_2 = models.BooleanField(blank=True, null=True)
+    answer_7_3 = models.BooleanField(blank=True, null=True)
+    answer_7_4 = models.BooleanField(blank=True, null=True)
+    answer_7_5 = models.BooleanField(blank=True, null=True)
+    answer_7_6 = models.BooleanField(blank=True, null=True)
+    answer_7_7 = models.BooleanField(blank=True, null=True)
+    answer_8_1 = models.BooleanField(blank=True, null=True)
+    answer_8_2 = models.BooleanField(blank=True, null=True)
+    answer_8_3 = models.BooleanField(blank=True, null=True)
+    answer_8_4 = models.BooleanField(blank=True, null=True)
+    answer_8_5 = models.BooleanField(blank=True, null=True)
+    answer_8_6 = models.BooleanField(blank=True, null=True)
+    answer_8_7 = models.BooleanField(blank=True, null=True)
+    answer_8_8 = models.BooleanField(blank=True, null=True)
+    answer_9_1 = models.BooleanField(blank=True, null=True)
+    answer_9_2 = models.BooleanField(blank=True, null=True)
+    answer_9_3 = models.BooleanField(blank=True, null=True)
+    answer_9_4 = models.BooleanField(blank=True, null=True)
+    answer_9_5 = models.BooleanField(blank=True, null=True)
+
+
+class Date(models.Model):
+    Date_Year = models.IntegerField(blank=True, null=True, verbose_name="Year")
+    Date_Month = models.IntegerField(blank=True, null=True, verbose_name="Month")
+    Date_Day = models.IntegerField(blank=True, null=True, verbose_name="Day")
+
+    class Meta:
+        verbose_name = "Date"
+        verbose_name_plural = "Dates"
+
+    def __str__(self):
+        return f"{self.Date_Year or '----'}-{self.Date_Month or '--'}-{self.Date_Day or '--'}"
+
+class Events(models.Model):
+    Event_Date=  models.ForeignKey(Date, on_delete=models.CASCADE, related_name="date_events")
+    Event_Title= models.CharField( max_length=63,blank=True, null=True) 
+    Event_Time= models.CharField( max_length=63,blank=True, null=True) 
 
     
-
- 

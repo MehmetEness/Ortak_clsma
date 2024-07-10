@@ -4,7 +4,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'sec-inputs.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'center.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'projects.css' %}" />
+
+
 <style>
+   :root {
+    --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
   .sidebar-links li.projeler_li {
   background: var(--main-color-dark);
 }
@@ -196,7 +204,7 @@
           </div>
           <div class="input-box" name="Dollar_Rate_Incomes">
             <span class="details">Dolar Kuru (₺)</span>
-            <input id="id_Dollar_Rate_Incomes" name="Dollar_Rate_Incomes" type="text" />
+            <input class="coc-input formatInputs" id="id_Dollar_Rate_Incomes" name="Dollar_Rate_Incomes" type="text" />
           </div>
 
           <div class="input-box">
@@ -280,7 +288,7 @@
           </div>
           <div class="input-box">
             <span class="details">Dolar Kuru (₺)</span>
-            <input id="id_Dollar_Rate_Expenses" name="Dollar_Rate_Expenses" type="text" />
+            <input class="coc-input formatInputs" id="id_Dollar_Rate_Expenses" name="Dollar_Rate_Expenses" type="text" />
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
@@ -367,7 +375,7 @@
           </div>
           <div class="input-box" name="Dollar_Rate_JobHistory">
             <span class="details">Dolar Kuru (₺)</span>
-            <input id="Dollar_Rate_JobHistory" name="Dollar_Rate_JobHistory" type="text" />
+            <input class="coc-input formatInputs" id="Dollar_Rate_JobHistory" name="Dollar_Rate_JobHistory" type="text" />
           </div>
           <div class="input-box">
             <span class="details">Tarih</span>
@@ -438,8 +446,9 @@
   <div class="right-menu">
     <main class="table" id="customers_table">
       <section class="table__header">
+        <button style="display: none;" class="hamburger-button"><i class="fa-solid fa-bars"></i></button>
         <p>PROJELER</p>
-
+        <button style="display: none;"  class="add-hamburger-button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
         <div class="export__file">
           <button class="income-add-btn">Gelir</button>
           <button class="expenses-add-btn">Yapılan Ödeme</button>

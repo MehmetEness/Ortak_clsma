@@ -472,6 +472,27 @@ async function clientNameControl(input, label, currentClient) {
   }
   return bool;
 }
+async function powerpointNameControl(input, label, currentClient) {
+  var data = await apiFunctions("powerpoint", "GET");
+  let exClient = input.value.trim().toLowerCase();
+  let bool = true;
+
+  for (var item of data) {
+    if (currentClient != item.PowerPlantName) {
+        let reClient = item.PowerPlantName.trim().toLowerCase();
+        if (reClient == exClient) {
+          label.style.color = "red";
+          label.style.fontWeight = "600";
+          bool = false;
+          break;
+        } else {
+          label.style.color = "black";
+          label.style.fontWeight = "500";
+        }
+    }    
+  }
+  return bool;
+}
 async function projectNameControl(input, label, currentProject) {
   var data = await apiFunctions("project", "GET");
   
@@ -1004,7 +1025,7 @@ async function apiFunctions(name, type, myForm, id) {
       }
       break;
 
-    case "POST":
+    case "POST":    
       try {
         await fetch(`/api_${name}/`, {
           method: "POST",
@@ -1024,6 +1045,22 @@ async function apiFunctions(name, type, myForm, id) {
         //console.log(`/api_${name}/${id}`)
         await fetch(`/api_${name}/${id}`, {
           method: "PUT",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: myForm,
+        });
+
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
+      break;
+      case "PATCH":
+      try {
+        //const formData = new FormData(myForm);
+        //console.log(`/api_${name}/${id}`)
+        await fetch(`/api_${name}/${id}`, {
+          method: "PATCH",
           headers: {
             "X-CSRFToken": getCookie("csrftoken"),
           },

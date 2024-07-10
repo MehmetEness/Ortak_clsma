@@ -10,6 +10,10 @@ urlpatterns = [
     path('api_client/', api_view.ClientsListCreateAPIView.as_view(), name='api-clients'),
     path('api_client/<pk>', api_view.ClientDetailAPIView.as_view(), name='api-client-detail'),
 
+    path('api_powerpoint/', api_view.PowerPlantsListCreateAPIView.as_view(), name='api-powerpoint'),
+    path('api_powerpoint/<pk>', api_view.PowerPlantDetailAPIView.as_view(), name='api-powerpoint-detail'),
+
+
     path('api_supplier/', api_view.SuppliersListCreateAPIView.as_view(), name='api-suppliers'),
     path('api_supplier/<pk>', api_view.SupplierDetailAPIView.as_view(), name='api-supplier-detail'),
 
@@ -46,8 +50,12 @@ urlpatterns = [
     path("api_poll/", api_view.PollListCreateAPIView.as_view(), name='api-poll'),
     path('api_poll/<pk>', api_view.PollRetrieveUpdateDestroyAPIView.as_view(), name='api-poll-detail'),
 
-
-   
+    path("api_date/", api_view.DateListCreateAPIView.as_view(), name='api-date'),
+    path('api_date/<pk>', api_view.DateDetailAPIView.as_view(), name='api-date-detail'),
+    
+    path("api_events/", api_view.EventsListCreateAPIView.as_view(), name='api-event'),
+    path('api_events/<pk>', api_view.EventsDetailAPIView.as_view(), name='api-events-detail'),
+    
     
     #******************************* ------- ***********************************
 

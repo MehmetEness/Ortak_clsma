@@ -11,6 +11,12 @@
 <link rel="stylesheet" type="text/css" href="{% static 'projects.css' %}">
 <link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
 <style>
+   :root {
+    --background-image-url: url("/static/images/html_table.png");
+  }
+  .body-div {
+      background: var(--background-image-url) center / cover;
+  }
   #table thead th:not(:nth-child(2)),
   #table tbody td:not(:nth-child(2)) {
     text-align: center;
@@ -97,6 +103,9 @@
 .sidebar-links li.isletme_bakim_li {
   background: var(--main-color-dark);
 }
+.status.green {
+    background-color: #55c53ec5;
+}
 </style>
 
 {% endblock %}
@@ -114,7 +123,7 @@
         <div class="user-details">
 
           <div class="input-box" id="CompanyNameInput">
-            <span id="firma_adi_span" class="details">Firma Adı*<button type="button" id="paying-company-add-btn"
+            <span id="firma_adi_span" class="details">Santral İsmi*<button type="button" id="paying-company-add-btn"
                 class="paying-company-add-btn">
                 <i class="fa-solid fa-plus"></i></button></span>
             <div class="dropdown-container">
@@ -147,12 +156,12 @@
             </div>
           </div>
           <div class="input-box">
-            <span class="details">inventör Güç</span>
+            <span class="details">İnventör Güç(kW)</span>
             <input class="coc-input formatInputs" type="text" name="Operation_Care_Inventor_Power"
               id="id_Operation_Care_Inventor_Power" step="1" autocomplete="off" />
           </div>
           <div class="input-box">
-            <span class="details">Panel Gücü</span>
+            <span class="details">Panel Gücü(W)</span>
             <input class="coc-input formatInputs" type="text" name="Operation_Care_Panel_Power"
               id="id_Operation_Care_Panel_Power" step="1" autocomplete="off" />
           </div>
@@ -171,19 +180,6 @@
             <input class="coc-input formatInputs" type="text" name="Operation_Care_VOC" id="id_Operation_Care_VOC"
               step="0.1" autocomplete="off" />
           </div>
-
-          <div class="input-box">
-            <span class="details">Tesis Kurulu Gücü</span>
-            <input class="formatInputs" id="id_Operation_Care_Capacity" type="text" name="Operation_Care_Capacity" />
-          </div>
-          <div class="input-box">
-            <span class="details">AC Güç(kWe)</span>
-            <input class="formatInputs" id="id_Operation_Care_AC_Power" type="text" name="Operation_Care_AC_Power" />
-          </div>
-          <div class="input-box">
-            <span class="details">String Sayısı</span>
-            <input id="id_Operation_Care_Number_Str" type="text" name="Operation_Care_Number_Str" />
-          </div>
           <div class="input-box">
             <span class="details">Arazi/Çatı</span>
             <select name="Operation_Care_Terrain_Roof" id="id_Operation_Care_Terrain_Roof">
@@ -191,6 +187,24 @@
               <option value="Çatı">Çatı</option>
             </select>
           </div>
+          
+          <!-- <div class="input-box">
+            <span class="details">Tesis Kurulu Gücü</span>
+            <input class="formatInputs" id="id_Operation_Care_Capacity" type="text" name="Operation_Care_Capacity" />
+          </div> -->
+          <div class="input-box">
+            <span class="details">AC Güç(kWe)</span>
+            <input class="formatInputs" id="id_Operation_Care_AC_Power" type="text" name="Operation_Care_AC_Power" />
+          </div>
+          <div class="input-box">
+            <span class="details">1 İnventördeki String Sayısı</span>
+            <input id="id_Operation_Care_Number_Str" type="text" name="Operation_Care_Number_Str" />
+          </div>
+          <div class="input-box">
+            <span class="details">Şalt Malzemesi</span>
+            <input class="" id="id_Operation_Care_Switchgear_Material" type="text" name="Operation_Care_Switchgear_Material"/>
+          </div>
+
           <div class="input-box">
             <span class="details">DC Güç(kWp)</span>
             <input class="formatInputs" id="id_Operation_Care_DC_Power" type="text" name="Operation_Care_DC_Power" />
@@ -206,7 +220,7 @@
           </div>
           <div class="input-box">
             <span class="details">Bakım Sözleşmesi Bitiş Tarihi</span>
-            <input class="date-inputs" id="id_Operation_Care_Finish_Date" type="text" name="Operation_Care_Finish_Date"
+            <input class="date-inputs" id="id_Operation_Care_Finish_Date" type="text" name="Operation_Care_Finish_Datee"
               maxlength="10" />
           </div>
           <div class="input-box">
@@ -218,10 +232,7 @@
               <option value="Batı">Batı</option>
             </select>
           </div>
-          <div class="input-box">
-            <span class="details">Şalt Malzemesi</span>
-            <input class="date-inputs" id="" type="text" name=""/>
-          </div>
+          
         </div>
         <div class="button">
           <input id="operation-care-create-btn" type="button" value="İşletme Bakım Ekle" />
@@ -233,7 +244,7 @@
     <div class="container">
       <h3 id="ariza-X" class="close-window">X</h3>
       <div class="title">Arıza Bildir</div>
-      <form id="ariza-add-form" action="#" method="post">
+      <form id="ariza-add-form" action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
@@ -244,15 +255,12 @@
             <div class="dropdown-container">
               <input autocomplete='off' type="text" id="id_Fail_Operation_Care" name="Fail_Operation_Care"
                 class="myInput need_id" placeholder="İşletme Bakım Seçiniz" data-dropdown="ariza-add-dropdown1">
-
               <div id="ariza-add-dropdown1" class="dropdown-content operation-dropdown">
-                {% for x in operation_cares %}
-                <span value="{{x.id}}" class="dropdown-item">{{x.Operation_Care_Company}}</span>
-                {% endfor %}
+                
               </div>
             </div>
           </div>
-
+          
           <div class="input-box" id="ProjectNameInput">
             <span id="proje_adi_span" class="details">Santral İsmi</span>
             <input autocomplete='off' type="text" name="Fail_Central_Name" maxlength="63"
@@ -266,7 +274,15 @@
 
           <div class="input-box">
             <span class="details">Arıza Tespit Tarihi</span>
-            <input class="date-inputs" type="text" placeholder="01.01.2000" name="Fail_Detection_Date" id="id_Fail_Detection_Date">
+            <input class="date-inputs" type="text" placeholder="01.01.2000" name="Fail_Detection_Date" id="id_Fail_Detection_Date" maxlength="10">
+          </div>
+          <div class="input-box">
+            <span class="details">Ekip Bilgilendirme Tarihi</span>
+            <input class="date-inputs" type="text" placeholder="01.01.2000" name="Fail_Team_Info_Date" id="id_Fail_Team_Info_Date" maxlength="10">
+          </div>
+          <div class="input-box">
+            <span class="details">Arıza Onarım Tarihi</span>
+            <input class="date-inputs" type="text" placeholder="01.01.2000" name="Fail_Repair_Date" id="id_Fail_Repair_Date" maxlength="10">
           </div>
           <div class="input-box">
             <span class="details">Garanti Kapsam Durumu</span>
@@ -274,6 +290,14 @@
               <option value="Belirsiz">Belirsiz</option>
               <option value="Evet">Evet</option>
               <option value="Hayır">Hayır</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <span class="details">Arıza Durumu</span>
+            <select name="Fail_Situation" id="id_Fail_Situation">
+              <option value="Belirlendi">Belirlendi</option>
+              <option value="Onarımda">Onarımda</option>
+              <option value="Onarıldı">Onarıldı</option>
             </select>
           </div>
           <div class="input-box medium">
@@ -291,7 +315,7 @@
     <div class="container">
       <h3 id="ariza-fatura-X" class="close-window">X</h3>
       <div class="title">Arıza Bakım Faturası</div>
-      <form id="fatura_form" action="#" method="post" enctype="multipart/form-data">
+      <form id="fatura_form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="form" />
 
@@ -340,15 +364,15 @@
   <div class="window client-add-window">
     <div style="width: 400px" id="client_container" class="container">
       <h3 id="client-X" class="close-window clientx">X</h3>
-      <div class="title">Firma Ekle</div>
-      <form id="firma_add_form" action="#" method="post">
+      <div class="title">Santral Ekle</div>
+      <form id="firma_add_form" action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="client_form" />
 
         <div class="user-details">
           <div id="firma_input_box" class="input-box" name="CompanyName_Clients">
-            <span id="firma_add_label" class="details">Firma Adı*</span>
-            <input id="id_CompanyName_Clients" name="CompanyName_Clients" type="text" />
+            <span id="firma_add_label" class="details">Santral İsmi*</span>
+            <input id="id_PowerPlantName" name="PowerPlantName" type="text" />
           </div>
         </div>
         <div class="button">
@@ -391,9 +415,9 @@
             {% for operation in operations %}
             <tr>
               <td>
-                <a href="{% url 'operation_care_edit' operation_care_id=operation.id %}">
+               
                   <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
-                </a>
+                
               </td>
               <td><a
                   href="{% url 'operation_care_detail' operation_care_id=operation.id %}">{{operation.Operation_Care_Company}}</a>
@@ -441,14 +465,14 @@
         <table id="ariza_takip_table" style="display: none;">
           <thead>
             <th><span></span></th>
+            <th>Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
             <th>Santral İsmi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza Tespit Tarihi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza<span class="icon-arrow">&UpArrow;</span></th>
             <th>Ekip Bilgilendirme Tarihi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Bilgi Verilen Kişi<span class="icon-arrow">&UpArrow;</span></th>
             <th>Arıza Onarım Tarihi<span class="icon-arrow">&UpArrow;</span></th>
-            <th>Garanti Kapsam Durumu<span class="icon-arrow">&UpArrow;</span></th>
-            <th>Arıza Durumu<span class="icon-arrow">&UpArrow;</span></th>
+            <th>Garanti Kapsam Durumu<span class="icon-arrow">&UpArrow;</span></th>            
           </thead>
           <tbody>
             {% for fail in fails %}

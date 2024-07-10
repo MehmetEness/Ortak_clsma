@@ -31,13 +31,12 @@ urlpatterns = [
     
     #MODUL-3
     path('operation_care/', views.operation_care, name='operation_care'),
-    path('operation_care_add/', views.operation_care_add, name='operation_care_add'),
     path("operation_care_detail/<operation_care_id>/", views.operation_care_detail, name='operation_care_detail'),
-    path('operation_care_edit/<operation_care_id>/', views.operation_care_edit, name='operation_care_edit'),
     path('fault_notification/', views.fault_notification, name='fault_notification'),
     path('fail_edit/<fail_id>/', views.fail_edit, name='fail_edit'),
     path('inverter/<operation_care_id>/', views.inverter, name='inverter'),
-    
+    path("calendar", views.calendar, name='calendar'),
+
     path("report/", views.report, name='report'),
 
 
@@ -62,6 +61,4 @@ urlpatterns = [
     #MODUL-DENEME
     path("deneme/", views.deneme, name='deneme'),
     path("deneme2/", views.deneme2, name='deneme2'),
-    
-
    ]   

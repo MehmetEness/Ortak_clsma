@@ -8,8 +8,8 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
-from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer
-from AFM.models import Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor, Poll
+from AFM.api.serializers import ClientSerializer, FailSerializer, SupplierSerializer, ProjectSerializer, ExpensesSerializer,PollSerializer ,JobHistorySerializer, IncomesSerializer,SalesOfferCardSerializer, SalesOfferCardReviseSerializer, OperationCareSerializer, InventorSerializer, StringSerializer, PowerPlantSerializer, EventsSerializer, DateSerializer
+from AFM.models import Date, Events, Project, Expenses, Incomes, PaymentFirms, CompanyNames, JobHistory, Inventor, Poll, PowerPlant
 from AFM.models import SalesOfferCard,SalesOfferCard_Revise, MyCompanyNames, PaymentFirms, Clients ,Details, Operation_Care
 from AFM.models import Supplier, Locations,Terrain_Roof, Situations, Banks, Worker, Operation_Care, Fail, Inventor, String
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -55,7 +55,6 @@ class IncomeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ClientsListCreateAPIView(generics.ListCreateAPIView):
-
     queryset= Clients.objects.all()
     serializer_class=ClientSerializer
 
@@ -63,6 +62,15 @@ class ClientsListCreateAPIView(generics.ListCreateAPIView):
 class ClientDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Clients.objects.all()
     serializer_class=ClientSerializer
+
+class PowerPlantsListCreateAPIView(generics.ListCreateAPIView):
+    queryset= PowerPlant.objects.all()
+    serializer_class=PowerPlantSerializer
+
+    
+class PowerPlantDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= PowerPlant.objects.all()
+    serializer_class=PowerPlantSerializer
 
 class SuppliersListCreateAPIView(generics.ListCreateAPIView):
     queryset= Supplier.objects.all()
@@ -80,24 +88,19 @@ class SalesOfferListCreateAPIView(generics.ListCreateAPIView):
 class SalesOfferDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard.objects.all()
     serializer_class=SalesOfferCardSerializer
+    
   
 class SalesOfferReviseListCreateAPIView(generics.ListCreateAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
-
+    
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
        
 class SalesOfferReviseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= SalesOfferCard_Revise.objects.all()
     serializer_class=SalesOfferCardReviseSerializer
-
-
-class OperationCareListCreateAPIView(generics.ListCreateAPIView):
-    queryset= Operation_Care.objects.all()
-    serializer_class=OperationCareSerializer
-
-class OperationCareDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset= Operation_Care.objects.all()
-    serializer_class=OperationCareSerializer
 
 class InventorListCreateAPIView(generics.ListCreateAPIView):
     queryset= Inventor.objects.all()
@@ -115,6 +118,13 @@ class StringDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= String.objects.all()
     serializer_class=StringSerializer
 
+class OperationCareListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
+
+class OperationCareDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Operation_Care.objects.all()
+    serializer_class=OperationCareSerializer
 
 class FailListCreateAPIView(generics.ListCreateAPIView):
     queryset = Fail.objects.all()
@@ -132,12 +142,21 @@ class PollRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
 
+class DateListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Date.objects.all()
+    serializer_class=DateSerializer
 
+class DateDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Date.objects.all()
+    serializer_class=DateSerializer
 
+class EventsListCreateAPIView(generics.ListCreateAPIView):
+    queryset= Events.objects.all()
+    serializer_class=EventsSerializer
 
-
-
-
+class EventsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Events.objects.all()
+    serializer_class=EventsSerializer
 
 
 

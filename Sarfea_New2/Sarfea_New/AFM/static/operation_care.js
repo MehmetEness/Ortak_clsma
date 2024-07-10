@@ -11,6 +11,7 @@ const reqIncomeInputs = document.querySelectorAll("#id_Operation_Care_Company")
 const reqIncomeLabels = document.querySelectorAll("#firma_adi_span")
 const reqFailInputs = document.querySelectorAll("#id_Fail_Operation_Care")
 const reqFailLabels = document.querySelectorAll("#Fail_Operation_Span")
+const arizaFaturaAddForm = document.getElementById("fatura_form");
 
 
 
@@ -29,10 +30,20 @@ async function getOperationCare(isEdit) {
 
     var data = await apiFunctions("operation_care", "GET");
     console.log(data);
+    
+    const failData = await apiFunctions("fail", "GET");
+    console.log(failData);
+    
     let formattedDate;
     let rows = "";
     for (const operationCare of data) {
-      var operationCareDetailUrl = `http://127.0.0.1:8000/operation_care_detail/${operationCare.id}/`;
+      let failCount = 0;
+      failData.forEach((fail)=>{
+        if(fail.Fail_Operation_Care == operationCare.id){
+          failCount++;
+        }
+      })
+      var operationCareDetailUrl = `/operation_care_detail/${operationCare.id}/`;
       var className = dateFormatForColor1(formatDateForTable(operationCare.Operation_Care_Finish_Date))
       const row = `
         <tr>
@@ -41,11 +52,11 @@ async function getOperationCare(isEdit) {
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
-          <td><a href="${operationCareDetailUrl}">${operationCare.client.CompanyName_Clients}</a></td>
+          <td><a href="${operationCareDetailUrl}">${operationCare.client.PowerPlantName}</a></td>
           <td>${formatNumber(operationCare.Operation_Care_Capacity)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
-          <td>${operationCare.Operation_Care_Fail_Number}</td>
+          <td>${failCount}</td>
           <td> <span class="status ${className}">${formatDateForTable(operationCare.Operation_Care_Finish_Date)}</span></td>
         </tr>`;
 
@@ -69,35 +80,52 @@ async function getOperationFail(isEdit) {
     let currentRows = arizaTakipTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
-    console.log("-fails-");
-    console.log(data)
-    //console.log(data);
     let rows = "";
+    const failPriorities = {
+      "Belirlendi": 1,
+      "Onarımda": 2,
+      "Onarıldı": 3
+    };
+    data.sort((a, b) => failPriorities[a.Fail_Situation] - failPriorities[b.Fail_Situation]);
+    
     for (const operationCareFail of data) {
+      let arizaDurumu;
+      switch (operationCareFail.Fail_Situation) {
+        case "Belirlendi":
+          arizaDurumu = "timeIsUp";
+          break;
+        case "Onarımda":
+          arizaDurumu = "twoWeek";
+          break;
+        case "Onarıldı":
+          arizaDurumu = "green";
+          break;
+        default:
+          arizaDurumu = "";
+      }
       const row = `
         <tr>
           <td>
             <button id="${operationCareFail.id}" type="button" class="edit-fail-btn" style="background: none; border:none;">
               <i id="edit-text" class="fa-solid fa-pen-to-square"></i>
             </button>
-          </td>
+          </td>          
+          <td><span class="status ${arizaDurumu}">${operationCareFail.Fail_Situation}</span></td>
           <td>${operationCareFail.Fail_Central_Name}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Detection_Date)}</td>
           <td>${operationCareFail.Fail_Detail}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Team_Info_Date)}</td>
           <td>${operationCareFail.Fail_Information_Person}</td>
           <td>${formatDateForTable(operationCareFail.Fail_Repair_Date)}</td>
-          <td>${operationCareFail.Fail_Guaranteed}</td>
-          <td>${operationCareFail.Fail_Situation}</td>
+          <td>${operationCareFail.Fail_Guaranteed}</td>          
         </tr>`;
 
       rows += row;
     }
     if (data.length > currentRows.length || isEdit) {
-
       arizaTakipTableBody.innerHTML = "";
       arizaTakipTableBody.insertAdjacentHTML("beforeend", rows);
-      failEditButtonsEvents() ;
+      failEditButtonsEvents();
       sortingTable(arizaTakipTable);
       // allTableFormat();
       //editButtonsEvents();
@@ -107,14 +135,13 @@ async function getOperationFail(isEdit) {
   }
 }
 
+
 getOperationBill(true)
 async function getOperationBill(isEdit) {
   try {
     let currentRows = faturaTable.querySelectorAll("tbody tr");
 
     var data = await apiFunctions("fail", "GET");
-    console.log("-Bill-");
-    console.log(data);
     let rows = "";
     for (const operationCareFail of data) {
       const row = `
@@ -188,7 +215,6 @@ topMenuLi.forEach(function (item) {
 topMenuLi.forEach(function (item) {
   item.addEventListener("click", function () {
     var clickedItemId = this.id;
-    console.log(clickedItemId)
     handleMenuItemClick(clickedItemId);
   });
 });
@@ -226,7 +252,7 @@ dateFormatForColor(tarihRow, 7);
 
 
 
-console.log(apiFunctions("sales_offer", "GET"))
+
 
 
 
@@ -303,6 +329,7 @@ arizaFaturaAddSelect.addEventListener("change", () => {
     arizaFaturaAddWindow.style.display = "flex";
   } else {
     arizaFaturaAddWindow.style.display = "none";    
+    clearInputAfterSave(arizaFaturaAddForm)
   }
 });
 document.addEventListener("mousedown", (event) => {
@@ -311,6 +338,7 @@ document.addEventListener("mousedown", (event) => {
     if (arizaFaturaAddSelect.value == "Hayır" && arizaFaturaAddWindow.style.display == "flex") {
       setTimeout(() => {
         arizaFaturaAddSelect.value = "Belirsiz"
+        clearInputAfterSave(arizaFaturaAddForm)
       }, 10);
     }
     arizaFaturaAddWindow.style.display = "none";
@@ -347,7 +375,6 @@ function operationEditButtonsEvents() {
         operationEditMode = true;
         operationBtnID = button.id;
         const data = await apiFunctions("operation_care", "GETID", "x", operationBtnID)
-        console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
@@ -386,17 +413,19 @@ function failEditButtonsEvents() {
         failEditMode = true;
         failBtnID = button.id;
         const data = await apiFunctions("fail", "GETID", "x", failBtnID)
+        console.log("logggggg");
+        console.log(data);
         for (var key in data) {
           if (data.hasOwnProperty(key)) {            
             var element = document.querySelector('input[name="' + key + '"]');
             var selectElement = document.querySelector('select[name="' + key + '"]');
             if (element) {
-              console.log(key)
-              console.log(data[key])
               if(key != "Fail_Bill_File"){
-                if (key == "Operation_Care_Company") {
-                  element.value = data["client"].CompanyName_Clients;
-                  element.setAttribute('data-id', data[key]);
+                if (key == "Fail_Operation_Care") {
+                  console.log(data.Fail_Operation_Care);
+                  let failIdd = data.Fail_Operation_Care;
+                  const dataFail = await apiFunctions("operation_care", "GETID", "x", failIdd)
+                  element.value = dataFail.client.CompanyName_Clients;
                 } else {
                   element.value = data[key];
                 }
@@ -445,11 +474,12 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
       const dataId = input.getAttribute('data-id');
       formData.set(input.getAttribute('name'), dataId);
     });
-    // const jsonObject = {};
-    // for (const [key, value] of formData.entries()) {
-    //   jsonObject[key] = value;
-    // }
-    // console.log(JSON.stringify(jsonObject));
+    console.log(operationBtnID);
+    const jsonObject = {};
+    for (const [key, value] of formData.entries()) {
+      jsonObject[key] = value;
+    }
+    console.log(JSON.stringify(jsonObject));
 
     if (operationEditMode == false) {
       await apiFunctions("operation_care", "POST", formData);
@@ -467,7 +497,7 @@ operationCareFormAddBtn.addEventListener("click", async function (event) {
 
 //                  ARIZA ADD 
 const arizaAddForm = document.getElementById("ariza-add-form");
-const arizaFaturaAddForm = document.getElementById("fatura_form");
+
 const arizaFormAddBtn = document.querySelector("#ariza-create-btn");
 const arizaFaturaFormAddBtn = document.querySelector("#fatura-create-btn");
 arizaFaturaFormAddBtn.addEventListener("click", async function (event) {
@@ -513,6 +543,7 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
+      getOperationCare(true)
     } else {
       if(document.querySelector("#id_Fail_Bill_File").value == ""){
         formData.delete("Fail_Bill_File")
@@ -521,6 +552,7 @@ arizaFormAddBtn.addEventListener("click", async function (event) {
       arizaAddWindow.style.display = "none";
       clearInputAfterSave(arizaAddForm);
       getOperationFail(true);
+      getOperationCare(true)
     }
   }
 });
@@ -536,14 +568,14 @@ const clientFormAddBtn = document.querySelector("#firma_submit_btn");
 clientFormAddBtn.addEventListener("click", async function (event) {
   var reqInputs = document.querySelectorAll("#id_CompanyName_Clients");
   var reqLabels = document.querySelectorAll("#firma_add_label")
-  var firmaInput = document.querySelector("#id_CompanyName_Clients");
+  var firmaInput = document.querySelector("#id_PowerPlantName");
   var firmaSpan = document.querySelector("#firma_add_label")
   event.preventDefault();
 
-  if (requiredInputs(reqInputs, reqLabels) && await clientNameControl(firmaInput, firmaSpan)) {
+  if (requiredInputs(reqInputs, reqLabels) && await powerpointNameControl(firmaInput, firmaSpan) ) {    
     try {
       const formData = new FormData(firma_add_form);
-      apiFunctions("client", "POST", formData)
+      apiFunctions("powerpoint", "POST", formData)
       clientAddWindow.style.display = "none";
       setTimeout(() => {
         getClients();
@@ -560,10 +592,11 @@ clientFormAddBtn.addEventListener("click", async function (event) {
 getClients()
 async function getClients() {
   try {
-    var data = await apiFunctions("client", "GET")
+    var data = await apiFunctions("powerpoint", "GET")
+    console.log(data);
     let rows = "";
     for (const client of data) {
-      const row = `<span value="${client.id}" class="dropdown-item">${client.CompanyName_Clients}</span>`;
+      const row = `<span value="${client.id}" class="dropdown-item">${client.PowerPlantName}</span>`;
       rows += row;
     }
     const clientDropdowns = document.querySelectorAll(".client-dropdown");

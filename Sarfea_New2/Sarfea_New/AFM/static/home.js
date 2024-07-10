@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
 
 
+
+
 await getIncome();
 await getExpenses();
 await akisChart()
@@ -212,6 +214,8 @@ new Chart(ctxNakitAkis, {
     ],
   },
   options: {
+    responsive: false, 
+    maintainAspectRatio: false,
     layout: {
       padding: {
         top: 5,
@@ -283,6 +287,8 @@ const karZararChart = async () =>{
         }]
     },
     options: {
+      responsive: false, 
+      maintainAspectRatio: false,
         layout: {
         padding: 20
         },
@@ -402,6 +408,8 @@ const giderDetayChart = async ()=>{
       }]
     },
     options: {
+      responsive: false, 
+      maintainAspectRatio: false,
       layout: {
         padding: {
           top: 5,
@@ -452,3 +460,34 @@ const giderDetayChart = async ()=>{
     }
   });
 }
+
+
+// RESPONSİVE KODLAR
+const mediaQuery = window.matchMedia("(max-width: 767px)");
+function checkWindowSize() {
+  if (window.innerWidth > 767) {
+    leftMenu.style.display = "block";
+  } else {
+    leftMenu.style.display = "none";
+  }
+}
+window.addEventListener("load", checkWindowSize);
+window.addEventListener("resize", checkWindowSize);
+
+//left menü acma kapatma
+const leftMenu = document.querySelector(".left-menu");
+
+const hamburgerBtn = document.querySelector(".hamburger-button");
+hamburgerBtn.addEventListener("click", () => {
+  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
+ 
+});
+
+document.addEventListener("click", (event) => {
+  const leftMenuNav = document.querySelector(
+    "#left-menu-nav"
+  );
+  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
+    leftMenu.style.display = "none";
+  }
+});
