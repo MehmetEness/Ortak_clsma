@@ -68,7 +68,7 @@ async function getProjects(isEdit) {
           <td>${project.Location || "-"}</td>
           <td>${formatNumber(project.AC_Power, 0)}</td>
           <td>${formatNumber(project.DC_Power, 0)}</td>
-          <td>${formatNumber(project.Cost_NotIncludingKDV, 2)}</td>
+          <td>${formatNumber(project.Cost_NotIncludingKDV, 2) + " $"}</td>
           <td>${project.Terrain_Roof || "-"}</td>
           <td>${formatDateForTable(project.StartDate)}</td>
           <td>${project.Situation || "-"}</td>
