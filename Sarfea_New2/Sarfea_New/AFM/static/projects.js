@@ -65,16 +65,6 @@ async function getProjects(isEdit) {
               <span style="display: none;">Düzenle</spam>
             </button>
           </td>
-<<<<<<< HEAD
-          <td><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
-          <td>${project.Location || "-"}</td>
-          <td>${formatNumber(project.AC_Power, 0)}</td>
-          <td>${formatNumber(project.DC_Power, 0)}</td>
-          <td>${formatNumber(project.Cost_NotIncludingKDV, 2) + " $"}</td>
-          <td>${project.Terrain_Roof || "-"}</td>
-          <td>${formatDateForTable(project.StartDate)}</td>
-          <td>${project.Situation || "-"}</td>
-=======
           <td data-label="Proje Adı"><a href="${projectDetailsUrl}">${project.ProjectName}</a></td>
           <td data-label="Konum">${project.Location || "-"}</td>
           <td data-label="AC Güç">${formatNumber(project.AC_Power, 0)}</td>
@@ -83,7 +73,6 @@ async function getProjects(isEdit) {
           <td data-label="Arazi/Çatı">${project.Terrain_Roof || "-"}</td>
           <td data-label="Tarih">${formatDateForTable(project.StartDate)}</td>
           <td data-label="Durum">${project.Situation || "-"}</td>
->>>>>>> 61efba4af35970f272f99d4242c2f654519b71ad
         </tr>`;
 
       rows += row;

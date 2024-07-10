@@ -111,11 +111,7 @@ function generateCard(card) {
               <p>${formatNumber(card.UnitCost_NotIncludingKDV, 2)  + "$"}</p>
           </div>
           <div class="boxes">
-<<<<<<< HEAD
               <p>${formatNumber(card.DC_Power_Card, 2)  + " kWp"}</p>
-=======
-              <p>${formatNumber(card.DC_Power_Card, 2)  + "kWp"}</p>
->>>>>>> 61efba4af35970f272f99d4242c2f654519b71ad
               <p>${card.Terrain_Roof_Card}</p>
           </div>
           <div class="boxes">
