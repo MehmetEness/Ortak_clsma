@@ -89,7 +89,7 @@ function generateCard(card) {
     <li id="${card.id}" data-situation="${card.Situation_Card}" class="item card" draggable="true">
       <div >
           <div class="boxes">
-              <p class="bold700">${card.client.CompanyName_Clients || "-"}</p>
+              <p class="bold700 card-title">${card.client.CompanyName_Clients || "-"}</p>
           </div>
           <p>${formattedDate}</p>
           <div class="boxes">
@@ -1324,3 +1324,27 @@ terrainSelect.addEventListener("change", async function () {
     terrainCost.disabled = true;
   }
 });
+
+const searchTerm = document.querySelector('.searchForNav input');
+searchTerm.addEventListener("input", ()=>{
+  filterCards()
+})
+
+function filterCards() {
+  const searchTerm = document.querySelector('.searchForNav input').value.toLowerCase();
+  const cards = document.querySelectorAll('.card-body li.item');
+  cards.forEach(card => {
+    if(card){
+      const companyName = card.querySelector('.card-title').textContent.toLowerCase();
+      if (companyName.includes(searchTerm)) {
+        card.style.display = 'list-item';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+  
+  //document.querySelector('.card-body').innerHTML = cards.map(generateCard).join('');
+}
+
+
