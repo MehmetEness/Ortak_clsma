@@ -47,10 +47,25 @@ const daysOfWeek = [
   "Pazar"
 ];
 
-const eventsArr = [];
+var eventsArr = [];
 
-getEvents();
-console.log(eventsArr);
+async function getApiEvents(){
+  let apiEvents = await apiFunctions("date", "GET");
+  eventsArr = apiEvents.map(event => ({
+    day: event.Date_Day,
+    month: event.Date_Month,
+    year: event.Date_Year,
+    events: event.date_events.map(evt => ({
+      title: evt.Event_Title,
+      time: evt.Event_Time
+    }))
+  }));
+  console.log(eventsArr);
+  initCalendar(); // API'den veriler geldikten sonra takvimi başlat
+}
+
+// API'den verileri çekerken ve takvimi başlatırken 
+getApiEvents();
 
 function initCalendar() {
     const firstDay = new Date(year, month, 1);
@@ -129,8 +144,6 @@ function nextMonth() {
 
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
-
-initCalendar();
 
 function addListner() {
   const days = document.querySelectorAll(".day");
@@ -267,188 +280,80 @@ addEventTitle.addEventListener("input", (e) => {
   addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 
+// Etkinlik ekleme işlemi
+async function addEvent() {
+  const title = addEventTitle.value;
+  const fromTime = addEventFrom.value;
+  const toTime = addEventTo.value;
+  const eventDateStr = `${year}-${month + 1}-${activeDay}`; // YYYY-MM-DD formatında
+  const time = fromTime && toTime ? `"${fromTime} - ${toTime}"` : "";
 
-
-addEventFrom.addEventListener("input", (e) => {
-  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
-  if (addEventFrom.value.length === 2) {
-    addEventFrom.value += ":";
-  }
-  if (addEventFrom.value.length > 5) {
-    addEventFrom.value = addEventFrom.value.slice(0, 5);
-  }
-});
-
-addEventTo.addEventListener("input", (e) => {
-  addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
-  if (addEventTo.value.length === 2) {
-    addEventTo.value += ":";
-  }
-  if (addEventTo.value.length > 5) {
-    addEventTo.value = addEventTo.value.slice(0, 5);
-  }
-});
-
-addEventSubmit.addEventListener("click", () => {
-  const eventTitle = addEventTitle.value;
-  const eventTimeFrom = addEventFrom.value;
-  const eventTimeTo = addEventTo.value;
-  if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
-    alert("Lütfen tüm alanları doldurun");
+  if (title === "") {
+    alert("Etkinlik başlığını girin!");
     return;
   }
 
-  const timeFromArr = eventTimeFrom.split(":");
-  const timeToArr = eventTimeTo.split(":");
-  if (
-    timeFromArr.length !== 2 ||
-    timeToArr.length !== 2 ||
-    timeFromArr[0] > 23 ||
-    timeFromArr[1] > 59 ||
-    timeToArr[0] > 23 ||
-    timeToArr[1] > 59
-  ) {
-    alert("Geçersiz Zaman Formatı");
+  // Gün bilgisini eklemek için API çağrısı
+  const dateData = new FormData();
+  dateData.append("Date_Year", year);
+  dateData.append("Date_Month", month + 1);
+  dateData.append("Date_Day", activeDay);
+  console.log("Gün verisi:", Object.fromEntries(dateData));
+
+  let dateId;
+  try {
+    const response = await fetch(`/api_date/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: dateData,
+    });
+    const responseData = await response.json();
+    dateId = responseData.id; // Yeni oluşturulan tarihin ID'sini al
+  } catch (error) {
+    console.error("Gün oluşturulurken bir hata oluştu!", error);
     return;
   }
 
-  const timeFrom = convertTime(eventTimeFrom);
-  const timeTo = convertTime(eventTimeTo);
+  // Etkinlik bilgisini eklemek için API çağrısı
+  const eventData = new FormData();
+  eventData.append("Event_Title", title);
+  eventData.append("Event_Time", time);
+  eventData.append("Event_Date", dateId); // Tarih ID'sini kullan
 
-  let eventExist = false;
-  eventsArr.forEach((event) => {
-    if (
-      event.day === activeDay &&
-      event.month === month + 1 &&
-      event.year === year
-    ) {
-      event.events.forEach((event) => {
-        if (event.title === eventTitle) {
-          eventExist = true;
-        }
-      });
-    }
+  console.log("Etkinlik verisi:", Object.fromEntries(eventData));
+  try {
+    await fetch(`/api_events/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: eventData,
+    });
+  } catch (error) {
+    console.error("Etkinlik oluşturulurken bir hata oluştu!", error);
+    return;
+  }
+
+  // Yerel olaylar dizisine ekleme
+  eventsArr.push({
+    day: activeDay,
+    month: month + 1,
+    year: year,
+    events: [
+      {
+        title: title,
+        time: time,
+      },
+    ],
   });
-  if (eventExist) {
-    alert("Etkinlik zaten eklendi");
-    return;
-  }
-  const newEvent = {
-    title: eventTitle,
-    time: eventTimeFrom + " - " + eventTimeTo,
-  };
-  console.log(newEvent);
-  console.log(activeDay);
-  let eventAdded = false;
-  if (eventsArr.length > 0) {
-    eventsArr.forEach((item) => {
-      if (
-        item.day === activeDay &&
-        item.month === month + 1 &&
-        item.year === year
-      ) {
-        item.events.push(newEvent);
-        eventAdded = true;
-      }
-    });
-  }
-
-  if (!eventAdded) {
-    eventsArr.push({
-      day: activeDay,
-      month: month + 1,
-      year: year,
-      events: [newEvent],
-    });
-  }
-
-  console.log(eventsArr);
-  addEventWrapper.classList.remove("active");
-  addEventTitle.value = "";
-  addEventFrom.value = "";
-  addEventTo.value = "";
   updateEvents(activeDay);
-  const activeDayEl = document.querySelector(".day.active");
-  if (!activeDayEl.classList.contains("event")) {
-    activeDayEl.classList.add("event");
-  }
-});
+  addEventWrapper.classList.remove("active");
+}
 
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Bu etkinliği silmek istediğinizden emin misiniz?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
-        if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
-        ) {
-          event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
-              event.events.splice(index, 1);
-            }
-          });
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
-            }
-          }
-        }
-      });
-      updateEvents(activeDay);
-    }
-  }
-});
+addEventSubmit.addEventListener("click", addEvent);
 
 function saveEvents() {
   localStorage.setItem("events", JSON.stringify(eventsArr));
 }
-
-function getEvents() {
-  if (localStorage.getItem("events") === null) {
-    return;
-  }
-  eventsArr.push(...JSON.parse(localStorage.getItem("events")));
-}
-
-function convertTime(time) {
-  let timeArr = time.split(":");
-  let timeHour = timeArr[0];
-  let timeMin = timeArr[1];
-  time = timeHour + ":" + timeMin;
-  return time;
-}
-
-
-// RESPONSİVE KODLAR
-const mediaQuery = window.matchMedia("(max-width: 767px)");
-function checkWindowSize() {
-  if (window.innerWidth > 767) {
-    leftMenu.style.display = "block";
-  } else {
-    leftMenu.style.display = "none";
-  }
-}
-window.addEventListener("load", checkWindowSize);
-window.addEventListener("resize", checkWindowSize);
-
-//left menü acma kapatma
-const leftMenu = document.querySelector(".left-menu");
-
-const hamburgerBtn = document.querySelector(".hamburger-button");
-hamburgerBtn.addEventListener("click", () => {
-  setTimeout(async () => { leftMenu.style.display = "block";}, 20)
- 
-});
-
-document.addEventListener("click", (event) => {
-  const leftMenuNav = document.querySelector(
-    "#left-menu-nav"
-  );
-  if (window.innerWidth <= 767 && !leftMenuNav.contains(event.target)) {
-    leftMenu.style.display = "none";
-  }
-});
