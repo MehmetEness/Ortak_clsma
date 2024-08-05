@@ -53,7 +53,7 @@ async function getOperationCare(isEdit) {
             </button>
           </td>
           <td><a href="${operationCareDetailUrl}">${operationCare.client.PowerPlantName}</a></td>
-          <td>${formatNumber(operationCare.Operation_Care_Capacity)}</td>
+          <td>${formatNumber(operationCare.Operation_Care_AC_Power)}</td>
           <td>${operationCare.Operation_Care_Location}</td>
           <td>${formatNumber(operationCare.Operation_Care_Cost) + "₺" || 0 + "₺"}</td>
           <td>${failCount}</td>
