@@ -1014,7 +1014,7 @@ async function getTotalList() {
       listTableBody.appendChild(row);
     }
     listTablePaint();
-    sortingTable(listTable);
+    sortingTable(listTable, true);
   } catch (error) {
     console.error("Error fetching and rendering clients:", error);
   }

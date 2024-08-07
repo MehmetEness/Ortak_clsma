@@ -247,7 +247,22 @@ function searchTable() {
   });
 }
 // SORTİNG
-function sortingTable(table) {
+
+const durumSiralama = [
+  "potansiyel müşteri",
+  "maliyet hesaplama",
+  "fiyat belirleme",
+  "teklif hazırlama",
+  "teklif hazır",
+  "teklif sunuldu",
+  "sunum sonrası görüşme",
+  "bekleyen i̇ş",
+  "kaybedilen i̇ş",
+  "kazanılan i̇ş"
+];
+
+
+function sortingTable(table, xyz) {
   const table_headings = table.querySelectorAll("thead th");
   const table_rows = table.querySelectorAll("tbody tr");
   const tableBody = table.querySelector("tbody");
@@ -266,17 +281,29 @@ function sortingTable(table) {
       head.classList.toggle("asc", sort_asc);
       sort_asc = head.classList.contains("asc") ? false : true;
 
-      sortTable(i, sort_asc, table_rows, tableBody);
+      if(xyz){
+        sortTable(i, sort_asc, table_rows, tableBody, true);
+      } else {
+        sortTable(i, sort_asc, table_rows, tableBody);
+      }      
     };
   });
 }
-function sortTable(column, sort_asc, table_rows, tableBody) {
+function sortTable(column, sort_asc, table_rows, tableBody, xyz) {
+
   [...table_rows]
     .sort((a, b) => {
       let first_row = a
         .querySelectorAll("td")
       [column].textContent.toLowerCase(),
-        second_row = b.querySelectorAll("td")[column].textContent.toLowerCase();
+        second_row = b.querySelectorAll("td")[column].textContent.toLowerCase();      
+      
+        if (column === 1 && xyz) {          
+          return sort_asc
+            ? durumSiralama.indexOf(first_row) - durumSiralama.indexOf(second_row)
+            : durumSiralama.indexOf(second_row) - durumSiralama.indexOf(first_row);
+        }
+
       let first_number = first_row
         .replace(/\./g, "")
         .replace("$", "")
