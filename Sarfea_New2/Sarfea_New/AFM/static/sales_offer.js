@@ -959,7 +959,7 @@ cardDateList(rowsElements);
   #                       LİSTELERİ YAZDIRMA
   ***********************************************************/
 
-getTotalList()
+// getTotalList()
 // TOTAL LİSTE
 async function getTotalList() {
   try {
@@ -985,7 +985,7 @@ async function getTotalList() {
       }
 
       row.innerHTML = `
-          <td data-label="Durum" class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i><span style="display: none;">Revize</span></a><span class="icon-blue"></span></td>
+          <td data-label="Durum" class="list_firt_tr"><a href="/sales_offer_revises/${card.id}/"><i class="fas fa-book"></i><span style="display: none;">Revize</span></a><span class="icon-red"><i class="fa-solid fa-circle"></i></span></td>
           <td data-label="Durum">${card.Is_Gain ? 'Kazanılan İş' : (card.Is_Lost ? 'Kaybedilen İş' : (card.Is_late ? 'Bekleyen İş' : card.Situation_Card))}</td>
           <td data-label="Müşteri Adı">${card.client.CompanyName_Clients || "-"}</td>
           <td data-label="Konum">${card.Location_Card || "-"}</td>
@@ -1043,7 +1043,7 @@ function getClassForSituation(situationCard) {
 function listTablePaint() {
   let trRowsList = listTable.querySelectorAll("tr");
   trRowsList.forEach((row) => {
-    let span = row.querySelector(".icon-blue")
+    let span = row.querySelector(".icon-red")
     switch (row.className) {
       case "gain-job":
         span.style.color = "#38b000"
@@ -1093,7 +1093,7 @@ function listTablePaint() {
 }
 
 // LOST LİST
-getLostList()
+// getLostList()
 async function getLostList() {
   try {
     //let currentRows = supplierTableBody.querySelectorAll("tr");
@@ -1143,7 +1143,7 @@ async function getLostList() {
 }
 
 // SALES LİST
-getSalesList()
+// getSalesList()
 async function getSalesList() {
   try {
     var data = await apiFunctions("sales_offer", "GET");
@@ -1192,7 +1192,7 @@ async function getSalesList() {
 }
 
 // WON LİST
-getWonList()
+// getWonList()
 async function getWonList() {
   try {
     var data = await apiFunctions("sales_offer", "GET");
@@ -1240,11 +1240,11 @@ async function getWonList() {
   }
 }
 function uploadPage(){
-  getSalesCards()
-  getWonList()
-  getSalesList()
-  getLostList()
-  getTotalList()
+  // getSalesCards()
+  // getWonList()
+  // getSalesList()
+  // getLostList()
+  // getTotalList()
 }
 //                  LİSTEDEN CARDA GİTME
 const goToCard = (event)=>{ 
