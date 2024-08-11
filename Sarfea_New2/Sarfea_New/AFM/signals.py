@@ -199,4 +199,5 @@ def update_capasity(sender, instance, **kwargs):
     
 @receiver(pre_save, sender=Operation_Care)
 def update_capasity_OC(sender, instance, **kwargs):
+    if instance.Operation_Care_AC_Power and instance.Operation_Care_DC_Power:
         instance.Operation_Care_Capacity = instance.Operation_Care_AC_Power + instance.Operation_Care_DC_Power
