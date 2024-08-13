@@ -296,6 +296,7 @@ function handleMenuItemClick(clickedItemId) {
       salesContainer.style.display = "none";
       lostJobContainer.style.display = "none";
       wonContainer.style.display = "none";
+      getSalesCards()
       break;
     case "waiting_job":
       listContainer.style.display = "none";
@@ -1240,7 +1241,7 @@ async function getWonList() {
   }
 }
 function uploadPage(){
-  // getSalesCards()
+   getSalesCards()
   // getWonList()
   // getSalesList()
   // getLostList()
