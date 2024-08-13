@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from AFM.models import Clients, Date, Events, Supplier, Project, Expenses, JobHistory, Incomes,  Fail, SalesOfferCard,SalesOfferCard_Revise, Operation_Care, Inventor, String, Poll, PowerPlant
 from django.db.models import Max, Count
+from dateutil.relativedelta import relativedelta
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -510,7 +511,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
         first_Operation_Care_Panel_Number_Str=instance.Operation_Care_Panel_Number_Str
         first_Operation_Care_Number_Str=instance.Operation_Care_Number_Str 
         first_Operation_Care_Capacity=instance.Operation_Care_Capacity 
-        
+        first_Operation_Care_Start_Date=instance.Operation_Care_Start_Date
+
         instance.Operation_Care_Company = validated_data.get('Operation_Care_Company', instance.Operation_Care_Company)
         instance.Operation_Care_Location = validated_data.get('Operation_Care_Location', instance.Operation_Care_Location)
         instance.Operation_Care_Inventor_Brand = validated_data.get('Operation_Care_Inventor_Brand', instance.Operation_Care_Inventor_Brand)
@@ -567,7 +569,8 @@ class OperationCareSerializer(serializers.ModelSerializer):
         inventors_s = instance.operation_inventors.all()
         first_inventor = instance.operation_inventors.first()
          # 1. En büyük String_Date değerini bul
-        max_date = first_inventor.inventor_strings.aggregate(Max('String_Date'))['String_Date__max']
+        if first_inventor:
+            max_date = first_inventor.inventor_strings.aggregate(Max('String_Date'))['String_Date__max']
         # 2. Bu en büyük String_Date değerine sahip string'lerin sayısını bul
         for inventor in inventors_s:
             strings = inventor.inventor_strings.filter(String_Date=max_date)
@@ -670,7 +673,22 @@ class OperationCareSerializer(serializers.ModelSerializer):
                 for str in strings_inventor:
                     str.String_Capacity=invntr.Inventor_Capacity
                     str.save()
-    
+        
+        if first_Operation_Care_Start_Date!=instance.Operation_Care_Start_Date:
+            old_date=first_Operation_Care_Start_Date
+            new_date = instance.Operation_Care_Start_Date
+            polls = instance.op_poll.all()
+            for poll in polls:
+                poll.Poll_Date = new_date
+                poll.save()
+                for invntr in inventors_ss:
+                    invntr_strngs = invntr.inventor_strings.filter(String_Date=old_date)
+                    if invntr_strngs:
+                        for str in invntr_strngs:
+                            str.String_Date=new_date
+                            str.save()
+                old_date = old_date + relativedelta(months=6)                
+                new_date = new_date + relativedelta(months=6)
         return instance
   
 class FailSerializer(serializers.ModelSerializer):
